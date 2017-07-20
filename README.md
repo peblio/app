@@ -8,3 +8,7 @@
 
 To run this go to the root folder on your terminal and run `node start`.
 You will now see the websit on `localhost:8080`
+
+python
+https://www.npmjs.com/package/brython
+http://www.infoworld.com/article/3033047/javascript/4-tools-to-convert-python-to-javascript-and-back-again.html

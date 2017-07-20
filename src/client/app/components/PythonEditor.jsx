@@ -2,18 +2,18 @@ import React, { PropTypes } from 'react';
 import CodeMirror from 'codemirror';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/selection/active-line';
-import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/python/python';
 
-class P5Editor extends React.Component {
+class PythonEditor extends React.Component {
   componentDidMount() {
-    console.log('p5 editor Output');
-    const defaultSketch = `function setup() {
-      createCanvas(400, 400);
-    }
-
-    function draw() {
-      background(220);
-    }`;
+    const defaultSketch = `
+    def factorial(n):
+      if n == 0:
+        return 1
+      else:
+        return n * factorial(n - 1)
+    print(factorial(5))
+    `;
     this.props.updateCode(defaultSketch);
 
     this.cm = CodeMirror(this.codemirrorContainer, {
@@ -22,8 +22,7 @@ class P5Editor extends React.Component {
       lineNumbers: true,
       autoCloseBrackets: true,
       inputStyle: 'contenteditable',
-      styleActiveLine: true,
-      theme:'3024-night'
+      styleActiveLine: true
     });
     this.cm.on('keyup', () => {
       console.log(this.props.editorCode);
@@ -42,4 +41,4 @@ class P5Editor extends React.Component {
   }
 }
 
-export default P5Editor;
+export default PythonEditor;

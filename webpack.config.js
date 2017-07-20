@@ -27,6 +27,8 @@ var config = {
         loader: 'css-loader'
       }
     ]
+  }, node: {
+    fs: "empty"
   }
 };
 

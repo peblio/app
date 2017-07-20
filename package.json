@@ -20,9 +20,11 @@
     "css-loader": "^0.28.4",
     "express": "^4.15.3",
     "mongoose": "^4.11.0",
+    "python-js": "^0.9.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-router-dom": "^4.1.1",
+    "serve": "^6.0.2",
     "style-loader": "^0.18.2",
     "webpack": "^2.6.1"
   },
