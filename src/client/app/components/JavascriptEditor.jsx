@@ -21,9 +21,7 @@ class JavascriptEditor extends React.Component {
       styleActiveLine: true
     });
     this.cm.on('keyup', () => {
-      console.log(this.props.editorCode);
       this.props.updateCode(this.cm.getValue());
-      console.log('changing code');
     });
 
   }

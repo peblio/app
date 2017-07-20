@@ -35,9 +35,14 @@ class EditorContainer extends React.Component {
         })()}
 
       <button
-        onClick = {this.props.executeCode}
+        onClick = {this.props.playCode}
       >
-        Run
+        Play
+      </button>
+      <button
+        onClick = {this.props.stopCode}
+      >
+        Stop
       </button>
       </div>
     );

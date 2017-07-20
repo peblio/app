@@ -17,8 +17,9 @@ class App extends React.Component {
         python: false
       }
     }
+    this.stopCode = this.stopCode.bind(this);
+    this.playCode = this.playCode.bind(this);
     this.updateCode = this.updateCode.bind(this);
-    this.executeCode = this.executeCode.bind(this);
     this.setEditorMode = this.setEditorMode.bind(this);
   }
   setEditorMode(event) {
@@ -51,20 +52,18 @@ class App extends React.Component {
   }
 
   updateCode(value) {
-    console.log("updating code");
-    console.log(value);
-    console.log(this.state.code);
     this.setState({
       code: value
     });
   }
-  executeCode(value) {
-    console.log("toggle sketch playing");
-    console.log('********');
-    console.log(this.state.isPlaying);
-    console.log('********');
-    this.setState ({
-      isPlaying: !this.state.isPlaying
+  stopCode() {
+    this.setState({
+      isPlaying: false
+    })
+  }
+  playCode() {
+    this.setState({
+      isPlaying: true
     })
   }
   render() {
@@ -78,7 +77,8 @@ class App extends React.Component {
             editorCode = {this.state.code}
             updateCode = {this.updateCode}
             isPlaying = {this.state.isPlaying}
-            executeCode = {this.executeCode}
+            playCode = {this.playCode}
+            stopCode = {this.stopCode}
             editorMode = {this.state.editorMode}
             setEditorMode= {this.setEditorMode}
           />

@@ -11,7 +11,7 @@ class OutputContainer extends React.Component {
     return(
       <div>
         {(() => { // eslint-disable-line
-          if (this.props.editorMode.p5) {
+          if (this.props.editorMode.p5 && this.props.isPlaying) {
             return (
               <P5Output
                 editorCode = {this.props.editorCode}
@@ -19,7 +19,7 @@ class OutputContainer extends React.Component {
                 isPlaying = {this.props.isPlaying}
               />
             );
-          } else if (this.props.editorMode.javascript) {
+          } else if (this.props.editorMode.javascript && this.props.isPlaying) {
             return (
               <JavascriptOutput
                 editorCode = {this.props.editorCode}

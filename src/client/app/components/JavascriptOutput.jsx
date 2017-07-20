@@ -4,33 +4,47 @@ import CodeMirror from 'codemirror';
 class JavascriptOutput extends React.Component {
   constructor(props) {
     super(props);
-    state:  {
-      output: ''
+    this.state = {
+      output: []
     }
+    this.receiveMessage = this.receiveMessage.bind(this);
+    this.updateOutput = this.updateOutput.bind(this);
   }
-  
-  componentDidUpdate() {
-    // console.log("DID UPDATE");
-    let defaultCode = this.props.editorCode;
-    if(this.props.isPlaying) {
-      const codeOutput = eval(this.props.editorCode);
-      console.log(codeOutput);
-      // this.setState({
-      //   output: codeOutput
-      // });
-    }
+  componentDidMount() {
+    window.addEventListener("message", this.receiveMessage, false);
+    let defaultCode = `<!DOCTYPE html>
+    <html>
+      <head>
+        <script src="/public/hijackConsole.js"></script>
+      </head>
+      <body>
+        <script>`
+        + this.props.editorCode
+        +
+      `</script>
+      </body>
+    </html>`;
+    this.iframe.contentWindow.document.open();
+    this.iframe.contentWindow.document.write(defaultCode);
+    this.iframe.contentWindow.document.close();
+  }
+  updateOutput(output) {
+    const tempOutput = this.state.output.slice()
+    tempOutput.push(output);
+    this.setState({ output: tempOutput })
+  }
+  receiveMessage(event) {
+    this.updateOutput(event.data.arguments.join());
   }
 
   render() {
+    const iframeStyle = {
+      display: 'none'
+    };
     return (
       <div>
-        {(() => { // eslint-disable-line
-          if (this.props.isPlaying) {
-            return (
-              <div> POTATO </div>
-            );
-          }
-        })()}
+        <p> {this.state.output.join("\n")} </p>
+        <iframe style={iframeStyle} ref={(element) => { this.iframe = element; }} id="code-output"></iframe>
       </div>
     );
   }
