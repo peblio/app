@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 
 import EditorContainer from './EditorContainer.jsx';
+import TextArea from './TextArea.jsx';
 import TextToolbar from './TextToolbar.jsx';
 
 class App extends React.Component {
@@ -81,6 +82,7 @@ class App extends React.Component {
             editorMode = {this.state.editorMode}
             setEditorMode= {this.setEditorMode}
           />
+          <TextArea/>
         </section>
       </div>
     );
