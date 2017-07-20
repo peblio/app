@@ -3,7 +3,6 @@ import { render } from 'react-dom';
 
 import EditorContainer from './EditorContainer.jsx';
 import TextToolbar from './TextToolbar.jsx';
-import OutputContainer from './OutputContainer.jsx';
 
 class App extends React.Component {
   constructor() {
@@ -81,11 +80,6 @@ class App extends React.Component {
             stopCode = {this.stopCode}
             editorMode = {this.state.editorMode}
             setEditorMode= {this.setEditorMode}
-          />
-        <OutputContainer
-            editorCode = {this.state.code}
-            isPlaying = {this.state.isPlaying}
-            editorMode = {this.state.editorMode}
           />
         </section>
       </div>

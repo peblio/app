@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import P5Editor from './p5Editor.jsx'
 import JavascriptEditor from './JavascriptEditor.jsx'
-// import PythonEditor from './PythonEditor.jsx'
+import P5Output from './p5Output.jsx'
+import JavascriptOutput from './JavascriptOutput.jsx'
 import EditorToolbar from './EditorToolbar.jsx';
 
 class EditorContainer extends React.Component {
@@ -11,6 +12,10 @@ class EditorContainer extends React.Component {
   render() {
     return(
       <div>
+        <EditorToolbar
+          playCode = {this.props.playCode}
+          stopCode = {this.props.stopCode}
+        />  
         <select id="test" onChange={this.props.setEditorMode}>
           <option value="p5">p5</option>
           <option value="javascript">javascript</option>
@@ -34,17 +39,29 @@ class EditorContainer extends React.Component {
           }
         })()}
 
-      <button
-        onClick = {this.props.playCode}
-      >
-        Play
-      </button>
-      <button
-        onClick = {this.props.stopCode}
-      >
-        Stop
-      </button>
-      </div>
+      {(() => { // eslint-disable-line
+        if(this.props.isPlaying) {
+          if (this.props.editorMode.p5) {
+            return (
+              <P5Output
+                editorCode = {this.props.editorCode}
+                updateCode = {this.props.updateCode}
+                isPlaying = {this.props.isPlaying}
+              />
+            );
+          } else if (this.props.editorMode.javascript) {
+            return (
+              <JavascriptOutput
+                editorCode = {this.props.editorCode}
+                updateCode = {this.props.updateCode}
+                isPlaying = {this.props.isPlaying}
+              />
+            );
+          }
+        }
+
+      })()}
+    </div>
     );
   }
 
