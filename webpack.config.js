@@ -24,7 +24,7 @@ var config = {
       },
       {
         test: /\.css$/,
-        loader: 'css-loader'
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
   }, node: {

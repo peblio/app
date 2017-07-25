@@ -4,6 +4,9 @@ import 'codemirror/keymap/sublime';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/mode/javascript/javascript';
 
+require('../styles/codemirror.css');
+require('../styles/3024-night.css');
+
 class P5Editor extends React.Component {
   componentDidMount() {
     console.log('p5 editor Output');
