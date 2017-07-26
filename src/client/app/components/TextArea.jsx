@@ -19,6 +19,9 @@ class TextArea extends React.Component {
         },
         'FONT': {
           fontSize: '54pt',
+        },
+        'FONTFACE': {
+          fontFamily: 'monospace',
         }
       }
     };
@@ -29,6 +32,7 @@ class TextArea extends React.Component {
     this._onUnderlineClick = this._onUnderlineClick.bind(this);
     this._onCodeClick = this._onCodeClick.bind(this);
     this._onFontChange = this._onFontChange.bind(this);
+    this._onFontfaceChange = this._onFontfaceChange.bind(this);
   }
   _onBoldClick() {
     this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'));
@@ -51,6 +55,16 @@ class TextArea extends React.Component {
     const selection = this.state.editorState.getSelection();
     const content = this.state.editorState.getCurrentContent();
     const newContent = Modifier.applyInlineStyle(content, selection, 'FONT');
+    this.onChange(EditorState.push(this.state.editorState, newContent, 'change-inline-style'));
+  }
+  _onFontfaceChange(event) {
+    const newFontface = event.target.value;
+    const tempStyleMap = this.state.styleMap;
+    tempStyleMap.FONTFACE.fontFamily = newFontface;
+    this.setState(styleMap: tempStyleMap);
+    const selection = this.state.editorState.getSelection();
+    const content = this.state.editorState.getCurrentContent();
+    const newContent = Modifier.applyInlineStyle(content, selection, 'FONTFACE');
     this.onChange(EditorState.push(this.state.editorState, newContent, 'change-inline-style'));
   }
   handleKeyCommand(command) {
@@ -89,6 +103,11 @@ class TextArea extends React.Component {
           >
             -
           </button>
+          <select name="fontface" onChange={this._onFontfaceChange}>
+            <option value="Arial, Helvetica, sans-serif">Arial</option>
+            <option value="Impact, Charcoal, sans-serif">Impact</option>
+            <option value="Times New Roman, Times, serif">Times New Roman</option>
+          </select>
           <select name="font-size" onChange={this._onFontChange}>
             <option value="20">20</option>
             <option value="24">24</option>
