@@ -97,9 +97,10 @@ class App extends React.Component {
   }
   _onFontfaceChange(event) {
     const newFontface = event.target.value;
+    console.log(newFontface);
     const tempStyleMap = this.state.styleMap;
     tempStyleMap.FONTFACE.fontFamily = newFontface;
-    this.setState({styleMap: tempStyleMap});
+    this.setState({ styleMap: tempStyleMap });
     const selection = this.state.editorState.getSelection();
     const content = this.state.editorState.getCurrentContent();
     const newContent = Modifier.applyInlineStyle(content, selection, 'FONTFACE');
@@ -132,7 +133,18 @@ class App extends React.Component {
     return (
       <div>
         <nav>
-          <TextToolbar/>
+          <TextToolbar
+              editorState = {this.state.editorState}
+              styleMap = {this.state.styleMap}
+              onChange = {this.onChange}
+              handleKeyCommand = {this.handleKeyCommand}
+              _onBoldClick = {this._onBoldClick}
+              _onItalicClick = {this._onItalicClick}
+              _onUnderlineClick = {this._onUnderlineClick}
+              _onCodeClick = {this._onCodeClick}
+              _onFontChange = {this._onFontChange}
+              _onFontfaceChange = {this._onFontfaceChange}
+            />
         </nav>
         <section>
           <EditorContainer
@@ -145,16 +157,10 @@ class App extends React.Component {
             setEditorMode= {this.setEditorMode}
           />
           <TextArea
-            editorState = {this.state.editorState}
-            styleMap = {this.state.styleMap}
-            onChange = {this.onChange}
-            handleKeyCommand = {this.handleKeyCommand}
-            _onBoldClick = {this._onBoldClick}
-            _onItalicClick = {this._onItalicClick}
-            _onUnderlineClick = {this._onUnderlineClick}
-            _onCodeClick = {this._onCodeClick}
-            _onFontChange = {this._onFontChange}
-            _onFontfaceChange = {this._onFontfaceChange}
+            styleMap={this.state.styleMap}
+            editorState={this.state.editorState}
+            onChange={this.onChange}
+            handleKeyCommand={this.handleKeyCommand}
           />
         </section>
       </div>
