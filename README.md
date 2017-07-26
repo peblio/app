@@ -4,7 +4,7 @@
 * [yet another react referece](http://andrewhfarmer.com/build-your-own-starter/#8-done)
 * [another reference](https://scotch.io/tutorials/react-on-the-server-for-beginners-build-a-universal-react-and-node-app)
 * [eslint reference](https://www.robinwieruch.de/react-eslint-webpack-babel/)
-
+* [Using draft-js to create and inline text-editor](https://draftjs.org/docs/quickstart-api-basics.html#content)
 
 To run this go to the root folder on your terminal and run `node start`.
 You will now see the websit on `localhost:8080`
