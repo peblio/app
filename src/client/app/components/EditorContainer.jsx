@@ -59,6 +59,8 @@ class EditorContainer extends React.Component {
                 editorCode = {this.props.editorCode}
                 updateCode = {this.props.updateCode}
                 isPlaying = {this.props.isPlaying}
+                receiveMessage = {this.props.receiveMessage}
+                consoleOutputText = {this.props.consoleOutputText}
               />
             );
           }

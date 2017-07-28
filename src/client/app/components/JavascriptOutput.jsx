@@ -9,7 +9,7 @@ class JavascriptOutput extends React.Component {
     }
   }
   componentDidMount() {
-    window.addEventListener("message", this.receiveMessage, false);
+    window.addEventListener("message", this.props.receiveMessage, false);
     let defaultCode = `<!DOCTYPE html>
     <html>
       <head>
@@ -34,7 +34,7 @@ class JavascriptOutput extends React.Component {
     };
     return (
       <div>
-        <p> {this.state.output.join("\n")} </p>
+        <p> {this.props.consoleOutputText.join("\n")} </p>
         <iframe style={iframeStyle} ref={(element) => { this.iframe = element; }} id="code-output"></iframe>
       </div>
     );
