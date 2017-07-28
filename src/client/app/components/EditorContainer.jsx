@@ -4,6 +4,7 @@ import JavascriptEditor from './JavascriptEditor.jsx'
 import P5Output from './p5Output.jsx'
 import JavascriptOutput from './JavascriptOutput.jsx'
 import EditorToolbar from './EditorToolbar.jsx';
+import ConsoleOutput from './ConsoleOutput.jsx';
 
 class EditorContainer extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class EditorContainer extends React.Component {
         <EditorToolbar
           playCode = {this.props.playCode}
           stopCode = {this.props.stopCode}
-        />  
+        />
         <select id="test" onChange={this.props.setEditorMode}>
           <option value="p5">p5</option>
           <option value="javascript">javascript</option>
@@ -38,7 +39,9 @@ class EditorContainer extends React.Component {
             );
           }
         })()}
-
+      <ConsoleOutput
+        consoleOutputText = {this.props.consoleOutputText}
+      />
       {(() => { // eslint-disable-line
         if(this.props.isPlaying) {
           if (this.props.editorMode.p5) {
@@ -47,6 +50,7 @@ class EditorContainer extends React.Component {
                 editorCode = {this.props.editorCode}
                 updateCode = {this.props.updateCode}
                 isPlaying = {this.props.isPlaying}
+                receiveMessage = {this.props.receiveMessage}
               />
             );
           } else if (this.props.editorMode.javascript) {
@@ -59,8 +63,8 @@ class EditorContainer extends React.Component {
             );
           }
         }
-
       })()}
+
     </div>
     );
   }

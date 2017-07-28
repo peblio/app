@@ -10,7 +10,7 @@ var LOGWAIT = 1000;
 
 methods.forEach( function(method) {
   iframeWindow.console[method] = function() {
-    // originalConsole[method].apply(originalConsole, arguments);
+    originalConsole[method].apply(originalConsole, arguments);
 
     var args = Array.from(arguments);
     args = args.map(function(i) {
