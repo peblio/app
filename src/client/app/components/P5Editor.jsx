@@ -12,6 +12,7 @@ class P5Editor extends React.Component {
     console.log('p5 editor Output');
     const defaultSketch = `function setup() {
       createCanvas(400, 400);
+      console.log("*******");
     }
 
     function draw() {
@@ -29,9 +30,7 @@ class P5Editor extends React.Component {
       theme:'3024-night'
     });
     this.cm.on('keyup', () => {
-      console.log(this.props.editorCode);
       this.props.updateCode(this.cm.getValue());
-      console.log('changing code');
     });
 
   }

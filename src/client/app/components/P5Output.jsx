@@ -3,10 +3,12 @@ import CodeMirror from 'codemirror';
 
 class P5Output extends React.Component {
   componentDidMount() {
+    window.addEventListener('message', this.props.receiveMessage, false);
     const defaultCode = `<!DOCTYPE html>
     <html>
       <head>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.10/p5.min.js"></script>
+        <script src="/public/hijackConsole.js"></script>
       </head>
       <body>
         <script>`

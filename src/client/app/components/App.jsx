@@ -4,6 +4,7 @@ import { render } from 'react-dom';
 import EditorContainer from './EditorContainer.jsx';
 import TextArea from './TextArea.jsx';
 import TextToolbar from './TextToolbar.jsx';
+import ConsoleOutput from './ConsoleOutput.jsx';
 import {Editor, EditorState, RichUtils, Modifier} from 'draft-js';
 
 class App extends React.Component {
@@ -11,6 +12,7 @@ class App extends React.Component {
     super();
     this.state = {
       editorState: EditorState.createEmpty(),
+      consoleOutputText: [],
       styleMap: {
         'STRIKETHROUGH': {
           textDecoration: 'line-through',
@@ -30,6 +32,9 @@ class App extends React.Component {
         python: false
       }
     }
+    this.receiveMessage = this.receiveMessage.bind(this);
+    this.updateOutput = this.updateOutput.bind(this);
+
     this.stopCode = this.stopCode.bind(this);
     this.playCode = this.playCode.bind(this);
     this.updateCode = this.updateCode.bind(this);
@@ -43,6 +48,16 @@ class App extends React.Component {
     this._onCodeClick = this._onCodeClick.bind(this);
     this._onFontChange = this._onFontChange.bind(this);
     this._onFontfaceChange = this._onFontfaceChange.bind(this);
+  }
+  updateOutput(consoleOutputText) {
+    console.log('updateOutput');
+    const tempOutput = this.state.consoleOutputText.slice()
+    tempOutput.push(consoleOutputText);
+    this.setState({ consoleOutputText: tempOutput })
+  }
+  receiveMessage(event) {
+    console.log('recieveMessage');
+    this.updateOutput(event.data.arguments.join());
   }
   setEditorMode(event) {
     console.log(event.target.value);
@@ -155,6 +170,8 @@ class App extends React.Component {
             stopCode = {this.stopCode}
             editorMode = {this.state.editorMode}
             setEditorMode= {this.setEditorMode}
+            receiveMessage = {this.receiveMessage}
+            consoleOutputText = {this.state.consoleOutputText}
           />
           <TextArea
             styleMap={this.state.styleMap}
