@@ -13,11 +13,11 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      currentTextEditorId: 0,
+      currentTextEditorId: 'text-editor-0',
       currentTextEditorState: null,
       noOfEditors: 0,
       noOfTextEditors: 0,
-      textEditor: [],
+      textEditors: {},
       styleMap: {
         STRIKETHROUGH: {
           textDecoration: 'line-through',
@@ -33,8 +33,8 @@ class App extends React.Component {
 
     this.addEditor = this.addEditor.bind(this);
     this.addTextEditor = this.addTextEditor.bind(this);
-    this.renderEditor = this.renderEditor.bind(this);
-    this.renderTextEditor = this.renderTextEditor.bind(this);
+    this.renderEditors = this.renderEditors.bind(this);
+    this.renderTextEditors = this.renderTextEditors.bind(this);
     this.onChange = this.onChange.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
     this._onBoldClick = this._onBoldClick.bind(this);
@@ -49,24 +49,24 @@ class App extends React.Component {
     this.setState({
       noOfEditors: this.state.noOfEditors+1,
     })
-    console.log('Editors: ' , this.state.noOfEditors);
   }
   addTextEditor() {
-    let textEditors = this.state.textEditor;
+    let textEditors = this.state.textEditors;
+    let newTextEditorId = 'text-editor-' + this.state.noOfTextEditors;
     let newTextEditor = {
-      id: 'text-editor-' + this.state.noOfTextEditors,
+      id: newTextEditorId,
       editorState: EditorState.createEmpty(),
     };
-    textEditors.push(newTextEditor);
-    console.log(textEditors);
+
+    textEditors[newTextEditorId]= newTextEditor;
+
     this.setState({
       noOfTextEditors: this.state.noOfTextEditors+1,
-      textEditor: textEditors,
-    })
-    console.log('Text Editors: ' , this.state.noOfTextEditors);
+      textEditors: textEditors,
+    });
   }
 
-  renderEditor() {
+  renderEditors() {
     let editors = [];
     if (this.state.noOfEditors> 0) {
       for (let i=0; i < this.state.noOfEditors; i++) {
@@ -76,53 +76,64 @@ class App extends React.Component {
     }
     else return [];
   }
-  renderTextEditor() {
+  renderTextEditors() {
     let textEditors = [];
-    if (this.state.noOfTextEditors > 0) {
-      for (let i=0; i < this.state.noOfTextEditors; i++) {
-        textEditors.push(<TextEditor
-          styleMap={this.state.styleMap}
-          editorState={this.state.textEditor[i].editorState}
-          onChange={this.onChange}
-          handleKeyCommand={this.handleKeyCommand}
-          setCurrentEditor = {this.setCurrentEditor}
-          ref={this.state.textEditor[i].id}
-          editorId={this.state.textEditor[i].id}
-        />);
-      }
-      // console.log(textEditors);
-      return textEditors;
-    }
-    else return [];
+    let ids = Object.keys(this.state.textEditors);
+    ids.forEach((id) => {
+      textEditors.push(<TextEditor
+        styleMap={this.state.styleMap}
+        editorState={this.state.textEditors[id].editorState}
+        onChange={this.onChange}
+        handleKeyCommand={this.handleKeyCommand}
+        setCurrentEditor = {this.setCurrentEditor}
+        ref={this.state.textEditors[id].id}
+        editorId={this.state.textEditors[id].id}
+      />);
+    });
+
+    return textEditors;
   }
+
   onChange(editorState)
   {
-    for(let i =0;i<this.state.noOfTextEditors;i++) {
-      let ref = this.state.textEditor[i].id;
-      console.log(document.activeElement);
-      if(document.activeElement.parentElement.parentElement){
-        if ( document.activeElement.parentElement.parentElement.parentElement === ReactDOM.findDOMNode(this.refs[ref]) ) {
-          this.setState({
-            currentTextEditorId: i,
-          },() => {
-            const temp = this.state.textEditor;
-            console.log()
-            temp[this.state.currentTextEditorId].editorState = editorState;
+    console.log('calling onChange');
+    // console.log(this.state.currentTextEditorId);
+    // let textEditors = this.state.textEditors;
+    // console.log(textEditors);
+    // console.log(this.state.currentTextEditorId);
+    // textEditors[this.state.currentTextEditorId].editorState = editorState;
+    // this.setState({
+    //   currentTextEditorState: editorState,
+    //   textEditors: textEditors
+    // });
+
+    let ids = Object.keys(this.state.textEditors);
+    ids.forEach((id) => {
+      let ref = this.state.textEditors[id].id;
+      console.log( );
+        if (document.activeElement.parentElement.parentElement.classList.value.localeCompare('DraftEditor-root')==0) {
+          if ( document.activeElement.parentElement.parentElement.parentElement === ReactDOM.findDOMNode(this.refs[ref]) ) {
             this.setState({
-              currentTextEditorState: temp[this.state.currentTextEditorId].editorState,
-              textEditor: temp
+              currentTextEditorId: id,
+            },() => {
+              let temp = this.state.textEditors;
+              temp[this.state.currentTextEditorId].editorState = editorState;
+              this.setState({
+                currentTextEditorState: temp[this.state.currentTextEditorId].editorState,
+                textEditors: temp
+              });
             });
+          }
+        } else {
+          console.log(this.state.textEditors);
+          let temp = this.state.textEditors;
+          temp[this.state.currentTextEditorId].editorState = editorState;
+          this.setState({
+            currentTextEditorState: temp[this.state.currentTextEditorId].editorState,
+            textEditors: temp
           });
         }
-      } else {
-        const temp = this.state.textEditor;
-        temp[this.state.currentTextEditorId].editorState = editorState;
-        this.setState({
-          currentTextEditorState: temp[this.state.currentTextEditorId].editorState,
-          textEditor: temp
-        });
-      }
-    }
+    });
   }
 
   _onBoldClick() {
@@ -139,7 +150,6 @@ class App extends React.Component {
   }
   _onFontChange(event) {
     const newFontSize = event.target.value + 'pt';
-    console.log(newFontSize);
     const tempStyleMap = this.state.styleMap;
     tempStyleMap.FONT.fontSize = newFontSize;
     this.setState({styleMap: tempStyleMap});
@@ -150,7 +160,6 @@ class App extends React.Component {
   }
   _onFontfaceChange(event) {
     const newFontface = event.target.value;
-    console.log(newFontface);
     const tempStyleMap = this.state.styleMap;
     tempStyleMap.FONTFACE.fontFamily = newFontface;
     this.setState({ styleMap: tempStyleMap });
@@ -160,14 +169,12 @@ class App extends React.Component {
     this.onChange(EditorState.push(this.state.currentTextEditorState, newContent, 'change-inline-style'));
   }
   setCurrentEditor(textEditorState,textEditorId) {
-    console.log(textEditorState);
     this.setState({
       currentTextEditorState: textEditorState,
       currentTextEditorId: textEditorId
     });
   }
   handleKeyCommand(command) {
-    console.log(this.state.currentTextEditorState);
     const newState = RichUtils.handleKeyCommand(this.state.currentTextEditorState, command);
     if (newState) {
       this.onChange(newState);
@@ -177,8 +184,8 @@ class App extends React.Component {
   }
 
   render() {
-    const Editors = this.renderEditor();
-    const TextEditors = this.renderTextEditor();
+    const Editors = this.renderEditors();
+    const TextEditors = this.renderTextEditors();
     return (
       <div>
         <nav>
