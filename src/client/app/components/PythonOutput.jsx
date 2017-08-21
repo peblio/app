@@ -8,7 +8,6 @@ class PythonOutput extends React.Component {
     super();
   }
   componentDidUpdate() {
-    // console.log("DID UPDATE");
     const defaultCode = this.props.editorCode;
     if (this.props.isPlaying) {
       // const code = pythonjs.translator.to_javascript( defaultCode ); // output javascript
