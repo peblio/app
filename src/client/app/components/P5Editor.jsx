@@ -9,7 +9,6 @@ require('../styles/3024-night.css');
 
 class P5Editor extends React.Component {
   componentDidMount() {
-    console.log('p5 editor Output');
     const defaultSketch = `function setup() {
       createCanvas(400, 400);
       console.log("*******");

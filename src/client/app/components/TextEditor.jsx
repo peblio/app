@@ -10,7 +10,7 @@ class TextEditor extends React.Component {
   onFocus() {
     // debugger;
     console.log('calling onFocus');
-    this.props.setCurrentEditor(this.props.editorState, this.props.editorId);
+    this.props.setCurrentTextEditor(this.props.editorState, this.props.editorId);
   }
 
 

@@ -4,7 +4,6 @@ import CodeMirror from 'codemirror';
 class ConsoleOutput extends React.Component {
   constructor(props) {
     super(props);
-    console.log('test');
   }
   componentDidMount() {
   }

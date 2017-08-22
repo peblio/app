@@ -13,6 +13,16 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      // consoleOutputText: [],
+      // code: '',
+      // isPlaying: false,
+      // editorMode: {
+      //   p5: true,
+      //   javascript: false,
+      //   python: false
+      // },
+      editors: {},
+      currentEditorId: 'editor-0',
       currentTextEditorId: 'text-editor-0',
       currentTextEditorState: null,
       noOfEditors: 0,
@@ -43,13 +53,61 @@ class App extends React.Component {
     this._onCodeClick = this._onCodeClick.bind(this);
     this._onFontChange = this._onFontChange.bind(this);
     this._onFontfaceChange = this._onFontfaceChange.bind(this);
+    this.setCurrentTextEditor = this.setCurrentTextEditor.bind(this);
     this.setCurrentEditor = this.setCurrentEditor.bind(this);
+    //for the editorMode
+    this.stopCode = this.stopCode.bind(this);
+    this.playCode = this.playCode.bind(this);
+    this.updateCode = this.updateCode.bind(this);
+    this.setEditorMode = this.setEditorMode.bind(this);
+    this.receiveMessage = this.receiveMessage.bind(this);
+    this.updateOutput = this.updateOutput.bind(this);
   }
   addEditor() {
+    let editors = this.state.editors;
+    let newEditorId = 'editor-' + this.state.noOfEditors;
+    let newEditor = {
+      id: newEditorId,
+      consoleOutputText: [],
+      code: '',
+      isPlaying: false,
+      editorMode: {
+        p5: true,
+        javascript: false,
+        python: false
+      },
+    };
+
+    editors[newEditorId]= newEditor;
     this.setState({
       noOfEditors: this.state.noOfEditors+1,
+      editors: editors
     })
   }
+
+  renderEditors() {
+    let editors = [];
+    let ids = Object.keys(this.state.editors);
+    ids.forEach((id) => {
+      editors.push(<EditorContainer
+        playCode = {this.playCode}
+        stopCode = {this.stopCode}
+        updateCode = {this.updateCode}
+        setEditorMode = {this.setEditorMode}
+        receiveMessage = {this.receiveMessage}
+        updateOutput = {this.updateOutput}
+        editorMode = {this.state.editors[id].editorMode}
+        editorId={this.state.editors[id].id}
+        setCurrentEditor = {this.setCurrentEditor}
+        consoleOutputText = {this.state.editors[id].consoleOutputText}
+        code = {this.state.editors[id].code}
+        isPlaying = {this.state.editors[id].isPlaying}
+      />);
+    });
+
+    return editors;
+  }
+
   addTextEditor() {
     let textEditors = this.state.textEditors;
     let newTextEditorId = 'text-editor-' + this.state.noOfTextEditors;
@@ -62,20 +120,11 @@ class App extends React.Component {
 
     this.setState({
       noOfTextEditors: this.state.noOfTextEditors+1,
-      textEditors: textEditors,
+      textEditors: textEditors
     });
   }
 
-  renderEditors() {
-    let editors = [];
-    if (this.state.noOfEditors> 0) {
-      for (let i=0; i < this.state.noOfEditors; i++) {
-        editors.push(<EditorContainer />);
-      }
-      return editors;
-    }
-    else return [];
-  }
+
   renderTextEditors() {
     let textEditors = [];
     let ids = Object.keys(this.state.textEditors);
@@ -85,7 +134,8 @@ class App extends React.Component {
         editorState={this.state.textEditors[id].editorState}
         onChange={this.onChange}
         handleKeyCommand={this.handleKeyCommand}
-        setCurrentEditor = {this.setCurrentEditor}
+        setTextEditor = {this.setTextEditor}
+        setCurrentTextEditor = {this.setCurrentTextEditor}
         ref={this.state.textEditors[id].id}
         editorId={this.state.textEditors[id].id}
       />);
@@ -96,21 +146,10 @@ class App extends React.Component {
 
   onChange(editorState)
   {
-    console.log('calling onChange');
-    // console.log(this.state.currentTextEditorId);
-    // let textEditors = this.state.textEditors;
-    // console.log(textEditors);
-    // console.log(this.state.currentTextEditorId);
-    // textEditors[this.state.currentTextEditorId].editorState = editorState;
-    // this.setState({
-    //   currentTextEditorState: editorState,
-    //   textEditors: textEditors
-    // });
-
     let ids = Object.keys(this.state.textEditors);
     ids.forEach((id) => {
       let ref = this.state.textEditors[id].id;
-      console.log( );
+
         if (document.activeElement.parentElement.parentElement.classList.value.localeCompare('DraftEditor-root')==0) {
           if ( document.activeElement.parentElement.parentElement.parentElement === ReactDOM.findDOMNode(this.refs[ref]) ) {
             this.setState({
@@ -125,7 +164,7 @@ class App extends React.Component {
             });
           }
         } else {
-          console.log(this.state.textEditors);
+
           let temp = this.state.textEditors;
           temp[this.state.currentTextEditorId].editorState = editorState;
           this.setState({
@@ -168,10 +207,15 @@ class App extends React.Component {
     const newContent = Modifier.applyInlineStyle(content, selection, 'FONTFACE');
     this.onChange(EditorState.push(this.state.currentTextEditorState, newContent, 'change-inline-style'));
   }
-  setCurrentEditor(textEditorState,textEditorId) {
+  setCurrentTextEditor(textEditorState,textEditorId) {
     this.setState({
       currentTextEditorState: textEditorState,
       currentTextEditorId: textEditorId
+    });
+  }
+  setCurrentEditor(editorId) {
+    this.setState({
+      currentEditorId: editorId
     });
   }
   handleKeyCommand(command) {
@@ -182,9 +226,57 @@ class App extends React.Component {
     }
     return 'not-handled';
   }
+  //for the editorMode
+  updateCode(value) {
+    let editors = this.state.editors;
+    // debugger;
+    editors[this.state.currentEditorId].code = value;
+    this.setState({
+      editors: editors
+    });
+
+  }
+  stopCode() {
+    let editors = this.state.editors;
+    editors[this.state.currentEditorId].isPlaying = false;
+    this.setState({
+      editors: editors
+    });
+  }
+  playCode() {
+    let editors = this.state.editors;
+    editors[this.state.currentEditorId].isPlaying = true;
+    this.setState({
+      editors: editors
+    });
+  }
+  receiveMessage(event) {
+    this.updateOutput(event.data.arguments.join());
+  }
+  updateOutput(consoleOutputText) {
+    let editors = this.state.editors;
+    const tempOutput = editors[this.state.currentEditorId].consoleOutputText.slice()
+    tempOutput.push(consoleOutputText);
+    editors[this.state.currentEditorId].consoleOutputText = tempOutput;
+    this.setState({
+      editors: editors
+    });
+  }
+  setEditorMode(event) {
+    let editors = this.state.editors;
+    let editorMode = editors[this.state.currentEditorId].editorMode;
+    let editorKeys = Object.keys(editorMode);
+    editorKeys.forEach(function(editorKey) {
+      editorMode[editorKey] = false;
+    });
+    editorMode[event.target.value] = true;
+    this.setState({
+      editors: editors
+    })
+  }
 
   render() {
-    const Editors = this.renderEditors();
+    const Editors = this.renderEditors();;
     const TextEditors = this.renderTextEditors();
     return (
       <div>
