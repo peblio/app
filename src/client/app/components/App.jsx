@@ -13,14 +13,6 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      // consoleOutputText: [],
-      // code: '',
-      // isPlaying: false,
-      // editorMode: {
-      //   p5: true,
-      //   javascript: false,
-      //   python: false
-      // },
       editors: {},
       currentEditorId: 'editor-0',
       currentTextEditorId: 'text-editor-0',
@@ -107,7 +99,6 @@ class App extends React.Component {
 
     return editors;
   }
-
   addTextEditor() {
     let textEditors = this.state.textEditors;
     let newTextEditorId = 'text-editor-' + this.state.noOfTextEditors;
@@ -239,6 +230,7 @@ class App extends React.Component {
   stopCode() {
     let editors = this.state.editors;
     editors[this.state.currentEditorId].isPlaying = false;
+    editors[this.state.currentEditorId].consoleOutputText = [];
     this.setState({
       editors: editors
     });

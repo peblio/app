@@ -79,32 +79,3 @@ class EditorContainer extends React.Component {
 }
 
 export default EditorContainer;
-
-//
-// <ConsoleOutput
-//   consoleOutputText = {this.props.consoleOutputText}
-// />
-// {(() => { // eslint-disable-line
-//   if (this.props.isPlaying) {
-//     if (this.props.editorMode.p5) {
-//       return (
-//         <P5Output
-//           editorCode = {this.props.code}
-//           updateCode = {this.props.updateCode}
-//           isPlaying = {this.props.isPlaying}
-//           receiveMessage = {this.props.receiveMessage}
-//         />
-//       );
-//     } else if (this.props.editorMode.javascript) {
-//       return (
-//         <JavascriptOutput
-//           editorCode = {this.props.code}
-//           updateCode = {this.props.updateCode}
-//           isPlaying = {this.props.isPlaying}
-//           receiveMessage = {this.props.receiveMessage}
-//           consoleOutputText = {this.props.consoleOutputText}
-//         />
-//       );
-//     }
-//   }
-// })()}
