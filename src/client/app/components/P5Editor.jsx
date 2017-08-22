@@ -26,7 +26,6 @@ class P5Editor extends React.Component {
       autoCloseBrackets: true,
       inputStyle: 'contenteditable',
       styleActiveLine: true,
-      theme:'3024-night'
     });
     this.cm.on('keyup', () => {
       this.props.updateCode(this.cm.getValue());

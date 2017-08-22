@@ -1,0 +1,16 @@
+.codeEditor__container {
+  width: 60%;
+  padding: 0 $small-padding;
+}
+.codeEditor__sub-container {
+  display: flex;
+  flex-direction: row;
+}
+.codeEditor__input {
+  width: 50%;
+  border-right: $thin-border-width solid $gray;
+}
+.codeEditor__output {
+  width: 50%;
+
+}

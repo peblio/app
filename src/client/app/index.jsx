@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import App from './components/App.jsx'
 
+require('./styles/sass/main.scss');
+
 class Main extends React.Component {
   render() {
     return (

@@ -4,9 +4,8 @@ const ReactDOM = require('react-dom');
 
 import EditorContainer from './EditorContainer.jsx';
 import TextEditor from './TextEditor.jsx';
-import TextToolbar from './TextToolbar.jsx';
-import MainToolbar from './MainToolbar.jsx';
 import ConsoleOutput from './ConsoleOutput.jsx';
+import MainToolbar from './MainToolbar.jsx';
 import {Editor, EditorState, RichUtils, Modifier} from 'draft-js';
 
 class App extends React.Component {
@@ -273,21 +272,19 @@ class App extends React.Component {
     return (
       <div>
         <nav>
-          <TextToolbar
-              _onBoldClick = {this._onBoldClick}
-              _onItalicClick = {this._onItalicClick}
-              _onUnderlineClick = {this._onUnderlineClick}
-              _onCodeClick = {this._onCodeClick}
-              _onFontChange = {this._onFontChange}
-              _onFontfaceChange = {this._onFontfaceChange}
-
-            />
-        </nav>
-        <section>
           <MainToolbar
+            _onBoldClick = {this._onBoldClick}
+            _onItalicClick = {this._onItalicClick}
+            _onUnderlineClick = {this._onUnderlineClick}
+            _onCodeClick = {this._onCodeClick}
+            _onFontChange = {this._onFontChange}
+            _onFontfaceChange = {this._onFontfaceChange}
             addEditor = {this.addEditor}
             addTextEditor = {this.addTextEditor}
           />
+        </nav>
+        <section>
+
           {Editors}
           {TextEditors}
         </section>
