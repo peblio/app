@@ -1,0 +1,10 @@
+.insertToolbar__container {
+  display: flex;
+  flex-direction: row;
+  color: $gray;
+  width: 100%;
+  padding: $small-padding 0;
+}
+.insertToolbar__button {
+  @extend %menu-item;
+}
