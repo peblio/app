@@ -1,3 +1,9 @@
+## To get started
+* Clone the repo
+* To build all the files, run `npm run dev` in source folder
+* To start the app, run `npm start` in root folder
+* App should be running in `localhost:8080`
+
 ## References
 
 * [react setup Reference](https://www.codementor.io/tamizhvendan/beginner-guide-setup-reactjs-environment-npm-babel-6-webpack-du107r9zr)
