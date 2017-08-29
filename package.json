@@ -7,7 +7,7 @@
     "start": "nodemon",
     "dev": "webpack -d --watch",
     "build": "webpack -p",
-    "postinstall": "webpack -d"
+    "postinstall": "webpack"
   },
   "author": "",
   "license": "ISC",
