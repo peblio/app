@@ -6,8 +6,7 @@
   "scripts": {
     "start": "nodemon",
     "dev": "webpack -d --watch",
-    "build": "webpack -p",
-    "postinstall": "webpack"
+    "postinstall": "webpack --config webpack.config.js"
   },
   "author": "",
   "license": "ISC",
