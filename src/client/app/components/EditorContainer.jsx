@@ -44,7 +44,7 @@ class EditorContainer extends React.Component {
                 }
               })()}
             </div>
-            <div classname="codeEditor__output">
+            <div className="codeEditor__output">
               {(() => { // eslint-disable-line
                 if (this.props.isPlaying) {
                   if (this.props.editorMode.p5) {
