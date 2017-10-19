@@ -48,6 +48,7 @@ class EditorContainer extends React.Component {
               {(() => { // eslint-disable-line
                 if (this.props.isPlaying) {
                   if (this.props.editorMode.p5) {
+                    console.log('playing p5 output');
                     return (
                       <P5Output
                         editorCode = {this.props.code}
@@ -71,11 +72,6 @@ class EditorContainer extends React.Component {
               })()}
             </div>
           </div>
-          <div className="codeEditor__console">
-            <ConsoleOutput
-              consoleOutputText = {this.props.consoleOutputText}
-            />
-          </div>
 
         </div>
       </div>
@@ -83,5 +79,14 @@ class EditorContainer extends React.Component {
   }
 
 }
+EditorContainer.PropTypes = {
+
+}
 
 export default EditorContainer;
+//
+// <div className="codeEditor__console">
+//   <ConsoleOutput
+//     consoleOutputText = {this.props.consoleOutputText}
+//   />
+// </div>

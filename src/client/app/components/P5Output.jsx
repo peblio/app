@@ -3,7 +3,6 @@ import CodeMirror from 'codemirror';
 
 class P5Output extends React.Component {
   componentDidMount() {
-    window.addEventListener('message', this.props.receiveMessage, false);
     const defaultCode = `<!DOCTYPE html>
     <html>
       <head>

@@ -8,6 +8,9 @@ require('../styles/codemirror.css');
 require('../styles/3024-night.css');
 
 class P5Editor extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   componentDidMount() {
     const defaultSketch = `function setup() {
       createCanvas(400, 400);

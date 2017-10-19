@@ -1,21 +1,43 @@
 import * as ActionTypes from '../constants.jsx';
 
 export function playCode(id) {
-  return {
-    type: ActionTypes.PLAY_CODE,
-    id
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.PLAY_CODE,
+    });
   };
 }
 
 export function stopCode(id) {
-  return {
-    type: ActionTypes.STOP_CODE,
-    id
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.STOP_CODE,
+    });
   };
 }
 
+export function updateCode(value) {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.UPDATE_CODE,
+      value
+    });
+  }
+}
+
 export function addEditor() {
-  return {
-    type: ActionTypes.ADD_EDITOR
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.ADD_EDITOR
+    });
+  };
+}
+
+export function setCurrentEditor(value) {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_CURRENT_EDITOR,
+      value
+    });
   };
 }

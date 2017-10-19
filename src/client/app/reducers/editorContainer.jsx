@@ -9,14 +9,23 @@ const initialState = {
 const editorContainer = (state = initialState, action) => {
   let editors = state.editors;
   switch (action.type) {
-    case ActionTypes.PLAY_CODE:
 
-      editors[action.id].isPlaying = true;
+    case ActionTypes.PLAY_CODE:
+      editors[state.currentEditorId].isPlaying = true;
       return Object.assign({}, state, { editors: editors });
+
     case ActionTypes.STOP_CODE:
-      editors[action.id].isPlaying = false;
-      editors[action.id].consoleOutputText = [];
+      editors[state.currentEditorId].isPlaying = false;
+      editors[state.currentEditorId].consoleOutputText = [];
       return Object.assign({}, state, { editors: editors });
+
+    case ActionTypes.UPDATE_CODE:
+      editors[state.currentEditorId].code = action.value;
+      return Object.assign({}, state, { editors: editors });
+
+    case ActionTypes.SET_CURRENT_EDITOR:
+      return Object.assign({}, state, { currentEditorId: action.value });
+
     case ActionTypes.ADD_EDITOR:
       let tempEditors = state.editors;
       let newEditorId = 'editor-' + state.noOfEditors;
@@ -24,7 +33,7 @@ const editorContainer = (state = initialState, action) => {
         id: newEditorId,
         consoleOutputText: [],
         code: '',
-        isPlaying: false,
+        isPlaying: true,
         editorMode: {
           p5: true,
           javascript: false,
@@ -32,12 +41,11 @@ const editorContainer = (state = initialState, action) => {
         },
       };
       editors[newEditorId]= newEditor;
-      console.log(editors);
-      console.log(state);
       return Object.assign({}, state, {
         editors: tempEditors,
         noOfEditors: state.noOfEditors + 1
       });
+
     default:
       return state;
   }
@@ -45,25 +53,4 @@ const editorContainer = (state = initialState, action) => {
 
 export default editorContainer;
 
-//
-// addEditor() {
-//   let editors = this.props.editors;
-//   let newEditorId = 'editor-' + this.state.noOfEditors;
-//   let newEditor = {
-//     id: newEditorId,
-//     consoleOutputText: [],
-//     code: '',
-//     isPlaying: false,
-//     editorMode: {
-//       p5: true,
-//       javascript: false,
-//       python: false
-//     },
-//   };
-//
-//   editors[newEditorId]= newEditor;
-//   this.setState({
-//     noOfEditors: this.state.noOfEditors+1,
-//     editors: editors
-//   })
-// }
+// playCode = {()=>this.props.playCode(id)}
