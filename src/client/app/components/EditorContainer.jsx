@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
-import P5Editor from './p5Editor.jsx'
+import P5Editor from './P5Editor.jsx'
 import JavascriptEditor from './JavascriptEditor.jsx'
-import P5Output from './p5Output.jsx'
+import P5Output from './P5Output.jsx'
 import JavascriptOutput from './JavascriptOutput.jsx'
 import EditorToolbar from './EditorToolbar.jsx';
 import ConsoleOutput from './ConsoleOutput.jsx';
