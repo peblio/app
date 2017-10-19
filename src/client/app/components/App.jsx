@@ -4,8 +4,15 @@ import { connect } from 'react-redux';
 import {playCode, stopCode, addEditor} from '../action/editorContainer.jsx';
 
 import EditorContainer from './EditorContainer.jsx';
+<<<<<<< HEAD
 import Test from './Test.jsx';
 import MainToolbar from './MainToolbar.jsx';
+=======
+import TextEditor from './TextEditor.jsx';
+import ConsoleOutput from './ConsoleOutput.jsx';
+import MainToolbar from './MainToolbar.jsx';
+import {Editor, EditorState, RichUtils, Modifier} from 'draft-js';
+>>>>>>> 9528e610b87f3dc7f34bdcc2dbef9841467c6254
 
 class App extends React.Component {
   constructor(props) {
@@ -36,10 +43,20 @@ class App extends React.Component {
     const Editors = this.renderEditors();
     return (
       <div>
-        <section>
+        <nav>
           <MainToolbar
-            addEditor = {this.props.addEditor}
+            _onBoldClick = {this._onBoldClick}
+            _onItalicClick = {this._onItalicClick}
+            _onUnderlineClick = {this._onUnderlineClick}
+            _onCodeClick = {this._onCodeClick}
+            _onFontChange = {this._onFontChange}
+            _onFontfaceChange = {this._onFontfaceChange}
+            addEditor = {this.addEditor}
+            addTextEditor = {this.addTextEditor}
           />
+        </nav>
+        <section>
+
           {Editors}
         </section>
       </div>

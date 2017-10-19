@@ -8,6 +8,8 @@ import App from './components/App.jsx';
 
 let store = createStore(rootReducer);
 
+require('./styles/sass/main.scss');
+
 class Main extends React.Component {
   render() {
     return (

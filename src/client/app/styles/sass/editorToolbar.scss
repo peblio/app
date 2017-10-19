@@ -1,0 +1,12 @@
+.editorToolbar__container {
+  display: flex;
+  flex-direction: row;
+  background-color: $light-gray;
+  width: 60%;
+  margin: 0 $small-padding;
+  padding: $small-padding 0;
+  border-radius: 2*$thin-border-width;
+}
+.editorToolbar__item {
+  @extend %menu-item;
+}

@@ -1,0 +1,13 @@
+.textToolbar__container {
+  display: flex;
+  flex-direction: row;
+  color: $gray;
+  width: 100%;
+  padding: $small-padding 0;
+}
+.textToolbar__button {
+  @extend %menu-item;
+}
+.textToolbar__select {
+  @extend %menu-item;
+}

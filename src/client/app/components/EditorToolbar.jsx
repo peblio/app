@@ -7,17 +7,28 @@ class EditorToolbar extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="editorToolbar__container">
         <button
+          className="editorToolbar__item"
           onClick = {this.props.playCode}
         >
           Play
         </button>
         <button
+          className="editorToolbar__item"
           onClick = {this.props.stopCode}
         >
           Stop
         </button>
+        <select
+          className="editorToolbar__item"
+          id="test"
+          onChange={this.props.setEditorMode}
+        >
+          <option value="p5">p5</option>
+          <option value="javascript">javascript</option>
+          <option value="python">python</option>
+        </select>
       </div>
     );
   }

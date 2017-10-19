@@ -1,5 +1,6 @@
 import React from 'react';
-import { render } from 'react-dom';
+import TextToolbar from './TextToolbar.jsx';
+import InsertToolbar from './InsertToolbar.jsx';
 
 class MainToolbar extends React.Component {
   constructor(props) {
@@ -8,20 +9,22 @@ class MainToolbar extends React.Component {
   render() {
     return (
       <div>
-        <button
-          onClick = {this.props.addEditor}
-        >
-          Editor
-        </button>
-        <button
-          onClick = {this.props.addTextEditor}
-        >
-          TextEditor
-        </button>
+        <TextToolbar
+            _onBoldClick = {this.props._onBoldClick}
+            _onItalicClick = {this.props._onItalicClick}
+            _onUnderlineClick = {this.props._onUnderlineClick}
+            _onCodeClick = {this.props._onCodeClick}
+            _onFontChange = {this.props._onFontChange}
+            _onFontfaceChange = {this.props._onFontfaceChange}
+
+          />
+        <InsertToolbar
+          addEditor = {this.props.addEditor}
+          addTextEditor = {this.props.addTextEditor}
+        />
       </div>
     );
   }
-
 }
 
 export default MainToolbar;
