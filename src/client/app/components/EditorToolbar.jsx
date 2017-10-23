@@ -23,7 +23,7 @@ class EditorToolbar extends React.Component {
         <select
           className="editorToolbar__item"
           id="test"
-          onChange={this.props.setEditorMode}
+          onChange={(event) => {this.props.setEditorMode(event.target.value)}}
         >
           <option value="p5">p5</option>
           <option value="javascript">javascript</option>

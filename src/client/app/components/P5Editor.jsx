@@ -14,9 +14,8 @@ class P5Editor extends React.Component {
   componentDidMount() {
     const defaultSketch = `function setup() {
       createCanvas(400, 400);
-      console.log("*******");
+      console.log("@");
     }
-
     function draw() {
       background(220);
     }`;

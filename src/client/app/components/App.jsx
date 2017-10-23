@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {playCode, stopCode, addEditor} from '../action/editorContainer.jsx';
 
 import EditorContainer from './EditorContainer.jsx';
 import Test from './Test.jsx';
@@ -33,8 +32,11 @@ class App extends React.Component {
         updateCode = {this.props.updateCode}
         isPlaying = {this.props.editors[id].isPlaying}
         editorMode = {this.props.editors[id].editorMode}
+        consoleOutputText = {this.props.editors[id].consoleOutputText}
         code = {this.props.editors[id].code}
         setCurrentEditor = {this.props.setCurrentEditor}
+        setEditorMode = {this.props.setEditorMode}
+        updateConsoleOutput = {this.props.updateConsoleOutput}
       />);
     });
     return editorsHTML;
@@ -57,7 +59,6 @@ class App extends React.Component {
           />
         </nav>
         <div>
-          {this.props.noOfEditors}
           {Editors}
         </div>
       </div>
@@ -66,21 +67,31 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  editors: PropTypes.object.isRequired,
+  editors: PropTypes.objectOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    consoleOutputText: PropTypes.arrayOf(PropTypes.string),
+    code: PropTypes.string.isRequired,
+    isPlaying: PropTypes.bool.isRequired,
+    editorMode: PropTypes.string.isRequired,
+  })),
   isPlaying: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
   addEditor: PropTypes.func.isRequired,
   noOfEditors: PropTypes.number.isRequired,
-  setCurrentEditor: PropTypes.func.isRequired
+  currentEditorId: PropTypes.string.isRequired,
+  setCurrentEditor: PropTypes.func.isRequired,
+  setEditorMode: PropTypes.func.isRequired,
+  updateConsoleOutput: PropTypes.func.isRequired,
 }
 
 function mapStateToProps(state) {
   return {
-    isPlaying: state.isPlaying,
-    editors: state.editors,
-    noOfEditors: state.noOfEditors
+    isPlaying: state.editorContainer.isPlaying,
+    editors: state.editorContainer.editors,
+    noOfEditors: state.editorContainer.noOfEditors,
+    currentEditorId: state.editorContainer.currentEditorId
   };
 }
 
