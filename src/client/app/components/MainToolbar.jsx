@@ -10,8 +10,6 @@ class MainToolbar extends React.Component {
     return (
       <div>
         <TextToolbar
-            _onFontChange = {this.props._onFontChange}
-            _onFontfaceChange = {this.props._onFontfaceChange}
             onChange = {this.props.onChange}
             currentTextEditorState = {this.props.currentTextEditorState}
 

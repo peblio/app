@@ -66,8 +66,6 @@ class App extends React.Component {
       <div>
         <nav>
           <MainToolbar
-            _onFontChange = {this._onFontChange}
-            _onFontfaceChange = {this._onFontfaceChange}
             addEditor = {this.props.addEditor}
             addTextEditor = {this.props.addTextEditor}
             currentTextEditorState = {this.props.currentTextEditorState}
@@ -124,6 +122,7 @@ function mapStateToProps(state) {
     noOfTextEditors: state.textEditors.noOfTextEditors,
     currentTextEditorId: state.textEditors.currentTextEditorId,
     currentTextEditorState: state.textEditors.currentTextEditorState,
+    styleMap: state.textEditors.styleMap,
   };
 }
 

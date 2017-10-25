@@ -6,6 +6,11 @@ const initialState = {
   currentTextEditorId: 'text-editor-0',
   currentTextEditorState: null,
   noOfTextEditors: 0,
+  styleMap: {
+    FONT: {
+      fontSize: '54pt',
+    },
+  }
 }
 
 const textEditors = (state = initialState, action) => {
@@ -44,7 +49,6 @@ const textEditors = (state = initialState, action) => {
           textEditors: textEditors
         });
       }
-
 
     default:
       return state;
