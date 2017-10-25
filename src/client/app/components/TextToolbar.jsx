@@ -1,4 +1,5 @@
 import React from 'react';
+import {RichUtils} from 'draft-js';
 
 class TextToolbar extends React.Component {
   constructor(props) {
@@ -8,22 +9,22 @@ class TextToolbar extends React.Component {
     return (
       <div className="textToolbar__container">
         <button className="textToolbar__button"
-          onClick={this.props._onBoldClick}
+          onClick={() => {this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'BOLD'))}}
         >
           Bold
         </button>
         <button className="textToolbar__button"
-          onClick={this.props._onUnderlineClick}
+          onClick={() => {this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'UNDERLINE'))}}
         >
           Underline
         </button>
         <button className="textToolbar__button"
-          onClick={this.props._onItalicClick}
+          onClick={() => {this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'ITALIC'))}}
         >
           Italics
         </button>
         <button className="textToolbar__button"
-          onClick={this.props._onCodeClick}
+          onClick={() => {this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'STRIKETHROUGH'))}}
         >
           Strike
         </button>

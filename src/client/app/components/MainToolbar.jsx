@@ -10,12 +10,10 @@ class MainToolbar extends React.Component {
     return (
       <div>
         <TextToolbar
-            _onBoldClick = {this.props._onBoldClick}
-            _onItalicClick = {this.props._onItalicClick}
-            _onUnderlineClick = {this.props._onUnderlineClick}
-            _onCodeClick = {this.props._onCodeClick}
             _onFontChange = {this.props._onFontChange}
             _onFontfaceChange = {this.props._onFontfaceChange}
+            onChange = {this.props.onChange}
+            currentTextEditorState = {this.props.currentTextEditorState}
 
           />
         <InsertToolbar

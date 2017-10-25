@@ -29,13 +29,22 @@ const textEditors = (state = initialState, action) => {
 
     case ActionTypes.UPDATE_TEXT_CHANGE:
       // debugger;
-      let tempId = document.activeElement.parentElement.parentElement.parentElement.id;
-      textEditors[tempId].editorState = action.state;
-      return Object.assign({}, state, {
-        currentTextEditorState: action.state,
-        textEditors: textEditors,
-        currentTextEditorId: tempId
-      });
+      if (document.activeElement.parentElement.parentElement.classList.value.localeCompare('DraftEditor-root')==0) {
+        let tempId = document.activeElement.parentElement.parentElement.parentElement.id;
+        textEditors[tempId].editorState = action.state;
+        return Object.assign({}, state, {
+          currentTextEditorState: action.state,
+          textEditors: textEditors,
+          currentTextEditorId: tempId
+        });
+      } else {
+        textEditors[state.currentTextEditorId].editorState = action.state;
+        return Object.assign({}, state, {
+          currentTextEditorState: action.state,
+          textEditors: textEditors
+        });
+      }
+
 
     default:
       return state;

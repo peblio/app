@@ -66,14 +66,12 @@ class App extends React.Component {
       <div>
         <nav>
           <MainToolbar
-            _onBoldClick = {this._onBoldClick}
-            _onItalicClick = {this._onItalicClick}
-            _onUnderlineClick = {this._onUnderlineClick}
-            _onCodeClick = {this._onCodeClick}
             _onFontChange = {this._onFontChange}
             _onFontfaceChange = {this._onFontfaceChange}
             addEditor = {this.props.addEditor}
             addTextEditor = {this.props.addTextEditor}
+            currentTextEditorState = {this.props.currentTextEditorState}
+            onChange={this.props.updateTextChange}
           />
         </nav>
         <div>
