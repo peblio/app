@@ -9,9 +9,6 @@ class ConsoleOutput extends React.Component {
   }
 
   render() {
-    const iframeStyle = {
-      display: 'none'
-    };
     return (
       <div>
         <h2> Console </h2>

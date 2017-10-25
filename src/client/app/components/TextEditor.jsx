@@ -5,24 +5,16 @@ import {Editor, EditorState, RichUtils, Modifier} from 'draft-js';
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.onFocus = this.onFocus.bind(this);
   }
-  onFocus() {
-    // debugger;
-    console.log('calling onFocus');
-    this.props.setCurrentTextEditor(this.props.editorState, this.props.editorId);
-  }
-
 
   render() {
     return (
-      <div onFocus={ this.onFocus }>
+      <div id={this.props.id}>
         <Editor
-          customStyleMap={this.props.styleMap}
+          id={this.props.id}
           editorState={this.props.editorState}
           onChange={this.props.onChange}
           placeholder="Enter some text..."
-          handleKeyCommand={this.props.handleKeyCommand}
         />
       </div>
     );
