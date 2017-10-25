@@ -24,7 +24,6 @@ Test.propTypes = {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     isVisible: state.isVisible
   };

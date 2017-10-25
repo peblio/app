@@ -10,7 +10,8 @@ import ConsoleOutput from './ConsoleOutput.jsx';
 import MainToolbar from './MainToolbar.jsx';
 import {Editor, EditorState, RichUtils, Modifier} from 'draft-js';
 
-import * as editorActions from '../action/editorContainer.jsx'
+import * as editorActions from '../action/editorContainer.jsx';
+import * as textEditorActions from '../action/textEditors.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -42,8 +43,25 @@ class App extends React.Component {
     return editorsHTML;
   }
 
+  renderTextEditors() {
+    let textEditors = [];
+    let ids = Object.keys(this.props.textEditors);
+    ids.forEach((id) => {
+      textEditors.push(<TextEditor
+        key={id}
+        editorState={this.props.textEditors[id].editorState}
+        onChange={this.props.updateTextChange}
+        ref={this.props.textEditors[id].id}
+        id={this.props.textEditors[id].id}
+      />);
+    });
+
+    return textEditors;
+  }
+
   render() {
     const Editors = this.renderEditors();
+    const TextEditors = this.renderTextEditors();
     return (
       <div>
         <nav>
@@ -55,11 +73,14 @@ class App extends React.Component {
             _onFontChange = {this._onFontChange}
             _onFontfaceChange = {this._onFontfaceChange}
             addEditor = {this.props.addEditor}
-            addTextEditor = {this.addTextEditor}
+            addTextEditor = {this.props.addTextEditor}
           />
         </nav>
         <div>
           {Editors}
+        </div>
+        <div>
+          {TextEditors}
         </div>
       </div>
     );
@@ -74,16 +95,25 @@ App.propTypes = {
     isPlaying: PropTypes.bool.isRequired,
     editorMode: PropTypes.string.isRequired,
   })),
+  textEditors: PropTypes.objectOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    editorState: PropTypes.object
+  })),
   isPlaying: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
   addEditor: PropTypes.func.isRequired,
+  addTextEditor: PropTypes.func.isRequired,
   noOfEditors: PropTypes.number.isRequired,
+  noOfTextEditors: PropTypes.number.isRequired,
   currentEditorId: PropTypes.string.isRequired,
+  currentTextEditorId: PropTypes.string.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
+  updateTextChange: PropTypes.func.isRequired,
+  currentTextEditorState: PropTypes.object
 }
 
 function mapStateToProps(state) {
@@ -91,13 +121,18 @@ function mapStateToProps(state) {
     isPlaying: state.editorContainer.isPlaying,
     editors: state.editorContainer.editors,
     noOfEditors: state.editorContainer.noOfEditors,
-    currentEditorId: state.editorContainer.currentEditorId
+    currentEditorId: state.editorContainer.currentEditorId,
+    textEditors: state.textEditors.textEditors,
+    noOfTextEditors: state.textEditors.noOfTextEditors,
+    currentTextEditorId: state.textEditors.currentTextEditorId,
+    currentTextEditorState: state.textEditors.currentTextEditorState,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
-    editorActions),
+    editorActions,
+    textEditorActions),
   dispatch);
 }
 export default (connect(mapStateToProps, mapDispatchToProps)(App));

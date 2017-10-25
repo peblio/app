@@ -27,7 +27,6 @@ const editorContainer = (state = initialState, action) => {
       return Object.assign({}, state, { currentEditorId: action.value });
 
     case ActionTypes.SET_EDITOR_MODE:
-      console.log(action.value);
       editors[state.currentEditorId].editorMode = action.value;
       return Object.assign({}, state, { editors: editors });
 

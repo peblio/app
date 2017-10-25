@@ -1,48 +1,56 @@
 import * as ActionTypes from '../constants.jsx';
+import {EditorState} from 'draft-js';
+
 const initialState = {
   textEditors: {},
-  currentTextEditorId: 'editor-0',
+  currentTextEditorId: 'text-editor-0',
+  currentTextEditorState: null,
   noOfTextEditors: 0,
 }
 
 const textEditors = (state = initialState, action) => {
-  let textEditors = JSON.parse(JSON.stringify(state.textEditors));
+  let textEditors = copyTextEditors(state.textEditors);
+  let tempTest = EditorState.createEmpty();
 
   switch (action.type) {
+
     case ActionTypes.ADD_TEXT_EDITOR:
-      let newEditorId = 'text-editor-' + state.noOfEditors;
-      let newEditor = {
-        id: newEditorId,
-        consoleOutputText: [],
-        code: '',
-        isPlaying: false,
-        editorMode: 'p5'
+      let newTextEditorId = 'text-editor-' + state.noOfTextEditors;
+      let newTextEditorState = EditorState.createEmpty();
+      let newTextEditor = {
+        id: newTextEditorId,
+        editorState: newTextEditorState
       };
-      editors[newEditorId]= newEditor;
+      textEditors[newTextEditorId]= newTextEditor;
       return Object.assign({}, state, {
-        editors: editors,
-        noOfEditors: state.noOfEditors + 1
+        textEditors: textEditors,
+        noOfTextEditors: state.noOfTextEditors + 1
       });
+
+    case ActionTypes.UPDATE_TEXT_CHANGE:
+      // debugger;
+      let tempId = document.activeElement.parentElement.parentElement.parentElement.id;
+      textEditors[tempId].editorState = action.state;
+      return Object.assign({}, state, {
+        currentTextEditorState: action.state,
+        textEditors: textEditors,
+        currentTextEditorId: tempId
+      });
+
     default:
       return state;
   }
 };
 
-export default editorContainer;
+function copyTextEditors(textEditors) {
+  let newTextEditors = {};
+  let ids = Object.keys(textEditors);
+  ids.forEach((id) => {
+    newTextEditors[id] = {};
+    newTextEditors[id].id = textEditors[id].id;
+    newTextEditors[id].editorState = textEditors[id].editorState;
+  });
+  return newTextEditors;
+}
 
-
-addTextEditor() {
-    let textEditors = this.state.textEditors;
-    let newTextEditorId = 'text-editor-' + this.state.noOfTextEditors;
-    let newTextEditor = {
-      id: newTextEditorId,
-      editorState: EditorState.createEmpty(),
-    };
-
-    textEditors[newTextEditorId]= newTextEditor;
-
-    this.setState({
-      noOfTextEditors: this.state.noOfTextEditors+1,
-      textEditors: textEditors
-    });
-  }
+export default textEditors;
