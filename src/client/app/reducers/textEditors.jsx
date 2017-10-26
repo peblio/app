@@ -29,7 +29,7 @@ const textEditors = (state = initialState, action) => {
       textEditors[newTextEditorId]= newTextEditor;
       return Object.assign({}, state, {
         textEditors: textEditors,
-        noOfTextEditors: state.noOfTextEditors + 1
+        noOfTextEditors: state.noOfTextEditors + 1,
       });
 
     case ActionTypes.UPDATE_TEXT_CHANGE:
@@ -54,6 +54,12 @@ const textEditors = (state = initialState, action) => {
       return Object.assign({}, state, {
         currentTextEditorId: action.id,
         currentTextEditorState: action.state,
+      });
+
+    case ActionTypes.REMOVE_TEXT_EDITOR:
+      delete textEditors[action.id];
+      return Object.assign({}, state, {
+        textEditors: textEditors
       });
 
     default:

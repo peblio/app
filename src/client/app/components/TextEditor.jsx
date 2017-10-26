@@ -16,7 +16,10 @@ class TextEditor extends React.Component {
 
   render() {
     return (
-      <div id={this.props.id} onFocus={this.onFocus}>
+      <div id={this.props.id} onFocus={this.onFocus} className = "textEditor__container">
+        <nav>
+          <button onClick={() => this.props.removeTextEditor(this.props.id)}>&#x2613;</button>
+        </nav>
         {(() => {
           if(this.props.id ==  this.props.currentTextEditorId){
             return(

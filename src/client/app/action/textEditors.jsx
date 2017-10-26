@@ -26,3 +26,12 @@ export function setCurrentTextEditor(id, state) {
     });
   };
 }
+
+export function removeTextEditor(id) {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.REMOVE_TEXT_EDITOR,
+      id
+    });
+  };
+}

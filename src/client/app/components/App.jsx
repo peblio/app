@@ -55,6 +55,8 @@ class App extends React.Component {
         id={this.props.textEditors[id].id}
         currentTextEditorState={this.props.currentTextEditorState}
         currentTextEditorId={this.props.currentTextEditorId}
+        setCurrentTextEditor={this.props.setCurrentTextEditor}
+        removeTextEditor={this.props.removeTextEditor}
       />);
     });
 
@@ -105,14 +107,13 @@ App.propTypes = {
   addTextEditor: PropTypes.func.isRequired,
   noOfEditors: PropTypes.number.isRequired,
   noOfTextEditors: PropTypes.number.isRequired,
-  currentEditorId: PropTypes.string.isRequired,
-  currentTextEditorId: PropTypes.string.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired,
   currentTextEditorState: PropTypes.object,
-  setCurrentTextEditor: PropTypes.func.isRequired
+  setCurrentTextEditor: PropTypes.func.isRequired,
+  removeTextEditor: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -125,6 +126,7 @@ function mapStateToProps(state) {
     noOfTextEditors: state.textEditors.noOfTextEditors,
     currentTextEditorId: state.textEditors.currentTextEditorId,
     currentTextEditorState: state.textEditors.currentTextEditorState,
+    textEditorIndex: state.textEditors.textEditorIndex,
     styleMap: state.textEditors.styleMap,
   };
 }
