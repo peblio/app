@@ -16,3 +16,13 @@ export function updateTextChange(state) {
     });
   };
 }
+
+export function setCurrentTextEditor(id, state) {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_CURRENT_TEXT_EDITOR,
+      id,
+      state
+    });
+  };
+}

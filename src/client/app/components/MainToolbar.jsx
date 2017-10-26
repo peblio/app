@@ -9,11 +9,6 @@ class MainToolbar extends React.Component {
   render() {
     return (
       <div>
-        <TextToolbar
-            onChange = {this.props.onChange}
-            currentTextEditorState = {this.props.currentTextEditorState}
-
-          />
         <InsertToolbar
           addEditor = {this.props.addEditor}
           addTextEditor = {this.props.addTextEditor}
