@@ -61,3 +61,12 @@ export function updateConsoleOutput(event) {
     });
   };
 }
+
+export function removeEditor(id) {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.REMOVE_EDITOR,
+      id
+    });
+  };
+}

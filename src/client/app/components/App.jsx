@@ -38,6 +38,7 @@ class App extends React.Component {
         setCurrentEditor = {this.props.setCurrentEditor}
         setEditorMode = {this.props.setEditorMode}
         updateConsoleOutput = {this.props.updateConsoleOutput}
+        removeEditor = {this.props.removeEditor}
       />);
     });
     return editorsHTML;
@@ -113,7 +114,8 @@ App.propTypes = {
   updateTextChange: PropTypes.func.isRequired,
   currentTextEditorState: PropTypes.object,
   setCurrentTextEditor: PropTypes.func.isRequired,
-  removeTextEditor: PropTypes.func.isRequired
+  removeTextEditor: PropTypes.func.isRequired,
+  removeEditor: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {

@@ -18,6 +18,9 @@ class EditorContainer extends React.Component {
   render() {
     return (
       <div onFocus={ this.onFocus }>
+        <nav>
+          <button onClick={() => this.props.removeEditor(this.props.editorId)}>&#x2613;</button>
+        </nav>
         <EditorToolbar
           playCode = {() => {this.props.playCode(this.props.editorId)}}
           stopCode = {() => {this.props.stopCode(this.props.editorId)}}
