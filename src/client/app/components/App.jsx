@@ -53,6 +53,8 @@ class App extends React.Component {
         onChange={this.props.updateTextChange}
         ref={this.props.textEditors[id].id}
         id={this.props.textEditors[id].id}
+        currentTextEditorState={this.props.currentTextEditorState}
+        currentTextEditorId={this.props.currentTextEditorId}
       />);
     });
 
@@ -109,7 +111,8 @@ App.propTypes = {
   setEditorMode: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired,
-  currentTextEditorState: PropTypes.object
+  currentTextEditorState: PropTypes.object,
+  setCurrentTextEditor: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {

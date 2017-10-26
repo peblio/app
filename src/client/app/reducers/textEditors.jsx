@@ -50,6 +50,12 @@ const textEditors = (state = initialState, action) => {
         });
       }
 
+    case ActionTypes.SET_CURRENT_TEXT_EDITOR:
+      return Object.assign({}, state, {
+        currentTextEditorId: action.id,
+        currentTextEditorState: action.state,
+      });
+
     default:
       return state;
   }
