@@ -3,7 +3,7 @@ const initialState = {
   isPlaying: false,
   editors: {},
   currentEditorId: 'editor-0',
-  noOfEditors: 0,
+  indexEditor: 0,
 }
 
 const editorContainer = (state = initialState, action) => {
@@ -31,7 +31,7 @@ const editorContainer = (state = initialState, action) => {
       return Object.assign({}, state, { editors: editors });
 
     case ActionTypes.ADD_EDITOR:
-      let newEditorId = 'editor-' + state.noOfEditors;
+      let newEditorId = 'editor-' + state.indexEditor;
       let newEditor = {
         id: newEditorId,
         consoleOutputText: [],
@@ -42,7 +42,7 @@ const editorContainer = (state = initialState, action) => {
       editors[newEditorId]= newEditor;
       return Object.assign({}, state, {
         editors: editors,
-        noOfEditors: state.noOfEditors + 1,
+        indexEditor: state.indexEditor + 1,
         currentEditorId: newEditorId
       });
 
