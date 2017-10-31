@@ -5,7 +5,7 @@ const initialState = {
   textEditors: {},
   currentTextEditorId: 'text-editor-0',
   currentTextEditorState: null,
-  noOfTextEditors: 0,
+  indexTextEditor: 0,
   styleMap: {
     FONT: {
       fontSize: '54pt',
@@ -20,7 +20,7 @@ const textEditors = (state = initialState, action) => {
   switch (action.type) {
 
     case ActionTypes.ADD_TEXT_EDITOR:
-      let newTextEditorId = 'text-editor-' + state.noOfTextEditors;
+      let newTextEditorId = 'text-editor-' + state.indexTextEditor;
       let newTextEditorState = EditorState.createEmpty();
       let newTextEditor = {
         id: newTextEditorId,
@@ -29,7 +29,7 @@ const textEditors = (state = initialState, action) => {
       textEditors[newTextEditorId]= newTextEditor;
       return Object.assign({}, state, {
         textEditors: textEditors,
-        noOfTextEditors: state.noOfTextEditors + 1,
+        indexTextEditor: state.indexTextEditor + 1,
       });
 
     case ActionTypes.UPDATE_TEXT_CHANGE:

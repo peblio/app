@@ -38,6 +38,7 @@ class App extends React.Component {
         setCurrentEditor = {this.props.setCurrentEditor}
         setEditorMode = {this.props.setEditorMode}
         updateConsoleOutput = {this.props.updateConsoleOutput}
+        removeEditor = {this.props.removeEditor}
       />);
     });
     return editorsHTML;
@@ -105,25 +106,26 @@ App.propTypes = {
   updateCode: PropTypes.func.isRequired,
   addEditor: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
-  noOfEditors: PropTypes.number.isRequired,
-  noOfTextEditors: PropTypes.number.isRequired,
+  indexEditor: PropTypes.number.isRequired,
+  indexTextEditor: PropTypes.number.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired,
   currentTextEditorState: PropTypes.object,
   setCurrentTextEditor: PropTypes.func.isRequired,
-  removeTextEditor: PropTypes.func.isRequired
+  removeTextEditor: PropTypes.func.isRequired,
+  removeEditor: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
   return {
     isPlaying: state.editorContainer.isPlaying,
     editors: state.editorContainer.editors,
-    noOfEditors: state.editorContainer.noOfEditors,
+    indexEditor: state.editorContainer.indexEditor,
     currentEditorId: state.editorContainer.currentEditorId,
     textEditors: state.textEditors.textEditors,
-    noOfTextEditors: state.textEditors.noOfTextEditors,
+    indexTextEditor: state.textEditors.indexTextEditor,
     currentTextEditorId: state.textEditors.currentTextEditorId,
     currentTextEditorState: state.textEditors.currentTextEditorState,
     textEditorIndex: state.textEditors.textEditorIndex,
