@@ -12,6 +12,7 @@ import {Editor, EditorState, RichUtils, Modifier} from 'draft-js';
 
 import * as editorActions from '../action/editorContainer.jsx';
 import * as textEditorActions from '../action/textEditors.jsx';
+import * as mainToolbarActions from '../action/mainToolbar.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -71,6 +72,7 @@ class App extends React.Component {
       <div>
         <nav>
           <MainToolbar
+            setPageTitle={this.props.setPageTitle}
             addEditor = {this.props.addEditor}
             addTextEditor = {this.props.addTextEditor}
             currentTextEditorState = {this.props.currentTextEditorState}
@@ -89,6 +91,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+  pageTitle: PropTypes.string.isRequired,
   editors: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     consoleOutputText: PropTypes.arrayOf(PropTypes.string),
@@ -114,6 +117,7 @@ App.propTypes = {
   updateTextChange: PropTypes.func.isRequired,
   currentTextEditorState: PropTypes.object,
   setCurrentTextEditor: PropTypes.func.isRequired,
+  setPageTitle: PropTypes.func.isRequired,
   removeTextEditor: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired
 }
@@ -130,13 +134,15 @@ function mapStateToProps(state) {
     currentTextEditorState: state.textEditors.currentTextEditorState,
     textEditorIndex: state.textEditors.textEditorIndex,
     styleMap: state.textEditors.styleMap,
+    pageTitle: state.mainToolbar.pageTitle,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
     editorActions,
-    textEditorActions),
+    textEditorActions,
+    mainToolbarActions),
   dispatch);
 }
 export default (connect(mapStateToProps, mapDispatchToProps)(App));
