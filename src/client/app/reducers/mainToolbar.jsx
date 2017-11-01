@@ -9,6 +9,9 @@ const mainToolbar = (state = initialState, action) => {
     case ActionTypes.SET_PAGE_TITLE:
       return Object.assign({}, state, { pageTitle: action.event.target.value });
 
+    case ActionTypes.SET_DB_PAGE_TITLE:
+      return Object.assign({}, state, { pageTitle: action.value });
+
     default:
       return state;
   }

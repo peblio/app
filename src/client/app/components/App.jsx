@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import EditorContainer from './EditorContainer.jsx';
-import Test from './Test.jsx';
 import TextEditor from './TextEditor.jsx';
 import ConsoleOutput from './ConsoleOutput.jsx';
 import MainToolbar from './MainToolbar.jsx';
@@ -14,11 +13,26 @@ import * as editorActions from '../action/editorContainer.jsx';
 import * as textEditorActions from '../action/textEditors.jsx';
 import * as mainToolbarActions from '../action/mainToolbar.jsx';
 
+const axios = require('axios');
+const Regex = require("regex");
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.renderEditors = this.renderEditors.bind(this);
   }
+  componentDidMount() {
+    let location = this.props.location.pathname;
+    let projectID = location.match(/\/pages\/([\w-].*)/)[1];
+    if(projectID){
+      axios.get('/sketch/'+projectID)
+         .then(res => {
+         console.log(res);
+         this.props.setDBPageTitle(res.data[0].title);
+         })
+    }
+  }
+
   componentDidUpdate() {
   }
 
@@ -77,6 +91,8 @@ class App extends React.Component {
             addTextEditor = {this.props.addTextEditor}
             currentTextEditorState = {this.props.currentTextEditorState}
             onChange={this.props.updateTextChange}
+            submitPage={this.props.submitPage}
+            pageTitle={this.props.pageTitle}
           />
         </nav>
         <div>
@@ -119,7 +135,10 @@ App.propTypes = {
   setCurrentTextEditor: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   removeTextEditor: PropTypes.func.isRequired,
-  removeEditor: PropTypes.func.isRequired
+  removeEditor: PropTypes.func.isRequired,
+  submitPage: PropTypes.func.isRequired,
+
+  setDBPageTitle: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
