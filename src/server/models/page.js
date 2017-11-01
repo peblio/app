@@ -3,7 +3,9 @@ const Schema = mongoose.Schema;
 
 const pageSchema = new Schema({
   id: {type: String, default:''},
-  title: { type: String, default: '' }
+  title: { type: String, default: '' },
+  editors: { type: Object, default:  {}},
+  indexEditor: { type: Number, default: 0},
 });
 
 module.exports = mongoose.model('page', pageSchema);

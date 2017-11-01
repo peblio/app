@@ -20,10 +20,12 @@ export function setDBPageTitle(value) {
   };
 }
 
-export function submitPage(value) {
+export function submitPage(title,editors,indexEditor) {
   axios.post('/save', {
       id: shortid.generate(),
-      title: value,
+      title: title,
+      editors: editors,
+      indexEditor: indexEditor
     })
       .then(function(response) { // eslint-disable-line
         console.log(response);
@@ -34,7 +36,9 @@ export function submitPage(value) {
   return(dispatch) => {
     dispatch({
       type: ActionTypes.SUBMIT_PAGE,
-      value
+      title,
+      editors,
+      indexEditor
     });
   };
 }

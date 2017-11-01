@@ -23,12 +23,13 @@ class App extends React.Component {
   }
   componentDidMount() {
     let location = this.props.location.pathname;
-    let projectID = location.match(/\/pages\/([\w-].*)/)[1];
+    let projectID = location.match(/\/pages\/([\w-].*)/);
     if(projectID){
-      axios.get('/sketch/'+projectID)
+      axios.get('/sketch/'+projectID[1])
          .then(res => {
          console.log(res);
          this.props.setDBPageTitle(res.data[0].title);
+         this.props.setDBEditors(res.data[0].indexEditor,res.data[0].editors)
          })
     }
   }
@@ -93,6 +94,8 @@ class App extends React.Component {
             onChange={this.props.updateTextChange}
             submitPage={this.props.submitPage}
             pageTitle={this.props.pageTitle}
+            editors={this.props.editors}
+            indexEditor={this.props.indexEditor}
           />
         </nav>
         <div>

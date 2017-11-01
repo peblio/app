@@ -70,3 +70,13 @@ export function removeEditor(id) {
     });
   };
 }
+
+export function setDBEditors(indexEditor, editors) {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_DB_EDITORS,
+      indexEditor,
+      editors
+    });
+  };
+}

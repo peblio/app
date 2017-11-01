@@ -6,6 +6,14 @@ const initialState = {
   indexEditor: 0,
 }
 
+const defaultSketch = `function setup() {
+  createCanvas(400, 400);
+  console.log("@");
+}
+function draw() {
+  background(220);
+}`;
+
 const editorContainer = (state = initialState, action) => {
   let editors = JSON.parse(JSON.stringify(state.editors));
   switch (action.type) {
@@ -35,7 +43,7 @@ const editorContainer = (state = initialState, action) => {
       let newEditor = {
         id: newEditorId,
         consoleOutputText: [],
-        code: '',
+        code: defaultSketch,
         isPlaying: false,
         editorMode: 'p5'
       };
@@ -56,6 +64,12 @@ const editorContainer = (state = initialState, action) => {
     delete editors[action.id];
     return Object.assign({}, state, {
       editors: editors
+    });
+
+    case ActionTypes.SET_DB_EDITORS:
+    return Object.assign({}, state, {
+      editors: action.editors ,
+      indexEditor: action.indexEditor
     });
 
     default:
