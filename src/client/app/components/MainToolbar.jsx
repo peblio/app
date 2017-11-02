@@ -11,7 +11,13 @@ class MainToolbar extends React.Component {
       <div>
         <input type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}></input>
         <button onClick={() => {
-            this.props.submitPage(this.props.pageTitle, this.props.editors, this.props.indexEditor);
+            this.props.submitPage(
+              this.props.pageTitle,
+              this.props.editors,
+              this.props.indexEditor,
+              this.props.textEditors,
+              this.props.indexTextEditor
+            );
           }}>SUBMIT</button>
         <InsertToolbar
           addEditor = {this.props.addEditor}

@@ -29,7 +29,9 @@ class App extends React.Component {
          .then(res => {
          console.log(res);
          this.props.setDBPageTitle(res.data[0].title);
-         this.props.setDBEditors(res.data[0].indexEditor,res.data[0].editors)
+         this.props.setDBEditors(res.data[0].indexEditor,res.data[0].editors);
+         this.props.setDBTextEditors(res.data[0].indexTextEditor,res.data[0].textEditors);
+         
          })
     }
   }
@@ -96,6 +98,8 @@ class App extends React.Component {
             pageTitle={this.props.pageTitle}
             editors={this.props.editors}
             indexEditor={this.props.indexEditor}
+            textEditors={this.props.textEditors}
+            indexTextEditor={this.props.indexTextEditor}
           />
         </nav>
         <div>

@@ -35,3 +35,14 @@ export function removeTextEditor(id) {
     });
   };
 }
+
+export function setDBTextEditors(indexTextEditor, textEditors) {
+  console.log(textEditors);
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_DB_TEXT_EDITORS,
+      indexTextEditor,
+      textEditors
+    });
+  };
+}

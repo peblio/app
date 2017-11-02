@@ -6,6 +6,8 @@ const pageSchema = new Schema({
   title: { type: String, default: '' },
   editors: { type: Object, default:  {}},
   indexEditor: { type: Number, default: 0},
+  textEditors: { type: Object, default:  {}},
+  indexTextEditor: { type: Number, default: 0},
 });
 
 module.exports = mongoose.model('page', pageSchema);

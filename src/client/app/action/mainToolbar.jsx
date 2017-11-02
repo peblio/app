@@ -1,6 +1,8 @@
 import * as ActionTypes from '../constants.jsx';
 import axios from 'axios';
 import shortid from 'shortid';
+import { convertFromRaw, convertToRaw } from 'draft-js';
+
 
 export function setPageTitle(event) {
   return(dispatch) => {
@@ -20,12 +22,15 @@ export function setDBPageTitle(value) {
   };
 }
 
-export function submitPage(title,editors,indexEditor) {
+export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor) {
+  let textEditorsRaw = convertEditorState(textEditors);
   axios.post('/save', {
       id: shortid.generate(),
       title: title,
       editors: editors,
-      indexEditor: indexEditor
+      indexEditor: indexEditor,
+      textEditors: textEditorsRaw,
+      indexTextEditor: indexTextEditor
     })
       .then(function(response) { // eslint-disable-line
         console.log(response);
@@ -41,4 +46,15 @@ export function submitPage(title,editors,indexEditor) {
       indexEditor
     });
   };
+}
+
+function convertEditorState(textEditors) {
+  let newTextEditors = {};
+  let ids = Object.keys(textEditors);
+  ids.forEach((id) => {
+    newTextEditors[id] = {};
+    newTextEditors[id].id = textEditors[id].id;
+    newTextEditors[id].rawContentState = JSON.stringify(convertToRaw(textEditors[id].editorState.getCurrentContent()));
+  });
+  return newTextEditors;
 }

@@ -1,5 +1,7 @@
 import * as ActionTypes from '../constants.jsx';
 import {EditorState} from 'draft-js';
+import { convertFromRaw, convertToRaw } from 'draft-js';
+
 
 const initialState = {
   textEditors: {},
@@ -62,10 +64,28 @@ const textEditors = (state = initialState, action) => {
         textEditors: textEditors
       });
 
+    case ActionTypes.SET_DB_TEXT_EDITORS:
+      let convertedTextEditors = convertContentState(action.textEditors);
+      return Object.assign({}, state, {
+        textEditors: convertedTextEditors,
+        indexTextEditor: action.indexTextEditor
+      });
+
     default:
       return state;
   }
 };
+
+function convertContentState(textEditorsRaw) {
+  let newTextEditors = {};
+  let ids = Object.keys(textEditorsRaw);
+  ids.forEach((id) => {
+    newTextEditors[id] = {};
+    newTextEditors[id].id = textEditorsRaw[id].id;
+    newTextEditors[id].editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(textEditorsRaw[id].rawContentState)))
+  });
+  return newTextEditors;
+}
 
 function copyTextEditors(textEditors) {
   let newTextEditors = {};
