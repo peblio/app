@@ -79,12 +79,14 @@ class App extends React.Component {
             onChange={this.props.updateTextChange}
           />
         </nav>
-        <div>
-          {Editors}
-        </div>
-        <div>
-          {TextEditors}
-        </div>
+        <section className="canvas">
+          <div>
+            {Editors}
+          </div>
+          <div>
+            {TextEditors}
+          </div>
+        </section>
       </div>
     );
   }
