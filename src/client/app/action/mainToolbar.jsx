@@ -13,19 +13,21 @@ export function setPageTitle(event) {
   };
 }
 
-export function setDBPageTitle(value) {
+export function setDBPage(id, title) {
   return(dispatch) => {
     dispatch({
-      type: ActionTypes.SET_DB_PAGE_TITLE,
-      value
+      type: ActionTypes.SET_DB_PAGE,
+      id,
+      title
     });
   };
 }
 
 export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor) {
+  let id = shortid.generate()
   let textEditorsRaw = convertEditorState(textEditors);
   axios.post('/save', {
-      id: shortid.generate(),
+      id: id,
       title: title,
       editors: editors,
       indexEditor: indexEditor,
@@ -40,10 +42,32 @@ export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor
       });
   return(dispatch) => {
     dispatch({
-      type: ActionTypes.SUBMIT_PAGE,
-      title,
-      editors,
-      indexEditor
+      type: ActionTypes.SET_PAGE_ID,
+      id
+    });
+  };
+}
+
+export function updatePage(id,title,editors,indexEditor,textEditors,indexTextEditor) {
+  let textEditorsRaw = convertEditorState(textEditors);
+  axios.post('/update', {
+      id: id,
+      title: title,
+      editors: editors,
+      indexEditor: indexEditor,
+      textEditors: textEditorsRaw,
+      indexTextEditor: indexTextEditor
+    })
+      .then(function(response) { // eslint-disable-line
+        console.log(response);
+      })
+      .catch(function(error) { // eslint-disable-line
+        console.log('Error  : ' + error);
+      });
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.UPDATE_PAGE,
+      id
     });
   };
 }

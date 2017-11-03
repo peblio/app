@@ -25,11 +25,32 @@ mongoose.connection.on('open', () => {
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-//api for Insert data from database
+//api for save data to database
 app.post("/save",function(req,res){
     console.log(req.body);
     var mod = new Page(req.body);
         mod.save(function(err,data){
+            if(err){
+                res.send(err);
+            }
+            else{
+                 res.send({data:"Record has been Inserted..!!"});
+            }
+        });
+})
+
+//api for update data in database
+app.post("/update",function(req,res){
+    console.log(req.body);
+    // var mod = new Page(req.body);
+        Page.update({id:req.body.id},{
+          title: req.body.title,
+          editors: req.body.editors,
+          indexEditor: req.body.indexEditor,
+          textEditors: req.body.textEditors,
+          indexTextEditor: req.body.indexTextEditor
+        },
+          function(err,data){
             if(err){
                 res.send(err);
             }

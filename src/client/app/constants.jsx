@@ -17,7 +17,9 @@ export const REMOVE_TEXT_EDITOR = 'REMOVE_TEXT_EDITOR';
 
 export const SET_PAGE_TITLE = 'SET_PAGE_TITLE';
 export const SUBMIT_PAGE = 'SUBMIT_PAGE';
+export const UPDATE_PAGE = 'UPDATE_PAGE';
 
-export const SET_DB_PAGE_TITLE = 'SET_DB_PAGE_TITLE';
+export const SET_DB_PAGE = 'SET_DB_PAGE';
+export const SET_PAGE_ID = 'SET_PAGE_ID';
 export const SET_DB_EDITORS = 'SET_DB_EDITORS';
 export const SET_DB_TEXT_EDITORS = 'SET_DB_TEXT_EDITORS';

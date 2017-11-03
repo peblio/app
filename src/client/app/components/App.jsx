@@ -28,10 +28,9 @@ class App extends React.Component {
       axios.get('/sketch/'+projectID[1])
          .then(res => {
          console.log(res);
-         this.props.setDBPageTitle(res.data[0].title);
+         this.props.setDBPage(res.data[0].id,res.data[0].title);
          this.props.setDBEditors(res.data[0].indexEditor,res.data[0].editors);
          this.props.setDBTextEditors(res.data[0].indexTextEditor,res.data[0].textEditors);
-         
          })
     }
   }
@@ -89,12 +88,14 @@ class App extends React.Component {
       <div>
         <nav>
           <MainToolbar
+            id={this.props.id}
             setPageTitle={this.props.setPageTitle}
             addEditor = {this.props.addEditor}
             addTextEditor = {this.props.addTextEditor}
             currentTextEditorState = {this.props.currentTextEditorState}
             onChange={this.props.updateTextChange}
             submitPage={this.props.submitPage}
+            updatePage={this.props.updatePage}
             pageTitle={this.props.pageTitle}
             editors={this.props.editors}
             indexEditor={this.props.indexEditor}
@@ -144,8 +145,8 @@ App.propTypes = {
   removeTextEditor: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
-
-  setDBPageTitle: PropTypes.func.isRequired
+  updatePage: PropTypes.func.isRequired,
+  setDBPage: PropTypes.func.isRequired,
 }
 
 function mapStateToProps(state) {
@@ -161,6 +162,7 @@ function mapStateToProps(state) {
     textEditorIndex: state.textEditors.textEditorIndex,
     styleMap: state.textEditors.styleMap,
     pageTitle: state.mainToolbar.pageTitle,
+    id: state.mainToolbar.id
   };
 }
 
