@@ -24,7 +24,8 @@ export function setDBPage(id, title) {
 }
 
 export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor) {
-  let id = shortid.generate()
+  let id = shortid.generate();
+
   let textEditorsRaw = convertEditorState(textEditors);
   axios.post('/save', {
       id: id,
@@ -36,6 +37,8 @@ export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor
     })
       .then(function(response) { // eslint-disable-line
         console.log(response);
+        console.log(id);
+        window.location.href= window.location.origin + '/pages/' + id;
       })
       .catch(function(error) { // eslint-disable-line
         console.log('Error  : ' + error);
