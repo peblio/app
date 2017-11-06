@@ -1,16 +1,28 @@
 .codeEditor__container {
   width: 60%;
   padding: 0 $small-padding;
+
 }
 .codeEditor__sub-container {
   display: flex;
   flex-direction: row;
+  border: $thin-border-width solid $gray;
+
+
 }
 .codeEditor__input {
   width: 50%;
   border-right: $thin-border-width solid $gray;
 }
 .codeEditor__output {
-  width: 50%;
+  width: 100%;
+  overflow:visible;
+
+}
+
+.codeEditor__console{
+  background-color: $black;
+  color:$white;
+  padding: 0 $small-padding;
 
 }

@@ -9,7 +9,7 @@ class MainToolbar extends React.Component {
   render() {
     return (
       <div>
-        <input type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}></input>
+        <input className="mainToolbar_title" placeholder="Title" type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}></input>
         <InsertToolbar
           addEditor = {this.props.addEditor}
           addTextEditor = {this.props.addTextEditor}

@@ -4,9 +4,27 @@
   background-color: $light-gray;
   width: 60%;
   margin: 0 $small-padding;
-  padding: $small-padding 0;
-  border-radius: 2*$thin-border-width;
+  padding: 5px 0 ;
+  border: $thin-border-width*2 solid $black;
+  border-radius: $border-radius*2 $border-radius*2 0 0 ;
+;
 }
 .editorToolbar__item {
-  @extend %menu-item;
+  @extend %small-button;
+}
+
+%small-button{
+  border: $thin-border-width solid $black;
+  border-radius: $border-radius;
+  color: $black;
+  background-color: $white;
+  text-transform: uppercase;
+  margin: 5px;
+  padding: $small-padding/2;
+  &:hover {
+    border: $thin-border-width solid $gray;
+    box-shadow: 3px 3px 1px $gray;
+    cursor: pointer;
+  }
+
 }
