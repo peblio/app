@@ -1,5 +1,7 @@
 @import './variables';
 @import './base';
+@import './mixins';
+
 
 @import './codeEditor';
 @import './editorToolbar';
@@ -7,14 +9,4 @@
 @import './mainToolbar';
 @import './textEditor';
 @import './textToolbar';
-
-
-.mainToolbar_title{
-height:40px;
-margin: 15px $small-padding*3;
-background-color: $black;
-color:$white;
-font-size: 35px;
-border: none;
-
-}
+@import './styleVariables';

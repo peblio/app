@@ -1,28 +1,57 @@
 .codeEditor__container {
-  width: 60%;
+  width: 100%;
+  height:60%;
   padding: 0 $small-padding;
 
 }
 .codeEditor__sub-container {
   display: flex;
   flex-direction: row;
+  width: 100%;
+  height: 100%;
   border: $thin-border-width solid $gray;
-
-
 }
+
+
 .codeEditor__input {
   width: 50%;
+  height: 100%;
   border-right: $thin-border-width solid $gray;
+  overflow:scroll;
+
 }
 .codeEditor__output {
   width: 100%;
-  overflow:visible;
-
+  height: 100%;
+  overflow:scroll;
+  background-color: $black;
+  padding: 0;
+  margin: 0;
 }
 
 .codeEditor__console{
   background-color: $black;
   color:$white;
   padding: 0 $small-padding;
+}
 
+#code-output{
+  background-color: $black;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height:100%;
+  border: none;
+}
+
+canvas{
+  padding: 0;
+  margin: 0;
+}
+
+.codeEditor_totalContainer{
+  padding: 0;
+  margin: $medium-margin 0;
+  width: 60%;
+  height: 50%;
 }

@@ -1,40 +1,24 @@
-.public-DraftEditor-content{
-margin: $small-padding;
-}
+// .public-DraftEditor-content{
+// margin: $small-padding;
+// }
 .DraftEditor-editorContainer{
-  // resize: both;
-  // overflow: scroll;
-  border: 1px solid $gray;
+  border: 1px solid $light-gray;
+  padding: $small-padding;
+
 }
 
 .textEditor__container {
- width: 500px;
- // display:block;
- // overflow: auto;
+ width: 50%;
+ margin: $small-margin;
 }
 
 .textToolbar__container{
   background-color: $black;
   overflow: visible;
   width: 100%;
+  border-radius: 0 0 $small-border-radius $small-border-radius;
 }
 
 .element__close{
-@extend %element_controls;
-}
-
-%element_controls{
-  border: 2PX solid $gray;
-  border-radius: $border-radius;
-  color: $gray;
-  background-color: $white;
-  text-transform: uppercase;
-  padding: 5px 10px;
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-  &:hover {
-    border: 2px solid $black;
-    color: $black;
-    cursor: pointer;
-  }
+  @extend %element_controls;
 }

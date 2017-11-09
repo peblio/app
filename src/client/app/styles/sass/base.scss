@@ -10,27 +10,9 @@ body, html, h1, h2, h3{
   width:$total-width;
   min-height:100vh;
   margin: auto;
-  padding: 15px;
+  padding: $medium-padding;
 }
 
 button {
   @extend %menu-item ;
-}
-
-%menu-item {
-  border: $thin-border-width solid $white;
-  border-radius: $border-radius;
-  color: $white;
-  background-color: $black;
-  text-transform: uppercase;
-  margin: 0 5px;
-  padding: $small-padding;
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-  &:hover {
-    border: $thin-border-width solid $gray;
-    color: $black;
-    background: $white;
-    cursor: pointer;
-  }
 }

@@ -17,7 +17,7 @@ class EditorContainer extends React.Component {
   }
   render() {
     return (
-      <div onFocus={ this.onFocus }>
+      <div className= "codeEditor_totalContainer" onFocus={ this.onFocus }>
         <nav>
           <button className="element__close" onClick={() => this.props.removeEditor(this.props.editorId)}>&#x2613;</button>
         </nav>

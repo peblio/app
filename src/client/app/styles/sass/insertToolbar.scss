@@ -1,12 +1,14 @@
 .insertToolbar__container {
   display: flex;
   flex-direction: row;
-  margin: auto;
+  margin: 0 $medium-padding;
   color: $gray;
   width: $total-width;
-  padding: $small-padding 0;
-  min-height: 35px;
+  padding: $small-padding;
+  min-height: 2rem;
 }
 .insertToolbar__button {
   @extend %menu-item;
+  margin: $small-margin;
+  padding: $medium-padding;
 }

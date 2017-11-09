@@ -1,0 +1,52 @@
+// for main toolbar and editing text in textarea
+%menu-item {
+  border: $thin-border-width solid $white;
+  border-radius: $small-border-radius;
+  color: $white;
+  background-color: $black;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  &:hover {
+    border: $thin-border-width solid $gray;
+    color: $black;
+    background: $white;
+    cursor: pointer;
+  }
+}
+
+// used for editor toolbar
+%small-button{
+  border: $thin-border-width solid $black;
+  border-radius: $small-border-radius;
+  color: $black;
+  background-color: $white;
+  height: 2rem;
+  margin: 0 $small-padding;
+  padding: $small-padding $medium-padding;
+  @include gradient(white, $light-gray);
+  &:hover {
+    box-shadow: 3px 3px 1px $gray;
+    cursor: pointer;
+    @include gradient(white, $light-gray);
+  }
+}
+
+//deleting and moving elements on the canvas
+%element_controls{
+  // @include transition(border 1s 1s color 2s);
+  border: $medium-border-width solid $gray;
+  border-radius: $small-border-radius;
+  color: $gray;
+  background-color: $white;
+  text-transform: uppercase;
+  text-align: center;
+  padding: $small-padding $medium-padding;
+  margin-bottom:$small-margin/2;
+  -webkit-transition-duration: 1s;
+  transition-duration: 1s;
+  &:hover {
+    border: 2px solid $black;
+    color: $black;
+    cursor: pointer;
+  }
+}
