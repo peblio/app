@@ -7,6 +7,7 @@ import rootReducer from './reducers/rootReducer.jsx';
 import thunk from 'redux-thunk';
 
 import App from './components/App.jsx';
+import SignUp from './components/SignUp.jsx';
 
 let store = createStore(
   rootReducer,
@@ -22,7 +23,9 @@ class Main extends React.Component {
       <Provider store={store}>
          <Router history={browserHistory}>
            <div>
-             <Route path="/" component={App}/>
+             <Route exact path="/signup" component={SignUp} />
+             <Route exact path="/" component={App}/>
+             <Route path="/pages" component={App}/>
            </div>
          </Router>
       </Provider>

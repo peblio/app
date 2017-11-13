@@ -3,10 +3,14 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const express = require('express'); // include the express library
 const path = require("path");
-
+const passport = require('passport');
 const app = express();
 const Page = require('./models/page.js');
 const srcpath  =path.join(__dirname,'../client') ;
+const userRoutes = require('./controllers/userController.jsx');
+
+require('./config/passport');
+
 // start the server:
 app.listen(process.env.PORT ||8080);
 app.use('/', express.static('src/client/')); // set a static file directory
@@ -25,6 +29,11 @@ mongoose.connection.on('open', () => {
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+// add routes
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/users', userRoutes);
 //api for save data to database
 app.post("/save",function(req,res){
     console.log(req.body);
