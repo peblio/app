@@ -1,3 +1,24 @@
+// .public-DraftEditor-content{
+// margin: $small-padding;
+// }
+.DraftEditor-editorContainer{
+  border: 1px solid $light-gray;
+  padding: $small-padding;
+
+}
+
 .textEditor__container {
-  border: 1px solid $gray;
+ width: 50%;
+ margin: $small-margin;
+}
+
+.textToolbar__container{
+  background-color: $black;
+  overflow: visible;
+  width: 100%;
+  border-radius: 0 0 $small-border-radius $small-border-radius;
+}
+
+.element__close{
+  @extend %element_controls;
 }

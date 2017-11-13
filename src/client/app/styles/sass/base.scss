@@ -2,22 +2,17 @@ body, html, h1, h2, h3{
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background-color: black;
+}
+
+.canvas{
+  background-color: white;
+  width:$total-width;
+  min-height:100vh;
+  margin: auto;
+  padding: $medium-padding;
 }
 
 button {
-  border: none;
-  background: $white;
-}
-
-%menu-item {
-  border: $thin-border-width solid $gray;
-  border-radius: $thin-border-width*2;
-  color: $gray;
-  text-transform: uppercase;
-  margin: 0 $small-padding;
-  &:hover {
-    color: $white;
-    background: $gray;
-    cursor: pointer;
-  }
+  @extend %menu-item ;
 }
