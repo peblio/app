@@ -16,10 +16,16 @@ class TextEditor extends React.Component {
 
   render() {
     return (
-      <div id={this.props.id} onFocus={this.onFocus} className = "textEditor__container">
+      <div id={this.props.id} onFocus={this.onFocus} className="textEditor__container">
         <nav>
-          <button onClick={() => this.props.removeTextEditor(this.props.id)}>&#x2613;</button>
+          <button className="element__close" onClick={() => this.props.removeTextEditor(this.props.id)}>&#x2613;</button>
         </nav>
+        <Editor
+          id={this.props.id}
+          editorState={this.props.editorState}
+          onChange={this.props.onChange}
+          placeholder="Enter some text..."
+        />
         {(() => {
           if(this.props.id ==  this.props.currentTextEditorId){
             return(
@@ -33,12 +39,6 @@ class TextEditor extends React.Component {
 
         )()}
 
-        <Editor
-          id={this.props.id}
-          editorState={this.props.editorState}
-          onChange={this.props.onChange}
-          placeholder="Enter some text..."
-        />
       </div>
     );
   }

@@ -9,7 +9,9 @@ class MainToolbar extends React.Component {
   render() {
     return (
       <div>
-        <input type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}></input>
+        <input className="mainToolbar__title"
+          placeholder="Title"
+          type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}></input>
         <button onClick={() => {
 
             if(this.props.id.length==0){

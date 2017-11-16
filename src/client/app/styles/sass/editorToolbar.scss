@@ -2,11 +2,19 @@
   display: flex;
   flex-direction: row;
   background-color: $light-gray;
-  width: 60%;
+  background: red; /* For browsers that do not support gradients */
+  @include gradient($light-gray, $gray);
+  // background: $medium-gradient-safari;
+  // background: $medium-gradient-firefox;
+  // background: $medium-gradient-standard;
+  width: 100%;
   margin: 0 $small-padding;
-  padding: $small-padding 0;
-  border-radius: 2*$thin-border-width;
+  padding: $small-padding 0 ;
+  border: $medium-border-width solid $black;
+  border-radius: $medium-border-radius $medium-border-radius 0 0 ;
+  z-index: 100;
+;
 }
 .editorToolbar__item {
-  @extend %menu-item;
+  @extend %small-button;
 }

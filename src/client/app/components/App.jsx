@@ -103,12 +103,14 @@ class App extends React.Component {
             indexTextEditor={this.props.indexTextEditor}
           />
         </nav>
-        <div>
-          {Editors}
-        </div>
-        <div>
-          {TextEditors}
-        </div>
+        <section className="canvas">
+          <div>
+            {Editors}
+          </div>
+          <div>
+            {TextEditors}
+          </div>
+        </section>
       </div>
     );
   }
