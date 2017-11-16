@@ -12,6 +12,7 @@ import {Editor, EditorState, RichUtils, Modifier} from 'draft-js';
 import * as editorActions from '../action/editorContainer.jsx';
 import * as textEditorActions from '../action/textEditors.jsx';
 import * as mainToolbarActions from '../action/mainToolbar.jsx';
+import * as userActions from '../action/user.jsx';
 
 const axios = require('axios');
 const Regex = require("regex");
@@ -24,8 +25,9 @@ class App extends React.Component {
   componentDidMount() {
     let location = this.props.location.pathname;
     let projectID = location.match(/\/pages\/([\w-].*)/);
+    console.log(projectID);
     if(projectID){
-      axios.get('/sketch/'+projectID[1])
+      axios.get('/api/pages/'+projectID[1])
          .then(res => {
          console.log(res);
          this.props.setDBPage(res.data[0].id,res.data[0].title);
@@ -101,6 +103,7 @@ class App extends React.Component {
             indexEditor={this.props.indexEditor}
             textEditors={this.props.textEditors}
             indexTextEditor={this.props.indexTextEditor}
+            name={this.props.name}
           />
         </nav>
         <section className="canvas">
@@ -149,6 +152,7 @@ App.propTypes = {
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
   setDBPage: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired
 }
 
 function mapStateToProps(state) {
@@ -164,7 +168,8 @@ function mapStateToProps(state) {
     textEditorIndex: state.textEditors.textEditorIndex,
     styleMap: state.textEditors.styleMap,
     pageTitle: state.mainToolbar.pageTitle,
-    id: state.mainToolbar.id
+    id: state.mainToolbar.id,
+    name: state.user.name
   };
 }
 
@@ -172,7 +177,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
     editorActions,
     textEditorActions,
-    mainToolbarActions),
+    mainToolbarActions,
+    userActions),
   dispatch);
 }
 export default (connect(mapStateToProps, mapDispatchToProps)(App));

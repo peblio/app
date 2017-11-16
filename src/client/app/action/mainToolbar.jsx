@@ -27,7 +27,7 @@ export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor
   let id = shortid.generate();
 
   let textEditorsRaw = convertEditorState(textEditors);
-  axios.post('/save', {
+  axios.post('/pages/save', {
       id: id,
       title: title,
       editors: editors,
@@ -53,7 +53,7 @@ export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor
 
 export function updatePage(id,title,editors,indexEditor,textEditors,indexTextEditor) {
   let textEditorsRaw = convertEditorState(textEditors);
-  axios.post('/update', {
+  axios.post('/pages/update', {
       id: id,
       title: title,
       editors: editors,
@@ -65,6 +65,7 @@ export function updatePage(id,title,editors,indexEditor,textEditors,indexTextEdi
         console.log(response);
       })
       .catch(function(error) { // eslint-disable-line
+        console.log("**");
         console.log('Error  : ' + error);
       });
   return(dispatch) => {

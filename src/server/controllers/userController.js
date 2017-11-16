@@ -1,6 +1,6 @@
 var express = require('express');
 var Router = express.Router();
-const User = require('../models/user.jsx');
+const User = require('../models/user.js');
 
 var userRoutes = express.Router();
 
@@ -11,12 +11,12 @@ userRoutes.route('/user').get(getUser);
 function createUser(req,res) {
   const name = req.body.name;
   const password = req.body.password;
-  //
+
   let user = new User({
     name: name,
     password: password
   });
-  //
+
   user.save(function(err, user){
     if (err) {
       res.status(422).json({error: saveErr});

@@ -23,7 +23,7 @@ class Main extends React.Component {
       <Provider store={store}>
          <Router history={browserHistory}>
            <div>
-             <Route exact path="/signup" component={SignUp} />
+             <Route exact path="/users/signup" component={SignUp} />
              <Route exact path="/" component={App}/>
              <Route path="/pages" component={App}/>
            </div>

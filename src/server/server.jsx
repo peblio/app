@@ -6,8 +6,11 @@ const path = require("path");
 const passport = require('passport');
 const app = express();
 const Page = require('./models/page.js');
+
 const srcpath  =path.join(__dirname,'../client') ;
-const userRoutes = require('./controllers/userController.jsx');
+const userRoutes = require('./controllers/userController.js');
+const pageRoutes = require('./controllers/pageController.js');
+const apiRoutes = require('./controllers/apiController.js');
 
 require('./config/passport');
 
@@ -34,53 +37,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/users', userRoutes);
-//api for save data to database
-app.post("/save",function(req,res){
-    console.log(req.body);
-    var mod = new Page(req.body);
-        mod.save(function(err,data){
-            if(err){
-                res.send(err);
-            }
-            else{
-                 res.send({data:"Record has been Inserted..!!"});
-            }
-        });
-})
-
-//api for update data in database
-app.post("/update",function(req,res){
-    console.log(req.body);
-    // var mod = new Page(req.body);
-        Page.update({id:req.body.id},{
-          title: req.body.title,
-          editors: req.body.editors,
-          indexEditor: req.body.indexEditor,
-          textEditors: req.body.textEditors,
-          indexTextEditor: req.body.indexTextEditor
-        },
-          function(err,data){
-            if(err){
-                res.send(err);
-            }
-            else{
-                 res.send({data:"Record has been Inserted..!!"});
-            }
-        });
-})
-
-app.get("/sketch/:id",function(req,res){
-  console.log
-  Page.find({id:req.params.id},function(err,data){
-    if(err){
-        res.send(err);
-    }
-    else{
-        res.send(data);
-        }
-  });
-
-})
+app.use('/pages', pageRoutes);
+app.use('/api', apiRoutes);
 
 // call by default index.html page
 app.get("*",function(req,res){
