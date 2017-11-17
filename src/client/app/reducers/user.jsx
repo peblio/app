@@ -13,6 +13,9 @@ const user = (state = initialState, action) => {
     case ActionTypes.UPDATE_USER_PASSWORD:
       return Object.assign({}, state, { password: action.event.target.value });
 
+    case ActionTypes.SET_USER_NAME:
+      return Object.assign({}, state, { name: action.name });
+
     default:
       return state;
   }

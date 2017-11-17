@@ -38,10 +38,10 @@ export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor
       .then(function(response) { // eslint-disable-line
         console.log(response);
         console.log(id);
-        window.location.href= window.location.origin + '/pages/' + id;
+        window.location.href= window.location.origin + '/page/' + id;
       })
       .catch(function(error) { // eslint-disable-line
-        console.log('Error  : ' + error);
+        console.log( error);
       });
   return(dispatch) => {
     dispatch({
@@ -72,6 +72,23 @@ export function updatePage(id,title,editors,indexEditor,textEditors,indexTextEdi
     dispatch({
       type: ActionTypes.UPDATE_PAGE,
       id
+    });
+  };
+}
+
+export function getAllPages() {
+  console.log('get all pages;')
+  axios.get('/api/sketches')
+      .then(function(response) { // eslint-disable-line
+        console.log(response);
+        window.location.href= window.location.origin + '/pages';
+      })
+      .catch(function(error) { // eslint-disable-line
+        console.log('Error  : ' + error);
+      });
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.GET_ALL_PAGES,
     });
   };
 }

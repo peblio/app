@@ -1,24 +1,55 @@
 var express = require('express');
 var Router = express.Router();
 const Page = require('../models/page.js');
+const User = require('../models/user.js');
 
 var pageRoutes = express.Router();
 
 pageRoutes.route('/save').post(savePage);
 pageRoutes.route('/update').post(updatePage);
-// pageRoutes.route('/:id').get(getPage);
 
 function savePage(req,res) {
-  console.log(req.body);
-  var mod = new Page(req.body);
-  mod.save(function(err,data){
-    if(err){
+  var user = req.user;
+  var newList = [];
+  if(user) {
+    console.log(user);
+
+    User.find({_id:user._id}, function(err,data) {
+      if(err) {
         res.send(err);
-    }
-    else{
-         res.send({data:"Record has been Inserted..!!"});
+        console.log("fail");
+      }
+      else {
+        console.log(data[0].pages);
+        data[0].pages.push(req.body.id);
+        User.update({_id:user._id}, {
+          pages: data[0].pages
+        },
+        function(err,data){
+          if(err){
+              res.send(err);
+          }
+          else{
+               // res.send({data:"Record has been Inserted..!!"});
+          }
+        });
     }
   });
+
+    console.log("in here??")
+    var mod = new Page(req.body);
+    mod.save(function(err,data){
+      if(err){
+          res.send(err);
+      }
+      else{
+           res.send({data:"Record has been Inserted..!!"});
+      }
+    });
+  }
+  else {
+    res.status(403).send({ error: 'Please log in first' })
+  }
 }
 
 function updatePage(req, res) {
@@ -35,18 +66,6 @@ function updatePage(req, res) {
     }
     else{
          res.send({data:"Record has been Inserted..!!"});
-    }
-  });
-}
-
-function getPage(req,res) {
-  console.log(req.params.id);
-  Page.find({id:req.params.id},function(err,data){
-    if(err){
-      res.send(err);
-    }
-    else{
-      res.send(data);
     }
   });
 }

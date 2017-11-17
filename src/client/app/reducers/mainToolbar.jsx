@@ -19,7 +19,7 @@ const mainToolbar = (state = initialState, action) => {
         id: action.id,
         pageTitle: action.title
       });
-
+  
     default:
       return state;
   }

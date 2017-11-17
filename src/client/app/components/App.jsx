@@ -24,17 +24,23 @@ class App extends React.Component {
   }
   componentDidMount() {
     let location = this.props.location.pathname;
-    let projectID = location.match(/\/pages\/([\w-].*)/);
-    console.log(projectID);
+    let projectID = location.match(/\/page\/([\w-].*)/);
     if(projectID){
-      axios.get('/api/pages/'+projectID[1])
-         .then(res => {
-         console.log(res);
-         this.props.setDBPage(res.data[0].id,res.data[0].title);
-         this.props.setDBEditors(res.data[0].indexEditor,res.data[0].editors);
-         this.props.setDBTextEditors(res.data[0].indexTextEditor,res.data[0].textEditors);
-         })
+      axios.get('/api/page/'+projectID[1])
+        .then(res => {
+        this.props.setDBPage(res.data[0].id,res.data[0].title);
+        this.props.setDBEditors(res.data[0].indexEditor,res.data[0].editors);
+        this.props.setDBTextEditors(res.data[0].indexTextEditor,res.data[0].textEditors);
+        })
     }
+    axios.get('/api/user')
+      .then((res) => {
+        console.log(res);
+        if(res.data.name) {
+          console.log(res.data.name);
+          this.props.setUserName(res.data.name);
+        }
+      })
   }
 
   componentDidUpdate() {
@@ -104,6 +110,7 @@ class App extends React.Component {
             textEditors={this.props.textEditors}
             indexTextEditor={this.props.indexTextEditor}
             name={this.props.name}
+            getAllPages={this.props.getAllPages}
           />
         </nav>
         <section className="canvas">
@@ -113,6 +120,15 @@ class App extends React.Component {
           <div>
             {TextEditors}
           </div>
+          {(() => { // eslint-disable-line
+            if (this.name && this.props.location.pathname.match(/pages$/)) {
+              return (
+                <div>
+                  WORK!!!
+                </div>
+              );
+            }
+          })()}
         </section>
       </div>
     );
@@ -152,6 +168,8 @@ App.propTypes = {
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
   setDBPage: PropTypes.func.isRequired,
+  setUserName: PropTypes.func.isRequired,
+  getAllPages: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired
 }
 

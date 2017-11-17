@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   name: { type: String, default: '' },
-  password: { type: String }
+  password: { type: String },
+  pages: { type: Array },
 });
 
 userSchema.pre('save', function checkPassword(next) { // eslint-disable-line consistent-return

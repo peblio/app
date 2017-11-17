@@ -35,7 +35,28 @@ class MainToolbar extends React.Component {
             )
           }
         }}>SUBMIT</button>
-        <p className="mainToolbar__login"> Welcome {this.props.name} </p>
+        {(() => { // eslint-disable-line
+          if (this.props.name) {
+            return (
+              <div>
+                <p className="mainToolbar__login">
+                  Welcome {this.props.name}
+                </p>
+                <button onClick={this.props.getAllPages}>
+                  View all sketches
+                </button>
+              </div>
+            );
+          } else {
+            return (
+              <div>
+                <a href="/login">Login</a>
+                <a href="/users/signup">Sign Up</a>
+              </div>
+            );
+          }
+        })()}
+
         <InsertToolbar
           addEditor = {this.props.addEditor}
           addTextEditor = {this.props.addTextEditor}

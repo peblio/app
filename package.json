@@ -24,6 +24,7 @@
     "css-loader": "^0.28.4",
     "draft-js": "^0.10.1",
     "express": "^4.15.3",
+    "express-session": "^1.15.6",
     "mongodb": "^2.2.33",
     "mongoose": "^4.11.0",
     "node-sass": "^4.5.3",
