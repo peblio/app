@@ -150,11 +150,13 @@ class App extends React.Component {
                   closeModal={this.props.closeLoginModal}
                 >
                   <Login
-                    name={this.props.name}
-                    password={this.props.password}
+                    loginName={this.props.loginName}
+                    loginPassword={this.props.loginPassword}
                     updateUserName={this.props.updateUserName}
                     updateUserPassword={this.props.updateUserPassword}
                     loginUser={this.props.loginUser}
+                    setUserName={this.props.setUserName}
+                    closeLoginModal={this.props.closeLoginModal}
                   />
                 </Modal>
               );
@@ -210,10 +212,12 @@ App.propTypes = {
   viewSignUpModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
+  loginName: PropTypes.string.isRequired,
+  loginPassword: PropTypes.string.isRequired,
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
-  loginUser: PropTypes.func.isRequired
+  loginUser: PropTypes.func.isRequired,
+  signUserUp: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -232,7 +236,8 @@ function mapStateToProps(state) {
     id: state.mainToolbar.id,
     pages: state.mainToolbar.pages,
     name: state.user.name,
-    password: state.user.password,
+    loginName: state.user.loginName,
+    loginPassword: state.user.loginPassword,
     isPagesModalOpen: state.mainToolbar.isPagesModalOpen,
     isLoginModalOpen: state.mainToolbar.isLoginModalOpen,
     isSignUpModalOpen: state.mainToolbar.isSignUpModalOpen,

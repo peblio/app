@@ -51,7 +51,7 @@ class MainToolbar extends React.Component {
           } else {
             return (
               <div>
-                <a href="/login">Login</a>
+                <button onClick={this.props.viewLoginModal}>Login</button>
                 <a href="/users/signup">Sign Up</a>
               </div>
             );

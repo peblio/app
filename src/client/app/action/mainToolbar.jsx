@@ -135,8 +135,6 @@ export function closeSignUpModal() {
   };
 }
 
-
-
 function convertEditorState(textEditors) {
   let newTextEditors = {};
   let ids = Object.keys(textEditors);
