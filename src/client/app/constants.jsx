@@ -18,7 +18,7 @@ export const REMOVE_TEXT_EDITOR = 'REMOVE_TEXT_EDITOR';
 export const SET_PAGE_TITLE = 'SET_PAGE_TITLE';
 export const SUBMIT_PAGE = 'SUBMIT_PAGE';
 export const UPDATE_PAGE = 'UPDATE_PAGE';
-export const GET_ALL_PAGES = 'GET_ALL_PAGES';
+export const SET_ALL_PAGES = 'SET_ALL_PAGES';
 
 export const SET_DB_PAGE = 'SET_DB_PAGE';
 export const SET_PAGE_ID = 'SET_PAGE_ID';
@@ -30,3 +30,10 @@ export const UPDATE_USER_NAME = 'UPDATE_USER_NAME';
 export const SIGN_USER_UP = 'SIGN_USER_UP';
 export const LOGIN_USER = 'LOGIN_USER';
 export const SET_USER_NAME = 'SET_USER_NAME';
+
+export const VIEW_PAGES_MODAL = 'VIEW_PAGES_MODAL';
+export const CLOSE_PAGES_MODAL = 'CLOSE_PAGES_MODAL';
+export const VIEW_LOGIN_MODAL = 'VIEW_LOGIN_MODAL';
+export const CLOSE_LOGIN_MODAL = 'CLOSE_LOGIN_MODAL';
+export const VIEW_SIGN_UP_MODAL = 'VIEW_SIGN_UP_MODAL';
+export const CLOSE_SIGN_UP_MODAL = 'CLOSE_SIGN_UP_MODAL';

@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 import { render } from 'react-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import * as userActions from '../action/user.jsx';
 
@@ -20,7 +18,7 @@ class Login extends React.Component {
           <label> password:
             <input type="text" value={this.props.password} onChange={this.props.updateUserPassword}/>
           </label>
-          <input type="submit" value='Submit'/>
+          <input type='submit' value='Submit'/>
         </form>
       </div>
     );
@@ -28,24 +26,5 @@ class Login extends React.Component {
 
 }
 
-Login.propTypes = {
-  name: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  updateUserName: PropTypes.func.isRequired,
-  updateUserPassword: PropTypes.func.isRequired,
-  loginUser: PropTypes.func.isRequired
-}
 
-function mapStateToProps(state) {
-  return {
-    name: state.user.name,
-    password: state.user.password
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({},
-    userActions),
-  dispatch);
-}
-export default (connect(mapStateToProps, mapDispatchToProps)(Login));
+export default Login;

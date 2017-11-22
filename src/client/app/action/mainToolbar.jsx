@@ -36,8 +36,6 @@ export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor
       indexTextEditor: indexTextEditor
     })
       .then(function(response) { // eslint-disable-line
-        console.log(response);
-        console.log(id);
         window.location.href= window.location.origin + '/page/' + id;
       })
       .catch(function(error) { // eslint-disable-line
@@ -76,22 +74,68 @@ export function updatePage(id,title,editors,indexEditor,textEditors,indexTextEdi
   };
 }
 
-export function getAllPages() {
-  console.log('get all pages;')
-  axios.get('/api/sketches')
-      .then(function(response) { // eslint-disable-line
-        console.log(response);
-        window.location.href= window.location.origin + '/pages';
-      })
-      .catch(function(error) { // eslint-disable-line
-        console.log('Error  : ' + error);
-      });
+export function setAllPages(data) {
+  let pages = [];
+  data.forEach(function(page) {
+    pages.push({'id': page.id, 'title': page.title});
+  });
   return(dispatch) => {
     dispatch({
-      type: ActionTypes.GET_ALL_PAGES,
+      type: ActionTypes.SET_ALL_PAGES,
+      pages
     });
   };
 }
+
+export function viewPagesModal() {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_PAGES_MODAL
+    });
+  };
+}
+
+export function closePagesModal() {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_PAGES_MODAL
+    });
+  };
+}
+
+export function viewLoginModal() {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_LOGIN_MODAL
+    });
+  };
+}
+
+export function closeLoginModal() {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_LOGIN_MODAL
+    });
+  };
+}
+
+export function viewSignUpModal() {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_SIGN_UP_MODAL
+    });
+  };
+}
+
+export function closeSignUpModal() {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_SIGN_UP_MODAL
+    });
+  };
+}
+
+
 
 function convertEditorState(textEditors) {
   let newTextEditors = {};

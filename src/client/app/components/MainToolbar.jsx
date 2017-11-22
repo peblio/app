@@ -42,9 +42,10 @@ class MainToolbar extends React.Component {
                 <p className="mainToolbar__login">
                   Welcome {this.props.name}
                 </p>
-                <button onClick={this.props.getAllPages}>
+                <button onClick={this.props.viewPagesModal}>
                   View all sketches
                 </button>
+                <a href="/logout">Logout</a>
               </div>
             );
           } else {

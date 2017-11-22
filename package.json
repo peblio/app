@@ -33,6 +33,8 @@
     "python-js": "^0.9.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-modal": "^3.1.2",
+    "react-overlays": "^0.8.3",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.1.1",
     "redux-form": "^7.1.1",
