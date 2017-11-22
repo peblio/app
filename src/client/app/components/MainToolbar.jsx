@@ -52,7 +52,7 @@ class MainToolbar extends React.Component {
             return (
               <div>
                 <button onClick={this.props.viewLoginModal}>Login</button>
-                <a href="/users/signup">Sign Up</a>
+                <button onClick={this.props.viewSignUpModal}>Sign Up</button>
               </div>
             );
           }

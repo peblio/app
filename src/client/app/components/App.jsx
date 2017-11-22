@@ -10,6 +10,7 @@ import Login from './Login.jsx';
 import MainToolbar from './MainToolbar.jsx';
 import Modal from './Modal.jsx';
 import PagesList from './PagesList.jsx';
+import SignUp from './SignUp.jsx';
 import TextEditor from './TextEditor.jsx';
 
 import * as editorActions from '../action/editorContainer.jsx';
@@ -154,9 +155,28 @@ class App extends React.Component {
                     loginPassword={this.props.loginPassword}
                     updateUserName={this.props.updateUserName}
                     updateUserPassword={this.props.updateUserPassword}
-                    loginUser={this.props.loginUser}
                     setUserName={this.props.setUserName}
                     closeLoginModal={this.props.closeLoginModal}
+                  />
+                </Modal>
+              );
+            }
+          })()}
+          {(() => { // eslint-disable-line
+            if (this.props.isSignUpModalOpen) {
+              return (
+                <Modal
+                  isOpen={this.props.isSignUpModalOpen}
+                  closeModal={this.props.closeSignUpModal}
+                >
+                  <SignUp
+                    loginName={this.props.loginName}
+                    loginPassword={this.props.loginPassword}
+                    updateUserName={this.props.updateUserName}
+                    updateUserPassword={this.props.updateUserPassword}
+                    signUserUp={this.props.signUserUp}
+                    setUserName={this.props.setUserName}
+                    closeSignUpModal={this.props.closeSignUpModal}
                   />
                 </Modal>
               );
@@ -216,7 +236,6 @@ App.propTypes = {
   loginPassword: PropTypes.string.isRequired,
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
-  loginUser: PropTypes.func.isRequired,
   signUserUp: PropTypes.func.isRequired
 }
 

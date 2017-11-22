@@ -24,7 +24,6 @@ class Main extends React.Component {
       <Provider store={store}>
          <Router history={browserHistory}>
            <div>
-             <Route exact path="/users/signup" component={SignUp} />
              <Route exact path="/" component={App}/>
              <Route path="/page" component={App}/>
              <Route exact path="/pages" component={App}/>

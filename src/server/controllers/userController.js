@@ -11,7 +11,9 @@ userRoutes.route('/user').get(getUser);
 function createUser(req,res) {
   const name = req.body.name;
   const password = req.body.password;
-
+  console.log("***********");
+  console.log(req);
+  console.log("***********");
   let user = new User({
     name: name,
     password: password
@@ -21,7 +23,7 @@ function createUser(req,res) {
     if (err) {
       res.status(422).json({error: saveErr});
     } else {
-      res.send('Successfully saved')
+      return res.send({ success : true, message : 'signup succeeded', user: user });
     }
   })
 }

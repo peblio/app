@@ -2,12 +2,16 @@ import React, { PropTypes } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import * as userActions from '../action/user.jsx';
+import axios from 'axios';
 
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  signUpSuccessful(response) {
+    this.props.closeSignUpModal();
   }
 
   submitSignUpUser(event,name,password) {
@@ -15,8 +19,8 @@ class SignUp extends React.Component {
         name: name,
         password: password
       })
-        .then(function(response) { // eslint-disable-line
-          console.log(response);
+        .then((response) => {
+          this.signUpSuccessful(response);
         })
         .catch(function(error) { // eslint-disable-line
           console.log(error);
@@ -28,12 +32,12 @@ class SignUp extends React.Component {
     return (
       <div>
         Sign up here
-        <form onSubmit={(event) => {this.props.signUserUp(event, this.props.name, this.props.password)}}>
+        <form onSubmit={(event) => {this.submitSignUpUser(event, this.props.loginName, this.props.loginPassword)}}>
           <label> name:
-            <input type="text" value={this.props.name} onChange={this.props.updateUserName}/>
+            <input type="text" value={this.props.loginName} onChange={this.props.updateUserName}/>
           </label>
           <label> password:
-            <input type="text" value={this.props.password} onChange={this.props.updateUserPassword}/>
+            <input type="text" value={this.props.loginPassword} onChange={this.props.updateUserPassword}/>
           </label>
           <input type="submit" value='Submit'/>
         </form>
