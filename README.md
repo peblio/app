@@ -22,3 +22,4 @@ http://www.infoworld.com/article/3033047/javascript/4-tools-to-convert-python-to
 
 * move loginName and loginPassword in Login and SignUp components to refs instead of props.
 * after successful requests to login, pass back only the user name and not the user password.
+* Replace this syntax in editor and iframe -> `JSON.parse(JSON.stringify)`

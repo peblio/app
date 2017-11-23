@@ -20,6 +20,12 @@ class InsertToolbar extends React.Component {
         >
           TextEditor
         </button>
+        <button
+          onClick = {this.props.addIframe}
+          className = 'insertToolbar__button'
+        >
+          Iframe
+        </button>
       </div>
     );
   }

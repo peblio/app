@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 
 import ConsoleOutput from './ConsoleOutput.jsx';
 import EditorContainer from './EditorContainer.jsx';
+import Iframe from './Iframe.jsx';
 import Login from './Login.jsx';
 import MainToolbar from './MainToolbar.jsx';
 import Modal from './Modal.jsx';
@@ -14,6 +15,7 @@ import SignUp from './SignUp.jsx';
 import TextEditor from './TextEditor.jsx';
 
 import * as editorActions from '../action/editorContainer.jsx';
+import * as iframeActions from '../action/iframe.jsx';
 import * as mainToolbarActions from '../action/mainToolbar.jsx';
 import * as textEditorActions from '../action/textEditors.jsx';
 import * as userActions from '../action/user.jsx';
@@ -93,9 +95,25 @@ class App extends React.Component {
     return textEditors;
   }
 
+  renderIframes() {
+    let iframes = [];
+    let ids = Object.keys(this.props.iframes);
+    ids.forEach((id) => {
+      iframes.push(
+        <Iframe
+          key={id}
+          setIframeURL={this.props.setIframeURL}
+          iframeURL={this.props.iframes[id].url}
+        />
+      );
+    });
+    return iframes;
+  }
+
   render() {
     const Editors = this.renderEditors();
     const TextEditors = this.renderTextEditors();
+    const Iframes = this.renderIframes();
     return (
       <div>
         <nav>
@@ -103,6 +121,7 @@ class App extends React.Component {
             id={this.props.id}
 
             addEditor = {this.props.addEditor}
+            addIframe = {this.props.addIframe}
             addTextEditor = {this.props.addTextEditor}
             currentTextEditorState = {this.props.currentTextEditorState}
             editors={this.props.editors}
@@ -127,6 +146,9 @@ class App extends React.Component {
           </div>
           <div>
             {TextEditors}
+          </div>
+          <div>
+            {Iframes}
           </div>
           {(() => { // eslint-disable-line
             if (this.props.isPagesModalOpen) {
@@ -202,12 +224,17 @@ App.propTypes = {
     id: PropTypes.string.isRequired,
     editorState: PropTypes.object
   })),
+  iframes: PropTypes.objectOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired
+  })),
   isPlaying: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
   addEditor: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
+  addIframe: PropTypes.func.isRequired,
   indexEditor: PropTypes.number.isRequired,
   indexTextEditor: PropTypes.number.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
@@ -251,6 +278,11 @@ function mapStateToProps(state) {
     currentTextEditorState: state.textEditors.currentTextEditorState,
     textEditorIndex: state.textEditors.textEditorIndex,
     styleMap: state.textEditors.styleMap,
+
+    currentIframeId: state.iframe.currentIframeId,
+    iframes: state.iframe.iframes,
+    indexIframe: state.iframe.indexIframe,
+
     pageTitle: state.mainToolbar.pageTitle,
     id: state.mainToolbar.id,
     pages: state.mainToolbar.pages,
@@ -266,8 +298,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
     editorActions,
-    textEditorActions,
+    iframeActions,
     mainToolbarActions,
+    textEditorActions,
     userActions),
   dispatch);
 }
