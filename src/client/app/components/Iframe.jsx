@@ -3,10 +3,10 @@ import React, { PropTypes } from 'react';
 class Iframe extends React.Component {
   constructor(props) {
     super(props);
+    this.onFocus = this.onFocus.bind(this);
   }
   onFocus() {
-    // debugger;
-    // this.props.setCurrentEditor(this.props.editorId);
+    this.props.setCurrentIframe(this.props.id);
   }
   urlSubmitted(event) {
     // debugger;
@@ -15,7 +15,7 @@ class Iframe extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div id={this.props.id} onFocus={this.onFocus}>
         <form onSubmit={(event) => {this.urlSubmitted(event)}}>
           <label> URL:
             <input type="text" ref={(element) => { this.url = element; }}  value={this.props.loginName}/>

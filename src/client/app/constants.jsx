@@ -17,6 +17,7 @@ export const REMOVE_TEXT_EDITOR = 'REMOVE_TEXT_EDITOR';
 
 export const ADD_IFRAME = 'ADD_IFRAME';
 export const SET_IFRAME_URL = 'SET_IFRAME_URL';
+export const SET_CURRENT_IFRAME = 'SET_CURRENT_IFRAME';
 
 export const SET_PAGE_TITLE = 'SET_PAGE_TITLE';
 export const SUBMIT_PAGE = 'SUBMIT_PAGE';

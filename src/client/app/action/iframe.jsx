@@ -16,3 +16,12 @@ export function setIframeURL(url) {
     });
   };
 }
+
+export function setCurrentIframe(value) {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_CURRENT_IFRAME,
+      value
+    });
+  };
+}

@@ -102,8 +102,10 @@ class App extends React.Component {
       iframes.push(
         <Iframe
           key={id}
+          id={id}
           setIframeURL={this.props.setIframeURL}
           iframeURL={this.props.iframes[id].url}
+          setCurrentIframe={this.props.setCurrentIframe}
         />
       );
     });
@@ -235,6 +237,7 @@ App.propTypes = {
   addEditor: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
+  setCurrentIframe: PropTypes.func.isRequired,
   indexEditor: PropTypes.number.isRequired,
   indexTextEditor: PropTypes.number.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,

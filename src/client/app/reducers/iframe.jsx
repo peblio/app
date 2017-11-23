@@ -26,6 +26,9 @@ const iframe = (state = initialState, action) => {
       iframes[state.currentIframeId].url = action.url;
       return Object.assign({}, state, { iframes: iframes })
 
+    case ActionTypes.SET_CURRENT_IFRAME:
+      return Object.assign({}, state, { currentIframeId: action.value });
+
     default:
       return state;
   }
