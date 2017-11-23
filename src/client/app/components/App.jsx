@@ -32,9 +32,9 @@ class App extends React.Component {
     if(projectID){
       axios.get('/api/page/'+projectID[1])
         .then(res => {
-        this.props.setDBPage(res.data[0].id,res.data[0].title);
-        this.props.setDBEditors(res.data[0].indexEditor,res.data[0].editors);
-        this.props.setDBTextEditors(res.data[0].indexTextEditor,res.data[0].textEditors);
+        this.props.loadPage(res.data[0].id,res.data[0].title);
+        this.props.loadEditors(res.data[0].indexEditor,res.data[0].editors);
+        this.props.loadTextEditors(res.data[0].indexTextEditor,res.data[0].textEditors);
         })
     }
     axios.get('/api/user')
@@ -221,7 +221,9 @@ App.propTypes = {
   removeEditor: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
-  setDBPage: PropTypes.func.isRequired,
+  loadPage: PropTypes.func.isRequired,
+  loadEditors: PropTypes.func.isRequired,
+  loadTextEditors: PropTypes.func.isRequired,
   setUserName: PropTypes.func.isRequired,
   setAllPages: PropTypes.func.isRequired,
   isPagesModalOpen: PropTypes.bool.isRequired,

@@ -16,9 +16,3 @@
 python
 https://www.npmjs.com/package/brython
 http://www.infoworld.com/article/3033047/javascript/4-tools-to-convert-python-to-javascript-and-back-again.html
-
-
-## to do
-
-* move loginName and loginPassword in Login and SignUp components to refs instead of props.
-* after successful requests to login, pass back only the user name and not the user password.

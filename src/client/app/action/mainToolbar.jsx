@@ -13,7 +13,7 @@ export function setPageTitle(event) {
   };
 }
 
-export function setDBPage(id, title) {
+export function loadPage(id, title) {
   return(dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
@@ -23,24 +23,23 @@ export function setDBPage(id, title) {
   };
 }
 
-export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor) {
+export function submitPage(title, editors, indexEditor, textEditors, indexTextEditor) {
   let id = shortid.generate();
-
   let textEditorsRaw = convertEditorState(textEditors);
   axios.post('/pages/save', {
-      id: id,
-      title: title,
-      editors: editors,
-      indexEditor: indexEditor,
-      textEditors: textEditorsRaw,
-      indexTextEditor: indexTextEditor
-    })
-      .then(function(response) { // eslint-disable-line
-        window.location.href= window.location.origin + '/page/' + id;
-      })
-      .catch(function(error) { // eslint-disable-line
-        console.log( error);
-      });
+    id: id,
+    title: title,
+    editors: editors,
+    indexEditor: indexEditor,
+    textEditors: textEditorsRaw,
+    indexTextEditor: indexTextEditor
+  })
+  .then(function(response) { // eslint-disable-line
+    window.location.href= window.location.origin + '/page/' + id;
+  })
+  .catch(function(error) { // eslint-disable-line
+    console.log( error);
+  });
   return(dispatch) => {
     dispatch({
       type: ActionTypes.SET_PAGE_ID,
@@ -49,23 +48,23 @@ export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor
   };
 }
 
-export function updatePage(id,title,editors,indexEditor,textEditors,indexTextEditor) {
+export function updatePage(id, title, editors, indexEditor, textEditors, indexTextEditor) {
   let textEditorsRaw = convertEditorState(textEditors);
   axios.post('/pages/update', {
-      id: id,
-      title: title,
-      editors: editors,
-      indexEditor: indexEditor,
-      textEditors: textEditorsRaw,
-      indexTextEditor: indexTextEditor
-    })
-      .then(function(response) { // eslint-disable-line
-        console.log(response);
-      })
-      .catch(function(error) { // eslint-disable-line
-        console.log("**");
-        console.log('Error  : ' + error);
-      });
+    id: id,
+    title: title,
+    editors: editors,
+    indexEditor: indexEditor,
+    textEditors: textEditorsRaw,
+    indexTextEditor: indexTextEditor
+  })
+  .then(function(response) { // eslint-disable-line
+    console.log(response);
+  })
+  .catch(function(error) { // eslint-disable-line
+    console.log("**");
+    console.log('Error  : ' + error);
+  });
   return(dispatch) => {
     dispatch({
       type: ActionTypes.UPDATE_PAGE,
@@ -75,9 +74,8 @@ export function updatePage(id,title,editors,indexEditor,textEditors,indexTextEdi
 }
 
 export function setAllPages(data) {
-  let pages = [];
-  data.forEach(function(page) {
-    pages.push({'id': page.id, 'title': page.title});
+  let pages = data.map(function(page) {
+    return { id: page.id, title: page.title };
   });
   return(dispatch) => {
     dispatch({
