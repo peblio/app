@@ -23,7 +23,7 @@ export function setDBPage(id, title) {
   };
 }
 
-export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor) {
+export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor,iframes,indexIframe) {
   let id = shortid.generate();
 
   let textEditorsRaw = convertEditorState(textEditors);
@@ -33,7 +33,9 @@ export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor
       editors: editors,
       indexEditor: indexEditor,
       textEditors: textEditorsRaw,
-      indexTextEditor: indexTextEditor
+      indexTextEditor: indexTextEditor,
+      iframes: iframes,
+      indexIframe: indexIframe
     })
       .then(function(response) { // eslint-disable-line
         window.location.href= window.location.origin + '/page/' + id;
@@ -49,7 +51,7 @@ export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor
   };
 }
 
-export function updatePage(id,title,editors,indexEditor,textEditors,indexTextEditor) {
+export function updatePage(id,title,editors,indexEditor,textEditors,indexTextEditor,iframes,indexIframe) {
   let textEditorsRaw = convertEditorState(textEditors);
   axios.post('/pages/update', {
       id: id,
@@ -57,13 +59,14 @@ export function updatePage(id,title,editors,indexEditor,textEditors,indexTextEdi
       editors: editors,
       indexEditor: indexEditor,
       textEditors: textEditorsRaw,
-      indexTextEditor: indexTextEditor
+      indexTextEditor: indexTextEditor,
+      iframes: iframes,
+      indexIframe: indexIframe
     })
       .then(function(response) { // eslint-disable-line
         console.log(response);
       })
       .catch(function(error) { // eslint-disable-line
-        console.log("**");
         console.log('Error  : ' + error);
       });
   return(dispatch) => {

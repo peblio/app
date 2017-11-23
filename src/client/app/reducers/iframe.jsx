@@ -29,6 +29,12 @@ const iframe = (state = initialState, action) => {
     case ActionTypes.SET_CURRENT_IFRAME:
       return Object.assign({}, state, { currentIframeId: action.value });
 
+    case ActionTypes.SET_DB_IFRAMES:
+      return Object.assign({}, state, {
+        iframes: action.iframes,
+        indexIframe: action.indexIframe
+      });
+
     default:
       return state;
   }

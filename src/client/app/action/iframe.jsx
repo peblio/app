@@ -25,3 +25,13 @@ export function setCurrentIframe(value) {
     });
   };
 }
+
+export function setDBIframes(indexIframe, iframes) {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_DB_IFRAMES,
+      indexIframe,
+      iframes
+    });
+  };
+}

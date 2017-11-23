@@ -8,6 +8,8 @@ const pageSchema = new Schema({
   indexEditor: { type: Number, default: 0},
   textEditors: { type: Object, default:  {}},
   indexTextEditor: { type: Number, default: 0},
+  iframes: { type: Object, default:  {}},
+  indexIframe: { type: Number, default: 0},
 },{ minimize: false });
 
 module.exports = mongoose.model('page', pageSchema);

@@ -9,7 +9,6 @@ class Iframe extends React.Component {
     this.props.setCurrentIframe(this.props.id);
   }
   urlSubmitted(event) {
-    // debugger;
     this.props.setIframeURL(this.url.value);
     event.preventDefault();
   }
@@ -18,7 +17,7 @@ class Iframe extends React.Component {
       <div id={this.props.id} onFocus={this.onFocus}>
         <form onSubmit={(event) => {this.urlSubmitted(event)}}>
           <label> URL:
-            <input type="text" ref={(element) => { this.url = element; }}  value={this.props.loginName}/>
+            <input type="text" ref={(element) => { this.url = element; }}  defaultValue={this.props.iframeURL}/>
           </label>
           <input type='submit' value='Submit'/>
         </form>

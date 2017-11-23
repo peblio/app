@@ -36,7 +36,6 @@ function savePage(req,res) {
     }
   });
 
-    console.log("in here??")
     var mod = new Page(req.body);
     mod.save(function(err,data){
       if(err){
@@ -58,7 +57,9 @@ function updatePage(req, res) {
     editors: req.body.editors,
     indexEditor: req.body.indexEditor,
     textEditors: req.body.textEditors,
-    indexTextEditor: req.body.indexTextEditor
+    indexTextEditor: req.body.indexTextEditor,
+    iframes: req.body.iframes,
+    indexIframe: req.body.indexIframe,
   },
   function(err,data){
     if(err){

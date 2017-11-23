@@ -35,8 +35,9 @@ class App extends React.Component {
       axios.get('/api/page/'+projectID[1])
         .then(res => {
         this.props.setDBPage(res.data[0].id,res.data[0].title);
-        this.props.setDBEditors(res.data[0].indexEditor,res.data[0].editors);
-        this.props.setDBTextEditors(res.data[0].indexTextEditor,res.data[0].textEditors);
+        res.data[0].editors && this.props.setDBEditors(res.data[0].indexEditor,res.data[0].editors);
+        res.data[0].textEditors && this.props.setDBTextEditors(res.data[0].indexTextEditor,res.data[0].textEditors);
+        res.data[0].iframes &&  this.props.setDBIframes(res.data[0].indexIframe,res.data[0].iframes);
         })
     }
     axios.get('/api/user')
@@ -127,7 +128,9 @@ class App extends React.Component {
             addTextEditor = {this.props.addTextEditor}
             currentTextEditorState = {this.props.currentTextEditorState}
             editors={this.props.editors}
+            iframes={this.props.iframes}
             indexEditor={this.props.indexEditor}
+            indexIframe={this.props.indexIframe}
             indexTextEditor={this.props.indexTextEditor}
             name={this.props.name}
             onChange={this.props.updateTextChange}

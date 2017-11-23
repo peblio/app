@@ -21,7 +21,9 @@ class MainToolbar extends React.Component {
               this.props.editors,
               this.props.indexEditor,
               this.props.textEditors,
-              this.props.indexTextEditor
+              this.props.indexTextEditor,
+              this.props.iframes,
+              this.props.indexIframe
             );
           } else {
             console.log('updating');
@@ -31,7 +33,9 @@ class MainToolbar extends React.Component {
               this.props.editors,
               this.props.indexEditor,
               this.props.textEditors,
-              this.props.indexTextEditor
+              this.props.indexTextEditor,
+              this.props.iframes,
+              this.props.indexIframe
             )
           }
         }}>SUBMIT</button>
