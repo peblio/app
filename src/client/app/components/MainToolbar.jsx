@@ -9,23 +9,28 @@ class MainToolbar extends React.Component {
   }
 
   submitPage() {
-    if(this.props.id.length==0){
-      this.props.submitPage(
-        this.props.pageTitle,
-        this.props.editors,
-        this.props.indexEditor,
-        this.props.textEditors,
-        this.props.indexTextEditor
-      );
-    } else {
-      this.props.updatePage(
-        this.props.id,
-        this.props.pageTitle,
-        this.props.editors,
-        this.props.indexEditor,
-        this.props.textEditors,
-        this.props.indexTextEditor
-      )
+    if(this.props.name) {
+      if(this.props.id.length==0){
+        this.props.submitPage(
+          this.props.pageTitle,
+          this.props.editors,
+          this.props.indexEditor,
+          this.props.textEditors,
+          this.props.indexTextEditor
+        );
+      } else {
+        this.props.updatePage(
+          this.props.id,
+          this.props.pageTitle,
+          this.props.editors,
+          this.props.indexEditor,
+          this.props.textEditors,
+          this.props.indexTextEditor
+        )
+      }
+    }
+    else {
+      this.props.viewLoginModal();
     }
   }
 
