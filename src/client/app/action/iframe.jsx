@@ -35,3 +35,12 @@ export function loadIframes(indexIframe, iframes) {
     });
   };
 }
+
+export function removeIframe(id) {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.REMOVE_IFRAME,
+      id
+    });
+  };
+}

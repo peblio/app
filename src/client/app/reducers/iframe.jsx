@@ -35,6 +35,12 @@ const iframe = (state = initialState, action) => {
         indexIframe: action.indexIframe
       });
 
+    case ActionTypes.REMOVE_IFRAME:
+      delete iframes[action.id];
+      return Object.assign({}, state, {
+        iframes: iframes
+      });
+
     default:
       return state;
   }

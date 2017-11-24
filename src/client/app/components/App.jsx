@@ -106,6 +106,7 @@ class App extends React.Component {
           setIframeURL={this.props.setIframeURL}
           iframeURL={this.props.iframes[id].url}
           setCurrentIframe={this.props.setCurrentIframe}
+          removeIframe={this.props.removeIframe}
         />
       );
     });
@@ -251,6 +252,7 @@ App.propTypes = {
   setPageTitle: PropTypes.func.isRequired,
   removeTextEditor: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
+  removeIframe: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
   loadPage: PropTypes.func.isRequired,
