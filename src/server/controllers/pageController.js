@@ -12,8 +12,6 @@ function savePage(req,res) {
   var user = req.user;
   var newList = [];
   if(user) {
-    console.log(user);
-
     User.find({_id:user._id}, function(err,data) {
       if(err) {
         res.send(err);
@@ -27,23 +25,22 @@ function savePage(req,res) {
         },
         function(err,data){
           if(err){
-              res.send(err);
+            res.send(err);
           }
           else{
-               // res.send({data:"Record has been Inserted..!!"});
+           res.send({data:"Record has been Inserted..!!"});
           }
         });
-    }
+      }
   });
 
-    console.log("in here??")
     var mod = new Page(req.body);
     mod.save(function(err,data){
       if(err){
-          res.send(err);
+        res.send(err);
       }
       else{
-           res.send({data:"Record has been Inserted..!!"});
+       res.send({data:"Record has been Inserted..!!"});
       }
     });
   }

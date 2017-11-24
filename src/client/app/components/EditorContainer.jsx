@@ -12,9 +12,7 @@ class EditorContainer extends React.Component {
     this.onFocus = this.onFocus.bind(this);
   }
   onFocus() {
-    // debugger;
     this.props.setCurrentEditor(this.props.editorId);
-    console.log(this.props);
   }
   render() {
     return (

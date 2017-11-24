@@ -13,13 +13,13 @@ apiRoutes.route('/sketches').get(getSketches);
 apiRoutes.route('/login').post(loginUser);
 
 function getPage(req,res) {
-  Page.find({id:req.params.id},function(err,data){
+  Page.find({ id: req.params.id }, function(err,data) {
     if(err){
-        res.send(err);
+      res.send(err);
     }
     else{
-        res.send(data);
-        }
+      res.send(data);
+    }
   });
 }
 
@@ -32,18 +32,14 @@ function getSketches(req,res) {
   let globalerr;
   if(req.user){
     let user = req.user;
-    console.log(user.pages);
     Page.find({id:{$in:user.pages}}, function(err,data) {
       if(err) {
         res.send(err);
       } else {
         res.send(data);
-
       }
     });
-
   }
-
 }
 
 function loginUser(req, res, next) {

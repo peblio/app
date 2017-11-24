@@ -8,6 +8,7 @@ class PagesList extends React.Component {
   constructor(props) {
     super(props);
   }
+
   componentDidMount() {
     axios.get('/api/sketches')
       .then((res) => {
@@ -17,7 +18,6 @@ class PagesList extends React.Component {
 
   renderPages() {
     let pages = [];
-    // let ids = Object.keys(this.props.pages);
     this.props.pages.forEach((page,index) => {
       let link = "/page/" + page.id;
       pages.push(
@@ -31,7 +31,6 @@ class PagesList extends React.Component {
 
   render() {
     const Pages = this.renderPages();
-    console.log(Pages);
     return (
       <div>
         <ul>

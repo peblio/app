@@ -13,9 +13,7 @@ class MainToolbar extends React.Component {
           placeholder="Title"
           type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}></input>
         <button onClick={() => {
-
           if(this.props.id.length==0){
-            console.log('saving');
             this.props.submitPage(
               this.props.pageTitle,
               this.props.editors,
@@ -24,7 +22,6 @@ class MainToolbar extends React.Component {
               this.props.indexTextEditor
             );
           } else {
-            console.log('updating');
             this.props.updatePage(
               this.props.id,
               this.props.pageTitle,
@@ -34,7 +31,7 @@ class MainToolbar extends React.Component {
               this.props.indexTextEditor
             )
           }
-        }}>SUBMIT</button>
+        }}>Submit</button>
         {(() => { // eslint-disable-line
           if (this.props.name) {
             return (
@@ -57,12 +54,10 @@ class MainToolbar extends React.Component {
             );
           }
         })()}
-
         <InsertToolbar
           addEditor = {this.props.addEditor}
           addTextEditor = {this.props.addTextEditor}
         />
-
       </div>
     );
   }

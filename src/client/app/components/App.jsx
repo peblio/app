@@ -25,12 +25,16 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.renderEditors = this.renderEditors.bind(this);
+    this.projectID = this.projectID.bind(this);
   }
-  componentDidMount() {
+  projectID() {
     let location = this.props.location.pathname;
     let projectID = location.match(/\/page\/([\w-].*)/);
-    if(projectID){
-      axios.get('/api/page/'+projectID[1])
+    return projectID ? projectID[1] : null;
+  }
+  componentDidMount() {
+    if(this.projectID()){
+      axios.get('/api/page/'+ this.projectID())
         .then(res => {
         this.props.loadPage(res.data[0].id,res.data[0].title);
         this.props.loadEditors(res.data[0].indexEditor,res.data[0].editors);
@@ -39,15 +43,10 @@ class App extends React.Component {
     }
     axios.get('/api/user')
       .then((res) => {
-        console.log(res);
         if(res.data.name) {
-          console.log(res.data.name);
           this.props.setUserName(res.data.name);
         }
       })
-  }
-
-  componentDidUpdate() {
   }
 
   renderEditors() {
@@ -129,7 +128,7 @@ class App extends React.Component {
             {TextEditors}
           </div>
           {(() => { // eslint-disable-line
-            if (this.props.isPagesModalOpen) {
+            if(this.props.isPagesModalOpen) {
               return (
                 <Modal
                   isOpen={this.props.isPagesModalOpen}

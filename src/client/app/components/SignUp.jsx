@@ -16,16 +16,16 @@ class SignUp extends React.Component {
 
   submitSignUpUser(event,name,password) {
     axios.post('/users/signup', {
-        name: name,
-        password: password
-      })
-        .then((response) => {
-          this.signUpSuccessful(response);
-        })
-        .catch(function(error) { // eslint-disable-line
-          console.log(error);
-        });
-      event.preventDefault();
+      name: name,
+      password: password
+    })
+    .then((response) => {
+      this.signUpSuccessful(response);
+    })
+    .catch(function(error) { // eslint-disable-line
+      console.log("Sign up failed");
+    });
+    event.preventDefault();
   }
 
   render() {
@@ -39,7 +39,7 @@ class SignUp extends React.Component {
           <label> password:
             <input type="text" value={this.props.loginPassword} onChange={this.props.updateUserPassword}/>
           </label>
-          <input type="submit" value='Submit'/>
+          <input type="submit" value="Submit"/>
         </form>
       </div>
     );

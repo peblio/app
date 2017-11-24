@@ -8,7 +8,7 @@ const initialState = {
 
 const defaultSketch = `function setup() {
   createCanvas(400, 400);
-  console.log("@");
+  console.log("drawing a canvas");
 }
 function draw() {
   background(220);
@@ -68,7 +68,7 @@ const editorContainer = (state = initialState, action) => {
 
     case ActionTypes.SET_DB_EDITORS:
     return Object.assign({}, state, {
-      editors: action.editors ,
+      editors: action.editors,
       indexEditor: action.indexEditor
     });
 
