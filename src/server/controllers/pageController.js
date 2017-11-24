@@ -55,7 +55,9 @@ function updatePage(req, res) {
     editors: req.body.editors,
     indexEditor: req.body.indexEditor,
     textEditors: req.body.textEditors,
-    indexTextEditor: req.body.indexTextEditor
+    indexTextEditor: req.body.indexTextEditor,
+    iframes: req.body.iframes,
+    indexIframe: req.body.indexIframe,
   },
   function(err,data){
     if(err){

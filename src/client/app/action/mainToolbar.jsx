@@ -23,23 +23,25 @@ export function loadPage(id, title) {
   };
 }
 
-export function submitPage(title, editors, indexEditor, textEditors, indexTextEditor) {
+export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor,iframes,indexIframe) {
   let id = shortid.generate();
   let textEditorsRaw = convertEditorState(textEditors);
   axios.post('/pages/save', {
-    id: id,
-    title: title,
-    editors: editors,
-    indexEditor: indexEditor,
-    textEditors: textEditorsRaw,
-    indexTextEditor: indexTextEditor
-  })
-  .then(function(response) { // eslint-disable-line
-    window.location.href= window.location.origin + '/page/' + id;
-  })
-  .catch(function(error) { // eslint-disable-line
-    console.log( error);
-  });
+      id: id,
+      title: title,
+      editors: editors,
+      indexEditor: indexEditor,
+      textEditors: textEditorsRaw,
+      indexTextEditor: indexTextEditor,
+      iframes: iframes,
+      indexIframe: indexIframe
+    })
+      .then(function(response) { // eslint-disable-line
+        window.location.href= window.location.origin + '/page/' + id;
+      })
+      .catch(function(error) { // eslint-disable-line
+        console.log( error);
+      });
   return(dispatch) => {
     dispatch({
       type: ActionTypes.SET_PAGE_ID,
@@ -48,23 +50,24 @@ export function submitPage(title, editors, indexEditor, textEditors, indexTextEd
   };
 }
 
-export function updatePage(id, title, editors, indexEditor, textEditors, indexTextEditor) {
+export function updatePage(id,title,editors,indexEditor,textEditors,indexTextEditor,iframes,indexIframe) {
   let textEditorsRaw = convertEditorState(textEditors);
   axios.post('/pages/update', {
-    id: id,
-    title: title,
-    editors: editors,
-    indexEditor: indexEditor,
-    textEditors: textEditorsRaw,
-    indexTextEditor: indexTextEditor
-  })
-  .then(function(response) { // eslint-disable-line
-    console.log(response);
-  })
-  .catch(function(error) { // eslint-disable-line
-    console.log("**");
-    console.log('Error  : ' + error);
-  });
+      id: id,
+      title: title,
+      editors: editors,
+      indexEditor: indexEditor,
+      textEditors: textEditorsRaw,
+      indexTextEditor: indexTextEditor,
+      iframes: iframes,
+      indexIframe: indexIframe
+    })
+      .then(function(response) { // eslint-disable-line
+        console.log(response);
+      })
+      .catch(function(error) { // eslint-disable-line
+        console.log('Error  : ' + error);
+      });
   return(dispatch) => {
     dispatch({
       type: ActionTypes.UPDATE_PAGE,

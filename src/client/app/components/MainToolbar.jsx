@@ -16,7 +16,9 @@ class MainToolbar extends React.Component {
           this.props.editors,
           this.props.indexEditor,
           this.props.textEditors,
-          this.props.indexTextEditor
+          this.props.indexTextEditor,
+          this.props.iframes,
+          this.props.indexIframe
         );
       } else {
         this.props.updatePage(
@@ -25,7 +27,9 @@ class MainToolbar extends React.Component {
           this.props.editors,
           this.props.indexEditor,
           this.props.textEditors,
-          this.props.indexTextEditor
+          this.props.indexTextEditor,
+          this.props.iframes,
+          this.props.indexIframe
         )
       }
     }
@@ -66,6 +70,7 @@ class MainToolbar extends React.Component {
         <InsertToolbar
           addEditor = {this.props.addEditor}
           addTextEditor = {this.props.addTextEditor}
+          addIframe = {this.props.addIframe}
         />
       </div>
     );
