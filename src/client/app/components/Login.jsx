@@ -30,7 +30,7 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <h1>Log In</h1>
+        Log In
         <form onSubmit={(event) => {this.submitLoginUser(event,this.props.loginName, this.props.loginPassword)}}>
           <label> name:
             <input type="text" value={this.props.loginName} onChange={this.props.updateUserName}/>
