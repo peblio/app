@@ -13,7 +13,7 @@ export function setPageTitle(event) {
   };
 }
 
-export function setDBPage(id, title) {
+export function loadPage(id, title) {
   return(dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
@@ -25,7 +25,6 @@ export function setDBPage(id, title) {
 
 export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor,iframes,indexIframe) {
   let id = shortid.generate();
-
   let textEditorsRaw = convertEditorState(textEditors);
   axios.post('/pages/save', {
       id: id,
@@ -78,9 +77,8 @@ export function updatePage(id,title,editors,indexEditor,textEditors,indexTextEdi
 }
 
 export function setAllPages(data) {
-  let pages = [];
-  data.forEach(function(page) {
-    pages.push({'id': page.id, 'title': page.title});
+  let pages = data.map(function(page) {
+    return { id: page.id, title: page.title };
   });
   return(dispatch) => {
     dispatch({

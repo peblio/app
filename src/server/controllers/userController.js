@@ -11,9 +11,6 @@ userRoutes.route('/user').get(getUser);
 function createUser(req,res) {
   const name = req.body.name;
   const password = req.body.password;
-  console.log("***********");
-  console.log(req);
-  console.log("***********");
   let user = new User({
     name: name,
     password: password

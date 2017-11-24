@@ -27,30 +27,29 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.renderEditors = this.renderEditors.bind(this);
+    this.projectID = this.projectID.bind(this);
   }
-  componentDidMount() {
+  projectID() {
     let location = this.props.location.pathname;
     let projectID = location.match(/\/page\/([\w-].*)/);
-    if(projectID){
-      axios.get('/api/page/'+projectID[1])
+    return projectID ? projectID[1] : null;
+  }
+  componentDidMount() {
+    if(this.projectID()){
+      axios.get('/api/page/'+ this.projectID())
         .then(res => {
-        this.props.setDBPage(res.data[0].id,res.data[0].title);
-        res.data[0].editors && this.props.setDBEditors(res.data[0].indexEditor,res.data[0].editors);
-        res.data[0].textEditors && this.props.setDBTextEditors(res.data[0].indexTextEditor,res.data[0].textEditors);
-        res.data[0].iframes &&  this.props.setDBIframes(res.data[0].indexIframe,res.data[0].iframes);
+        this.props.loadPage(res.data[0].id, res.data[0].title);
+        this.props.loadEditors(res.data[0].indexEditor, res.data[0].editors);
+        this.props.loadTextEditors(res.data[0].indexTextEditor, res.data[0].textEditors);
+        this.props.loadIframes(res.data[0].indexIframe, res.data[0].iframes);
         })
     }
     axios.get('/api/user')
       .then((res) => {
-        console.log(res);
         if(res.data.name) {
-          console.log(res.data.name);
           this.props.setUserName(res.data.name);
         }
       })
-  }
-
-  componentDidUpdate() {
   }
 
   renderEditors() {
@@ -156,7 +155,7 @@ class App extends React.Component {
             {Iframes}
           </div>
           {(() => { // eslint-disable-line
-            if (this.props.isPagesModalOpen) {
+            if(this.props.isPagesModalOpen) {
               return (
                 <Modal
                   isOpen={this.props.isPagesModalOpen}
@@ -254,7 +253,9 @@ App.propTypes = {
   removeEditor: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
-  setDBPage: PropTypes.func.isRequired,
+  loadPage: PropTypes.func.isRequired,
+  loadEditors: PropTypes.func.isRequired,
+  loadTextEditors: PropTypes.func.isRequired,
   setUserName: PropTypes.func.isRequired,
   setAllPages: PropTypes.func.isRequired,
   isPagesModalOpen: PropTypes.bool.isRequired,

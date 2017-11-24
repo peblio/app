@@ -26,7 +26,7 @@ export function setCurrentIframe(value) {
   };
 }
 
-export function setDBIframes(indexIframe, iframes) {
+export function loadIframes(indexIframe, iframes) {
   return(dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_IFRAMES,

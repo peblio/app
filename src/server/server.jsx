@@ -56,5 +56,5 @@ app.get('/logout', function(req, res){
 
 // call by default index.html page
 app.get("*",function(req,res){
-    res.sendFile(srcpath +'/index.html');
+  res.sendFile(srcpath +'/index.html');
 })

@@ -5,40 +5,46 @@ import InsertToolbar from './InsertToolbar.jsx';
 class MainToolbar extends React.Component {
   constructor(props) {
     super(props);
+    this.submitPage = this.submitPage.bind(this);
   }
+
+  submitPage() {
+    if(this.props.name) {
+      if(this.props.id.length==0){
+        this.props.submitPage(
+          this.props.pageTitle,
+          this.props.editors,
+          this.props.indexEditor,
+          this.props.textEditors,
+          this.props.indexTextEditor,
+          this.props.iframes,
+          this.props.indexIframe
+        );
+      } else {
+        this.props.updatePage(
+          this.props.id,
+          this.props.pageTitle,
+          this.props.editors,
+          this.props.indexEditor,
+          this.props.textEditors,
+          this.props.indexTextEditor,
+          this.props.iframes,
+          this.props.indexIframe
+        )
+      }
+    }
+    else {
+      this.props.viewLoginModal();
+    }
+  }
+
   render() {
     return (
       <div>
         <input className="mainToolbar__title"
           placeholder="Title"
           type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}></input>
-        <button onClick={() => {
-
-          if(this.props.id.length==0){
-            console.log('saving');
-            this.props.submitPage(
-              this.props.pageTitle,
-              this.props.editors,
-              this.props.indexEditor,
-              this.props.textEditors,
-              this.props.indexTextEditor,
-              this.props.iframes,
-              this.props.indexIframe
-            );
-          } else {
-            console.log('updating');
-            this.props.updatePage(
-              this.props.id,
-              this.props.pageTitle,
-              this.props.editors,
-              this.props.indexEditor,
-              this.props.textEditors,
-              this.props.indexTextEditor,
-              this.props.iframes,
-              this.props.indexIframe
-            )
-          }
-        }}>SUBMIT</button>
+        <button onClick={this.submitPage}>Submit</button>
         {(() => { // eslint-disable-line
           if (this.props.name) {
             return (
@@ -61,13 +67,11 @@ class MainToolbar extends React.Component {
             );
           }
         })()}
-
         <InsertToolbar
           addEditor = {this.props.addEditor}
           addTextEditor = {this.props.addTextEditor}
           addIframe = {this.props.addIframe}
         />
-
       </div>
     );
   }

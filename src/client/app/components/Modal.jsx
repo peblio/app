@@ -10,7 +10,6 @@ class Modal extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <ReactModal isOpen={this.props.isOpen}>
         <nav>

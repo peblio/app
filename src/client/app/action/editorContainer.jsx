@@ -71,7 +71,7 @@ export function removeEditor(id) {
   };
 }
 
-export function setDBEditors(indexEditor, editors) {
+export function loadEditors(indexEditor, editors) {
   return(dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_EDITORS,

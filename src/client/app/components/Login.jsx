@@ -20,18 +20,17 @@ class Login extends React.Component {
       password: password
     })
       .then((response) => {
-        // debugger;
         this.loginSuccessful(response);
       })
       .catch(function(error) { // eslint-disable-line
-          console.log(error);
+        console.log("Login Failed");
       });
     event.preventDefault();
   }
   render() {
     return (
       <div>
-        <h1>LOG IN!</h1>
+        Log In
         <form onSubmit={(event) => {this.submitLoginUser(event,this.props.loginName, this.props.loginPassword)}}>
           <label> name:
             <input type="text" value={this.props.loginName} onChange={this.props.updateUserName}/>
