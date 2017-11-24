@@ -1,8 +1,12 @@
-.mainToolbar_title{
+.mainToolbar__title{
   height:40px;
   margin: $medium-padding $large-padding;
   background-color: $black;
   color:$white;
   font-size: 35px;
   border: none;
+ }
+
+ .mainToolbar__login {
+   color: $white;
  }

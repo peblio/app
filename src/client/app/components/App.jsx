@@ -1,25 +1,52 @@
+import { Editor, EditorState, RichUtils, Modifier } from 'draft-js';
 import React, { PropTypes } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import EditorContainer from './EditorContainer.jsx';
-import Test from './Test.jsx';
-import TextEditor from './TextEditor.jsx';
 import ConsoleOutput from './ConsoleOutput.jsx';
+import EditorContainer from './EditorContainer.jsx';
+import Login from './Login.jsx';
 import MainToolbar from './MainToolbar.jsx';
-import {Editor, EditorState, RichUtils, Modifier} from 'draft-js';
+import Modal from './Modal.jsx';
+import PagesList from './PagesList.jsx';
+import SignUp from './SignUp.jsx';
+import TextEditor from './TextEditor.jsx';
 
 import * as editorActions from '../action/editorContainer.jsx';
-import * as textEditorActions from '../action/textEditors.jsx';
 import * as mainToolbarActions from '../action/mainToolbar.jsx';
+import * as textEditorActions from '../action/textEditors.jsx';
+import * as userActions from '../action/user.jsx';
+
+const axios = require('axios');
+const Regex = require('regex');
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.renderEditors = this.renderEditors.bind(this);
+    this.projectID = this.projectID.bind(this);
   }
-  componentDidUpdate() {
+  projectID() {
+    let location = this.props.location.pathname;
+    let projectID = location.match(/\/page\/([\w-].*)/);
+    return projectID ? projectID[1] : null;
+  }
+  componentDidMount() {
+    if(this.projectID()){
+      axios.get('/api/page/'+ this.projectID())
+        .then(res => {
+        this.props.loadPage(res.data[0].id,res.data[0].title);
+        this.props.loadEditors(res.data[0].indexEditor,res.data[0].editors);
+        this.props.loadTextEditors(res.data[0].indexTextEditor,res.data[0].textEditors);
+        })
+    }
+    axios.get('/api/user')
+      .then((res) => {
+        if(res.data.name) {
+          this.props.setUserName(res.data.name);
+        }
+      })
   }
 
   renderEditors() {
@@ -72,11 +99,25 @@ class App extends React.Component {
       <div>
         <nav>
           <MainToolbar
-            setPageTitle={this.props.setPageTitle}
+            id={this.props.id}
+
             addEditor = {this.props.addEditor}
             addTextEditor = {this.props.addTextEditor}
             currentTextEditorState = {this.props.currentTextEditorState}
+            editors={this.props.editors}
+            indexEditor={this.props.indexEditor}
+            indexTextEditor={this.props.indexTextEditor}
+            name={this.props.name}
             onChange={this.props.updateTextChange}
+            pageTitle={this.props.pageTitle}
+            setAllPages={this.props.setAllPages}
+            setPageTitle={this.props.setPageTitle}
+            submitPage={this.props.submitPage}
+            textEditors={this.props.textEditors}
+            updatePage={this.props.updatePage}
+            viewPagesModal={this.props.viewPagesModal}
+            viewLoginModal={this.props.viewLoginModal}
+            viewSignUpModal={this.props.viewSignUpModal}
           />
         </nav>
         <section className="canvas">
@@ -86,6 +127,61 @@ class App extends React.Component {
           <div>
             {TextEditors}
           </div>
+          {(() => { // eslint-disable-line
+            if(this.props.isPagesModalOpen) {
+              return (
+                <Modal
+                  isOpen={this.props.isPagesModalOpen}
+                  closeModal={this.props.closePagesModal}
+                >
+                  <PagesList
+                    pages={this.props.pages}
+                    setAllPages={this.props.setAllPages}
+                  />
+                </Modal>
+              );
+            }
+          })()}
+          {(() => { // eslint-disable-line
+            if (this.props.isLoginModalOpen) {
+              return (
+                <Modal
+                  isOpen={this.props.isLoginModalOpen}
+                  closeModal={this.props.closeLoginModal}
+                >
+                  <Login
+                    loginName={this.props.loginName}
+                    loginPassword={this.props.loginPassword}
+                    updateUserName={this.props.updateUserName}
+                    updateUserPassword={this.props.updateUserPassword}
+                    setUserName={this.props.setUserName}
+                    closeLoginModal={this.props.closeLoginModal}
+                  />
+                </Modal>
+              );
+            }
+          })()}
+          {(() => { // eslint-disable-line
+            if (this.props.isSignUpModalOpen) {
+              return (
+                <Modal
+                  isOpen={this.props.isSignUpModalOpen}
+                  closeModal={this.props.closeSignUpModal}
+                >
+                  <SignUp
+                    loginName={this.props.loginName}
+                    loginPassword={this.props.loginPassword}
+                    updateUserName={this.props.updateUserName}
+                    updateUserPassword={this.props.updateUserPassword}
+                    signUserUp={this.props.signUserUp}
+                    setUserName={this.props.setUserName}
+                    closeSignUpModal={this.props.closeSignUpModal}
+                  />
+                </Modal>
+              );
+            }
+          })()}
+
         </section>
       </div>
     );
@@ -121,7 +217,27 @@ App.propTypes = {
   setCurrentTextEditor: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   removeTextEditor: PropTypes.func.isRequired,
-  removeEditor: PropTypes.func.isRequired
+  removeEditor: PropTypes.func.isRequired,
+  submitPage: PropTypes.func.isRequired,
+  updatePage: PropTypes.func.isRequired,
+  loadPage: PropTypes.func.isRequired,
+  loadEditors: PropTypes.func.isRequired,
+  loadTextEditors: PropTypes.func.isRequired,
+  setUserName: PropTypes.func.isRequired,
+  setAllPages: PropTypes.func.isRequired,
+  isPagesModalOpen: PropTypes.bool.isRequired,
+  viewPagesModal: PropTypes.func.isRequired,
+  closePagesModal: PropTypes.func.isRequired,
+  viewLoginModal: PropTypes.func.isRequired,
+  closeLoginModal: PropTypes.func.isRequired,
+  viewSignUpModal: PropTypes.func.isRequired,
+  closeSignUpModal: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  loginName: PropTypes.string.isRequired,
+  loginPassword: PropTypes.string.isRequired,
+  updateUserName: PropTypes.func.isRequired,
+  updateUserPassword: PropTypes.func.isRequired,
+  signUserUp: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -137,6 +253,14 @@ function mapStateToProps(state) {
     textEditorIndex: state.textEditors.textEditorIndex,
     styleMap: state.textEditors.styleMap,
     pageTitle: state.mainToolbar.pageTitle,
+    id: state.mainToolbar.id,
+    pages: state.mainToolbar.pages,
+    name: state.user.name,
+    loginName: state.user.loginName,
+    loginPassword: state.user.loginPassword,
+    isPagesModalOpen: state.mainToolbar.isPagesModalOpen,
+    isLoginModalOpen: state.mainToolbar.isLoginModalOpen,
+    isSignUpModalOpen: state.mainToolbar.isSignUpModalOpen,
   };
 }
 
@@ -144,7 +268,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
     editorActions,
     textEditorActions,
-    mainToolbarActions),
+    mainToolbarActions,
+    userActions),
   dispatch);
 }
 export default (connect(mapStateToProps, mapDispatchToProps)(App));

@@ -12,17 +12,8 @@ class P5Editor extends React.Component {
     super(props);
   }
   componentDidMount() {
-    const defaultSketch = `function setup() {
-      createCanvas(400, 400);
-      console.log("@");
-    }
-    function draw() {
-      background(220);
-    }`;
-    this.props.updateCode(defaultSketch);
-
     this.cm = CodeMirror(this.codemirrorContainer, {
-      value: defaultSketch,
+      value: this.props.editorCode,
       mode: 'javascript',
       lineNumbers: true,
       autoCloseBrackets: true,
