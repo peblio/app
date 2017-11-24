@@ -28,7 +28,7 @@ function savePage(req,res) {
             res.send(err);
           }
           else{
-           res.send({data:"Record has been Inserted..!!"});
+           // res.send({data:"Record has been Inserted..!!"});
           }
         });
       }

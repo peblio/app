@@ -5,33 +5,37 @@ import InsertToolbar from './InsertToolbar.jsx';
 class MainToolbar extends React.Component {
   constructor(props) {
     super(props);
+    this.submitPage = this.submitPage.bind(this);
   }
+
+  submitPage() {
+    if(this.props.id.length==0){
+      this.props.submitPage(
+        this.props.pageTitle,
+        this.props.editors,
+        this.props.indexEditor,
+        this.props.textEditors,
+        this.props.indexTextEditor
+      );
+    } else {
+      this.props.updatePage(
+        this.props.id,
+        this.props.pageTitle,
+        this.props.editors,
+        this.props.indexEditor,
+        this.props.textEditors,
+        this.props.indexTextEditor
+      )
+    }
+  }
+
   render() {
     return (
       <div>
         <input className="mainToolbar__title"
           placeholder="Title"
           type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}></input>
-        <button onClick={() => {
-          if(this.props.id.length==0){
-            this.props.submitPage(
-              this.props.pageTitle,
-              this.props.editors,
-              this.props.indexEditor,
-              this.props.textEditors,
-              this.props.indexTextEditor
-            );
-          } else {
-            this.props.updatePage(
-              this.props.id,
-              this.props.pageTitle,
-              this.props.editors,
-              this.props.indexEditor,
-              this.props.textEditors,
-              this.props.indexTextEditor
-            )
-          }
-        }}>Submit</button>
+        <button onClick={this.submitPage}>Submit</button>
         {(() => { // eslint-disable-line
           if (this.props.name) {
             return (
