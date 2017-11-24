@@ -15,6 +15,9 @@ class Iframe extends React.Component {
   render() {
     return (
       <div id={this.props.id} onFocus={this.onFocus}>
+        <nav>
+          <button className="element__close" onClick={() => this.props.removeIframe(this.props.id)}>&#x2613;</button>
+        </nav>
         <form onSubmit={(event) => {this.urlSubmitted(event)}}>
           <label> URL:
             <input type="text" ref={(element) => { this.url = element; }}  defaultValue={this.props.iframeURL}/>
