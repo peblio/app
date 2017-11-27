@@ -1,5 +1,6 @@
 .insertToolbar__container {
   display: flex;
+  @include flex;
   flex-direction: row;
   margin: 0 $medium-padding;
   color: $gray;
@@ -9,6 +10,27 @@
 }
 .insertToolbar__button {
   @extend %menu-item;
-  margin: $small-margin;
-  padding: $medium-padding;
+  margin: 0 $small-margin;
+  padding: $small-padding/2 $small-padding;
+}
+
+.insertToolbar__icon{
+
+  display: block;
+  width: 20px;
+  margin: auto;
+  margin-bottom: $small-margin/2;
+}
+
+// #Shape:hover {
+//     fill:black;
+// }
+
+.insertToolbar__button:hover #Shape {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+    fill:black;
+    stroke:black;
+
+
 }

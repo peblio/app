@@ -34,19 +34,42 @@
 //deleting and moving elements on the canvas
 %element_controls{
   // @include transition(border 1s 1s color 2s);
-  border: $medium-border-width solid $gray;
-  border-radius: $small-border-radius;
-  color: $gray;
+  // border: $medium-border-width solid $gray;
+  // border-radius: $small-border-radius;
+  color: black;
   background-color: $white;
+  font-size: 20px;
+  font-style: bold;
   text-transform: uppercase;
-  text-align: center;
-  padding: $small-padding $medium-padding;
+  text-align:center;
+
+  // padding: $small-padding $medium-padding;
   margin-bottom:$small-margin/2;
-  -webkit-transition-duration: 1s;
-  transition-duration: 1s;
+  -webkit-transition-duration: .5s;
+  transition-duration: .5s;
   &:hover {
-    border: 2px solid $black;
+    border: white;
+    color: $light-gray;
+    cursor: pointer;
+  }
+}
+
+%mainToolbar__button{
+  margin: $large-margin $small-margin;
+  padding: $medium-padding/2 $medium-padding;
+  float: right;
+  font-size: 14px;
+  font-weight: bold;
+  border: $thin-border-width solid $white;
+  border-radius: $small-border-radius;
+  color: $white;
+  background-color: $black;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  &:hover {
+    border: $thin-border-width solid $gray;
     color: $black;
+    background: $white;
     cursor: pointer;
   }
 }

@@ -29,16 +29,21 @@ class Login extends React.Component {
   }
   render() {
     return (
-      <div>
-        Log In
+      <div className="loginModal_content">
+        <h5 className="loginModal_title">Log In</h5>
         <form onSubmit={(event) => {this.submitLoginUser(event,this.props.loginName, this.props.loginPassword)}}>
-          <label> name:
-            <input type="text" value={this.props.loginName} onChange={this.props.updateUserName}/>
+        <div className="loginModal_div">
+          <label  className="loginModal_label"> Name
+            <input className="loginModal_input" type="text" value={this.props.loginName} onChange={this.props.updateUserName}/>
           </label>
-          <label> password:
-            <input type="text" value={this.props.loginPassword} onChange={this.props.updateUserPassword}/>
+        </div>
+        <div className="loginModal_div">
+          <label  className="loginModal_label"> Password
+            <input className="loginModal_input" type="text" value={this.props.loginPassword} onChange={this.props.updateUserPassword}/>
           </label>
-          <input type='submit' value='Submit'/>
+        </div>
+
+          <input className="loginModal_button" type='submit' value='Submit'/>
         </form>
       </div>
     );

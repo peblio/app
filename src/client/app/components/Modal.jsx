@@ -11,9 +11,9 @@ class Modal extends React.Component {
 
   render() {
     return (
-      <ReactModal isOpen={this.props.isOpen}>
+      <ReactModal className="Modal" isOpen={this.props.isOpen}>
         <nav>
-          <button onClick={this.props.closeModal}>Close</button>
+          <button className="Modal_closeButton" onClick={this.props.closeModal}>Close</button>
         </nav>
         {this.props.children}
       </ReactModal>
