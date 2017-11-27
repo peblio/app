@@ -17,15 +17,15 @@
 // used for editor toolbar
 %small-button{
   border: $thin-border-width solid $black;
-  border-radius: $small-border-radius;
+  border-radius: $medium-border-radius;
   color: $black;
   background-color: $white;
-  height: 2rem;
-  margin: 0 $small-padding;
+  height: 1.5rem;
+  margin: $small-padding ;
   padding: $small-padding $medium-padding;
-  @include gradient(white, $light-gray);
+  // @include gradient(white, $light-gray);
   &:hover {
-    box-shadow: 3px 3px 1px $gray;
+    // box-shadow: 3px 3px 1px $gray;
     cursor: pointer;
     @include gradient(white, $light-gray);
   }
@@ -34,7 +34,7 @@
 //deleting and moving elements on the canvas
 %element_controls{
   // @include transition(border 1s 1s color 2s);
-  // border: $medium-border-width solid $gray;
+  border: none;
   // border-radius: $small-border-radius;
   color: black;
   background-color: $white;
@@ -48,7 +48,7 @@
   -webkit-transition-duration: .5s;
   transition-duration: .5s;
   &:hover {
-    border: white;
+    border: none;
     color: $light-gray;
     cursor: pointer;
   }

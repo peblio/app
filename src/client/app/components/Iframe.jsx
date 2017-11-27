@@ -14,19 +14,20 @@ class Iframe extends React.Component {
   }
   render() {
     return (
-      <div id={this.props.id} onFocus={this.onFocus}>
+      <div className="element__iframe" id={this.props.id} onFocus={this.onFocus}>
         <nav>
           <button className="element__close" onClick={() => this.props.removeIframe(this.props.id)}>&#x2613;</button>
         </nav>
-        <form onSubmit={(event) => {this.urlSubmitted(event)}}>
-          <label> URL:
-            <input type="text" ref={(element) => { this.url = element; }}  defaultValue={this.props.iframeURL}/>
-          </label>
-          <input type='submit' value='Submit'/>
-        </form>
         <div>
           <iframe src={this.props.iframeURL}/>
         </div>
+        <form className="element__addURL" onSubmit={(event) => {this.urlSubmitted(event)}}>
+          <label className="element__label"> URL: 
+            <input className="element__input" type="text" ref={(element) => { this.url = element; }}  defaultValue={this.props.iframeURL}/>
+          </label>
+          <input className="element__button" type='submit' value='Submit'/>
+        </form>
+
       </div>
     );
   }
