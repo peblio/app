@@ -3,7 +3,7 @@ const initialState = {
   isPlaying: false,
   editors: {},
   currentEditorId: 'editor-0',
-  indexEditor: 0,
+  indexEditor: 0
 }
 
 const defaultSketch = `function setup() {
@@ -55,7 +55,11 @@ const editorContainer = (state = initialState, action) => {
         consoleOutputText: [],
         code: defaultSketch,
         isPlaying: false,
-        editorMode: 'p5'
+        editorMode: 'p5',
+        x: 0,
+        y: 0,
+        width: 200,
+        height: 100
       };
       editors[newEditorId]= newEditor;
       return Object.assign({}, state, {
@@ -69,20 +73,34 @@ const editorContainer = (state = initialState, action) => {
       tempOutput.push(action.event.data.arguments.join());
       editors[state.currentEditorId].consoleOutputText = tempOutput;
       return Object.assign({}, state, {
-        editors: editors 
+        editors: editors
       });
 
     case ActionTypes.REMOVE_EDITOR:
-    delete editors[action.id];
-    return Object.assign({}, state, {
-      editors: editors
-    });
+      delete editors[action.id];
+      return Object.assign({}, state, {
+        editors: editors
+      });
 
     case ActionTypes.SET_DB_EDITORS:
-    return Object.assign({}, state, {
-      editors: action.editors,
-      indexEditor: action.indexEditor
-    });
+      return Object.assign({}, state, {
+        editors: action.editors,
+        indexEditor: action.indexEditor
+      });
+
+    case ActionTypes.SET_EDITOR_POSITION:
+      editors[state.currentEditorId].x = action.x;
+      editors[state.currentEditorId].y = action.y;
+      return Object.assign({}, state, {
+        editors: editors
+      });
+
+    case ActionTypes.SET_EDITOR_SIZE:
+      editors[state.currentEditorId].width = action.width;
+      editors[state.currentEditorId].height = action.height;
+      return Object.assign({}, state, {
+        editors: editors
+      });
 
     default:
       return state;
