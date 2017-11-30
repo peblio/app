@@ -17,9 +17,7 @@ const iframe = (state = initialState, action) => {
         x: 0,
         y: 0,
         width: 200,
-        height: 50,
-        minWidth: 200,
-        minHeight: 50
+        height: 50
       };
       iframes[newIframeId]= newIframe;
       return Object.assign({}, state, {
