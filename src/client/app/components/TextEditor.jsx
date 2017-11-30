@@ -10,15 +10,16 @@ class TextEditor extends React.Component {
   }
 
   onFocus() {
-    console.log(this.props.id);
     this.props.setCurrentTextEditor(this.props.id, this.props.editorState);
   }
 
   render() {
+    let dragClassName = "element__close drag__" +this.props.id;
     return (
       <div id={this.props.id} onFocus={this.onFocus} className="textEditor__container">
         <nav>
           <button className="element__close" onClick={() => this.props.removeTextEditor(this.props.id)}>&#x2613;</button>
+          <button className={dragClassName}>&#x2612;</button>
         </nav>
         <Editor
           id={this.props.id}

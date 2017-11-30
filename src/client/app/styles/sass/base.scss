@@ -13,6 +13,11 @@ body, html, h1, h2, h3{
   padding: $medium-padding;
 }
 
+.resize-container {
+  border: $small-border solid $black;
+  border-radius: $medium-border-radius;
+}
+
 button {
   @extend %menu-item ;
 }

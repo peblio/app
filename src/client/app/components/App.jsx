@@ -24,6 +24,10 @@ import * as userActions from '../action/user.jsx';
 const axios = require('axios');
 const Regex = require('regex');
 
+const divStyle = {
+  background: 'maroon'
+};
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -54,21 +58,23 @@ class App extends React.Component {
   }
 
   renderEditors() {
-    const divStyle = {
-      background: 'red'
-    };
+
     let editorsHTML = [];
     let ids = Object.keys(this.props.editors);
     ids.forEach((id) => {
+      let dragHandle = '.drag__' + id;
       editorsHTML.push(
         <Rnd
-          style={divStyle}
+          className="resize-container"
           size={{ width: this.props.editors[id].width,  height: this.props.editors[id].height }}
           position={{ x: this.props.editors[id].x, y: this.props.editors[id].y }}
-          onDragStop={(e, d) => { this.props.setEditorPosition(d.x, d.y)}}
+          onDragStop={(e, d) => {this.props.setEditorPosition(d.x, d.y)}}
+          dragHandleClassName={dragHandle}
           onResize={(e, direction, ref, delta, position) => {
             this.props.setEditorSize(ref.offsetWidth, ref.offsetHeight)
           }}
+          minWidth={this.props.editors[id].minWidth}
+          minHeight={this.props.editors[id].minHeight}
         >
           <EditorContainer
             key={id}
@@ -92,32 +98,33 @@ class App extends React.Component {
   }
 
   renderTextEditors() {
-    const divStyle = {
-      background: 'blue'
-    };
     let textEditors = [];
     let ids = Object.keys(this.props.textEditors);
     ids.forEach((id) => {
+      let dragHandle = '.drag__' + id;
       textEditors.push(
         <Rnd
-          style={divStyle}
-          default={{
-            x: 0,
-            y: 0,
-            width: 320,
-            height: 200,
+          className="resize-container"
+          size={{ width: this.props.textEditors[id].width,  height: this.props.textEditors[id].height }}
+          position={{ x: this.props.textEditors[id].x, y: this.props.textEditors[id].y }}
+          onDragStop={(e, d) => {console.log("hi");this.props.setTextEditorPosition(d.x, d.y)}}
+          dragHandleClassName={dragHandle}
+          onResize={(e, direction, ref, delta, position) => {
+            this.props.setTextEditorSize(ref.offsetWidth, ref.offsetHeight)
           }}
+          minWidth={this.props.textEditors[id].minWidth}
+          minHeight={this.props.textEditors[id].minHeight}
         >
           <TextEditor
-          key={id}
-          editorState={this.props.textEditors[id].editorState}
-          onChange={this.props.updateTextChange}
-          ref={this.props.textEditors[id].id}
-          id={this.props.textEditors[id].id}
-          currentTextEditorState={this.props.currentTextEditorState}
-          currentTextEditorId={this.props.currentTextEditorId}
-          setCurrentTextEditor={this.props.setCurrentTextEditor}
-          removeTextEditor={this.props.removeTextEditor}
+            key={id}
+            editorState={this.props.textEditors[id].editorState}
+            onChange={this.props.updateTextChange}
+            ref={this.props.textEditors[id].id}
+            id={this.props.textEditors[id].id}
+            currentTextEditorState={this.props.currentTextEditorState}
+            currentTextEditorId={this.props.currentTextEditorId}
+            setCurrentTextEditor={this.props.setCurrentTextEditor}
+            removeTextEditor={this.props.removeTextEditor}
           />
         </Rnd>
       );
@@ -127,21 +134,22 @@ class App extends React.Component {
   }
 
   renderIframes() {
-    const divStyle = {
-      background: 'yellow'
-    };
     let iframes = [];
     let ids = Object.keys(this.props.iframes);
     ids.forEach((id) => {
+      let dragHandle = '.drag__' + id;
       iframes.push(
         <Rnd
-          style={divStyle}
-          default={{
-            x: 0,
-            y: 0,
-            width: 320,
-            height: 200,
+          className="resize-container"
+          size={{ width: this.props.iframes[id].width,  height: this.props.iframes[id].height }}
+          position={{ x: this.props.iframes[id].x, y: this.props.iframes[id].y }}
+          onDragStop={(e, d) => {this.props.setIframePosition(d.x, d.y)}}
+          dragHandleClassName={dragHandle}
+          onResize={(e, direction, ref, delta, position) => {
+            this.props.setIframeSize(ref.offsetWidth, ref.offsetHeight)
           }}
+          minWidth={this.props.iframes[id].minWidth}
+          minHeight={this.props.iframes[id].minHeight}
         >
           <Iframe
             key={id}
@@ -161,9 +169,6 @@ class App extends React.Component {
     const Editors = this.renderEditors();
     const TextEditors = this.renderTextEditors();
     const Iframes = this.renderIframes();
-    const divStyle = {
-      background: 'yellow'
-    };
     return (
       <div>
         <nav>
@@ -290,6 +295,8 @@ App.propTypes = {
   addIframe: PropTypes.func.isRequired,
   setCurrentIframe: PropTypes.func.isRequired,
   removeIframe: PropTypes.func.isRequired,
+  setIframeSize: PropTypes.func.isRequired,
+  setIframePosition: PropTypes.func.isRequired,
 
   addTextEditor: PropTypes.func.isRequired,
   indexTextEditor: PropTypes.number.isRequired,
@@ -298,6 +305,8 @@ App.propTypes = {
   setCurrentTextEditor: PropTypes.func.isRequired,
   removeTextEditor: PropTypes.func.isRequired,
   loadTextEditors: PropTypes.func.isRequired,
+  setTextEditorSize: PropTypes.func.isRequired,
+  setTextEditorPosition: PropTypes.func.isRequired,
 
   setPageTitle: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,

@@ -58,8 +58,10 @@ const editorContainer = (state = initialState, action) => {
         editorMode: 'p5',
         x: 0,
         y: 0,
-        width: 200,
-        height: 100
+        width: 300,
+        height: 100,
+        minWidth: 300,
+        minHeight: 100
       };
       editors[newEditorId]= newEditor;
       return Object.assign({}, state, {

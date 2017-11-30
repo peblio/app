@@ -46,3 +46,23 @@ export function loadTextEditors(indexTextEditor, textEditors) {
     });
   };
 }
+
+export function setTextEditorPosition(x, y) {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_TEXT_EDITOR_POSITION,
+      x,
+      y
+    });
+  };
+}
+
+export function setTextEditorSize(width, height) {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_TEXT_EDITOR_SIZE,
+      width,
+      height
+    });
+  };
+}

@@ -143,6 +143,10 @@ function convertEditorState(textEditors) {
     newTextEditors[id] = {};
     newTextEditors[id].id = textEditors[id].id;
     newTextEditors[id].rawContentState = JSON.stringify(convertToRaw(textEditors[id].editorState.getCurrentContent()));
+    newTextEditors[id].x = textEditors[id].x;
+    newTextEditors[id].y = textEditors[id].y;
+    newTextEditors[id].width = textEditors[id].width;
+    newTextEditors[id].height = textEditors[id].height;
   });
   return newTextEditors;
 }
