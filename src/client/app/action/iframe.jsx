@@ -44,3 +44,23 @@ export function removeIframe(id) {
     });
   };
 }
+
+export function setIframePosition(x, y) {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_IFRAME_POSITION,
+      x,
+      y
+    });
+  };
+}
+
+export function setIframeSize(width, height) {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_IFRAME_SIZE,
+      width,
+      height
+    });
+  };
+}

@@ -13,7 +13,11 @@ const iframe = (state = initialState, action) => {
       let newIframeId = 'iframe-' + state.indexIframe;
       let newIframe = {
         id: newIframeId,
-        url:''
+        url:'',
+        x: 0,
+        y: 0,
+        width: 200,
+        height: 50
       };
       iframes[newIframeId]= newIframe;
       return Object.assign({}, state, {
@@ -37,6 +41,20 @@ const iframe = (state = initialState, action) => {
 
     case ActionTypes.REMOVE_IFRAME:
       delete iframes[action.id];
+      return Object.assign({}, state, {
+        iframes: iframes
+      });
+
+    case ActionTypes.SET_IFRAME_POSITION:
+      iframes[state.currentIframeId].x = action.x;
+      iframes[state.currentIframeId].y = action.y;
+      return Object.assign({}, state, {
+        iframes: iframes
+      });
+
+    case ActionTypes.SET_IFRAME_SIZE:
+      iframes[state.currentIframeId].width = action.width;
+      iframes[state.currentIframeId].height = action.height;
       return Object.assign({}, state, {
         iframes: iframes
       });

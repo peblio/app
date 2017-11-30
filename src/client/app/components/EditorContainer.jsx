@@ -15,10 +15,12 @@ class EditorContainer extends React.Component {
     this.props.setCurrentEditor(this.props.editorId);
   }
   render() {
+    let dragClassName = "element__close drag__" +this.props.editorId;
     return (
       <div className= "codeEditor_totalContainer" onFocus={ this.onFocus }>
         <nav>
           <button className="element__close" onClick={() => this.props.removeEditor(this.props.editorId)}>&#x2613;</button>
+          <button className={dragClassName}>&#x2612;</button>
         </nav>
         <EditorToolbar
           playCode = {() => {this.props.playCode(this.props.editorId)}}

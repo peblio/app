@@ -13,10 +13,12 @@ class Iframe extends React.Component {
     event.preventDefault();
   }
   render() {
+    let dragClassName = "element__close drag__" +this.props.id;
     return (
       <div id={this.props.id} onFocus={this.onFocus}>
         <nav>
           <button className="element__close" onClick={() => this.props.removeIframe(this.props.id)}>&#x2613;</button>
+          <button className={dragClassName}>&#x2612;</button>
         </nav>
         <form onSubmit={(event) => {this.urlSubmitted(event)}}>
           <label> URL:

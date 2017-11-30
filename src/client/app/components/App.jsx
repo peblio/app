@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Rnd from 'react-rnd';
 
 import ConsoleOutput from './ConsoleOutput.jsx';
 import EditorContainer from './EditorContainer.jsx';
@@ -22,6 +23,10 @@ import * as userActions from '../action/user.jsx';
 
 const axios = require('axios');
 const Regex = require('regex');
+
+const divStyle = {
+  background: 'maroon'
+};
 
 class App extends React.Component {
   constructor(props) {
@@ -53,24 +58,41 @@ class App extends React.Component {
   }
 
   renderEditors() {
+
     let editorsHTML = [];
     let ids = Object.keys(this.props.editors);
     ids.forEach((id) => {
-      editorsHTML.push(<EditorContainer
-        key={id}
-        editorId={id}
-        playCode = {this.props.playCode}
-        stopCode = {this.props.stopCode}
-        updateCode = {this.props.updateCode}
-        isPlaying = {this.props.editors[id].isPlaying}
-        editorMode = {this.props.editors[id].editorMode}
-        consoleOutputText = {this.props.editors[id].consoleOutputText}
-        code = {this.props.editors[id].code}
-        setCurrentEditor = {this.props.setCurrentEditor}
-        setEditorMode = {this.props.setEditorMode}
-        updateConsoleOutput = {this.props.updateConsoleOutput}
-        removeEditor = {this.props.removeEditor}
-      />);
+      let dragHandle = '.drag__' + id;
+      editorsHTML.push(
+        <Rnd
+          className="resize-container"
+          size={{ width: this.props.editors[id].width,  height: this.props.editors[id].height }}
+          position={{ x: this.props.editors[id].x, y: this.props.editors[id].y }}
+          onDragStop={(e, d) => {this.props.setEditorPosition(d.x, d.y)}}
+          dragHandleClassName={dragHandle}
+          onResize={(e, direction, ref, delta, position) => {
+            this.props.setEditorSize(ref.offsetWidth, ref.offsetHeight)
+          }}
+          minWidth={this.props.editors[id].minWidth}
+          minHeight={this.props.editors[id].minHeight}
+        >
+          <EditorContainer
+            key={id}
+            editorId={id}
+            playCode = {this.props.playCode}
+            stopCode = {this.props.stopCode}
+            updateCode = {this.props.updateCode}
+            isPlaying = {this.props.editors[id].isPlaying}
+            editorMode = {this.props.editors[id].editorMode}
+            consoleOutputText = {this.props.editors[id].consoleOutputText}
+            code = {this.props.editors[id].code}
+            setCurrentEditor = {this.props.setCurrentEditor}
+            setEditorMode = {this.props.setEditorMode}
+            updateConsoleOutput = {this.props.updateConsoleOutput}
+            removeEditor = {this.props.removeEditor}
+          />
+        </Rnd>
+      );
     });
     return editorsHTML;
   }
@@ -79,17 +101,33 @@ class App extends React.Component {
     let textEditors = [];
     let ids = Object.keys(this.props.textEditors);
     ids.forEach((id) => {
-      textEditors.push(<TextEditor
-        key={id}
-        editorState={this.props.textEditors[id].editorState}
-        onChange={this.props.updateTextChange}
-        ref={this.props.textEditors[id].id}
-        id={this.props.textEditors[id].id}
-        currentTextEditorState={this.props.currentTextEditorState}
-        currentTextEditorId={this.props.currentTextEditorId}
-        setCurrentTextEditor={this.props.setCurrentTextEditor}
-        removeTextEditor={this.props.removeTextEditor}
-      />);
+      let dragHandle = '.drag__' + id;
+      textEditors.push(
+        <Rnd
+          className="resize-container"
+          size={{ width: this.props.textEditors[id].width,  height: this.props.textEditors[id].height }}
+          position={{ x: this.props.textEditors[id].x, y: this.props.textEditors[id].y }}
+          onDragStop={(e, d) => {console.log("hi");this.props.setTextEditorPosition(d.x, d.y)}}
+          dragHandleClassName={dragHandle}
+          onResize={(e, direction, ref, delta, position) => {
+            this.props.setTextEditorSize(ref.offsetWidth, ref.offsetHeight)
+          }}
+          minWidth={this.props.textEditors[id].minWidth}
+          minHeight={this.props.textEditors[id].minHeight}
+        >
+          <TextEditor
+            key={id}
+            editorState={this.props.textEditors[id].editorState}
+            onChange={this.props.updateTextChange}
+            ref={this.props.textEditors[id].id}
+            id={this.props.textEditors[id].id}
+            currentTextEditorState={this.props.currentTextEditorState}
+            currentTextEditorId={this.props.currentTextEditorId}
+            setCurrentTextEditor={this.props.setCurrentTextEditor}
+            removeTextEditor={this.props.removeTextEditor}
+          />
+        </Rnd>
+      );
     });
 
     return textEditors;
@@ -99,15 +137,29 @@ class App extends React.Component {
     let iframes = [];
     let ids = Object.keys(this.props.iframes);
     ids.forEach((id) => {
+      let dragHandle = '.drag__' + id;
       iframes.push(
-        <Iframe
-          key={id}
-          id={id}
-          setIframeURL={this.props.setIframeURL}
-          iframeURL={this.props.iframes[id].url}
-          setCurrentIframe={this.props.setCurrentIframe}
-          removeIframe={this.props.removeIframe}
-        />
+        <Rnd
+          className="resize-container"
+          size={{ width: this.props.iframes[id].width,  height: this.props.iframes[id].height }}
+          position={{ x: this.props.iframes[id].x, y: this.props.iframes[id].y }}
+          onDragStop={(e, d) => {this.props.setIframePosition(d.x, d.y)}}
+          dragHandleClassName={dragHandle}
+          onResize={(e, direction, ref, delta, position) => {
+            this.props.setIframeSize(ref.offsetWidth, ref.offsetHeight)
+          }}
+          minWidth={this.props.iframes[id].minWidth}
+          minHeight={this.props.iframes[id].minHeight}
+        >
+          <Iframe
+            key={id}
+            id={id}
+            setIframeURL={this.props.setIframeURL}
+            iframeURL={this.props.iframes[id].url}
+            setCurrentIframe={this.props.setCurrentIframe}
+            removeIframe={this.props.removeIframe}
+          />
+        </Rnd>
       );
     });
     return iframes;
@@ -122,7 +174,6 @@ class App extends React.Component {
         <nav>
           <MainToolbar
             id={this.props.id}
-
             addEditor = {this.props.addEditor}
             addIframe = {this.props.addIframe}
             addTextEditor = {this.props.addTextEditor}
@@ -146,71 +197,64 @@ class App extends React.Component {
           />
         </nav>
         <section className="canvas">
-          <div>
-            {Editors}
-          </div>
-          <div>
-            {TextEditors}
-          </div>
-          <div>
-            {Iframes}
-          </div>
-          {(() => { // eslint-disable-line
-            if(this.props.isPagesModalOpen) {
-              return (
-                <Modal
-                  isOpen={this.props.isPagesModalOpen}
-                  closeModal={this.props.closePagesModal}
-                >
-                  <PagesList
-                    pages={this.props.pages}
-                    setAllPages={this.props.setAllPages}
-                  />
-                </Modal>
-              );
-            }
-          })()}
-          {(() => { // eslint-disable-line
-            if (this.props.isLoginModalOpen) {
-              return (
-                <Modal
-                  isOpen={this.props.isLoginModalOpen}
-                  closeModal={this.props.closeLoginModal}
-                >
-                  <Login
-                    loginName={this.props.loginName}
-                    loginPassword={this.props.loginPassword}
-                    updateUserName={this.props.updateUserName}
-                    updateUserPassword={this.props.updateUserPassword}
-                    setUserName={this.props.setUserName}
-                    closeLoginModal={this.props.closeLoginModal}
-                  />
-                </Modal>
-              );
-            }
-          })()}
-          {(() => { // eslint-disable-line
-            if (this.props.isSignUpModalOpen) {
-              return (
-                <Modal
-                  isOpen={this.props.isSignUpModalOpen}
-                  closeModal={this.props.closeSignUpModal}
-                >
-                  <SignUp
-                    loginName={this.props.loginName}
-                    loginPassword={this.props.loginPassword}
-                    updateUserName={this.props.updateUserName}
-                    updateUserPassword={this.props.updateUserPassword}
-                    signUserUp={this.props.signUserUp}
-                    setUserName={this.props.setUserName}
-                    closeSignUpModal={this.props.closeSignUpModal}
-                  />
-                </Modal>
-              );
-            }
-          })()}
-
+          {Editors}
+          {TextEditors}
+          {Iframes}
         </section>
+        {(() => { // eslint-disable-line
+          if(this.props.isPagesModalOpen) {
+            return (
+              <Modal
+                isOpen={this.props.isPagesModalOpen}
+                closeModal={this.props.closePagesModal}
+              >
+                <PagesList
+                  pages={this.props.pages}
+                  setAllPages={this.props.setAllPages}
+                />
+              </Modal>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.isLoginModalOpen) {
+            return (
+              <Modal
+                isOpen={this.props.isLoginModalOpen}
+                closeModal={this.props.closeLoginModal}
+              >
+                <Login
+                  loginName={this.props.loginName}
+                  loginPassword={this.props.loginPassword}
+                  updateUserName={this.props.updateUserName}
+                  updateUserPassword={this.props.updateUserPassword}
+                  setUserName={this.props.setUserName}
+                  closeLoginModal={this.props.closeLoginModal}
+                />
+              </Modal>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.isSignUpModalOpen) {
+            return (
+              <Modal
+                isOpen={this.props.isSignUpModalOpen}
+                closeModal={this.props.closeSignUpModal}
+              >
+                <SignUp
+                  loginName={this.props.loginName}
+                  loginPassword={this.props.loginPassword}
+                  updateUserName={this.props.updateUserName}
+                  updateUserPassword={this.props.updateUserPassword}
+                  signUserUp={this.props.signUserUp}
+                  setUserName={this.props.setUserName}
+                  closeSignUpModal={this.props.closeSignUpModal}
+                />
+              </Modal>
+            );
+          }
+        })()}
       </div>
     );
   }
@@ -233,33 +277,44 @@ App.propTypes = {
     id: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired
   })),
+
   isPlaying: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
   addEditor: PropTypes.func.isRequired,
-  addTextEditor: PropTypes.func.isRequired,
+  indexEditor: PropTypes.number.isRequired,
+  setCurrentEditor: PropTypes.func.isRequired,
+  updateConsoleOutput: PropTypes.func.isRequired,
+  setEditorMode: PropTypes.func.isRequired,
+  removeEditor: PropTypes.func.isRequired,
+  loadEditors: PropTypes.func.isRequired,
+  setEditorSize: PropTypes.func.isRequired,
+  setEditorPosition: PropTypes.func.isRequired,
+
   addIframe: PropTypes.func.isRequired,
   setCurrentIframe: PropTypes.func.isRequired,
-  indexEditor: PropTypes.number.isRequired,
+  removeIframe: PropTypes.func.isRequired,
+  setIframeSize: PropTypes.func.isRequired,
+  setIframePosition: PropTypes.func.isRequired,
+
+  addTextEditor: PropTypes.func.isRequired,
   indexTextEditor: PropTypes.number.isRequired,
-  setCurrentEditor: PropTypes.func.isRequired,
-  setEditorMode: PropTypes.func.isRequired,
-  updateConsoleOutput: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired,
   currentTextEditorState: PropTypes.object,
   setCurrentTextEditor: PropTypes.func.isRequired,
-  setPageTitle: PropTypes.func.isRequired,
   removeTextEditor: PropTypes.func.isRequired,
-  removeEditor: PropTypes.func.isRequired,
-  removeIframe: PropTypes.func.isRequired,
+  loadTextEditors: PropTypes.func.isRequired,
+  setTextEditorSize: PropTypes.func.isRequired,
+  setTextEditorPosition: PropTypes.func.isRequired,
+
+  setPageTitle: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
   loadPage: PropTypes.func.isRequired,
-  loadEditors: PropTypes.func.isRequired,
-  loadTextEditors: PropTypes.func.isRequired,
   setUserName: PropTypes.func.isRequired,
   setAllPages: PropTypes.func.isRequired,
+
   isPagesModalOpen: PropTypes.bool.isRequired,
   viewPagesModal: PropTypes.func.isRequired,
   closePagesModal: PropTypes.func.isRequired,
@@ -267,6 +322,7 @@ App.propTypes = {
   closeLoginModal: PropTypes.func.isRequired,
   viewSignUpModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
+
   name: PropTypes.string.isRequired,
   loginName: PropTypes.string.isRequired,
   loginPassword: PropTypes.string.isRequired,
@@ -281,6 +337,7 @@ function mapStateToProps(state) {
     editors: state.editorContainer.editors,
     indexEditor: state.editorContainer.indexEditor,
     currentEditorId: state.editorContainer.currentEditorId,
+
     textEditors: state.textEditors.textEditors,
     indexTextEditor: state.textEditors.indexTextEditor,
     currentTextEditorId: state.textEditors.currentTextEditorId,
@@ -298,6 +355,7 @@ function mapStateToProps(state) {
     name: state.user.name,
     loginName: state.user.loginName,
     loginPassword: state.user.loginPassword,
+
     isPagesModalOpen: state.mainToolbar.isPagesModalOpen,
     isLoginModalOpen: state.mainToolbar.isLoginModalOpen,
     isSignUpModalOpen: state.mainToolbar.isSignUpModalOpen,

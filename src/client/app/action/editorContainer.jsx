@@ -80,3 +80,23 @@ export function loadEditors(indexEditor, editors) {
     });
   };
 }
+
+export function setEditorPosition(x, y) {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_EDITOR_POSITION,
+      x,
+      y
+    });
+  };
+}
+
+export function setEditorSize(width, height) {
+  return(dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_EDITOR_SIZE,
+      width,
+      height
+    });
+  };
+}
