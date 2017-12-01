@@ -22,7 +22,7 @@ class Iframe extends React.Component {
           <iframe src={this.props.iframeURL}/>
         </div>
         <form className="element__addURL" onSubmit={(event) => {this.urlSubmitted(event)}}>
-          <label className="element__label"> URL: 
+          <label className="element__label"> URL
             <input className="element__input" type="text" ref={(element) => { this.url = element; }}  defaultValue={this.props.iframeURL}/>
           </label>
           <input className="element__button" type='submit' value='Submit'/>

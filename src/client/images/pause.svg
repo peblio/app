@@ -1,0 +1,10 @@
+<svg width="11px" height="12px" viewBox="0 0 11 12" version="1.1">
+  <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+      <g id="playPause"  transform="translate(-774.000000, -299.000000)" fill="#F7F7F7">
+          <g transform="translate(774.000000, 299.000000)">
+              <rect x="0" y="0" width="4.2" height="12" rx="1.2"></rect>
+              <rect x="6.6" y="0" width="4.2" height="12" rx="1.2"></rect>
+          </g>
+      </g>
+  </g>
+</svg>
