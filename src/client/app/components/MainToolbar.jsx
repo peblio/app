@@ -40,29 +40,30 @@ class MainToolbar extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="mainToolbar">
         <input className="mainToolbar__title"
           placeholder="Title"
           type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}></input>
-        <button onClick={this.submitPage}>Submit</button>
+        <button className="mainToolbar_save" onClick={this.submitPage}>Save</button>
         {(() => { // eslint-disable-line
           if (this.props.name) {
             return (
-              <div>
-                <p className="mainToolbar__login">
-                  Welcome {this.props.name}
-                </p>
-                <button onClick={this.props.viewPagesModal}>
+                <div className="mainToolbar_div">
+                  <p className="mainToolbar__welcome">
+                    Welcome {this.props.name}!
+                  </p>
+                <button className="mainToolbar__open" onClick={this.props.viewPagesModal}>
                   View all sketches
                 </button>
-                <a href="/logout">Logout</a>
-              </div>
+                <a className="mainToolbar_save" href="/logout">Logout</a>
+            </div>
+
             );
           } else {
             return (
-              <div>
-                <button onClick={this.props.viewLoginModal}>Login</button>
-                <button onClick={this.props.viewSignUpModal}>Sign Up</button>
+              <div className="mainToolbar_div">
+                <button className="mainToolbar_save" onClick={this.props.viewLoginModal}>Log In</button>
+                <button className="mainToolbar_save" onClick={this.props.viewSignUpModal}>Sign Up</button>
               </div>
             );
           }

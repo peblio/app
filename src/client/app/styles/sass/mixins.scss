@@ -7,3 +7,11 @@
   background-image:      -o-linear-gradient(top, $from-color, $to-color);
   -ms-filter:	"progid:DXImageTransform.Microsoft.gradient(startColorStr='#{$from-color}', EndColorStr='#{$to-color}')";
 }
+
+@mixin flex {
+    // write the css here
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}

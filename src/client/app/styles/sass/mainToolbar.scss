@@ -1,12 +1,36 @@
+.mainToolbar{
+  padding: 0 $large-padding 0 0;
+
+}
+
 .mainToolbar__title{
   height:40px;
-  margin: $medium-padding $large-padding;
+  margin: $medium-padding $large-padding auto;
   background-color: $black;
   color:$white;
   font-size: 35px;
   border: none;
+  width:30%;
  }
 
- .mainToolbar__login {
+ .mainToolbar__welcome {
    color: $white;
+   width:auto;
+   margin: auto;
+   padding: 10px;
  }
+
+.mainToolbar_save{
+  @extend %mainToolbar__button;
+}
+
+.mainToolbar__open{
+  @extend %mainToolbar__button;
+
+}
+
+.mainToolbar_div{
+  @include flex;
+  float: right;
+
+}

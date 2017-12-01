@@ -2,19 +2,37 @@
   display: flex;
   flex-direction: row;
   background-color: $light-gray;
-  background: red; /* For browsers that do not support gradients */
-  @include gradient($light-gray, $gray);
-  // background: $medium-gradient-safari;
-  // background: $medium-gradient-firefox;
-  // background: $medium-gradient-standard;
+  background: $dark-gray; /* For browsers that do not support gradients */
   width: 100%;
   margin: 0 $small-padding;
-  padding: $small-padding 0 ;
-  border: $medium-border-width solid $black;
+  padding: $small-padding/2 0 ;
+  // border: $medium-border-width solid $black;
   border-radius: $medium-border-radius $medium-border-radius 0 0 ;
   z-index: 100;
 ;
 }
 .editorToolbar__item {
   @extend %small-button;
+}
+
+.editorToolbar__svg{
+  border: none;
+  border-radius: $small-border-radius;
+  width: 1.5rem;
+  background-color: $dark-gray;
+  height: 1.5rem;
+  margin: $small-padding $small-padding 0 ;
+  // padding: $small-padding $medium-padding;
+  &:hover {
+    background-color: $dark-gray;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+.editorToolbar__svg:hover #playPause {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+    fill:$light-gray;
+    stroke:$light-gray;
 }

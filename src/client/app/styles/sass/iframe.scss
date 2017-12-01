@@ -1,0 +1,42 @@
+.element__iframe{
+  width: 40%;
+  padding: 0;
+}
+.element__addURL{
+  background-color: $light-gray;
+  margin: 0;
+  padding: $small-padding;
+}
+
+iframe{
+  width:100%;
+}
+
+.element__label{
+  margin-right: $small-margin;
+  font-style: bold;
+}
+
+.element__input{
+margin-left: $small-padding;
+width:80%;
+height:1.5rem;
+border: 1px black;
+border-radius: $small-border-radius;
+padding-left: $small-padding;
+}
+
+.element__button{
+  width:auto;
+  height:1.5rem;
+  border: 1px black;
+  border-radius: $small-border-radius;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  &:hover {
+    background-color: $dark-gray;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+}

@@ -1,6 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 
+const playButton = require('../../images/play.svg');
+const pauseButton = require('../../images/pause.svg');
+
 class EditorToolbar extends React.Component {
   constructor(props) {
     super(props);
@@ -8,18 +11,6 @@ class EditorToolbar extends React.Component {
   render() {
     return (
       <div className="editorToolbar__container">
-        <button
-          className="editorToolbar__item"
-          onClick = {this.props.playCode}
-        >
-          Play
-        </button>
-        <button
-          className="editorToolbar__item"
-          onClick = {this.props.stopCode}
-        >
-          Stop
-        </button>
         <select
           className="editorToolbar__item"
           id="test"
@@ -29,6 +20,19 @@ class EditorToolbar extends React.Component {
           <option value="javascript">javascript</option>
           <option value="python">python</option>
         </select>
+        <button
+          className="editorToolbar__svg"
+          onClick = {this.props.playCode}
+        >
+        <InlineSVG src={playButton} alt="Run Code" />
+        </button>
+        <button
+          className="editorToolbar__svg"
+          onClick = {this.props.stopCode}
+        >
+        <InlineSVG src={pauseButton} alt="Pause Code" />
+
+        </button>
       </div>
     );
   }

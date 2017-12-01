@@ -1,6 +1,11 @@
 import React from 'react';
 import { render } from 'react-dom';
 
+
+const editorButton = require('../../images/editor.svg');
+const textButton = require('../../images/text.svg');
+const embedButton = require('../../images/embed.svg');
+
 class InsertToolbar extends React.Component {
   constructor(props) {
     super(props);
@@ -12,19 +17,23 @@ class InsertToolbar extends React.Component {
           onClick = {this.props.addEditor}
           className = 'insertToolbar__button'
         >
-          Editor
+        <InlineSVG src={editorButton} alt="add Editor" />
+          editor
         </button>
         <button
           onClick = {this.props.addTextEditor}
-          className = 'insertToolbar__button'
+          id="elementButton" className = 'insertToolbar__button'
         >
-          TextEditor
+        <InlineSVG src={textButton} alt="add textBox" />
+          text box
         </button>
         <button
           onClick = {this.props.addIframe}
           className = 'insertToolbar__button'
         >
-          Iframe
+        <InlineSVG src={embedButton} alt="add embed" />
+
+          embed
         </button>
       </div>
     );
