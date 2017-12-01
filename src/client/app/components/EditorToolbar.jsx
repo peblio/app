@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-const playButton = require('../../images/play.svg');
-const pauseButton = require('../../images/pause.svg');
+import PlaySVG from '../images/play.svg';
+import PauseSVG from '../images/pause.svg';
 
 class EditorToolbar extends React.Component {
   constructor(props) {
@@ -24,13 +24,13 @@ class EditorToolbar extends React.Component {
           className="editorToolbar__svg"
           onClick = {this.props.playCode}
         >
-        <InlineSVG src={playButton} alt="Run Code" />
+        <PlaySVG alt="Run Code" />
         </button>
         <button
           className="editorToolbar__svg"
           onClick = {this.props.stopCode}
         >
-        <InlineSVG src={pauseButton} alt="Pause Code" />
+        <PauseSVG alt="Pause Code" />
 
         </button>
       </div>
