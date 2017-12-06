@@ -29,6 +29,7 @@
     "mongodb": "^2.2.33",
     "mongoose": "^4.11.0",
     "node-sass": "^4.5.3",
+    "nodemon": "^1.12.5",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "python-js": "^0.9.8",
