@@ -33,23 +33,16 @@
 
 //deleting and moving elements on the canvas
 %element_controls{
-  // @include transition(border 1s 1s color 2s);
   border: none;
-  // border-radius: $small-border-radius;
-  color: black;
-  background-color: $white;
-  font-size: 20px;
-  font-style: bold;
-  text-transform: uppercase;
-  text-align:center;
-
-  // padding: $small-padding $medium-padding;
+  background-color: white;
   margin-bottom:$small-margin/2;
-  -webkit-transition-duration: .5s;
-  transition-duration: .5s;
+  fill: black;
+  margin-top: -45px;
+  -webkit-transition-duration: .2s;
+  transition-duration: .2s;
   &:hover {
     border: none;
-    color: $light-gray;
+    fill: $light-gray;
     cursor: pointer;
   }
 }

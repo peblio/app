@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import TextToolbar from './TextToolbar.jsx';
 import {Editor, EditorState, RichUtils, Modifier} from 'draft-js';
 
+import Drag from '../images/drag.svg';
+import CloseSVG from '../images/close.svg';
+
+
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -18,8 +22,10 @@ class TextEditor extends React.Component {
     return (
       <div id={this.props.id} onFocus={this.onFocus} className="textEditor__container">
         <nav>
-          <button className="element__close" onClick={() => this.props.removeTextEditor(this.props.id)}>&#x2613;</button>
-          <button className={dragClassName}>&#x2612;</button>
+          <button className="element__close" onClick={() => this.props.removeTextEditor(this.props.id)}><CloseSVG alt="close element"/></button>
+          <button className={dragClassName}>
+            <Drag alt="drag element"/>
+          </button>
         </nav>
         <Editor
           id={this.props.id}
