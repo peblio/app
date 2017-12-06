@@ -62,6 +62,11 @@ class App extends React.Component {
     let editorsHTML = [];
     let ids = Object.keys(this.props.editors);
     ids.forEach((id) => {
+      let extendsProps = {
+        onMouseOver: () => {
+          this.props.setCurrentEditor(id)
+        }
+      };
       let dragHandle = '.drag__' + id;
       editorsHTML.push(
         <Rnd
@@ -75,6 +80,7 @@ class App extends React.Component {
           }}
           minWidth={this.props.editors[id].minWidth}
           minHeight={this.props.editors[id].minHeight}
+          extendsProps={extendsProps}
         >
           <EditorContainer
             key={id}
@@ -99,8 +105,15 @@ class App extends React.Component {
 
   renderTextEditors() {
     let textEditors = [];
+
+
     let ids = Object.keys(this.props.textEditors);
     ids.forEach((id) => {
+      let extendsProps = {
+        onMouseOver: () => {
+          this.props.setCurrentTextEditor(this.props.textEditors[id].id, this.props.textEditors[id].editorState)
+        }
+      };
       let dragHandle = '.drag__' + id;
       textEditors.push(
         <Rnd
@@ -114,6 +127,7 @@ class App extends React.Component {
           }}
           minWidth={this.props.textEditors[id].minWidth}
           minHeight={this.props.textEditors[id].minHeight}
+          extendsProps={extendsProps}
         >
           <TextEditor
             key={id}
@@ -137,6 +151,11 @@ class App extends React.Component {
     let iframes = [];
     let ids = Object.keys(this.props.iframes);
     ids.forEach((id) => {
+      let extendsProps = {
+        onMouseOver: () => {
+          this.props.setCurrentIframe(id);
+        }
+      };
       let dragHandle = '.drag__' + id;
       iframes.push(
         <Rnd
@@ -150,6 +169,7 @@ class App extends React.Component {
           }}
           minWidth={this.props.iframes[id].minWidth}
           minHeight={this.props.iframes[id].minHeight}
+          extendsProps={extendsProps}
         >
           <Iframe
             key={id}
