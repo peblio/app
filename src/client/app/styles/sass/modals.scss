@@ -1,18 +1,44 @@
 .Modal{
-  width: 80%;
-  height:80%;
-  background: $white;
-  margin: auto;
-  margin-top: 5%;
-  margin-bottom: 5%;
-
-  // width: 200px;
-  // border: 3px solid green;
-  padding: 10px;
+  @extend %modal;
+  width: 60%;
+  height:70%;
 }
 
 
 .Modal_closeButton{
  float:right;
  padding: 4px;
+}
+
+.pages_list{
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+  max-height: 80%;
+  width: 100%;
+  padding-top: $large-margin;
+}
+ol{
+  list-style-position: inside;
+  -webkit-margin-before: 0;
+  -webkit-padding-start: 0px;
+}
+ol li{
+    padding: 1.5rem;
+    color: $gray;
+}
+
+ol li:nth-child(odd){
+  background: $lighter-gray;
+}
+
+ol li a{
+  color: $gray;
+
+}
+
+.pages_title{
+  margin-left: $large-margin;
+  color: $light-gray;
+
 }

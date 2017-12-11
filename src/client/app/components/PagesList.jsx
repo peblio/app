@@ -32,10 +32,11 @@ class PagesList extends React.Component {
   render() {
     const Pages = this.renderPages();
     return (
-      <div>
-        <ul>
+      <div className= "pages_list">
+        <p className="pages_title">Title</p>
+        <ol>
           {Pages}
-        </ul>
+        </ol>
       </div>
     );
   }

@@ -66,3 +66,13 @@
     cursor: pointer;
   }
 }
+
+%modal{
+  background: $white;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  border-radius: $medium-border-radius;
+  border: 2px solid $gray;
+  padding: 10px;
+}
