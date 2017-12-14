@@ -70,7 +70,7 @@ class App extends React.Component {
       let dragHandle = '.drag__' + id;
       editorsHTML.push(
         <Rnd
-          className="resize-container"
+          className='resize-container'
           size={{ width: this.props.editors[id].width,  height: this.props.editors[id].height }}
           position={{ x: this.props.editors[id].x, y: this.props.editors[id].y }}
           onDragStop={(e, d) => {this.props.setEditorPosition(d.x, d.y)}}
@@ -81,6 +81,7 @@ class App extends React.Component {
           minWidth={this.props.editors[id].minWidth}
           minHeight={this.props.editors[id].minHeight}
           extendsProps={extendsProps}
+          bounds='.canvas'
         >
           <EditorContainer
             key={id}
@@ -117,10 +118,10 @@ class App extends React.Component {
       let dragHandle = '.drag__' + id;
       textEditors.push(
         <Rnd
-          className="resize-container"
+          className='resize-container'
           size={{ width: this.props.textEditors[id].width,  height: this.props.textEditors[id].height }}
           position={{ x: this.props.textEditors[id].x, y: this.props.textEditors[id].y }}
-          onDragStop={(e, d) => {console.log("hi");this.props.setTextEditorPosition(d.x, d.y)}}
+          onDragStop={(e, d) => {this.props.setTextEditorPosition(d.x, d.y)}}
           dragHandleClassName={dragHandle}
           onResize={(e, direction, ref, delta, position) => {
             this.props.setTextEditorSize(ref.offsetWidth, ref.offsetHeight)
@@ -128,6 +129,7 @@ class App extends React.Component {
           minWidth={this.props.textEditors[id].minWidth}
           minHeight={this.props.textEditors[id].minHeight}
           extendsProps={extendsProps}
+          bounds='.canvas'
         >
           <TextEditor
             key={id}
@@ -159,7 +161,7 @@ class App extends React.Component {
       let dragHandle = '.drag__' + id;
       iframes.push(
         <Rnd
-          className="resize-container"
+          className='resize-container'
           size={{ width: this.props.iframes[id].width,  height: this.props.iframes[id].height }}
           position={{ x: this.props.iframes[id].x, y: this.props.iframes[id].y }}
           onDragStop={(e, d) => {this.props.setIframePosition(d.x, d.y)}}
@@ -170,6 +172,7 @@ class App extends React.Component {
           minWidth={this.props.iframes[id].minWidth}
           minHeight={this.props.iframes[id].minHeight}
           extendsProps={extendsProps}
+          bounds='.canvas'
         >
           <Iframe
             key={id}
@@ -216,7 +219,7 @@ class App extends React.Component {
             viewSignUpModal={this.props.viewSignUpModal}
           />
         </nav>
-        <section className="canvas">
+        <section className='canvas'>
           {Editors}
           {TextEditors}
           {Iframes}
