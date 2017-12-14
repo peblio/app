@@ -24,7 +24,11 @@ function getPage(req,res) {
 }
 
 function getUser(req,res) {
-  res.send(req.user);
+  let name = null;
+  if(req.user) {
+    name = req.user.name;
+  }
+  res.send({name:name});
 }
 
 function getSketches(req,res) {
@@ -55,7 +59,7 @@ function loginUser(req, res, next) {
       if(err){
         return next(err);
       }
-      return res.send({ success : true, message : 'authentication succeeded', user: user });
+      return res.send({ success : true, message : 'authentication succeeded', user: {name:user.name} });
     });
   })(req, res, next);
 }
