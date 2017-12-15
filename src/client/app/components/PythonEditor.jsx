@@ -6,9 +6,9 @@ import 'codemirror/mode/python/python';
 
 class PythonEditor extends React.Component {
   componentDidMount() {
-    const defaultSketch = `
+    const defaultSketch=`
     def factorial(n):
-      if n == 0:
+      if n==0:
         return 1
       else:
         return n * factorial(n - 1)
@@ -16,7 +16,7 @@ class PythonEditor extends React.Component {
     `;
     this.props.updateCode(defaultSketch);
 
-    this.cm = CodeMirror(this.codemirrorContainer, {
+    this.cm=CodeMirror(this.codemirrorContainer, {
       value: defaultSketch,
       mode: 'javascript',
       lineNumbers: true,
@@ -24,7 +24,7 @@ class PythonEditor extends React.Component {
       inputStyle: 'contenteditable',
       styleActiveLine: true
     });
-    this.cm.on('keyup', () => {
+    this.cm.on('keyup', ()=> {
       this.props.updateCode(this.cm.getValue());
     });
 
@@ -32,7 +32,7 @@ class PythonEditor extends React.Component {
   render() {
     return (
       <div>
-        <div ref={(element) => { this.codemirrorContainer = element; }}>
+        <div ref={(element)=> { this.codemirrorContainer=element; }}>
         </div>
       </div>
     );

@@ -1,11 +1,11 @@
 import * as ActionTypes from '../constants.jsx';
-const initialState = {
+const initialState={
   name: '',
   loginName: '',
   loginPassword: ''
 }
 
-const user = (state = initialState, action) => {
+const user=(state=initialState, action)=> {
   switch (action.type) {
 
     case ActionTypes.UPDATE_USER_NAME:

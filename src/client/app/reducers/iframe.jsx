@@ -1,17 +1,17 @@
 import * as ActionTypes from '../constants.jsx';
-const initialState = {
+const initialState={
   iframes: {},
   currentIframeId: 'iframe-0',
   indexIframe: 0
 }
 
-const iframe = (state = initialState, action) => {
-  let iframes = JSON.parse(JSON.stringify(state.iframes));
+const iframe=(state=initialState, action)=> {
+  let iframes=JSON.parse(JSON.stringify(state.iframes));
   switch (action.type) {
 
     case ActionTypes.ADD_IFRAME:
-      let newIframeId = 'iframe-' + state.indexIframe;
-      let newIframe = {
+      let newIframeId='iframe-' + state.indexIframe;
+      let newIframe={
         id: newIframeId,
         url:'',
         x: 0,
@@ -19,7 +19,7 @@ const iframe = (state = initialState, action) => {
         width: 200,
         height: 50
       };
-      iframes[newIframeId]= newIframe;
+      iframes[newIframeId]=newIframe;
       return Object.assign({}, state, {
         iframes: iframes,
         indexIframe: state.indexIframe + 1,
@@ -27,7 +27,7 @@ const iframe = (state = initialState, action) => {
       });
 
     case ActionTypes.SET_IFRAME_URL:
-      iframes[state.currentIframeId].url = action.url;
+      iframes[state.currentIframeId].url=action.url;
       return Object.assign({}, state, { iframes: iframes })
 
     case ActionTypes.SET_CURRENT_IFRAME:
@@ -46,15 +46,15 @@ const iframe = (state = initialState, action) => {
       });
 
     case ActionTypes.SET_IFRAME_POSITION:
-      iframes[state.currentIframeId].x = action.x;
-      iframes[state.currentIframeId].y = action.y;
+      iframes[state.currentIframeId].x=action.x;
+      iframes[state.currentIframeId].y=action.y;
       return Object.assign({}, state, {
         iframes: iframes
       });
 
     case ActionTypes.SET_IFRAME_SIZE:
-      iframes[state.currentIframeId].width = action.width;
-      iframes[state.currentIframeId].height = action.height;
+      iframes[state.currentIframeId].width=action.width;
+      iframes[state.currentIframeId].height=action.height;
       return Object.assign({}, state, {
         iframes: iframes
       });

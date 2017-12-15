@@ -6,7 +6,7 @@ import {Editor, EditorState, RichUtils, Modifier} from 'draft-js';
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.onFocus = this.onFocus.bind(this);
+    this.onFocus=this.onFocus.bind(this);
   }
 
   onFocus() {
@@ -14,11 +14,11 @@ class TextEditor extends React.Component {
   }
 
   render() {
-    let dragClassName = "element__close drag__" +this.props.id;
+    let dragClassName="element__close drag__" +this.props.id;
     return (
       <div id={this.props.id} onFocus={this.onFocus} className="textEditor__container">
         <nav>
-          <button className="element__close" onClick={() => this.props.removeTextEditor(this.props.id)}>&#x2613;</button>
+          <button className="element__close" onClick={()=> this.props.removeTextEditor(this.props.id)}>&#x2613;</button>
           <button className={dragClassName}>&#x2612;</button>
         </nav>
         <Editor
@@ -27,11 +27,11 @@ class TextEditor extends React.Component {
           onChange={this.props.onChange}
           placeholder="Enter some text..."
         />
-        {(() => {
-          if(this.props.id ==  this.props.currentTextEditorId){
+        {(()=> {
+          if(this.props.id==this.props.currentTextEditorId){
             return(
               <TextToolbar
-                onChange = {this.props.onChange}
+                onChange={this.props.onChange}
                 currentTextEditorState={this.props.currentTextEditorState}
               />
             )

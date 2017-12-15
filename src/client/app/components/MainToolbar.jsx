@@ -5,7 +5,7 @@ import InsertToolbar from './InsertToolbar.jsx';
 class MainToolbar extends React.Component {
   constructor(props) {
     super(props);
-    this.submitPage = this.submitPage.bind(this);
+    this.submitPage=this.submitPage.bind(this);
   }
 
   submitPage() {
@@ -45,7 +45,7 @@ class MainToolbar extends React.Component {
           placeholder="Title"
           type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}></input>
         <button className="mainToolbar_save" onClick={this.submitPage}>Save</button>
-        {(() => { // eslint-disable-line
+        {(()=> { // eslint-disable-line
           if (this.props.name) {
             return (
                 <div className="mainToolbar_div">
@@ -69,9 +69,9 @@ class MainToolbar extends React.Component {
           }
         })()}
         <InsertToolbar
-          addEditor = {this.props.addEditor}
-          addTextEditor = {this.props.addTextEditor}
-          addIframe = {this.props.addIframe}
+          addEditor={this.props.addEditor}
+          addTextEditor={this.props.addTextEditor}
+          addIframe={this.props.addIframe}
         />
       </div>
     );

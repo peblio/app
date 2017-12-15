@@ -9,22 +9,22 @@ class TextToolbar extends React.Component {
     return (
       <div className="textToolbar__container">
         <button className="textToolbar__button"
-          onClick={() => {this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'BOLD'))}}
+          onClick={()=> {this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'BOLD'))}}
         >
           Bold
         </button>
         <button className="textToolbar__button"
-          onClick={() => {this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'UNDERLINE'))}}
+          onClick={()=> {this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'UNDERLINE'))}}
         >
           Underline
         </button>
         <button className="textToolbar__button"
-          onClick={() => {this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'ITALIC'))}}
+          onClick={()=> {this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'ITALIC'))}}
         >
           Italics
         </button>
         <button className="textToolbar__button"
-          onClick={() => {this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'STRIKETHROUGH'))}}
+          onClick={()=> {this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'STRIKETHROUGH'))}}
         >
           Strike
         </button>

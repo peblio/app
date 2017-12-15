@@ -4,13 +4,13 @@ import CodeMirror from 'codemirror';
 class JavascriptOutput extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state={
       output: []
     }
   }
   componentDidMount() {
     window.addEventListener("message", this.props.receiveMessage, false);
-    let defaultCode = `<!DOCTYPE html>
+    let defaultCode=`<!DOCTYPE html>
     <html>
       <head>
         <script src="/public/hijackConsole.js"></script>
@@ -29,13 +29,13 @@ class JavascriptOutput extends React.Component {
 
 
   render() {
-    const iframeStyle = {
+    const iframeStyle={
       display: 'none'
     };
     return (
       <div>
         <p> {this.props.consoleOutputText.join("\n")} </p>
-        <iframe style={iframeStyle} ref={(element) => { this.iframe = element; }} id="code-output"></iframe>
+        <iframe style={iframeStyle} ref={(element)=> { this.iframe=element; }} id="code-output"></iframe>
       </div>
     );
   }

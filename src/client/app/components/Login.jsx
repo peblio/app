@@ -19,7 +19,7 @@ class Login extends React.Component {
       name: name,
       password: password
     })
-      .then((response) => {
+      .then((response)=> {
         this.loginSuccessful(response);
       })
       .catch(function(error) { // eslint-disable-line
@@ -31,7 +31,7 @@ class Login extends React.Component {
     return (
       <div className="loginModal_content">
         <h5 className="loginModal_title">Log In</h5>
-        <form onSubmit={(event) => {this.submitLoginUser(event,this.props.loginName, this.props.loginPassword)}}>
+        <form onSubmit={(event)=> {this.submitLoginUser(event,this.props.loginName, this.props.loginPassword)}}>
         <div className="loginModal_div">
           <label  className="loginModal_label"> Name
             <input className="loginModal_input" type="text" value={this.props.loginName} onChange={this.props.updateUserName}/>

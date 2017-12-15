@@ -19,7 +19,7 @@ class SignUp extends React.Component {
       name: name,
       password: password
     })
-    .then((response) => {
+    .then((response)=> {
       this.signUpSuccessful(response);
     })
     .catch(function(error) { // eslint-disable-line
@@ -32,7 +32,7 @@ class SignUp extends React.Component {
     return (
       <div>
         Sign up here
-        <form onSubmit={(event) => {this.submitSignUpUser(event, this.props.loginName, this.props.loginPassword)}}>
+        <form onSubmit={(event)=> {this.submitSignUpUser(event, this.props.loginName, this.props.loginPassword)}}>
           <label> name:
             <input type="text" value={this.props.loginName} onChange={this.props.updateUserName}/>
           </label>

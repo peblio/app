@@ -21,28 +21,28 @@ import * as mainToolbarActions from '../action/mainToolbar.jsx';
 import * as textEditorActions from '../action/textEditors.jsx';
 import * as userActions from '../action/user.jsx';
 
-const axios = require('axios');
-const Regex = require('regex');
+const axios=require('axios');
+const Regex=require('regex');
 
-const divStyle = {
+const divStyle={
   background: 'maroon'
 };
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.renderEditors = this.renderEditors.bind(this);
-    this.projectID = this.projectID.bind(this);
+    this.renderEditors=this.renderEditors.bind(this);
+    this.projectID=this.projectID.bind(this);
   }
   projectID() {
-    let location = this.props.location.pathname;
-    let projectID = location.match(/\/page\/([\w-].*)/);
+    let location=this.props.location.pathname;
+    let projectID=location.match(/\/page\/([\w-].*)/);
     return projectID ? projectID[1] : null;
   }
   componentDidMount() {
     if(this.projectID()){
       axios.get('/api/page/'+ this.projectID())
-        .then(res => {
+        .then(res=> {
         this.props.loadPage(res.data[0].id, res.data[0].title);
         this.props.loadEditors(res.data[0].indexEditor, res.data[0].editors);
         this.props.loadTextEditors(res.data[0].indexTextEditor, res.data[0].textEditors);
@@ -50,7 +50,7 @@ class App extends React.Component {
         })
     }
     axios.get('/api/user')
-      .then((res) => {
+      .then((res)=> {
         if(res.data.name) {
           this.props.setUserName(res.data.name);
         }
@@ -59,23 +59,23 @@ class App extends React.Component {
 
   renderEditors() {
 
-    let editorsHTML = [];
-    let ids = Object.keys(this.props.editors);
-    ids.forEach((id) => {
-      let extendsProps = {
-        onMouseOver: () => {
+    let editorsHTML=[];
+    let ids=Object.keys(this.props.editors);
+    ids.forEach((id)=> {
+      let extendsProps={
+        onMouseOver: ()=> {
           this.props.setCurrentEditor(id)
         }
       };
-      let dragHandle = '.drag__' + id;
+      let dragHandle='.drag__' + id;
       editorsHTML.push(
         <Rnd
           className='resize-container'
           size={{ width: this.props.editors[id].width,  height: this.props.editors[id].height }}
           position={{ x: this.props.editors[id].x, y: this.props.editors[id].y }}
-          onDragStop={(e, d) => {this.props.setEditorPosition(d.x, d.y)}}
+          onDragStop={(e, d)=> {this.props.setEditorPosition(d.x, d.y)}}
           dragHandleClassName={dragHandle}
-          onResize={(e, direction, ref, delta, position) => {
+          onResize={(e, direction, ref, delta, position)=> {
             this.props.setEditorSize(ref.offsetWidth, ref.offsetHeight)
           }}
           minWidth={this.props.editors[id].minWidth}
@@ -86,17 +86,17 @@ class App extends React.Component {
           <EditorContainer
             key={id}
             editorId={id}
-            playCode = {this.props.playCode}
-            stopCode = {this.props.stopCode}
-            updateCode = {this.props.updateCode}
-            isPlaying = {this.props.editors[id].isPlaying}
-            editorMode = {this.props.editors[id].editorMode}
-            consoleOutputText = {this.props.editors[id].consoleOutputText}
-            code = {this.props.editors[id].code}
-            setCurrentEditor = {this.props.setCurrentEditor}
-            setEditorMode = {this.props.setEditorMode}
-            updateConsoleOutput = {this.props.updateConsoleOutput}
-            removeEditor = {this.props.removeEditor}
+            playCode={this.props.playCode}
+            stopCode={this.props.stopCode}
+            updateCode={this.props.updateCode}
+            isPlaying={this.props.editors[id].isPlaying}
+            editorMode={this.props.editors[id].editorMode}
+            consoleOutputText={this.props.editors[id].consoleOutputText}
+            code={this.props.editors[id].code}
+            setCurrentEditor={this.props.setCurrentEditor}
+            setEditorMode={this.props.setEditorMode}
+            updateConsoleOutput={this.props.updateConsoleOutput}
+            removeEditor={this.props.removeEditor}
           />
         </Rnd>
       );
@@ -105,25 +105,25 @@ class App extends React.Component {
   }
 
   renderTextEditors() {
-    let textEditors = [];
+    let textEditors=[];
 
 
-    let ids = Object.keys(this.props.textEditors);
-    ids.forEach((id) => {
-      let extendsProps = {
-        onMouseOver: () => {
+    let ids=Object.keys(this.props.textEditors);
+    ids.forEach((id)=> {
+      let extendsProps={
+        onMouseOver: ()=> {
           this.props.setCurrentTextEditor(this.props.textEditors[id].id, this.props.textEditors[id].editorState)
         }
       };
-      let dragHandle = '.drag__' + id;
+      let dragHandle='.drag__' + id;
       textEditors.push(
         <Rnd
           className='resize-container'
           size={{ width: this.props.textEditors[id].width,  height: this.props.textEditors[id].height }}
           position={{ x: this.props.textEditors[id].x, y: this.props.textEditors[id].y }}
-          onDragStop={(e, d) => {this.props.setTextEditorPosition(d.x, d.y)}}
+          onDragStop={(e, d)=> {this.props.setTextEditorPosition(d.x, d.y)}}
           dragHandleClassName={dragHandle}
-          onResize={(e, direction, ref, delta, position) => {
+          onResize={(e, direction, ref, delta, position)=> {
             this.props.setTextEditorSize(ref.offsetWidth, ref.offsetHeight)
           }}
           minWidth={this.props.textEditors[id].minWidth}
@@ -150,23 +150,23 @@ class App extends React.Component {
   }
 
   renderIframes() {
-    let iframes = [];
-    let ids = Object.keys(this.props.iframes);
-    ids.forEach((id) => {
-      let extendsProps = {
-        onMouseOver: () => {
+    let iframes=[];
+    let ids=Object.keys(this.props.iframes);
+    ids.forEach((id)=> {
+      let extendsProps={
+        onMouseOver: ()=> {
           this.props.setCurrentIframe(id);
         }
       };
-      let dragHandle = '.drag__' + id;
+      let dragHandle='.drag__' + id;
       iframes.push(
         <Rnd
           className='resize-container'
           size={{ width: this.props.iframes[id].width,  height: this.props.iframes[id].height }}
           position={{ x: this.props.iframes[id].x, y: this.props.iframes[id].y }}
-          onDragStop={(e, d) => {this.props.setIframePosition(d.x, d.y)}}
+          onDragStop={(e, d)=> {this.props.setIframePosition(d.x, d.y)}}
           dragHandleClassName={dragHandle}
-          onResize={(e, direction, ref, delta, position) => {
+          onResize={(e, direction, ref, delta, position)=> {
             this.props.setIframeSize(ref.offsetWidth, ref.offsetHeight)
           }}
           minWidth={this.props.iframes[id].minWidth}
@@ -189,18 +189,18 @@ class App extends React.Component {
   }
 
   render() {
-    const Editors = this.renderEditors();
-    const TextEditors = this.renderTextEditors();
-    const Iframes = this.renderIframes();
+    const Editors=this.renderEditors();
+    const TextEditors=this.renderTextEditors();
+    const Iframes=this.renderIframes();
     return (
       <div>
         <nav>
           <MainToolbar
             id={this.props.id}
-            addEditor = {this.props.addEditor}
-            addIframe = {this.props.addIframe}
-            addTextEditor = {this.props.addTextEditor}
-            currentTextEditorState = {this.props.currentTextEditorState}
+            addEditor={this.props.addEditor}
+            addIframe={this.props.addIframe}
+            addTextEditor={this.props.addTextEditor}
+            currentTextEditorState={this.props.currentTextEditorState}
             editors={this.props.editors}
             iframes={this.props.iframes}
             indexEditor={this.props.indexEditor}
@@ -224,7 +224,7 @@ class App extends React.Component {
           {TextEditors}
           {Iframes}
         </section>
-        {(() => { // eslint-disable-line
+        {(()=> { // eslint-disable-line
           if(this.props.isPagesModalOpen) {
             return (
               <Modal
@@ -239,7 +239,7 @@ class App extends React.Component {
             );
           }
         })()}
-        {(() => { // eslint-disable-line
+        {(()=> { // eslint-disable-line
           if (this.props.isLoginModalOpen) {
             return (
               <Modal
@@ -258,7 +258,7 @@ class App extends React.Component {
             );
           }
         })()}
-        {(() => { // eslint-disable-line
+        {(()=> { // eslint-disable-line
           if (this.props.isSignUpModalOpen) {
             return (
               <Modal
@@ -283,7 +283,7 @@ class App extends React.Component {
   }
 }
 
-App.propTypes = {
+App.propTypes={
   pageTitle: PropTypes.string.isRequired,
   editors: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string.isRequired,

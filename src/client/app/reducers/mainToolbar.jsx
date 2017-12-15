@@ -1,5 +1,5 @@
 import * as ActionTypes from '../constants.jsx';
-const initialState = {
+const initialState={
   pageTitle: '',
   id: '',
   pages: [],
@@ -8,7 +8,7 @@ const initialState = {
   isSignUpModalOpen: false
 }
 
-const mainToolbar = (state = initialState, action) => {
+const mainToolbar=(state=initialState, action)=> {
   switch (action.type) {
 
     case ActionTypes.SET_PAGE_TITLE:

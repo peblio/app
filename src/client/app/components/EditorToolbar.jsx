@@ -14,7 +14,7 @@ class EditorToolbar extends React.Component {
         <select
           className="editorToolbar__item"
           id="test"
-          onChange={(event) => {this.props.setEditorMode(event.target.value)}}
+          onChange={(event)=> {this.props.setEditorMode(event.target.value)}}
         >
           <option value="p5">p5</option>
           <option value="javascript">javascript</option>
@@ -22,13 +22,13 @@ class EditorToolbar extends React.Component {
         </select>
         <button
           className="editorToolbar__svg"
-          onClick = {this.props.playCode}
+          onClick={this.props.playCode}
         >
         <PlaySVG alt="Run Code" />
         </button>
         <button
           className="editorToolbar__svg"
-          onClick = {this.props.stopCode}
+          onClick={this.props.stopCode}
         >
         <PauseSVG alt="Pause Code" />
 

@@ -10,7 +10,7 @@ import App from './components/App.jsx';
 import SignUp from './components/SignUp.jsx';
 import Login from './components/Login.jsx';
 
-let store = createStore(
+let store=createStore(
   rootReducer,
   applyMiddleware(
     thunk,

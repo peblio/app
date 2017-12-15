@@ -4,7 +4,7 @@ import CodeMirror from 'codemirror';
 class P5Output extends React.Component {
   componentDidMount() {
    window.addEventListener('message', this.props.updateConsoleOutput, false);
-    const defaultCode = `<!DOCTYPE html>
+    const defaultCode=`<!DOCTYPE html>
     <html>
       <head>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.10/p5.min.js"></script>
@@ -25,7 +25,7 @@ class P5Output extends React.Component {
   render() {
     return (
       <div>
-        <iframe ref={(element) => { this.iframe = element; }} id="code-output"></iframe>
+        <iframe ref={(element)=> { this.iframe=element; }} id="code-output"></iframe>
       </div>
     );
   }
