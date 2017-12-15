@@ -1,11 +1,25 @@
-import * as ActionTypes from '../constants.jsx';
 import axios from 'axios';
 import shortid from 'shortid';
 import { convertFromRaw, convertToRaw } from 'draft-js';
+import * as ActionTypes from '../constants.jsx';
 
+function convertEditorState(textEditors) {
+  const newTextEditors = {};
+  const ids = Object.keys(textEditors);
+  ids.forEach((id) => {
+    newTextEditors[id] = {};
+    newTextEditors[id].id = textEditors[id].id;
+    newTextEditors[id].rawContentState = JSON.stringify(convertToRaw(textEditors[id].editorState.getCurrentContent()));
+    newTextEditors[id].x = textEditors[id].x;
+    newTextEditors[id].y = textEditors[id].y;
+    newTextEditors[id].width = textEditors[id].width;
+    newTextEditors[id].height = textEditors[id].height;
+  });
+  return newTextEditors;
+}
 
 export function setPageTitle(event) {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_PAGE_TITLE,
       event
@@ -14,7 +28,7 @@ export function setPageTitle(event) {
 }
 
 export function loadPage(id, title) {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
       id,
@@ -23,26 +37,27 @@ export function loadPage(id, title) {
   };
 }
 
-export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor,iframes,indexIframe) {
-  let id=shortid.generate();
-  let textEditorsRaw=convertEditorState(textEditors);
+
+export function submitPage(title, editors, indexEditor, textEditors, indexTextEditor, iframes, indexIframe) {
+  const id = shortid.generate();
+  const textEditorsRaw = convertEditorState(textEditors);
   axios.post('/pages/save', {
-      id: id,
-      title: title,
-      editors: editors,
-      indexEditor: indexEditor,
-      textEditors: textEditorsRaw,
-      indexTextEditor: indexTextEditor,
-      iframes: iframes,
-      indexIframe: indexIframe
-    })
+    id,
+    title,
+    editors,
+    indexEditor,
+    textEditors: textEditorsRaw,
+    indexTextEditor,
+    iframes,
+    indexIframe
+  })
       .then(function(response) { // eslint-disable-line
-        window.location.href=window.location.origin + '/page/' + id;
+        window.location.href = `${window.location.origin}/page/${id}`;
       })
       .catch(function(error) { // eslint-disable-line
-        console.log( error);
+        console.log(error);
       });
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_PAGE_ID,
       id
@@ -50,25 +65,25 @@ export function submitPage(title,editors,indexEditor,textEditors,indexTextEditor
   };
 }
 
-export function updatePage(id,title,editors,indexEditor,textEditors,indexTextEditor,iframes,indexIframe) {
-  let textEditorsRaw=convertEditorState(textEditors);
+export function updatePage(id, title, editors, indexEditor, textEditors, indexTextEditor, iframes, indexIframe) {
+  const textEditorsRaw = convertEditorState(textEditors);
   axios.post('/pages/update', {
-      id: id,
-      title: title,
-      editors: editors,
-      indexEditor: indexEditor,
-      textEditors: textEditorsRaw,
-      indexTextEditor: indexTextEditor,
-      iframes: iframes,
-      indexIframe: indexIframe
-    })
+    id,
+    title,
+    editors,
+    indexEditor,
+    textEditors: textEditorsRaw,
+    indexTextEditor,
+    iframes,
+    indexIframe
+  })
       .then(function(response) { // eslint-disable-line
         console.log(response);
       })
       .catch(function(error) { // eslint-disable-line
-        console.log('Error  : ' + error);
+        console.log(`Error  : ${error}`);
       });
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.UPDATE_PAGE,
       id
@@ -77,10 +92,8 @@ export function updatePage(id,title,editors,indexEditor,textEditors,indexTextEdi
 }
 
 export function setAllPages(data) {
-  let pages=data.map(function(page) {
-    return { id: page.id, title: page.title };
-  });
-  return(dispatch)=> {
+  const pages = data.map(page => ({ id: page.id, title: page.title }));
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_ALL_PAGES,
       pages
@@ -89,7 +102,7 @@ export function setAllPages(data) {
 }
 
 export function viewPagesModal() {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.VIEW_PAGES_MODAL
     });
@@ -97,7 +110,7 @@ export function viewPagesModal() {
 }
 
 export function closePagesModal() {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.CLOSE_PAGES_MODAL
     });
@@ -105,7 +118,7 @@ export function closePagesModal() {
 }
 
 export function viewLoginModal() {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.VIEW_LOGIN_MODAL
     });
@@ -113,7 +126,7 @@ export function viewLoginModal() {
 }
 
 export function closeLoginModal() {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.CLOSE_LOGIN_MODAL
     });
@@ -121,7 +134,7 @@ export function closeLoginModal() {
 }
 
 export function viewSignUpModal() {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.VIEW_SIGN_UP_MODAL
     });
@@ -129,24 +142,9 @@ export function viewSignUpModal() {
 }
 
 export function closeSignUpModal() {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.CLOSE_SIGN_UP_MODAL
     });
   };
-}
-
-function convertEditorState(textEditors) {
-  let newTextEditors={};
-  let ids=Object.keys(textEditors);
-  ids.forEach((id)=> {
-    newTextEditors[id]={};
-    newTextEditors[id].id=textEditors[id].id;
-    newTextEditors[id].rawContentState=JSON.stringify(convertToRaw(textEditors[id].editorState.getCurrentContent()));
-    newTextEditors[id].x=textEditors[id].x;
-    newTextEditors[id].y=textEditors[id].y;
-    newTextEditors[id].width=textEditors[id].width;
-    newTextEditors[id].height=textEditors[id].height;
-  });
-  return newTextEditors;
 }

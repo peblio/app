@@ -1,30 +1,31 @@
 import React from 'react';
-import {RichUtils} from 'draft-js';
+import { RichUtils } from 'draft-js';
 
 class TextToolbar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <div className="textToolbar__container">
-        <button className="textToolbar__button"
-          onClick={()=> {this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'BOLD'))}}
+        <button
+          className="textToolbar__button"
+          onClick={() => { this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'BOLD')); }}
         >
           Bold
         </button>
-        <button className="textToolbar__button"
-          onClick={()=> {this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'UNDERLINE'))}}
+        <button
+          className="textToolbar__button"
+          onClick={() => { this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'UNDERLINE')); }}
         >
           Underline
         </button>
-        <button className="textToolbar__button"
-          onClick={()=> {this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'ITALIC'))}}
+        <button
+          className="textToolbar__button"
+          onClick={() => { this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'ITALIC')); }}
         >
           Italics
         </button>
-        <button className="textToolbar__button"
-          onClick={()=> {this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'STRIKETHROUGH'))}}
+        <button
+          className="textToolbar__button"
+          onClick={() => { this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'STRIKETHROUGH')); }}
         >
           Strike
         </button>

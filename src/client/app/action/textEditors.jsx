@@ -1,7 +1,7 @@
 import * as ActionTypes from '../constants.jsx';
 
 export function addTextEditor() {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.ADD_TEXT_EDITOR
     });
@@ -9,7 +9,7 @@ export function addTextEditor() {
 }
 
 export function updateTextChange(state) {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.UPDATE_TEXT_CHANGE,
       state
@@ -18,7 +18,7 @@ export function updateTextChange(state) {
 }
 
 export function setCurrentTextEditor(id, state) {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_CURRENT_TEXT_EDITOR,
       id,
@@ -28,7 +28,7 @@ export function setCurrentTextEditor(id, state) {
 }
 
 export function removeTextEditor(id) {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.REMOVE_TEXT_EDITOR,
       id
@@ -38,7 +38,7 @@ export function removeTextEditor(id) {
 
 export function loadTextEditors(indexTextEditor, textEditors) {
   console.log(textEditors);
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_TEXT_EDITORS,
       indexTextEditor,
@@ -48,7 +48,7 @@ export function loadTextEditors(indexTextEditor, textEditors) {
 }
 
 export function setTextEditorPosition(x, y) {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_TEXT_EDITOR_POSITION,
       x,
@@ -58,7 +58,7 @@ export function setTextEditorPosition(x, y) {
 }
 
 export function setTextEditorSize(width, height) {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_TEXT_EDITOR_SIZE,
       width,

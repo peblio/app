@@ -8,11 +8,8 @@ require('../styles/codemirror.css');
 require('../styles/3024-night.css');
 
 class P5Editor extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
-    this.cm=CodeMirror(this.codemirrorContainer, {
+    this.cm = CodeMirror(this.codemirrorContainer, {
       value: this.props.editorCode,
       mode: 'javascript',
       lineNumbers: true,
@@ -20,16 +17,15 @@ class P5Editor extends React.Component {
       inputStyle: 'contenteditable',
       styleActiveLine: true,
     });
-    this.cm.on('keyup', ()=> {
-      console.log("key up");
+    this.cm.on('keyup', () => {
+      console.log('key up');
       this.props.updateCode(this.cm.getValue());
     });
-
   }
   render() {
     return (
       <div>
-        <div ref={(element)=> { this.codemirrorContainer=element; }}>
+        <div ref={(element) => { this.codemirrorContainer = element; }}>
         </div>
       </div>
     );

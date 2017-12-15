@@ -1,7 +1,7 @@
 import * as ActionTypes from '../constants.jsx';
 
 export function addIframe() {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.ADD_IFRAME
     });
@@ -9,7 +9,7 @@ export function addIframe() {
 }
 
 export function setIframeURL(url) {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_IFRAME_URL,
       url
@@ -18,7 +18,7 @@ export function setIframeURL(url) {
 }
 
 export function setCurrentIframe(value) {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_CURRENT_IFRAME,
       value
@@ -27,7 +27,7 @@ export function setCurrentIframe(value) {
 }
 
 export function loadIframes(indexIframe, iframes) {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_IFRAMES,
       indexIframe,
@@ -37,7 +37,7 @@ export function loadIframes(indexIframe, iframes) {
 }
 
 export function removeIframe(id) {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.REMOVE_IFRAME,
       id
@@ -46,7 +46,7 @@ export function removeIframe(id) {
 }
 
 export function setIframePosition(x, y) {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_IFRAME_POSITION,
       x,
@@ -56,7 +56,7 @@ export function setIframePosition(x, y) {
 }
 
 export function setIframeSize(width, height) {
-  return(dispatch)=> {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_IFRAME_SIZE,
       width,

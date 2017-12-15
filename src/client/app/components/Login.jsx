@@ -5,25 +5,23 @@ import axios from 'axios';
 import * as userActions from '../action/user.jsx';
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   loginSuccessful(response) {
     this.props.setUserName(response.data.user.name);
     this.props.closeLoginModal();
   }
 
   submitLoginUser(event, name, password) {
+    console.log(name, password);
     axios.post('/api/login', {
-      name: name,
-      password: password
+      name,
+      password
     })
-      .then((response)=> {
+      .then((response) => {
+        console.log(response);
         this.loginSuccessful(response);
       })
       .catch(function(error) { // eslint-disable-line
-        console.log("Login Failed");
+        console.log('Login Failed');
       });
     event.preventDefault();
   }
@@ -31,19 +29,19 @@ class Login extends React.Component {
     return (
       <div className="loginModal_content">
         <h5 className="loginModal_title">Log In</h5>
-        <form onSubmit={(event)=> {this.submitLoginUser(event,this.props.loginName, this.props.loginPassword)}}>
-        <div className="loginModal_div">
-          <label  className="loginModal_label"> Name
-            <input className="loginModal_input" type="text" value={this.props.loginName} onChange={this.props.updateUserName}/>
-          </label>
-        </div>
-        <div className="loginModal_div">
-          <label  className="loginModal_label"> Password
-            <input className="loginModal_input" type="text" value={this.props.loginPassword} onChange={this.props.updateUserPassword}/>
-          </label>
-        </div>
+        <form onSubmit={(event) => { this.submitLoginUser(event, this.props.loginName, this.props.loginPassword); }}>
+          <div className="loginModal_div">
+            <label htmlFor="loginModal-name" className="loginModal_label"> Name
+              <input id="loginModal-name" className="loginModal_input" type="text" value={this.props.loginName} onChange={this.props.updateUserName} />
+            </label>
+          </div>
+          <div className="loginModal_div">
+            <label htmlFor="loginModal-password" className="loginModal_label"> Password
+              <input id="loginModal-password" className="loginModal_input" type="text" value={this.props.loginPassword} onChange={this.props.updateUserPassword} />
+            </label>
+          </div>
 
-          <input className="loginModal_button" type='submit' value='Submit'/>
+          <input className="loginModal_button" type="submit" value="Submit" />
         </form>
       </div>
     );

@@ -21,67 +21,66 @@ import * as mainToolbarActions from '../action/mainToolbar.jsx';
 import * as textEditorActions from '../action/textEditors.jsx';
 import * as userActions from '../action/user.jsx';
 
-const axios=require('axios');
-const Regex=require('regex');
+const axios = require('axios');
+const Regex = require('regex');
 
-const divStyle={
+const divStyle = {
   background: 'maroon'
 };
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.renderEditors=this.renderEditors.bind(this);
-    this.projectID=this.projectID.bind(this);
-  }
-  projectID() {
-    let location=this.props.location.pathname;
-    let projectID=location.match(/\/page\/([\w-].*)/);
-    return projectID ? projectID[1] : null;
+    this.renderEditors = this.renderEditors.bind(this);
+    this.projectID = this.projectID.bind(this);
   }
   componentDidMount() {
-    if(this.projectID()){
-      axios.get('/api/page/'+ this.projectID())
-        .then(res=> {
-        this.props.loadPage(res.data[0].id, res.data[0].title);
-        this.props.loadEditors(res.data[0].indexEditor, res.data[0].editors);
-        this.props.loadTextEditors(res.data[0].indexTextEditor, res.data[0].textEditors);
-        this.props.loadIframes(res.data[0].indexIframe, res.data[0].iframes);
-        })
+    if (this.projectID()) {
+      axios.get(`/api/page/${this.projectID()}`)
+        .then((res) => {
+          this.props.loadPage(res.data[0].id, res.data[0].title);
+          this.props.loadEditors(res.data[0].indexEditor, res.data[0].editors);
+          this.props.loadTextEditors(res.data[0].indexTextEditor, res.data[0].textEditors);
+          this.props.loadIframes(res.data[0].indexIframe, res.data[0].iframes);
+        });
     }
     axios.get('/api/user')
-      .then((res)=> {
-        if(res.data.name) {
+      .then((res) => {
+        if (res.data.name) {
           this.props.setUserName(res.data.name);
         }
-      })
+      });
+  }
+  projectID() {
+    const location = this.props.location.pathname;
+    const projectID = location.match(/\/page\/([\w-].*)/);
+    return projectID ? projectID[1] : null;
   }
 
   renderEditors() {
-
-    let editorsHTML=[];
-    let ids=Object.keys(this.props.editors);
-    ids.forEach((id)=> {
-      let extendsProps={
-        onMouseOver: ()=> {
-          this.props.setCurrentEditor(id)
+    const editorsHTML = [];
+    const ids = Object.keys(this.props.editors);
+    ids.forEach((id) => {
+      const extendsProps = {
+        onMouseOver: () => {
+          this.props.setCurrentEditor(id);
         }
       };
-      let dragHandle='.drag__' + id;
+      const dragHandle = `.drag__${id}`;
       editorsHTML.push(
         <Rnd
-          className='resize-container'
-          size={{ width: this.props.editors[id].width,  height: this.props.editors[id].height }}
+          className="resize-container"
+          size={{ width: this.props.editors[id].width, height: this.props.editors[id].height }}
           position={{ x: this.props.editors[id].x, y: this.props.editors[id].y }}
-          onDragStop={(e, d)=> {this.props.setEditorPosition(d.x, d.y)}}
+          onDragStop={(e, d) => { this.props.setEditorPosition(d.x, d.y); }}
           dragHandleClassName={dragHandle}
-          onResize={(e, direction, ref, delta, position)=> {
-            this.props.setEditorSize(ref.offsetWidth, ref.offsetHeight)
+          onResize={(e, direction, ref, delta, position) => {
+            this.props.setEditorSize(ref.offsetWidth, ref.offsetHeight);
           }}
           minWidth={this.props.editors[id].minWidth}
           minHeight={this.props.editors[id].minHeight}
           extendsProps={extendsProps}
-          bounds='.canvas'
+          bounds=".canvas"
         >
           <EditorContainer
             key={id}
@@ -105,31 +104,31 @@ class App extends React.Component {
   }
 
   renderTextEditors() {
-    let textEditors=[];
+    const textEditors = [];
 
 
-    let ids=Object.keys(this.props.textEditors);
-    ids.forEach((id)=> {
-      let extendsProps={
-        onMouseOver: ()=> {
-          this.props.setCurrentTextEditor(this.props.textEditors[id].id, this.props.textEditors[id].editorState)
+    const ids = Object.keys(this.props.textEditors);
+    ids.forEach((id) => {
+      const extendsProps = {
+        onMouseOver: () => {
+          this.props.setCurrentTextEditor(this.props.textEditors[id].id, this.props.textEditors[id].editorState);
         }
       };
-      let dragHandle='.drag__' + id;
+      const dragHandle = `.drag__${id}`;
       textEditors.push(
         <Rnd
-          className='resize-container'
-          size={{ width: this.props.textEditors[id].width,  height: this.props.textEditors[id].height }}
+          className="resize-container"
+          size={{ width: this.props.textEditors[id].width, height: this.props.textEditors[id].height }}
           position={{ x: this.props.textEditors[id].x, y: this.props.textEditors[id].y }}
-          onDragStop={(e, d)=> {this.props.setTextEditorPosition(d.x, d.y)}}
+          onDragStop={(e, d) => { this.props.setTextEditorPosition(d.x, d.y); }}
           dragHandleClassName={dragHandle}
-          onResize={(e, direction, ref, delta, position)=> {
-            this.props.setTextEditorSize(ref.offsetWidth, ref.offsetHeight)
+          onResize={(e, direction, ref, delta, position) => {
+            this.props.setTextEditorSize(ref.offsetWidth, ref.offsetHeight);
           }}
           minWidth={this.props.textEditors[id].minWidth}
           minHeight={this.props.textEditors[id].minHeight}
           extendsProps={extendsProps}
-          bounds='.canvas'
+          bounds=".canvas"
         >
           <TextEditor
             key={id}
@@ -150,29 +149,29 @@ class App extends React.Component {
   }
 
   renderIframes() {
-    let iframes=[];
-    let ids=Object.keys(this.props.iframes);
-    ids.forEach((id)=> {
-      let extendsProps={
-        onMouseOver: ()=> {
+    const iframes = [];
+    const ids = Object.keys(this.props.iframes);
+    ids.forEach((id) => {
+      const extendsProps = {
+        onMouseOver: () => {
           this.props.setCurrentIframe(id);
         }
       };
-      let dragHandle='.drag__' + id;
+      const dragHandle = `.drag__${id}`;
       iframes.push(
         <Rnd
-          className='resize-container'
-          size={{ width: this.props.iframes[id].width,  height: this.props.iframes[id].height }}
+          className="resize-container"
+          size={{ width: this.props.iframes[id].width, height: this.props.iframes[id].height }}
           position={{ x: this.props.iframes[id].x, y: this.props.iframes[id].y }}
-          onDragStop={(e, d)=> {this.props.setIframePosition(d.x, d.y)}}
+          onDragStop={(e, d) => { this.props.setIframePosition(d.x, d.y); }}
           dragHandleClassName={dragHandle}
-          onResize={(e, direction, ref, delta, position)=> {
-            this.props.setIframeSize(ref.offsetWidth, ref.offsetHeight)
+          onResize={(e, direction, ref, delta, position) => {
+            this.props.setIframeSize(ref.offsetWidth, ref.offsetHeight);
           }}
           minWidth={this.props.iframes[id].minWidth}
           minHeight={this.props.iframes[id].minHeight}
           extendsProps={extendsProps}
-          bounds='.canvas'
+          bounds=".canvas"
         >
           <Iframe
             key={id}
@@ -189,9 +188,9 @@ class App extends React.Component {
   }
 
   render() {
-    const Editors=this.renderEditors();
-    const TextEditors=this.renderTextEditors();
-    const Iframes=this.renderIframes();
+    const Editors = this.renderEditors();
+    const TextEditors = this.renderTextEditors();
+    const Iframes = this.renderIframes();
     return (
       <div>
         <nav>
@@ -219,13 +218,13 @@ class App extends React.Component {
             viewSignUpModal={this.props.viewSignUpModal}
           />
         </nav>
-        <section className='canvas'>
+        <section className="canvas">
           {Editors}
           {TextEditors}
           {Iframes}
         </section>
         {(()=> { // eslint-disable-line
-          if(this.props.isPagesModalOpen) {
+          if (this.props.isPagesModalOpen) {
             return (
               <Modal
                 isOpen={this.props.isPagesModalOpen}
@@ -283,7 +282,7 @@ class App extends React.Component {
   }
 }
 
-App.propTypes={
+App.propTypes = {
   pageTitle: PropTypes.string.isRequired,
   editors: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -291,15 +290,15 @@ App.propTypes={
     code: PropTypes.string.isRequired,
     isPlaying: PropTypes.bool.isRequired,
     editorMode: PropTypes.string.isRequired,
-  })),
+  })).isRequired,
   textEditors: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
-    editorState: PropTypes.object
-  })),
+    editorState: PropTypes.shape
+  })).isRequired,
   iframes: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired
-  })),
+  })).isRequired,
 
   isPlaying: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
@@ -324,7 +323,7 @@ App.propTypes={
   addTextEditor: PropTypes.func.isRequired,
   indexTextEditor: PropTypes.number.isRequired,
   updateTextChange: PropTypes.func.isRequired,
-  currentTextEditorState: PropTypes.object,
+  currentTextEditorState: PropTypes.shape.isRequired,
   setCurrentTextEditor: PropTypes.func.isRequired,
   removeTextEditor: PropTypes.func.isRequired,
   loadTextEditors: PropTypes.func.isRequired,
@@ -352,7 +351,7 @@ App.propTypes={
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
   signUserUp: PropTypes.func.isRequired
-}
+};
 
 function mapStateToProps(state) {
   return {

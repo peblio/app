@@ -7,7 +7,7 @@ import mainToolbar from './mainToolbar.jsx';
 import textEditors from './textEditors.jsx';
 import user from './user.jsx';
 
-const rootReducer=combineReducers({
+const rootReducer = combineReducers({
   editorContainer,
   iframe,
   mainToolbar,
