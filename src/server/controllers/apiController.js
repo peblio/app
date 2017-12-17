@@ -1,43 +1,43 @@
-var express = require('express');
-var Router = express.Router();
+const express = require('express');
+
+const Router = express.Router();
 
 const Page = require('../models/page.js');
 const User = require('../models/user.js');
 const passport = require('passport');
 
-var apiRoutes = express.Router();
+const apiRoutes = express.Router();
 
 apiRoutes.route('/page/:id').get(getPage);
 apiRoutes.route('/user').get(getUser);
 apiRoutes.route('/sketches').get(getSketches);
 apiRoutes.route('/login').post(loginUser);
 
-function getPage(req,res) {
-  Page.find({ id: req.params.id }, function(err,data) {
-    if(err){
+function getPage(req, res) {
+  Page.find({ id: req.params.id }, (err, data) => {
+    if (err) {
       res.send(err);
-    }
-    else{
+    } else {
       res.send(data);
     }
   });
 }
 
-function getUser(req,res) {
+function getUser(req, res) {
   let name = null;
-  if(req.user) {
+  if (req.user) {
     name = req.user.name;
   }
-  res.send({name:name});
+  res.send({ name });
 }
 
-function getSketches(req,res) {
-  let sketches =[];
+function getSketches(req, res) {
+  const sketches = [];
   let globalerr;
-  if(req.user){
-    let user = req.user;
-    Page.find({id:{$in:user.pages}}, function(err,data) {
-      if(err) {
+  if (req.user) {
+    const user = req.user;
+    Page.find({ id: { $in: user.pages } }, (err, data) => {
+      if (err) {
         res.send(err);
       } else {
         res.send(data);
@@ -47,19 +47,19 @@ function getSketches(req,res) {
 }
 
 function loginUser(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
+  passport.authenticate('local', (err, user, info) => {
     if (err) {
       return next(err); // will generate a 500 error
     }
     // Generate a JSON response reflecting authentication status
-    if (! user) {
-      return res.send(401,{ success : false, message : 'authentication failed' });
+    if (!user) {
+      return res.send(401, { success: false, message: 'authentication failed' });
     }
-    req.login(user, function(err){
-      if(err){
+    req.login(user, (err) => {
+      if (err) {
         return next(err);
       }
-      return res.send({ success : true, message : 'authentication succeeded', user: {name:user.name} });
+      return res.send({ success: true, message: 'authentication succeeded', user: { name: user.name } });
     });
   })(req, res, next);
 }

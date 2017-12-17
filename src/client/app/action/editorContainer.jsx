@@ -1,7 +1,7 @@
 import * as ActionTypes from '../constants.jsx';
 
 export function addEditor() {
-  return(dispatch) => {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.ADD_EDITOR
     });
@@ -9,7 +9,7 @@ export function addEditor() {
 }
 
 export function playCode(id) {
-  return(dispatch) => {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.PLAY_CODE,
       id
@@ -18,7 +18,7 @@ export function playCode(id) {
 }
 
 export function setCurrentEditor(value) {
-  return(dispatch) => {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_CURRENT_EDITOR,
       value
@@ -27,7 +27,7 @@ export function setCurrentEditor(value) {
 }
 
 export function setEditorMode(value) {
-  return(dispatch) => {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_EDITOR_MODE,
       value
@@ -36,7 +36,7 @@ export function setEditorMode(value) {
 }
 
 export function stopCode(id) {
-  return(dispatch) => {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.STOP_CODE,
       id
@@ -45,16 +45,16 @@ export function stopCode(id) {
 }
 
 export function updateCode(value) {
-  return(dispatch) => {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.UPDATE_CODE,
       value
     });
-  }
+  };
 }
 
 export function updateConsoleOutput(event) {
-  return(dispatch) => {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.UPDATE_CONSOLE_OUTPUT,
       event
@@ -63,7 +63,7 @@ export function updateConsoleOutput(event) {
 }
 
 export function removeEditor(id) {
-  return(dispatch) => {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.REMOVE_EDITOR,
       id
@@ -72,7 +72,7 @@ export function removeEditor(id) {
 }
 
 export function loadEditors(indexEditor, editors) {
-  return(dispatch) => {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_EDITORS,
       indexEditor,
@@ -82,7 +82,7 @@ export function loadEditors(indexEditor, editors) {
 }
 
 export function setEditorPosition(x, y) {
-  return(dispatch) => {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_EDITOR_POSITION,
       x,
@@ -92,7 +92,7 @@ export function setEditorPosition(x, y) {
 }
 
 export function setEditorSize(width, height) {
-  return(dispatch) => {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_EDITOR_SIZE,
       width,

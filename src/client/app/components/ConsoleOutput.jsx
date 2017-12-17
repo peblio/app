@@ -1,17 +1,11 @@
-import React, { PropTypes } from 'react';
-import CodeMirror from 'codemirror';
+import React from 'react';
 
 class ConsoleOutput extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  componentDidMount() {
-  }
 
   render() {
     return (
       <div className="console_outputDiv">
-        <p className="console_outputText"> {this.props.consoleOutputText.join("\n")} </p>
+        <p className="console_outputText"> {this.props.consoleOutputText.join('\n')} </p>
       </div>
     );
   }

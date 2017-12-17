@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import CodeMirror from 'codemirror';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/selection/active-line';
@@ -7,7 +7,7 @@ import 'codemirror/mode/javascript/javascript';
 class JavascriptEditor extends React.Component {
   componentDidMount() {
     const defaultSketch = `
-    var a = 20;
+    var a=20;
     console.log(a +40);
     `;
     this.props.updateCode(defaultSketch);
@@ -24,7 +24,6 @@ class JavascriptEditor extends React.Component {
       this.props.updateCode(this.cm.getValue());
       console.log(this.props.code);
     });
-
   }
   render() {
     return (
