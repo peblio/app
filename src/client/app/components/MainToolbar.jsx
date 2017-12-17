@@ -1,5 +1,4 @@
 import React from 'react';
-import TextToolbar from './TextToolbar.jsx';
 import InsertToolbar from './InsertToolbar.jsx';
 
 class MainToolbar extends React.Component {

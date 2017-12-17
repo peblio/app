@@ -1,5 +1,4 @@
-import React, { PropTypes } from 'react';
-import CodeMirror from 'codemirror';
+import React from 'react';
 
 class ConsoleOutput extends React.Component {
 

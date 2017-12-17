@@ -1,8 +1,5 @@
-import React, { PropTypes } from 'react';
-import { render } from 'react-dom';
+import React from 'react';
 import axios from 'axios';
-
-import * as userActions from '../action/user.jsx';
 
 class Login extends React.Component {
   loginSuccessful(response) {

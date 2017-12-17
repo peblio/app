@@ -1,9 +1,5 @@
 import React from 'react';
-import { RichUtils } from 'draft-js';
-import ReactDOM from 'react-dom';
 import ReactModal from 'react-modal';
-
-const axios = require('axios');
 
 class Modal extends React.Component {
   render() {

@@ -1,6 +1,5 @@
-import { Editor, EditorState, RichUtils, Modifier } from 'draft-js';
+import { Editor } from 'draft-js';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import TextToolbar from './TextToolbar.jsx';
 
 class TextEditor extends React.Component {
@@ -18,8 +17,17 @@ class TextEditor extends React.Component {
     return (
       <div id={this.props.id} onFocus={this.onFocus} className="textEditor__container">
         <nav>
-          <button className="element__close" onClick={() => this.props.removeTextEditor(this.props.id)}>&#x2613;</button>
-          <button className={dragClassName}>&#x2612;</button>
+          <button
+            className="element__close"
+            onClick={() => this.props.removeTextEditor(this.props.id)}
+          >
+            &#x2613;
+          </button>
+          <button
+            className={dragClassName}
+          >
+            &#x2612;
+          </button>
         </nav>
         <Editor
           id={this.props.id}

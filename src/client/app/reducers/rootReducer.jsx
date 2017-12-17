@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { reducer as form } from 'redux-form';
 
 import editorContainer from './editorContainer.jsx';
 import iframe from './iframe.jsx';

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import shortid from 'shortid';
-import { convertFromRaw, convertToRaw } from 'draft-js';
+import { convertToRaw } from 'draft-js';
 import * as ActionTypes from '../constants.jsx';
 
 function convertEditorState(textEditors) {

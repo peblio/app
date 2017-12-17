@@ -1,5 +1,5 @@
 import { EditorState } from 'draft-js';
-import { convertFromRaw, convertToRaw } from 'draft-js';
+import { convertFromRaw } from 'draft-js';
 import * as ActionTypes from '../constants.jsx';
 
 const initialState = {
@@ -20,7 +20,9 @@ function convertContentState(textEditorsRaw) {
   ids.forEach((id) => {
     newTextEditors[id] = {};
     newTextEditors[id].id = textEditorsRaw[id].id;
-    newTextEditors[id].editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(textEditorsRaw[id].rawContentState)));
+    newTextEditors[id].editorState = EditorState.createWithContent(
+      convertFromRaw(JSON.parse(textEditorsRaw[id].rawContentState))
+    );
     newTextEditors[id].x = textEditorsRaw[id].x;
     newTextEditors[id].y = textEditorsRaw[id].y;
     newTextEditors[id].width = textEditorsRaw[id].width;
@@ -46,7 +48,6 @@ function copyTextEditors(textEditors) {
 
 const textEditors = (state = initialState, action) => {
   const textEditorsCopy = copyTextEditors(state.textEditors);
-  const tempTest = EditorState.createEmpty();
 
   switch (action.type) {
 

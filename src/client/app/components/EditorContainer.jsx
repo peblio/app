@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import P5Editor from './P5Editor.jsx';
 import JavascriptEditor from './JavascriptEditor.jsx';
 import P5Output from './P5Output.jsx';
@@ -19,8 +19,17 @@ class EditorContainer extends React.Component {
     return (
       <div className="codeEditor_totalContainer" onFocus={this.onFocus}>
         <nav>
-          <button className="element__close" onClick={() => this.props.removeEditor(this.props.editorId)}>&#x2613;</button>
-          <button className={dragClassName}>&#x2612;</button>
+          <button
+            className="element__close"
+            onClick={() => this.props.removeEditor(this.props.editorId)}
+          >
+            &#x2613;
+          </button>
+          <button
+            className={dragClassName}
+          >
+          &#x2612;
+          </button>
         </nav>
         <EditorToolbar
           playCode={() => { this.props.playCode(this.props.editorId); }}

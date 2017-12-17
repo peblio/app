@@ -1,11 +1,8 @@
-import { Editor, EditorState, RichUtils, Modifier } from 'draft-js';
 import React, { PropTypes } from 'react';
-import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Rnd from 'react-rnd';
 
-import ConsoleOutput from './ConsoleOutput.jsx';
 import EditorContainer from './EditorContainer.jsx';
 import Iframe from './Iframe.jsx';
 import Login from './Login.jsx';
@@ -22,11 +19,6 @@ import * as textEditorActions from '../action/textEditors.jsx';
 import * as userActions from '../action/user.jsx';
 
 const axios = require('axios');
-const Regex = require('regex');
-
-const divStyle = {
-  background: 'maroon'
-};
 
 class App extends React.Component {
   constructor(props) {

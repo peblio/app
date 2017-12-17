@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 import * as ActionTypes from '../constants.jsx';
 
 export function updateUserName(event) {

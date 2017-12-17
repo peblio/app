@@ -1,9 +1,5 @@
 import axios from 'axios';
-import React, { PropTypes } from 'react';
-import { render } from 'react-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as userActions from '../action/user.jsx';
+import React from 'react';
 
 class SignUp extends React.Component {
   signUpSuccessful(response) {
