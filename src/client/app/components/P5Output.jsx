@@ -1,9 +1,8 @@
-import React, { PropTypes } from 'react';
-import CodeMirror from 'codemirror';
+import React from 'react';
 
 class P5Output extends React.Component {
   componentDidMount() {
-   window.addEventListener('message', this.props.updateConsoleOutput, false);
+    window.addEventListener('message', this.props.updateConsoleOutput, false);
     const defaultCode = `<!DOCTYPE html>
     <html>
       <head>
@@ -11,10 +10,10 @@ class P5Output extends React.Component {
         <script src="/public/hijackConsole.js"></script>
       </head>
       <body>
-        <script>`
-        + this.props.editorCode
-        +
-      `</script>
+        <script>${
+         this.props.editorCode
+
+      }</script>
       </body>
     </html>`;
     this.iframe.contentWindow.document.open();

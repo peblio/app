@@ -1,9 +1,8 @@
-import * as ActionTypes from '../constants.jsx';
-import axios from 'axios';
 
+import * as ActionTypes from '../constants.jsx';
 
 export function updateUserName(event) {
-  return(dispatch) => {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.UPDATE_USER_NAME,
       event
@@ -12,7 +11,7 @@ export function updateUserName(event) {
 }
 
 export function updateUserPassword(event) {
-  return(dispatch) => {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.UPDATE_USER_PASSWORD,
       event
@@ -21,7 +20,7 @@ export function updateUserPassword(event) {
 }
 
 export function setUserName(name) {
-  return(dispatch) => {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_USER_NAME,
       name
@@ -30,8 +29,7 @@ export function setUserName(name) {
 }
 
 export function signUserUp(name, password) {
-  
-  return(dispatch) => {
+  return (dispatch) => {
     dispatch({
       type: ActionTypes.SIGN_USER_UP
     });

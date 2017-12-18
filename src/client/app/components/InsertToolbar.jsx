@@ -5,32 +5,28 @@ import TextSVG from '../images/text.svg';
 import EmbedSVG from '../images/embed.svg';
 
 class InsertToolbar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
-      <div className='insertToolbar__container'>
+      <div className="insertToolbar__container">
         <button
-          onClick = {this.props.addEditor}
-          className = 'insertToolbar__button'
+          onClick={this.props.addEditor}
+          className="insertToolbar__button"
         >
-        <EditorSVG alt="add editor"/>
+          <EditorSVG alt="add editor" />
           editor
         </button>
         <button
-          onClick = {this.props.addTextEditor}
-          id="elementButton" className = 'insertToolbar__button'
+          onClick={this.props.addTextEditor}
+          id="elementButton" className="insertToolbar__button"
         >
-        <TextSVG alt="add text"/>
+          <TextSVG alt="add text" />
           text box
         </button>
         <button
-          onClick = {this.props.addIframe}
-          className = 'insertToolbar__button'
+          onClick={this.props.addIframe}
+          className="insertToolbar__button"
         >
-        <EmbedSVG alt="add embed" />
-
+          <EmbedSVG alt="add embed" />
           embed
         </button>
       </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import TextToolbar from './TextToolbar.jsx';
 import InsertToolbar from './InsertToolbar.jsx';
 
 class MainToolbar extends React.Component {
@@ -9,8 +8,8 @@ class MainToolbar extends React.Component {
   }
 
   submitPage() {
-    if(this.props.name) {
-      if(this.props.id.length==0){
+    if (this.props.name) {
+      if (this.props.id.length === 0) {
         this.props.submitPage(
           this.props.pageTitle,
           this.props.editors,
@@ -30,10 +29,9 @@ class MainToolbar extends React.Component {
           this.props.indexTextEditor,
           this.props.iframes,
           this.props.indexIframe
-        )
+        );
       }
-    }
-    else {
+    } else {
       this.props.viewLoginModal();
     }
   }
@@ -41,37 +39,38 @@ class MainToolbar extends React.Component {
   render() {
     return (
       <div className="mainToolbar">
-        <input className="mainToolbar__title"
+        <input
+          className="mainToolbar__title"
           placeholder="Title"
-          type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}></input>
+          type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}
+        ></input>
         <button className="mainToolbar_save" onClick={this.submitPage}>Save</button>
-        {(() => { // eslint-disable-line
+        {(()=> { // eslint-disable-line
           if (this.props.name) {
             return (
-                <div className="mainToolbar_div">
-                  <p className="mainToolbar__welcome">
+              <div className="mainToolbar_div">
+                <p className="mainToolbar__welcome">
                     Welcome {this.props.name}!
-                  </p>
+                </p>
                 <button className="mainToolbar__open" onClick={this.props.viewPagesModal}>
                   View all sketches
                 </button>
                 <a className="mainToolbar_save" href="/logout">Logout</a>
-            </div>
+              </div>
 
             );
-          } else {
-            return (
-              <div className="mainToolbar_div">
-                <button className="mainToolbar_save" onClick={this.props.viewLoginModal}>Log In</button>
-                <button className="mainToolbar_save" onClick={this.props.viewSignUpModal}>Sign Up</button>
-              </div>
-            );
           }
+          return (
+            <div className="mainToolbar_div">
+              <button className="mainToolbar_save" onClick={this.props.viewLoginModal}>Log In</button>
+              <button className="mainToolbar_save" onClick={this.props.viewSignUpModal}>Sign Up</button>
+            </div>
+          );
         })()}
         <InsertToolbar
-          addEditor = {this.props.addEditor}
-          addTextEditor = {this.props.addTextEditor}
-          addIframe = {this.props.addIframe}
+          addEditor={this.props.addEditor}
+          addTextEditor={this.props.addTextEditor}
+          addIframe={this.props.addIframe}
         />
       </div>
     );

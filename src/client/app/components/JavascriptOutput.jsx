@@ -1,25 +1,24 @@
-import React, { PropTypes } from 'react';
-import CodeMirror from 'codemirror';
+import React from 'react';
 
 class JavascriptOutput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       output: []
-    }
+    };
   }
   componentDidMount() {
-    window.addEventListener("message", this.props.receiveMessage, false);
-    let defaultCode = `<!DOCTYPE html>
+    window.addEventListener('message', this.props.receiveMessage, false);
+    const defaultCode = `<!DOCTYPE html>
     <html>
       <head>
         <script src="/public/hijackConsole.js"></script>
       </head>
       <body>
-        <script>`
-        + this.props.editorCode
-        +
-      `</script>
+        <script>${
+         this.props.editorCode
+
+      }</script>
       </body>
     </html>`;
     this.iframe.contentWindow.document.open();
@@ -34,7 +33,7 @@ class JavascriptOutput extends React.Component {
     };
     return (
       <div>
-        <p> {this.props.consoleOutputText.join("\n")} </p>
+        <p> {this.props.consoleOutputText.join('\n')} </p>
         <iframe style={iframeStyle} ref={(element) => { this.iframe = element; }} id="code-output"></iframe>
       </div>
     );

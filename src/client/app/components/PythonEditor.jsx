@@ -8,7 +8,7 @@ class PythonEditor extends React.Component {
   componentDidMount() {
     const defaultSketch = `
     def factorial(n):
-      if n == 0:
+      if n==0:
         return 1
       else:
         return n * factorial(n - 1)
@@ -27,7 +27,6 @@ class PythonEditor extends React.Component {
     this.cm.on('keyup', () => {
       this.props.updateCode(this.cm.getValue());
     });
-
   }
   render() {
     return (

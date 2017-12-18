@@ -1,7 +1,6 @@
+import { EditorState } from 'draft-js';
+import { convertFromRaw } from 'draft-js';
 import * as ActionTypes from '../constants.jsx';
-import {EditorState} from 'draft-js';
-import { convertFromRaw, convertToRaw } from 'draft-js';
-
 
 const initialState = {
   textEditors: {},
@@ -13,94 +12,17 @@ const initialState = {
       fontSize: '54pt',
     },
   }
-}
-
-const textEditors = (state = initialState, action) => {
-  let textEditors = copyTextEditors(state.textEditors);
-  let tempTest = EditorState.createEmpty();
-
-  switch (action.type) {
-
-    case ActionTypes.ADD_TEXT_EDITOR:
-      let newTextEditorId = 'text-editor-' + state.indexTextEditor;
-      let newTextEditorState = EditorState.createEmpty();
-      let newTextEditor = {
-        id: newTextEditorId,
-        editorState: newTextEditorState,
-        x: 0,
-        y: 0,
-        width: 350,
-        height: 150
-      };
-      textEditors[newTextEditorId]= newTextEditor;
-      return Object.assign({}, state, {
-        textEditors: textEditors,
-        indexTextEditor: state.indexTextEditor + 1,
-      });
-
-    case ActionTypes.UPDATE_TEXT_CHANGE:
-      // debugger;
-      if (document.activeElement.parentElement.parentElement.classList.value.localeCompare('DraftEditor-root')==0) {
-        let tempId = document.activeElement.parentElement.parentElement.parentElement.id;
-        textEditors[tempId].editorState = action.state;
-        return Object.assign({}, state, {
-          currentTextEditorState: action.state,
-          textEditors: textEditors,
-          currentTextEditorId: tempId
-        });
-      } else {
-        textEditors[state.currentTextEditorId].editorState = action.state;
-        return Object.assign({}, state, {
-          currentTextEditorState: action.state,
-          textEditors: textEditors
-        });
-      }
-
-    case ActionTypes.SET_CURRENT_TEXT_EDITOR:
-      return Object.assign({}, state, {
-        currentTextEditorId: action.id,
-        currentTextEditorState: action.state,
-      });
-
-    case ActionTypes.REMOVE_TEXT_EDITOR:
-      delete textEditors[action.id];
-      return Object.assign({}, state, {
-        textEditors: textEditors
-      });
-
-    case ActionTypes.SET_DB_TEXT_EDITORS:
-      let convertedTextEditors = convertContentState(action.textEditors);
-      return Object.assign({}, state, {
-        textEditors: convertedTextEditors,
-        indexTextEditor: action.indexTextEditor
-      });
-
-    case ActionTypes.SET_TEXT_EDITOR_POSITION:
-      textEditors[state.currentTextEditorId].x = action.x;
-      textEditors[state.currentTextEditorId].y = action.y;
-      return Object.assign({}, state, {
-        textEditors: textEditors
-      });
-
-    case ActionTypes.SET_TEXT_EDITOR_SIZE:
-      textEditors[state.currentTextEditorId].width = action.width;
-      textEditors[state.currentTextEditorId].height = action.height;
-      return Object.assign({}, state, {
-        textEditors: textEditors
-      });
-
-    default:
-      return state;
-  }
 };
 
 function convertContentState(textEditorsRaw) {
-  let newTextEditors = {};
-  let ids = Object.keys(textEditorsRaw);
+  const newTextEditors = {};
+  const ids = Object.keys(textEditorsRaw);
   ids.forEach((id) => {
     newTextEditors[id] = {};
     newTextEditors[id].id = textEditorsRaw[id].id;
-    newTextEditors[id].editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(textEditorsRaw[id].rawContentState)));
+    newTextEditors[id].editorState = EditorState.createWithContent(
+      convertFromRaw(JSON.parse(textEditorsRaw[id].rawContentState))
+    );
     newTextEditors[id].x = textEditorsRaw[id].x;
     newTextEditors[id].y = textEditorsRaw[id].y;
     newTextEditors[id].width = textEditorsRaw[id].width;
@@ -110,8 +32,8 @@ function convertContentState(textEditorsRaw) {
 }
 
 function copyTextEditors(textEditors) {
-  let newTextEditors = {};
-  let ids = Object.keys(textEditors);
+  const newTextEditors = {};
+  const ids = Object.keys(textEditors);
   ids.forEach((id) => {
     newTextEditors[id] = {};
     newTextEditors[id].id = textEditors[id].id;
@@ -123,5 +45,87 @@ function copyTextEditors(textEditors) {
   });
   return newTextEditors;
 }
+
+const textEditors = (state = initialState, action) => {
+  const textEditorsCopy = copyTextEditors(state.textEditors);
+
+  switch (action.type) {
+
+    case ActionTypes.ADD_TEXT_EDITOR:
+      {
+        const newTextEditorId = `text-editor-${state.indexTextEditor}`;
+        const newTextEditorState = EditorState.createEmpty();
+        const newTextEditor = {
+          id: newTextEditorId,
+          editorState: newTextEditorState,
+          x: 0,
+          y: 0,
+          width: 350,
+          height: 150
+        };
+        textEditorsCopy[newTextEditorId] = newTextEditor;
+        return Object.assign({}, state, {
+          textEditors: textEditorsCopy,
+          indexTextEditor: state.indexTextEditor + 1,
+        });
+      }
+
+    case ActionTypes.UPDATE_TEXT_CHANGE:
+      // debugger;
+      if (document.activeElement.parentElement.parentElement.classList.value.localeCompare('DraftEditor-root') === 0) {
+        const tempId = document.activeElement.parentElement.parentElement.parentElement.id;
+        textEditorsCopy[tempId].editorState = action.state;
+        return Object.assign({}, state, {
+          currentTextEditorState: action.state,
+          textEditors: textEditorsCopy,
+          currentTextEditorId: tempId
+        });
+      }
+      textEditorsCopy[state.currentTextEditorId].editorState = action.state;
+      return Object.assign({}, state, {
+        currentTextEditorState: action.state,
+        textEditors: textEditorsCopy
+      });
+
+
+    case ActionTypes.SET_CURRENT_TEXT_EDITOR:
+      return Object.assign({}, state, {
+        currentTextEditorId: action.id,
+        currentTextEditorState: action.state,
+      });
+
+    case ActionTypes.REMOVE_TEXT_EDITOR:
+      delete textEditorsCopy[action.id];
+      return Object.assign({}, state, {
+        textEditors: textEditorsCopy
+      });
+
+    case ActionTypes.SET_DB_TEXT_EDITORS:
+      {
+        const convertedTextEditors = convertContentState(action.textEditors);
+        return Object.assign({}, state, {
+          textEditors: convertedTextEditors,
+          indexTextEditor: action.indexTextEditor
+        });
+      }
+
+    case ActionTypes.SET_TEXT_EDITOR_POSITION:
+      textEditorsCopy[state.currentTextEditorId].x = action.x;
+      textEditorsCopy[state.currentTextEditorId].y = action.y;
+      return Object.assign({}, state, {
+        textEditors: textEditorsCopy
+      });
+
+    case ActionTypes.SET_TEXT_EDITOR_SIZE:
+      textEditorsCopy[state.currentTextEditorId].width = action.width;
+      textEditorsCopy[state.currentTextEditorId].height = action.height;
+      return Object.assign({}, state, {
+        textEditors: textEditorsCopy
+      });
+
+    default:
+      return state;
+  }
+};
 
 export default textEditors;
