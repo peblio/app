@@ -4,10 +4,9 @@
   height:70%;
 }
 
-
 .Modal_closeButton{
- float:right;
- padding: 4px;
+  float:right;
+  padding: 4px;
 }
 
 .pages_list{
@@ -24,8 +23,8 @@ ol{
   -webkit-padding-start: 0px;
 }
 ol li{
-    padding: 1.5rem;
-    color: $gray;
+  padding: 1.5rem;
+  color: $gray;
 }
 
 ol li:nth-child(odd){
@@ -34,7 +33,6 @@ ol li:nth-child(odd){
 
 ol li a{
   color: $gray;
-
 }
 
 .pages_title{
