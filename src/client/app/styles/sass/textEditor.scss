@@ -3,7 +3,9 @@
 // }
 .DraftEditor-editorContainer{
   border: 1px solid $light-gray;
-  padding: $small-padding;
+  // padding: $small-padding;
+  height: 100%;
+
 
 }
 
@@ -25,6 +27,18 @@
   border-radius: 0 0 $small-border-radius $small-border-radius;
 }
 
+.element__control{
+  fill: black;
+    &:hover {
+      fill:$light-gray;
+      cursor: pointer;
+    }
+}
+
 .element__close{
+  @extend %element_controls;
+}
+
+.dragClassName{
   @extend %element_controls;
 }

@@ -5,6 +5,9 @@ import P5Output from './P5Output.jsx';
 import JavascriptOutput from './JavascriptOutput.jsx';
 import EditorToolbar from './EditorToolbar.jsx';
 import ConsoleOutput from './ConsoleOutput.jsx';
+import DragSVG from '../images/drag.svg';
+import CloseSVG from '../images/close.svg';
+
 
 class EditorContainer extends React.Component {
   constructor(props) {
@@ -23,12 +26,10 @@ class EditorContainer extends React.Component {
             className="element__close"
             onClick={() => this.props.removeEditor(this.props.editorId)}
           >
-            &#x2613;
+            <CloseSVG alt="close element" />
           </button>
-          <button
-            className={dragClassName}
-          >
-          &#x2612;
+          <button className={dragClassName}>
+            <DragSVG alt="drag element" />
           </button>
         </nav>
         <EditorToolbar

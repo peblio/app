@@ -1,4 +1,6 @@
 import React from 'react';
+import DragSVG from '../images/drag.svg';
+import CloseSVG from '../images/close.svg';
 
 class Iframe extends React.Component {
   constructor(props) {
@@ -17,8 +19,8 @@ class Iframe extends React.Component {
     return (
       <div className="element__iframe" id={this.props.id} onFocus={this.onFocus}>
         <nav>
-          <button className="element__close" onClick={() => this.props.removeIframe(this.props.id)}>&#x2613;</button>
-          <button className={dragClassName}>&#x2612;</button>
+          <button className="element__close" onClick={() => this.props.removeIframe(this.props.id)}><CloseSVG alt="close element" /></button>
+          <button className={dragClassName}><DragSVG alt="drag element" /></button>
         </nav>
         <div>
           <iframe src={this.props.iframeURL} />
