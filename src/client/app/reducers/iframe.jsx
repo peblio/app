@@ -18,8 +18,10 @@ const iframe = (state = initialState, action) => {
           url: '',
           x: 0,
           y: 0,
-          width: 200,
-          height: 50
+          width: 400,
+          height: 300,
+          minWidth: 400,
+          minHeight: 300,
         };
         iframes[newIframeId] = newIframe;
         return Object.assign({}, state, {
