@@ -8,7 +8,7 @@ class JavascriptOutput extends React.Component {
     };
   }
   componentDidMount() {
-    window.addEventListener('message', this.props.receiveMessage, false);
+    window.addEventListener('message', this.props.updateConsoleOutput, false);
     const defaultCode = `<!DOCTYPE html>
     <html>
       <head>
@@ -32,7 +32,7 @@ class JavascriptOutput extends React.Component {
       display: 'none'
     };
     return (
-      <div>
+      <div className="codeEditor__output-text">
         <p> {this.props.consoleOutputText.join('\n')} </p>
         <iframe style={iframeStyle} ref={(element) => { this.iframe = element; }} id="code-output"></iframe>
       </div>
@@ -43,7 +43,7 @@ class JavascriptOutput extends React.Component {
 JavascriptOutput.propTypes = {
   consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired,
   editorCode: PropTypes.string.isRequired,
-  receiveMessage: PropTypes.func.isRequired
+  updateConsoleOutput: PropTypes.func.isRequired
 };
 
 export default JavascriptOutput;

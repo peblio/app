@@ -275,7 +275,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  location: PropTypes.string.isRequired,
+  location: PropTypes.shape.isRequired,
   pages: PropTypes.arrayOf.isRequired,
   id: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
@@ -361,8 +361,8 @@ App.propTypes = {
   closeLoginModal: PropTypes.func.isRequired,
   viewSignUpModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
-  isLoginModalOpen: PropTypes.func.isRequired,
-  isSignUpModalOpen: PropTypes.func.isRequired,
+  isLoginModalOpen: PropTypes.bool.isRequired,
+  isSignUpModalOpen: PropTypes.bool.isRequired,
 
   name: PropTypes.string.isRequired,
   loginName: PropTypes.string.isRequired,
