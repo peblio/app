@@ -34,7 +34,7 @@ class Login extends React.Component {
           </div>
           <div className="loginModal_div">
             <label htmlFor="loginModal-password" className="loginModal_label"> Password
-              <input id="loginModal-password" className="loginModal_input" type="text" value={this.props.loginPassword} onChange={this.props.updateUserPassword} />
+              <input id="loginModal-password" className="loginModal_input" type="password" value={this.props.loginPassword} onChange={this.props.updateUserPassword} />
             </label>
           </div>
 
