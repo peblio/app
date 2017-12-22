@@ -24,12 +24,12 @@ class SignUp extends React.Component {
     return (
       <div>
         Sign up here
-        <form onSubmit={(event) => { this.submitSignUpUser(event, this.props.loginName, this.props.loginPassword); }}>
+        <form onSubmit={(event) => { this.submitSignUpUser(event, this.userName.value, this.userPassword.value); }}>
           <label htmlFor="signupModal-name"> name:
-            <input id="signupModal-name" type="text" value={this.props.loginName} onChange={this.props.updateUserName} />
+            <input id="signupModal-name" type="text" ref={(userName) => { this.userName = userName; }} />
           </label>
           <label htmlFor="signupModal-password"> password:
-            <input id="signupModal-password" type="password" value={this.props.loginPassword} onChange={this.props.updateUserPassword} />
+            <input id="signupModal-password" type="password" ref={(userPassword) => { this.userPassword = userPassword; }} />
           </label>
           <input type="submit" value="Submit" />
         </form>

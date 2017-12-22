@@ -8,7 +8,6 @@ class Login extends React.Component {
   }
 
   submitLoginUser(event, name, password) {
-    console.log(name, password);
     axios.post('/api/login', {
       name,
       password
@@ -26,15 +25,17 @@ class Login extends React.Component {
     return (
       <div className="loginModal_content">
         <h5 className="loginModal_title">Log In</h5>
-        <form onSubmit={(event) => { this.submitLoginUser(event, this.props.loginName, this.props.loginPassword); }}>
+        <form onSubmit={(event) => { this.submitLoginUser(event, this.userName.value, this.userPassword.value); }}>
           <div className="loginModal_div">
             <label htmlFor="loginModal-name" className="loginModal_label"> Name
-              <input id="loginModal-name" className="loginModal_input" type="text" value={this.props.loginName} onChange={this.props.updateUserName} />
+              <input id="loginModal-name" className="loginModal_input" type="text" ref={(userName) => { this.userName = userName; }} />
             </label>
           </div>
           <div className="loginModal_div">
             <label htmlFor="loginModal-password" className="loginModal_label"> Password
-              <input id="loginModal-password" className="loginModal_input" type="password" value={this.props.loginPassword} onChange={this.props.updateUserPassword} />
+              <input
+                id="loginModal-password" className="loginModal_input" type="password" ref={(userPassword) => { this.userPassword = userPassword; }}
+              />
             </label>
           </div>
 
