@@ -17,7 +17,7 @@ const apiRoutes = require('./controllers/apiController.js');
 require('./config/passport');
 
 // start the server:
-app.listen(process.env.PORT || 8000);
+app.listen(process.env.PORT || 8080);
 app.use('/', express.static('src/client/')); // set a static file directory
 
 mongoose.connect('mongodb://localhost:27017/peblio');

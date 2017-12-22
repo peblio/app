@@ -275,6 +275,9 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+  location: PropTypes.string.isRequired,
+  pages: PropTypes.arrayOf.isRequired,
+  id: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
   editors: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -282,14 +285,32 @@ App.propTypes = {
     code: PropTypes.string.isRequired,
     isPlaying: PropTypes.bool.isRequired,
     editorMode: PropTypes.string.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+    minWidth: PropTypes.number.isRequired,
+    minHeight: PropTypes.number.isRequired
   })).isRequired,
   textEditors: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
-    editorState: PropTypes.shape
+    editorState: PropTypes.shape,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+    minWidth: PropTypes.number.isRequired,
+    minHeight: PropTypes.number.isRequired
   })).isRequired,
   iframes: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired
+    url: PropTypes.string.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+    minWidth: PropTypes.number.isRequired,
+    minHeight: PropTypes.number.isRequired
   })).isRequired,
 
   isPlaying: PropTypes.bool.isRequired,
@@ -307,20 +328,24 @@ App.propTypes = {
   setEditorPosition: PropTypes.func.isRequired,
 
   addIframe: PropTypes.func.isRequired,
-  setCurrentIframe: PropTypes.func.isRequired,
+  indexIframe: PropTypes.number.isRequired,
+  loadIframes: PropTypes.func.isRequired,
   removeIframe: PropTypes.func.isRequired,
-  setIframeSize: PropTypes.func.isRequired,
+  setCurrentIframe: PropTypes.func.isRequired,
   setIframePosition: PropTypes.func.isRequired,
+  setIframeSize: PropTypes.func.isRequired,
+  setIframeURL: PropTypes.func.isRequired,
 
   addTextEditor: PropTypes.func.isRequired,
-  indexTextEditor: PropTypes.number.isRequired,
-  updateTextChange: PropTypes.func.isRequired,
+  currentTextEditorId: PropTypes.string.isRequired,
   currentTextEditorState: PropTypes.shape.isRequired,
-  setCurrentTextEditor: PropTypes.func.isRequired,
-  removeTextEditor: PropTypes.func.isRequired,
+  indexTextEditor: PropTypes.number.isRequired,
   loadTextEditors: PropTypes.func.isRequired,
+  removeTextEditor: PropTypes.func.isRequired,
+  setCurrentTextEditor: PropTypes.func.isRequired,
   setTextEditorSize: PropTypes.func.isRequired,
   setTextEditorPosition: PropTypes.func.isRequired,
+  updateTextChange: PropTypes.func.isRequired,
 
   setPageTitle: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
@@ -336,6 +361,8 @@ App.propTypes = {
   closeLoginModal: PropTypes.func.isRequired,
   viewSignUpModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
+  isLoginModalOpen: PropTypes.func.isRequired,
+  isSignUpModalOpen: PropTypes.func.isRequired,
 
   name: PropTypes.string.isRequired,
   loginName: PropTypes.string.isRequired,

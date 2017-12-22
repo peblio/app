@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { RichUtils } from 'draft-js';
 
 class TextToolbar extends React.Component {
@@ -33,5 +33,10 @@ class TextToolbar extends React.Component {
     );
   }
 }
+
+TextToolbar.propTypes = {
+  currentTextEditorState: PropTypes.shape.isRequired,
+  onChange: PropTypes.func.isRequired
+};
 
 export default TextToolbar;

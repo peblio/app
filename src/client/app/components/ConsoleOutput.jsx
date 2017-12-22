@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 class ConsoleOutput extends React.Component {
 
@@ -10,5 +10,9 @@ class ConsoleOutput extends React.Component {
     );
   }
 }
+
+ConsoleOutput.propTypes = {
+  consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired
+};
 
 export default ConsoleOutput;

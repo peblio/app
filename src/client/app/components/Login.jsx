@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import axios from 'axios';
 
 class Login extends React.Component {
@@ -45,5 +45,14 @@ class Login extends React.Component {
   }
 
 }
+
+Login.propTypes = {
+  closeLoginModal: PropTypes.func.isRequired,
+  loginName: PropTypes.string.isRequired,
+  loginPassword: PropTypes.string.isRequired,
+  setUserName: PropTypes.func.isRequired,
+  updateUserName: PropTypes.func.isRequired,
+  updateUserPassword: PropTypes.func.isRequired
+};
 
 export default Login;

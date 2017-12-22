@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ReactModal from 'react-modal';
 
 class Modal extends React.Component {
@@ -13,5 +13,11 @@ class Modal extends React.Component {
     );
   }
 }
+
+Modal.propTypes = {
+  children: PropTypes.shape.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  isOpen: PropTypes.func.isRequired
+};
 
 export default Modal;

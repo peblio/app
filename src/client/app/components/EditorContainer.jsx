@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import P5Editor from './P5Editor.jsx';
 import JavascriptEditor from './JavascriptEditor.jsx';
 import P5Output from './P5Output.jsx';
@@ -99,5 +99,19 @@ class EditorContainer extends React.Component {
 
 }
 
+EditorContainer.propTypes = {
+  code: PropTypes.string.isRequired,
+  consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired,
+  editorId: PropTypes.string.isRequired,
+  editorMode: PropTypes.string.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
+  playCode: PropTypes.func.isRequired,
+  removeEditor: PropTypes.func.isRequired,
+  setCurrentEditor: PropTypes.func.isRequired,
+  setEditorMode: PropTypes.func.isRequired,
+  stopCode: PropTypes.func.isRequired,
+  updateCode: PropTypes.func.isRequired,
+  updateConsoleOutput: PropTypes.func.isRequired,
+};
 
 export default EditorContainer;

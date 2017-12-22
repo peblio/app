@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import CodeMirror from 'codemirror';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/selection/active-line';
@@ -34,5 +34,10 @@ class JavascriptEditor extends React.Component {
     );
   }
 }
+
+JavascriptEditor.propTypes = {
+  code: PropTypes.string.isRequired,
+  updateCode: PropTypes.func.isRequired
+};
 
 export default JavascriptEditor;
