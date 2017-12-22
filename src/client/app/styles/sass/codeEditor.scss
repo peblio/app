@@ -30,6 +30,10 @@
   margin: 0;
 }
 
+.codeEditor__output-text {
+  color:$white;
+}
+
 .codeEditor__console{
   background-color: $black;
   color:$white;

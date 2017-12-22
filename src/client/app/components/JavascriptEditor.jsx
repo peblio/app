@@ -22,7 +22,7 @@ class JavascriptEditor extends React.Component {
     });
     this.cm.on('keyup', () => {
       this.props.updateCode(this.cm.getValue());
-      console.log(this.props.code);
+      console.log(this.props.editorCode);
     });
   }
   render() {
@@ -36,7 +36,7 @@ class JavascriptEditor extends React.Component {
 }
 
 JavascriptEditor.propTypes = {
-  code: PropTypes.string.isRequired,
+  editorCode: PropTypes.string.isRequired,
   updateCode: PropTypes.func.isRequired
 };
 

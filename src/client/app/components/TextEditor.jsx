@@ -57,8 +57,8 @@ class TextEditor extends React.Component {
 
 TextEditor.propTypes = {
   currentTextEditorId: PropTypes.string.isRequired,
-  currentTextEditorState: PropTypes.shape.isRequired,
-  editorState: PropTypes.shape.isRequired,
+  currentTextEditorState: PropTypes.object.isRequired,
+  editorState: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   removeTextEditor: PropTypes.func.isRequired,

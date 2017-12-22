@@ -74,7 +74,7 @@ const editorContainer = (state = initialState, action) => {
     case ActionTypes.UPDATE_CONSOLE_OUTPUT:
       {
         const tempOutput = editors[state.currentEditorId].consoleOutputText.slice();
-        tempOutput.push(action.event.data.arguments.join());
+        action.event.data.arguments && tempOutput.push(action.event.data.arguments.join());
         editors[state.currentEditorId].consoleOutputText = tempOutput;
         return Object.assign({}, state, {
           editors
