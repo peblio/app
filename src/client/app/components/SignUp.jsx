@@ -29,7 +29,7 @@ class SignUp extends React.Component {
             <input id="signupModal-name" type="text" value={this.props.loginName} onChange={this.props.updateUserName} />
           </label>
           <label htmlFor="signupModal-password"> password:
-            <input id="signupModal-password" type="text" value={this.props.loginPassword} onChange={this.props.updateUserPassword} />
+            <input id="signupModal-password" type="password" value={this.props.loginPassword} onChange={this.props.updateUserPassword} />
           </label>
           <input type="submit" value="Submit" />
         </form>
