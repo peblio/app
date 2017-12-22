@@ -27,6 +27,8 @@ function convertContentState(textEditorsRaw) {
     newTextEditors[id].y = textEditorsRaw[id].y;
     newTextEditors[id].width = textEditorsRaw[id].width;
     newTextEditors[id].height = textEditorsRaw[id].height;
+    newTextEditors[id].minWidth = textEditorsRaw[id].minWidth;
+    newTextEditors[id].minHeight = textEditorsRaw[id].minHeight;
   });
   return newTextEditors;
 }
@@ -42,6 +44,8 @@ function copyTextEditors(textEditors) {
     newTextEditors[id].y = textEditors[id].y;
     newTextEditors[id].width = textEditors[id].width;
     newTextEditors[id].height = textEditors[id].height;
+    newTextEditors[id].minWidth = textEditors[id].minWidth;
+    newTextEditors[id].minHeight = textEditors[id].minHeight;
   });
   return newTextEditors;
 }
@@ -61,7 +65,9 @@ const textEditors = (state = initialState, action) => {
           x: 0,
           y: 0,
           width: 350,
-          height: 150
+          height: 100,
+          minWidth: 350,
+          minHeight: 100
         };
         textEditorsCopy[newTextEditorId] = newTextEditor;
         return Object.assign({}, state, {

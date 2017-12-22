@@ -14,6 +14,8 @@ function convertEditorState(textEditors) {
     newTextEditors[id].y = textEditors[id].y;
     newTextEditors[id].width = textEditors[id].width;
     newTextEditors[id].height = textEditors[id].height;
+    newTextEditors[id].minWidth = textEditors[id].minWidth;
+    newTextEditors[id].minHeight = textEditors[id].minHeight;
   });
   return newTextEditors;
 }
