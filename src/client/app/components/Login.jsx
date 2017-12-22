@@ -25,7 +25,7 @@ class Login extends React.Component {
     return (
       <div className="loginModal_content">
         <h5 className="loginModal_title">Log In</h5>
-        <form onSubmit={(event) => { this.submitLoginUser(event, this.userName._getText(), this.userPassword._getText()); }}>
+        <form onSubmit={(event) => { this.submitLoginUser(event, this.userName.value, this.userPassword.value); }}>
           <div className="loginModal_div">
             <label htmlFor="loginModal-name" className="loginModal_label"> Name
               <input id="loginModal-name" className="loginModal_input" type="text" ref={(userName) => { this.userName = userName; }} />
