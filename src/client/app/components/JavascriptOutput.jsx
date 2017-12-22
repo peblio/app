@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 class JavascriptOutput extends React.Component {
   constructor(props) {
@@ -39,5 +39,11 @@ class JavascriptOutput extends React.Component {
     );
   }
 }
+
+JavascriptOutput.propTypes = {
+  consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired,
+  editorCode: PropTypes.string.isRequired,
+  receiveMessage: PropTypes.func.isRequired
+};
 
 export default JavascriptOutput;

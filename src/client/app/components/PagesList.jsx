@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 const axios = require('axios');
 
@@ -26,7 +26,7 @@ class PagesList extends React.Component {
   render() {
     const Pages = this.renderPages();
     return (
-      <div className= "pages_list">
+      <div className="pages_list">
         <p className="pages_title">Title</p>
         <ol>
           {Pages}
@@ -35,5 +35,10 @@ class PagesList extends React.Component {
     );
   }
 }
+
+PagesList.propTypes = {
+  pages: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  setAllPages: PropTypes.func.isRequired
+};
 
 export default PagesList;

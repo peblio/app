@@ -1,5 +1,4 @@
-import React from 'react';
-import { render } from 'react-dom';
+import React, { PropTypes } from 'react';
 
 import PlaySVG from '../images/play.svg';
 import PauseSVG from '../images/pause.svg';
@@ -35,5 +34,11 @@ class EditorToolbar extends React.Component {
   }
 
 }
+
+EditorToolbar.propTypes = {
+  playCode: PropTypes.func.isRequired,
+  setEditorMode: PropTypes.func.isRequired,
+  stopCode: PropTypes.func.isRequired
+};
 
 export default EditorToolbar;

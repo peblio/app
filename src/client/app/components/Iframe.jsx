@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import DragSVG from '../images/drag.svg';
 import CloseSVG from '../images/close.svg';
 
@@ -38,5 +38,12 @@ class Iframe extends React.Component {
 
 }
 
+Iframe.propTypes = {
+  id: PropTypes.string.isRequired,
+  iframeURL: PropTypes.string.isRequired,
+  removeIframe: PropTypes.func.isRequired,
+  setCurrentIframe: PropTypes.func.isRequired,
+  setIframeURL: PropTypes.func.isRequired
+};
 
 export default Iframe;

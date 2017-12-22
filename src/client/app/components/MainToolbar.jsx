@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import InsertToolbar from './InsertToolbar.jsx';
 
 class MainToolbar extends React.Component {
@@ -76,5 +76,26 @@ class MainToolbar extends React.Component {
     );
   }
 }
+
+MainToolbar.propTypes = {
+  addEditor: PropTypes.func.isRequired,
+  addIframe: PropTypes.func.isRequired,
+  addTextEditor: PropTypes.func.isRequired,
+  editors: PropTypes.objectOf.isRequired,
+  name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  iframes: PropTypes.objectOf.isRequired,
+  indexEditor: PropTypes.number.isRequired,
+  indexIframe: PropTypes.number.isRequired,
+  indexTextEditor: PropTypes.number.isRequired,
+  pageTitle: PropTypes.string.isRequired,
+  setPageTitle: PropTypes.func.isRequired,
+  submitPage: PropTypes.func.isRequired,
+  textEditors: PropTypes.objectOf.isRequired,
+  updatePage: PropTypes.func.isRequired,
+  viewLoginModal: PropTypes.func.isRequired,
+  viewPagesModal: PropTypes.func.isRequired,
+  viewSignUpModal: PropTypes.func.isRequired
+};
 
 export default MainToolbar;

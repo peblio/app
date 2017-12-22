@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import CodeMirror from 'codemirror';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/selection/active-line';
@@ -31,5 +31,10 @@ class P5Editor extends React.Component {
     );
   }
 }
+
+P5Editor.propTypes = {
+  editorCode: PropTypes.string.isRequired,
+  updateCode: PropTypes.func.isRequired
+};
 
 export default P5Editor;

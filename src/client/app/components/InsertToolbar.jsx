@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { render } from 'react-dom';
 import EditorSVG from '../images/editor.svg';
 import TextSVG from '../images/text.svg';
@@ -34,5 +34,11 @@ class InsertToolbar extends React.Component {
   }
 
 }
+
+InsertToolbar.propTypes = {
+  addEditor: PropTypes.func.isRequired,
+  addIframe: PropTypes.func.isRequired,
+  addTextEditor: PropTypes.func.isRequired
+};
 
 export default InsertToolbar;

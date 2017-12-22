@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 class P5Output extends React.Component {
   componentDidMount() {
@@ -29,5 +29,10 @@ class P5Output extends React.Component {
     );
   }
 }
+
+P5Output.propTypes = {
+  editorCode: PropTypes.string.isRequired,
+  updateConsoleOutput: PropTypes.func.isRequired
+};
 
 export default P5Output;

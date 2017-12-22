@@ -1,5 +1,5 @@
 import { Editor } from 'draft-js';
-import React from 'react';
+import React, { PropTypes } from 'react';
 import TextToolbar from './TextToolbar.jsx';
 
 import Drag from '../images/drag.svg';
@@ -54,5 +54,15 @@ class TextEditor extends React.Component {
     );
   }
 }
+
+TextEditor.propTypes = {
+  currentTextEditorId: PropTypes.string.isRequired,
+  currentTextEditorState: PropTypes.shape.isRequired,
+  editorState: PropTypes.shape.isRequired,
+  id: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  removeTextEditor: PropTypes.func.isRequired,
+  setCurrentTextEditor: PropTypes.func.isRequired
+};
 
 export default TextEditor;

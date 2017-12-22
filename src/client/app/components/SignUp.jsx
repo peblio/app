@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 class SignUp extends React.Component {
   signUpSuccessful(response) {
@@ -38,5 +38,13 @@ class SignUp extends React.Component {
   }
 
 }
+
+SignUp.propTypes = {
+  closeSignUpModal: PropTypes.func.isRequired,
+  loginName: PropTypes.string.isRequired,
+  loginPassword: PropTypes.string.isRequired,
+  updateUserName: PropTypes.func.isRequired,
+  updateUserPassword: PropTypes.func.isRequired
+};
 
 export default SignUp;
