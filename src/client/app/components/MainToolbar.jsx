@@ -63,7 +63,8 @@ class MainToolbar extends React.Component {
           placeholder="Title"
           type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}
         ></input>
-        <button className="mainToolbar_save" onClick={this.savePage}>{saveText}</button>
+        <a className="mainToolbar__new" href="/">New Sketch</a>
+        <button className="mainToolbar__save" onClick={this.savePage}>{saveText}</button>
         {(()=> { // eslint-disable-line
           if (this.props.name) {
             return (
@@ -74,15 +75,15 @@ class MainToolbar extends React.Component {
                 <button className="mainToolbar__open" onClick={this.props.viewPagesModal}>
                   View all sketches
                 </button>
-                <a className="mainToolbar_save" href="/logout">Logout</a>
+                <a className="mainToolbar__save" href="/logout">Logout</a>
               </div>
 
             );
           }
           return (
             <div className="mainToolbar_div">
-              <button className="mainToolbar_save" onClick={this.props.viewLoginModal}>Log In</button>
-              <button className="mainToolbar_save" onClick={this.props.viewSignUpModal}>Sign Up</button>
+              <button className="mainToolbar__save" onClick={this.props.viewLoginModal}>Log In</button>
+              <button className="mainToolbar__save" onClick={this.props.viewSignUpModal}>Sign Up</button>
             </div>
           );
         })()}

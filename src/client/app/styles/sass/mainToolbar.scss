@@ -19,7 +19,11 @@
    padding: 10px;
  }
 
-.mainToolbar_save{
+.mainToolbar__save{
+  @extend %mainToolbar__button;
+}
+
+.mainToolbar__new{
   @extend %mainToolbar__button;
 }
 
