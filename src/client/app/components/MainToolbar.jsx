@@ -11,6 +11,7 @@ class MainToolbar extends React.Component {
     if (this.props.name) {
       if (this.props.id.length === 0) {
         this.props.submitPage(
+          '',
           this.props.pageTitle,
           this.props.editors,
           this.props.indexEditor,
@@ -31,8 +32,10 @@ class MainToolbar extends React.Component {
           this.props.indexIframe
         );
       } else {
+        // this is for fork and save
         this.props.submitPage(
-          this.props.pageTitle,
+          this.props.id,
+          `${this.props.pageTitle}-copy`,
           this.props.editors,
           this.props.indexEditor,
           this.props.textEditors,
