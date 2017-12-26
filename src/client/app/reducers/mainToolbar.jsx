@@ -13,13 +13,20 @@ const initialState = {
 const mainToolbar = (state = initialState, action) => {
   switch (action.type) {
 
+    case ActionTypes.DELETE_PAGE:
+      {
+        const pages = state.pages.filter(id => id.id !== action.id);
+        return Object.assign({}, state, {
+          pages
+        });
+      }
+
     case ActionTypes.SET_PAGE_TITLE:
       return Object.assign({}, state, {
         pageTitle: action.event.target.value
       });
 
     case ActionTypes.SET_PAGE_ID:
-      console.log(action);
       return Object.assign({}, state, {
         id: action.id
       });
@@ -31,7 +38,6 @@ const mainToolbar = (state = initialState, action) => {
       });
 
     case ActionTypes.SET_ALL_PAGES:
-      console.log(action);
       return Object.assign({}, state, {
         pages: action.pages
       });

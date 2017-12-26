@@ -35,7 +35,6 @@ class JavascriptEditor extends React.Component {
 }
 
 JavascriptEditor.propTypes = {
-  editorCode: PropTypes.string.isRequired,
   updateCode: PropTypes.func.isRequired
 };
 
