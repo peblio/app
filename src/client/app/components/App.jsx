@@ -23,17 +23,32 @@ const axios = require('axios');
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.renderEditors = this.renderEditors.bind(this);
+    this.authPage = this.authPage.bind(this);
     this.projectID = this.projectID.bind(this);
   }
+
   componentDidMount() {
+    this.authPage();
+  }
+
+  authPage() {
     if (this.projectID()) {
+      this.props.setEditAccess(false);
+      const projectID = this.projectID();
       axios.get(`/api/page/${this.projectID()}`)
         .then((res) => {
           this.props.loadPage(res.data[0].id, res.data[0].title);
           this.props.loadEditors(res.data[0].indexEditor, res.data[0].editors);
           this.props.loadTextEditors(res.data[0].indexTextEditor, res.data[0].textEditors);
           this.props.loadIframes(res.data[0].indexIframe, res.data[0].iframes);
+          axios.get('/api/user')
+            .then((res1) => {
+              if (res1.data.pages) {
+                if (res1.data.pages.includes(projectID)) {
+                  this.props.setEditAccess(true);
+                }
+              }
+            });
         });
     }
     axios.get('/api/user')
@@ -191,6 +206,7 @@ class App extends React.Component {
             addEditor={this.props.addEditor}
             addIframe={this.props.addIframe}
             addTextEditor={this.props.addTextEditor}
+            canEdit={this.props.canEdit}
             currentTextEditorState={this.props.currentTextEditorState}
             editors={this.props.editors}
             iframes={this.props.iframes}
@@ -238,6 +254,7 @@ class App extends React.Component {
                 closeModal={this.props.closeLoginModal}
               >
                 <Login
+                  authPage={this.authPage}
                   loginName={this.props.loginName}
                   loginPassword={this.props.loginPassword}
                   updateUserName={this.props.updateUserName}
@@ -257,6 +274,7 @@ class App extends React.Component {
                 closeModal={this.props.closeSignUpModal}
               >
                 <SignUp
+                  authPage={this.authPage}
                   loginName={this.props.loginName}
                   loginPassword={this.props.loginPassword}
                   updateUserName={this.props.updateUserName}
@@ -353,6 +371,8 @@ App.propTypes = {
   loadPage: PropTypes.func.isRequired,
   setUserName: PropTypes.func.isRequired,
   setAllPages: PropTypes.func.isRequired,
+  setEditAccess: PropTypes.func.isRequired,
+  canEdit: PropTypes.bool.isRequired,
 
   isPagesModalOpen: PropTypes.bool.isRequired,
   viewPagesModal: PropTypes.func.isRequired,
@@ -393,9 +413,11 @@ function mapStateToProps(state) {
     pageTitle: state.mainToolbar.pageTitle,
     id: state.mainToolbar.id,
     pages: state.mainToolbar.pages,
-    name: state.user.name,
+
+    canEdit: state.user.canEdit,
     loginName: state.user.loginName,
     loginPassword: state.user.loginPassword,
+    name: state.user.name,
 
     isPagesModalOpen: state.mainToolbar.isPagesModalOpen,
     isLoginModalOpen: state.mainToolbar.isLoginModalOpen,

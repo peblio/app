@@ -42,6 +42,8 @@ export const UPDATE_USER_NAME = 'UPDATE_USER_NAME';
 export const SIGN_USER_UP = 'SIGN_USER_UP';
 export const LOGIN_USER = 'LOGIN_USER';
 export const SET_USER_NAME = 'SET_USER_NAME';
+export const MATCH_USER_NAME = 'MATCH_USER_NAME';
+export const SET_EDIT_ACCESS = 'SET_EDIT_ACCESS';
 
 export const VIEW_PAGES_MODAL = 'VIEW_PAGES_MODAL';
 export const CLOSE_PAGES_MODAL = 'CLOSE_PAGES_MODAL';

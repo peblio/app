@@ -4,10 +4,10 @@ import InsertToolbar from './InsertToolbar.jsx';
 class MainToolbar extends React.Component {
   constructor(props) {
     super(props);
-    this.submitPage = this.submitPage.bind(this);
+    this.savePage = this.savePage.bind(this);
   }
 
-  submitPage() {
+  savePage() {
     if (this.props.name) {
       if (this.props.id.length === 0) {
         this.props.submitPage(
@@ -19,9 +19,19 @@ class MainToolbar extends React.Component {
           this.props.iframes,
           this.props.indexIframe
         );
-      } else {
+      } else if (this.props.canEdit) {
         this.props.updatePage(
           this.props.id,
+          this.props.pageTitle,
+          this.props.editors,
+          this.props.indexEditor,
+          this.props.textEditors,
+          this.props.indexTextEditor,
+          this.props.iframes,
+          this.props.indexIframe
+        );
+      } else {
+        this.props.submitPage(
           this.props.pageTitle,
           this.props.editors,
           this.props.indexEditor,
@@ -37,6 +47,12 @@ class MainToolbar extends React.Component {
   }
 
   render() {
+    let saveText = 'Save';
+    if (!this.props.name) {
+      saveText = 'Login and Save';
+    } else if (!this.props.canEdit) {
+      saveText = 'Fork and Save';
+    }
     return (
       <div className="mainToolbar">
         <input
@@ -44,7 +60,7 @@ class MainToolbar extends React.Component {
           placeholder="Title"
           type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}
         ></input>
-        <button className="mainToolbar_save" onClick={this.submitPage}>Save</button>
+        <button className="mainToolbar_save" onClick={this.savePage}>{saveText}</button>
         {(()=> { // eslint-disable-line
           if (this.props.name) {
             return (
@@ -81,17 +97,18 @@ MainToolbar.propTypes = {
   addEditor: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
-  editors: PropTypes.object.isRequired,
+  canEdit: PropTypes.bool.isRequired,
+  editors: PropTypes.shape.isRequired,
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  iframes: PropTypes.object.isRequired,
+  iframes: PropTypes.shape.isRequired,
   indexEditor: PropTypes.number.isRequired,
   indexIframe: PropTypes.number.isRequired,
   indexTextEditor: PropTypes.number.isRequired,
   pageTitle: PropTypes.string.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
-  textEditors: PropTypes.object.isRequired,
+  textEditors: PropTypes.shape.isRequired,
   updatePage: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired,

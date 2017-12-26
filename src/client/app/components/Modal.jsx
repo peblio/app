@@ -15,7 +15,7 @@ class Modal extends React.Component {
 }
 
 Modal.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.shape.isRequired,
   closeModal: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired
 };
