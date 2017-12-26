@@ -240,6 +240,7 @@ class App extends React.Component {
               >
                 <PagesList
                   pages={this.props.pages}
+                  deletePage={this.props.deletePage}
                   setAllPages={this.props.setAllPages}
                 />
               </Modal>
@@ -370,6 +371,7 @@ App.propTypes = {
   updatePage: PropTypes.func.isRequired,
   loadPage: PropTypes.func.isRequired,
   setUserName: PropTypes.func.isRequired,
+  deletePage: PropTypes.func.isRequired,
   setAllPages: PropTypes.func.isRequired,
   setEditAccess: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,

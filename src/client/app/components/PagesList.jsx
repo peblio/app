@@ -13,10 +13,12 @@ class PagesList extends React.Component {
   renderPages() {
     const pages = [];
     this.props.pages.forEach((page, index) => {
+      const pageId = page.id;
       const link = `/pebl/${page.id}`;
       pages.push(
         <li>
           <a href={link}> {page.title} </a>
+          <button onClick={() => { this.props.deletePage({ page }); }}> Delete </button>
         </li>
       );
     });
@@ -37,6 +39,7 @@ class PagesList extends React.Component {
 }
 
 PagesList.propTypes = {
+  deletePage: PropTypes.func.isRequired,
   pages: PropTypes.arrayOf(PropTypes.shape).isRequired,
   setAllPages: PropTypes.func.isRequired
 };

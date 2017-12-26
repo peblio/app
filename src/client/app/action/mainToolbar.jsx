@@ -39,6 +39,24 @@ export function loadPage(id, title) {
   };
 }
 
+export function deletePage(page) {
+  const id = page.page.id;
+  axios.post('/pages/delete', {
+    id
+  })
+  .then((response) => {
+    console.log('deleted');
+  })
+  .catch(function(error) { // eslint-disable-line
+    console.log(error);
+  });
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.DELETE_PAGE,
+      id
+    });
+  };
+}
 
 export function submitPage(parentId, title, editors, indexEditor, textEditors, indexTextEditor, iframes, indexIframe) {
   const id = shortid.generate();
@@ -54,12 +72,12 @@ export function submitPage(parentId, title, editors, indexEditor, textEditors, i
     iframes,
     indexIframe
   })
-      .then(function(response) { // eslint-disable-line
-        window.location.href = `${window.location.origin}/pebl/${id}`;
-      })
-      .catch(function(error) { // eslint-disable-line
-        console.log(error);
-      });
+  .then(function(response) { // eslint-disable-line
+    window.location.href = `${window.location.origin}/pebl/${id}`;
+  })
+  .catch(function(error) { // eslint-disable-line
+    console.log(error);
+  });
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_PAGE_ID,

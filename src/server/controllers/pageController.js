@@ -8,6 +8,7 @@ const pageRoutes = express.Router();
 
 pageRoutes.route('/save').post(savePage);
 pageRoutes.route('/update').post(updatePage);
+pageRoutes.route('/delete').post(deletePage);
 
 function savePage(req, res) {
   const user = req.user;
@@ -16,7 +17,6 @@ function savePage(req, res) {
     User.find({ _id: user._id }, (err, data) => {
       if (err) {
         res.send(err);
-        console.log('fail');
       } else {
         data[0].pages.push(req.body.id);
         User.update({ _id: user._id }, {
@@ -43,6 +43,36 @@ function savePage(req, res) {
   } else {
     res.status(403).send({ error: 'Please log in first' });
   }
+}
+
+function deletePage(req, res) {
+  const user = req.user;
+  Page.remove({ id: req.body.id },
+  (err, data) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send({ data: 'Record has been Deleted..!!' });
+    }
+  });
+
+  User.find({ _id: user._id }, (err, data) => {
+    if (err) {
+      res.send(err);
+    } else {
+      const pages = data[0].pages.filter(id => id !== req.body.id);
+      User.update({ _id: user._id }, {
+        pages
+      },
+      (err, data) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send({ data: 'Single Page removed from User!!' });
+        }
+      });
+    }
+  });
 }
 
 function updatePage(req, res) {
