@@ -40,10 +40,11 @@ export function loadPage(id, title) {
 }
 
 
-export function submitPage(title, editors, indexEditor, textEditors, indexTextEditor, iframes, indexIframe) {
+export function submitPage(parentId, title, editors, indexEditor, textEditors, indexTextEditor, iframes, indexIframe) {
   const id = shortid.generate();
   const textEditorsRaw = convertEditorState(textEditors);
   axios.post('/pages/save', {
+    parentId,
     id,
     title,
     editors,

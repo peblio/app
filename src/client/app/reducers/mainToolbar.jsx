@@ -2,6 +2,7 @@ import * as ActionTypes from '../constants.jsx';
 
 const initialState = {
   pageTitle: '',
+  parentId: '',
   id: '',
   pages: [],
   isPagesModalOpen: false,
