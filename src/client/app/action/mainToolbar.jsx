@@ -55,7 +55,7 @@ export function submitPage(parentId, title, editors, indexEditor, textEditors, i
     indexIframe
   })
       .then(function(response) { // eslint-disable-line
-        window.location.href = `${window.location.origin}/page/${id}`;
+        window.location.href = `${window.location.origin}/pebl/${id}`;
       })
       .catch(function(error) { // eslint-disable-line
         console.log(error);

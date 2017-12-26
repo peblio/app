@@ -53,7 +53,7 @@ class MainToolbar extends React.Component {
     let saveText = 'Save';
     if (!this.props.name) {
       saveText = 'Login and Save';
-    } else if (!this.props.canEdit) {
+    } else if (!this.props.canEdit && this.props.id) {
       saveText = 'Fork and Save';
     }
     return (

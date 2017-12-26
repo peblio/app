@@ -23,8 +23,8 @@ class Main extends React.Component {
         <Router history={browserHistory}>
           <div>
             <Route exact path="/" component={App} />
-            <Route path="/page" component={App} />
-            <Route exact path="/pages" component={App} />
+            <Route path="/pebl" component={App} />
+            <Route exact path="/pebls" component={App} />
           </div>
         </Router>
       </Provider>
