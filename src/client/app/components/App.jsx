@@ -60,7 +60,7 @@ class App extends React.Component {
   }
   projectID() {
     const location = this.props.location.pathname;
-    const projectID = location.match(/\/page\/([\w-].*)/);
+    const projectID = location.match(/\/pebl\/([\w-].*)/);
     return projectID ? projectID[1] : null;
   }
 

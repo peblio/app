@@ -13,7 +13,7 @@ class PagesList extends React.Component {
   renderPages() {
     const pages = [];
     this.props.pages.forEach((page, index) => {
-      const link = `/page/${page.id}`;
+      const link = `/pebl/${page.id}`;
       pages.push(
         <li>
           <a href={link}> {page.title} </a>
