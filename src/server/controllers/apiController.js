@@ -25,10 +25,12 @@ function getPage(req, res) {
 
 function getUser(req, res) {
   let name = null;
+  let pages = null;
   if (req.user) {
     name = req.user.name;
+    pages = req.user.pages;
   }
-  res.send({ name });
+  res.send({ name, pages });
 }
 
 function getSketches(req, res) {

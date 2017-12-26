@@ -2,6 +2,10 @@ import axios from 'axios';
 import React, { PropTypes } from 'react';
 
 class SignUp extends React.Component {
+  componentWillUnmount() {
+    this.props.authPage();
+  }
+
   signUpSuccessful(response) {
     this.props.closeSignUpModal();
   }
@@ -40,11 +44,8 @@ class SignUp extends React.Component {
 }
 
 SignUp.propTypes = {
-  closeSignUpModal: PropTypes.func.isRequired,
-  loginName: PropTypes.string.isRequired,
-  loginPassword: PropTypes.string.isRequired,
-  updateUserName: PropTypes.func.isRequired,
-  updateUserPassword: PropTypes.func.isRequired
+  authPage: PropTypes.func.isRequired,
+  closeSignUpModal: PropTypes.func.isRequired
 };
 
 export default SignUp;

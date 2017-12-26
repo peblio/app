@@ -2,6 +2,10 @@ import React, { PropTypes } from 'react';
 import axios from 'axios';
 
 class Login extends React.Component {
+  componentWillUnmount() {
+    this.props.authPage();
+  }
+
   loginSuccessful(response) {
     this.props.setUserName(response.data.user.name);
     this.props.closeLoginModal();
@@ -13,7 +17,6 @@ class Login extends React.Component {
       password
     })
       .then((response) => {
-        console.log(response);
         this.loginSuccessful(response);
       })
       .catch(function(error) { // eslint-disable-line
@@ -48,12 +51,9 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
+  authPage: PropTypes.func.isRequired,
   closeLoginModal: PropTypes.func.isRequired,
-  loginName: PropTypes.string.isRequired,
-  loginPassword: PropTypes.string.isRequired,
-  setUserName: PropTypes.func.isRequired,
-  updateUserName: PropTypes.func.isRequired,
-  updateUserPassword: PropTypes.func.isRequired
+  setUserName: PropTypes.func.isRequired
 };
 
 export default Login;

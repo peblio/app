@@ -1,4 +1,3 @@
-
 import * as ActionTypes from '../constants.jsx';
 
 export function updateUserName(event) {
@@ -28,10 +27,29 @@ export function setUserName(name) {
   };
 }
 
+export function matchUserName(name, projectID) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.MATCH_USER_NAME,
+      name,
+      projectID
+    });
+  };
+}
+
 export function signUserUp(name, password) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SIGN_USER_UP
+    });
+  };
+}
+
+export function setEditAccess(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_EDIT_ACCESS,
+      value
     });
   };
 }

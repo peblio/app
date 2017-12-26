@@ -22,7 +22,6 @@ class JavascriptEditor extends React.Component {
     });
     this.cm.on('keyup', () => {
       this.props.updateCode(this.cm.getValue());
-      console.log(this.props.editorCode);
     });
   }
   render() {

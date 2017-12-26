@@ -3,7 +3,9 @@ import * as ActionTypes from '../constants.jsx';
 const initialState = {
   name: '',
   loginName: '',
-  loginPassword: ''
+  loginPassword: '',
+  canView: true,
+  canEdit: false
 };
 
 const user = (state = initialState, action) => {
@@ -23,6 +25,11 @@ const user = (state = initialState, action) => {
       console.log(action.name);
       return Object.assign({}, state, {
         name: action.name
+      });
+
+    case ActionTypes.SET_EDIT_ACCESS:
+      return Object.assign({}, state, {
+        canEdit: action.value
       });
 
     default:
