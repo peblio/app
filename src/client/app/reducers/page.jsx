@@ -39,11 +39,6 @@ const page = (state = initialState, action) => {
         pages: action.pages
       });
 
-    case ActionTypes.VIEW_PAGES_MODAL:
-      return Object.assign({}, state, {
-        isPagesModalOpen: true
-      });
-
     default:
       return state;
   }
