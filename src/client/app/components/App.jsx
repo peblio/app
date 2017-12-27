@@ -15,6 +15,7 @@ import TextEditor from './TextEditor.jsx';
 import * as editorActions from '../action/editorContainer.jsx';
 import * as iframeActions from '../action/iframe.jsx';
 import * as mainToolbarActions from '../action/mainToolbar.jsx';
+import * as pageActions from '../action/page.jsx';
 import * as textEditorActions from '../action/textEditors.jsx';
 import * as userActions from '../action/user.jsx';
 
@@ -412,9 +413,9 @@ function mapStateToProps(state) {
     iframes: state.iframe.iframes,
     indexIframe: state.iframe.indexIframe,
 
-    pageTitle: state.mainToolbar.pageTitle,
-    id: state.mainToolbar.id,
-    pages: state.mainToolbar.pages,
+    pageTitle: state.page.pageTitle,
+    id: state.page.id,
+    pages: state.page.pages,
 
     canEdit: state.user.canEdit,
     loginName: state.user.loginName,
@@ -432,6 +433,7 @@ function mapDispatchToProps(dispatch) {
     editorActions,
     iframeActions,
     mainToolbarActions,
+    pageActions,
     textEditorActions,
     userActions),
   dispatch);
