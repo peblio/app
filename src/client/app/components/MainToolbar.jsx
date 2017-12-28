@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import FileModal from './FileModal.jsx';
 import InsertToolbar from './InsertToolbar.jsx';
 
 class MainToolbar extends React.Component {
@@ -50,43 +51,56 @@ class MainToolbar extends React.Component {
   }
 
   render() {
-    let saveText = 'Save';
-    if (!this.props.name) {
-      saveText = 'Login and Save';
-    } else if (!this.props.canEdit && this.props.id) {
-      saveText = 'Fork and Save';
-    }
     return (
-      <div className="mainToolbar">
-        <input
-          className="mainToolbar__title"
-          placeholder="Title"
-          type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}
-        ></input>
-        <a className="mainToolbar__new" href="/">New Sketch</a>
-        <button className="mainToolbar__save" onClick={this.savePage}>{saveText}</button>
+      <div>
+        <div className="mainToolbar">
+          <input
+            className="mainToolbar__title"
+            placeholder="Title"
+            type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}
+          ></input>
+          <div className="mainToolbar__div-left">
+            <div className="fileModal__container">
+              <button className="mainToolbar__save" onClick={this.props.toggleFileDropdown}>
+              File
+              </button>
+            {(() => { // eslint-disable-line
+              if (this.props.isFileDropdownOpen) {
+                return (
+                  <FileModal
+                    name={this.props.name}
+                    savePage={this.savePage}
+                    viewPagesModal={this.props.viewPagesModal}
+                  />
+                );
+              }
+            })()}
+            </div>
+          </div>
+          <div className="mainToolbar__div-right">
         {(()=> { // eslint-disable-line
           if (this.props.name) {
             return (
-              <div className="mainToolbar_div">
+              <div>
                 <p className="mainToolbar__welcome">
                     Welcome {this.props.name}!
                 </p>
-                <button className="mainToolbar__open" onClick={this.props.viewPagesModal}>
-                  View all sketches
-                </button>
+
                 <a className="mainToolbar__save" href="/logout">Logout</a>
               </div>
 
             );
           }
           return (
-            <div className="mainToolbar_div">
+            <div>
               <button className="mainToolbar__save" onClick={this.props.viewLoginModal}>Log In</button>
               <button className="mainToolbar__save" onClick={this.props.viewSignUpModal}>Sign Up</button>
             </div>
           );
         })()}
+          </div>
+        </div>
+
         <InsertToolbar
           addEditor={this.props.addEditor}
           addTextEditor={this.props.addTextEditor}
@@ -109,10 +123,12 @@ MainToolbar.propTypes = {
   indexEditor: PropTypes.number.isRequired,
   indexIframe: PropTypes.number.isRequired,
   indexTextEditor: PropTypes.number.isRequired,
+  isFileDropdownOpen: PropTypes.bool.isRequired,
   pageTitle: PropTypes.string.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   textEditors: PropTypes.shape.isRequired,
+  toggleFileDropdown: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired,
