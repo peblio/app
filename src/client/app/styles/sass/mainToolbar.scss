@@ -1,20 +1,28 @@
 .mainToolbar{
-  padding: 0 $large-padding 0 0;
+  padding: 0 $large-padding $small-padding 0;
+  background-color: #333;
+  height: 3.5em;
 }
 
+
 .mainToolbar__title{
-  height:40px;
-  margin: $medium-padding $large-padding auto;
-  background-color: $black;
-  color:$white;
-  font-size: 35px;
-  border: none;
-  width:30%;
+  height:35px;
+  margin: $medium-padding $medium-padding 0;
+  background-color: $white;
+  color:$gray;
+  font-size: 1em;
+  border-radius: 5px;
+  width:15%;
   float: left;
  }
 
 .mainToolbar__welcome {
-  @extend %mainToolbar__button;
+color: $white;
+margin: $medium-margin $small-margin;
+padding: $medium-padding/2 $medium-padding;
+float: right;
+font-size: 14px;
+font-weight: bold;
 }
 
 .mainToolbar__file{
@@ -34,11 +42,24 @@
   @extend %mainToolbar__button;
 
 }
-
 .mainToolbar__div-left{
-  @include flex;
-  float: left;
+    @include flex;
+    float: left;
 }
+
+.upperToolbar__dropdown{
+  margin: $medium-padding $large-padding 0;
+  border: none;
+  border-radius: 0;
+  width: 80px;
+  color: $gray;
+  background: none;
+  height:40px;
+  font-style: bold;
+  font-size: 1em;
+}
+
+
 .mainToolbar__div-right{
   @include flex;
   float: right;
