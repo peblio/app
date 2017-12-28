@@ -214,6 +214,7 @@ class App extends React.Component {
             indexEditor={this.props.indexEditor}
             indexIframe={this.props.indexIframe}
             indexTextEditor={this.props.indexTextEditor}
+            isFileDropdownOpen={this.props.isFileDropdownOpen}
             name={this.props.name}
             onChange={this.props.updateTextChange}
             pageTitle={this.props.pageTitle}
@@ -221,6 +222,7 @@ class App extends React.Component {
             setPageTitle={this.props.setPageTitle}
             submitPage={this.props.submitPage}
             textEditors={this.props.textEditors}
+            toggleFileDropdown={this.props.toggleFileDropdown}
             updatePage={this.props.updatePage}
             viewPagesModal={this.props.viewPagesModal}
             viewLoginModal={this.props.viewLoginModal}
@@ -386,6 +388,8 @@ App.propTypes = {
   closeSignUpModal: PropTypes.func.isRequired,
   isLoginModalOpen: PropTypes.bool.isRequired,
   isSignUpModalOpen: PropTypes.bool.isRequired,
+  isFileDropdownOpen: PropTypes.bool.isRequired,
+  toggleFileDropdown: PropTypes.func.isRequired,
 
   name: PropTypes.string.isRequired,
   loginName: PropTypes.string.isRequired,
@@ -422,6 +426,7 @@ function mapStateToProps(state) {
     loginPassword: state.user.loginPassword,
     name: state.user.name,
 
+    isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isPagesModalOpen: state.mainToolbar.isPagesModalOpen,
     isLoginModalOpen: state.mainToolbar.isLoginModalOpen,
     isSignUpModalOpen: state.mainToolbar.isSignUpModalOpen,

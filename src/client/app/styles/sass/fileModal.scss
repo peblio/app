@@ -1,0 +1,34 @@
+.fileModal__container {
+  position: relative;
+}
+
+.fileModal__list {
+  position: absolute;
+  background: $white;
+  top: 40px;
+  left: 0;
+  margin: $medium-padding/2;
+  padding: 0;
+  color: $black;
+  border-radius: $small-border-radius;
+}
+
+.fileModal__item {
+  list-style: none;
+  padding: $medium-padding/2 $medium-padding;
+}
+
+.fileModal__link {
+  margin: $large-margin $small-margin;
+  font-size: 14px;
+  font-weight: bold;
+  color: $gray;
+  background-color: $white;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  width: 100%;
+  &:hover {
+    color: $black;
+    cursor: pointer;
+  }
+}

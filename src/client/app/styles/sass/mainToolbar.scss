@@ -10,14 +10,17 @@
   font-size: 35px;
   border: none;
   width:30%;
+  float: left;
  }
 
- .mainToolbar__welcome {
-   color: $white;
-   width:auto;
-   margin: auto;
-   padding: 10px;
- }
+.mainToolbar__welcome {
+  @extend %mainToolbar__button;
+}
+
+.mainToolbar__file{
+  @extend %mainToolbar__button;
+  position: relative;
+}
 
 .mainToolbar__save{
   @extend %mainToolbar__button;
@@ -32,8 +35,11 @@
 
 }
 
-.mainToolbar_div{
+.mainToolbar__div-left{
+  @include flex;
+  float: left;
+}
+.mainToolbar__div-right{
   @include flex;
   float: right;
-
 }

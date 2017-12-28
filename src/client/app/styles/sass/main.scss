@@ -2,16 +2,16 @@
 @import './base';
 @import './mixins';
 
-
 @import './codeEditor';
+@import './console';
 @import './editorToolbar';
+@import './fileModal';
+@import './iframe';
 @import './insertToolbar';
+@import './login';
 @import './mainToolbar';
+@import './modals';
+@import './resize';
+@import './styleVariables';
 @import './textEditor';
 @import './textToolbar';
-@import './styleVariables';
-@import './login';
-@import './modals';
-@import './console';
-@import './iframe';
-@import './resize';

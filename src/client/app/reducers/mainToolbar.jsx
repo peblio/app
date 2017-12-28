@@ -1,6 +1,7 @@
 import * as ActionTypes from '../constants.jsx';
 
 const initialState = {
+  isFileDropdownOpen: false,
   isPagesModalOpen: false,
   isLoginModalOpen: false,
   isSignUpModalOpen: false
@@ -8,6 +9,11 @@ const initialState = {
 
 const mainToolbar = (state = initialState, action) => {
   switch (action.type) {
+
+    case ActionTypes.TOGGLE_FILE_DROPDOWN:
+      return Object.assign({}, state, {
+        isFileDropdownOpen: !state.isFileDropdownOpen
+      });
 
     case ActionTypes.VIEW_PAGES_MODAL:
       return Object.assign({}, state, {
