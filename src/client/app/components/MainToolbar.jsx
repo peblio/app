@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import FileModal from './FileModal.jsx';
 import InsertToolbar from './InsertToolbar.jsx';
+import ToolbarLogo from '../images/logo.svg';
+import EditorSVG from '../images/editor.svg';
 
 class MainToolbar extends React.Component {
   constructor(props) {
@@ -54,14 +56,13 @@ class MainToolbar extends React.Component {
     return (
       <div>
         <div className="mainToolbar">
-          <input
-            className="mainToolbar__title"
-            placeholder="Title"
-            type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}
-          ></input>
           <div className="mainToolbar__div-left">
+            <div className="logo_toolbar">
+              <ToolbarLogo alt="logo in toolbar"/>
+            </div>
+
             <div className="fileModal__container">
-              <button className="mainToolbar__save" onClick={this.props.toggleFileDropdown}>
+              <button className="upperToolbar__dropdown" onClick={this.props.toggleFileDropdown}>
               File
               </button>
             {(() => { // eslint-disable-line
@@ -77,16 +78,22 @@ class MainToolbar extends React.Component {
             })()}
             </div>
           </div>
+          <input
+            className="mainToolbar__title"
+            placeholder="Title"
+            type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}
+          ></input>
           <div className="mainToolbar__div-right">
         {(()=> { // eslint-disable-line
           if (this.props.name) {
             return (
               <div>
-                <p className="mainToolbar__welcome">
-                    Welcome {this.props.name}!
-                </p>
+
 
                 <a className="mainToolbar__save" href="/logout">Logout</a>
+                  <p className="mainToolbar__welcome">
+                      Welcome {this.props.name}!
+                  </p>
               </div>
 
             );
