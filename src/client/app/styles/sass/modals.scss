@@ -16,7 +16,24 @@
   max-height: 80%;
   width: 100%;
   padding-top: $large-margin;
+  z-index: 100;
 }
+
+.pages_delete{
+  margin: -10px;
+  border: none;
+  background: none;
+  float:right;
+  fill: #B1B1B1;
+    &:hover {
+      border: none;
+      background: none;
+      float:right;
+      box-shadow: none;
+      fill: $dark-gray;
+    }
+}
+
 ol{
   list-style-position: inside;
   -webkit-margin-before: 0;
@@ -39,4 +56,9 @@ ol li a{
   margin-left: $large-margin;
   color: $light-gray;
 
+}
+
+.fileModal__list{
+  border: 2px solid $light-gray;
+  z-index: 1;
 }

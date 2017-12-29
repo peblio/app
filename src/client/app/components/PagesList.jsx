@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import DeleteIcon from '../images/trash.svg';
+
 
 const axios = require('axios');
 
@@ -18,7 +20,7 @@ class PagesList extends React.Component {
       pages.push(
         <li>
           <a href={link}> {page.title} </a>
-          <button onClick={() => { this.props.deletePage({ page }); }}> Delete </button>
+          <button className="pages_delete" onClick={() => { this.props.deletePage({ page }); }}> <DeleteIcon alt="delete page" /> </button>
         </li>
       );
     });
