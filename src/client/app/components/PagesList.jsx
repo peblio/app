@@ -20,7 +20,7 @@ class PagesList extends React.Component {
       pages.push(
         <li>
           <a href={link}> {page.title} </a>
-          <button className="pages_delete" onClick={() => { this.props.deletePage({ page }); }}> <DeleteIcon alt="delete page" /> </button>
+          <button className="pages__delete" onClick={() => { this.props.deletePage({ page }); }}> <DeleteIcon alt="delete page" /> </button>
         </li>
       );
     });
