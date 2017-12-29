@@ -4,7 +4,8 @@ const initialState = {
   pageTitle: '',
   parentId: '',
   id: '',
-  pages: []
+  pages: [],
+  unsavedChanges: false
 };
 
 const page = (state = initialState, action) => {
@@ -37,6 +38,11 @@ const page = (state = initialState, action) => {
     case ActionTypes.SET_ALL_PAGES:
       return Object.assign({}, state, {
         pages: action.pages
+      });
+
+    case ActionTypes.SET_UNSAVED_CHANGES:
+      return Object.assign({}, state, {
+        unsavedChanges: action.value
       });
 
     default:

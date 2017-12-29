@@ -18,7 +18,6 @@ class P5Editor extends React.Component {
       styleActiveLine: true,
     });
     this.cm.on('keyup', () => {
-      console.log('key up');
       this.props.updateCode(this.cm.getValue());
     });
   }

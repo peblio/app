@@ -1,10 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Rnd from 'react-rnd';
 
-import EditorContainer from './EditorContainer.jsx';
-import Iframe from './Iframe.jsx';
+import Canvas from './Canvas.jsx';
 import Login from './Login.jsx';
 import MainToolbar from './MainToolbar.jsx';
 import Modal from './Modal.jsx';
@@ -65,140 +63,7 @@ class App extends React.Component {
     return projectID ? projectID[1] : null;
   }
 
-  renderEditors() {
-    const editorsHTML = [];
-    const ids = Object.keys(this.props.editors);
-    ids.forEach((id) => {
-      const extendsProps = {
-        onMouseOver: () => {
-          this.props.setCurrentEditor(id);
-        }
-      };
-      const dragHandle = `.drag__${id}`;
-      editorsHTML.push(
-        <Rnd
-          className="resize-container"
-          size={{ width: this.props.editors[id].width, height: this.props.editors[id].height }}
-          position={{ x: this.props.editors[id].x, y: this.props.editors[id].y }}
-          onDragStop={(e, d) => { this.props.setEditorPosition(d.x, d.y); }}
-          dragHandleClassName={dragHandle}
-          onResize={(e, direction, ref, delta, position) => {
-            this.props.setEditorSize(ref.offsetWidth, ref.offsetHeight);
-          }}
-          minWidth={this.props.editors[id].minWidth}
-          minHeight={this.props.editors[id].minHeight}
-          extendsProps={extendsProps}
-          bounds=".canvas"
-        >
-          <EditorContainer
-            key={id}
-            editorId={id}
-            playCode={this.props.playCode}
-            stopCode={this.props.stopCode}
-            updateCode={this.props.updateCode}
-            isPlaying={this.props.editors[id].isPlaying}
-            editorMode={this.props.editors[id].editorMode}
-            consoleOutputText={this.props.editors[id].consoleOutputText}
-            code={this.props.editors[id].code}
-            setCurrentEditor={this.props.setCurrentEditor}
-            setEditorMode={this.props.setEditorMode}
-            updateConsoleOutput={this.props.updateConsoleOutput}
-            removeEditor={this.props.removeEditor}
-          />
-        </Rnd>
-      );
-    });
-    return editorsHTML;
-  }
-
-  renderTextEditors() {
-    const textEditors = [];
-
-
-    const ids = Object.keys(this.props.textEditors);
-    ids.forEach((id) => {
-      const extendsProps = {
-        onMouseOver: () => {
-          this.props.setCurrentTextEditor(this.props.textEditors[id].id, this.props.textEditors[id].editorState);
-        }
-      };
-      const dragHandle = `.drag__${id}`;
-      textEditors.push(
-        <Rnd
-          className="resize-container"
-          size={{ width: this.props.textEditors[id].width, height: this.props.textEditors[id].height }}
-          position={{ x: this.props.textEditors[id].x, y: this.props.textEditors[id].y }}
-          onDragStop={(e, d) => { this.props.setTextEditorPosition(d.x, d.y); }}
-          dragHandleClassName={dragHandle}
-          onResize={(e, direction, ref, delta, position) => {
-            this.props.setTextEditorSize(ref.offsetWidth, ref.offsetHeight);
-          }}
-          minWidth={this.props.textEditors[id].minWidth}
-          minHeight={this.props.textEditors[id].minHeight}
-          extendsProps={extendsProps}
-          bounds=".canvas"
-        >
-          <TextEditor
-            key={id}
-            editorState={this.props.textEditors[id].editorState}
-            onChange={this.props.updateTextChange}
-            ref={this.props.textEditors[id].id}
-            id={this.props.textEditors[id].id}
-            currentTextEditorState={this.props.currentTextEditorState}
-            currentTextEditorId={this.props.currentTextEditorId}
-            setCurrentTextEditor={this.props.setCurrentTextEditor}
-            removeTextEditor={this.props.removeTextEditor}
-          />
-        </Rnd>
-      );
-    });
-
-    return textEditors;
-  }
-
-  renderIframes() {
-    const iframes = [];
-    const ids = Object.keys(this.props.iframes);
-    ids.forEach((id) => {
-      const extendsProps = {
-        onMouseOver: () => {
-          this.props.setCurrentIframe(id);
-        }
-      };
-      const dragHandle = `.drag__${id}`;
-      iframes.push(
-        <Rnd
-          className="resize-container"
-          size={{ width: this.props.iframes[id].width, height: this.props.iframes[id].height }}
-          position={{ x: this.props.iframes[id].x, y: this.props.iframes[id].y }}
-          onDragStop={(e, d) => { this.props.setIframePosition(d.x, d.y); }}
-          dragHandleClassName={dragHandle}
-          onResize={(e, direction, ref, delta, position) => {
-            this.props.setIframeSize(ref.offsetWidth, ref.offsetHeight);
-          }}
-          minWidth={this.props.iframes[id].minWidth}
-          minHeight={this.props.iframes[id].minHeight}
-          extendsProps={extendsProps}
-          bounds=".canvas"
-        >
-          <Iframe
-            key={id}
-            id={id}
-            setIframeURL={this.props.setIframeURL}
-            iframeURL={this.props.iframes[id].url}
-            setCurrentIframe={this.props.setCurrentIframe}
-            removeIframe={this.props.removeIframe}
-          />
-        </Rnd>
-      );
-    });
-    return iframes;
-  }
-
   render() {
-    const Editors = this.renderEditors();
-    const TextEditors = this.renderTextEditors();
-    const Iframes = this.renderIframes();
     return (
       <div>
         <nav>
@@ -220,20 +85,48 @@ class App extends React.Component {
             pageTitle={this.props.pageTitle}
             setAllPages={this.props.setAllPages}
             setPageTitle={this.props.setPageTitle}
+            setUnsavedChanges={this.props.setUnsavedChanges}
             submitPage={this.props.submitPage}
             textEditors={this.props.textEditors}
             toggleFileDropdown={this.props.toggleFileDropdown}
+            unsavedChanges={this.props.unsavedChanges}
             updatePage={this.props.updatePage}
             viewPagesModal={this.props.viewPagesModal}
             viewLoginModal={this.props.viewLoginModal}
             viewSignUpModal={this.props.viewSignUpModal}
           />
         </nav>
-        <section className="canvas">
-          {Editors}
-          {TextEditors}
-          {Iframes}
-        </section>
+        <Canvas
+          setUnsavedChanges={this.props.setUnsavedChanges}
+
+          editors={this.props.editors}
+          textEditors={this.props.textEditors}
+          iframes={this.props.iframes}
+          isPlaying={this.props.isPlaying}
+          playCode={this.props.playCode}
+          stopCode={this.props.stopCode}
+          updateCode={this.props.updateCode}
+          setCurrentEditor={this.props.setCurrentEditor}
+          updateConsoleOutput={this.props.updateConsoleOutput}
+          setEditorMode={this.props.setEditorMode}
+          removeEditor={this.props.removeEditor}
+          setEditorSize={this.props.setEditorSize}
+          setEditorPosition={this.props.setEditorPosition}
+
+          removeIframe={this.props.removeIframe}
+          setCurrentIframe={this.props.setCurrentIframe}
+          setIframePosition={this.props.setIframePosition}
+          setIframeSize={this.props.setIframeSize}
+          setIframeURL={this.props.setIframeURL}
+
+          currentTextEditorId={this.props.currentTextEditorId}
+          currentTextEditorState={this.props.currentTextEditorState}
+          removeTextEditor={this.props.removeTextEditor}
+          setCurrentTextEditor={this.props.setCurrentTextEditor}
+          setTextEditorSize={this.props.setTextEditorSize}
+          setTextEditorPosition={this.props.setTextEditorPosition}
+          updateTextChange={this.props.updateTextChange}
+        />
         {(()=> { // eslint-disable-line
           if (this.props.isPagesModalOpen) {
             return (
@@ -378,6 +271,8 @@ App.propTypes = {
   setAllPages: PropTypes.func.isRequired,
   setEditAccess: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
+  setUnsavedChanges: PropTypes.func.isRequired,
+  unsavedChanges: PropTypes.bool.isRequired,
 
   isPagesModalOpen: PropTypes.bool.isRequired,
   viewPagesModal: PropTypes.func.isRequired,
@@ -420,6 +315,7 @@ function mapStateToProps(state) {
     pageTitle: state.page.pageTitle,
     id: state.page.id,
     pages: state.page.pages,
+    unsavedChanges: state.page.unsavedChanges,
 
     canEdit: state.user.canEdit,
     loginName: state.user.loginName,

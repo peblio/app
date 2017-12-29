@@ -9,6 +9,7 @@ class MainToolbar extends React.Component {
   }
 
   savePage() {
+    this.props.setUnsavedChanges(false);
     if (this.props.name) {
       if (this.props.id.length === 0) {
         this.props.submitPage(
@@ -59,6 +60,15 @@ class MainToolbar extends React.Component {
             placeholder="Title"
             type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}
           ></input>
+          {(()=>{ //eslint-disable-line
+            if (this.props.unsavedChanges) {
+              return (
+                <span className="mainToolbar__unsaved-ind">
+                  *
+                </span>
+              );
+            }
+          })()}
           <div className="mainToolbar__div-left">
             <div className="fileModal__container">
               <button className="mainToolbar__save" onClick={this.props.toggleFileDropdown}>
@@ -126,13 +136,15 @@ MainToolbar.propTypes = {
   isFileDropdownOpen: PropTypes.bool.isRequired,
   pageTitle: PropTypes.string.isRequired,
   setPageTitle: PropTypes.func.isRequired,
+  setUnsavedChanges: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   textEditors: PropTypes.shape.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired,
-  viewSignUpModal: PropTypes.func.isRequired
+  viewSignUpModal: PropTypes.func.isRequired,
+  unsavedChanges: PropTypes.bool.isRequired
 };
 
 export default MainToolbar;

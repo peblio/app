@@ -13,6 +13,13 @@
   float: left;
  }
 
+.mainToolbar__unsaved-ind {
+  color: $light-gray;
+  position: absolute;
+  left: $micro-margin;
+  top: $micro-margin;
+  font-size: 2rem;
+}
 .mainToolbar__welcome {
   @extend %mainToolbar__button;
 }
