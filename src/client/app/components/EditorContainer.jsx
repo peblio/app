@@ -15,9 +15,9 @@ class EditorContainer extends React.Component {
     this.onFocus = this.onFocus.bind(this);
   }
   componentDidUpdate(prevProps) {
-    if (this.props.x != prevProps.x
-      || this.props.y != prevProps.y
-      || this.props.code != prevProps.code) {
+    if (this.props.x !== prevProps.x
+      || this.props.y !== prevProps.y
+      || this.props.code !== prevProps.code) {
       this.props.setUnsavedChanges(true);
     }
   }
@@ -116,9 +116,12 @@ EditorContainer.propTypes = {
   removeEditor: PropTypes.func.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
+  setUnsavedChanges: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired
 };
 
 export default EditorContainer;
