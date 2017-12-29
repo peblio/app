@@ -1,13 +1,22 @@
 .mainToolbar{
   padding: 0 $large-padding $small-padding 0;
-  background-color: #333;
+  background-color: #242424;
   height: 3.5em;
+  box-shadow: 3px 5px 5px #888888;
+}
+
+.logo_toolbar{
+  // width: 100px;
+  // height: 100%;
+  margin: $medium-margin $small-margin;
+  padding: $medium-padding/2 $medium-padding;
 }
 
 
 .mainToolbar__title{
   height:35px;
-  margin: $medium-padding $medium-padding 0;
+  margin: $medium-padding 0 0;
+  padding: $small-padding;
   background-color: $white;
   color:$gray;
   font-size: 1em;
@@ -48,7 +57,7 @@ font-weight: bold;
 }
 
 .upperToolbar__dropdown{
-  margin: $medium-padding $large-padding 0;
+  margin: $medium-padding $small-padding 0;
   border: none;
   border-radius: 0;
   width: 80px;

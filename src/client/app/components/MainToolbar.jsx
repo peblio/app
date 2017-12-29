@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import FileModal from './FileModal.jsx';
 import InsertToolbar from './InsertToolbar.jsx';
+import ToolbarLogo from '../images/logo.svg';
+import EditorSVG from '../images/editor.svg';
 
 class MainToolbar extends React.Component {
   constructor(props) {
@@ -54,8 +56,11 @@ class MainToolbar extends React.Component {
     return (
       <div>
         <div className="mainToolbar">
-
           <div className="mainToolbar__div-left">
+            <div className="logo_toolbar">
+              <ToolbarLogo alt="logo in toolbar"/>
+            </div>
+
             <div className="fileModal__container">
               <button className="upperToolbar__dropdown" onClick={this.props.toggleFileDropdown}>
               File

@@ -9,8 +9,11 @@ body, html, h1, h2, h3{
   background-color: white;
   width:$total-width;
   min-height:100vh;
-  margin: auto;
+  // margin: auto;
   padding: $medium-padding;
+  border-radius: $medium-border-radius;
+  box-shadow: -8px 0px 10px #888888;
+
 }
 
 .resize-container {

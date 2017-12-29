@@ -13,6 +13,8 @@
   margin: 0 $small-margin;
   padding: $small-padding/2 $small-padding;
   background-color: $gray;
+  box-shadow: 3px 5px 5px #888888;
+
 }
 
 .insertToolbar__icon{
@@ -30,6 +32,6 @@
 .insertToolbar__button:hover #Shape {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
-    fill:black;
-    stroke:black;
+  fill:black;
+  stroke:black;
 }
