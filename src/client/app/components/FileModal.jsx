@@ -12,12 +12,22 @@ class FileModal extends React.Component {
             return (
               <div>
                 <li className="fileModal__item">
-                  <a className="fileModal__link" onClick={this.props.viewPagesModal}>
+                  <a
+                    className="fileModal__link" onClick={() => {
+                      this.props.viewPagesModal();
+                      this.props.toggleFileDropdown();
+                    }}
+                  >
                     Open
                   </a>
                 </li>
                 <li className="fileModal__item">
-                  <a className="fileModal__link" onClick={this.props.savePage}>
+                  <a
+                    className="fileModal__link" onClick={() => {
+                      this.props.savePage();
+                      this.props.toggleFileDropdown();
+                    }}
+                  >
                     Save
                   </a>
                 </li>
@@ -31,9 +41,10 @@ class FileModal extends React.Component {
 }
 
 FileModal.propTypes = {
-  viewPagesModal: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
   savePage: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired
+  toggleFileDropdown: PropTypes.func.isRequired,
+  viewPagesModal: PropTypes.func.isRequired
 };
 
 export default FileModal;

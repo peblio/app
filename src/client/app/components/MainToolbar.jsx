@@ -82,6 +82,7 @@ class MainToolbar extends React.Component {
                   <FileModal
                     name={this.props.name}
                     savePage={this.savePage}
+                    toggleFileDropdown={this.props.toggleFileDropdown}
                     viewPagesModal={this.props.viewPagesModal}
                   />
                 );
