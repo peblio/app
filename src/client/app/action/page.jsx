@@ -130,3 +130,11 @@ export function setUnsavedChanges(value) {
     });
   };
 }
+
+export function togglePreviewMode(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.TOGGLE_PREVIEW_MODE
+    });
+  };
+}

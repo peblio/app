@@ -33,12 +33,18 @@
   font-size: 2rem;
 }
 .mainToolbar__welcome {
-color: $white;
-margin: $medium-margin $small-margin;
-padding: $medium-padding/2 $medium-padding;
-float: right;
-font-size: 14px;
-font-weight: bold;
+  color: $white;
+  margin: $medium-margin $small-margin;
+  padding: $medium-padding/2 $medium-padding;
+  float: right;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.mainToolbar__preview {
+  color: $white;
+  margin: $medium-margin $small-margin;
+  padding: $medium-padding/2 $medium-padding;
 }
 
 .mainToolbar__file{

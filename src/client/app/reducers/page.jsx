@@ -1,10 +1,11 @@
 import * as ActionTypes from '../constants.jsx';
 
 const initialState = {
-  pageTitle: '',
-  parentId: '',
   id: '',
   pages: [],
+  pageTitle: '',
+  parentId: '',
+  preview: false,
   unsavedChanges: false
 };
 
@@ -43,6 +44,11 @@ const page = (state = initialState, action) => {
     case ActionTypes.SET_UNSAVED_CHANGES:
       return Object.assign({}, state, {
         unsavedChanges: action.value
+      });
+
+    case ActionTypes.TOGGLE_PREVIEW_MODE:
+      return Object.assign({}, state, {
+        preview: !state.preview
       });
 
     default:

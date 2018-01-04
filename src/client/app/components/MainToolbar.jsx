@@ -96,35 +96,43 @@ class MainToolbar extends React.Component {
             type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}
           ></input>
           <div className="mainToolbar__div-right">
-        {(()=> { // eslint-disable-line
-          if (this.props.name) {
-            return (
-              <div>
+            <label className="mainToolbar__preview" htmlFor="preview-checkbox">
+              <input id="preview-checkbox" type="checkbox" onChange={this.props.togglePreviewMode} />
+              Preview
+            </label>
 
+            {(()=> { // eslint-disable-line
+              if (this.props.name) {
+                return (
+                  <div>
+                    <a className="mainToolbar__save" href="/logout">Logout</a>
+                    <p className="mainToolbar__welcome">
+                          Welcome {this.props.name}!
+                    </p>
+                  </div>
 
-                <a className="mainToolbar__save" href="/logout">Logout</a>
-                <p className="mainToolbar__welcome">
-                      Welcome {this.props.name}!
-                </p>
-              </div>
-
-            );
-          }
-          return (
-            <div>
-              <button className="mainToolbar__save" onClick={this.props.viewLoginModal}>Log In</button>
-              <button className="mainToolbar__save" onClick={this.props.viewSignUpModal}>Sign Up</button>
-            </div>
-          );
-        })()}
+                );
+              }
+              return (
+                <div>
+                  <button className="mainToolbar__save" onClick={this.props.viewLoginModal}>Log In</button>
+                  <button className="mainToolbar__save" onClick={this.props.viewSignUpModal}>Sign Up</button>
+                </div>
+              );
+            })()}
           </div>
         </div>
-
-        <InsertToolbar
-          addEditor={this.props.addEditor}
-          addTextEditor={this.props.addTextEditor}
-          addIframe={this.props.addIframe}
-        />
+        {(() => {
+          if (!this.props.preview) {
+            return (
+              <InsertToolbar
+                addEditor={this.props.addEditor}
+                addTextEditor={this.props.addTextEditor}
+                addIframe={this.props.addIframe}
+              />
+            );
+          }
+        })()}
       </div>
     );
   }
@@ -144,6 +152,7 @@ MainToolbar.propTypes = {
   indexTextEditor: PropTypes.number.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   pageTitle: PropTypes.string.isRequired,
+  preview: PropTypes.bool.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,

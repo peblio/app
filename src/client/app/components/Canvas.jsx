@@ -34,22 +34,23 @@ class Canvas extends React.Component {
           bounds=".canvas"
         >
           <EditorContainer
-            x={this.props.editors[id].x}
-            y={this.props.editors[id].y}
-            setUnsavedChanges={this.props.setUnsavedChanges}
-            key={id}
-            editorId={id}
-            playCode={this.props.playCode}
-            stopCode={this.props.stopCode}
-            updateCode={this.props.updateCode}
-            isPlaying={this.props.editors[id].isPlaying}
-            editorMode={this.props.editors[id].editorMode}
-            consoleOutputText={this.props.editors[id].consoleOutputText}
             code={this.props.editors[id].code}
+            consoleOutputText={this.props.editors[id].consoleOutputText}
+            editorId={id}
+            editorMode={this.props.editors[id].editorMode}
+            key={id}
+            isPlaying={this.props.editors[id].isPlaying}
+            playCode={this.props.playCode}
+            preview={this.props.preview}
+            removeEditor={this.props.removeEditor}
             setCurrentEditor={this.props.setCurrentEditor}
             setEditorMode={this.props.setEditorMode}
+            setUnsavedChanges={this.props.setUnsavedChanges}
+            stopCode={this.props.stopCode}
+            updateCode={this.props.updateCode}
             updateConsoleOutput={this.props.updateConsoleOutput}
-            removeEditor={this.props.removeEditor}
+            x={this.props.editors[id].x}
+            y={this.props.editors[id].y}
           />
         </Rnd>
       );
@@ -85,18 +86,19 @@ class Canvas extends React.Component {
           bounds=".canvas"
         >
           <TextEditor
+            currentTextEditorId={this.props.currentTextEditorId}
+            currentTextEditorState={this.props.currentTextEditorState}
+            editorState={this.props.textEditors[id].editorState}
+            id={this.props.textEditors[id].id}
+            key={id}
+            onChange={this.props.updateTextChange}
+            preview={this.props.preview}
+            ref={this.props.textEditors[id].id}
+            removeTextEditor={this.props.removeTextEditor}
+            setCurrentTextEditor={this.props.setCurrentTextEditor}
+            setUnsavedChanges={this.props.setUnsavedChanges}
             x={this.props.textEditors[id].x}
             y={this.props.textEditors[id].y}
-            setUnsavedChanges={this.props.setUnsavedChanges}
-            key={id}
-            editorState={this.props.textEditors[id].editorState}
-            onChange={this.props.updateTextChange}
-            ref={this.props.textEditors[id].id}
-            id={this.props.textEditors[id].id}
-            currentTextEditorState={this.props.currentTextEditorState}
-            currentTextEditorId={this.props.currentTextEditorId}
-            setCurrentTextEditor={this.props.setCurrentTextEditor}
-            removeTextEditor={this.props.removeTextEditor}
           />
         </Rnd>
       );
@@ -132,15 +134,16 @@ class Canvas extends React.Component {
           bounds=".canvas"
         >
           <Iframe
-            x={this.props.iframes[id].x}
-            y={this.props.iframes[id].y}
-            setUnsavedChanges={this.props.setUnsavedChanges}
             key={id}
             id={id}
-            setIframeURL={this.props.setIframeURL}
             iframeURL={this.props.iframes[id].url}
-            setCurrentIframe={this.props.setCurrentIframe}
+            preview={this.props.preview}
             removeIframe={this.props.removeIframe}
+            setCurrentIframe={this.props.setCurrentIframe}
+            setIframeURL={this.props.setIframeURL}
+            setUnsavedChanges={this.props.setUnsavedChanges}
+            x={this.props.iframes[id].x}
+            y={this.props.iframes[id].y}
           />
         </Rnd>
       );
@@ -165,6 +168,7 @@ class Canvas extends React.Component {
 }
 
 Canvas.propTypes = {
+  preview: PropTypes.bool.isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
 
   editors: PropTypes.objectOf(PropTypes.shape({

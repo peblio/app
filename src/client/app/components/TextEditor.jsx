@@ -28,17 +28,23 @@ class TextEditor extends React.Component {
     const dragClassName = `element__close drag__${this.props.id}`;
     return (
       <div id={this.props.id} onFocus={this.onFocus} className="textEditor__container">
-        <nav>
-          <button
-            className="element__close"
-            onClick={() => this.props.removeTextEditor(this.props.id)}
-          >
-            <CloseSVG alt="close element" />
-          </button>
-          <button className={dragClassName}>
-            <Drag alt="drag element" />
-          </button>
-        </nav>
+        {(() => {
+          if (!this.props.preview) {
+            return (
+              <nav>
+                <button
+                  className="element__close"
+                  onClick={() => this.props.removeTextEditor(this.props.id)}
+                >
+                  <CloseSVG alt="close element" />
+                </button>
+                <button className={dragClassName}>
+                  <Drag alt="drag element" />
+                </button>
+              </nav>
+            );
+          }
+        })()}
         <Editor
           id={this.props.id}
           editorState={this.props.editorState}
