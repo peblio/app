@@ -45,7 +45,7 @@ export function deletePage(page) {
     id
   })
   .then((response) => {
-    window.location.href = `${window.location.origin}`;
+    console.log('deleted');
   })
   .catch(function(error) { // eslint-disable-line
     console.log(error);
