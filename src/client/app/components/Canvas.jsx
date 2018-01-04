@@ -65,6 +65,9 @@ class Canvas extends React.Component {
       const extendsProps = {
         onMouseOver: () => {
           this.props.setCurrentTextEditor(this.props.textEditors[id].id, this.props.textEditors[id].editorState);
+        },
+        onMouseOut: () => {
+          this.props.setCurrentTextEditor('0', null);
         }
       };
       const dragHandle = `.drag__${id}`;
