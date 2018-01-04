@@ -11,6 +11,8 @@
   padding: 0;
   color: $black;
   border-radius: $small-border-radius;
+  border: 2px solid $light-gray;
+  z-index: 1;
 }
 
 .fileModal__item {

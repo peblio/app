@@ -1,0 +1,37 @@
+
+.pages_title{
+  margin-left: $large-margin;
+  color: $light-gray;
+
+}
+
+.pages_list{
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+  max-height: 80%;
+  width: 100%;
+  padding-top: $large-margin;
+  z-index: 100;
+}
+
+.pages__delete{
+  margin: -10px;
+  border: none;
+  background: none;
+  float:right;
+  fill: $medium-gray;
+    &:hover {
+      border: none;
+      background: none;
+      float:right;
+      box-shadow: none;
+      fill: $dark-gray;
+    }
+}
+
+
+.Modal_closeButton{
+  float:right;
+  padding: 4px;
+}

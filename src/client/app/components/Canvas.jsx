@@ -1,25 +1,9 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Rnd from 'react-rnd';
 
 import EditorContainer from './EditorContainer.jsx';
 import Iframe from './Iframe.jsx';
-import Login from './Login.jsx';
-import MainToolbar from './MainToolbar.jsx';
-import Modal from './Modal.jsx';
-import PagesList from './PagesList.jsx';
-import SignUp from './SignUp.jsx';
 import TextEditor from './TextEditor.jsx';
-
-import * as editorActions from '../action/editorContainer.jsx';
-import * as iframeActions from '../action/iframe.jsx';
-import * as mainToolbarActions from '../action/mainToolbar.jsx';
-import * as pageActions from '../action/page.jsx';
-import * as textEditorActions from '../action/textEditors.jsx';
-import * as userActions from '../action/user.jsx';
-
-const axios = require('axios');
 
 class Canvas extends React.Component {
 

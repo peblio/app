@@ -9,14 +9,7 @@
   padding: 4px;
 }
 
-.pages_list{
-  display: flex;
-  flex-wrap: wrap;
-  flex-flow: column;
-  max-height: 80%;
-  width: 100%;
-  padding-top: $large-margin;
-}
+
 ol{
   list-style-position: inside;
   -webkit-margin-before: 0;
@@ -33,10 +26,4 @@ ol li:nth-child(odd){
 
 ol li a{
   color: $gray;
-}
-
-.pages_title{
-  margin-left: $large-margin;
-  color: $light-gray;
-
 }

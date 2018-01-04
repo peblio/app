@@ -2,16 +2,19 @@
   display: flex;
   @include flex;
   flex-direction: row;
-  margin: 0 $medium-padding;
+  margin: $medium-padding $medium-padding $small-padding;
   color: $gray;
   width: $total-width;
-  padding: $small-padding;
+  padding: 0 $small-padding $medium-padding 0;
   min-height: 2rem;
 }
 .insertToolbar__button {
   @extend %menu-item;
   margin: 0 $small-margin;
   padding: $small-padding/2 $small-padding;
+  background-color: $gray;
+  box-shadow: 3px 5px 5px $boxShaddow-gray;
+
 }
 
 .insertToolbar__icon{
@@ -29,6 +32,6 @@
 .insertToolbar__button:hover #Shape {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
-    fill:black;
-    stroke:black;
+  fill:$black;
+  stroke:$black;
 }
