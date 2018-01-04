@@ -121,3 +121,12 @@ export function setAllPages(data) {
     });
   };
 }
+
+export function setUnsavedChanges(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_UNSAVED_CHANGES,
+      value
+    });
+  };
+}

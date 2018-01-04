@@ -12,6 +12,14 @@ class TextEditor extends React.Component {
     this.onFocus = this.onFocus.bind(this);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.x !== prevProps.x
+      || this.props.y !== prevProps.y
+      || this.props.editorState.getCurrentContent() !== prevProps.editorState.getCurrentContent()) {
+      this.props.setUnsavedChanges(true);
+    }
+  }
+
   onFocus() {
     this.props.setCurrentTextEditor(this.props.id, this.props.editorState);
   }
@@ -62,7 +70,10 @@ TextEditor.propTypes = {
   id: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   removeTextEditor: PropTypes.func.isRequired,
-  setCurrentTextEditor: PropTypes.func.isRequired
+  setCurrentTextEditor: PropTypes.func.isRequired,
+  setUnsavedChanges: PropTypes.func.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired
 };
 
 export default TextEditor;

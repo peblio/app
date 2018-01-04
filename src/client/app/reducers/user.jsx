@@ -22,7 +22,6 @@ const user = (state = initialState, action) => {
       });
 
     case ActionTypes.SET_USER_NAME:
-      console.log(action.name);
       return Object.assign({}, state, {
         name: action.name
       });

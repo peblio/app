@@ -49,9 +49,7 @@ app.use('/api', apiRoutes);
 
 
 app.get('/logout', (req, res) => {
-  console.log('logout');
   req.logout();
-  console.log(req.user);
   res.redirect('/');
 });
 
