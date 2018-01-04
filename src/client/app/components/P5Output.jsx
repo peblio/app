@@ -21,6 +21,10 @@ class P5Output extends React.Component {
     this.iframe.contentWindow.document.close();
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('message', this.props.updateConsoleOutput);
+  }
+
   render() {
     return (
       <div>
