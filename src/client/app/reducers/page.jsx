@@ -33,7 +33,8 @@ const page = (state = initialState, action) => {
     case ActionTypes.SET_DB_PAGE:
       return Object.assign({}, state, {
         id: action.id,
-        pageTitle: action.title
+        pageTitle: action.title,
+        preview: action.preview
       });
 
     case ActionTypes.SET_ALL_PAGES:

@@ -29,12 +29,13 @@ export function setPageTitle(event) {
   };
 }
 
-export function loadPage(id, title) {
+export function loadPage(id, title, preview) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
       id,
-      title
+      title,
+      preview
     });
   };
 }
@@ -58,13 +59,14 @@ export function deletePage(page) {
   };
 }
 
-export function submitPage(parentId, title, editors, indexEditor, textEditors, indexTextEditor, iframes, indexIframe) {
+export function submitPage(parentId, title, preview, editors, indexEditor, textEditors, indexTextEditor, iframes, indexIframe) {
   const id = shortid.generate();
   const textEditorsRaw = convertEditorState(textEditors);
   axios.post('/pages/save', {
     parentId,
     id,
     title,
+    preview,
     editors,
     indexEditor,
     textEditors: textEditorsRaw,
@@ -86,11 +88,12 @@ export function submitPage(parentId, title, editors, indexEditor, textEditors, i
   };
 }
 
-export function updatePage(id, title, editors, indexEditor, textEditors, indexTextEditor, iframes, indexIframe) {
+export function updatePage(id, title, preview, editors, indexEditor, textEditors, indexTextEditor, iframes, indexIframe) {
   const textEditorsRaw = convertEditorState(textEditors);
   axios.post('/pages/update', {
     id,
     title,
+    preview,
     editors,
     indexEditor,
     textEditors: textEditorsRaw,

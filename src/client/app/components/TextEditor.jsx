@@ -50,9 +50,11 @@ class TextEditor extends React.Component {
           editorState={this.props.editorState}
           onChange={this.props.onChange}
           placeholder="Enter some text..."
+          spellCheck={!this.props.preview}
+          readOnly={this.props.preview}
         />
         {(() => { // eslint-disable-line
-          if (this.props.id === this.props.currentTextEditorId) {
+          if (this.props.id === this.props.currentTextEditorId && !this.props.preview) {
             return (
               <TextToolbar
                 onChange={this.props.onChange}

@@ -40,7 +40,7 @@ class Iframe extends React.Component {
         </div>
         <form className="element__addURL" onSubmit={(event) => { this.urlSubmitted(event); }}>
           <label htmlFor="element-name" className="element__label"> URL
-            <input id="element-name" className="element__input" type="text" ref={(element) => { this.url = element; }} defaultValue={this.props.iframeURL} />
+            <input id="element-name" className="element__input" type="text" ref={(element) => { this.url = element; }} defaultValue={this.props.iframeURL} readOnly={this.props.preview} />
           </label>
           <input className="element__button" type="submit" value="Submit" />
         </form>
@@ -52,6 +52,7 @@ class Iframe extends React.Component {
 Iframe.propTypes = {
   id: PropTypes.string.isRequired,
   iframeURL: PropTypes.string.isRequired,
+  preview: PropTypes.bool.isRequired,
   removeIframe: PropTypes.func.isRequired,
   setCurrentIframe: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired,

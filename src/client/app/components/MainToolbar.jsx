@@ -17,6 +17,7 @@ class MainToolbar extends React.Component {
         this.props.submitPage(
           '',
           this.props.pageTitle,
+          this.props.preview,
           this.props.editors,
           this.props.indexEditor,
           this.props.textEditors,
@@ -28,6 +29,7 @@ class MainToolbar extends React.Component {
         this.props.updatePage(
           this.props.id,
           this.props.pageTitle,
+          this.props.preview,
           this.props.editors,
           this.props.indexEditor,
           this.props.textEditors,
@@ -40,6 +42,7 @@ class MainToolbar extends React.Component {
         this.props.submitPage(
           this.props.id,
           `${this.props.pageTitle}-copy`,
+          this.props.preview,
           this.props.editors,
           this.props.indexEditor,
           this.props.textEditors,
@@ -97,7 +100,12 @@ class MainToolbar extends React.Component {
           ></input>
           <div className="mainToolbar__div-right">
             <label className="mainToolbar__preview" htmlFor="preview-checkbox">
-              <input id="preview-checkbox" type="checkbox" onChange={this.props.togglePreviewMode} />
+              <input
+                id="preview-checkbox"
+                onChange={this.props.togglePreviewMode}
+                type="checkbox"
+                checked={this.props.preview}
+              />
               Preview
             </label>
 

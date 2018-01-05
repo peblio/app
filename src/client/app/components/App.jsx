@@ -36,7 +36,7 @@ class App extends React.Component {
       const projectID = this.projectID();
       axios.get(`/api/page/${this.projectID()}`)
         .then((res) => {
-          this.props.loadPage(res.data[0].id, res.data[0].title);
+          this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].preview);
           this.props.loadEditors(res.data[0].indexEditor, res.data[0].editors);
           this.props.loadTextEditors(res.data[0].indexTextEditor, res.data[0].textEditors);
           this.props.loadIframes(res.data[0].indexIframe, res.data[0].iframes);
