@@ -96,13 +96,21 @@ class MainToolbar extends React.Component {
           <input
             className="mainToolbar__title"
             placeholder="Title"
-            type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}
+            type="text"
+            value={this.props.pageTitle}
+            onChange={(event) => {
+              this.props.setPageTitle(event);
+              this.props.setUnsavedChanges(true);
+            }}
           ></input>
           <div className="mainToolbar__div-right">
             <label className="mainToolbar__preview" htmlFor="preview-checkbox">
               <input
                 id="preview-checkbox"
-                onChange={this.props.togglePreviewMode}
+                onChange={() => {
+                  this.props.togglePreviewMode();
+                  this.props.setUnsavedChanges(true);
+                }}
                 type="checkbox"
                 checked={this.props.preview}
               />
@@ -137,6 +145,7 @@ class MainToolbar extends React.Component {
                 addEditor={this.props.addEditor}
                 addTextEditor={this.props.addTextEditor}
                 addIframe={this.props.addIframe}
+                setUnsavedChanges={this.setUnsavedChanges}
               />
             );
           }
