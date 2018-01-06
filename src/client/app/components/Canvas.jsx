@@ -32,6 +32,16 @@ class Canvas extends React.Component {
           minHeight={this.props.editors[id].minHeight}
           extendsProps={extendsProps}
           bounds=".canvas"
+          enableResizing={{
+            bottom: !this.props.preview,
+            bottomLeft: !this.props.preview,
+            bottomRight: !this.props.preview,
+            left: !this.props.preview,
+            right: !this.props.preview,
+            top: !this.props.preview,
+            topLeft: !this.props.preview,
+            topRight: !this.props.preview
+          }}
         >
           <EditorContainer
             code={this.props.editors[id].code}
@@ -84,6 +94,16 @@ class Canvas extends React.Component {
           minHeight={this.props.textEditors[id].minHeight}
           extendsProps={extendsProps}
           bounds=".canvas"
+          enableResizing={{
+            bottom: !this.props.preview,
+            bottomLeft: !this.props.preview,
+            bottomRight: !this.props.preview,
+            left: !this.props.preview,
+            right: !this.props.preview,
+            top: !this.props.preview,
+            topLeft: !this.props.preview,
+            topRight: !this.props.preview
+          }}
         >
           <TextEditor
             currentTextEditorId={this.props.currentTextEditorId}
@@ -132,6 +152,16 @@ class Canvas extends React.Component {
           minHeight={this.props.iframes[id].minHeight}
           extendsProps={extendsProps}
           bounds=".canvas"
+          enableResizing={{
+            bottom: !this.props.preview,
+            bottomLeft: !this.props.preview,
+            bottomRight: !this.props.preview,
+            left: !this.props.preview,
+            right: !this.props.preview,
+            top: !this.props.preview,
+            topLeft: !this.props.preview,
+            topRight: !this.props.preview
+          }}
         >
           <Iframe
             key={id}

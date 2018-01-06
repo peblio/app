@@ -145,7 +145,7 @@ class MainToolbar extends React.Component {
                 addEditor={this.props.addEditor}
                 addTextEditor={this.props.addTextEditor}
                 addIframe={this.props.addIframe}
-                setUnsavedChanges={this.setUnsavedChanges}
+                setUnsavedChanges={this.props.setUnsavedChanges}
               />
             );
           }

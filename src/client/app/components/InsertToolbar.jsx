@@ -47,7 +47,8 @@ class InsertToolbar extends React.Component {
 InsertToolbar.propTypes = {
   addEditor: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
-  addTextEditor: PropTypes.func.isRequired
+  addTextEditor: PropTypes.func.isRequired,
+  setUnsavedChanges: PropTypes.func.isRequired
 };
 
 export default InsertToolbar;
