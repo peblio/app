@@ -28,7 +28,7 @@ class TextEditor extends React.Component {
     const dragClassName = `element__close drag__${this.props.id}`;
     return (
       <div id={this.props.id} onFocus={this.onFocus} className="textEditor__container">
-        {(() => {
+        {(() => { //eslint-disable-line
           if (!this.props.preview) {
             return (
               <nav>
@@ -77,6 +77,7 @@ TextEditor.propTypes = {
   editorState: PropTypes.shape.isRequired,
   id: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  preview: PropTypes.bool.isRequired,
   removeTextEditor: PropTypes.func.isRequired,
   setCurrentTextEditor: PropTypes.func.isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,

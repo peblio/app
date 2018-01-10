@@ -28,7 +28,7 @@ class EditorContainer extends React.Component {
     const dragClassName = `element__close drag__${this.props.editorId}`;
     return (
       <div className="codeEditor_totalContainer" onFocus={this.onFocus}>
-        {(() => {
+        {(() => { //eslint-disable-line
           if (!this.props.preview) {
             return (
               <nav>
@@ -119,6 +119,7 @@ EditorContainer.propTypes = {
   editorMode: PropTypes.string.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
+  preview: PropTypes.bool.isRequired,
   removeEditor: PropTypes.func.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,

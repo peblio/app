@@ -138,7 +138,7 @@ class MainToolbar extends React.Component {
             })()}
           </div>
         </div>
-        {(() => {
+        {(() => { //eslint-disable-line
           if (!this.props.preview) {
             return (
               <InsertToolbar
@@ -175,6 +175,7 @@ MainToolbar.propTypes = {
   submitPage: PropTypes.func.isRequired,
   textEditors: PropTypes.shape.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
+  togglePreviewMode: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired,

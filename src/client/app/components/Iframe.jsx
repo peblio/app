@@ -25,7 +25,7 @@ class Iframe extends React.Component {
     const dragClassName = `element__close drag__${this.props.id}`;
     return (
       <div className="element__iframe" id={this.props.id} onFocus={this.onFocus}>
-        {(() => {
+        {(() => { //eslint-disable-line
           if (!this.props.preview) {
             return (
               <nav>
