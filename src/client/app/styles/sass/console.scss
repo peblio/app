@@ -7,4 +7,6 @@
 .codeEditor__console{
   border-radius: 0 0  $medium-border-radius $medium-border-radius;
   background-color: $dark-gray;
+  height: 25px;
+  overflow-y: scroll;
 }
