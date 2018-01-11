@@ -47,18 +47,19 @@ function savePage(req, res) {
 
 function deletePage(req, res) {
   const user = req.user;
+  let data;
   Page.remove({ id: req.body.id },
   (err, data) => {
     if (err) {
-      res.send(err);
+      data = err;
     } else {
-      res.send({ data: 'Record has been Deleted..!!' });
+      data = 'Record has been Deleted..!!';
     }
   });
 
   User.find({ _id: user._id }, (err, data) => {
     if (err) {
-      res.send(err);
+      data = err;
     } else {
       const pages = data[0].pages.filter(id => id !== req.body.id);
       User.update({ _id: user._id }, {
@@ -66,13 +67,14 @@ function deletePage(req, res) {
       },
       (err, data) => {
         if (err) {
-          res.send(err);
+          data = err;
         } else {
-          res.send({ data: 'Single Page removed from User!!' });
+          data = 'Single Page removed from User!!';
         }
       });
     }
   });
+  res.send(data);
 }
 
 function updatePage(req, res) {
