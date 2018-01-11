@@ -17,25 +17,25 @@ class TextToolbar extends React.Component {
           className="textToolbar__button"
           onClick={() => { this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'BOLD')); }}
         >
-        <BoldSVG alt="bold text" />
+          <BoldSVG alt="bold text" />
         </button>
         <button
           className="textToolbar__button"
           onClick={() => { this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'UNDERLINE')); }}
         >
-        <UnderlineSVG alt="underline text" />
+          <UnderlineSVG alt="underline text" />
         </button>
         <button
           className="textToolbar__button"
           onClick={() => { this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'ITALIC')); }}
         >
-        <ItalicsSVG alt="italicise text" />
+          <ItalicsSVG alt="italicise text" />
         </button>
         <button
           className="textToolbar__button"
           onClick={() => { this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'STRIKETHROUGH')); }}
         >
-        <StrikethroughSVG alt="strikethrough text" />
+          <StrikethroughSVG alt="strikethrough text" />
         </button>
       </div>
     );
