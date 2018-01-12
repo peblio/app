@@ -5,10 +5,6 @@ import ItalicsSVG from '../images/textbox/italics.svg';
 import StrikethroughSVG from '../images/textbox/strikethrough.svg';
 import UnderlineSVG from '../images/textbox/underline.svg';
 
-
-
-
-
 class TextToolbar extends React.Component {
   render() {
     return (
