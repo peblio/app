@@ -37,6 +37,10 @@
 
 .element__close{
   @extend %element_controls;
+  &:hover {
+    fill:$light-gray;
+    box-shadow: none;
+  }
 }
 
 .dragClassName{

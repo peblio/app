@@ -1,5 +1,9 @@
 import React, { PropTypes } from 'react';
 import { RichUtils } from 'draft-js';
+import BoldSVG from '../images/textbox/bold.svg';
+import ItalicsSVG from '../images/textbox/italics.svg';
+import StrikethroughSVG from '../images/textbox/strikethrough.svg';
+import UnderlineSVG from '../images/textbox/underline.svg';
 
 class TextToolbar extends React.Component {
   render() {
@@ -9,25 +13,25 @@ class TextToolbar extends React.Component {
           className="textToolbar__button"
           onClick={() => { this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'BOLD')); }}
         >
-          Bold
+          <BoldSVG alt="bold text" />
         </button>
         <button
           className="textToolbar__button"
           onClick={() => { this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'UNDERLINE')); }}
         >
-          Underline
+          <UnderlineSVG alt="underline text" />
         </button>
         <button
           className="textToolbar__button"
           onClick={() => { this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'ITALIC')); }}
         >
-          Italics
+          <ItalicsSVG alt="italicise text" />
         </button>
         <button
           className="textToolbar__button"
           onClick={() => { this.props.onChange(RichUtils.toggleInlineStyle(this.props.currentTextEditorState, 'STRIKETHROUGH')); }}
         >
-          Strike
+          <StrikethroughSVG alt="strikethrough text" />
         </button>
       </div>
     );

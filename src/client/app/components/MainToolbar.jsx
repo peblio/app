@@ -62,7 +62,7 @@ class MainToolbar extends React.Component {
             if (this.props.unsavedChanges) {
               return (
                 <span className="mainToolbar__unsaved-ind">
-                  *
+                   *
                 </span>
               );
             }

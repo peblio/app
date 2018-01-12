@@ -1,10 +1,8 @@
 import { Editor } from 'draft-js';
 import React, { PropTypes } from 'react';
 import TextToolbar from './TextToolbar.jsx';
-
 import Drag from '../images/drag.svg';
 import CloseSVG from '../images/close.svg';
-
 
 class TextEditor extends React.Component {
   constructor(props) {
