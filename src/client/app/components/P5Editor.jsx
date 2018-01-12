@@ -10,17 +10,18 @@ require('../styles/3024-night.css');
 class P5Editor extends React.Component {
   componentDidMount() {
     this.cm = CodeMirror(this.codemirrorContainer, {
-      value: this.props.editorCode,
-      mode: 'javascript',
+      value: CodeMirror.Doc(this.props.files[0].content, 'htmlmixed'),
+      mode: 'htmlmixed',
       lineNumbers: true,
       autoCloseBrackets: true,
       inputStyle: 'contenteditable',
       styleActiveLine: true,
     });
     this.cm.on('keyup', () => {
-      this.props.updateCode(this.cm.getValue());
+      this.props.updateFile(0, this.cm.getValue());
     });
   }
+
   render() {
     return (
       <div>
@@ -32,8 +33,13 @@ class P5Editor extends React.Component {
 }
 
 P5Editor.propTypes = {
-  editorCode: PropTypes.string.isRequired,
-  updateCode: PropTypes.func.isRequired
+  // editorCode: PropTypes.string.isRequired,
+  files: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
+  })).isRequired,
+  updateCode: PropTypes.func.isRequired,
+  updateFile: PropTypes.func.isRequired
 };
 
 export default P5Editor;

@@ -39,6 +39,7 @@ class Canvas extends React.Component {
             setUnsavedChanges={this.props.setUnsavedChanges}
             key={id}
             editorId={id}
+            files={this.props.files}
             playCode={this.props.playCode}
             stopCode={this.props.stopCode}
             updateCode={this.props.updateCode}
@@ -49,6 +50,7 @@ class Canvas extends React.Component {
             setCurrentEditor={this.props.setCurrentEditor}
             setEditorMode={this.props.setEditorMode}
             updateConsoleOutput={this.props.updateConsoleOutput}
+            updateFile={this.props.updateFile}
             removeEditor={this.props.removeEditor}
           />
         </Rnd>
@@ -180,6 +182,10 @@ Canvas.propTypes = {
     minWidth: PropTypes.number.isRequired,
     minHeight: PropTypes.number.isRequired
   })).isRequired,
+  files: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
+  })).isRequired,
   textEditors: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     editorState: PropTypes.shape,
@@ -205,6 +211,7 @@ Canvas.propTypes = {
   playCode: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
+  updateFile: PropTypes.func.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
@@ -225,6 +232,7 @@ Canvas.propTypes = {
   setTextEditorSize: PropTypes.func.isRequired,
   setTextEditorPosition: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired,
+
 
 };
 

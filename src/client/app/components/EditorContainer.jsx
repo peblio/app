@@ -51,8 +51,10 @@ class EditorContainer extends React.Component {
                 if (this.props.editorMode === 'p5') {
                   return (
                     <P5Editor
+                      files={this.props.files}
                       editorCode={this.props.code}
                       updateCode={this.props.updateCode}
+                      updateFile={this.props.updateFile}
                     />
                   );
                 } else if (this.props.editorMode === 'javascript') {
@@ -71,6 +73,7 @@ class EditorContainer extends React.Component {
                   if (this.props.editorMode === 'p5') {
                     return (
                       <P5Output
+                        files={this.props.files}
                         editorCode={this.props.code}
                         updateCode={this.props.updateCode}
                         isPlaying={this.props.isPlaying}
@@ -111,6 +114,10 @@ EditorContainer.propTypes = {
   consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired,
   editorId: PropTypes.string.isRequired,
   editorMode: PropTypes.string.isRequired,
+  files: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
+  })).isRequired,
   isPlaying: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
@@ -120,6 +127,7 @@ EditorContainer.propTypes = {
   stopCode: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
+  updateFile: PropTypes.func.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired
 };

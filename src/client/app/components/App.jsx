@@ -13,6 +13,7 @@ import TextEditor from './TextEditor.jsx';
 import * as editorActions from '../action/editorContainer.jsx';
 import * as iframeActions from '../action/iframe.jsx';
 import * as mainToolbarActions from '../action/mainToolbar.jsx';
+import * as p5filesActions from '../action/p5files.jsx';
 import * as pageActions from '../action/page.jsx';
 import * as textEditorActions from '../action/textEditors.jsx';
 import * as userActions from '../action/user.jsx';
@@ -99,6 +100,8 @@ class App extends React.Component {
         <Canvas
           setUnsavedChanges={this.props.setUnsavedChanges}
 
+          files={this.props.files}
+          updateFile={this.props.updateFile}
           editors={this.props.editors}
           textEditors={this.props.textEditors}
           iframes={this.props.iframes}
@@ -207,6 +210,10 @@ App.propTypes = {
     minWidth: PropTypes.number.isRequired,
     minHeight: PropTypes.number.isRequired
   })).isRequired,
+  files: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
+  })).isRequired,
   textEditors: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     editorState: PropTypes.shape,
@@ -231,6 +238,7 @@ App.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
+  updateFile: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
   addEditor: PropTypes.func.isRequired,
   indexEditor: PropTypes.number.isRequired,
@@ -312,6 +320,8 @@ function mapStateToProps(state) {
     iframes: state.iframe.iframes,
     indexIframe: state.iframe.indexIframe,
 
+    files: state.p5files.files,
+
     pageTitle: state.page.pageTitle,
     id: state.page.id,
     pages: state.page.pages,
@@ -334,6 +344,7 @@ function mapDispatchToProps(dispatch) {
     editorActions,
     iframeActions,
     mainToolbarActions,
+    p5filesActions,
     pageActions,
     textEditorActions,
     userActions),
