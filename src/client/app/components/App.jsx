@@ -187,7 +187,7 @@ class App extends React.Component {
                 closeModal={this.props.closeSignUpModal}
               >
                 <SignUp
-                  authAndLoadPage={this.authAndLoadPage}
+                  authLoadedPage={this.authLoadedPage}
                   loginName={this.props.loginName}
                   loginPassword={this.props.loginPassword}
                   updateUserName={this.props.updateUserName}
