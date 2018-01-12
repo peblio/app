@@ -22,15 +22,31 @@ const axios = require('axios');
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.authPage = this.authPage.bind(this);
+    this.authAndLoadPage = this.authAndLoadPage.bind(this);
+    this.authLoadedPage = this.authLoadedPage.bind(this);
     this.projectID = this.projectID.bind(this);
   }
 
   componentDidMount() {
-    this.authPage();
+    this.authAndLoadPage();
   }
 
-  authPage() {
+  authLoadedPage() {
+    if (this.projectID()) {
+      this.props.setEditAccess(false);
+      const projectID = this.projectID();
+      axios.get('/api/user')
+          .then((res1) => {
+            if (res1.data.pages) {
+              if (res1.data.pages.includes(projectID)) {
+                this.props.setEditAccess(true);
+              }
+            }
+          });
+    }
+  }
+
+  authAndLoadPage() {
     if (this.projectID()) {
       this.props.setEditAccess(false);
       const projectID = this.projectID();
@@ -151,7 +167,7 @@ class App extends React.Component {
                 closeModal={this.props.closeLoginModal}
               >
                 <Login
-                  authPage={this.authPage}
+                  authLoadedPage={this.authLoadedPage}
                   loginName={this.props.loginName}
                   loginPassword={this.props.loginPassword}
                   updateUserName={this.props.updateUserName}
@@ -171,7 +187,7 @@ class App extends React.Component {
                 closeModal={this.props.closeSignUpModal}
               >
                 <SignUp
-                  authPage={this.authPage}
+                  authAndLoadPage={this.authAndLoadPage}
                   loginName={this.props.loginName}
                   loginPassword={this.props.loginPassword}
                   updateUserName={this.props.updateUserName}

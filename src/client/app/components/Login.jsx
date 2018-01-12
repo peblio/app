@@ -3,7 +3,7 @@ import axios from 'axios';
 
 class Login extends React.Component {
   componentWillUnmount() {
-    this.props.authPage();
+    this.props.authLoadedPage();
   }
 
   loginSuccessful(response) {
@@ -51,7 +51,7 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  authPage: PropTypes.func.isRequired,
+  authLoadedPage: PropTypes.func.isRequired,
   closeLoginModal: PropTypes.func.isRequired,
   setUserName: PropTypes.func.isRequired
 };

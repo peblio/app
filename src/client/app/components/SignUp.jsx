@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 
 class SignUp extends React.Component {
   componentWillUnmount() {
-    this.props.authPage();
+    this.props.authAndLoadPage();
   }
 
   signUpSuccessful(response) {
@@ -44,7 +44,7 @@ class SignUp extends React.Component {
 }
 
 SignUp.propTypes = {
-  authPage: PropTypes.func.isRequired,
+  authAndLoadPage: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired
 };
 
