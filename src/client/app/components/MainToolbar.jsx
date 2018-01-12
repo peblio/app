@@ -11,6 +11,7 @@ class MainToolbar extends React.Component {
   }
 
   savePage() {
+    this.props.setUnsavedChanges(false);
     if (this.props.name) {
       if (this.props.id.length === 0) {
         this.props.submitPage(
@@ -56,9 +57,19 @@ class MainToolbar extends React.Component {
     return (
       <div>
         <div className="mainToolbar">
+
+          {(()=>{ //eslint-disable-line
+            if (this.props.unsavedChanges) {
+              return (
+                <span className="mainToolbar__unsaved-ind">
+                   *
+                </span>
+              );
+            }
+          })()}
           <div className="mainToolbar__div-left">
             <div className="logo_toolbar">
-              <ToolbarLogo alt="logo in toolbar"/>
+              <ToolbarLogo alt="logo in toolbar" />
             </div>
 
             <div className="fileModal__container">
@@ -71,6 +82,7 @@ class MainToolbar extends React.Component {
                   <FileModal
                     name={this.props.name}
                     savePage={this.savePage}
+                    toggleFileDropdown={this.props.toggleFileDropdown}
                     viewPagesModal={this.props.viewPagesModal}
                   />
                 );
@@ -91,9 +103,9 @@ class MainToolbar extends React.Component {
 
 
                 <a className="mainToolbar__save" href="/logout">Logout</a>
-                  <p className="mainToolbar__welcome">
+                <p className="mainToolbar__welcome">
                       Welcome {this.props.name}!
-                  </p>
+                </p>
               </div>
 
             );
@@ -133,13 +145,15 @@ MainToolbar.propTypes = {
   isFileDropdownOpen: PropTypes.bool.isRequired,
   pageTitle: PropTypes.string.isRequired,
   setPageTitle: PropTypes.func.isRequired,
+  setUnsavedChanges: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   textEditors: PropTypes.shape.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired,
-  viewSignUpModal: PropTypes.func.isRequired
+  viewSignUpModal: PropTypes.func.isRequired,
+  nsavedChanges: PropTypes.bool.isRequired
 };
 
 export default MainToolbar;
