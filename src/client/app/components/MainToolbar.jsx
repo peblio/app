@@ -153,7 +153,7 @@ MainToolbar.propTypes = {
   viewLoginModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired,
   viewSignUpModal: PropTypes.func.isRequired,
-  nsavedChanges: PropTypes.bool.isRequired
+  unsavedChanges: PropTypes.bool.isRequired
 };
 
 export default MainToolbar;
