@@ -7,13 +7,6 @@ class Iframe extends React.Component {
     super(props);
     this.onFocus = this.onFocus.bind(this);
   }
-  componentDidUpdate(prevProps) {
-    if (this.props.iframeURL !== prevProps.iframeURL
-      || this.props.x !== prevProps.x
-      || this.props.y !== prevProps.y) {
-      this.props.setUnsavedChanges(true);
-    }
-  }
   onFocus() {
     this.props.setCurrentIframe(this.props.id);
   }
@@ -55,10 +48,7 @@ Iframe.propTypes = {
   preview: PropTypes.bool.isRequired,
   removeIframe: PropTypes.func.isRequired,
   setCurrentIframe: PropTypes.func.isRequired,
-  setIframeURL: PropTypes.func.isRequired,
-  setUnsavedChanges: PropTypes.func.isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired
+  setIframeURL: PropTypes.func.isRequired
 };
 
 export default Iframe;

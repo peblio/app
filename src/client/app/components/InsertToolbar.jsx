@@ -9,30 +9,21 @@ class InsertToolbar extends React.Component {
     return (
       <div className="insertToolbar__container">
         <button
-          onClick={() => {
-            this.props.addEditor();
-            this.props.setUnsavedChanges(true);
-          }}
+          onClick={this.props.addEditor}
           className="insertToolbar__button"
         >
           <EditorSVG alt="add editor" />
           editor
         </button>
         <button
-          onClick={() => {
-            this.props.addTextEditor();
-            this.props.setUnsavedChanges(true);
-          }}
+          onClick={this.props.addTextEditor}
           id="elementButton" className="insertToolbar__button"
         >
           <TextSVG alt="add text" />
           text box
         </button>
         <button
-          onClick={() => {
-            this.props.addIframe();
-            this.props.setUnsavedChanges(true);
-          }}
+          onClick={this.props.addIframe}
           className="insertToolbar__button"
         >
           <EmbedSVG alt="add embed" />
@@ -47,8 +38,7 @@ class InsertToolbar extends React.Component {
 InsertToolbar.propTypes = {
   addEditor: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
-  addTextEditor: PropTypes.func.isRequired,
-  setUnsavedChanges: PropTypes.func.isRequired
+  addTextEditor: PropTypes.func.isRequired
 };
 
 export default InsertToolbar;
