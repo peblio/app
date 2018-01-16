@@ -142,7 +142,6 @@ class MainToolbar extends React.Component {
                 addEditor={this.props.addEditor}
                 addTextEditor={this.props.addTextEditor}
                 addIframe={this.props.addIframe}
-                setUnsavedChanges={this.props.setUnsavedChanges}
               />
             );
           }
@@ -168,7 +167,6 @@ MainToolbar.propTypes = {
   pageTitle: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
   setPageTitle: PropTypes.func.isRequired,
-  setUnsavedChanges: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   textEditors: PropTypes.shape.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
