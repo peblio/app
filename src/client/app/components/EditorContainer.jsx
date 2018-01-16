@@ -126,14 +126,7 @@ EditorContainer.propTypes = {
   setEditorMode: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
-<<<<<<< HEAD
-  updateConsoleOutput: PropTypes.func.isRequired,
-  updateFile: PropTypes.func.isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired
-=======
   updateConsoleOutput: PropTypes.func.isRequired
->>>>>>> 73f97296e8631326ba55e0f23cc533c88aaf6dfe
 };
 
 export default EditorContainer;
