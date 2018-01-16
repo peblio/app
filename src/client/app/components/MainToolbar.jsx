@@ -11,7 +11,6 @@ class MainToolbar extends React.Component {
   }
 
   savePage() {
-    this.props.setUnsavedChanges(false);
     if (this.props.name) {
       if (this.props.id.length === 0) {
         this.props.submitPage(
@@ -100,7 +99,6 @@ class MainToolbar extends React.Component {
             value={this.props.pageTitle}
             onChange={(event) => {
               this.props.setPageTitle(event);
-              this.props.setUnsavedChanges(true);
             }}
           ></input>
           <div className="mainToolbar__div-right">
@@ -109,7 +107,6 @@ class MainToolbar extends React.Component {
                 id="preview-checkbox"
                 onChange={() => {
                   this.props.togglePreviewMode();
-                  this.props.setUnsavedChanges(true);
                 }}
                 type="checkbox"
                 checked={this.props.preview}

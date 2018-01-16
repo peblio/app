@@ -103,7 +103,6 @@ class App extends React.Component {
             setAllPages={this.props.setAllPages}
             setPageTitle={this.props.setPageTitle}
             togglePreviewMode={this.props.togglePreviewMode}
-            setUnsavedChanges={this.props.setUnsavedChanges}
             submitPage={this.props.submitPage}
             textEditors={this.props.textEditors}
             toggleFileDropdown={this.props.toggleFileDropdown}
@@ -116,7 +115,6 @@ class App extends React.Component {
         </nav>
         <Canvas
           preview={this.props.preview}
-          setUnsavedChanges={this.props.setUnsavedChanges}
 
           editors={this.props.editors}
           textEditors={this.props.textEditors}
@@ -292,7 +290,6 @@ App.propTypes = {
   setAllPages: PropTypes.func.isRequired,
   setEditAccess: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
-  setUnsavedChanges: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
 
   isPagesModalOpen: PropTypes.bool.isRequired,

@@ -1,7 +1,9 @@
 import * as ActionTypes from '../constants.jsx';
+import { setUnsavedChanges } from './page.jsx';
 
 export function addIframe() {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.ADD_IFRAME
     });
@@ -10,6 +12,7 @@ export function addIframe() {
 
 export function setIframeURL(url) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_IFRAME_URL,
       url
@@ -38,6 +41,7 @@ export function loadIframes(indexIframe, iframes) {
 
 export function removeIframe(id) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.REMOVE_IFRAME,
       id
@@ -47,6 +51,7 @@ export function removeIframe(id) {
 
 export function setIframePosition(x, y) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_IFRAME_POSITION,
       x,
@@ -57,6 +62,7 @@ export function setIframePosition(x, y) {
 
 export function setIframeSize(width, height) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_IFRAME_SIZE,
       width,

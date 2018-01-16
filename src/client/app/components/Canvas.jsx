@@ -26,7 +26,6 @@ class Canvas extends React.Component {
           dragHandleClassName={dragHandle}
           onResize={(e, direction, ref, delta, position) => {
             this.props.setEditorSize(ref.offsetWidth, ref.offsetHeight);
-            this.props.setUnsavedChanges(true);
           }}
           minWidth={this.props.editors[id].minWidth}
           minHeight={this.props.editors[id].minHeight}
@@ -55,12 +54,9 @@ class Canvas extends React.Component {
             removeEditor={this.props.removeEditor}
             setCurrentEditor={this.props.setCurrentEditor}
             setEditorMode={this.props.setEditorMode}
-            setUnsavedChanges={this.props.setUnsavedChanges}
             stopCode={this.props.stopCode}
             updateCode={this.props.updateCode}
             updateConsoleOutput={this.props.updateConsoleOutput}
-            x={this.props.editors[id].x}
-            y={this.props.editors[id].y}
           />
         </Rnd>
       );
@@ -88,7 +84,6 @@ class Canvas extends React.Component {
           dragHandleClassName={dragHandle}
           onResize={(e, direction, ref, delta, position) => {
             this.props.setTextEditorSize(ref.offsetWidth, ref.offsetHeight);
-            this.props.setUnsavedChanges(true);
           }}
           minWidth={this.props.textEditors[id].minWidth}
           minHeight={this.props.textEditors[id].minHeight}
@@ -116,9 +111,6 @@ class Canvas extends React.Component {
             ref={this.props.textEditors[id].id}
             removeTextEditor={this.props.removeTextEditor}
             setCurrentTextEditor={this.props.setCurrentTextEditor}
-            setUnsavedChanges={this.props.setUnsavedChanges}
-            x={this.props.textEditors[id].x}
-            y={this.props.textEditors[id].y}
           />
         </Rnd>
       );
@@ -146,7 +138,6 @@ class Canvas extends React.Component {
           dragHandleClassName={dragHandle}
           onResize={(e, direction, ref, delta, position) => {
             this.props.setIframeSize(ref.offsetWidth, ref.offsetHeight);
-            this.props.setUnsavedChanges(true);
           }}
           minWidth={this.props.iframes[id].minWidth}
           minHeight={this.props.iframes[id].minHeight}
@@ -171,9 +162,6 @@ class Canvas extends React.Component {
             removeIframe={this.props.removeIframe}
             setCurrentIframe={this.props.setCurrentIframe}
             setIframeURL={this.props.setIframeURL}
-            setUnsavedChanges={this.props.setUnsavedChanges}
-            x={this.props.iframes[id].x}
-            y={this.props.iframes[id].y}
           />
         </Rnd>
       );
@@ -199,8 +187,6 @@ class Canvas extends React.Component {
 
 Canvas.propTypes = {
   preview: PropTypes.bool.isRequired,
-  setUnsavedChanges: PropTypes.func.isRequired,
-
   editors: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     consoleOutputText: PropTypes.arrayOf(PropTypes.string),
