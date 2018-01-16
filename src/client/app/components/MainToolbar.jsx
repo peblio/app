@@ -97,17 +97,13 @@ class MainToolbar extends React.Component {
             placeholder="Title"
             type="text"
             value={this.props.pageTitle}
-            onChange={(event) => {
-              this.props.setPageTitle(event);
-            }}
+            onChange={this.props.setPageTitle}
           ></input>
           <div className="mainToolbar__div-right">
             <label className="mainToolbar__preview" htmlFor="preview-checkbox">
               <input
                 id="preview-checkbox"
-                onChange={() => {
-                  this.props.togglePreviewMode();
-                }}
+                onChange={this.props.togglePreviewMode}
                 type="checkbox"
                 checked={this.props.preview}
               />

@@ -9,27 +9,21 @@ class InsertToolbar extends React.Component {
     return (
       <div className="insertToolbar__container">
         <button
-          onClick={() => {
-            this.props.addEditor();
-          }}
+          onClick={this.props.addEditor}
           className="insertToolbar__button"
         >
           <EditorSVG alt="add editor" />
           editor
         </button>
         <button
-          onClick={() => {
-            this.props.addTextEditor();
-          }}
+          onClick={this.props.addTextEditor}
           id="elementButton" className="insertToolbar__button"
         >
           <TextSVG alt="add text" />
           text box
         </button>
         <button
-          onClick={() => {
-            this.props.addIframe();
-          }}
+          onClick={this.props.addIframe}
           className="insertToolbar__button"
         >
           <EmbedSVG alt="add embed" />

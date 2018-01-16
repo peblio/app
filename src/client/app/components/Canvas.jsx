@@ -12,7 +12,7 @@ class Canvas extends React.Component {
     const ids = Object.keys(this.props.editors);
     ids.forEach((id) => {
       const extendsProps = {
-        onMouseOver: () => {
+        onMouseEnter: () => {
           this.props.setCurrentEditor(id);
         }
       };
@@ -70,7 +70,7 @@ class Canvas extends React.Component {
     const ids = Object.keys(this.props.textEditors);
     ids.forEach((id) => {
       const extendsProps = {
-        onMouseOver: () => {
+        onMouseEnter: () => {
           this.props.setCurrentTextEditor(this.props.textEditors[id].id, this.props.textEditors[id].editorState);
         }
       };
@@ -124,7 +124,7 @@ class Canvas extends React.Component {
     const ids = Object.keys(this.props.iframes);
     ids.forEach((id) => {
       const extendsProps = {
-        onMouseOver: () => {
+        onMouseEnter: () => {
           this.props.setCurrentIframe(id);
         }
       };
