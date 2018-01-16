@@ -18,13 +18,9 @@ class PythonOutput extends React.Component {
   render() {
     return (
       <div>
-        {(()=> { // eslint-disable-line
-          if (this.props.isPlaying) {
-            return (
-              <div> POTATO </div>
-            );
-          }
-        })()}
+        { this.props.isPlaying &&
+          <div> POTATO </div>
+        }
       </div>
     );
   }

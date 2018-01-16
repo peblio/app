@@ -18,7 +18,7 @@ class Iframe extends React.Component {
     const dragClassName = `element__close drag__${this.props.id}`;
     return (
       <div className="element__iframe" id={this.props.id} onFocus={this.onFocus}>
-        { this.props.preview || 
+        { this.props.preview ||
           <nav>
             <button className="element__close" onClick={() => this.props.removeIframe(this.props.id)}><CloseSVG alt="close element" /></button>
             <button className={dragClassName}><DragSVG alt="drag element" /></button>

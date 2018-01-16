@@ -43,49 +43,37 @@ class EditorContainer extends React.Component {
         <div className="codeEditor__container">
           <div className="codeEditor__sub-container">
             <div className="codeEditor__input">
-              {(()=> { // eslint-disable-line
-                if (this.props.editorMode === 'p5') {
-                  return (
-                    <P5Editor
-                      editorCode={this.props.code}
-                      updateCode={this.props.updateCode}
-                    />
-                  );
-                } else if (this.props.editorMode === 'javascript') {
-                  return (
-                    <JavascriptEditor
-                      editorCode={this.props.code}
-                      updateCode={this.props.updateCode}
-                    />
-                  );
-                }
-              })()}
+              { this.props.editorMode === 'p5' ? (
+                <P5Editor
+                  editorCode={this.props.code}
+                  updateCode={this.props.updateCode}
+                />
+              ) : this.props.editorMode === 'javascript' &&
+                <JavascriptEditor
+                  editorCode={this.props.code}
+                  updateCode={this.props.updateCode}
+                />
+              }
             </div>
             <div className="codeEditor__output">
-              {(()=> { // eslint-disable-line
-                if (this.props.isPlaying) {
-                  if (this.props.editorMode === 'p5') {
-                    return (
-                      <P5Output
-                        editorCode={this.props.code}
-                        updateCode={this.props.updateCode}
-                        isPlaying={this.props.isPlaying}
-                        updateConsoleOutput={this.props.updateConsoleOutput}
-                      />
-                    );
-                  } else if (this.props.editorMode === 'javascript') {
-                    return (
-                      <JavascriptOutput
-                        editorCode={this.props.code}
-                        updateCode={this.props.updateCode}
-                        isPlaying={this.props.isPlaying}
-                        updateConsoleOutput={this.props.updateConsoleOutput}
-                        consoleOutputText={this.props.consoleOutputText}
-                      />
-                    );
-                  }
-                }
-              })()}
+              { this.props.isPlaying && (
+                this.props.editorMode === 'p5' ? (
+                  <P5Output
+                    editorCode={this.props.code}
+                    updateCode={this.props.updateCode}
+                    isPlaying={this.props.isPlaying}
+                    updateConsoleOutput={this.props.updateConsoleOutput}
+                  />
+                ) : this.props.editorMode === 'javascript' && (
+                  <JavascriptOutput
+                    editorCode={this.props.code}
+                    updateCode={this.props.updateCode}
+                    isPlaying={this.props.isPlaying}
+                    updateConsoleOutput={this.props.updateConsoleOutput}
+                    consoleOutputText={this.props.consoleOutputText}
+                  />
+                )
+              )}
             </div>
           </div>
 

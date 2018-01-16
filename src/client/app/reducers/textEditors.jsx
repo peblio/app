@@ -44,7 +44,7 @@ const textEditors = (state = initialState, action) => {
           ...state,
           textEditors: {
             ...state.textEditors,
-            newTextEditorId: {
+            [newTextEditorId]: {
               id: newTextEditorId,
               editorState: newTextEditorState,
               x: 0,
@@ -64,12 +64,14 @@ const textEditors = (state = initialState, action) => {
       if (document.activeElement.parentElement.parentElement &&
           document.activeElement.parentElement.parentElement.classList.value.localeCompare('DraftEditor-root') === 0) {
         const tempId = document.activeElement.parentElement.parentElement.parentElement.id;
-        textEditorsCopy[tempId].editorState = action.state;
-        return Object.assign({}, state, {
-          currentTextEditorState: action.state,
-          textEditors: textEditorsCopy,
-          currentTextEditorId: tempId
-        });
+        if (tempId && textEditorsCopy[tempId]) {
+          textEditorsCopy[tempId].editorState = action.state;
+          return Object.assign({}, state, {
+            currentTextEditorState: action.state,
+            textEditors: textEditorsCopy,
+            currentTextEditorId: tempId
+          });
+        }
       }
       textEditorsCopy[state.currentTextEditorId].editorState = action.state;
       return {

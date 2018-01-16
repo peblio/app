@@ -49,21 +49,22 @@ class MainToolbar extends React.Component {
               Preview
             </label>
 
-            { this.props.name &&
+            { this.props.name ? (
               <div>
                 <a className="mainToolbar__save" href="/logout">Logout</a>
                 <p className="mainToolbar__welcome">
                       Welcome {this.props.name}!
                 </p>
               </div>
-            }
-            <div>
-              <button className="mainToolbar__save" onClick={this.props.viewLoginModal}>Log In</button>
-              <button className="mainToolbar__save" onClick={this.props.viewSignUpModal}>Sign Up</button>
-            </div>
+            ) : (
+              <div>
+                <button className="mainToolbar__save" onClick={this.props.viewLoginModal}>Log In</button>
+                <button className="mainToolbar__save" onClick={this.props.viewSignUpModal}>Sign Up</button>
+              </div>
+            ) }
           </div>
         </div>
-        { this.props.preview || 
+        { this.props.preview ||
           <InsertToolbar
             addEditor={this.props.addEditor}
             addTextEditor={this.props.addTextEditor}
