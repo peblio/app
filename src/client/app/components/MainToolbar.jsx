@@ -3,6 +3,8 @@ import FileModal from './FileModal.jsx';
 import InsertToolbar from './InsertToolbar.jsx';
 import ToolbarLogo from '../images/logo.svg';
 import EditorSVG from '../images/editor.svg';
+import CheckSVG from '../images/check.svg';
+
 
 class MainToolbar extends React.Component {
   constructor(props) {
@@ -61,15 +63,6 @@ class MainToolbar extends React.Component {
       <div>
         <div className="mainToolbar">
 
-          {(()=>{ //eslint-disable-line
-            if (this.props.unsavedChanges) {
-              return (
-                <span className="mainToolbar__unsaved-ind">
-                   *
-                </span>
-              );
-            }
-          })()}
           <div className="mainToolbar__div-left">
             <div className="logo_toolbar">
               <ToolbarLogo alt="logo in toolbar" />
@@ -116,6 +109,26 @@ class MainToolbar extends React.Component {
               />
               Preview
             </label>
+
+
+            {(()=>{ //eslint-disable-line
+                if (this.props.unsavedChanges) {
+                  return (
+                    <span className="mainToolbar__unsaved-ind">
+                     <button className="mainToolbar__unsaved-ind-button"  onClick={this.savePage}>Save</button>
+                          </span>
+                          );
+                        } else {
+                          return (
+                            <span className="mainToolbar__unsaved-ind">
+                             <button className="mainToolbar__unsaved-ind-button"  onClick={this.savePage}> <CheckSVG alt="check"/> Saved</button>
+                                  </span>
+                                );
+
+                        }
+            })()}
+
+
 
             {(()=> { // eslint-disable-line
               if (this.props.name) {
