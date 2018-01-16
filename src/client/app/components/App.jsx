@@ -52,7 +52,7 @@ class App extends React.Component {
       const projectID = this.projectID();
       axios.get(`/api/page/${this.projectID()}`)
         .then((res) => {
-          this.props.loadPage(res.data[0].id, res.data[0].title);
+          this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].preview);
           this.props.loadEditors(res.data[0].indexEditor, res.data[0].editors);
           this.props.loadTextEditors(res.data[0].indexTextEditor, res.data[0].textEditors);
           this.props.loadIframes(res.data[0].indexIframe, res.data[0].iframes);
@@ -99,8 +99,10 @@ class App extends React.Component {
             name={this.props.name}
             onChange={this.props.updateTextChange}
             pageTitle={this.props.pageTitle}
+            preview={this.props.preview}
             setAllPages={this.props.setAllPages}
             setPageTitle={this.props.setPageTitle}
+            togglePreviewMode={this.props.togglePreviewMode}
             setUnsavedChanges={this.props.setUnsavedChanges}
             submitPage={this.props.submitPage}
             textEditors={this.props.textEditors}
@@ -113,6 +115,7 @@ class App extends React.Component {
           />
         </nav>
         <Canvas
+          preview={this.props.preview}
           setUnsavedChanges={this.props.setUnsavedChanges}
 
           editors={this.props.editors}
@@ -278,6 +281,8 @@ App.propTypes = {
   setTextEditorPosition: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired,
 
+  preview: PropTypes.bool.isRequired,
+  togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
@@ -331,6 +336,7 @@ function mapStateToProps(state) {
     pageTitle: state.page.pageTitle,
     id: state.page.id,
     pages: state.page.pages,
+    preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,
 
     canEdit: state.user.canEdit,

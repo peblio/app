@@ -28,17 +28,23 @@ class EditorContainer extends React.Component {
     const dragClassName = `element__close drag__${this.props.editorId}`;
     return (
       <div className="codeEditor_totalContainer" onFocus={this.onFocus}>
-        <nav>
-          <button
-            className="element__close"
-            onClick={() => this.props.removeEditor(this.props.editorId)}
-          >
-            <CloseSVG alt="close element" />
-          </button>
-          <button className={dragClassName}>
-            <DragSVG alt="drag element" />
-          </button>
-        </nav>
+        {(() => { //eslint-disable-line
+          if (!this.props.preview) {
+            return (
+              <nav>
+                <button
+                  className="element__close"
+                  onClick={() => this.props.removeEditor(this.props.editorId)}
+                >
+                  <CloseSVG alt="close element" />
+                </button>
+                <button className={dragClassName}>
+                  <DragSVG alt="drag element" />
+                </button>
+              </nav>
+            );
+          }
+        })()}
         <EditorToolbar
           playCode={() => { this.props.playCode(this.props.editorId); }}
           stopCode={() => { this.props.stopCode(this.props.editorId); }}
@@ -113,6 +119,7 @@ EditorContainer.propTypes = {
   editorMode: PropTypes.string.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
+  preview: PropTypes.bool.isRequired,
   removeEditor: PropTypes.func.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,

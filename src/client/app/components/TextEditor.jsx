@@ -26,25 +26,33 @@ class TextEditor extends React.Component {
     const dragClassName = `element__close drag__${this.props.id}`;
     return (
       <div id={this.props.id} onFocus={this.onFocus} className="textEditor__container">
-        <nav>
-          <button
-            className="element__close"
-            onClick={() => this.props.removeTextEditor(this.props.id)}
-          >
-            <CloseSVG alt="close element" />
-          </button>
-          <button className={dragClassName}>
-            <Drag alt="drag element" />
-          </button>
-        </nav>
+        {(() => { //eslint-disable-line
+          if (!this.props.preview) {
+            return (
+              <nav>
+                <button
+                  className="element__close"
+                  onClick={() => this.props.removeTextEditor(this.props.id)}
+                >
+                  <CloseSVG alt="close element" />
+                </button>
+                <button className={dragClassName}>
+                  <Drag alt="drag element" />
+                </button>
+              </nav>
+            );
+          }
+        })()}
         <Editor
           id={this.props.id}
           editorState={this.props.editorState}
           onChange={this.props.onChange}
           placeholder="Enter some text..."
+          spellCheck={!this.props.preview}
+          readOnly={this.props.preview}
         />
         {(() => { // eslint-disable-line
-          if (this.props.id === this.props.currentTextEditorId) {
+          if (this.props.id === this.props.currentTextEditorId && !this.props.preview) {
             return (
               <TextToolbar
                 onChange={this.props.onChange}
@@ -67,6 +75,7 @@ TextEditor.propTypes = {
   editorState: PropTypes.shape.isRequired,
   id: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  preview: PropTypes.bool.isRequired,
   removeTextEditor: PropTypes.func.isRequired,
   setCurrentTextEditor: PropTypes.func.isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
