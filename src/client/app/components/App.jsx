@@ -23,21 +23,37 @@ const axios = require('axios');
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.authPage = this.authPage.bind(this);
+    this.authAndLoadPage = this.authAndLoadPage.bind(this);
+    this.authLoadedPage = this.authLoadedPage.bind(this);
     this.projectID = this.projectID.bind(this);
   }
 
   componentDidMount() {
-    this.authPage();
+    this.authAndLoadPage();
   }
 
-  authPage() {
+  authLoadedPage() {
+    if (this.projectID()) {
+      this.props.setEditAccess(false);
+      const projectID = this.projectID();
+      axios.get('/api/user')
+          .then((res1) => {
+            if (res1.data.pages) {
+              if (res1.data.pages.includes(projectID)) {
+                this.props.setEditAccess(true);
+              }
+            }
+          });
+    }
+  }
+
+  authAndLoadPage() {
     if (this.projectID()) {
       this.props.setEditAccess(false);
       const projectID = this.projectID();
       axios.get(`/api/page/${this.projectID()}`)
         .then((res) => {
-          this.props.loadPage(res.data[0].id, res.data[0].title);
+          this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].preview);
           this.props.loadEditors(res.data[0].indexEditor, res.data[0].editors);
           this.props.loadTextEditors(res.data[0].indexTextEditor, res.data[0].textEditors);
           this.props.loadIframes(res.data[0].indexIframe, res.data[0].iframes);
@@ -84,9 +100,10 @@ class App extends React.Component {
             name={this.props.name}
             onChange={this.props.updateTextChange}
             pageTitle={this.props.pageTitle}
+            preview={this.props.preview}
             setAllPages={this.props.setAllPages}
             setPageTitle={this.props.setPageTitle}
-            setUnsavedChanges={this.props.setUnsavedChanges}
+            togglePreviewMode={this.props.togglePreviewMode}
             submitPage={this.props.submitPage}
             textEditors={this.props.textEditors}
             toggleFileDropdown={this.props.toggleFileDropdown}
@@ -98,7 +115,7 @@ class App extends React.Component {
           />
         </nav>
         <Canvas
-          setUnsavedChanges={this.props.setUnsavedChanges}
+          preview={this.props.preview}
 
           files={this.props.files}
           updateFile={this.props.updateFile}
@@ -154,7 +171,7 @@ class App extends React.Component {
                 closeModal={this.props.closeLoginModal}
               >
                 <Login
-                  authPage={this.authPage}
+                  authLoadedPage={this.authLoadedPage}
                   loginName={this.props.loginName}
                   loginPassword={this.props.loginPassword}
                   updateUserName={this.props.updateUserName}
@@ -174,7 +191,7 @@ class App extends React.Component {
                 closeModal={this.props.closeSignUpModal}
               >
                 <SignUp
-                  authPage={this.authPage}
+                  authLoadedPage={this.authLoadedPage}
                   loginName={this.props.loginName}
                   loginPassword={this.props.loginPassword}
                   updateUserName={this.props.updateUserName}
@@ -270,6 +287,8 @@ App.propTypes = {
   setTextEditorPosition: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired,
 
+  preview: PropTypes.bool.isRequired,
+  togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
@@ -279,7 +298,6 @@ App.propTypes = {
   setAllPages: PropTypes.func.isRequired,
   setEditAccess: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
-  setUnsavedChanges: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
 
   isPagesModalOpen: PropTypes.bool.isRequired,
@@ -325,6 +343,7 @@ function mapStateToProps(state) {
     pageTitle: state.page.pageTitle,
     id: state.page.id,
     pages: state.page.pages,
+    preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,
 
     canEdit: state.user.canEdit,

@@ -20,8 +20,18 @@ function convertEditorState(textEditors) {
   return newTextEditors;
 }
 
+export function setUnsavedChanges(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_UNSAVED_CHANGES,
+      value
+    });
+  };
+}
+
 export function setPageTitle(event) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_PAGE_TITLE,
       event
@@ -29,12 +39,13 @@ export function setPageTitle(event) {
   };
 }
 
-export function loadPage(id, title) {
+export function loadPage(id, title, preview) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
       id,
-      title
+      title,
+      preview
     });
   };
 }
@@ -58,13 +69,14 @@ export function deletePage(page) {
   };
 }
 
-export function submitPage(parentId, title, editors, indexEditor, textEditors, indexTextEditor, iframes, indexIframe) {
+export function submitPage(parentId, title, preview, editors, indexEditor, textEditors, indexTextEditor, iframes, indexIframe) {
   const id = shortid.generate();
   const textEditorsRaw = convertEditorState(textEditors);
   axios.post('/pages/save', {
     parentId,
     id,
     title,
+    preview,
     editors,
     indexEditor,
     textEditors: textEditorsRaw,
@@ -79,6 +91,7 @@ export function submitPage(parentId, title, editors, indexEditor, textEditors, i
     console.log(error);
   });
   return (dispatch) => {
+    dispatch(setUnsavedChanges(false));
     dispatch({
       type: ActionTypes.SET_PAGE_ID,
       id
@@ -86,11 +99,12 @@ export function submitPage(parentId, title, editors, indexEditor, textEditors, i
   };
 }
 
-export function updatePage(id, title, editors, indexEditor, textEditors, indexTextEditor, iframes, indexIframe) {
+export function updatePage(id, title, preview, editors, indexEditor, textEditors, indexTextEditor, iframes, indexIframe) {
   const textEditorsRaw = convertEditorState(textEditors);
   axios.post('/pages/update', {
     id,
     title,
+    preview,
     editors,
     indexEditor,
     textEditors: textEditorsRaw,
@@ -105,6 +119,7 @@ export function updatePage(id, title, editors, indexEditor, textEditors, indexTe
         console.log(`Error  : ${error}`);
       });
   return (dispatch) => {
+    dispatch(setUnsavedChanges(false));
     dispatch({
       type: ActionTypes.UPDATE_PAGE,
       id
@@ -122,11 +137,11 @@ export function setAllPages(data) {
   };
 }
 
-export function setUnsavedChanges(value) {
+export function togglePreviewMode(value) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
-      type: ActionTypes.SET_UNSAVED_CHANGES,
-      value
+      type: ActionTypes.TOGGLE_PREVIEW_MODE
     });
   };
 }

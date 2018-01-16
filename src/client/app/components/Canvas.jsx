@@ -12,7 +12,7 @@ class Canvas extends React.Component {
     const ids = Object.keys(this.props.editors);
     ids.forEach((id) => {
       const extendsProps = {
-        onMouseOver: () => {
+        onMouseEnter: () => {
           this.props.setCurrentEditor(id);
         }
       };
@@ -26,32 +26,39 @@ class Canvas extends React.Component {
           dragHandleClassName={dragHandle}
           onResize={(e, direction, ref, delta, position) => {
             this.props.setEditorSize(ref.offsetWidth, ref.offsetHeight);
-            this.props.setUnsavedChanges(true);
           }}
           minWidth={this.props.editors[id].minWidth}
           minHeight={this.props.editors[id].minHeight}
           extendsProps={extendsProps}
           bounds=".canvas"
+          enableResizing={{
+            bottom: !this.props.preview,
+            bottomLeft: !this.props.preview,
+            bottomRight: !this.props.preview,
+            left: !this.props.preview,
+            right: !this.props.preview,
+            top: !this.props.preview,
+            topLeft: !this.props.preview,
+            topRight: !this.props.preview
+          }}
         >
           <EditorContainer
-            x={this.props.editors[id].x}
-            y={this.props.editors[id].y}
-            setUnsavedChanges={this.props.setUnsavedChanges}
-            key={id}
-            editorId={id}
-            files={this.props.files}
-            playCode={this.props.playCode}
-            stopCode={this.props.stopCode}
-            updateCode={this.props.updateCode}
-            isPlaying={this.props.editors[id].isPlaying}
-            editorMode={this.props.editors[id].editorMode}
-            consoleOutputText={this.props.editors[id].consoleOutputText}
             code={this.props.editors[id].code}
+            consoleOutputText={this.props.editors[id].consoleOutputText}
+            editorId={id}
+            editorMode={this.props.editors[id].editorMode}
+            files={this.props.files}
+            key={id}
+            isPlaying={this.props.editors[id].isPlaying}
+            playCode={this.props.playCode}
+            preview={this.props.preview}
+            removeEditor={this.props.removeEditor}
             setCurrentEditor={this.props.setCurrentEditor}
             setEditorMode={this.props.setEditorMode}
+            stopCode={this.props.stopCode}
+            updateCode={this.props.updateCode}
             updateConsoleOutput={this.props.updateConsoleOutput}
             updateFile={this.props.updateFile}
-            removeEditor={this.props.removeEditor}
           />
         </Rnd>
       );
@@ -65,7 +72,7 @@ class Canvas extends React.Component {
     const ids = Object.keys(this.props.textEditors);
     ids.forEach((id) => {
       const extendsProps = {
-        onMouseOver: () => {
+        onMouseEnter: () => {
           this.props.setCurrentTextEditor(this.props.textEditors[id].id, this.props.textEditors[id].editorState);
         }
       };
@@ -79,26 +86,33 @@ class Canvas extends React.Component {
           dragHandleClassName={dragHandle}
           onResize={(e, direction, ref, delta, position) => {
             this.props.setTextEditorSize(ref.offsetWidth, ref.offsetHeight);
-            this.props.setUnsavedChanges(true);
           }}
           minWidth={this.props.textEditors[id].minWidth}
           minHeight={this.props.textEditors[id].minHeight}
           extendsProps={extendsProps}
           bounds=".canvas"
+          enableResizing={{
+            bottom: !this.props.preview,
+            bottomLeft: !this.props.preview,
+            bottomRight: !this.props.preview,
+            left: !this.props.preview,
+            right: !this.props.preview,
+            top: !this.props.preview,
+            topLeft: !this.props.preview,
+            topRight: !this.props.preview
+          }}
         >
           <TextEditor
-            x={this.props.textEditors[id].x}
-            y={this.props.textEditors[id].y}
-            setUnsavedChanges={this.props.setUnsavedChanges}
-            key={id}
-            editorState={this.props.textEditors[id].editorState}
-            onChange={this.props.updateTextChange}
-            ref={this.props.textEditors[id].id}
-            id={this.props.textEditors[id].id}
-            currentTextEditorState={this.props.currentTextEditorState}
             currentTextEditorId={this.props.currentTextEditorId}
-            setCurrentTextEditor={this.props.setCurrentTextEditor}
+            currentTextEditorState={this.props.currentTextEditorState}
+            editorState={this.props.textEditors[id].editorState}
+            id={this.props.textEditors[id].id}
+            key={id}
+            onChange={this.props.updateTextChange}
+            preview={this.props.preview}
+            ref={this.props.textEditors[id].id}
             removeTextEditor={this.props.removeTextEditor}
+            setCurrentTextEditor={this.props.setCurrentTextEditor}
           />
         </Rnd>
       );
@@ -112,7 +126,7 @@ class Canvas extends React.Component {
     const ids = Object.keys(this.props.iframes);
     ids.forEach((id) => {
       const extendsProps = {
-        onMouseOver: () => {
+        onMouseEnter: () => {
           this.props.setCurrentIframe(id);
         }
       };
@@ -126,23 +140,30 @@ class Canvas extends React.Component {
           dragHandleClassName={dragHandle}
           onResize={(e, direction, ref, delta, position) => {
             this.props.setIframeSize(ref.offsetWidth, ref.offsetHeight);
-            this.props.setUnsavedChanges(true);
           }}
           minWidth={this.props.iframes[id].minWidth}
           minHeight={this.props.iframes[id].minHeight}
           extendsProps={extendsProps}
           bounds=".canvas"
+          enableResizing={{
+            bottom: !this.props.preview,
+            bottomLeft: !this.props.preview,
+            bottomRight: !this.props.preview,
+            left: !this.props.preview,
+            right: !this.props.preview,
+            top: !this.props.preview,
+            topLeft: !this.props.preview,
+            topRight: !this.props.preview
+          }}
         >
           <Iframe
-            x={this.props.iframes[id].x}
-            y={this.props.iframes[id].y}
-            setUnsavedChanges={this.props.setUnsavedChanges}
             key={id}
             id={id}
-            setIframeURL={this.props.setIframeURL}
             iframeURL={this.props.iframes[id].url}
-            setCurrentIframe={this.props.setCurrentIframe}
+            preview={this.props.preview}
             removeIframe={this.props.removeIframe}
+            setCurrentIframe={this.props.setCurrentIframe}
+            setIframeURL={this.props.setIframeURL}
           />
         </Rnd>
       );
@@ -167,8 +188,7 @@ class Canvas extends React.Component {
 }
 
 Canvas.propTypes = {
-  setUnsavedChanges: PropTypes.func.isRequired,
-
+  preview: PropTypes.bool.isRequired,
   editors: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     consoleOutputText: PropTypes.arrayOf(PropTypes.string),

@@ -5,9 +5,16 @@
 }
 .textToolbar__button {
   @extend %menu-item;
-  margin: $small-margin/2;
-  padding: $medium-padding/2;
+  margin: $small-margin/2 $small-margin/3;
+  padding: $small-padding/2;
 }
 .textToolbar__select {
   @extend %menu-item;
+}
+
+.textToolbar__button:hover #Shape {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  fill:$black;
+  stroke:$black;
 }
