@@ -63,7 +63,7 @@ class App extends React.Component {
       const projectID = this.projectID();
       axios.get(`/api/page/${this.projectID()}`)
         .then((res) => {
-          this.props.loadPage(res.data[0].id, res.data[0].title);
+          this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].preview);
           this.props.loadEditors(res.data[0].indexEditor, res.data[0].editors);
           this.props.loadTextEditors(res.data[0].indexTextEditor, res.data[0].textEditors);
           this.props.loadIframes(res.data[0].indexIframe, res.data[0].iframes);
@@ -97,12 +97,12 @@ class App extends React.Component {
   }
 
   savePage() {
-    this.props.setUnsavedChanges(false);
     if (this.props.name) {
       if (this.props.id.length === 0) {
         this.props.submitPage(
           '',
           this.props.pageTitle,
+          this.props.preview,
           this.props.editors,
           this.props.indexEditor,
           this.props.textEditors,
@@ -114,6 +114,7 @@ class App extends React.Component {
         this.props.updatePage(
           this.props.id,
           this.props.pageTitle,
+          this.props.preview,
           this.props.editors,
           this.props.indexEditor,
           this.props.textEditors,
@@ -126,6 +127,7 @@ class App extends React.Component {
         this.props.submitPage(
           this.props.id,
           `${this.props.pageTitle}-copy`,
+          this.props.preview,
           this.props.editors,
           this.props.indexEditor,
           this.props.textEditors,
@@ -155,21 +157,20 @@ class App extends React.Component {
             name={this.props.name}
             onChange={this.props.updateTextChange}
             pageTitle={this.props.pageTitle}
+            preview={this.props.preview}
             setAllPages={this.props.setAllPages}
             setPageTitle={this.props.setPageTitle}
             savePage={this.savePage}
-            setUnsavedChanges={this.props.setUnsavedChanges}
-            submitPage={this.props.submitPage}
+            togglePreviewMode={this.props.togglePreviewMode}
             toggleFileDropdown={this.props.toggleFileDropdown}
             unsavedChanges={this.props.unsavedChanges}
-            updatePage={this.props.updatePage}
             viewPagesModal={this.props.viewPagesModal}
             viewLoginModal={this.props.viewLoginModal}
             viewSignUpModal={this.props.viewSignUpModal}
           />
         </nav>
         <Canvas
-          setUnsavedChanges={this.props.setUnsavedChanges}
+          preview={this.props.preview}
 
           editors={this.props.editors}
           textEditors={this.props.textEditors}
@@ -211,7 +212,7 @@ class App extends React.Component {
             />
           </Modal>
         }
-        { this.props.isPagesModalOpen &&
+        { this.props.isLoginModalOpen &&
           <Modal
             isOpen={this.props.isLoginModalOpen}
             closeModal={this.props.closeLoginModal}
@@ -324,6 +325,8 @@ App.propTypes = {
   setTextEditorPosition: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired,
 
+  preview: PropTypes.bool.isRequired,
+  togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
@@ -333,7 +336,6 @@ App.propTypes = {
   setAllPages: PropTypes.func.isRequired,
   setEditAccess: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
-  setUnsavedChanges: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
 
   isPagesModalOpen: PropTypes.bool.isRequired,
@@ -377,6 +379,7 @@ function mapStateToProps(state) {
     pageTitle: state.page.pageTitle,
     id: state.page.id,
     pages: state.page.pages,
+    preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,
 
     canEdit: state.user.canEdit,

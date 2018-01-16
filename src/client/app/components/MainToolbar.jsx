@@ -34,9 +34,21 @@ class MainToolbar extends React.Component {
           <input
             className="mainToolbar__title"
             placeholder="Title"
-            type="text" value={this.props.pageTitle} onChange={this.props.setPageTitle}
+            type="text"
+            value={this.props.pageTitle}
+            onChange={this.props.setPageTitle}
           ></input>
           <div className="mainToolbar__div-right">
+            <label className="mainToolbar__preview" htmlFor="preview-checkbox">
+              <input
+                id="preview-checkbox"
+                onChange={this.props.togglePreviewMode}
+                type="checkbox"
+                checked={this.props.preview}
+              />
+              Preview
+            </label>
+
             { this.props.name &&
               <div>
                 <a className="mainToolbar__save" href="/logout">Logout</a>
@@ -51,12 +63,13 @@ class MainToolbar extends React.Component {
             </div>
           </div>
         </div>
-
-        <InsertToolbar
-          addEditor={this.props.addEditor}
-          addTextEditor={this.props.addTextEditor}
-          addIframe={this.props.addIframe}
-        />
+        { this.props.preview || 
+          <InsertToolbar
+            addEditor={this.props.addEditor}
+            addTextEditor={this.props.addTextEditor}
+            addIframe={this.props.addIframe}
+          />
+        }
       </div>
     );
   }
@@ -69,9 +82,11 @@ MainToolbar.propTypes = {
   name: PropTypes.string.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   pageTitle: PropTypes.string.isRequired,
+  preview: PropTypes.bool.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   savePage: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
+  togglePreviewMode: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired,
   viewSignUpModal: PropTypes.func.isRequired,
