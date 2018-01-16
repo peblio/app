@@ -37,7 +37,6 @@ export function removeTextEditor(id) {
 }
 
 export function loadTextEditors(indexTextEditor, textEditors) {
-  console.log(textEditors);
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_TEXT_EDITORS,

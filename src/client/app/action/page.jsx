@@ -41,15 +41,9 @@ export function loadPage(id, title) {
 
 export function deletePage(page) {
   const id = page.page.id;
-  axios.post('/pages/delete', {
-    id
-  })
-  .then((response) => {
-    console.log('deleted');
-  })
-  .catch(function(error) { // eslint-disable-line
-    console.log(error);
-  });
+  axios.post('/pages/delete', { id })
+    .then(() => console.log('Page deleted'))
+    .catch(error => console.error('Error deleting page', error));
   return (dispatch) => {
     dispatch({
       type: ActionTypes.DELETE_PAGE,
@@ -71,13 +65,9 @@ export function submitPage(parentId, title, editors, indexEditor, textEditors, i
     indexTextEditor,
     iframes,
     indexIframe
-  })
-  .then(function(response) { // eslint-disable-line
-    window.location.href = `${window.location.origin}/pebl/${id}`;
-  })
-  .catch(function(error) { // eslint-disable-line
-    console.log(error);
-  });
+  }).then(() => { window.location.replace(`${window.location.origin}/pebl/${id}`); })
+    .catch(error => console.error(error));
+
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_PAGE_ID,
@@ -98,12 +88,9 @@ export function updatePage(id, title, editors, indexEditor, textEditors, indexTe
     iframes,
     indexIframe
   })
-      .then(function(response) { // eslint-disable-line
-        console.log(response);
-      })
-      .catch(function(error) { // eslint-disable-line
-        console.log(`Error  : ${error}`);
-      });
+  .then(response => console.log('Page update', response))
+  .catch(error => console.error('Page update error', error));
+
   return (dispatch) => {
     dispatch({
       type: ActionTypes.UPDATE_PAGE,

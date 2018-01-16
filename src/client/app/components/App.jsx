@@ -8,7 +8,6 @@ import MainToolbar from './MainToolbar.jsx';
 import Modal from './Modal.jsx';
 import PagesList from './PagesList.jsx';
 import SignUp from './SignUp.jsx';
-import TextEditor from './TextEditor.jsx';
 
 import * as editorActions from '../action/editorContainer.jsx';
 import * as iframeActions from '../action/iframe.jsx';
@@ -25,25 +24,37 @@ class App extends React.Component {
     this.authAndLoadPage = this.authAndLoadPage.bind(this);
     this.authLoadedPage = this.authLoadedPage.bind(this);
     this.projectID = this.projectID.bind(this);
+    this.savePage = this.savePage.bind(this);
   }
 
   componentDidMount() {
     this.authAndLoadPage();
   }
 
-  authLoadedPage() {
-    if (this.projectID()) {
-      this.props.setEditAccess(false);
-      const projectID = this.projectID();
-      axios.get('/api/user')
-          .then((res1) => {
-            if (res1.data.pages) {
-              if (res1.data.pages.includes(projectID)) {
-                this.props.setEditAccess(true);
-              }
-            }
-          });
+  onKeyPressed(e) {
+    if (e.metaKey || e.ctrlKey) {
+      switch (e.keyCode) {
+        case 78: // n,N
+          // new
+          break;
+        case 79: // o,O
+          this.props.viewPagesModal();
+          e.preventDefault();
+          break;
+        case 83: // s,S
+          this.savePage();
+          e.preventDefault();
+          break;
+        default:
+          break;
+      }
     }
+  }
+
+  projectID() {
+    const location = this.props.location.pathname;
+    const projectID = location.match(/\/pebl\/([\w-].*)/);
+    return projectID ? projectID[1] : null;
   }
 
   authAndLoadPage() {
@@ -58,10 +69,8 @@ class App extends React.Component {
           this.props.loadIframes(res.data[0].indexIframe, res.data[0].iframes);
           axios.get('/api/user')
             .then((res1) => {
-              if (res1.data.pages) {
-                if (res1.data.pages.includes(projectID)) {
-                  this.props.setEditAccess(true);
-                }
+              if (res1.data.pages && res1.data.pages.includes(projectID)) {
+                this.props.setEditAccess(true);
               }
             });
         });
@@ -73,37 +82,84 @@ class App extends React.Component {
         }
       });
   }
-  projectID() {
-    const location = this.props.location.pathname;
-    const projectID = location.match(/\/pebl\/([\w-].*)/);
-    return projectID ? projectID[1] : null;
+
+  authLoadedPage() {
+    if (this.projectID()) {
+      this.props.setEditAccess(false);
+      const projectID = this.projectID();
+      axios.get('/api/user')
+        .then((res1) => {
+          if (res1.data.pages && res1.data.pages.includes(projectID)) {
+            this.props.setEditAccess(true);
+          }
+        });
+    }
+  }
+
+  savePage() {
+    this.props.setUnsavedChanges(false);
+    if (this.props.name) {
+      if (this.props.id.length === 0) {
+        this.props.submitPage(
+          '',
+          this.props.pageTitle,
+          this.props.editors,
+          this.props.indexEditor,
+          this.props.textEditors,
+          this.props.indexTextEditor,
+          this.props.iframes,
+          this.props.indexIframe
+        );
+      } else if (this.props.canEdit) {
+        this.props.updatePage(
+          this.props.id,
+          this.props.pageTitle,
+          this.props.editors,
+          this.props.indexEditor,
+          this.props.textEditors,
+          this.props.indexTextEditor,
+          this.props.iframes,
+          this.props.indexIframe
+        );
+      } else {
+        // this is for fork and save
+        this.props.submitPage(
+          this.props.id,
+          `${this.props.pageTitle}-copy`,
+          this.props.editors,
+          this.props.indexEditor,
+          this.props.textEditors,
+          this.props.indexTextEditor,
+          this.props.iframes,
+          this.props.indexIframe
+        );
+      }
+    } else {
+      this.props.viewLoginModal();
+    }
   }
 
   render() {
     return (
-      <div>
+      <div
+        tabIndex="0"
+        onKeyDown={this.onKeyPressed}
+      >
         <nav>
           <MainToolbar
-            id={this.props.id}
             addEditor={this.props.addEditor}
             addIframe={this.props.addIframe}
             addTextEditor={this.props.addTextEditor}
-            canEdit={this.props.canEdit}
             currentTextEditorState={this.props.currentTextEditorState}
-            editors={this.props.editors}
-            iframes={this.props.iframes}
-            indexEditor={this.props.indexEditor}
-            indexIframe={this.props.indexIframe}
-            indexTextEditor={this.props.indexTextEditor}
             isFileDropdownOpen={this.props.isFileDropdownOpen}
             name={this.props.name}
             onChange={this.props.updateTextChange}
             pageTitle={this.props.pageTitle}
             setAllPages={this.props.setAllPages}
             setPageTitle={this.props.setPageTitle}
+            savePage={this.savePage}
             setUnsavedChanges={this.props.setUnsavedChanges}
             submitPage={this.props.submitPage}
-            textEditors={this.props.textEditors}
             toggleFileDropdown={this.props.toggleFileDropdown}
             unsavedChanges={this.props.unsavedChanges}
             updatePage={this.props.updatePage}
@@ -143,71 +199,61 @@ class App extends React.Component {
           setTextEditorPosition={this.props.setTextEditorPosition}
           updateTextChange={this.props.updateTextChange}
         />
-        {(()=> { // eslint-disable-line
-          if (this.props.isPagesModalOpen) {
-            return (
-              <Modal
-                isOpen={this.props.isPagesModalOpen}
-                closeModal={this.props.closePagesModal}
-              >
-                <PagesList
-                  pages={this.props.pages}
-                  deletePage={this.props.deletePage}
-                  setAllPages={this.props.setAllPages}
-                />
-              </Modal>
-            );
-          }
-        })()}
-        {(()=> { // eslint-disable-line
-          if (this.props.isLoginModalOpen) {
-            return (
-              <Modal
-                isOpen={this.props.isLoginModalOpen}
-                closeModal={this.props.closeLoginModal}
-              >
-                <Login
-                  authLoadedPage={this.authLoadedPage}
-                  loginName={this.props.loginName}
-                  loginPassword={this.props.loginPassword}
-                  updateUserName={this.props.updateUserName}
-                  updateUserPassword={this.props.updateUserPassword}
-                  setUserName={this.props.setUserName}
-                  closeLoginModal={this.props.closeLoginModal}
-                />
-              </Modal>
-            );
-          }
-        })()}
-        {(()=> { // eslint-disable-line
-          if (this.props.isSignUpModalOpen) {
-            return (
-              <Modal
-                isOpen={this.props.isSignUpModalOpen}
-                closeModal={this.props.closeSignUpModal}
-              >
-                <SignUp
-                  authLoadedPage={this.authLoadedPage}
-                  loginName={this.props.loginName}
-                  loginPassword={this.props.loginPassword}
-                  updateUserName={this.props.updateUserName}
-                  updateUserPassword={this.props.updateUserPassword}
-                  signUserUp={this.props.signUserUp}
-                  setUserName={this.props.setUserName}
-                  closeSignUpModal={this.props.closeSignUpModal}
-                />
-              </Modal>
-            );
-          }
-        })()}
+        { this.props.isPagesModalOpen &&
+          <Modal
+            isOpen={this.props.isPagesModalOpen}
+            closeModal={this.props.closePagesModal}
+          >
+            <PagesList
+              pages={this.props.pages}
+              deletePage={this.props.deletePage}
+              setAllPages={this.props.setAllPages}
+            />
+          </Modal>
+        }
+        { this.props.isPagesModalOpen &&
+          <Modal
+            isOpen={this.props.isLoginModalOpen}
+            closeModal={this.props.closeLoginModal}
+          >
+            <Login
+              authLoadedPage={this.authLoadedPage}
+              loginName={this.props.loginName}
+              loginPassword={this.props.loginPassword}
+              updateUserName={this.props.updateUserName}
+              updateUserPassword={this.props.updateUserPassword}
+              setUserName={this.props.setUserName}
+              closeLoginModal={this.props.closeLoginModal}
+            />
+          </Modal>
+        }
+        { this.props.isSignUpModalOpen &&
+          <Modal
+            isOpen={this.props.isSignUpModalOpen}
+            closeModal={this.props.closeSignUpModal}
+          >
+            <SignUp
+              authLoadedPage={this.authLoadedPage}
+              loginName={this.props.loginName}
+              loginPassword={this.props.loginPassword}
+              updateUserName={this.props.updateUserName}
+              updateUserPassword={this.props.updateUserPassword}
+              signUserUp={this.props.signUserUp}
+              setUserName={this.props.setUserName}
+              closeSignUpModal={this.props.closeSignUpModal}
+            />
+          </Modal>
+        }
       </div>
     );
   }
 }
 
 App.propTypes = {
-  location: PropTypes.shape.isRequired,
-  pages: PropTypes.arrayOf.isRequired,
+  location: PropTypes.shape({
+    pathname: React.PropTypes.string.isRequired,
+  }).isRequired,
+  pages: PropTypes.arrayOf(PropTypes.shape).isRequired,
   id: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
   editors: PropTypes.objectOf(PropTypes.shape({
