@@ -82,17 +82,17 @@ MainToolbar.propTypes = {
   addIframe: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
-  isFileDropdownOpen: PropTypes.bool.isRequired,
   pageTitle: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   savePage: PropTypes.func.isRequired,
+  unsavedChanges: PropTypes.bool.isRequired,
+  isFileDropdownOpen: PropTypes.bool.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired,
-  viewSignUpModal: PropTypes.func.isRequired,
-  unsavedChanges: PropTypes.bool.isRequired
+  viewSignUpModal: PropTypes.func.isRequired
 };
 
 export default MainToolbar;

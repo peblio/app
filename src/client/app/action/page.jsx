@@ -3,23 +3,6 @@ import shortid from 'shortid';
 import { convertToRaw } from 'draft-js';
 import * as ActionTypes from '../constants.jsx';
 
-function convertEditorState(textEditors) {
-  const newTextEditors = {};
-  const ids = Object.keys(textEditors);
-  ids.forEach((id) => {
-    newTextEditors[id] = {};
-    newTextEditors[id].id = textEditors[id].id;
-    newTextEditors[id].rawContentState = JSON.stringify(convertToRaw(textEditors[id].editorState.getCurrentContent()));
-    newTextEditors[id].x = textEditors[id].x;
-    newTextEditors[id].y = textEditors[id].y;
-    newTextEditors[id].width = textEditors[id].width;
-    newTextEditors[id].height = textEditors[id].height;
-    newTextEditors[id].minWidth = textEditors[id].minWidth;
-    newTextEditors[id].minHeight = textEditors[id].minHeight;
-  });
-  return newTextEditors;
-}
-
 export function setUnsavedChanges(value) {
   return (dispatch) => {
     dispatch({
@@ -63,21 +46,28 @@ export function deletePage(page) {
   };
 }
 
-export function submitPage(parentId, title, preview, editors, indexEditor, textEditors, indexTextEditor, iframes, indexIframe) {
+function convertEditorsToRaw(editors){
+  return editors.map(editor => {
+    if(editor.type === 'text'){
+      const {editorState, newEditor} = editor;
+      newEditor.rawContentState = JSON.stringify(
+        convertToRaw(editorState.getCurrentContent())
+      );
+      return newEditor;
+    } 
+    return editor;
+  });
+}
+
+export function submitPage(parentId, title, preview, editors) {
   const id = shortid.generate();
-  const textEditorsRaw = convertEditorState(textEditors);
   axios.post('/pages/save', {
     parentId,
     id,
     title,
     preview,
-    editors,
-    indexEditor,
-    textEditors: textEditorsRaw,
-    indexTextEditor,
-    iframes,
-    indexIframe
-  }).then(() => { window.location.replace(`${window.location.origin}/pebl/${id}`); })
+    convertEditorsToRaw(editors)
+  }).then(() => window.location.replace(`${window.location.origin}/pebl/${id}`))
     .catch(error => console.error(error));
 
   return (dispatch) => {
@@ -89,18 +79,12 @@ export function submitPage(parentId, title, preview, editors, indexEditor, textE
   };
 }
 
-export function updatePage(id, title, preview, editors, indexEditor, textEditors, indexTextEditor, iframes, indexIframe) {
-  const textEditorsRaw = convertEditorState(textEditors);
+export function updatePage(id, title, preview, editors) {
   axios.post('/pages/update', {
     id,
     title,
     preview,
-    editors,
-    indexEditor,
-    textEditors: textEditorsRaw,
-    indexTextEditor,
-    iframes,
-    indexIframe
+    convertEditorsToRaw(editors)
   })
   .then(response => console.log('Page update', response))
   .catch(error => console.error('Page update error', error));

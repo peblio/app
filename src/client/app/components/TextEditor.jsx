@@ -9,26 +9,25 @@ import CloseSVG from '../images/close.svg';
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.onFocus = this.onFocus.bind(this);
+    
+    const i = this.props.index;
+    this.setCurrentEditor = () => this.props.setCurrentEditor(i);
+    this.removeEditor = () => this.props.removeEditor(i);
+    this.onChange = state => this.props.onChange(i, state);
   }
-
-  onFocus() {
-    this.props.setCurrentTextEditor(this.props.id, this.props.editorState);
-  }
-
+  
   render() {
-    const dragClassName = `element__close drag__${this.props.id}`;
     return (
-      <div id={this.props.id} onFocus={this.onFocus} className="textEditor__container">
+      <div id={this.props.id} onFocus={this.setCurrentEditor} className="textEditor__container">
         { this.props.preview ||
           <nav>
             <button
               className="element__close"
-              onClick={() => this.props.removeTextEditor(this.props.id)}
+              onClick={this.removeEditor}
             >
               <CloseSVG alt="close element" />
             </button>
-            <button className={dragClassName}>
+            <button className={`element__close drag__${this.props.id}`}>
               <Drag alt="drag element" />
             </button>
           </nav>
@@ -46,7 +45,7 @@ class TextEditor extends React.Component {
           // wrapperClassName="wrapperClassName"
           // editorClassName="editorClassName"
           editorState={this.props.editorState}
-          onEditorStateChange={this.props.onChange}
+          onEditorStateChange={this.onChange}
           placeholder="Enter some text..."
           spellCheck={!this.props.preview}
           readOnly={this.props.preview}
@@ -57,14 +56,13 @@ class TextEditor extends React.Component {
 }
 
 TextEditor.propTypes = {
-  currentTextEditorId: PropTypes.string.isRequired,
-  currentTextEditorState: PropTypes.shape.isRequired,
-  editorState: PropTypes.shape.isRequired,
+  index: PropTypes.index.isRequired,
   id: PropTypes.string.isRequired,
+  editorState: PropTypes.shape.isRequired,
   onChange: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
-  removeTextEditor: PropTypes.func.isRequired,
-  setCurrentTextEditor: PropTypes.func.isRequired
+  setCurrentEditor: PropTypes.func.isRequired,
+  removeEditor: PropTypes.func.isRequired
 };
 
 export default TextEditor;

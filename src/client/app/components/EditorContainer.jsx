@@ -13,33 +13,37 @@ import CloseSVG from '../images/close.svg';
 class EditorContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.onFocus = this.onFocus.bind(this);
+    
+    const i = this.props.index;
+    this.setCurrentEditor = () => this.props.setCurrentEditor(i);
+    this.removeEditor = () => this.props.removeEditor(i);
+    this.playCode = () => this.props.playCode(i);
+    this.stopCode = () => this.props.stopCode(i);
+    this.updateCode = val => this.props.updateCode(i, val);
+    this.updateConsoleOutput = e => this.props.updateConsoleOutput(i, e)
+    this.setEditorMode = mode => this.props.setEditorMode(i, mode);
   }
 
-  onFocus() {
-    this.props.setCurrentEditor(this.props.editorId);
-  }
   render() {
-    const dragClassName = `element__close drag__${this.props.editorId}`;
     return (
-      <div className="codeEditor_totalContainer" onFocus={this.onFocus}>
+      <div className="codeEditor_totalContainer" onFocus={this.setCurrentEditor}>
         { this.props.preview ||
           <nav>
             <button
               className="element__close"
-              onClick={() => this.props.removeEditor(this.props.editorId)}
+              onClick={this.removeEditor}
             >
               <CloseSVG alt="close element" />
             </button>
-            <button className={dragClassName}>
+            <button className={`element__close drag__${this.props.editorId}`}>
               <DragSVG alt="drag element" />
             </button>
           </nav>
         }
         <EditorToolbar
-          playCode={() => { this.props.playCode(this.props.editorId); }}
-          stopCode={() => { this.props.stopCode(this.props.editorId); }}
-          setEditorMode={this.props.setEditorMode}
+          playCode={this.playCode}
+          stopCode={this.stopCode}
+          setEditorMode={this.setEditorMode}
         />
         <div className="codeEditor__container">
           <div className="codeEditor__sub-container">
@@ -47,12 +51,12 @@ class EditorContainer extends React.Component {
               { this.props.editorMode === 'p5' ? (
                 <P5Editor
                   editorCode={this.props.code}
-                  updateCode={this.props.updateCode}
+                  updateCode={this.updateCode}
                 />
               ) : this.props.editorMode === 'javascript' &&
                 <JavascriptEditor
                   editorCode={this.props.code}
-                  updateCode={this.props.updateCode}
+                  updateCode={this.updateCode}
                 />
               }
             </div>
@@ -61,16 +65,16 @@ class EditorContainer extends React.Component {
                 this.props.editorMode === 'p5' ? (
                   <P5Output
                     editorCode={this.props.code}
-                    updateCode={this.props.updateCode}
+                    updateCode={this.updateCode}
                     isPlaying={this.props.isPlaying}
-                    updateConsoleOutput={this.props.updateConsoleOutput}
+                    updateConsoleOutput={this.updateConsoleOutput}
                   />
                 ) : this.props.editorMode === 'javascript' && (
                   <JavascriptOutput
                     editorCode={this.props.code}
-                    updateCode={this.props.updateCode}
+                    updateCode={this.updateCode}
                     isPlaying={this.props.isPlaying}
-                    updateConsoleOutput={this.props.updateConsoleOutput}
+                    updateConsoleOutput={this.updateConsoleOutput}
                     consoleOutputText={this.props.consoleOutputText}
                   />
                 )
@@ -92,16 +96,17 @@ class EditorContainer extends React.Component {
 }
 
 EditorContainer.propTypes = {
+  index: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+  editorMode: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,
   consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired,
-  editorId: PropTypes.string.isRequired,
-  editorMode: PropTypes.string.isRequired,
   isPlaying: PropTypes.bool.isRequired,
-  playCode: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
   removeEditor: PropTypes.func.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
+  playCode: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired

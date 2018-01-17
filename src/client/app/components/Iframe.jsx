@@ -6,13 +6,15 @@ import CloseSVG from '../images/close.svg';
 class Iframe extends React.Component {
   constructor(props) {
     super(props);
-    this.onFocus = this.onFocus.bind(this);
+    
+    const i = this.props.index;
+    this.setCurrentEditor = () => this.props.setCurrentEditor(i);
+    this.removeEditor = () => this.props.removeEditor(i);
+    this.onChange = state => this.props.onChange(i, state);
   }
-  onFocus() {
-    this.props.setCurrentIframe(this.props.id);
-  }
+  
   urlSubmitted(event) {
-    this.props.setIframeURL(this.url.value);
+    this.props.setIframeURL(this.props.index, this.url.value);
     event.preventDefault();
   }
   render() {
@@ -40,11 +42,12 @@ class Iframe extends React.Component {
 }
 
 Iframe.propTypes = {
+  index: PropTypes.index.isRequired,
   id: PropTypes.string.isRequired,
   iframeURL: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
-  removeIframe: PropTypes.func.isRequired,
-  setCurrentIframe: PropTypes.func.isRequired,
+  removeEditor: PropTypes.func.isRequired,
+  setCurrentEditor: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired
 };
 
