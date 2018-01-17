@@ -109,12 +109,14 @@ class MainToolbar extends React.Component {
               />
               Preview
             </label>
-
+            <button className="mainToolbar__button" onClick={this.props.viewShareModal}>
+              Share
+            </button>
             {(()=> { // eslint-disable-line
               if (this.props.name) {
                 return (
                   <div>
-                    <a className="mainToolbar__save" href="/logout">Logout</a>
+                    <a className="mainToolbar__button" href="/logout">Logout</a>
                     <p className="mainToolbar__welcome">
                           Welcome {this.props.name}!
                     </p>
@@ -124,8 +126,8 @@ class MainToolbar extends React.Component {
               }
               return (
                 <div>
-                  <button className="mainToolbar__save" onClick={this.props.viewLoginModal}>Log In</button>
-                  <button className="mainToolbar__save" onClick={this.props.viewSignUpModal}>Sign Up</button>
+                  <button className="mainToolbar__button" onClick={this.props.viewLoginModal}>Log In</button>
+                  <button className="mainToolbar__button" onClick={this.props.viewSignUpModal}>Sign Up</button>
                 </div>
               );
             })()}
@@ -170,6 +172,7 @@ MainToolbar.propTypes = {
   updatePage: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired,
+  viewShareModal: PropTypes.func.isRequired,
   viewSignUpModal: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired
 };

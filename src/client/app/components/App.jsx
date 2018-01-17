@@ -7,6 +7,7 @@ import Login from './Login.jsx';
 import MainToolbar from './MainToolbar.jsx';
 import Modal from './Modal.jsx';
 import PagesList from './PagesList.jsx';
+import ShareModal from './ShareModal.jsx';
 import SignUp from './SignUp.jsx';
 import TextEditor from './TextEditor.jsx';
 
@@ -110,6 +111,7 @@ class App extends React.Component {
             updatePage={this.props.updatePage}
             viewPagesModal={this.props.viewPagesModal}
             viewLoginModal={this.props.viewLoginModal}
+            viewShareModal={this.props.viewShareModal}
             viewSignUpModal={this.props.viewSignUpModal}
           />
         </nav>
@@ -144,63 +146,66 @@ class App extends React.Component {
           setTextEditorPosition={this.props.setTextEditorPosition}
           updateTextChange={this.props.updateTextChange}
         />
-        {(()=> { // eslint-disable-line
-          if (this.props.isPagesModalOpen) {
-            return (
-              <Modal
-                isOpen={this.props.isPagesModalOpen}
-                closeModal={this.props.closePagesModal}
-              >
-                <PagesList
-                  pages={this.props.pages}
-                  deletePage={this.props.deletePage}
-                  setAllPages={this.props.setAllPages}
-                />
-              </Modal>
-            );
-          }
-        })()}
-        {(()=> { // eslint-disable-line
-          if (this.props.isLoginModalOpen) {
-            return (
-              <Modal
-                isOpen={this.props.isLoginModalOpen}
-                closeModal={this.props.closeLoginModal}
-              >
-                <Login
-                  authLoadedPage={this.authLoadedPage}
-                  loginName={this.props.loginName}
-                  loginPassword={this.props.loginPassword}
-                  updateUserName={this.props.updateUserName}
-                  updateUserPassword={this.props.updateUserPassword}
-                  setUserName={this.props.setUserName}
-                  closeLoginModal={this.props.closeLoginModal}
-                />
-              </Modal>
-            );
-          }
-        })()}
-        {(()=> { // eslint-disable-line
-          if (this.props.isSignUpModalOpen) {
-            return (
-              <Modal
-                isOpen={this.props.isSignUpModalOpen}
-                closeModal={this.props.closeSignUpModal}
-              >
-                <SignUp
-                  authLoadedPage={this.authLoadedPage}
-                  loginName={this.props.loginName}
-                  loginPassword={this.props.loginPassword}
-                  updateUserName={this.props.updateUserName}
-                  updateUserPassword={this.props.updateUserPassword}
-                  signUserUp={this.props.signUserUp}
-                  setUserName={this.props.setUserName}
-                  closeSignUpModal={this.props.closeSignUpModal}
-                />
-              </Modal>
-            );
-          }
-        })()}
+        { this.props.isPagesModalOpen &&
+          <Modal
+            size="large"
+            isOpen={this.props.isPagesModalOpen}
+            closeModal={this.props.closePagesModal}
+          >
+            <PagesList
+              pages={this.props.pages}
+              deletePage={this.props.deletePage}
+              setAllPages={this.props.setAllPages}
+            />
+          </Modal>
+        }
+        {
+          this.props.isShareModalOpen &&
+          <Modal
+            size="small"
+            isOpen={this.props.isShareModalOpen}
+            closeModal={this.props.closeShareModal}
+          >
+            <ShareModal />
+          </Modal>
+        }
+        {
+          this.props.isLoginModalOpen &&
+          <Modal
+            size="large"
+            isOpen={this.props.isLoginModalOpen}
+            closeModal={this.props.closeLoginModal}
+          >
+            <Login
+              authLoadedPage={this.authLoadedPage}
+              loginName={this.props.loginName}
+              loginPassword={this.props.loginPassword}
+              updateUserName={this.props.updateUserName}
+              updateUserPassword={this.props.updateUserPassword}
+              setUserName={this.props.setUserName}
+              closeLoginModal={this.props.closeLoginModal}
+            />
+          </Modal>
+        }
+        {
+          this.props.isSignUpModalOpen &&
+          <Modal
+            size="large"
+            isOpen={this.props.isSignUpModalOpen}
+            closeModal={this.props.closeSignUpModal}
+          >
+            <SignUp
+              authLoadedPage={this.authLoadedPage}
+              loginName={this.props.loginName}
+              loginPassword={this.props.loginPassword}
+              updateUserName={this.props.updateUserName}
+              updateUserPassword={this.props.updateUserPassword}
+              signUserUp={this.props.signUserUp}
+              setUserName={this.props.setUserName}
+              closeSignUpModal={this.props.closeSignUpModal}
+            />
+          </Modal>
+        }
       </div>
     );
   }
@@ -303,6 +308,8 @@ App.propTypes = {
   isSignUpModalOpen: PropTypes.bool.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
+  isShareModalOpen: PropTypes.bool.isRequired,
+  closeShareModal: PropTypes.func.isRequired,
 
   name: PropTypes.string.isRequired,
   loginName: PropTypes.string.isRequired,
@@ -343,6 +350,7 @@ function mapStateToProps(state) {
 
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isPagesModalOpen: state.mainToolbar.isPagesModalOpen,
+    isShareModalOpen: state.mainToolbar.isShareModalOpen,
     isLoginModalOpen: state.mainToolbar.isLoginModalOpen,
     isSignUpModalOpen: state.mainToolbar.isSignUpModalOpen,
   };

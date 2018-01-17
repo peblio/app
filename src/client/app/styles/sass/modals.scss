@@ -1,10 +1,16 @@
-.Modal{
+.modal__large{
   @extend %modal;
   width: 60%;
   height:70%;
 }
 
-.Modal_closeButton{
+.modal__small{
+  @extend %modal;
+  width: 60%;
+  height: 10%;
+}
+
+.modal__closeButton{
   float:right;
   padding: 4px;
 }
