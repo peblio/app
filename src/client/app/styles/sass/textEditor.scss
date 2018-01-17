@@ -2,11 +2,9 @@
 // margin: $small-padding;
 // }
 .DraftEditor-editorContainer{
-  border: 1px solid $light-gray;
+  // border: 1px solid $light-gray;
   // padding: $small-padding;
   height: 100%;
-
-
 }
 
 .textEditor__container {
@@ -19,6 +17,10 @@
  margin: 0;
 }
 
+.textEditor__toolbar {
+  position: absolute;
+  transform: translateY(-100%);
+}
 
 .textToolbar__container{
   background-color: $black;
@@ -29,10 +31,11 @@
 
 .element__control{
   fill: black;
-    &:hover {
-      fill:$light-gray;
-      cursor: pointer;
-    }
+  outline: none;
+  &:hover {
+    fill: $light-gray;
+    cursor: pointer;
+  }
 }
 
 .element__close{

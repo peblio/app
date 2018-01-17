@@ -1,6 +1,7 @@
-import { Editor } from 'draft-js';
+// import { Editor, RichUtils } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import React, { PropTypes } from 'react';
-import TextToolbar from './TextToolbar.jsx';
 import Drag from '../images/drag.svg';
 import CloseSVG from '../images/close.svg';
 
@@ -33,18 +34,22 @@ class TextEditor extends React.Component {
         }
         <Editor
           id={this.props.id}
+          toolbarOnFocus
+          toolbar={{
+            options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'history'],
+            inline: {
+              options: ['bold', 'italic', 'underline', 'strikethrough']
+            }
+          }}
+          toolbarClassName="textEditor__toolbar"
+          // wrapperClassName="wrapperClassName"
+          // editorClassName="editorClassName"
           editorState={this.props.editorState}
-          onChange={this.props.onChange}
+          onEditorStateChange={this.props.onChange}
           placeholder="Enter some text..."
           spellCheck={!this.props.preview}
           readOnly={this.props.preview}
         />
-        { (this.props.id === this.props.currentTextEditorId && !this.props.preview) &&
-          <TextToolbar
-            onChange={this.props.onChange}
-            currentTextEditorState={this.props.currentTextEditorState}
-          />
-        }
       </div>
     );
   }

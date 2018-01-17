@@ -169,7 +169,7 @@ class Canvas extends React.Component {
 
   render() {
     return (
-      <section className="canvas">
+      <section className={`canvas ${this.props.preview ? 'preview-mode' : ''}`}>
         {this.renderEditors()}
         {this.renderTextEditors()}
         {this.renderIframes()}

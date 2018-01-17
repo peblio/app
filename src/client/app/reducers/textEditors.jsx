@@ -49,7 +49,7 @@ const textEditors = (state = initialState, action) => {
               editorState: newTextEditorState,
               x: 0,
               y: 0,
-              width: 350,
+              width: 500,
               height: 100,
               minWidth: 350,
               minHeight: 100
@@ -69,7 +69,7 @@ const textEditors = (state = initialState, action) => {
           return Object.assign({}, state, {
             currentTextEditorState: action.state,
             textEditors: textEditorsCopy,
-            currentTextEditorId: tempId
+            currentTextEditorId: tempId 
           });
         }
       }
