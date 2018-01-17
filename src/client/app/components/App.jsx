@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -252,7 +253,7 @@ class App extends React.Component {
 
 App.propTypes = {
   location: PropTypes.shape({
-    pathname: React.PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired,
   }).isRequired,
   pages: PropTypes.arrayOf(PropTypes.shape).isRequired,
   id: PropTypes.string.isRequired,

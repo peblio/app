@@ -1,5 +1,6 @@
 import axios from 'axios';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 class SignUp extends React.Component {
   componentWillUnmount() {

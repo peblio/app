@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import P5Editor from './P5Editor.jsx';
 import JavascriptEditor from './JavascriptEditor.jsx';
 import P5Output from './P5Output.jsx';

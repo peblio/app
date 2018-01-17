@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import DragSVG from '../images/drag.svg';
 import CloseSVG from '../images/close.svg';
 

@@ -69,7 +69,7 @@ const textEditors = (state = initialState, action) => {
           return Object.assign({}, state, {
             currentTextEditorState: action.state,
             textEditors: textEditorsCopy,
-            currentTextEditorId: tempId 
+            currentTextEditorId: tempId
           });
         }
       }

@@ -1,7 +1,8 @@
 // import { Editor, RichUtils } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Drag from '../images/drag.svg';
 import CloseSVG from '../images/close.svg';
 
