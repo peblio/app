@@ -1,4 +1,5 @@
 import * as ActionTypes from '../constants.jsx';
+import p5files from './p5files.jsx';
 
 const initialState = {
   isPlaying: false,
@@ -6,6 +7,30 @@ const initialState = {
   currentEditorId: 'editor-0',
   indexEditor: 0
 };
+
+const defaultHTML =
+`<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.sound.min.js"></script>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <script>
+      function setup() {
+        createCanvas(400, 400);
+      }
+
+      function draw() {
+        background(220);
+      }
+    </script>
+  </body>
+</html>
+
+`;
 
 const defaultSketch = `function setup() {
   createCanvas(400, 400);
@@ -55,7 +80,12 @@ const editorContainer = (state = initialState, action) => {
         const newEditor = {
           id: newEditorId,
           consoleOutputText: [],
-          code: defaultSketch,
+          files: [
+            {
+              name: 'index.html',
+              content: defaultHTML
+            }
+          ],
           isPlaying: false,
           editorMode: 'p5',
           x: 0,
@@ -107,6 +137,12 @@ const editorContainer = (state = initialState, action) => {
     case ActionTypes.SET_EDITOR_SIZE:
       editors[state.currentEditorId].width = action.width;
       editors[state.currentEditorId].height = action.height;
+      return Object.assign({}, state, {
+        editors
+      });
+
+    case ActionTypes.UPDATE_FILE:
+      editors[state.currentEditorId].files[action.index].content = action.content;
       return Object.assign({}, state, {
         editors
       });

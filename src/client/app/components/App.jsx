@@ -117,7 +117,6 @@ class App extends React.Component {
         <Canvas
           preview={this.props.preview}
 
-          files={this.props.files}
           updateFile={this.props.updateFile}
           editors={this.props.editors}
           textEditors={this.props.textEditors}
@@ -337,8 +336,6 @@ function mapStateToProps(state) {
     currentIframeId: state.iframe.currentIframeId,
     iframes: state.iframe.iframes,
     indexIframe: state.iframe.indexIframe,
-
-    files: state.p5files.files,
 
     pageTitle: state.page.pageTitle,
     id: state.page.id,

@@ -47,7 +47,7 @@ class Canvas extends React.Component {
             consoleOutputText={this.props.editors[id].consoleOutputText}
             editorId={id}
             editorMode={this.props.editors[id].editorMode}
-            files={this.props.files}
+            files={this.props.editors[id].files}
             key={id}
             isPlaying={this.props.editors[id].isPlaying}
             playCode={this.props.playCode}

@@ -13,8 +13,6 @@ class EditorToolbar extends React.Component {
           onChange={(event) => { this.props.setEditorMode(event.target.value); }}
         >
           <option value="p5">p5</option>
-          <option value="javascript">javascript</option>
-          <option value="python">python</option>
         </select>
         <button
           className="editorToolbar__svg"
