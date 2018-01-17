@@ -13,14 +13,18 @@ import CloseSVG from '../images/close.svg';
 class EditorContainer extends React.Component {
   constructor(props) {
     super(props);
-    
+
     const i = this.props.index;
     this.setCurrentEditor = () => this.props.setCurrentEditor(i);
     this.removeEditor = () => this.props.removeEditor(i);
     this.playCode = () => this.props.playCode(i);
     this.stopCode = () => this.props.stopCode(i);
     this.updateCode = val => this.props.updateCode(i, val);
-    this.updateConsoleOutput = e => this.props.updateConsoleOutput(i, e)
+    this.updateConsoleOutput = (e) => {
+      // There's a memory leak in the Javascript editor. Watch the console after clicking Play.
+      console.log(e);
+      this.props.updateConsoleOutput(i, e);
+    };
     this.setEditorMode = mode => this.props.setEditorMode(i, mode);
   }
 
@@ -35,7 +39,7 @@ class EditorContainer extends React.Component {
             >
               <CloseSVG alt="close element" />
             </button>
-            <button className={`element__close drag__${this.props.editorId}`}>
+            <button className={`element__close drag__${this.props.id}`}>
               <DragSVG alt="drag element" />
             </button>
           </nav>

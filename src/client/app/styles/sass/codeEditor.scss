@@ -3,7 +3,6 @@
 }
 .codeEditor__container {
   width: 100%;
-
 }
 .codeEditor__sub-container {
   display: flex;
@@ -60,4 +59,5 @@ canvas{
   padding: 0;
   margin: 0;
   width: auto;
+  @extend %editor_nav;
 }

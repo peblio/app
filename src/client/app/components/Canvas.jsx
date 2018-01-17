@@ -12,7 +12,6 @@ class Canvas extends React.Component {
       <EditorContainer
         index={index}
         id={editor.id}
-        key={editor.id}
         editorMode={editor.editorMode}
         code={editor.code}
         consoleOutputText={editor.consoleOutputText}
@@ -34,7 +33,6 @@ class Canvas extends React.Component {
       <TextEditor
         index={index}
         id={editor.id}
-        key={editor.id}
         ref={editor.id}
         editorState={editor.editorState}
         onChange={this.props.updateTextChange}
@@ -49,8 +47,7 @@ class Canvas extends React.Component {
     return (
       <Iframe
         index={index}
-        id={id}
-        key={id}
+        id={editor.id}
         iframeURL={editor.url}
         preview={this.props.preview}
         removeEditor={this.props.removeEditor}
@@ -61,23 +58,21 @@ class Canvas extends React.Component {
   }
 
   render() {
-    const extendsProps = (index) => {
-      onMouseOver: () => {
-        this.props.setCurrentEditor(index);
-      }
-    };
-    const dragHandle = id => `.drag__${id}`
+    const extendsProps = index => ({
+      onMouseEnter: () => { this.props.setCurrentEditor(index); }
+    });
     return (
       <section className={`canvas ${this.props.preview ? 'preview-mode' : ''}`}>
-        { this.props.editors.map((editor, index) => {
+        { this.props.editors.map((editor, index) => (
           <Rnd
+            key={editor.id}
             className="resize-container"
             size={{ width: editor.width, height: editor.height }}
             position={{ x: editor.x, y: editor.y }}
-            onDragStop={(e, d) => { this.props.setEditorPosition(d.x, d.y); }}
-            dragHandleClassName={dragHandle(index)}
+            onDragStop={(e, d) => { this.props.setEditorPosition(index, d.x, d.y); }}
+            dragHandleClassName={`.drag__${editor.id}`}
             onResize={(e, direction, ref, delta, position) => {
-              this.props.setEditorSize(ref.offsetWidth, ref.offsetHeight);
+              this.props.setEditorSize(index, ref.offsetWidth, ref.offsetHeight);
             }}
             minWidth={editor.minWidth}
             minHeight={editor.minHeight}
@@ -95,15 +90,15 @@ class Canvas extends React.Component {
             }}
           >
             {(() => {
-              switch(editor.type){
-                case 'code': return renderCodeEditor(editor, index);
-                case 'text': return renderTextEditor(editor, index);
-                case 'iframe': return renderIframe(editor, index);
+              switch (editor.type) {
+                case 'code': return this.renderCodeEditor(editor, index);
+                case 'text': return this.renderTextEditor(editor, index);
+                case 'iframe': return this.renderIframe(editor, index);
                 default: return null;
               }
             })()}
           </Rnd>
-        })}
+        ))}
       </section>
     );
   }

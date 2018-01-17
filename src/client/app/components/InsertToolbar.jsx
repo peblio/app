@@ -10,10 +10,10 @@ class InsertToolbar extends React.Component {
     return (
       <div className="insertToolbar__container">
         <button
-          onClick={this.props.addEditor}
+          onClick={this.props.addCodeEditor}
           className="insertToolbar__button"
         >
-          <EditorSVG alt="add editor" />
+          <EditorSVG alt="add code editor" />
           editor
         </button>
         <button
@@ -37,7 +37,7 @@ class InsertToolbar extends React.Component {
 }
 
 InsertToolbar.propTypes = {
-  addEditor: PropTypes.func.isRequired,
+  addCodeEditor: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired
 };

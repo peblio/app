@@ -131,9 +131,9 @@ class App extends React.Component {
       >
         <nav>
           <MainToolbar
-            addEditor={this.props.addEditor}
-            addIframe={this.props.addIframe}
+            addCodeEditor={this.props.addCodeEditor}
             addTextEditor={this.props.addTextEditor}
+            addIframe={this.props.addIframe}
             name={this.props.name}
             pageTitle={this.props.pageTitle}
             preview={this.props.preview}
@@ -246,7 +246,7 @@ App.propTypes = {
   updateTextChange: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired,
-  
+
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
@@ -256,7 +256,7 @@ App.propTypes = {
   deletePage: PropTypes.func.isRequired,
   setAllPages: PropTypes.func.isRequired,
   setEditAccess: PropTypes.func.isRequired,
-  
+
   viewPagesModal: PropTypes.func.isRequired,
   closePagesModal: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
@@ -264,7 +264,7 @@ App.propTypes = {
   viewSignUpModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
-  
+
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
   signUserUp: PropTypes.func.isRequired

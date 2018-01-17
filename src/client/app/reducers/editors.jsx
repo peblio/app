@@ -1,3 +1,4 @@
+import { EditorState, convertFromRaw } from 'draft-js';
 import * as ActionTypes from '../constants.jsx';
 
 const initialState = {
@@ -12,35 +13,42 @@ function draw() {
   background(220);
 }`;
 
-const editors = (state = initialState, action) => {
-  // deep copy
-  const editors = JSON.parse(JSON.stringify(state.editors));
+const editorsReducer = (state = initialState, action) => {
+  // Deep copy
+  // To speed this up, don't copy full editors array on every action!
+  const editors = state.editors.map((editor) => {
+    if (editor.type === 'text') return { ...editor };
+    return JSON.parse(JSON.stringify(editor)); // Quicker than spread.
+  });
+  if (action.hasOwnProperty('index') && (action.index > state.editors.length - 1)) {
+    return { editors };
+  }
 
   switch (action.type) {
     /** ALL */
-    case ActionTypes.SET_CURRENT_EDITOR: 
-      {
-        const editor = editors.splice(action.index, 1)
-        editors.push(editor)
-        return { editors };
+    case ActionTypes.SET_CURRENT_EDITOR:
+      if (action.index !== editors.length - 1) {
+        const editor = editors.splice(action.index, 1)[0];
+        editors.push(editor);
       }
+      return { editors };
 
     case ActionTypes.REMOVE_EDITOR:
-      delete editors[action.index];
+      editors.splice(action.index, 1);
       return { editors };
 
     case ActionTypes.SET_DB_EDITORS: {
-      const editors = action.editors.map(editor => {
-        if(editor.type === 'text'){
-          const {rawContentState, newEditor} = editor;
+      const newEditors = action.editors.map((editor) => {
+        if (editor.type === 'text') {
+          const { rawContentState, ...newEditor } = editor;
           newEditor.editorState = EditorState.createWithContent(
             convertFromRaw(JSON.parse(rawContentState))
           );
           return newEditor;
         }
         return editor;
-      })
-      return { editors };
+      });
+      return { editors: newEditors };
     }
 
     case ActionTypes.SET_EDITOR_POSITION:
@@ -51,7 +59,7 @@ const editors = (state = initialState, action) => {
     case ActionTypes.SET_EDITOR_SIZE:
       editors[action.index].width = action.width;
       editors[action.index].height = action.height;
-      return { editors };      
+      return { editors };
 
     /** CODE EDITOR */
     case ActionTypes.ADD_CODE_EDITOR:
@@ -70,7 +78,7 @@ const editors = (state = initialState, action) => {
         minHeight: 300
       });
       return { editors };
-    
+
     case ActionTypes.PLAY_CODE:
       editors[action.index].isPlaying = true;
       return { editors };
@@ -103,7 +111,7 @@ const editors = (state = initialState, action) => {
       editors.push({
         type: 'text',
         id: `editor-${editors.length}`,
-        editorState: newTextEditorState,
+        editorState: EditorState.createEmpty(),
         x: 0,
         y: 0,
         width: 500,
@@ -116,7 +124,7 @@ const editors = (state = initialState, action) => {
     case ActionTypes.UPDATE_TEXT_CHANGE:
       editors[action.index].editorState = action.state;
       return { editors };
-    
+
     /** IFRAME */
     case ActionTypes.ADD_IFRAME:
       editors.push({
@@ -130,6 +138,7 @@ const editors = (state = initialState, action) => {
         minWidth: 400,
         minHeight: 300,
       });
+      return { editors };
 
     case ActionTypes.SET_IFRAME_URL:
       editors[action.index].url = action.url;
@@ -140,4 +149,4 @@ const editors = (state = initialState, action) => {
   }
 };
 
-export default editors;
+export default editorsReducer;

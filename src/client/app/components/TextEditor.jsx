@@ -9,13 +9,12 @@ import CloseSVG from '../images/close.svg';
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
-    
     const i = this.props.index;
-    this.setCurrentEditor = () => this.props.setCurrentEditor(i);
-    this.removeEditor = () => this.props.removeEditor(i);
-    this.onChange = state => this.props.onChange(i, state);
+    this.setCurrentEditor = () => { this.props.setCurrentEditor(i); };
+    this.removeEditor = () => { this.props.removeEditor(i); };
+    this.onChange = (state) => { this.props.onChange(i, state); };
   }
-  
+
   render() {
     return (
       <div id={this.props.id} onFocus={this.setCurrentEditor} className="textEditor__container">
@@ -42,8 +41,8 @@ class TextEditor extends React.Component {
             }
           }}
           toolbarClassName="textEditor__toolbar"
+          editorClassName="textEditor__content"
           // wrapperClassName="wrapperClassName"
-          // editorClassName="editorClassName"
           editorState={this.props.editorState}
           onEditorStateChange={this.onChange}
           placeholder="Enter some text..."
@@ -56,9 +55,9 @@ class TextEditor extends React.Component {
 }
 
 TextEditor.propTypes = {
-  index: PropTypes.index.isRequired,
+  index: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
-  editorState: PropTypes.shape.isRequired,
+  editorState: PropTypes.object,
   onChange: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,

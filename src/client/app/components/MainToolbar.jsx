@@ -67,7 +67,7 @@ class MainToolbar extends React.Component {
         </div>
         { this.props.preview ||
           <InsertToolbar
-            addEditor={this.props.addEditor}
+            addCodeEditor={this.props.addCodeEditor}
             addTextEditor={this.props.addTextEditor}
             addIframe={this.props.addIframe}
           />
@@ -78,9 +78,9 @@ class MainToolbar extends React.Component {
 }
 
 MainToolbar.propTypes = {
-  addEditor: PropTypes.func.isRequired,
-  addIframe: PropTypes.func.isRequired,
+  addCodeEditor: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
+  addIframe: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,

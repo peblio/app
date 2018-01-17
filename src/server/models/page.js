@@ -7,12 +7,7 @@ const pageSchema = new Schema({
   id: { type: String, default: '' },
   title: { type: String, default: '' },
   preview: { type: Boolean, default: false },
-  editors: { type: Object, default: {} },
-  indexEditor: { type: Number, default: 0 },
-  textEditors: { type: Object, default: {} },
-  indexTextEditor: { type: Number, default: 0 },
-  iframes: { type: Object, default: {} },
-  indexIframe: { type: Number, default: 0 },
+  editors: { type: Array, default: [] }
 }, { minimize: false });
 
 module.exports = mongoose.model('page', pageSchema);

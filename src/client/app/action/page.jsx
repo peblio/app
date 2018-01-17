@@ -46,15 +46,16 @@ export function deletePage(page) {
   };
 }
 
-function convertEditorsToRaw(editors){
-  return editors.map(editor => {
-    if(editor.type === 'text'){
-      const {editorState, newEditor} = editor;
+function convertEditorsToRaw(editors) {
+  return editors.map((editor) => {
+    if (editor.type === 'text') {
+      const { editorState, ...newEditor } = editor;
+      console.log(newEditor, editorState, editorState.getCurrentContent());
       newEditor.rawContentState = JSON.stringify(
         convertToRaw(editorState.getCurrentContent())
       );
       return newEditor;
-    } 
+    }
     return editor;
   });
 }
@@ -66,7 +67,7 @@ export function submitPage(parentId, title, preview, editors) {
     id,
     title,
     preview,
-    convertEditorsToRaw(editors)
+    editors: convertEditorsToRaw(editors)
   }).then(() => window.location.replace(`${window.location.origin}/pebl/${id}`))
     .catch(error => console.error(error));
 
@@ -84,10 +85,9 @@ export function updatePage(id, title, preview, editors) {
     id,
     title,
     preview,
-    convertEditorsToRaw(editors)
-  })
-  .then(response => console.log('Page update', response))
-  .catch(error => console.error('Page update error', error));
+    editors: convertEditorsToRaw(editors)
+  }).then(response => console.log('Page update', response))
+    .catch(error => console.error('Page update error', error));
 
   return (dispatch) => {
     dispatch(setUnsavedChanges(false));
