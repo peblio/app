@@ -59,6 +59,15 @@ class MainToolbar extends React.Component {
   }
 
   render() {
+    let saveButtonText = 'Fork';
+    if (this.props.canEdit) {
+      if (this.props.unsavedChanges) {
+        saveButtonText = 'Save';
+      } else {
+        saveButtonText = 'Saved';
+      }
+    }
+
     return (
       <div>
         <div className="mainToolbar">
@@ -111,23 +120,7 @@ class MainToolbar extends React.Component {
             </label>
 
 
-            {(()=>{ //eslint-disable-line
-                if (this.props.unsavedChanges) {
-                  return (
-                    <span className="mainToolbar__unsaved-ind">
-                     <button className="mainToolbar__unsaved-ind-button"  onClick={this.savePage}>Save</button>
-                          </span>
-                          );
-                        } else {
-                          return (
-                            <span className="mainToolbar__unsaved-ind">
-                             <button className="mainToolbar__unsaved-ind-button"  onClick={this.savePage}> <CheckSVG alt="check"/> Saved</button>
-                                  </span>
-                                );
-
-                        }
-            })()}
-
+            <button className="mainToolbar__unsaved-ind-button" onClick={this.savePage}>{saveButtonText}</button>
 
 
             {(()=> { // eslint-disable-line
