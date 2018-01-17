@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 
 class Modal extends React.Component {
+  componentWillMount() {
+    ReactModal.setAppElement('body');
+  }
+
   render() {
     return (
       <ReactModal className="Modal" isOpen={this.props.isOpen}>
@@ -16,7 +20,10 @@ class Modal extends React.Component {
 }
 
 Modal.propTypes = {
-  children: PropTypes.shape.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
   closeModal: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired
 };

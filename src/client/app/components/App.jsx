@@ -201,51 +201,45 @@ class App extends React.Component {
           setTextEditorPosition={this.props.setTextEditorPosition}
           updateTextChange={this.props.updateTextChange}
         />
-        { this.props.isPagesModalOpen &&
-          <Modal
-            isOpen={this.props.isPagesModalOpen}
-            closeModal={this.props.closePagesModal}
-          >
-            <PagesList
-              pages={this.props.pages}
-              deletePage={this.props.deletePage}
-              setAllPages={this.props.setAllPages}
-            />
-          </Modal>
-        }
-        { this.props.isLoginModalOpen &&
-          <Modal
-            isOpen={this.props.isLoginModalOpen}
-            closeModal={this.props.closeLoginModal}
-          >
-            <Login
-              authLoadedPage={this.authLoadedPage}
-              loginName={this.props.loginName}
-              loginPassword={this.props.loginPassword}
-              updateUserName={this.props.updateUserName}
-              updateUserPassword={this.props.updateUserPassword}
-              setUserName={this.props.setUserName}
-              closeLoginModal={this.props.closeLoginModal}
-            />
-          </Modal>
-        }
-        { this.props.isSignUpModalOpen &&
-          <Modal
-            isOpen={this.props.isSignUpModalOpen}
-            closeModal={this.props.closeSignUpModal}
-          >
-            <SignUp
-              authLoadedPage={this.authLoadedPage}
-              loginName={this.props.loginName}
-              loginPassword={this.props.loginPassword}
-              updateUserName={this.props.updateUserName}
-              updateUserPassword={this.props.updateUserPassword}
-              signUserUp={this.props.signUserUp}
-              setUserName={this.props.setUserName}
-              closeSignUpModal={this.props.closeSignUpModal}
-            />
-          </Modal>
-        }
+        <Modal
+          isOpen={this.props.isPagesModalOpen}
+          closeModal={this.props.closePagesModal}
+        >
+          <PagesList
+            pages={this.props.pages}
+            deletePage={this.props.deletePage}
+            setAllPages={this.props.setAllPages}
+          />
+        </Modal>
+        <Modal
+          isOpen={this.props.isLoginModalOpen}
+          closeModal={this.props.closeLoginModal}
+        >
+          <Login
+            authLoadedPage={this.authLoadedPage}
+            loginName={this.props.loginName}
+            loginPassword={this.props.loginPassword}
+            updateUserName={this.props.updateUserName}
+            updateUserPassword={this.props.updateUserPassword}
+            setUserName={this.props.setUserName}
+            closeLoginModal={this.props.closeLoginModal}
+          />
+        </Modal>
+        <Modal
+          isOpen={this.props.isSignUpModalOpen}
+          closeModal={this.props.closeSignUpModal}
+        >
+          <SignUp
+            authLoadedPage={this.authLoadedPage}
+            loginName={this.props.loginName}
+            loginPassword={this.props.loginPassword}
+            updateUserName={this.props.updateUserName}
+            updateUserPassword={this.props.updateUserPassword}
+            signUserUp={this.props.signUserUp}
+            setUserName={this.props.setUserName}
+            closeSignUpModal={this.props.closeSignUpModal}
+          />
+        </Modal>
       </div>
     );
   }
