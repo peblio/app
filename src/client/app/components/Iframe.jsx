@@ -7,11 +7,10 @@ class Iframe extends React.Component {
   constructor(props) {
     super(props);
 
-    const i = this.props.index;
-    this.setCurrentEditor = () => { this.props.setCurrentEditor(i); };
-    this.removeEditor = () => { this.props.removeEditor(i); };
+    this.setCurrentEditor = () => { this.props.setCurrentEditor(this.props.id); };
+    this.removeEditor = () => { this.props.removeEditor(this.props.id); };
     this.urlSubmitted = (event) => {
-      this.props.setIframeURL(i, this.url.value);
+      this.props.setIframeURL(this.props.id, this.url.value);
       event.preventDefault();
     };
   }
@@ -21,14 +20,14 @@ class Iframe extends React.Component {
       <div className="element__iframe" id={this.props.id} onFocus={this.setCurrentEditor}>
         { this.props.preview ||
           <nav>
-            <button className="element__close" onClick={this.removeEditor}><CloseSVG alt="close element" /></button>
+            <button className="element__close" onClick={this.removeEditor.bind(this)}><CloseSVG alt="close element" /></button>
             <button className={`element__close drag__${this.props.id}`}><DragSVG alt="drag element" /></button>
           </nav>
         }
         <div>
           <iframe src={this.props.iframeURL} />
         </div>
-        <form className="element__addURL" onSubmit={this.urlSubmitted}>
+        <form className="element__addURL" onSubmit={this.urlSubmitted.bind(this)}>
           <label htmlFor="element-name" className="element__label"> URL
             <input
               id="element-name"
@@ -47,7 +46,6 @@ class Iframe extends React.Component {
 }
 
 Iframe.propTypes = {
-  index: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
   iframeURL: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,

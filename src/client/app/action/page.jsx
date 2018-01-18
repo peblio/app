@@ -47,27 +47,28 @@ export function deletePage(page) {
 }
 
 function convertEditorsToRaw(editors) {
-  return editors.map((editor) => {
-    if (editor.type === 'text') {
-      const { editorState, ...newEditor } = editor;
-      console.log(newEditor, editorState, editorState.getCurrentContent());
-      newEditor.rawContentState = JSON.stringify(
+  const rawEditors = {};
+  Object.keys(editors).forEach((id) => {
+    if(editors[id].type === 'text'){
+      const { editorState, ...rawEditor } = editors[id];
+      rawEditor.rawContentState = JSON.stringify(
         convertToRaw(editorState.getCurrentContent())
       );
-      return newEditor;
-    }
-    return editor;
+      rawEditors[id] = rawEditor;
+    } else rawEditors[id] = editors[id];
   });
+  return rawEditors;
 }
 
-export function submitPage(parentId, title, preview, editors) {
+export function submitPage(parentId, title, preview, editors, editorIndex) {
   const id = shortid.generate();
   axios.post('/pages/save', {
     parentId,
     id,
     title,
     preview,
-    editors: convertEditorsToRaw(editors)
+    editors: convertEditorsToRaw(editors),
+    editorIndex
   }).then(() => window.location.replace(`${window.location.origin}/pebl/${id}`))
     .catch(error => console.error(error));
 
@@ -80,12 +81,13 @@ export function submitPage(parentId, title, preview, editors) {
   };
 }
 
-export function updatePage(id, title, preview, editors) {
+export function updatePage(id, title, preview, editors, editorIndex) {
   axios.post('/pages/update', {
     id,
     title,
     preview,
-    editors: convertEditorsToRaw(editors)
+    editors: convertEditorsToRaw(editors),
+    editorIndex
   }).then(response => console.log('Page update', response))
     .catch(error => console.error('Page update error', error));
 

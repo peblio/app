@@ -9,20 +9,20 @@ import CloseSVG from '../images/close.svg';
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
-    const i = this.props.index;
-    this.setCurrentEditor = () => { this.props.setCurrentEditor(i); };
-    this.removeEditor = () => { this.props.removeEditor(i); };
-    this.onChange = (state) => { this.props.onChange(i, state); };
+
+    this.setCurrentEditor = () => { this.props.setCurrentEditor(this.props.id); };
+    this.removeEditor = () => { this.props.removeEditor(this.props.id); };
+    this.onChange = (state) => { this.props.onChange(this.props.id, state); };
   }
 
   render() {
     return (
-      <div id={this.props.id} onFocus={this.setCurrentEditor} className="textEditor__container">
+      <div id={this.props.id} onFocus={this.setCurrentEditor.bind(this)} className="textEditor__container">
         { this.props.preview ||
           <nav>
             <button
               className="element__close"
-              onClick={this.removeEditor}
+              onClick={this.removeEditor.bind(this)}
             >
               <CloseSVG alt="close element" />
             </button>
@@ -44,7 +44,7 @@ class TextEditor extends React.Component {
           editorClassName="textEditor__content"
           // wrapperClassName="wrapperClassName"
           editorState={this.props.editorState}
-          onEditorStateChange={this.onChange}
+          onEditorStateChange={this.onChange.bind(this)}
           placeholder="Enter some text..."
           spellCheck={!this.props.preview}
           readOnly={this.props.preview}
@@ -55,9 +55,8 @@ class TextEditor extends React.Component {
 }
 
 TextEditor.propTypes = {
-  index: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
-  editorState: PropTypes.object,
+  editorState: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,

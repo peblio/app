@@ -14,18 +14,17 @@ class EditorContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    const i = this.props.index;
-    this.setCurrentEditor = () => this.props.setCurrentEditor(i);
-    this.removeEditor = () => this.props.removeEditor(i);
-    this.playCode = () => this.props.playCode(i);
-    this.stopCode = () => this.props.stopCode(i);
-    this.updateCode = val => this.props.updateCode(i, val);
+    this.setCurrentEditor = () => this.props.setCurrentEditor(this.props.id);
+    this.removeEditor = () => this.props.removeEditor(this.props.id);
+    this.playCode = () => this.props.playCode(this.props.id);
+    this.stopCode = () => this.props.stopCode(this.props.id);
+    this.updateCode = val => this.props.updateCode(this.props.id, val);
     this.updateConsoleOutput = (e) => {
       // There's a memory leak in the Javascript editor. Watch the console after clicking Play.
       console.log(e);
-      this.props.updateConsoleOutput(i, e);
+      this.props.updateConsoleOutput(this.props.id, e);
     };
-    this.setEditorMode = mode => this.props.setEditorMode(i, mode);
+    this.setEditorMode = mode => this.props.setEditorMode(this.props.id, mode);
   }
 
   render() {
@@ -100,7 +99,6 @@ class EditorContainer extends React.Component {
 }
 
 EditorContainer.propTypes = {
-  index: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
   editorMode: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,

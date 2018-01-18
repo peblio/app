@@ -2,52 +2,53 @@ import * as ActionTypes from '../constants.jsx';
 import { setUnsavedChanges } from './page.jsx';
 
 /** ALL */
-export function setCurrentEditor(index) {
+export function setCurrentEditor(id) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_CURRENT_EDITOR,
-      index
+      id
     });
   };
 }
 
-export function removeEditor(index) {
+export function removeEditor(id) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.REMOVE_EDITOR,
-      index
+      id
     });
   };
 }
 
-export function loadEditors(editors) {
+export function loadEditors(editors, editorIndex) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_EDITORS,
-      editors
+      editors,
+      editorIndex
     });
   };
 }
 
-export function setEditorPosition(index, x, y) {
+export function setEditorPosition(id, x, y) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_EDITOR_POSITION,
-      index,
+      id,
       x,
       y
     });
   };
 }
 
-export function setEditorSize(index, width, height) {
+export function setEditorSize(id, width, height) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_EDITOR_SIZE,
-      index,
+      id,
       width,
       height
     });
@@ -64,50 +65,50 @@ export function addCodeEditor() {
   };
 }
 
-export function playCode(index) {
+export function playCode(id) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.PLAY_CODE,
-      index
+      id
     });
   };
 }
 
-export function stopCode(index) {
+export function stopCode(id) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.STOP_CODE,
-      index
+      id
     });
   };
 }
 
-export function updateCode(index, value) {
+export function updateCode(id, value) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.UPDATE_CODE,
-      index,
+      id,
       value
     });
   };
 }
 
-export function setEditorMode(index, value) {
+export function setEditorMode(id, value) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_EDITOR_MODE,
-      index,
+      id,
       value
     });
   };
 }
 
-export function updateConsoleOutput(index, event) {
+export function updateConsoleOutput(id, event) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.UPDATE_CONSOLE_OUTPUT,
-      index,
+      id,
       event
     });
   };
@@ -123,12 +124,12 @@ export function addTextEditor() {
   };
 }
 
-export function updateTextChange(index, state) {
+export function updateTextChange(id, state) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.UPDATE_TEXT_CHANGE,
-      index,
+      id,
       state
     });
   };
@@ -144,12 +145,12 @@ export function addIframe() {
   };
 }
 
-export function setIframeURL(index, url) {
+export function setIframeURL(id, url) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_IFRAME_URL,
-      index,
+      id,
       url
     });
   };

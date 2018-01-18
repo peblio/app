@@ -2,7 +2,8 @@ import { EditorState, convertFromRaw } from 'draft-js';
 import * as ActionTypes from '../constants.jsx';
 
 const initialState = {
-  editors: []
+  editors: {},
+  editorIndex: 0
 };
 
 const defaultSketch = `function setup() {
@@ -13,59 +14,76 @@ function draw() {
   background(220);
 }`;
 
+let stack = [];
+
+// Deep copy
+const updateIndices = (editors) => {
+  stack.forEach((id, index) => { editors[id].index = index; });
+  return editors;
+};
+
 const editorsReducer = (state = initialState, action) => {
-  // Deep copy
-  // To speed this up, don't copy full editors array on every action!
-  const editors = state.editors.map((editor) => {
-    if (editor.type === 'text') return { ...editor };
-    return JSON.parse(JSON.stringify(editor)); // Quicker than spread.
-  });
-  if (action.hasOwnProperty('index') && (action.index > state.editors.length - 1)) {
-    return { editors };
+  if (action.hasOwnProperty('id') && !state.editors.hasOwnProperty(action.id)) {
+    return state;
   }
+
+  // deep copy
+  const editors = {};
+  Object.keys(state.editors).forEach((id) => {
+    if (state.editors[id].type === 'text') editors[id] = { ...state.editors[id] };
+    else editors[id] = JSON.parse(JSON.stringify(state.editors[id])); // Quicker than spread.
+  });
 
   switch (action.type) {
     /** ALL */
-    case ActionTypes.SET_CURRENT_EDITOR:
-      if (action.index !== editors.length - 1) {
-        const editor = editors.splice(action.index, 1)[0];
-        editors.push(editor);
-      }
-      return { editors };
-
-    case ActionTypes.REMOVE_EDITOR:
-      editors.splice(action.index, 1);
-      return { editors };
-
     case ActionTypes.SET_DB_EDITORS: {
-      const newEditors = action.editors.map((editor) => {
-        if (editor.type === 'text') {
-          const { rawContentState, ...newEditor } = editor;
+      const newEditors = {};
+      stack = Object.keys(action.editors); // An array of keys
+      stack.forEach((id) => {
+        if (action.editors[id].type === 'text') {
+          const { rawContentState, ...newEditor } = action.editors[id];
           newEditor.editorState = EditorState.createWithContent(
             convertFromRaw(JSON.parse(rawContentState))
           );
-          return newEditor;
-        }
-        return editor;
+          newEditors[id] = newEditor;
+        } else newEditors[id] = action.editors[id];
       });
-      return { editors: newEditors };
+      stack.sort((e1, e2) => newEditors[e1].index - newEditors[e2].index);
+      return { editors: newEditors, editorIndex: action.editorIndex };
     }
 
+    case ActionTypes.SET_CURRENT_EDITOR: {
+      if (editors[action.id].index === stack.length - 1) {
+        // It's not already current
+        return state;
+      }
+      const id = stack.splice(stack.indexOf(action.id), 1)[0];
+      stack.push(id);
+      return { ...state, editors: updateIndices(editors) };
+    }
+
+    case ActionTypes.REMOVE_EDITOR:
+      stack.splice(stack.indexOf(action.id), 1);
+      delete editors[action.id];
+      return { ...state, editors: updateIndices(editors) };
+
     case ActionTypes.SET_EDITOR_POSITION:
-      editors[action.index].x = action.x;
-      editors[action.index].y = action.y;
-      return { editors };
+      editors[action.id].x = action.x;
+      editors[action.id].y = action.y;
+      return { ...state, editors };
 
     case ActionTypes.SET_EDITOR_SIZE:
-      editors[action.index].width = action.width;
-      editors[action.index].height = action.height;
-      return { editors };
+      editors[action.id].width = action.width;
+      editors[action.id].height = action.height;
+      return { ...state, editors };
 
     /** CODE EDITOR */
-    case ActionTypes.ADD_CODE_EDITOR:
-      editors.push({
+    case ActionTypes.ADD_CODE_EDITOR: {
+      const id = `editor-${state.editorIndex}`;
+      editors[id] = {
         type: 'code',
-        id: `editor-${editors.length}`,
+        id,
+        index: stack.length,
         consoleOutputText: [],
         code: defaultSketch,
         isPlaying: false,
@@ -76,41 +94,45 @@ const editorsReducer = (state = initialState, action) => {
         height: 300,
         minWidth: 500,
         minHeight: 300
-      });
-      return { editors };
+      };
+      stack.push(id);
+      const editorIndex = state.editorIndex + 1;
+      return { editors, editorIndex };
+    }
 
     case ActionTypes.PLAY_CODE:
-      editors[action.index].isPlaying = true;
-      return { editors };
+      editors[action.id].isPlaying = true;
+      return { ...state, editors };
 
     case ActionTypes.STOP_CODE:
-      editors[action.index].isPlaying = false;
-      editors[action.index].consoleOutputText = [];
-      return { editors };
+      editors[action.id].isPlaying = false;
+      editors[action.id].consoleOutputText = [];
+      return { ...state, editors };
 
     case ActionTypes.UPDATE_CODE:
-      editors[action.index].code = action.value;
-      return { editors };
+      editors[action.id].code = action.value;
+      return { ...state, editors };
 
     case ActionTypes.SET_EDITOR_MODE:
-      editors[action.index].editorMode = action.value;
-      return { editors };
+      editors[action.id].editorMode = action.value;
+      return { ...state, editors };
 
-    case ActionTypes.UPDATE_CONSOLE_OUTPUT:
-      {
-        const tempOutput = editors[action.index].consoleOutputText.slice();
-        if (action.event.data.arguments) {
-          tempOutput.push(action.event.data.arguments.join());
-        }
-        editors[action.index].consoleOutputText = tempOutput;
-        return { editors };
+    case ActionTypes.UPDATE_CONSOLE_OUTPUT: {
+      const tempOutput = editors[action.id].consoleOutputText.slice();
+      if (action.event.data.arguments) {
+        tempOutput.push(action.event.data.arguments.join());
       }
+      editors[action.id].consoleOutputText = tempOutput;
+      return { ...state, editors };
+    }
 
     /** TEXT EDITOR */
-    case ActionTypes.ADD_TEXT_EDITOR:
-      editors.push({
+    case ActionTypes.ADD_TEXT_EDITOR: {
+      const id = `editor-${state.editorIndex}`;
+      editors[id] = {
         type: 'text',
-        id: `editor-${editors.length}`,
+        id,
+        index: stack.length,
         editorState: EditorState.createEmpty(),
         x: 0,
         y: 0,
@@ -118,18 +140,23 @@ const editorsReducer = (state = initialState, action) => {
         height: 100,
         minWidth: 350,
         minHeight: 100
-      });
-      return { editors };
+      };
+      stack.push(id);
+      const editorIndex = state.editorIndex + 1;
+      return { editors, editorIndex };
+    }
 
     case ActionTypes.UPDATE_TEXT_CHANGE:
-      editors[action.index].editorState = action.state;
-      return { editors };
+      editors[action.id].editorState = action.state;
+      return { ...state, editors };
 
     /** IFRAME */
-    case ActionTypes.ADD_IFRAME:
-      editors.push({
+    case ActionTypes.ADD_IFRAME: {
+      const id = `editor-${state.editorIndex}`;
+      editors[id] = {
         type: 'iframe',
-        id: `editor-${editors.length}`,
+        id,
+        index: stack.length,
         url: '',
         x: 0,
         y: 0,
@@ -137,12 +164,15 @@ const editorsReducer = (state = initialState, action) => {
         height: 300,
         minWidth: 400,
         minHeight: 300,
-      });
-      return { editors };
+      };
+      stack.push(id);
+      const editorIndex = state.editorIndex + 1;
+      return { editors, editorIndex };
+    }
 
     case ActionTypes.SET_IFRAME_URL:
-      editors[action.index].url = action.url;
-      return { editors };
+      editors[action.id].url = action.url;
+      return { ...state, editors };
 
     default:
       return state;

@@ -81,7 +81,8 @@ function updatePage(req, res) {
   Page.update({ id: req.body.id }, {
     title: req.body.title,
     preview: req.body.preview,
-    editors: req.body.editors
+    editors: req.body.editors,
+    editorIndex: req.body.editorIndex
   },
   (err, data) => {
     if (err) {

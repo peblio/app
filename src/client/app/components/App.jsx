@@ -63,7 +63,7 @@ class App extends React.Component {
       axios.get(`/api/page/${this.projectID()}`)
         .then((res) => {
           this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].preview);
-          this.props.loadEditors(res.data[0].editors);
+          this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
           axios.get('/api/user')
             .then((res1) => {
               if (res1.data.pages && res1.data.pages.includes(projectID)) {
@@ -100,14 +100,16 @@ class App extends React.Component {
           '',
           this.props.pageTitle,
           this.props.preview,
-          this.props.editors
+          this.props.editors,
+          this.props.editorIndex
         );
       } else if (this.props.canEdit) {
         this.props.updatePage(
           this.props.id,
           this.props.pageTitle,
           this.props.preview,
-          this.props.editors
+          this.props.editors,
+          this.props.editorIndex
         );
       } else {
         // this is for fork and save
@@ -115,7 +117,8 @@ class App extends React.Component {
           this.props.id,
           `${this.props.pageTitle}-copy`,
           this.props.preview,
-          this.props.editors
+          this.props.editors,
+          this.props.editorIndex
         );
       }
     } else {
@@ -213,7 +216,8 @@ App.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
-  editors: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  editors: PropTypes.object.isRequired,
+  editorIndex: PropTypes.number.isRequired,
 
   pageTitle: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
@@ -273,6 +277,7 @@ App.propTypes = {
 function mapStateToProps(state) {
   return {
     editors: state.editors.editors,
+    editorIndex: state.editors.editorIndex,
 
     pageTitle: state.page.pageTitle,
     id: state.page.id,

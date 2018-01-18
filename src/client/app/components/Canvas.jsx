@@ -7,10 +7,9 @@ import Iframe from './Iframe.jsx';
 import TextEditor from './TextEditor.jsx';
 
 class Canvas extends React.Component {
-  renderCodeEditor(editor, index) {
+  renderCodeEditor(editor) {
     return (
       <EditorContainer
-        index={index}
         id={editor.id}
         editorMode={editor.editorMode}
         code={editor.code}
@@ -28,10 +27,9 @@ class Canvas extends React.Component {
     );
   }
 
-  renderTextEditor(editor, index) {
+  renderTextEditor(editor) {
     return (
       <TextEditor
-        index={index}
         id={editor.id}
         ref={editor.id}
         editorState={editor.editorState}
@@ -43,10 +41,9 @@ class Canvas extends React.Component {
     );
   }
 
-  renderIframe(editor, index) {
+  renderIframe(editor) {
     return (
       <Iframe
-        index={index}
         id={editor.id}
         iframeURL={editor.url}
         preview={this.props.preview}
@@ -58,25 +55,26 @@ class Canvas extends React.Component {
   }
 
   render() {
-    const extendsProps = index => ({
-      onMouseEnter: () => { this.props.setCurrentEditor(index); }
+    const extendsProps = id => ({
+      onMouseEnter: () => { this.props.setCurrentEditor(id); }
     });
+    const ids = Object.keys(this.props.editors);
     return (
       <section className={`canvas ${this.props.preview ? 'preview-mode' : ''}`}>
-        { this.props.editors.map((editor, index) => (
+        { ids.map(id => (
           <Rnd
-            key={editor.id}
+            key={id}
             className="resize-container"
-            size={{ width: editor.width, height: editor.height }}
-            position={{ x: editor.x, y: editor.y }}
-            onDragStop={(e, d) => { this.props.setEditorPosition(index, d.x, d.y); }}
-            dragHandleClassName={`.drag__${editor.id}`}
+            size={{ width: this.props.editors[id].width, height: this.props.editors[id].height }}
+            position={{ x: this.props.editors[id].x, y: this.props.editors[id].y }}
+            onDragStop={(e, d) => { this.props.setEditorPosition(id, d.x, d.y); }}
+            dragHandleClassName={`.drag__${id}`}
             onResize={(e, direction, ref, delta, position) => {
-              this.props.setEditorSize(index, ref.offsetWidth, ref.offsetHeight);
+              this.props.setEditorSize(id, ref.offsetWidth, ref.offsetHeight);
             }}
-            minWidth={editor.minWidth}
-            minHeight={editor.minHeight}
-            extendsProps={extendsProps(index)}
+            minWidth={this.props.editors[id].minWidth}
+            minHeight={this.props.editors[id].minHeight}
+            extendsProps={extendsProps(id)}
             bounds=".canvas"
             enableResizing={{
               bottom: !this.props.preview,
@@ -88,12 +86,13 @@ class Canvas extends React.Component {
               topLeft: !this.props.preview,
               topRight: !this.props.preview
             }}
+            z={this.props.editors[id].index+50}
           >
             {(() => {
-              switch (editor.type) {
-                case 'code': return this.renderCodeEditor(editor, index);
-                case 'text': return this.renderTextEditor(editor, index);
-                case 'iframe': return this.renderIframe(editor, index);
+              switch (this.props.editors[id].type) {
+                case 'code': return this.renderCodeEditor(this.props.editors[id]);
+                case 'text': return this.renderTextEditor(this.props.editors[id]);
+                case 'iframe': return this.renderIframe(this.props.editors[id]);
                 default: return null;
               }
             })()}
@@ -106,7 +105,7 @@ class Canvas extends React.Component {
 
 Canvas.propTypes = {
   preview: PropTypes.bool.isRequired,
-  editors: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  editors: PropTypes.object.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
   setEditorSize: PropTypes.func.isRequired,
