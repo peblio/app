@@ -1,7 +1,9 @@
 import * as ActionTypes from '../constants.jsx';
+import { setUnsavedChanges } from './page.jsx';
 
 export function addEditor() {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.ADD_EDITOR
     });
@@ -46,6 +48,7 @@ export function stopCode(id) {
 
 export function updateCode(value) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.UPDATE_CODE,
       value
@@ -64,6 +67,7 @@ export function updateConsoleOutput(event) {
 
 export function removeEditor(id) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.REMOVE_EDITOR,
       id
@@ -83,6 +87,7 @@ export function loadEditors(indexEditor, editors) {
 
 export function setEditorPosition(x, y) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_EDITOR_POSITION,
       x,
@@ -93,6 +98,7 @@ export function setEditorPosition(x, y) {
 
 export function setEditorSize(width, height) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_EDITOR_SIZE,
       width,

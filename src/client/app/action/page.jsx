@@ -20,8 +20,18 @@ function convertEditorState(textEditors) {
   return newTextEditors;
 }
 
+export function setUnsavedChanges(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_UNSAVED_CHANGES,
+      value
+    });
+  };
+}
+
 export function setPageTitle(event) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_PAGE_TITLE,
       event
@@ -81,6 +91,7 @@ export function submitPage(parentId, title, preview, editors, indexEditor, textE
     console.log(error);
   });
   return (dispatch) => {
+    dispatch(setUnsavedChanges(false));
     dispatch({
       type: ActionTypes.SET_PAGE_ID,
       id
@@ -108,6 +119,7 @@ export function updatePage(id, title, preview, editors, indexEditor, textEditors
         console.log(`Error  : ${error}`);
       });
   return (dispatch) => {
+    dispatch(setUnsavedChanges(false));
     dispatch({
       type: ActionTypes.UPDATE_PAGE,
       id
@@ -125,17 +137,9 @@ export function setAllPages(data) {
   };
 }
 
-export function setUnsavedChanges(value) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_UNSAVED_CHANGES,
-      value
-    });
-  };
-}
-
 export function togglePreviewMode(value) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.TOGGLE_PREVIEW_MODE
     });

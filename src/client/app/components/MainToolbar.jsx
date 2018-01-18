@@ -13,7 +13,6 @@ class MainToolbar extends React.Component {
   }
 
   savePage() {
-    this.props.setUnsavedChanges(false);
     if (this.props.name) {
       if (this.props.id.length === 0) {
         this.props.submitPage(
@@ -100,19 +99,13 @@ class MainToolbar extends React.Component {
             placeholder="Title"
             type="text"
             value={this.props.pageTitle}
-            onChange={(event) => {
-              this.props.setPageTitle(event);
-              this.props.setUnsavedChanges(true);
-            }}
+            onChange={this.props.setPageTitle}
           ></input>
           <div className="mainToolbar__div-right">
             <label className="mainToolbar__preview" htmlFor="preview-checkbox">
               <input
                 id="preview-checkbox"
-                onChange={() => {
-                  this.props.togglePreviewMode();
-                  this.props.setUnsavedChanges(true);
-                }}
+                onChange={this.props.togglePreviewMode}
                 type="checkbox"
                 checked={this.props.preview}
               />
@@ -151,7 +144,6 @@ class MainToolbar extends React.Component {
                 addEditor={this.props.addEditor}
                 addTextEditor={this.props.addTextEditor}
                 addIframe={this.props.addIframe}
-                setUnsavedChanges={this.props.setUnsavedChanges}
               />
             );
           }
@@ -177,7 +169,6 @@ MainToolbar.propTypes = {
   pageTitle: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
   setPageTitle: PropTypes.func.isRequired,
-  setUnsavedChanges: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   textEditors: PropTypes.shape.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
