@@ -34,14 +34,14 @@
       cursor: pointer;
     }
 }
-
 .element__close{
   @extend %element_controls;
-  &:hover {
-    fill:$light-gray;
-    box-shadow: none;
-  }
 }
+
+.element__close:hover #ShapeCNTRL{
+    fill:$light-gray;
+}
+
 
 .dragClassName{
   @extend %element_controls;

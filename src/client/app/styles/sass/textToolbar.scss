@@ -12,7 +12,8 @@
   @extend %menu-item;
 }
 
-.textToolbar__button:hover #Shape {
+
+.textToolbar__button:hover #ShapeTT {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
   fill:$black;

@@ -2,36 +2,41 @@
   display: flex;
   @include flex;
   flex-direction: row;
-  margin: $medium-padding $medium-padding $small-padding;
-  color: $gray;
+  margin: $small-padding $small-padding $small-padding;
+  border-radius: $small-border-radius $small-border-radius 0 0; 
   width: $total-width;
-  padding: 0 $small-padding $medium-padding 0;
+  padding: 0 $small-padding $small-padding 0;
   min-height: 2rem;
 }
-.insertToolbar__button {
-  @extend %menu-item;
+.insertToolbar__button{
+  color:$black;
+  // @extend %menu-item;
   margin: 0 $small-margin;
   padding: $small-padding/2 $small-padding;
-  background-color: $gray;
-  box-shadow: 3px 5px 5px $boxShaddow-gray;
-
+  background-color: $lighter-gray;
+  border:none !important;
+  // box-shadow: 3px 5px 5px $boxShaddow-gray;
+  &:hover{
+    color:$blue;
+    box-shadow: none;
+    background-color: $hover-gray;
+  }
 }
 
 .insertToolbar__icon{
-
   display: block;
   width: 20px;
   margin: auto;
   margin-bottom: $small-margin/2;
 }
 
-// #Shape:hover {
-//     fill:black;
-// }
-
+#Shape{
+  fill:$black;
+  stroke:none;
+}
 .insertToolbar__button:hover #Shape {
   -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-  fill:$black;
-  stroke:$black;
+  transition-duration: 0.2s;
+  fill:$blue;
+
 }

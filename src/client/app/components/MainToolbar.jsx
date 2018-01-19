@@ -58,15 +58,14 @@ class MainToolbar extends React.Component {
   }
 
   render() {
-    let saveButtonText = 'Fork';
-    if (this.props.canEdit) {
-      if (this.props.unsavedChanges) {
+    let saveButtonText = 'Saved';
+    if (this.props.unsavedChanges) {
+      if (this.props.canEdit) {
         saveButtonText = 'Save';
       } else {
-        saveButtonText = 'Saved';
+        saveButtonText = 'Fork';
       }
     }
-
     return (
       <div>
         <div className="mainToolbar">

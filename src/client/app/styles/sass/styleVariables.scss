@@ -3,6 +3,7 @@
   border: $thin-border-width solid $white;
   border-radius: $small-border-radius;
   color: $white;
+  fill:$white;
   background-color: $dark-gray;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
@@ -11,7 +12,7 @@
     color: $black;
     background: $white;
     cursor: pointer;
-    box-shadow: 1px 1px 3px $boxShaddow-gray;
+    // box-shadow: 1px 1px 3px $boxShaddow-gray;
 
   }
 }
@@ -42,7 +43,7 @@
   margin-top: -45px;
   -webkit-transition-duration: .2s;
   transition-duration: .2s;
-  &:hover {
+  &:hover{
     border: none;
     fill: $light-gray;
     cursor: pointer;

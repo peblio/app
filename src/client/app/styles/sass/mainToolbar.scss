@@ -1,8 +1,8 @@
 .mainToolbar{
   padding: 0 $large-padding $small-padding 0;
-  background-color: #242424;
+  background-color: $black;
   height: 3.5em;
-  box-shadow: 3px 5px 5px $boxShaddow-gray;
+  // box-shadow: 3px 5px 5px $light-gray;
 }
 
 .logo_toolbar{
@@ -17,10 +17,15 @@
   height:35px;
   margin: $medium-padding 0 0;
   padding: $small-padding;
-  background-color: $white;
+  background-color: $black;
+  border-top:  $black;
+  border-left:  $black;
+  border-right:  $black;
+
+  border-color: $light-gray;
   color:$gray;
   font-size: 1em;
-  border-radius: 5px;
+  // border-radius: 5px;
   width:15%;
   float: left;
  }
