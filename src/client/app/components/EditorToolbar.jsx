@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import PlaySVG from '../images/play.svg';
 import PauseSVG from '../images/pause.svg';

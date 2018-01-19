@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { render } from 'react-dom';
 import EditorSVG from '../images/editor.svg';
 import TextSVG from '../images/text.svg';
@@ -9,10 +10,10 @@ class InsertToolbar extends React.Component {
     return (
       <div className="insertToolbar__container">
         <button
-          onClick={this.props.addEditor}
+          onClick={this.props.addCodeEditor}
           className="insertToolbar__button"
         >
-          <EditorSVG alt="add editor" />
+          <EditorSVG alt="add code editor" />
           EDITOR
         </button>
         <button
@@ -36,7 +37,7 @@ class InsertToolbar extends React.Component {
 }
 
 InsertToolbar.propTypes = {
-  addEditor: PropTypes.func.isRequired,
+  addCodeEditor: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired
 };

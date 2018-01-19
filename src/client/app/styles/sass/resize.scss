@@ -1,7 +1,12 @@
 .resize-container{
-  padding: 10px;
   min-width: 200px;
   min-height: auto !important;
   border: 2px dashed $light-gray;
+  &:hover {
+    z-index: 10;
+  }
+}
 
+.preview-mode .resize-container {
+  border: none;
 }
