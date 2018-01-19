@@ -1,74 +1,18 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import FileModal from './FileModal.jsx';
 import InsertToolbar from './InsertToolbar.jsx';
 import ToolbarLogo from '../images/logo.svg';
 import EditorSVG from '../images/editor.svg';
 
 class MainToolbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.savePage = this.savePage.bind(this);
-  }
-
-  savePage() {
-    if (this.props.name) {
-      if (this.props.id.length === 0) {
-        this.props.submitPage(
-          '',
-          this.props.pageTitle,
-          this.props.preview,
-          this.props.editors,
-          this.props.indexEditor,
-          this.props.textEditors,
-          this.props.indexTextEditor,
-          this.props.iframes,
-          this.props.indexIframe
-        );
-      } else if (this.props.canEdit) {
-        this.props.updatePage(
-          this.props.id,
-          this.props.pageTitle,
-          this.props.preview,
-          this.props.editors,
-          this.props.indexEditor,
-          this.props.textEditors,
-          this.props.indexTextEditor,
-          this.props.iframes,
-          this.props.indexIframe
-        );
-      } else {
-        // this is for fork and save
-        this.props.submitPage(
-          this.props.id,
-          `${this.props.pageTitle}-copy`,
-          this.props.preview,
-          this.props.editors,
-          this.props.indexEditor,
-          this.props.textEditors,
-          this.props.indexTextEditor,
-          this.props.iframes,
-          this.props.indexIframe
-        );
-      }
-    } else {
-      this.props.viewLoginModal();
-    }
-  }
-
   render() {
     return (
       <div>
         <div className="mainToolbar">
-
-          {(()=>{ //eslint-disable-line
-            if (this.props.unsavedChanges) {
-              return (
-                <span className="mainToolbar__unsaved-ind">
-                   *
-                </span>
-              );
-            }
-          })()}
+          { this.props.unsavedChanges &&
+            <span className="mainToolbar__unsaved-ind"> *</span>
+          }
           <div className="mainToolbar__div-left">
             <div className="logo_toolbar">
               <ToolbarLogo alt="logo in toolbar" />
@@ -78,18 +22,14 @@ class MainToolbar extends React.Component {
               <button className="upperToolbar__dropdown" onClick={this.props.toggleFileDropdown}>
               File
               </button>
-            {(() => { // eslint-disable-line
-              if (this.props.isFileDropdownOpen) {
-                return (
-                  <FileModal
-                    name={this.props.name}
-                    savePage={this.savePage}
-                    toggleFileDropdown={this.props.toggleFileDropdown}
-                    viewPagesModal={this.props.viewPagesModal}
-                  />
-                );
+              { this.props.isFileDropdownOpen &&
+                <FileModal
+                  name={this.props.name}
+                  savePage={this.props.savePage}
+                  toggleFileDropdown={this.props.toggleFileDropdown}
+                  viewPagesModal={this.props.viewPagesModal}
+                />
               }
-            })()}
             </div>
           </div>
           <input
@@ -110,68 +50,49 @@ class MainToolbar extends React.Component {
               Preview
             </label>
 
-            {(()=> { // eslint-disable-line
-              if (this.props.name) {
-                return (
-                  <div>
-                    <a className="mainToolbar__save" href="/logout">Logout</a>
-                    <p className="mainToolbar__welcome">
-                          Welcome {this.props.name}!
-                    </p>
-                  </div>
-
-                );
-              }
-              return (
-                <div>
-                  <button className="mainToolbar__save" onClick={this.props.viewLoginModal}>Log In</button>
-                  <button className="mainToolbar__save" onClick={this.props.viewSignUpModal}>Sign Up</button>
-                </div>
-              );
-            })()}
+            { this.props.name ? (
+              <div>
+                <a className="mainToolbar__save" href="/logout">Logout</a>
+                <p className="mainToolbar__welcome">
+                      Welcome {this.props.name}!
+                </p>
+              </div>
+            ) : (
+              <div>
+                <button className="mainToolbar__save" onClick={this.props.viewLoginModal}>Log In</button>
+                <button className="mainToolbar__save" onClick={this.props.viewSignUpModal}>Sign Up</button>
+              </div>
+            ) }
           </div>
         </div>
-        {(() => { //eslint-disable-line
-          if (!this.props.preview) {
-            return (
-              <InsertToolbar
-                addEditor={this.props.addEditor}
-                addTextEditor={this.props.addTextEditor}
-                addIframe={this.props.addIframe}
-              />
-            );
-          }
-        })()}
+        { this.props.preview ||
+          <InsertToolbar
+            addCodeEditor={this.props.addCodeEditor}
+            addTextEditor={this.props.addTextEditor}
+            addIframe={this.props.addIframe}
+          />
+        }
       </div>
     );
   }
 }
 
 MainToolbar.propTypes = {
-  addEditor: PropTypes.func.isRequired,
-  addIframe: PropTypes.func.isRequired,
+  addCodeEditor: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
-  canEdit: PropTypes.bool.isRequired,
-  editors: PropTypes.shape.isRequired,
+  addIframe: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  iframes: PropTypes.shape.isRequired,
-  indexEditor: PropTypes.number.isRequired,
-  indexIframe: PropTypes.number.isRequired,
-  indexTextEditor: PropTypes.number.isRequired,
-  isFileDropdownOpen: PropTypes.bool.isRequired,
   pageTitle: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
   setPageTitle: PropTypes.func.isRequired,
-  submitPage: PropTypes.func.isRequired,
-  textEditors: PropTypes.shape.isRequired,
+  savePage: PropTypes.func.isRequired,
+  unsavedChanges: PropTypes.bool.isRequired,
+  isFileDropdownOpen: PropTypes.bool.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
-  updatePage: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired,
-  viewSignUpModal: PropTypes.func.isRequired,
-  unsavedChanges: PropTypes.bool.isRequired
+  viewSignUpModal: PropTypes.func.isRequired
 };
 
 export default MainToolbar;

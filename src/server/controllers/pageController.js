@@ -82,11 +82,7 @@ function updatePage(req, res) {
     title: req.body.title,
     preview: req.body.preview,
     editors: req.body.editors,
-    indexEditor: req.body.indexEditor,
-    textEditors: req.body.textEditors,
-    indexTextEditor: req.body.indexTextEditor,
-    iframes: req.body.iframes,
-    indexIframe: req.body.indexIframe,
+    editorIndex: req.body.editorIndex
   },
   (err, data) => {
     if (err) {

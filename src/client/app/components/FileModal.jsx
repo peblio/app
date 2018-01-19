@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 class FileModal extends React.Component {
   render() {
@@ -7,34 +8,30 @@ class FileModal extends React.Component {
         <li className="fileModal__item">
           <a className="fileModal__link" href="/">New</a>
         </li>
-        {(() => { // eslint-disable-line
-          if (this.props.name) {
-            return (
-              <div>
-                <li className="fileModal__item">
-                  <a
-                    className="fileModal__link" onClick={() => {
-                      this.props.viewPagesModal();
-                      this.props.toggleFileDropdown();
-                    }}
-                  >
-                    Open
-                  </a>
-                </li>
-                <li className="fileModal__item">
-                  <a
-                    className="fileModal__link" onClick={() => {
-                      this.props.savePage();
-                      this.props.toggleFileDropdown();
-                    }}
-                  >
-                    Save
-                  </a>
-                </li>
-              </div>
-            );
-          }
-        })()}
+        { this.props.name &&
+          <div>
+            <li className="fileModal__item">
+              <a
+                className="fileModal__link" onClick={() => {
+                  this.props.viewPagesModal();
+                  this.props.toggleFileDropdown();
+                }}
+              >
+                Open
+              </a>
+            </li>
+            <li className="fileModal__item">
+              <a
+                className="fileModal__link" onClick={() => {
+                  this.props.savePage();
+                  this.props.toggleFileDropdown();
+                }}
+              >
+                Save
+              </a>
+            </li>
+          </div>
+        }
       </ul>
     );
   }

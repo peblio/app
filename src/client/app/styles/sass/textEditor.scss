@@ -2,24 +2,35 @@
 // margin: $small-padding;
 // }
 .DraftEditor-editorContainer{
-  border: 1px solid $light-gray;
+  // border: 1px solid $light-gray;
   // padding: $small-padding;
+  margin-top: -5px;
   height: 100%;
-
-
 }
 
 .textEditor__container {
- width: 100%;
- margin: 0;
+  width: 100%;
+  margin: 0;
+  @extend %editor_nav;
+  > nav {
+    margin: -22px 0 -10px -2px !important;
+  }
 }
 
 .textEditor__nav {
- width: 100%;
- margin: 0;
+  width: 100%;
+  margin: 0;
 }
 
+.textEditor__toolbar {
+  position: absolute;
+  transform: translateY(-94%);
+  z-index: 100;
+}
 
+.textEditor__content {
+  padding: 10px;
+}
 .textToolbar__container{
   background-color: $black;
   overflow: visible;
@@ -29,10 +40,10 @@
 
 .element__control{
   fill: black;
-    &:hover {
-      fill:$light-gray;
-      cursor: pointer;
-    }
+  &:hover {
+    fill: $light-gray;
+    cursor: pointer;
+  }
 }
 
 .element__close{

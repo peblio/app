@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import DeleteIcon from '../images/trash.svg';
 
 
@@ -18,7 +19,7 @@ class PagesList extends React.Component {
       const pageId = page.id;
       const link = `/pebl/${page.id}`;
       pages.push(
-        <li>
+        <li key={page.id}>
           <a href={link}> {page.title} </a>
           <button className="pages__delete" onClick={() => { this.props.deletePage({ page }); }}> <DeleteIcon alt="delete page" /> </button>
         </li>
