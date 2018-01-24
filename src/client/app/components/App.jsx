@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -8,14 +9,11 @@ import MainToolbar from './MainToolbar.jsx';
 import Modal from './Modal.jsx';
 import PagesList from './PagesList.jsx';
 import SignUp from './SignUp.jsx';
-import TextEditor from './TextEditor.jsx';
 
-import * as editorActions from '../action/editorContainer.jsx';
-import * as iframeActions from '../action/iframe.jsx';
+import * as editorActions from '../action/editors.jsx';
 import * as mainToolbarActions from '../action/mainToolbar.jsx';
 import * as p5filesActions from '../action/p5files.jsx';
 import * as pageActions from '../action/page.jsx';
-import * as textEditorActions from '../action/textEditors.jsx';
 import * as userActions from '../action/user.jsx';
 
 const axios = require('axios');
@@ -26,25 +24,37 @@ class App extends React.Component {
     this.authAndLoadPage = this.authAndLoadPage.bind(this);
     this.authLoadedPage = this.authLoadedPage.bind(this);
     this.projectID = this.projectID.bind(this);
+    this.savePage = this.savePage.bind(this);
   }
 
   componentDidMount() {
     this.authAndLoadPage();
   }
 
-  authLoadedPage() {
-    if (this.projectID()) {
-      this.props.setEditAccess(false);
-      const projectID = this.projectID();
-      axios.get('/api/user')
-          .then((res1) => {
-            if (res1.data.pages) {
-              if (res1.data.pages.includes(projectID)) {
-                this.props.setEditAccess(true);
-              }
-            }
-          });
+  onKeyPressed(e) {
+    if (e.metaKey || e.ctrlKey) {
+      switch (e.keyCode) {
+        case 78: // n,N
+          // new
+          break;
+        case 79: // o,O
+          this.props.viewPagesModal();
+          e.preventDefault();
+          break;
+        case 83: // s,S
+          this.savePage();
+          e.preventDefault();
+          break;
+        default:
+          break;
+      }
     }
+  }
+
+  projectID() {
+    const location = this.props.location.pathname;
+    const projectID = location.match(/\/pebl\/([\w-].*)/);
+    return projectID ? projectID[1] : null;
   }
 
   authAndLoadPage() {
@@ -54,15 +64,11 @@ class App extends React.Component {
       axios.get(`/api/page/${this.projectID()}`)
         .then((res) => {
           this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].preview);
-          this.props.loadEditors(res.data[0].indexEditor, res.data[0].editors);
-          this.props.loadTextEditors(res.data[0].indexTextEditor, res.data[0].textEditors);
-          this.props.loadIframes(res.data[0].indexIframe, res.data[0].iframes);
+          this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
           axios.get('/api/user')
             .then((res1) => {
-              if (res1.data.pages) {
-                if (res1.data.pages.includes(projectID)) {
-                  this.props.setEditAccess(true);
-                }
+              if (res1.data.pages && res1.data.pages.includes(projectID)) {
+                this.props.setEditAccess(true);
               }
             });
         });
@@ -74,41 +80,73 @@ class App extends React.Component {
         }
       });
   }
-  projectID() {
-    const location = this.props.location.pathname;
-    const projectID = location.match(/\/pebl\/([\w-].*)/);
-    return projectID ? projectID[1] : null;
+
+  authLoadedPage() {
+    if (this.projectID()) {
+      this.props.setEditAccess(false);
+      const projectID = this.projectID();
+      axios.get('/api/user')
+        .then((res1) => {
+          if (res1.data.pages && res1.data.pages.includes(projectID)) {
+            this.props.setEditAccess(true);
+          }
+        });
+    }
+  }
+
+  savePage() {
+    if (this.props.name) {
+      if (this.props.id.length === 0) {
+        this.props.submitPage(
+          '',
+          this.props.pageTitle,
+          this.props.preview,
+          this.props.editors,
+          this.props.editorIndex
+        );
+      } else if (this.props.canEdit) {
+        this.props.updatePage(
+          this.props.id,
+          this.props.pageTitle,
+          this.props.preview,
+          this.props.editors,
+          this.props.editorIndex
+        );
+      } else {
+        // this is for fork and save
+        this.props.submitPage(
+          this.props.id,
+          `${this.props.pageTitle}-copy`,
+          this.props.preview,
+          this.props.editors,
+          this.props.editorIndex
+        );
+      }
+    } else {
+      this.props.viewLoginModal();
+    }
   }
 
   render() {
     return (
-      <div>
+      <div
+        tabIndex="0"
+        onKeyDown={this.onKeyPressed}
+      >
         <nav>
           <MainToolbar
-            id={this.props.id}
-            addEditor={this.props.addEditor}
-            addIframe={this.props.addIframe}
+            addCodeEditor={this.props.addCodeEditor}
             addTextEditor={this.props.addTextEditor}
-            canEdit={this.props.canEdit}
-            currentTextEditorState={this.props.currentTextEditorState}
-            editors={this.props.editors}
-            iframes={this.props.iframes}
-            indexEditor={this.props.indexEditor}
-            indexIframe={this.props.indexIframe}
-            indexTextEditor={this.props.indexTextEditor}
-            isFileDropdownOpen={this.props.isFileDropdownOpen}
+            addIframe={this.props.addIframe}
             name={this.props.name}
-            onChange={this.props.updateTextChange}
             pageTitle={this.props.pageTitle}
             preview={this.props.preview}
-            setAllPages={this.props.setAllPages}
             setPageTitle={this.props.setPageTitle}
-            togglePreviewMode={this.props.togglePreviewMode}
-            submitPage={this.props.submitPage}
-            textEditors={this.props.textEditors}
-            toggleFileDropdown={this.props.toggleFileDropdown}
+            savePage={this.savePage}
             unsavedChanges={this.props.unsavedChanges}
-            updatePage={this.props.updatePage}
+            isFileDropdownOpen={this.props.isFileDropdownOpen}
+            toggleFileDropdown={this.props.toggleFileDropdown}
+            togglePreviewMode={this.props.togglePreviewMode}
             viewPagesModal={this.props.viewPagesModal}
             viewLoginModal={this.props.viewLoginModal}
             viewSignUpModal={this.props.viewSignUpModal}
@@ -119,174 +157,102 @@ class App extends React.Component {
 
           updateFile={this.props.updateFile}
           editors={this.props.editors}
-          textEditors={this.props.textEditors}
-          iframes={this.props.iframes}
-          isPlaying={this.props.isPlaying}
-          playCode={this.props.playCode}
-          stopCode={this.props.stopCode}
-          updateCode={this.props.updateCode}
           setCurrentEditor={this.props.setCurrentEditor}
-          updateConsoleOutput={this.props.updateConsoleOutput}
-          setEditorMode={this.props.setEditorMode}
           removeEditor={this.props.removeEditor}
           setEditorSize={this.props.setEditorSize}
           setEditorPosition={this.props.setEditorPosition}
 
-          removeIframe={this.props.removeIframe}
-          setCurrentIframe={this.props.setCurrentIframe}
-          setIframePosition={this.props.setIframePosition}
-          setIframeSize={this.props.setIframeSize}
-          setIframeURL={this.props.setIframeURL}
-
-          currentTextEditorId={this.props.currentTextEditorId}
-          currentTextEditorState={this.props.currentTextEditorState}
-          removeTextEditor={this.props.removeTextEditor}
-          setCurrentTextEditor={this.props.setCurrentTextEditor}
-          setTextEditorSize={this.props.setTextEditorSize}
-          setTextEditorPosition={this.props.setTextEditorPosition}
+          playCode={this.props.playCode}
+          stopCode={this.props.stopCode}
+          updateCode={this.props.updateCode}
+          updateConsoleOutput={this.props.updateConsoleOutput}
+          setEditorMode={this.props.setEditorMode}
           updateTextChange={this.props.updateTextChange}
+          setIframeURL={this.props.setIframeURL}
         />
-        {(()=> { // eslint-disable-line
-          if (this.props.isPagesModalOpen) {
-            return (
-              <Modal
-                isOpen={this.props.isPagesModalOpen}
-                closeModal={this.props.closePagesModal}
-              >
-                <PagesList
-                  pages={this.props.pages}
-                  deletePage={this.props.deletePage}
-                  setAllPages={this.props.setAllPages}
-                />
-              </Modal>
-            );
-          }
-        })()}
-        {(()=> { // eslint-disable-line
-          if (this.props.isLoginModalOpen) {
-            return (
-              <Modal
-                isOpen={this.props.isLoginModalOpen}
-                closeModal={this.props.closeLoginModal}
-              >
-                <Login
-                  authLoadedPage={this.authLoadedPage}
-                  loginName={this.props.loginName}
-                  loginPassword={this.props.loginPassword}
-                  updateUserName={this.props.updateUserName}
-                  updateUserPassword={this.props.updateUserPassword}
-                  setUserName={this.props.setUserName}
-                  closeLoginModal={this.props.closeLoginModal}
-                />
-              </Modal>
-            );
-          }
-        })()}
-        {(()=> { // eslint-disable-line
-          if (this.props.isSignUpModalOpen) {
-            return (
-              <Modal
-                isOpen={this.props.isSignUpModalOpen}
-                closeModal={this.props.closeSignUpModal}
-              >
-                <SignUp
-                  authLoadedPage={this.authLoadedPage}
-                  loginName={this.props.loginName}
-                  loginPassword={this.props.loginPassword}
-                  updateUserName={this.props.updateUserName}
-                  updateUserPassword={this.props.updateUserPassword}
-                  signUserUp={this.props.signUserUp}
-                  setUserName={this.props.setUserName}
-                  closeSignUpModal={this.props.closeSignUpModal}
-                />
-              </Modal>
-            );
-          }
-        })()}
+        <Modal
+          isOpen={this.props.isPagesModalOpen}
+          closeModal={this.props.closePagesModal}
+        >
+          <PagesList
+            pages={this.props.pages}
+            deletePage={this.props.deletePage}
+            setAllPages={this.props.setAllPages}
+          />
+        </Modal>
+        <Modal
+          isOpen={this.props.isLoginModalOpen}
+          closeModal={this.props.closeLoginModal}
+        >
+          <Login
+            authLoadedPage={this.authLoadedPage}
+            loginName={this.props.loginName}
+            loginPassword={this.props.loginPassword}
+            updateUserName={this.props.updateUserName}
+            updateUserPassword={this.props.updateUserPassword}
+            setUserName={this.props.setUserName}
+            closeLoginModal={this.props.closeLoginModal}
+          />
+        </Modal>
+        <Modal
+          isOpen={this.props.isSignUpModalOpen}
+          closeModal={this.props.closeSignUpModal}
+        >
+          <SignUp
+            authLoadedPage={this.authLoadedPage}
+            loginName={this.props.loginName}
+            loginPassword={this.props.loginPassword}
+            updateUserName={this.props.updateUserName}
+            updateUserPassword={this.props.updateUserPassword}
+            signUserUp={this.props.signUserUp}
+            setUserName={this.props.setUserName}
+            closeSignUpModal={this.props.closeSignUpModal}
+          />
+        </Modal>
       </div>
     );
   }
 }
 
 App.propTypes = {
-  location: PropTypes.shape.isRequired,
-  pages: PropTypes.arrayOf.isRequired,
-  id: PropTypes.string.isRequired,
-  pageTitle: PropTypes.string.isRequired,
-  editors: PropTypes.objectOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    consoleOutputText: PropTypes.arrayOf(PropTypes.string),
-    code: PropTypes.string.isRequired,
-    isPlaying: PropTypes.bool.isRequired,
-    editorMode: PropTypes.string.isRequired,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-    minWidth: PropTypes.number.isRequired,
-    minHeight: PropTypes.number.isRequired
-  })).isRequired,
-  files: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired
-  })).isRequired,
-  textEditors: PropTypes.objectOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    editorState: PropTypes.shape,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-    minWidth: PropTypes.number.isRequired,
-    minHeight: PropTypes.number.isRequired
-  })).isRequired,
-  iframes: PropTypes.objectOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-    minWidth: PropTypes.number.isRequired,
-    minHeight: PropTypes.number.isRequired
-  })).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
+  editors: PropTypes.object.isRequired,
+  editorIndex: PropTypes.number.isRequired,
 
-  isPlaying: PropTypes.bool.isRequired,
-  playCode: PropTypes.func.isRequired,
-  stopCode: PropTypes.func.isRequired,
-  updateFile: PropTypes.func.isRequired,
-  updateCode: PropTypes.func.isRequired,
-  addEditor: PropTypes.func.isRequired,
-  indexEditor: PropTypes.number.isRequired,
+  pageTitle: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  pages: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  preview: PropTypes.bool.isRequired,
+  unsavedChanges: PropTypes.bool.isRequired,
+
+  canEdit: PropTypes.bool.isRequired,
+  loginName: PropTypes.string.isRequired,
+  loginPassword: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+
+  isFileDropdownOpen: PropTypes.bool.isRequired,
+  isPagesModalOpen: PropTypes.bool.isRequired,
+  isLoginModalOpen: PropTypes.bool.isRequired,
+  isSignUpModalOpen: PropTypes.bool.isRequired,
+
   setCurrentEditor: PropTypes.func.isRequired,
-  updateConsoleOutput: PropTypes.func.isRequired,
-  setEditorMode: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
   loadEditors: PropTypes.func.isRequired,
-  setEditorSize: PropTypes.func.isRequired,
   setEditorPosition: PropTypes.func.isRequired,
-
+  setEditorSize: PropTypes.func.isRequired,
+  addCodeEditor: PropTypes.func.isRequired,
+  playCode: PropTypes.func.isRequired,
+  stopCode: PropTypes.func.isRequired,
+  updateCode: PropTypes.func.isRequired,
+  setEditorMode: PropTypes.func.isRequired,
+  updateConsoleOutput: PropTypes.func.isRequired,
+  addTextEditor: PropTypes.func.isRequired,
+  updateTextChange: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
-  indexIframe: PropTypes.number.isRequired,
-  loadIframes: PropTypes.func.isRequired,
-  removeIframe: PropTypes.func.isRequired,
-  setCurrentIframe: PropTypes.func.isRequired,
-  setIframePosition: PropTypes.func.isRequired,
-  setIframeSize: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired,
 
-  addTextEditor: PropTypes.func.isRequired,
-  currentTextEditorId: PropTypes.string.isRequired,
-  currentTextEditorState: PropTypes.shape.isRequired,
-  indexTextEditor: PropTypes.number.isRequired,
-  loadTextEditors: PropTypes.func.isRequired,
-  removeTextEditor: PropTypes.func.isRequired,
-  setCurrentTextEditor: PropTypes.func.isRequired,
-  setTextEditorSize: PropTypes.func.isRequired,
-  setTextEditorPosition: PropTypes.func.isRequired,
-  updateTextChange: PropTypes.func.isRequired,
-
-  preview: PropTypes.bool.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
@@ -296,24 +262,15 @@ App.propTypes = {
   deletePage: PropTypes.func.isRequired,
   setAllPages: PropTypes.func.isRequired,
   setEditAccess: PropTypes.func.isRequired,
-  canEdit: PropTypes.bool.isRequired,
-  unsavedChanges: PropTypes.bool.isRequired,
 
-  isPagesModalOpen: PropTypes.bool.isRequired,
   viewPagesModal: PropTypes.func.isRequired,
   closePagesModal: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   closeLoginModal: PropTypes.func.isRequired,
   viewSignUpModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
-  isLoginModalOpen: PropTypes.bool.isRequired,
-  isSignUpModalOpen: PropTypes.bool.isRequired,
-  isFileDropdownOpen: PropTypes.bool.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
 
-  name: PropTypes.string.isRequired,
-  loginName: PropTypes.string.isRequired,
-  loginPassword: PropTypes.string.isRequired,
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
   signUserUp: PropTypes.func.isRequired
@@ -321,21 +278,8 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    isPlaying: state.editorContainer.isPlaying,
-    editors: state.editorContainer.editors,
-    indexEditor: state.editorContainer.indexEditor,
-    currentEditorId: state.editorContainer.currentEditorId,
-
-    textEditors: state.textEditors.textEditors,
-    indexTextEditor: state.textEditors.indexTextEditor,
-    currentTextEditorId: state.textEditors.currentTextEditorId,
-    currentTextEditorState: state.textEditors.currentTextEditorState,
-    textEditorIndex: state.textEditors.textEditorIndex,
-    styleMap: state.textEditors.styleMap,
-
-    currentIframeId: state.iframe.currentIframeId,
-    iframes: state.iframe.iframes,
-    indexIframe: state.iframe.indexIframe,
+    editors: state.editors.editors,
+    editorIndex: state.editors.editorIndex,
 
     pageTitle: state.page.pageTitle,
     id: state.page.id,
@@ -358,11 +302,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
     editorActions,
-    iframeActions,
     mainToolbarActions,
     p5filesActions,
     pageActions,
-    textEditorActions,
     userActions),
   dispatch);
 }

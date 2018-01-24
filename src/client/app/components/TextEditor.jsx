@@ -1,75 +1,66 @@
-import { Editor } from 'draft-js';
-import React, { PropTypes } from 'react';
-import TextToolbar from './TextToolbar.jsx';
+// import { Editor, RichUtils } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Drag from '../images/drag.svg';
 import CloseSVG from '../images/close.svg';
 
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.onFocus = this.onFocus.bind(this);
-  }
 
-  onFocus() {
-    this.props.setCurrentTextEditor(this.props.id, this.props.editorState);
+    this.setCurrentEditor = () => { this.props.setCurrentEditor(this.props.id); };
+    this.removeEditor = () => { this.props.removeEditor(this.props.id); };
+    this.onChange = (state) => { this.props.onChange(this.props.id, state); };
   }
 
   render() {
-    const dragClassName = `element__close drag__${this.props.id}`;
     return (
-      <div id={this.props.id} onFocus={this.onFocus} className="textEditor__container">
-        {(() => { //eslint-disable-line
-          if (!this.props.preview) {
-            return (
-              <nav>
-                <button
-                  className="element__close"
-                  onClick={() => this.props.removeTextEditor(this.props.id)}
-                >
-                  <CloseSVG alt="close element" />
-                </button>
-                <button className={dragClassName}>
-                  <Drag alt="drag element" />
-                </button>
-              </nav>
-            );
-          }
-        })()}
+      <div id={this.props.id} onFocus={this.setCurrentEditor.bind(this)} className="textEditor__container">
+        { this.props.preview ||
+          <nav>
+            <button
+              className="element__close"
+              onClick={this.removeEditor.bind(this)}
+            >
+              <CloseSVG alt="close element" />
+            </button>
+            <button className={`element__close drag__${this.props.id}`}>
+              <Drag alt="drag element" />
+            </button>
+          </nav>
+        }
         <Editor
           id={this.props.id}
+          toolbarOnFocus
+          toolbar={{
+            options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'history'],
+            inline: {
+              options: ['bold', 'italic', 'underline', 'strikethrough']
+            }
+          }}
+          toolbarClassName="textEditor__toolbar"
+          editorClassName="textEditor__content"
+          // wrapperClassName="wrapperClassName"
           editorState={this.props.editorState}
-          onChange={this.props.onChange}
+          onEditorStateChange={this.onChange.bind(this)}
           placeholder="Enter some text..."
           spellCheck={!this.props.preview}
           readOnly={this.props.preview}
         />
-        {(() => { // eslint-disable-line
-          if (this.props.id === this.props.currentTextEditorId && !this.props.preview) {
-            return (
-              <TextToolbar
-                onChange={this.props.onChange}
-                currentTextEditorState={this.props.currentTextEditorState}
-              />
-            );
-          }
-        }
-
-        )()}
-
       </div>
     );
   }
 }
 
 TextEditor.propTypes = {
-  currentTextEditorId: PropTypes.string.isRequired,
-  currentTextEditorState: PropTypes.shape.isRequired,
-  editorState: PropTypes.shape.isRequired,
   id: PropTypes.string.isRequired,
+  editorState: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
-  removeTextEditor: PropTypes.func.isRequired,
-  setCurrentTextEditor: PropTypes.func.isRequired
+  setCurrentEditor: PropTypes.func.isRequired,
+  removeEditor: PropTypes.func.isRequired
 };
 
 export default TextEditor;

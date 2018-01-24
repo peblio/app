@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import CodeMirror from 'codemirror';
 
 // const pythonjs=require('python-js');
@@ -18,13 +19,9 @@ class PythonOutput extends React.Component {
   render() {
     return (
       <div>
-        {(()=> { // eslint-disable-line
-          if (this.props.isPlaying) {
-            return (
-              <div> POTATO </div>
-            );
-          }
-        })()}
+        { this.props.isPlaying &&
+          <div> POTATO </div>
+        }
       </div>
     );
   }
