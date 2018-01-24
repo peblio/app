@@ -8,15 +8,7 @@ export const defaultHTML =
     <meta charset="utf-8" />
   </head>
   <body>
-    <script>
-      function setup() {
-        createCanvas(400, 400);
-      }
-
-      function draw() {
-        background(220);
-      }
-    </script>
+    <script src="sketch.js"></script>
   </body>
 </html>
 
