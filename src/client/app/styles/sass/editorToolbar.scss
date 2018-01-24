@@ -1,6 +1,6 @@
 .editorToolbar__container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background-color: $light-gray;
   background: $dark-gray; /* For browsers that do not support gradients */
   width: 100%;
@@ -36,4 +36,24 @@
   transition-duration: 0.4s;
     fill:$light-gray;
     stroke:$light-gray;
+}
+
+.editorToolbar {
+  &__files {
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  &__file {
+    text-decoration: none;
+    list-style: none;
+    &-button {
+      border-radius: 0;
+      box-shadow: none;
+      &:hover, &--selected {
+        background-color: $white;
+        color: $black;
+      }
+    }
+  }
 }

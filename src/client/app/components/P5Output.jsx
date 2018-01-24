@@ -12,15 +12,10 @@ class P5Output extends React.Component {
     const htmlFile = this.props.files[this.getHTMLFileIndex(this.props.files)].content;
     const parser = new DOMParser();
     let sketchDoc = parser.parseFromString(htmlFile, 'text/html');
-    sketchDoc = this.injectLocalFiles(sketchDoc);
-
-    /*
-     TODO:
-    - find .js in HTML files
-    - replace with the .js file contentWindow
-    */
-
     this.resolveJSFile(sketchDoc, this.props.files);
+    this.resolveCSSFile(sketchDoc, this.props.files);
+    console.log(sketchDoc);
+    sketchDoc = this.injectLocalFiles(sketchDoc);
     sketchDoc = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
     srcDoc.set(this.iframe, sketchDoc);
   }
@@ -28,17 +23,37 @@ class P5Output extends React.Component {
   getFileName(filepath) {
     return filepath.replace(/^.*[\\\/]/, '');
   }
+
   resolveJSFile(sketchDoc, files) {
     const scriptsInHTML = sketchDoc.getElementsByTagName('script');
     const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
     scriptsInHTMLArray.forEach((script) => {
       if (script.getAttribute('src') && script.getAttribute('src').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
-        console.log(script.src);
         // check if the script name is present in the files that are included for this sketch
         files.forEach((file) => {
           if (file.name == this.getFileName(script.src)) {
             script.removeAttribute('src');
             script.innerHTML = file.content; // eslint-disable-line
+          }
+        });
+      }
+    });
+  }
+
+  resolveCSSFile(sketchDoc, files) {
+    const stylesInHTML = sketchDoc.getElementsByTagName('link');
+    const stylesInHTMLArray = Array.prototype.slice.call(stylesInHTML);
+    stylesInHTMLArray.forEach((css) => {
+      if (css.getAttribute('href') && css.getAttribute('href').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
+        // check if the css name is present in the files that are included for this sketch
+        files.forEach((file) => {
+          if (file.name == this.getFileName(css.href)) {
+            console.log(file.name);
+            const style = sketchDoc.createElement('style');
+            style.innerHTML = file.content;
+            sketchDoc.head.appendChild(style);
+            css.parentElement.removeChild(css);
+            console.log(style);
           }
         });
       }

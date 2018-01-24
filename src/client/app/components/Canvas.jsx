@@ -12,6 +12,8 @@ class Canvas extends React.Component {
       <EditorContainer
         id={editor.id}
         files={editor.files}
+        currentFile={editor.currentFile}
+        setCurrentFile={this.props.setCurrentFile}
         editorMode={editor.editorMode}
         code={editor.code}
         consoleOutputText={editor.consoleOutputText}

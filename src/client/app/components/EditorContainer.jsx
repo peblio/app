@@ -19,9 +19,10 @@ class EditorContainer extends React.Component {
     this.stopCode = () => this.props.stopCode(this.props.id);
     this.updateCode = val => this.props.updateCode(this.props.id, val);
     this.updateFile = (index, file) => this.props.updateFile(this.props.id, index, file);
+    this.setCurrentFile = index => this.props.setCurrentFile(this.props.id, index);
     this.updateConsoleOutput = (e) => {
       // There's a memory leak in the Javascript editor. Watch the console after clicking Play.
-      console.log(e);
+      // console.log(e);
       this.props.updateConsoleOutput(this.props.id, e);
     };
     this.setEditorMode = mode => this.props.setEditorMode(this.props.id, mode);
@@ -47,12 +48,16 @@ class EditorContainer extends React.Component {
           playCode={this.playCode}
           stopCode={this.stopCode}
           setEditorMode={this.setEditorMode}
+          files={this.props.files}
+          currentFile={this.props.currentFile}
+          setCurrentFile={this.setCurrentFile}
         />
         <div className="codeEditor__container">
           <div className="codeEditor__sub-container">
             <div className="codeEditor__input">
               { this.props.editorMode === 'p5' ? (
                 <P5Editor
+                  currentFile={this.props.currentFile}
                   editorCode={this.props.code}
                   files={this.props.files}
                   updateCode={this.updateCode}

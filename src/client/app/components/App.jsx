@@ -161,6 +161,7 @@ class App extends React.Component {
           removeEditor={this.props.removeEditor}
           setEditorSize={this.props.setEditorSize}
           setEditorPosition={this.props.setEditorPosition}
+          setCurrentFile={this.props.setCurrentFile}
 
           playCode={this.props.playCode}
           stopCode={this.props.stopCode}

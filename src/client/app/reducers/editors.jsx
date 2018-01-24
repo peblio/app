@@ -78,6 +78,7 @@ const editorsReducer = (state = initialState, action) => {
         id,
         index: stack.length,
         consoleOutputText: [],
+        currentFile: 1,
         files: Code.FILES.p5,
         isPlaying: false,
         editorMode: 'p5',
@@ -117,6 +118,13 @@ const editorsReducer = (state = initialState, action) => {
 
     case ActionTypes.UPDATE_FILE: {
       editors[action.id].files[action.index].content = action.content;
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
+    case ActionTypes.SET_CURRENT_FILE: {
+      editors[action.id].currentFile = action.index;
       return Object.assign({}, state, {
         editors
       });

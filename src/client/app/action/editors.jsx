@@ -94,7 +94,6 @@ export function setEditorMode(id, value) {
 }
 
 export function updateConsoleOutput(id, event) {
-  console.log(event);
   return (dispatch) => {
     dispatch({
       type: ActionTypes.UPDATE_CONSOLE_OUTPUT,
@@ -111,6 +110,16 @@ export function updateFile(id, index, content) {
       id,
       index,
       content
+    });
+  };
+}
+
+export function setCurrentFile(id, index) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_CURRENT_FILE,
+      id,
+      index
     });
   };
 }

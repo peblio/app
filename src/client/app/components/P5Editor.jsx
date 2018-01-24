@@ -10,17 +10,41 @@ require('../styles/3024-night.css');
 
 class P5Editor extends React.Component {
   componentDidMount() {
+    const file = this.props.files[this.props.currentFile];
     this.cm = CodeMirror(this.codemirrorContainer, {
-      value: CodeMirror.Doc(this.props.files[0].content, 'htmlmixed'),
-      mode: 'htmlmixed',
+      value: CodeMirror.Doc(file.content, this.getFileMode(file.name)),
       lineNumbers: true,
       autoCloseBrackets: true,
       inputStyle: 'contenteditable',
       styleActiveLine: true,
     });
     this.cm.on('keyup', () => {
-      this.props.updateFile(0, this.cm.getValue());
+      this.props.updateFile(this.props.currentFile, this.cm.getValue());
     });
+  }
+
+  componentWillUpdate(nextProps) {
+    // check if files have changed
+    if (this.props.currentFile !== nextProps.currentFile) {
+      const file = this.props.files[nextProps.currentFile];
+      this.cm.swapDoc(CodeMirror.Doc(file.content, this.getFileMode(file.name)));
+    }
+  }
+
+  getFileMode(fileName) {
+    let mode;
+    if (fileName.match(/.+\.js$/i)) {
+      mode = 'javascript';
+    } else if (fileName.match(/.+\.css$/i)) {
+      mode = 'css';
+    } else if (fileName.match(/.+\.html$/i)) {
+      mode = 'htmlmixed';
+    } else if (fileName.match(/.+\.json$/i)) {
+      mode = 'application/json';
+    } else {
+      mode = 'text/plain';
+    }
+    return mode;
   }
 
   render() {
@@ -34,6 +58,7 @@ class P5Editor extends React.Component {
 }
 
 P5Editor.propTypes = {
+  currentFile: PropTypes.number.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
