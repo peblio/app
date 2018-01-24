@@ -86,7 +86,7 @@ class Canvas extends React.Component {
               topLeft: !this.props.preview,
               topRight: !this.props.preview
             }}
-            z={this.props.editors[id].index+50}
+            z={this.props.editors[id].index + 50}
           >
             {(() => {
               switch (this.props.editors[id].type) {
