@@ -13,12 +13,12 @@ import CloseSVG from '../images/close.svg';
 class EditorContainer extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.setCurrentEditor = () => this.props.setCurrentEditor(this.props.id);
     this.removeEditor = () => this.props.removeEditor(this.props.id);
     this.playCode = () => this.props.playCode(this.props.id);
     this.stopCode = () => this.props.stopCode(this.props.id);
     this.updateCode = val => this.props.updateCode(this.props.id, val);
+    this.updateFile = (index, file) => this.props.updateFile(this.props.id, index, file);
     this.updateConsoleOutput = (e) => {
       // There's a memory leak in the Javascript editor. Watch the console after clicking Play.
       console.log(e);
@@ -54,8 +54,9 @@ class EditorContainer extends React.Component {
               { this.props.editorMode === 'p5' ? (
                 <P5Editor
                   editorCode={this.props.code}
-                  updateCode={this.updateCode}
                   files={this.props.files}
+                  updateCode={this.updateCode}
+                  updateFile={this.updateFile}
                 />
               ) : this.props.editorMode === 'javascript' &&
                 <JavascriptEditor
@@ -68,6 +69,7 @@ class EditorContainer extends React.Component {
               { this.props.isPlaying && (
                 this.props.editorMode === 'p5' ? (
                   <P5Output
+                    files={this.props.files}
                     editorCode={this.props.code}
                     updateCode={this.updateCode}
                     isPlaying={this.props.isPlaying}
@@ -116,7 +118,8 @@ EditorContainer.propTypes = {
   playCode: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
-  updateConsoleOutput: PropTypes.func.isRequired
+  updateConsoleOutput: PropTypes.func.isRequired,
+  updateFile: PropTypes.func.isRequired
 };
 
 export default EditorContainer;

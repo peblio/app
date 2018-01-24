@@ -139,10 +139,6 @@ const editorsReducer = (state = initialState, action) => {
       editors[action.id].consoleOutputText = [];
       return { ...state, editors };
 
-    case ActionTypes.UPDATE_CODE:
-      editors[action.id].code = action.value;
-      return { ...state, editors };
-
     case ActionTypes.SET_EDITOR_MODE:
       editors[action.id].editorMode = action.value;
       return { ...state, editors };
@@ -155,6 +151,14 @@ const editorsReducer = (state = initialState, action) => {
       editors[action.id].consoleOutputText = tempOutput;
       return { ...state, editors };
     }
+
+    case ActionTypes.UPDATE_FILE: {
+      editors[action.id].files[action.index].content = action.content;
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
 
     /** TEXT EDITOR */
     case ActionTypes.ADD_TEXT_EDITOR: {

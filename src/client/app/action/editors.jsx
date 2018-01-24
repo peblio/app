@@ -83,17 +83,6 @@ export function stopCode(id) {
   };
 }
 
-export function updateCode(id, value) {
-  return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
-    dispatch({
-      type: ActionTypes.UPDATE_CODE,
-      id,
-      value
-    });
-  };
-}
-
 export function setEditorMode(id, value) {
   return (dispatch) => {
     dispatch({
@@ -105,11 +94,23 @@ export function setEditorMode(id, value) {
 }
 
 export function updateConsoleOutput(id, event) {
+  console.log(event);
   return (dispatch) => {
     dispatch({
       type: ActionTypes.UPDATE_CONSOLE_OUTPUT,
       id,
       event
+    });
+  };
+}
+
+export function updateFile(id, index, content) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.UPDATE_FILE,
+      id,
+      index,
+      content
     });
   };
 }
@@ -152,16 +153,6 @@ export function setIframeURL(id, url) {
       type: ActionTypes.SET_IFRAME_URL,
       id,
       url
-    });
-  };
-}
-
-export function updateFile(index, content) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.UPDATE_FILE,
-      index,
-      content
     });
   };
 }

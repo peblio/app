@@ -141,11 +141,7 @@ const editorContainer = (state = initialState, action) => {
         editors
       });
 
-    case ActionTypes.UPDATE_FILE:
-      editors[state.currentEditorId].files[action.index].content = action.content;
-      return Object.assign({}, state, {
-        editors
-      });
+    
 
     default:
       return state;

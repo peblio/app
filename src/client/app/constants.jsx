@@ -9,7 +9,6 @@ export const UPDATE_FILE = 'UPDATE_FILE';
 export const ADD_CODE_EDITOR = 'ADD_CODE_EDITOR';
 export const PLAY_CODE = 'PLAY_CODE';
 export const STOP_CODE = 'STOP_CODE';
-export const UPDATE_CODE = 'UPDATE_CODE';
 export const RECIEVE_MESSAGE = 'RECIEVE_MESSAGE';
 export const SET_EDITOR_MODE = 'SET_EDITOR_MODE';
 export const UPDATE_CONSOLE_OUTPUT = 'UPDATE_CONSOLE_OUTPUT';

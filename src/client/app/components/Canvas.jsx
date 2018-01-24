@@ -24,6 +24,7 @@ class Canvas extends React.Component {
         stopCode={this.props.stopCode}
         updateCode={this.props.updateCode}
         updateConsoleOutput={this.props.updateConsoleOutput}
+        updateFile={this.props.updateFile}
       />
     );
   }

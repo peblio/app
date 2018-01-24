@@ -34,7 +34,6 @@ class P5Editor extends React.Component {
 }
 
 P5Editor.propTypes = {
-  // editorCode: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
