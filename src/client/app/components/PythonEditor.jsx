@@ -15,7 +15,7 @@ class PythonEditor extends React.Component {
         return n * factorial(n - 1)
     print(factorial(5))
     `;
-    this.props.updateCode(defaultSketch);
+    // this.props.updateCode(defaultSketch);
 
     this.cm = CodeMirror(this.codemirrorContainer, {
       value: defaultSketch,
@@ -26,7 +26,7 @@ class PythonEditor extends React.Component {
       styleActiveLine: true
     });
     this.cm.on('keyup', () => {
-      this.props.updateCode(this.cm.getValue());
+      // this.props.updateCode(this.cm.getValue());
     });
   }
   render() {

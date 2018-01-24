@@ -5,16 +5,16 @@ import CodeMirror from 'codemirror';
 // const pythonjs=require('python-js');
 
 class PythonOutput extends React.Component {
-  constructor() {
-    super();
-  }
-  componentDidUpdate() {
-    const defaultCode = this.props.editorCode;
-    if (this.props.isPlaying) {
-      // const code=pythonjs.translator.to_javascript( defaultCode ); // output javascript
-      // eval(code);
-    }
-  }
+  // constructor() {
+  //   super();
+  // }
+  // componentDidUpdate() {
+  //   const defaultCode = this.props.editorCode;
+  //   if (this.props.isPlaying) {
+  //     // const code=pythonjs.translator.to_javascript( defaultCode ); // output javascript
+  //     // eval(code);
+  //   }
+  // }
 
   render() {
     return (
