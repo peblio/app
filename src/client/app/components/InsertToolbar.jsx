@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { render } from 'react-dom';
 import EditorSVG from '../images/editor.svg';
 import TextSVG from '../images/text.svg';
 import EmbedSVG from '../images/embed.svg';

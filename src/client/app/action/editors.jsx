@@ -83,17 +83,6 @@ export function stopCode(id) {
   };
 }
 
-export function updateCode(id, value) {
-  return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
-    dispatch({
-      type: ActionTypes.UPDATE_CODE,
-      id,
-      value
-    });
-  };
-}
-
 export function setEditorMode(id, value) {
   return (dispatch) => {
     dispatch({
@@ -110,6 +99,27 @@ export function updateConsoleOutput(id, event) {
       type: ActionTypes.UPDATE_CONSOLE_OUTPUT,
       id,
       event
+    });
+  };
+}
+
+export function updateFile(id, index, content) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.UPDATE_FILE,
+      id,
+      index,
+      content
+    });
+  };
+}
+
+export function setCurrentFile(id, index) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_CURRENT_FILE,
+      id,
+      index
     });
   };
 }

@@ -16,12 +16,13 @@ class PagesList extends React.Component {
   renderPages() {
     const pages = [];
     this.props.pages.forEach((page, index) => {
-      const pageId = page.id;
       const link = `/pebl/${page.id}`;
       pages.push(
         <li key={page.id}>
           <a href={link}> {page.title} </a>
-          <button className="pages__delete" onClick={() => { this.props.deletePage({ page }); }}> <DeleteIcon alt="delete page" /> </button>
+          <button className="pages__delete" onClick={() => { this.props.deletePage({ page }); }}>
+            <DeleteIcon alt="delete page" />
+          </button>
         </li>
       );
     });

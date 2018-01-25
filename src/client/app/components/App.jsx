@@ -12,6 +12,7 @@ import SignUp from './SignUp.jsx';
 
 import * as editorActions from '../action/editors.jsx';
 import * as mainToolbarActions from '../action/mainToolbar.jsx';
+import * as p5filesActions from '../action/p5files.jsx';
 import * as pageActions from '../action/page.jsx';
 import * as userActions from '../action/user.jsx';
 
@@ -154,11 +155,13 @@ class App extends React.Component {
         <Canvas
           preview={this.props.preview}
 
+          updateFile={this.props.updateFile}
           editors={this.props.editors}
           setCurrentEditor={this.props.setCurrentEditor}
           removeEditor={this.props.removeEditor}
           setEditorSize={this.props.setEditorSize}
           setEditorPosition={this.props.setEditorPosition}
+          setCurrentFile={this.props.setCurrentFile}
 
           playCode={this.props.playCode}
           stopCode={this.props.stopCode}
@@ -216,7 +219,7 @@ App.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
-  editors: PropTypes.object.isRequired,
+  editors: PropTypes.shape.isRequired,
   editorIndex: PropTypes.number.isRequired,
 
   pageTitle: PropTypes.string.isRequired,
@@ -250,6 +253,8 @@ App.propTypes = {
   updateTextChange: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired,
+  updateFile: PropTypes.func.isRequired,
+  setCurrentFile: PropTypes.func.isRequired,
 
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
@@ -301,6 +306,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
     editorActions,
     mainToolbarActions,
+    p5filesActions,
     pageActions,
     userActions),
   dispatch);

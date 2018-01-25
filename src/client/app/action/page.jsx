@@ -49,7 +49,7 @@ export function deletePage(page) {
 function convertEditorsToRaw(editors) {
   const rawEditors = {};
   Object.keys(editors).forEach((id) => {
-    if(editors[id].type === 'text'){
+    if (editors[id].type === 'text') {
       const { editorState, ...rawEditor } = editors[id];
       rawEditor.rawContentState = JSON.stringify(
         convertToRaw(editorState.getCurrentContent())
