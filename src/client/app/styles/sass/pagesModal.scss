@@ -13,6 +13,7 @@
   width: 100%;
   padding-top: $large-margin;
   z-index: 100;
+  overflow-y: scroll;
 }
 
 .pages__delete{
@@ -31,7 +32,7 @@
 }
 
 
-.Modal_closeButton{
+.modal__closeButton{
   float:right;
   padding: 4px;
 }

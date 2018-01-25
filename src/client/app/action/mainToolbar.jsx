@@ -24,6 +24,22 @@ export function closePagesModal() {
   };
 }
 
+export function viewShareModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_SHARE_MODAL
+    });
+  };
+}
+
+export function closeShareModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_SHARE_MODAL
+    });
+  };
+}
+
 export function viewLoginModal() {
   return (dispatch) => {
     dispatch({

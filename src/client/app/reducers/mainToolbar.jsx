@@ -3,6 +3,7 @@ import * as ActionTypes from '../constants.jsx';
 const initialState = {
   isFileDropdownOpen: false,
   isPagesModalOpen: false,
+  isShareModalOpen: false,
   isLoginModalOpen: false,
   isSignUpModalOpen: false
 };
@@ -23,6 +24,16 @@ const mainToolbar = (state = initialState, action) => {
     case ActionTypes.CLOSE_PAGES_MODAL:
       return Object.assign({}, state, {
         isPagesModalOpen: false
+      });
+
+    case ActionTypes.VIEW_SHARE_MODAL:
+      return Object.assign({}, state, {
+        isShareModalOpen: true
+      });
+
+    case ActionTypes.CLOSE_SHARE_MODAL:
+      return Object.assign({}, state, {
+        isShareModalOpen: false
       });
 
     case ActionTypes.VIEW_LOGIN_MODAL:

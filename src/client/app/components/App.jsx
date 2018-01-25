@@ -8,6 +8,7 @@ import Login from './Login.jsx';
 import MainToolbar from './MainToolbar.jsx';
 import Modal from './Modal.jsx';
 import PagesList from './PagesList.jsx';
+import ShareModal from './ShareModal.jsx';
 import SignUp from './SignUp.jsx';
 
 import * as editorActions from '../action/editors.jsx';
@@ -149,6 +150,7 @@ class App extends React.Component {
             togglePreviewMode={this.props.togglePreviewMode}
             viewPagesModal={this.props.viewPagesModal}
             viewLoginModal={this.props.viewLoginModal}
+            viewShareModal={this.props.viewShareModal}
             viewSignUpModal={this.props.viewSignUpModal}
           />
         </nav>
@@ -172,6 +174,7 @@ class App extends React.Component {
           setIframeURL={this.props.setIframeURL}
         />
         <Modal
+          size="large"
           isOpen={this.props.isPagesModalOpen}
           closeModal={this.props.closePagesModal}
         >
@@ -182,6 +185,7 @@ class App extends React.Component {
           />
         </Modal>
         <Modal
+          size="large"
           isOpen={this.props.isLoginModalOpen}
           closeModal={this.props.closeLoginModal}
         >
@@ -209,6 +213,13 @@ class App extends React.Component {
             setUserName={this.props.setUserName}
             closeSignUpModal={this.props.closeSignUpModal}
           />
+        </Modal>
+        <Modal
+          size="small"
+          isOpen={this.props.isShareModalOpen}
+          closeModal={this.props.closeShareModal}
+        >
+          <ShareModal />
         </Modal>
       </div>
     );
@@ -273,6 +284,8 @@ App.propTypes = {
   viewSignUpModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
+  isShareModalOpen: PropTypes.bool.isRequired,
+  closeShareModal: PropTypes.func.isRequired,
 
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
@@ -297,6 +310,7 @@ function mapStateToProps(state) {
 
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isPagesModalOpen: state.mainToolbar.isPagesModalOpen,
+    isShareModalOpen: state.mainToolbar.isShareModalOpen,
     isLoginModalOpen: state.mainToolbar.isLoginModalOpen,
     isSignUpModalOpen: state.mainToolbar.isSignUpModalOpen,
   };

@@ -8,10 +8,11 @@ class Modal extends React.Component {
   }
 
   render() {
+    const modalClassName = `modal__${this.props.size}`;
     return (
-      <ReactModal className="Modal" isOpen={this.props.isOpen}>
+      <ReactModal className={modalClassName} isOpen={this.props.isOpen}>
         <nav>
-          <button className="Modal_closeButton" onClick={this.props.closeModal}>Close</button>
+          <button className="modal__closeButton" onClick={this.props.closeModal}>Close</button>
         </nav>
         {this.props.children}
       </ReactModal>
