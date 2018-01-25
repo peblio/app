@@ -32,10 +32,13 @@ class EditorToolbar extends React.Component {
         <ul className="editorToolbar__files">
           {
             this.props.files.map((file, index) => (
-              <li key={index} className="editorToolbar__file">
+              <li key={file.id} className="editorToolbar__file">
                 <button
                   onClick={() => this.props.setCurrentFile(index)}
-                  className={`editorToolbar__file-button ${(this.props.currentFile === index) ? 'editorToolbar__file-button--selected' : ''}`}
+                  className={
+                    `editorToolbar__file-button
+                    ${(this.props.currentFile === index) ? 'editorToolbar__file-button--selected' : ''}`
+                  }
                 >
                   {file.name}
                 </button>
@@ -51,7 +54,13 @@ class EditorToolbar extends React.Component {
 }
 
 EditorToolbar.propTypes = {
+  currentFile: PropTypes.number.isRequired,
+  files: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
+  })).isRequired,
   playCode: PropTypes.func.isRequired,
+  setCurrentFile: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired
 };

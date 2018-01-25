@@ -109,16 +109,17 @@ class Canvas extends React.Component {
 
 Canvas.propTypes = {
   preview: PropTypes.bool.isRequired,
-  editors: PropTypes.object.isRequired,
+  editors: PropTypes.shape.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
+  setCurrentFile: PropTypes.func.isRequired,
   setEditorSize: PropTypes.func.isRequired,
   setEditorPosition: PropTypes.func.isRequired,
-
   playCode: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
+  updateFile: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired

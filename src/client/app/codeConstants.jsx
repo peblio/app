@@ -47,3 +47,5 @@ export const FILES = {
     }
   ]
 };
+
+export { FILES as default };

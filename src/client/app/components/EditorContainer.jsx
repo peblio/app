@@ -111,6 +111,7 @@ EditorContainer.propTypes = {
   editorMode: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,
   consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currentFile: PropTypes.number.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
@@ -121,6 +122,7 @@ EditorContainer.propTypes = {
   setCurrentEditor: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
   playCode: PropTypes.func.isRequired,
+  setCurrentFile: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,

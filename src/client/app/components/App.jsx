@@ -219,7 +219,7 @@ App.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
-  editors: PropTypes.object.isRequired,
+  editors: PropTypes.shape.isRequired,
   editorIndex: PropTypes.number.isRequired,
 
   pageTitle: PropTypes.string.isRequired,
@@ -253,6 +253,8 @@ App.propTypes = {
   updateTextChange: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired,
+  updateFile: PropTypes.func.isRequired,
+  setCurrentFile: PropTypes.func.isRequired,
 
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,

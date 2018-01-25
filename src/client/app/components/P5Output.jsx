@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import srcDoc from 'srcdoc-polyfill';
 
 const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
-const EXTERNAL_LINK_REGEX = /^(http:\/\/|https:\/\/)/;
 
 class P5Output extends React.Component {
 
@@ -20,8 +19,23 @@ class P5Output extends React.Component {
     srcDoc.set(this.iframe, sketchDoc);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('message', this.props.updateConsoleOutput);
+  }
+
   getFileName(filepath) {
-    return filepath.replace(/^.*[\\\/]/, '');
+    return filepath.replace(/^.*[\\\/]/, ''); // eslint-disable-line
+  }
+
+  getHTMLFileIndex(files) {
+    const HTML_REGEX = /(.+\.html)/i;
+    let index = -1;
+    files.forEach((file, i) => {
+      if (file.name.match(HTML_REGEX)) {
+        index = i;
+      }
+    });
+    return index;
   }
 
   resolveJSFile(sketchDoc, files) {
@@ -31,7 +45,7 @@ class P5Output extends React.Component {
       if (script.getAttribute('src') && script.getAttribute('src').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
         // check if the script name is present in the files that are included for this sketch
         files.forEach((file) => {
-          if (file.name == this.getFileName(script.src)) {
+          if (file.name === this.getFileName(script.src)) {
             script.removeAttribute('src');
             script.innerHTML = file.content; // eslint-disable-line
           }
@@ -47,7 +61,7 @@ class P5Output extends React.Component {
       if (css.getAttribute('href') && css.getAttribute('href').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
         // check if the css name is present in the files that are included for this sketch
         files.forEach((file) => {
-          if (file.name == this.getFileName(css.href)) {
+          if (file.name === this.getFileName(css.href)) {
             console.log(file.name);
             const style = sketchDoc.createElement('style');
             style.innerHTML = file.content;
@@ -72,21 +86,6 @@ class P5Output extends React.Component {
     return sketchDoc;
   }
 
-  getHTMLFileIndex(files) {
-    const HTML_REGEX = /(.+\.html)/i;
-    let index = -1;
-    files.forEach((file, i) => {
-      if (file.name.match(HTML_REGEX)) {
-        index = i;
-      }
-    });
-    return index;
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('message', this.props.updateConsoleOutput);
-  }
-
   render() {
     return (
       <div>
@@ -97,7 +96,10 @@ class P5Output extends React.Component {
 }
 
 P5Output.propTypes = {
-  editorCode: PropTypes.string.isRequired,
+  files: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
+  })).isRequired,
   updateConsoleOutput: PropTypes.func.isRequired
 };
 

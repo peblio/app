@@ -63,7 +63,6 @@ P5Editor.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
-  updateCode: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired
 };
 

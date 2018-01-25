@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import FileModal from './FileModal.jsx';
 import InsertToolbar from './InsertToolbar.jsx';
 import ToolbarLogo from '../images/logo.svg';
-import EditorSVG from '../images/editor.svg';
 
 class MainToolbar extends React.Component {
   render() {
