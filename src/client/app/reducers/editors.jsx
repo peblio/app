@@ -1,18 +1,11 @@
 import { EditorState, convertFromRaw } from 'draft-js';
 import * as ActionTypes from '../constants.jsx';
+import * as Code from '../codeConstants.jsx';
 
 const initialState = {
   editors: {},
   editorIndex: 0
 };
-
-const defaultSketch = `function setup() {
-  createCanvas(400, 400);
-  console.log("drawing a canvas");
-}
-function draw() {
-  background(220);
-}`;
 
 let stack = [];
 
@@ -85,7 +78,8 @@ const editorsReducer = (state = initialState, action) => {
         id,
         index: stack.length,
         consoleOutputText: [],
-        code: defaultSketch,
+        currentFile: 1,
+        files: Code.FILES.p5,
         isPlaying: false,
         editorMode: 'p5',
         x: 0,
@@ -109,10 +103,6 @@ const editorsReducer = (state = initialState, action) => {
       editors[action.id].consoleOutputText = [];
       return { ...state, editors };
 
-    case ActionTypes.UPDATE_CODE:
-      editors[action.id].code = action.value;
-      return { ...state, editors };
-
     case ActionTypes.SET_EDITOR_MODE:
       editors[action.id].editorMode = action.value;
       return { ...state, editors };
@@ -124,6 +114,20 @@ const editorsReducer = (state = initialState, action) => {
       }
       editors[action.id].consoleOutputText = tempOutput;
       return { ...state, editors };
+    }
+
+    case ActionTypes.UPDATE_FILE: {
+      editors[action.id].files[action.index].content = action.content;
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
+    case ActionTypes.SET_CURRENT_FILE: {
+      editors[action.id].currentFile = action.index;
+      return Object.assign({}, state, {
+        editors
+      });
     }
 
     /** TEXT EDITOR */

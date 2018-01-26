@@ -20,7 +20,7 @@ require('./config/passport');
 app.listen(process.env.PORT || 8080);
 app.use('/', express.static('src/client/')); // set a static file directory
 
-mongoose.connect('mongodb://localhost:27017/peblio');
+mongoose.connect('mongodb://localhost:27017/peblio-file');
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
@@ -35,6 +35,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
+app.use(express.static(path.resolve(__dirname, '../static')));
 // add body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

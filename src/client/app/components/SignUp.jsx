@@ -34,7 +34,11 @@ class SignUp extends React.Component {
             <input id="signupModal-name" type="text" ref={(userName) => { this.userName = userName; }} />
           </label>
           <label htmlFor="signupModal-password"> password:
-            <input id="signupModal-password" type="password" ref={(userPassword) => { this.userPassword = userPassword; }} />
+            <input
+              id="signupModal-password"
+              type="password"
+              ref={(userPassword) => { this.userPassword = userPassword; }}
+            />
           </label>
           <input type="submit" value="Submit" />
         </form>

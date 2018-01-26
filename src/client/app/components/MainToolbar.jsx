@@ -57,19 +57,20 @@ class MainToolbar extends React.Component {
               />
               Preview
             </label>
-            { (this.props.canEdit || this.props.unsavedChanges) && <button className="mainToolbar__unsaved-ind-button" onClick={this.props.savePage}>{saveButtonText}</button>
-            }
-            {this.props.name ? (
+            <button className="mainToolbar__button" onClick={this.props.viewShareModal}>
+              Share
+            </button>
+            { this.props.name ? (
               <div>
-                <a className="mainToolbar__save" href="/logout">Logout</a>
+                <a className="mainToolbar__button" href="/logout">Logout</a>
                 <p className="mainToolbar__welcome">
                       Welcome {this.props.name}!
                 </p>
               </div>
             ) : (
               <div>
-                <button className="mainToolbar__save" onClick={this.props.viewLoginModal}>Log In</button>
-                <button className="mainToolbar__save" onClick={this.props.viewSignUpModal}>Sign Up</button>
+                <button className="mainToolbar__button" onClick={this.props.viewLoginModal}>Log In</button>
+                <button className="mainToolbar__button" onClick={this.props.viewSignUpModal}>Sign Up</button>
               </div>
             ) }
           </div>
@@ -101,7 +102,9 @@ MainToolbar.propTypes = {
   togglePreviewMode: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired,
-  viewSignUpModal: PropTypes.func.isRequired
+  viewShareModal: PropTypes.func.isRequired,
+  viewSignUpModal: PropTypes.func.isRequired,
+  unsavedChanges: PropTypes.bool.isRequired
 };
 
 export default MainToolbar;

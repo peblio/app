@@ -8,10 +8,12 @@ import Login from './Login.jsx';
 import MainToolbar from './MainToolbar.jsx';
 import Modal from './Modal.jsx';
 import PagesList from './PagesList.jsx';
+import ShareModal from './ShareModal.jsx';
 import SignUp from './SignUp.jsx';
 
 import * as editorActions from '../action/editors.jsx';
 import * as mainToolbarActions from '../action/mainToolbar.jsx';
+import * as p5filesActions from '../action/p5files.jsx';
 import * as pageActions from '../action/page.jsx';
 import * as userActions from '../action/user.jsx';
 
@@ -148,17 +150,20 @@ class App extends React.Component {
             togglePreviewMode={this.props.togglePreviewMode}
             viewPagesModal={this.props.viewPagesModal}
             viewLoginModal={this.props.viewLoginModal}
+            viewShareModal={this.props.viewShareModal}
             viewSignUpModal={this.props.viewSignUpModal}
           />
         </nav>
         <Canvas
           preview={this.props.preview}
 
+          updateFile={this.props.updateFile}
           editors={this.props.editors}
           setCurrentEditor={this.props.setCurrentEditor}
           removeEditor={this.props.removeEditor}
           setEditorSize={this.props.setEditorSize}
           setEditorPosition={this.props.setEditorPosition}
+          setCurrentFile={this.props.setCurrentFile}
 
           playCode={this.props.playCode}
           stopCode={this.props.stopCode}
@@ -169,6 +174,7 @@ class App extends React.Component {
           setIframeURL={this.props.setIframeURL}
         />
         <Modal
+          size="large"
           isOpen={this.props.isPagesModalOpen}
           closeModal={this.props.closePagesModal}
         >
@@ -179,6 +185,7 @@ class App extends React.Component {
           />
         </Modal>
         <Modal
+          size="large"
           isOpen={this.props.isLoginModalOpen}
           closeModal={this.props.closeLoginModal}
         >
@@ -207,6 +214,13 @@ class App extends React.Component {
             closeSignUpModal={this.props.closeSignUpModal}
           />
         </Modal>
+        <Modal
+          size="small"
+          isOpen={this.props.isShareModalOpen}
+          closeModal={this.props.closeShareModal}
+        >
+          <ShareModal />
+        </Modal>
       </div>
     );
   }
@@ -216,7 +230,7 @@ App.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
-  editors: PropTypes.object.isRequired,
+  editors: PropTypes.shape.isRequired,
   editorIndex: PropTypes.number.isRequired,
 
   pageTitle: PropTypes.string.isRequired,
@@ -250,6 +264,8 @@ App.propTypes = {
   updateTextChange: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired,
+  updateFile: PropTypes.func.isRequired,
+  setCurrentFile: PropTypes.func.isRequired,
 
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
@@ -268,6 +284,8 @@ App.propTypes = {
   viewSignUpModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
+  isShareModalOpen: PropTypes.bool.isRequired,
+  closeShareModal: PropTypes.func.isRequired,
 
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
@@ -292,6 +310,7 @@ function mapStateToProps(state) {
 
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isPagesModalOpen: state.mainToolbar.isPagesModalOpen,
+    isShareModalOpen: state.mainToolbar.isShareModalOpen,
     isLoginModalOpen: state.mainToolbar.isLoginModalOpen,
     isSignUpModalOpen: state.mainToolbar.isSignUpModalOpen,
   };
@@ -301,6 +320,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
     editorActions,
     mainToolbarActions,
+    p5filesActions,
     pageActions,
     userActions),
   dispatch);

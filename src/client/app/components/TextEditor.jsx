@@ -35,7 +35,7 @@ class TextEditor extends React.Component {
           id={this.props.id}
           toolbarOnFocus
           toolbar={{
-            options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'history'],
+            options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'history'], //eslint-disable-line
             inline: {
               options: ['bold', 'italic', 'underline', 'strikethrough']
             }
@@ -56,7 +56,7 @@ class TextEditor extends React.Component {
 
 TextEditor.propTypes = {
   id: PropTypes.string.isRequired,
-  editorState: PropTypes.object.isRequired,
+  editorState: PropTypes.shape.isRequired,
   onChange: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,

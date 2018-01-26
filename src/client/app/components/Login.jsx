@@ -32,13 +32,21 @@ class Login extends React.Component {
         <form onSubmit={(event) => { this.submitLoginUser(event, this.userName.value, this.userPassword.value); }}>
           <div className="loginModal_div">
             <label htmlFor="loginModal-name" className="loginModal_label"> Name
-              <input id="loginModal-name" className="loginModal_input" type="text" ref={(userName) => { this.userName = userName; }} />
+              <input
+                id="loginModal-name"
+                className="loginModal_input"
+                type="text"
+                ref={(userName) => { this.userName = userName; }}
+              />
             </label>
           </div>
           <div className="loginModal_div">
             <label htmlFor="loginModal-password" className="loginModal_label"> Password
               <input
-                id="loginModal-password" className="loginModal_input" type="password" ref={(userPassword) => { this.userPassword = userPassword; }}
+                id="loginModal-password"
+                className="loginModal_input"
+                type="password"
+                ref={(userPassword) => { this.userPassword = userPassword; }}
               />
             </label>
           </div>

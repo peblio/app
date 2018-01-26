@@ -1,6 +1,3 @@
-import axios from 'axios';
-import shortid from 'shortid';
-import { convertToRaw } from 'draft-js';
 import * as ActionTypes from '../constants.jsx';
 
 export function toggleFileDropdown() {
@@ -23,6 +20,22 @@ export function closePagesModal() {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.CLOSE_PAGES_MODAL
+    });
+  };
+}
+
+export function viewShareModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_SHARE_MODAL
+    });
+  };
+}
+
+export function closeShareModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_SHARE_MODAL
     });
   };
 }
