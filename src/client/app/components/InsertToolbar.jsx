@@ -13,21 +13,21 @@ class InsertToolbar extends React.Component {
           className="insertToolbar__button"
         >
           <EditorSVG alt="add code editor" />
-          EDITOR
+          Editor
         </button>
         <button
           onClick={this.props.addTextEditor}
           id="elementButton" className="insertToolbar__button"
         >
           <TextSVG alt="add text" />
-          TEXTBOX
+          Textbox
         </button>
         <button
           onClick={this.props.addIframe}
           className="insertToolbar__button"
         >
           <EmbedSVG alt="add embed" />
-          EMBED
+          Embed
         </button>
       </div>
     );

@@ -53,12 +53,13 @@
   outline: 0;
   -webkit-transition-duration: .2s;
   transition-duration: .2s;
+  margin: -22px 0 -10px -2px !important;
+
   &:hover{
   cursor: pointer;
   fill: black;
-  padding: 3px 7px;
   border: none;
-  fill: $light-gray; 
+  fill: $light-gray;
   }
 }
 

@@ -3,7 +3,7 @@
   @include flex;
   flex-direction: row;
   margin: $small-padding $small-padding $small-padding;
-  border-radius: $small-border-radius $small-border-radius 0 0; 
+  border-radius: $small-border-radius $small-border-radius 0 0;
   width: $total-width;
   padding: 0 $small-padding $small-padding 0;
   min-height: 2rem;
@@ -15,6 +15,7 @@
   padding: $small-padding/2 $small-padding;
   background-color: $lighter-gray;
   border:none !important;
+  text-transform: uppercase;
   // box-shadow: 3px 5px 5px $boxShaddow-gray;
   &:hover{
     color:$blue;
