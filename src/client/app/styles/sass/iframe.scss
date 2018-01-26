@@ -3,7 +3,8 @@
   height: calc(100% - 40px);
   padding: 0;
   min-width: 300px;
-  @extend %editor_nav;
+  // @extend %editor_nav;
+
 }
 .element__addURL{
   background-color: $light-gray;

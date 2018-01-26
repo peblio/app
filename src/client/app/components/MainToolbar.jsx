@@ -11,15 +11,16 @@ class MainToolbar extends React.Component {
   render() {
     let saveButtonText = 'Saved';
     if (this.props.unsavedChanges) {
-      saveButtonText = 'Save';
+      if (this.props.canEdit) {
+        saveButtonText = 'Save';
+      } else {
+        saveButtonText = 'Fork';
+      }
     }
 
     return (
       <div>
         <div className="mainToolbar">
-          { this.props.unsavedChanges &&
-            <span className="mainToolbar__unsaved-ind"> *</span>
-          }
           <div className="mainToolbar__div-left">
             <div className="logo_toolbar">
               <ToolbarLogo alt="logo in toolbar" />
@@ -56,8 +57,9 @@ class MainToolbar extends React.Component {
               />
               Preview
             </label>
-
-            { this.props.name ? (
+            { (this.props.canEdit || this.props.unsavedChanges) && <button className="mainToolbar__unsaved-ind-button" onClick={this.props.savePage}>{saveButtonText}</button>
+            }
+            {this.props.name ? (
               <div>
                 <a className="mainToolbar__save" href="/logout">Logout</a>
                 <p className="mainToolbar__welcome">
