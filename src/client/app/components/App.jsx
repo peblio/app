@@ -289,6 +289,7 @@ App.propTypes = {
   toggleFileDropdown: PropTypes.func.isRequired,
   isShareModalOpen: PropTypes.bool.isRequired,
   closeShareModal: PropTypes.func.isRequired,
+  viewShareModal: PropTypes.func.isRequired,
 
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,

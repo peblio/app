@@ -98,6 +98,7 @@ MainToolbar.propTypes = {
   addCodeEditor: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
+  canEdit: PropTypes.bool.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
@@ -107,7 +108,7 @@ MainToolbar.propTypes = {
   savePage: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
-  unsavedChanges: PropTypes.bool.isRequired
+  unsavedChanges: PropTypes.bool.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
