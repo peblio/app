@@ -57,6 +57,13 @@ class MainToolbar extends React.Component {
               />
               Preview
             </label>
+            {(this.props.projectID() || this.props.unsavedChanges) &&
+              (
+                <button className="mainToolbar__button" onClick={this.props.savePage}>
+                  {saveButtonText}
+                </button>
+              )
+            }
             <button className="mainToolbar__button" onClick={this.props.viewShareModal}>
               Share
             </button>
@@ -91,20 +98,20 @@ MainToolbar.propTypes = {
   addCodeEditor: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
+  isFileDropdownOpen: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
+  projectID: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   savePage: PropTypes.func.isRequired,
-  unsavedChanges: PropTypes.bool.isRequired,
-  isFileDropdownOpen: PropTypes.bool.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
+  unsavedChanges: PropTypes.bool.isRequired
   viewLoginModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
   viewSignUpModal: PropTypes.func.isRequired,
-  unsavedChanges: PropTypes.bool.isRequired
 };
 
 export default MainToolbar;
