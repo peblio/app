@@ -25,7 +25,8 @@ Modal.propTypes = {
     PropTypes.node
   ]).isRequired,
   closeModal: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool.isRequired
+  isOpen: PropTypes.bool.isRequired,
+  size: PropTypes.string.isRequired
 };
 
 export default Modal;
