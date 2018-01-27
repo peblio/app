@@ -200,6 +200,7 @@ class App extends React.Component {
           />
         </Modal>
         <Modal
+          size="large"
           isOpen={this.props.isSignUpModalOpen}
           closeModal={this.props.closeSignUpModal}
         >
