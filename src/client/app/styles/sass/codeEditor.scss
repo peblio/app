@@ -3,13 +3,15 @@
 }
 .codeEditor__container {
   width: 100%;
+  box-shadow: 0px 0px 10px $light-gray;
 }
 .codeEditor__sub-container {
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: calc(100% - 65px);
-  border: $thin-border-width solid $gray;
+  height: calc(100% - 105px);
+  border: none;
+
 }
 
 
@@ -56,8 +58,7 @@ canvas{
 .codeEditor_totalContainer{
   display: flex;
   flex-direction: column;
-  padding: 0;
+  padding: $small-padding;
   margin: 0;
   width: auto;
-  @extend %editor_nav;
 }

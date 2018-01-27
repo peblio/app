@@ -5,7 +5,7 @@ const initialState = {
   loginName: '',
   loginPassword: '',
   canView: true,
-  canEdit: false
+  canEdit: true
 };
 
 const user = (state = initialState, action) => {

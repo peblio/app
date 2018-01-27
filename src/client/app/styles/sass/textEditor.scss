@@ -11,10 +11,6 @@
 .textEditor__container {
   width: 100%;
   margin: 0;
-  @extend %editor_nav;
-  > nav {
-    margin: -22px 0 -10px -2px !important;
-  }
 }
 
 .textEditor__nav {
@@ -45,14 +41,14 @@
     cursor: pointer;
   }
 }
-
 .element__close{
   @extend %element_controls;
-  &:hover {
-    fill:$light-gray;
-    box-shadow: none;
-  }
 }
+
+.element__close:hover #ShapeCNTRL{
+    fill:$light-gray;
+}
+
 
 .dragClassName{
   @extend %element_controls;

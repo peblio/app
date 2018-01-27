@@ -10,6 +10,7 @@
   // border: $medium-border-width solid $black;
   border-radius: $medium-border-radius $medium-border-radius 0 0 ;
   z-index: 100;
+
 ;
 }
 .editorToolbar__item {
@@ -43,6 +44,9 @@
     display: flex;
     margin: 0;
     padding: 0;
+    background-color: white;
+    box-shadow: 0px 0px 10px $light-gray;
+    height:25px;
   }
   &__file {
     text-decoration: none;
@@ -50,8 +54,12 @@
     &-button {
       border-radius: 0;
       box-shadow: none;
+      background-color: white;
+      color: gray;
+      height:100%;
       &:hover, &--selected {
-        background-color: $white;
+        border: none;
+        background-color: $lighter-gray;
         color: $black;
       }
     }

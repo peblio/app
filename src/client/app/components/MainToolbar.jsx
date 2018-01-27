@@ -3,15 +3,24 @@ import PropTypes from 'prop-types';
 import FileModal from './FileModal.jsx';
 import InsertToolbar from './InsertToolbar.jsx';
 import ToolbarLogo from '../images/logo.svg';
+import EditorSVG from '../images/editor.svg';
+import CheckSVG from '../images/check.svg';
+
 
 class MainToolbar extends React.Component {
   render() {
+    let saveButtonText = 'Saved';
+    if (this.props.unsavedChanges) {
+      if (this.props.canEdit) {
+        saveButtonText = 'Save';
+      } else {
+        saveButtonText = 'Fork';
+      }
+    }
+
     return (
       <div>
         <div className="mainToolbar">
-          { this.props.unsavedChanges &&
-            <span className="mainToolbar__unsaved-ind"> *</span>
-          }
           <div className="mainToolbar__div-left">
             <div className="logo_toolbar">
               <ToolbarLogo alt="logo in toolbar" />
