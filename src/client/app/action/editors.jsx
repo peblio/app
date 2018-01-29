@@ -83,6 +83,24 @@ export function stopCode(id) {
   };
 }
 
+export function startCodeRefresh(id) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.START_CODE_REFRESH,
+      id
+    });
+  };
+}
+
+export function stopCodeRefresh(id) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.STOP_CODE_REFRESH,
+      id
+    });
+  };
+}
+
 export function setEditorMode(id, value) {
   return (dispatch) => {
     dispatch({
@@ -99,6 +117,15 @@ export function updateConsoleOutput(id, event) {
       type: ActionTypes.UPDATE_CONSOLE_OUTPUT,
       id,
       event
+    });
+  };
+}
+
+export function clearConsoleOutput(id) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLEAR_CONSOLE_OUTPUT,
+      id
     });
   };
 }

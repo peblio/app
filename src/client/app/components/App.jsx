@@ -13,7 +13,6 @@ import SignUp from './SignUp.jsx';
 
 import * as editorActions from '../action/editors.jsx';
 import * as mainToolbarActions from '../action/mainToolbar.jsx';
-import * as p5filesActions from '../action/p5files.jsx';
 import * as pageActions from '../action/page.jsx';
 import * as userActions from '../action/user.jsx';
 
@@ -169,7 +168,10 @@ class App extends React.Component {
 
           playCode={this.props.playCode}
           stopCode={this.props.stopCode}
+          startCodeRefresh={this.props.startCodeRefresh}
+          stopCodeRefresh={this.props.stopCodeRefresh}
           updateCode={this.props.updateCode}
+          clearConsoleOutput={this.props.clearConsoleOutput}
           updateConsoleOutput={this.props.updateConsoleOutput}
           setEditorMode={this.props.setEditorMode}
           updateTextChange={this.props.updateTextChange}
@@ -260,8 +262,11 @@ App.propTypes = {
   addCodeEditor: PropTypes.func.isRequired,
   playCode: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
+  startCodeRefresh: PropTypes.func.isRequired,
+  stopCodeRefresh: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
+  clearConsoleOutput: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired,
@@ -324,7 +329,6 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
     editorActions,
     mainToolbarActions,
-    p5filesActions,
     pageActions,
     userActions),
   dispatch);

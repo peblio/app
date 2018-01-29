@@ -18,7 +18,10 @@ class EditorToolbar extends React.Component {
           </select>
           <button
             className="editorToolbar__svg"
-            onClick={this.props.playCode}
+            onClick={() => {
+              this.props.playCode();
+              if (this.props.isPlaying) { this.props.startCodeRefresh(); }
+            }}
           >
             <PlaySVG alt="Run Code" />
           </button>
@@ -59,7 +62,9 @@ EditorToolbar.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
+  isPlaying: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
+  startCodeRefresh: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired

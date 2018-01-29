@@ -11,19 +11,23 @@ class Canvas extends React.Component {
     return (
       <EditorContainer
         id={editor.id}
-        files={editor.files}
         currentFile={editor.currentFile}
-        setCurrentFile={this.props.setCurrentFile}
-        editorMode={editor.editorMode}
+        clearConsoleOutput={this.props.clearConsoleOutput}
         code={editor.code}
         consoleOutputText={editor.consoleOutputText}
+        editorMode={editor.editorMode}
+        files={editor.files}
         isPlaying={editor.isPlaying}
-        preview={this.props.preview}
-        setCurrentEditor={this.props.setCurrentEditor}
-        removeEditor={this.props.removeEditor}
-        setEditorMode={this.props.setEditorMode}
+        isRefreshing={editor.isRefreshing}
         playCode={this.props.playCode}
+        preview={this.props.preview}
+        removeEditor={this.props.removeEditor}
+        setCurrentEditor={this.props.setCurrentEditor}
+        setEditorMode={this.props.setEditorMode}
+        startCodeRefresh={this.props.startCodeRefresh}
+        setCurrentFile={this.props.setCurrentFile}
         stopCode={this.props.stopCode}
+        stopCodeRefresh={this.props.stopCodeRefresh}
         updateCode={this.props.updateCode}
         updateConsoleOutput={this.props.updateConsoleOutput}
         updateFile={this.props.updateFile}
@@ -108,21 +112,24 @@ class Canvas extends React.Component {
 }
 
 Canvas.propTypes = {
-  preview: PropTypes.bool.isRequired,
+  clearConsoleOutput: PropTypes.func.isRequired,
   editors: PropTypes.shape.isRequired,
-  setCurrentEditor: PropTypes.func.isRequired,
-  removeEditor: PropTypes.func.isRequired,
-  setCurrentFile: PropTypes.func.isRequired,
-  setEditorSize: PropTypes.func.isRequired,
-  setEditorPosition: PropTypes.func.isRequired,
+  preview: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
+  removeEditor: PropTypes.func.isRequired,
+  setCurrentEditor: PropTypes.func.isRequired,
+  setCurrentFile: PropTypes.func.isRequired,
+  setEditorMode: PropTypes.func.isRequired,
+  setEditorPosition: PropTypes.func.isRequired,
+  setEditorSize: PropTypes.func.isRequired,
+  setIframeURL: PropTypes.func.isRequired,
+  startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
+  stopCodeRefresh: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
-  setEditorMode: PropTypes.func.isRequired,
-  updateTextChange: PropTypes.func.isRequired,
-  setIframeURL: PropTypes.func.isRequired
+  updateTextChange: PropTypes.func.isRequired
 };
 
 export default Canvas;
