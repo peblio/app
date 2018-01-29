@@ -6,21 +6,26 @@ const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
 
 class P5Output extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.startSketch = this.startSketch.bind(this);
+    this.stopSketch = this.stopSketch.bind(this);
+  }
+
   componentDidMount() {
-    window.addEventListener('message', this.props.updateConsoleOutput, false);
-    const htmlFile = this.props.files[this.getHTMLFileIndex(this.props.files)].content;
-    const parser = new DOMParser();
-    let sketchDoc = parser.parseFromString(htmlFile, 'text/html');
-    this.resolveJSFile(sketchDoc, this.props.files);
-    this.resolveCSSFile(sketchDoc, this.props.files);
-    console.log(sketchDoc);
-    sketchDoc = this.injectLocalFiles(sketchDoc);
-    sketchDoc = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
-    srcDoc.set(this.iframe, sketchDoc);
+    this.startSketch();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.isRefreshing === false && this.props.isRefreshing === true) {
+      this.props.stopCodeRefresh();
+      this.stopSketch();
+      this.startSketch();
+    }
   }
 
   componentWillUnmount() {
-    window.removeEventListener('message', this.props.updateConsoleOutput);
+    this.stopSketch();
   }
 
   getFileName(filepath) {
@@ -37,6 +42,24 @@ class P5Output extends React.Component {
     });
     return index;
   }
+
+  startSketch() {
+    window.addEventListener('message', this.props.updateConsoleOutput, false);
+    const htmlFile = this.props.files[this.getHTMLFileIndex(this.props.files)].content;
+    const parser = new DOMParser();
+    let sketchDoc = parser.parseFromString(htmlFile, 'text/html');
+    this.resolveJSFile(sketchDoc, this.props.files);
+    this.resolveCSSFile(sketchDoc, this.props.files);
+    sketchDoc = this.injectLocalFiles(sketchDoc);
+    sketchDoc = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
+    srcDoc.set(this.iframe, sketchDoc);
+  }
+
+  stopSketch() {
+    window.removeEventListener('message', this.props.updateConsoleOutput);
+    this.props.clearConsoleOutput();
+  }
+
 
   resolveJSFile(sketchDoc, files) {
     const scriptsInHTML = sketchDoc.getElementsByTagName('script');
@@ -62,12 +85,10 @@ class P5Output extends React.Component {
         // check if the css name is present in the files that are included for this sketch
         files.forEach((file) => {
           if (file.name === this.getFileName(css.href)) {
-            console.log(file.name);
             const style = sketchDoc.createElement('style');
             style.innerHTML = file.content;
             sketchDoc.head.appendChild(style);
             css.parentElement.removeChild(css);
-            console.log(style);
           }
         });
       }
@@ -96,10 +117,13 @@ class P5Output extends React.Component {
 }
 
 P5Output.propTypes = {
+  clearConsoleOutput: PropTypes.func.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
+  isRefreshing: PropTypes.bool.isRequired,
+  stopCodeRefresh: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired
 };
 

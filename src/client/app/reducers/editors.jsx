@@ -81,6 +81,7 @@ const editorsReducer = (state = initialState, action) => {
         currentFile: 1,
         files: Code.FILES.p5,
         isPlaying: false,
+        isRefreshing: false,
         editorMode: 'p5',
         x: 0,
         y: 0,
@@ -103,6 +104,14 @@ const editorsReducer = (state = initialState, action) => {
       editors[action.id].consoleOutputText = [];
       return { ...state, editors };
 
+    case ActionTypes.START_CODE_REFRESH:
+      editors[action.id].isRefreshing = true;
+      return { ...state, editors };
+
+    case ActionTypes.STOP_CODE_REFRESH:
+      editors[action.id].isRefreshing = false;
+      return { ...state, editors };
+
     case ActionTypes.SET_EDITOR_MODE:
       editors[action.id].editorMode = action.value;
       return { ...state, editors };
@@ -113,6 +122,11 @@ const editorsReducer = (state = initialState, action) => {
         tempOutput.push(action.event.data.arguments.join());
       }
       editors[action.id].consoleOutputText = tempOutput;
+      return { ...state, editors };
+    }
+
+    case ActionTypes.CLEAR_CONSOLE_OUTPUT: {
+      editors[action.id].consoleOutputText = [];
       return { ...state, editors };
     }
 

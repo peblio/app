@@ -17,9 +17,12 @@ class EditorContainer extends React.Component {
     this.removeEditor = () => this.props.removeEditor(this.props.id);
     this.playCode = () => this.props.playCode(this.props.id);
     this.stopCode = () => this.props.stopCode(this.props.id);
+    this.startCodeRefresh = () => this.props.startCodeRefresh(this.props.id);
+    this.stopCodeRefresh = () => this.props.stopCodeRefresh(this.props.id);
     this.updateCode = val => this.props.updateCode(this.props.id, val);
     this.updateFile = (index, file) => this.props.updateFile(this.props.id, index, file);
     this.setCurrentFile = index => this.props.setCurrentFile(this.props.id, index);
+    this.clearConsoleOutput = () => this.props.clearConsoleOutput(this.props.id);
     this.updateConsoleOutput = (e) => {
       // There's a memory leak in the Javascript editor. Watch the console after clicking Play.
       // console.log(e);
@@ -45,12 +48,14 @@ class EditorContainer extends React.Component {
           </nav>
         }
         <EditorToolbar
-          playCode={this.playCode}
-          stopCode={this.stopCode}
-          setEditorMode={this.setEditorMode}
-          files={this.props.files}
           currentFile={this.props.currentFile}
+          files={this.props.files}
+          isPlaying={this.props.isPlaying}
+          playCode={this.playCode}
           setCurrentFile={this.setCurrentFile}
+          setEditorMode={this.setEditorMode}
+          startCodeRefresh={this.startCodeRefresh}
+          stopCode={this.stopCode}
         />
         <div className="codeEditor__container">
           <div className="codeEditor__sub-container">
@@ -74,10 +79,13 @@ class EditorContainer extends React.Component {
               { this.props.isPlaying && (
                 this.props.editorMode === 'p5' ? (
                   <P5Output
-                    files={this.props.files}
+                    clearConsoleOutput={this.clearConsoleOutput}
                     editorCode={this.props.code}
-                    updateCode={this.updateCode}
+                    files={this.props.files}
                     isPlaying={this.props.isPlaying}
+                    isRefreshing={this.props.isRefreshing}
+                    stopCodeRefresh={this.stopCodeRefresh}
+                    updateCode={this.updateCode}
                     updateConsoleOutput={this.updateConsoleOutput}
                   />
                 ) : this.props.editorMode === 'javascript' && (
@@ -108,22 +116,26 @@ class EditorContainer extends React.Component {
 
 EditorContainer.propTypes = {
   id: PropTypes.string.isRequired,
-  editorMode: PropTypes.string.isRequired,
+  clearConsoleOutput: PropTypes.func.isRequired,
   code: PropTypes.string.isRequired,
   consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired,
   currentFile: PropTypes.number.isRequired,
+  editorMode: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
   isPlaying: PropTypes.bool.isRequired,
+  isRefreshing: PropTypes.bool.isRequired,
+  playCode: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
   removeEditor: PropTypes.func.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
-  playCode: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
+  startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
+  stopCodeRefresh: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired
