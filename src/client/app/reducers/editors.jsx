@@ -85,6 +85,8 @@ const editorsReducer = (state = initialState, action) => {
         editorMode: 'p5',
         x: 0,
         y: 0,
+        innerWidth: 250,
+        innerHeight: 270,
         width: 500,
         height: 300,
         minWidth: 500,
@@ -139,6 +141,20 @@ const editorsReducer = (state = initialState, action) => {
 
     case ActionTypes.SET_CURRENT_FILE: {
       editors[action.id].currentFile = action.index;
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
+    case ActionTypes.SET_INNER_WIDTH: {
+      editors[action.id].innerWidth = action.value;
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
+    case ActionTypes.SET_INNER_HEIGHT: {
+      editors[action.id].innerHeight = action.value;
       return Object.assign({}, state, {
         editors
       });
