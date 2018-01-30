@@ -44,7 +44,6 @@
   }
 }
 
-
 .mainToolbar__welcome {
   color: $white;
   margin: $medium-margin $small-margin;
@@ -98,4 +97,32 @@
 .mainToolbar__div-right{
   @include flex;
   float: right;
+}
+
+
+input[type="checkbox"] {
+    display: none;
+}
+label {
+  cursor: pointer;
+}
+.mainToolbar__previewOn{
+  display: none;
+}
+
+input[type="checkbox"]:checked ~ .mainToolbar__previewOn {
+  display:  inline-block;
+}
+input[type="checkbox"]:checked ~ .mainToolbar__previewOff {
+  display: none;
+}
+
+input[type="checkbox"] ~ .mainToolbar__previewOff {
+  display: inline-block;
+}
+
+.mainToolbar__previewTitle {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: $small-padding;
 }

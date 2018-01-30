@@ -5,6 +5,8 @@ import InsertToolbar from './InsertToolbar.jsx';
 import ToolbarLogo from '../images/logo.svg';
 import EditorSVG from '../images/editor.svg';
 import CheckSVG from '../images/check.svg';
+import PreviewOnSVG from '../images/previewOnSVG.svg';
+import PreviewOffSVG from '../images/previewOffSVG.svg';
 
 
 class MainToolbar extends React.Component {
@@ -48,14 +50,21 @@ class MainToolbar extends React.Component {
             onChange={this.props.setPageTitle}
           ></input>
           <div className="mainToolbar__div-right">
-            <label className="mainToolbar__preview" htmlFor="preview-checkbox">
+            <label className="mainToolbar__preview" htmlFor="mainToolbar__checkbox">
               <input
-                id="preview-checkbox"
+                id="mainToolbar__checkbox"
                 onChange={this.props.togglePreviewMode}
                 type="checkbox"
                 checked={this.props.preview}
               />
-              Preview
+              <span className="mainToolbar__previewOn">
+                <PreviewOnSVG alt="add code editor" />
+              </span>
+              <span className="mainToolbar__previewOff">
+                <PreviewOffSVG alt="add code editor" />
+              </span>
+              <span className="mainToolbar__previewTitle">Preview</span>
+
             </label>
             {(this.props.projectID() || this.props.unsavedChanges) &&
               (
