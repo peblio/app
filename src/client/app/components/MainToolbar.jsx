@@ -11,7 +11,7 @@ import PreviewOffSVG from '../images/previewOffSVG.svg';
 
 class MainToolbar extends React.Component {
   render() {
-    let saveButtonText = 'Saved';
+    let saveButtonText = <CheckSVG alt="check svg" />;
     if (this.props.unsavedChanges) {
       if (this.props.canEdit) {
         saveButtonText = 'Save';
@@ -70,7 +70,7 @@ class MainToolbar extends React.Component {
             </label>
             {(this.props.projectID() || this.props.unsavedChanges) &&
               (
-                <button className="mainToolbar__button" onClick={this.props.savePage}>
+                <button className="mainToolbar__save" onClick={this.props.savePage}>
                   {saveButtonText}
                 </button>
               )

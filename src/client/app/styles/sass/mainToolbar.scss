@@ -30,20 +30,22 @@
   float: left;
  }
 
-.mainToolbar__unsaved-ind-button {
-  @extend %mainToolbar__button;
-  background-color: $blue !important;
-  border: none !important;
-  width: 90px;
-  &:hover {
-    fill:$light-gray;
-    color: $white !important;
-    box-shadow: none;
-    background-color: $dark-blue !important;
-
-  }
+// .mainToolbar__unsaved-ind-button {
+//   @extend %mainToolbar__button;
+//   background-color: $blue !important;
+//   border: none !important;
+//   width: 90px;
+//   &:hover {
+//     fill:$light-gray;
+//     color: $white !important;
+//     box-shadow: none;
+//     background-color: $dark-blue !important;
+//
+//   }
+// }
+.mainToolbar__save {
+@extend %mainToolbar__blueButton
 }
-
 .mainToolbar__welcome {
   color: $white;
   margin: $medium-margin $small-margin;
