@@ -125,4 +125,16 @@ input[type="checkbox"] ~ .mainToolbar__previewOff {
     display: inline-block;
     vertical-align: middle;
     padding-left: $small-padding;
+
+}
+
+.mainToolbar__preview:hover .mainToolbar__previewTitle {
+      color: $blue;
+}
+
+.mainToolbar__preview:hover #previewOn {
+      fill: $blue;
+}
+.mainToolbar__preview:hover #previewOff {
+      fill: $blue;
 }

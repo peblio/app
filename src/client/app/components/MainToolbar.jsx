@@ -58,12 +58,14 @@ class MainToolbar extends React.Component {
                 checked={this.props.preview}
               />
               <span className="mainToolbar__previewOn">
-                <PreviewOnSVG alt="add code editor" />
+                <PreviewOnSVG alt="preview on" />
+                <span className="mainToolbar__previewTitle">Preview On</span>
+
               </span>
               <span className="mainToolbar__previewOff">
-                <PreviewOffSVG alt="add code editor" />
+                <PreviewOffSVG alt="preview Off" />
+                <span className="mainToolbar__previewTitle">Preview Off</span>
               </span>
-              <span className="mainToolbar__previewTitle">Preview</span>
 
             </label>
             {(this.props.projectID() || this.props.unsavedChanges) &&
