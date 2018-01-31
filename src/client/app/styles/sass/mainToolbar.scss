@@ -140,3 +140,8 @@ input[type="checkbox"] ~ .mainToolbar__previewOff {
 .mainToolbar__preview:hover #previewOff {
       fill: $blue;
 }
+
+.demoNotice{
+  padding:$small-padding $medium-padding;
+  background-color: #E07063;
+}
