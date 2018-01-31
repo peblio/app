@@ -5,11 +5,13 @@ import InsertToolbar from './InsertToolbar.jsx';
 import ToolbarLogo from '../images/logo.svg';
 import EditorSVG from '../images/editor.svg';
 import CheckSVG from '../images/check.svg';
+import PreviewOnSVG from '../images/previewOnSVG.svg';
+import PreviewOffSVG from '../images/previewOffSVG.svg';
 
 
 class MainToolbar extends React.Component {
   render() {
-    let saveButtonText = 'Saved';
+    let saveButtonText = <CheckSVG alt="check svg" />;
     if (this.props.unsavedChanges) {
       if (this.props.canEdit) {
         saveButtonText = 'Save';
@@ -20,6 +22,9 @@ class MainToolbar extends React.Component {
 
     return (
       <div>
+        <div className="demoNotice">
+          This is a demo version of Peblio. Feel free to play around but projects will not yet be permanently saved. <a target="_blank" href="http://peblio-splash-page.webflow.io/#contact">Contact us</a> with feedback. We would love to hear from you!
+        </div>
         <div className="mainToolbar">
           <div className="mainToolbar__div-left">
             <div className="logo_toolbar">
@@ -48,18 +53,27 @@ class MainToolbar extends React.Component {
             onChange={this.props.setPageTitle}
           ></input>
           <div className="mainToolbar__div-right">
-            <label className="mainToolbar__preview" htmlFor="preview-checkbox">
+            <label className="mainToolbar__preview" htmlFor="mainToolbar__checkbox">
               <input
-                id="preview-checkbox"
+                id="mainToolbar__checkbox"
                 onChange={this.props.togglePreviewMode}
                 type="checkbox"
                 checked={this.props.preview}
               />
-              Preview
+              <span className="mainToolbar__previewOn">
+                <PreviewOnSVG alt="preview on" />
+                <span className="mainToolbar__previewTitle">Preview On</span>
+
+              </span>
+              <span className="mainToolbar__previewOff">
+                <PreviewOffSVG alt="preview Off" />
+                <span className="mainToolbar__previewTitle">Preview Off</span>
+              </span>
+
             </label>
             {(this.props.projectID() || this.props.unsavedChanges) &&
               (
-                <button className="mainToolbar__button" onClick={this.props.savePage}>
+                <button className="mainToolbar__save" onClick={this.props.savePage}>
                   {saveButtonText}
                 </button>
               )

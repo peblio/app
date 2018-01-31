@@ -83,6 +83,27 @@
   }
 }
 
+%mainToolbar__blueButton{
+  margin: $medium-margin $small-margin;
+  padding: $medium-padding/2 $medium-padding;
+  width: 78px;
+  float: right;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: $small-border-radius;
+  color: $white;
+  background-color: $blue;
+  -webkit-transition-duration: 150ms; /* Safari */
+  transition-duration: 150ms;
+  &:hover {
+    border: $thin-border-width solid $gray;
+    color: $white;
+    background: $dark-blue;
+    cursor: pointer;
+  }
+}
+
 %modal{
   background: $white;
   margin: auto;

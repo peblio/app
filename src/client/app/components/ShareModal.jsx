@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 class Share extends React.Component {
   constructor(props) {
@@ -19,16 +19,9 @@ class Share extends React.Component {
 
   render() {
     return (
-      <div className="share__modal">
-        <div className="share__container">
-          <input
-            className="share__input"
-            ref={(element) => { this.input = element; }}
-            value={window.location.href}
-            readOnly
-          ></input>
-          <button className="share__button" onClick={this.copyShareLink}>Copy Link</button>
-        </div>
+      <div className="share__container">
+        <input className="share__input" ref={(element) => { this.input = element; }} value={window.location.href} readOnly></input>
+        <button className="share__button" onClick={this.copyShareLink}>Copy Link</button>
       </div>
     );
   }
