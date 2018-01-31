@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Canvas from './Canvas.jsx';
+import ExamplesModal from './ExamplesModal.jsx';
 import Login from './Login.jsx';
 import MainToolbar from './MainToolbar.jsx';
 import Modal from './Modal.jsx';
@@ -149,6 +150,7 @@ class App extends React.Component {
             toggleFileDropdown={this.props.toggleFileDropdown}
             togglePreviewMode={this.props.togglePreviewMode}
             unsavedChanges={this.props.unsavedChanges}
+            viewExamplesModal={this.props.viewExamplesModal}
             viewPagesModal={this.props.viewPagesModal}
             viewLoginModal={this.props.viewLoginModal}
             viewShareModal={this.props.viewShareModal}
@@ -190,6 +192,15 @@ class App extends React.Component {
             setAllPages={this.props.setAllPages}
           />
         </Modal>
+
+        <Modal
+          size="large"
+          isOpen={this.props.isExamplesModalOpen}
+          closeModal={this.props.closeExamplesModal}
+        >
+          <ExamplesModal />
+        </Modal>
+
         <Modal
           size="large"
           isOpen={this.props.isLoginModalOpen}
@@ -256,6 +267,10 @@ App.propTypes = {
   isLoginModalOpen: PropTypes.bool.isRequired,
   isSignUpModalOpen: PropTypes.bool.isRequired,
 
+  isExamplesModalOpen: PropTypes.bool.isRequired,
+  viewExamplesModal: PropTypes.func.isRequired,
+  closeExamplesModal: PropTypes.func.isRequired,
+
   setCurrentEditor: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
   loadEditors: PropTypes.func.isRequired,
@@ -321,6 +336,7 @@ function mapStateToProps(state) {
     loginPassword: state.user.loginPassword,
     name: state.user.name,
 
+    isExamplesModalOpen: state.mainToolbar.isExamplesModalOpen,
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isPagesModalOpen: state.mainToolbar.isPagesModalOpen,
     isShareModalOpen: state.mainToolbar.isShareModalOpen,

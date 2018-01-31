@@ -8,6 +8,7 @@ const passport = require('passport');
 
 const apiRoutes = express.Router();
 
+apiRoutes.route('/examples').get(getExamples);
 apiRoutes.route('/page/:id').get(getPage);
 apiRoutes.route('/user').get(getUser);
 apiRoutes.route('/sketches').get(getSketches);
@@ -46,6 +47,22 @@ function getSketches(req, res) {
       }
     });
   }
+}
+
+function getExamples(req, res) {
+  User.find({ name: 'peblioexamples' }, (err, data) => {
+    if (err) {
+      res.send(err);
+    } else {
+      Page.find({ id: { $in: data[0].pages } }, (err, data) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(data);
+        }
+      });
+    }
+  });
 }
 
 function loginUser(req, res, next) {

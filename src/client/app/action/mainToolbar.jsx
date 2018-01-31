@@ -40,6 +40,22 @@ export function closeShareModal() {
   };
 }
 
+export function viewExamplesModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_EXAMPLES_MODAL
+    });
+  };
+}
+
+export function closeExamplesModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_EXAMPLES_MODAL
+    });
+  };
+}
+
 export function viewLoginModal() {
   return (dispatch) => {
     dispatch({

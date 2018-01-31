@@ -30,7 +30,9 @@ class MainToolbar extends React.Component {
             <div className="logo_toolbar">
               <ToolbarLogo alt="logo in toolbar" />
             </div>
-
+            <button className="upperToolbar__dropdown" onClick={this.props.viewExamplesModal}>
+            Examples
+            </button>
             <div className="fileModal__container">
               <button className="upperToolbar__dropdown" onClick={this.props.toggleFileDropdown}>
               File
@@ -44,6 +46,7 @@ class MainToolbar extends React.Component {
                 />
               }
             </div>
+
           </div>
           <input
             className="mainToolbar__title"
@@ -123,6 +126,7 @@ MainToolbar.propTypes = {
   toggleFileDropdown: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
+  viewExamplesModal: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
