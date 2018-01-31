@@ -35,10 +35,21 @@ class TextEditor extends React.Component {
           id={this.props.id}
           toolbarOnFocus
           toolbar={{
-            options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'history'], //eslint-disable-line
+            options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'emoji','embedded', 'image','history'], //eslint-disable-line
             inline: {
               options: ['bold', 'italic', 'underline', 'strikethrough']
-            }
+            },
+            list: {
+              inDropdown: false,
+              className: undefined,
+              component: undefined,
+              dropdownClassName: undefined,
+              options: ['unordered', 'ordered'],
+            },
+            link: { inDropdown: true },
+            history: { inDropdown: true },
+            image: { className: 'textEditor__image', popupClassName: 'textEditor__imagePopup' },
+
           }}
           toolbarClassName="textEditor__toolbar"
           editorClassName="textEditor__content"

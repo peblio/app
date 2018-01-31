@@ -2,6 +2,7 @@
   min-width: 200px;
   min-height: auto !important;
   border: 2px dashed $light-gray;
+  border-radius: $small-border-radius;
   &:hover {
     z-index: 10;
   }

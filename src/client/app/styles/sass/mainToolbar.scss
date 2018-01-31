@@ -30,21 +30,22 @@
   float: left;
  }
 
-.mainToolbar__unsaved-ind-button {
-  @extend %mainToolbar__button;
-  background-color: $blue !important;
-  border: none !important;
-  width: 90px;
-  &:hover {
-    fill:$light-gray;
-    color: $white !important;
-    box-shadow: none;
-    background-color: $dark-blue !important;
-
-  }
+// .mainToolbar__unsaved-ind-button {
+//   @extend %mainToolbar__button;
+//   background-color: $blue !important;
+//   border: none !important;
+//   width: 90px;
+//   &:hover {
+//     fill:$light-gray;
+//     color: $white !important;
+//     box-shadow: none;
+//     background-color: $dark-blue !important;
+//
+//   }
+// }
+.mainToolbar__save {
+@extend %mainToolbar__blueButton
 }
-
-
 .mainToolbar__welcome {
   color: $white;
   margin: $medium-margin $small-margin;
@@ -98,4 +99,49 @@
 .mainToolbar__div-right{
   @include flex;
   float: right;
+}
+
+
+input[type="checkbox"] {
+    display: none;
+}
+label {
+  cursor: pointer;
+}
+.mainToolbar__previewOn{
+  display: none;
+}
+
+input[type="checkbox"]:checked ~ .mainToolbar__previewOn {
+  display:  inline-block;
+}
+input[type="checkbox"]:checked ~ .mainToolbar__previewOff {
+  display: none;
+}
+
+input[type="checkbox"] ~ .mainToolbar__previewOff {
+  display: inline-block;
+}
+
+.mainToolbar__previewTitle {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: $small-padding;
+
+}
+
+.mainToolbar__preview:hover .mainToolbar__previewTitle {
+      color: $blue;
+}
+
+.mainToolbar__preview:hover #previewOn {
+      fill: $blue;
+}
+.mainToolbar__preview:hover #previewOff {
+      fill: $blue;
+}
+
+.demoNotice{
+  padding:$small-padding $medium-padding;
+  background-color: #E07063;
 }
