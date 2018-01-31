@@ -174,6 +174,8 @@ class App extends React.Component {
           clearConsoleOutput={this.props.clearConsoleOutput}
           updateConsoleOutput={this.props.updateConsoleOutput}
           setEditorMode={this.props.setEditorMode}
+          setInnerWidth={this.props.setInnerWidth}
+          setInnerHeight={this.props.setInnerHeight}
           updateTextChange={this.props.updateTextChange}
           setIframeURL={this.props.setIframeURL}
         />
@@ -274,6 +276,8 @@ App.propTypes = {
   setIframeURL: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
+  setInnerWidth: PropTypes.func.isRequired,
+  setInnerHeight: PropTypes.func.isRequired,
 
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,

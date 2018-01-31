@@ -17,6 +17,8 @@ class Canvas extends React.Component {
         consoleOutputText={editor.consoleOutputText}
         editorMode={editor.editorMode}
         files={editor.files}
+        innerHeight={editor.innerHeight}
+        innerWidth={editor.innerWidth}
         isPlaying={editor.isPlaying}
         isRefreshing={editor.isRefreshing}
         playCode={this.props.playCode}
@@ -26,6 +28,8 @@ class Canvas extends React.Component {
         setEditorMode={this.props.setEditorMode}
         startCodeRefresh={this.props.startCodeRefresh}
         setCurrentFile={this.props.setCurrentFile}
+        setInnerWidth={this.props.setInnerWidth}
+        setInnerHeight={this.props.setInnerHeight}
         stopCode={this.props.stopCode}
         stopCodeRefresh={this.props.stopCodeRefresh}
         updateCode={this.props.updateCode}

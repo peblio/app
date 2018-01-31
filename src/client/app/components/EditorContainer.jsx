@@ -1,5 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+import SplitPane from 'react-split-pane';
+
 import P5Editor from './P5Editor.jsx';
 import JavascriptEditor from './JavascriptEditor.jsx';
 import P5Output from './P5Output.jsx';
@@ -13,10 +15,17 @@ import CloseSVG from '../images/close.svg';
 class EditorContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isResizing: false
+    };
+    this.startResize = this.startResize.bind(this);
+    this.finishResize = this.finishResize.bind(this);
     this.setCurrentEditor = () => this.props.setCurrentEditor(this.props.id);
     this.removeEditor = () => this.props.removeEditor(this.props.id);
     this.playCode = () => this.props.playCode(this.props.id);
     this.stopCode = () => this.props.stopCode(this.props.id);
+    this.setInnerWidth = value => this.props.setInnerWidth(this.props.id, value);
+    this.setInnerHeight = value => this.props.setInnerHeight(this.props.id, value);
     this.startCodeRefresh = () => this.props.startCodeRefresh(this.props.id);
     this.stopCodeRefresh = () => this.props.stopCodeRefresh(this.props.id);
     this.updateCode = val => this.props.updateCode(this.props.id, val);
@@ -29,6 +38,14 @@ class EditorContainer extends React.Component {
       this.props.updateConsoleOutput(this.props.id, e);
     };
     this.setEditorMode = mode => this.props.setEditorMode(this.props.id, mode);
+  }
+
+  startResize() {
+    this.setState({ isResizing: true });
+  }
+
+  finishResize() {
+    this.setState({ isResizing: false });
   }
 
   render() {
@@ -58,25 +75,39 @@ class EditorContainer extends React.Component {
           stopCode={this.stopCode}
         />
         <div className="codeEditor__container">
-          <div className="codeEditor__sub-container">
-            <div className="codeEditor__input">
-              { this.props.editorMode === 'p5' ? (
-                <P5Editor
-                  currentFile={this.props.currentFile}
-                  editorCode={this.props.code}
-                  files={this.props.files}
-                  updateCode={this.updateCode}
-                  updateFile={this.updateFile}
-                />
-              ) : this.props.editorMode === 'javascript' &&
-                <JavascriptEditor
-                  editorCode={this.props.code}
-                  updateCode={this.updateCode}
-                />
-              }
-            </div>
-            <div className="codeEditor__output">
-              { this.props.isPlaying && (
+          <SplitPane
+            split="horizontal"
+            defaultSize={this.props.innerHeight}
+            onDragStarted={this.startResize}
+            onDragFinished={(size) => { this.finishResize(); this.setInnerHeight(size); }}
+          >
+            <div className="codeEditor__sub-container">
+              <SplitPane
+                split="vertical"
+                defaultSize={this.props.innerWidth}
+                onDragStarted={this.startResize}
+                onDragFinished={(size) => { this.finishResize(); this.setInnerWidth(size); }}
+              >
+                <div className="codeEditor__input">
+                  { this.props.editorMode === 'p5' ? (
+                    <P5Editor
+                      currentFile={this.props.currentFile}
+                      editorCode={this.props.code}
+                      files={this.props.files}
+                      updateCode={this.updateCode}
+                      updateFile={this.updateFile}
+                    />
+                ) : this.props.editorMode === 'javascript' &&
+                  <JavascriptEditor
+                    editorCode={this.props.code}
+                    updateCode={this.updateCode}
+                  />
+                }
+                </div>
+                <div className="codeEditor__output">
+                  <div className={`codeEditor__output--overlay ${this.state.isResizing ? 'codeEditor__output--overlay-show' : ''}`}>
+                  </div>
+                  { this.props.isPlaying && (
                 this.props.editorMode === 'p5' ? (
                   <P5Output
                     clearConsoleOutput={this.clearConsoleOutput}
@@ -98,15 +129,15 @@ class EditorContainer extends React.Component {
                   />
                 )
               )}
+                </div>
+              </SplitPane>
             </div>
-          </div>
-
-          <div className="codeEditor__console">
-            <ConsoleOutput
-              consoleOutputText={this.props.consoleOutputText}
-            />
-          </div>
-
+            <div className="codeEditor__console">
+              <ConsoleOutput
+                consoleOutputText={this.props.consoleOutputText}
+              />
+            </div>
+          </SplitPane>
         </div>
       </div>
     );
