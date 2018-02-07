@@ -8,12 +8,10 @@ body, html, h1, h2, h3{
 .canvas{
   background-color: white;
   width:$total-width;
-  min-height:100vh;
-  // margin: auto;
-  padding: $medium-padding;
-  // border-radius: $medium-border-radius;
+  min-height:80vh;
+  padding: $large-padding;
   box-shadow: -8px 0px 10px $light-gray;
-  // overflow-x: scroll;
+  // overflow-y: scroll;
 
 
 }
@@ -21,6 +19,7 @@ body, html, h1, h2, h3{
 .resize-container {
   border: $small-border solid $black;
   border-radius: $medium-border-radius;
+  margin: $large-margin;
 }
 
 button {

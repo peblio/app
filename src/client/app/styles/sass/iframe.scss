@@ -1,22 +1,40 @@
 .element__iframe{
   // width: 100%;
-  height: calc(100% - 60px);
+  // height: calc(100% - 60px);
+  min-height:auto;
   padding: $small-padding;
   min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: visible;
   // @extend %editor_nav;
-
+  &:hover .element__addURL{
+    min-height:40px;
+    background-color: $light-gray;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+  }
 }
 .element__addURL{
+  display: none;
+}
+
+// .previewMode .element__addURL{
+//   display: none;
+// }
+
+.element__addURL:hover {
+  min-height:40px;
   background-color: $light-gray;
   margin: 0;
-  height:auto;
   display: flex;
   flex-direction: row;
 }
 
 iframe{
   width:100%;
-  height:100%;
+  height: 100%;
   background-color: $lighter-gray;
 
 }

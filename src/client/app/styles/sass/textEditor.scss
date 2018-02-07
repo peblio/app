@@ -44,13 +44,23 @@
 
 .element__control{
   fill: black;
+
   &:hover {
     fill: $light-gray;
     cursor: pointer;
   }
 }
+
+.resize-container .element__close{
+ display: none;
+}
+  .resize-container:hover .element__close {
+display: inline-block;
+  }
+
 .element__close{
   @extend %element_controls;
+
 }
 
 .element__close:hover #ShapeCNTRL{
@@ -60,4 +70,5 @@
 
 .dragClassName{
   @extend %element_controls;
+
 }
