@@ -13,15 +13,15 @@
                 <g id="Group-15" transform="translate(0.000000, 18.000000)">
                     <g id="Combined-Shape">
                         <use fill="#D8D8D8" xlink:href="#path-1"></use>
-                        <use id="previewOff" fill="#FFFFFF" xlink:href="#path-1"></use>
+                        <use id="preview-off" fill="#FFFFFF" xlink:href="#path-1"></use>
                     </g>
                     <g id="Path-5">
                         <use fill="#D8D8D8" xlink:href="#path-2"></use>
-                        <use id="previewOff" fill="#FFFFFF" xlink:href="#path-2"></use>
+                        <use id="preview-off" fill="#FFFFFF" xlink:href="#path-2"></use>
                     </g>
                     <g id="Path-6">
                         <use fill="#D8D8D8" xlink:href="#path-3"></use>
-                        <use id="previewOff" fill="#FFFFFF" xlink:href="#path-3"></use>
+                        <use id="preview-off" fill="#FFFFFF" xlink:href="#path-3"></use>
                     </g>
                 </g>
             </g>
