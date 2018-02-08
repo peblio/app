@@ -1,4 +1,4 @@
-<svg className='insertToolbar__icon' width="31px" height="16px" viewBox="0 0 31 16" version="1.1">
+<svg className='insert-toolbar__icon' width="31px" height="16px" viewBox="0 0 31 16" version="1.1">
   <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g id="Shape" transform="translate(-53.000000, -64.000000)" stroke="#FFFFFF">
           <rect id="Shape" id="Rectangle-25" x="53.5" y="66.5" width="30" height="13"></rect>

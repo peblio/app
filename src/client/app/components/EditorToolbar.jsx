@@ -7,17 +7,17 @@ import PauseSVG from '../images/pause.svg';
 class EditorToolbar extends React.Component {
   render() {
     return (
-      <div className="editorToolbar__container">
+      <div className="editor-toolbar__container">
         <div>
           <select
-            className="editorToolbar__item"
+            className="editor-toolbar__item"
             id="test"
             onChange={(event) => { this.props.setEditorMode(event.target.value); }}
           >
             <option value="p5">p5</option>
           </select>
           <button
-            className="editorToolbar__svg"
+            className="editor-toolbar__svg"
             onClick={() => {
               this.props.playCode();
               if (this.props.isPlaying) { this.props.startCodeRefresh(); }
@@ -26,21 +26,21 @@ class EditorToolbar extends React.Component {
             <PlaySVG alt="Run Code" />
           </button>
           <button
-            className="editorToolbar__svg"
+            className="editor-toolbar__svg"
             onClick={this.props.stopCode}
           >
             <PauseSVG alt="Pause Code" />
           </button>
         </div>
-        <ul className="editorToolbar__files">
+        <ul className="editor-toolbar__files">
           {
             this.props.files.map((file, index) => (
-              <li key={file.id} className="editorToolbar__file">
+              <li key={file.id} className="editor-toolbar__file">
                 <button
                   onClick={() => this.props.setCurrentFile(index)}
                   className={
-                    `editorToolbar__file-button
-                    ${(this.props.currentFile === index) ? 'editorToolbar__file-button--selected' : ''}`
+                    `editor-toolbar__file-button
+                    ${(this.props.currentFile === index) ? 'editor-toolbar__file-button--selected' : ''}`
                   }
                 >
                   {file.name}

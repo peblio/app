@@ -17,7 +17,7 @@ class TextEditor extends React.Component {
 
   render() {
     return (
-      <div id={this.props.id} onFocus={this.setCurrentEditor.bind(this)} className="textEditor__container">
+      <div id={this.props.id} onFocus={this.setCurrentEditor.bind(this)} className="text-editor__container">
         { this.props.preview ||
           <nav>
             <button
@@ -48,11 +48,11 @@ class TextEditor extends React.Component {
             },
             link: { inDropdown: true },
             history: { inDropdown: true },
-            image: { className: 'textEditor__image', popupClassName: 'textEditor__imagePopup' },
+            image: { className: 'text-editor__image', popupClassName: 'text-editor__imagePopup' },
 
           }}
-          toolbarClassName="textEditor__toolbar"
-          editorClassName="textEditor__content"
+          toolbarClassName="text-editor__toolbar"
+          editorClassName="text-editor__content"
           // wrapperClassName="wrapperClassName"
           editorState={this.props.editorState}
           onEditorStateChange={this.onChange.bind(this)}

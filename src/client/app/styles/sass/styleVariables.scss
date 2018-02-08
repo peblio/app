@@ -12,8 +12,6 @@
     color: $black;
     background: $white;
     cursor: pointer;
-    // box-shadow: 1px 1px 3px $boxShaddow-gray;
-
   }
 }
 
@@ -33,7 +31,6 @@
 }
 
 //deleting and moving elements on the canvas
-
 %element_controls{
   border: none;
   background-color: white;
@@ -41,13 +38,11 @@
   -webkit-transition-duration: .5s;
   transition-duration: .5s;
   margin: -20px 0 0px 0px !important;
-
-
   &:hover{
-  cursor: pointer;
-  fill: black;
-  border: none;
-  fill: $light-gray;
+    cursor: pointer;
+    fill: black;
+    border: none;
+    fill: $light-gray;
   }
 }
 

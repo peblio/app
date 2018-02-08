@@ -1,14 +1,18 @@
+iframe{
+  width:100%;
+  height: 100%;
+  background-color: $lighter-gray;
+
+}
+
 .element__iframe{
-  // width: 100%;
-  // height: calc(100% - 60px);
   min-height:auto;
   padding: $small-padding;
   min-width: 300px;
   display: flex;
   flex-direction: column;
   overflow-y: visible;
-  // @extend %editor_nav;
-  &:hover .element__addURL{
+  &:hover .element__add-url{
     min-height:40px;
     background-color: $light-gray;
     margin: 0;
@@ -16,15 +20,11 @@
     flex-direction: row;
   }
 }
-.element__addURL{
+.element__add-url{
   display: none;
 }
 
-// .previewMode .element__addURL{
-//   display: none;
-// }
-
-.element__addURL:hover {
+.element__add-url:hover {
   min-height:40px;
   background-color: $light-gray;
   margin: 0;
@@ -32,12 +32,6 @@
   flex-direction: row;
 }
 
-iframe{
-  width:100%;
-  height: 100%;
-  background-color: $lighter-gray;
-
-}
 
 .element__label{
   margin-right: $small-margin;
@@ -47,25 +41,25 @@ iframe{
 }
 
 .element__input{
-margin-left: $small-padding;
-width:calc(100% - 50px);
-height:1.5rem;
-border: 1px black;
-border-radius: $small-border-radius;
-padding: $small-padding;
+  margin-left: $small-padding;
+  width:calc(100% - 50px);
+  height:1.5rem;
+  border: 1px $black;
+  border-radius: $small-border-radius;
+  padding: $small-padding;
 }
 
 .element__button{
   width:80px;
   height:1.5rem;
   margin: $small-padding;
-  border: 1px black;
+  border: 1px $black;
   border-radius: $small-border-radius;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
   &:hover {
     background-color: $dark-gray;
-    color: white;
+    color: $white;
     border: none;
     cursor: pointer;
   }

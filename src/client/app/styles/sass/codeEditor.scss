@@ -1,15 +1,15 @@
-.CodeMirror-scroll {
+.CodeMirror-scroll { // sass-lint:disable-line class-name-format
   z-index: 0;
 }
 
-.codeEditor__container {
+.code-editor__container {
   position: relative;
   width: 100%;
   height: 90%;
   box-shadow: 0px 0px 10px $light-gray;
 }
 
-.codeEditor__sub-container {
+.code-editor__sub-container {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -18,24 +18,24 @@
 
 }
 
-.codeEditor__input {
+.code-editor__input {
   height: 100%;
   border-right: $thin-border-width solid $gray;
   overflow:scroll;
 
 }
-.codeEditor__output--overlay {
+.code-editor__output-overlay {
   height: 100%;
   width: 100%;
   position: absolute;
   z-index: 10;
   display: none;
-  &-show {
+  &--show { // sass-lint:disable-line class-name-format
     display: block;
   }
 }
 
-.codeEditor__output {
+.code-editor__output {
   width: 100%;
   height: 100%;
   overflow:scroll;
@@ -45,11 +45,11 @@
   z-index: 10;
 }
 
-.codeEditor__output-text {
+.code-editor__output-text {
   color:$white;
 }
 
-.codeEditor__console{
+.code-editor__console{
   background-color: $black;
   color:$white;
   padding: 0 $small-padding;
@@ -69,7 +69,7 @@ canvas{
   margin: 0;
 }
 
-.codeEditor_totalContainer{
+.code-editor_total-container{
   display: flex;
   flex-direction: column;
   padding: $small-padding;
@@ -77,20 +77,20 @@ canvas{
   width: auto;
 }
 
-.console_outputText{
+.console__output-text{
   font-family: 'Inconsolata', monospace !important;
   margin: 0;
   padding: $small-padding;
 }
 
-.codeEditor__console{
+.code-editor__console{
   border-radius: 0 0  $medium-border-radius $medium-border-radius;
   background-color: $dark-gray;
   height: 100%;
   overflow-y: scroll;
 }
 
-
+// sass-lint:disable class-name-format
 .Resizer {
   background: #000;
   opacity: .2;

@@ -6,7 +6,7 @@ class ConsoleOutput extends React.Component {
   render() {
     return (
       <div className="console_outputDiv">
-        <p className="console_outputText"> {this.props.consoleOutputText.join('\n')} </p>
+        <p className="console__output-text"> {this.props.consoleOutputText.join('\n')} </p>
       </div>
     );
   }

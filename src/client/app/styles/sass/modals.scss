@@ -1,4 +1,4 @@
-.ReactModal__Overlay {
+.ReactModal__Overlay { // sass-lint:disable-line class-name-format
   z-index: 1000;
 }
 
@@ -14,7 +14,7 @@
   height: 10%;
 }
 
-.modal__closeButton{
+.modal__close-button{
   float:right;
   padding: 4px;
 }

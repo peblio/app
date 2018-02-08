@@ -1,24 +1,19 @@
-// .public-DraftEditor-content{
-// margin: $small-padding;
-// }
-.DraftEditor-editorContainer{
-  // border: 1px solid $light-gray;
-  // padding: $small-padding;
+.DraftEditor-editorContainer { // sass-lint:disable-line class-name-format
   margin-top: -5px;
   height: 100%;
 }
 
-.textEditor__container {
+.text-editor__container {
   width: 100%;
   margin: 0;
 }
 
-.textEditor__nav {
+.text-editor__nav {
   width: 100%;
   margin: 0;
 }
 
-.textEditor__toolbar {
+.text-editor__toolbar {
   position: absolute;
   transform: translateY(-94%);
   z-index: 100;
@@ -32,14 +27,8 @@
   color:black;
 }
 
-.textEditor__content {
+.text-editor__content {
   padding: 10px;
-}
-.textToolbar__container{
-  background-color: $black;
-  overflow: visible;
-  width: 100%;
-  border-radius: 0 0 $small-border-radius $small-border-radius;
 }
 
 .element__control{
@@ -52,23 +41,22 @@
 }
 
 .resize-container .element__close{
- display: none;
+  display: none;
 }
-  .resize-container:hover .element__close {
-display: inline-block;
-  }
+
+.resize-container:hover .element__close {
+  display: inline-block;
+}
 
 .element__close{
   @extend %element_controls;
-
 }
 
 .element__close:hover #ShapeCNTRL{
-    fill:$light-gray;
+  fill:$light-gray;
 }
 
-
-.dragClassName{
+.dragClassName{ // sass-lint:disable-line class-name-format
   @extend %element_controls;
 
 }
