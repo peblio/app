@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const sassLintPlugin = require('sasslint-webpack-plugin');
 
 const BUILD_DIR = path.resolve(__dirname, 'src/client/public');
 const APP_DIR = path.resolve(__dirname, 'src/client/app');
@@ -34,7 +35,13 @@ const config = {
   },
   node: {
     fs: 'empty'
-  }
+  },
+  plugins: [
+    new sassLintPlugin({
+      configFile: '.sass-lint.yml',
+      glob: 'src/**/*.s?(a|c)ss',
+    }),
+  ]
 };
 
 module.exports = config;

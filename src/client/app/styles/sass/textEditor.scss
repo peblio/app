@@ -1,9 +1,4 @@
-// .public-DraftEditor-content{
-// margin: $small-padding;
-// }
 .DraftEditor-editorContainer{
-  // border: 1px solid $light-gray;
-  // padding: $small-padding;
   margin-top: -5px;
   height: 100%;
 }
@@ -52,21 +47,20 @@
 }
 
 .resize-container .element__close{
- display: none;
+  display: none;
 }
-  .resize-container:hover .element__close {
-display: inline-block;
-  }
+
+.resize-container:hover .element__close {
+  display: inline-block;
+}
 
 .element__close{
   @extend %element_controls;
-
 }
 
 .element__close:hover #ShapeCNTRL{
-    fill:$light-gray;
+  fill:$light-gray;
 }
-
 
 .dragClassName{
   @extend %element_controls;

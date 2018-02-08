@@ -1,4 +1,3 @@
-
 .pages_title{
   margin-left: $large-margin;
   color: $light-gray;
@@ -22,15 +21,14 @@
   background: none;
   float:right;
   fill: $medium-gray;
-    &:hover {
-      border: none;
-      background: none;
-      float:right;
-      box-shadow: none;
-      fill: $dark-gray;
-    }
+  &:hover {
+    border: none;
+    background: none;
+    float:right;
+    box-shadow: none;
+    fill: $dark-gray;
+  }
 }
-
 
 .modal__closeButton{
   float:right;
