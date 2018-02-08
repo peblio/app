@@ -12,7 +12,7 @@ iframe{
   display: flex;
   flex-direction: column;
   overflow-y: visible;
-  &:hover .element__addURL{
+  &:hover .element__add-url{
     min-height:40px;
     background-color: $light-gray;
     margin: 0;
@@ -20,11 +20,11 @@ iframe{
     flex-direction: row;
   }
 }
-.element__addURL{
+.element__add-url{
   display: none;
 }
 
-.element__addURL:hover {
+.element__add-url:hover {
   min-height:40px;
   background-color: $light-gray;
   margin: 0;

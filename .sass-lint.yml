@@ -24,3 +24,7 @@ rules:
     - 2
     -
       size: 2
+  class-name-format:
+    - 2
+    -
+      convention: strictbem

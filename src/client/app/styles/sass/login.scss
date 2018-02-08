@@ -1,22 +1,22 @@
-.loginModal_content{
+.login-modal__content{
   margin: auto;
   width: 45%;
   padding-top: 5%;
 }
 
-.loginModal_div{
+.login-modal__div{
   display: block;
   text-align: left;
 }
 
-.loginModal_title{
+.login-modal__title{
   font-size: 35px;
   display: block;
   text-align: center;
   margin: $small-margin;
 }
 
-.loginModal_label{
+.login-modal__label{
   font-size: 20px;
   font-style: bold;
   text-align: left;
@@ -25,7 +25,7 @@
   margin-top: $medium-margin;
 }
 
-.loginModal_input{
+.login-modal__input{
   border-radius: $small-border-radius;
   width:100%;
   height: 35px;
@@ -35,7 +35,7 @@
   padding: $small-padding $medium-padding;
 }
 
-.loginModal_button{
+.login-modal__button{
   font-size: 20px;
   background-color: $gray;
   display: block;

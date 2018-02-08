@@ -1,8 +1,8 @@
-.mainToolbar__container{
+.main-toolbar__container{
   width: 100%;
 }
 
-.mainToolbar{
+.main-toolbar{
   padding: 0 $large-padding $small-padding 0;
   background-color: $black;
   height: 3.5em;
@@ -13,7 +13,7 @@
   padding: $medium-padding/2 $medium-padding;
 }
 
-.mainToolbar__title{
+.main-toolbar__title{
   height:35px;
   margin: $medium-padding 0 0;
   padding: $small-padding;
@@ -28,10 +28,10 @@
   float: left;
  }
 
-.mainToolbar__save {
+.main-toolbar__save {
   @extend %mainToolbar__blueButton
 }
-.mainToolbar__welcome {
+.main-toolbar__welcome {
   color: $white;
   margin: $medium-margin $small-margin;
   padding: $medium-padding/2 $medium-padding;
@@ -40,35 +40,35 @@
   font-weight: bold;
 }
 
-.mainToolbar__preview {
+.main-toolbar__preview {
   color: $white;
   margin: $medium-margin $small-margin;
   padding: $medium-padding/2 $medium-padding;
 }
 
-.mainToolbar__file{
+.main-toolbar__file{
   @extend %mainToolbar__button;
   position: relative;
 }
 
-.mainToolbar__button{
+.main-toolbar__button{
   @extend %mainToolbar__button;
 }
 
-.mainToolbar__new{
+.main-toolbar__new{
   @extend %mainToolbar__button;
 }
 
-.mainToolbar__open{
+.main-toolbar__open{
   @extend %mainToolbar__button;
 
 }
-.mainToolbar__div-left{
+.main-toolbar__div-left{
   @include flex;
   float: left;
 }
 
-.upperToolbar__dropdown{
+.upper-toolbar__dropdown{
   margin: $medium-padding $small-padding 0;
   border: none;
   border-radius: 0;
@@ -81,7 +81,7 @@
 }
 
 
-.mainToolbar__div-right{
+.main-toolbar__div-right{
   @include flex;
   float: right;
 }
@@ -92,41 +92,41 @@ input[type="checkbox"] {
 label {
   cursor: pointer;
 }
-.mainToolbar__previewOn{
+.main-toolbar__preview-on{
   display: none;
 }
 
-input[type="checkbox"]:checked ~ .mainToolbar__previewOn {
+input[type="checkbox"]:checked ~ .main-toolbar__preview-on {
   display:  inline-block;
 }
 
-input[type="checkbox"]:checked ~ .mainToolbar__previewOff {
+input[type="checkbox"]:checked ~ .main-toolbar__preview-off {
   display: none;
 }
 
-input[type="checkbox"] ~ .mainToolbar__previewOff {
+input[type="checkbox"] ~ .main-toolbar__preview-off {
   display: inline-block;
 }
 
-.mainToolbar__previewTitle {
+.main-toolbar__preview-title {
   display: inline-block;
   vertical-align: middle;
   padding-left: $small-padding;
 
 }
 
-.mainToolbar__preview:hover .mainToolbar__previewTitle {
+.main-toolbar__preview:hover .main-toolbar__preview-title {
   color: $blue;
 }
 
-.mainToolbar__preview:hover #previewOn {
+.main-toolbar__preview:hover #preview-on {
   fill: $blue;
 }
-.mainToolbar__preview:hover #previewOff {
+.main-toolbar__preview:hover #preview-off {
   fill: $blue;
 }
 
-.demoNotice{
+.demo-notice{
   padding:$small-padding $medium-padding;
   background-color: #E07063;
 }

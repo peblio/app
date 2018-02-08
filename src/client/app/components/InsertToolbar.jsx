@@ -7,24 +7,24 @@ import EmbedSVG from '../images/embed.svg';
 class InsertToolbar extends React.Component {
   render() {
     return (
-      <div className="insertToolbar__container">
+      <div className="insert-toolbar__container">
         <button
           onClick={this.props.addCodeEditor}
-          className="insertToolbar__button"
+          className="insert-toolbar__button"
         >
           <EditorSVG alt="add code editor" />
           Editor
         </button>
         <button
           onClick={this.props.addTextEditor}
-          id="elementButton" className="insertToolbar__button"
+          id="elementButton" className="insert-toolbar__button"
         >
           <TextSVG alt="add text" />
           Textbox
         </button>
         <button
           onClick={this.props.addIframe}
-          className="insertToolbar__button"
+          className="insert-toolbar__button"
         >
           <EmbedSVG alt="add embed" />
           Embed

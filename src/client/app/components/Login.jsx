@@ -27,31 +27,31 @@ class Login extends React.Component {
   }
   render() {
     return (
-      <div className="loginModal_content">
-        <h5 className="loginModal_title">Log In</h5>
+      <div className="login-modal__content">
+        <h5 className="login-modal__title">Log In</h5>
         <form onSubmit={(event) => { this.submitLoginUser(event, this.userName.value, this.userPassword.value); }}>
-          <div className="loginModal_div">
-            <label htmlFor="loginModal-name" className="loginModal_label"> Name
+          <div className="login-modal__div">
+            <label htmlFor="login-modal_-name" className="login-modal__label"> Name
               <input
-                id="loginModal-name"
-                className="loginModal_input"
+                id="login-modal_-name"
+                className="login-modal__input"
                 type="text"
                 ref={(userName) => { this.userName = userName; }}
               />
             </label>
           </div>
-          <div className="loginModal_div">
-            <label htmlFor="loginModal-password" className="loginModal_label"> Password
+          <div className="login-modal__div">
+            <label htmlFor="login-modal_-password" className="login-modal__label"> Password
               <input
-                id="loginModal-password"
-                className="loginModal_input"
+                id="login-modal_-password"
+                className="login-modal__input"
                 type="password"
                 ref={(userPassword) => { this.userPassword = userPassword; }}
               />
             </label>
           </div>
 
-          <input className="loginModal_button" type="submit" value="Submit" />
+          <input className="login-modal__button" type="submit" value="Submit" />
         </form>
       </div>
     );

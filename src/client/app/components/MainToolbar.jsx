@@ -21,20 +21,20 @@ class MainToolbar extends React.Component {
     }
 
     return (
-      <div className="mainToolbar__container">
-        <div className="demoNotice">
+      <div className="main-toolbar__container">
+        <div className="demo-notice">
           This is a demo version of Peblio. Feel free to play around but projects will not yet be permanently saved. <a target="_blank" href="http://peblio-splash-page.webflow.io/#contact">Contact us</a> with feedback. We would love to hear from you!
         </div>
-        <div className="mainToolbar">
-          <div className="mainToolbar__div-left">
+        <div className="main-toolbar">
+          <div className="main-toolbar__div-left">
             <div className="logo_toolbar">
               <ToolbarLogo alt="logo in toolbar" />
             </div>
-            <button className="upperToolbar__dropdown" onClick={this.props.viewExamplesModal}>
+            <button className="upper-toolbar__dropdown" onClick={this.props.viewExamplesModal}>
             Examples
             </button>
-            <div className="fileModal__container">
-              <button className="upperToolbar__dropdown" onClick={this.props.toggleFileDropdown}>
+            <div className="file-modal__container">
+              <button className="upper-toolbar__dropdown" onClick={this.props.toggleFileDropdown}>
               File
               </button>
               { this.props.isFileDropdownOpen &&
@@ -49,52 +49,52 @@ class MainToolbar extends React.Component {
 
           </div>
           <input
-            className="mainToolbar__title"
+            className="main-toolbar__title"
             placeholder="Title"
             type="text"
             value={this.props.pageTitle}
             onChange={this.props.setPageTitle}
           ></input>
-          <div className="mainToolbar__div-right">
-            <label className="mainToolbar__preview" htmlFor="mainToolbar__checkbox">
+          <div className="main-toolbar__div-right">
+            <label className="main-toolbar__preview" htmlFor="main-toolbar__checkbox">
               <input
-                id="mainToolbar__checkbox"
+                id="main-toolbar__checkbox"
                 onChange={this.props.togglePreviewMode}
                 type="checkbox"
                 checked={this.props.preview}
               />
-              <span className="mainToolbar__previewOn">
+              <span className="main-toolbar__preview-on">
                 <PreviewOnSVG alt="preview on" />
-                <span className="mainToolbar__previewTitle">Preview On</span>
+                <span className="main-toolbar__preview-title">Preview On</span>
 
               </span>
-              <span className="mainToolbar__previewOff">
+              <span className="main-toolbar__preview-off">
                 <PreviewOffSVG alt="preview Off" />
-                <span className="mainToolbar__previewTitle">Preview Off</span>
+                <span className="main-toolbar__preview-title">Preview Off</span>
               </span>
 
             </label>
             {(this.props.projectID() || this.props.unsavedChanges) &&
               (
-                <button className="mainToolbar__save" onClick={this.props.savePage}>
+                <button className="main-toolbar__save" onClick={this.props.savePage}>
                   {saveButtonText}
                 </button>
               )
             }
-            <button className="mainToolbar__button" onClick={this.props.viewShareModal}>
+            <button className="main-toolbar__button" onClick={this.props.viewShareModal}>
               Share
             </button>
             { this.props.name ? (
               <div>
-                <a className="mainToolbar__button" href="/logout">Logout</a>
-                <p className="mainToolbar__welcome">
+                <a className="main-toolbar__button" href="/logout">Logout</a>
+                <p className="main-toolbar__welcome">
                       Welcome {this.props.name}!
                 </p>
               </div>
             ) : (
               <div>
-                <button className="mainToolbar__button" onClick={this.props.viewLoginModal}>Log In</button>
-                <button className="mainToolbar__button" onClick={this.props.viewSignUpModal}>Sign Up</button>
+                <button className="main-toolbar__button" onClick={this.props.viewLoginModal}>Log In</button>
+                <button className="main-toolbar__button" onClick={this.props.viewSignUpModal}>Sign Up</button>
               </div>
             ) }
           </div>

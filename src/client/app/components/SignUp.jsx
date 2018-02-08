@@ -27,39 +27,39 @@ class SignUp extends React.Component {
 
   render() {
     return (
-      <div className="signupModal__content">
-        <h5 className="signupModal__title">Sign Up</h5>
+      <div className="signup-modal__content">
+        <h5 className="signup-modal__title">Sign Up</h5>
         <form onSubmit={(event) => { this.submitSignUpUser(event, this.userName.value, this.userPassword.value); }}>
-          <div className="signupModal__div">
+          <div className="signup-modal__div">
             <label
-              className="signupModal__label"
-              htmlFor="signupModal-name"
+              className="signup-modal__label"
+              htmlFor="signup-modal-name"
             >
               Name
               <input
-                className="signupModal__input"
-                id="signupModal-name"
+                className="signup-modal__input"
+                id="signup-modal-name"
                 ref={(userName) => { this.userName = userName; }}
                 type="text"
               />
             </label>
           </div>
-          <div className="signupModal__div">
+          <div className="signup-modal__div">
             <label
-              className="signupModal__label"
-              htmlFor="signupModal-password"
+              className="signup-modal__label"
+              htmlFor="signup-modal-password"
             >
               Password
               <input
-                className="signupModal__input"
-                id="signupModal-password"
+                className="signup-modal__input"
+                id="signup-modal-password"
                 ref={(userPassword) => { this.userPassword = userPassword; }}
                 type="password"
               />
             </label>
           </div>
           <input
-            className="signupModal__button"
+            className="signup-modal__button"
             type="submit"
             value="Submit"
           />

@@ -1,4 +1,4 @@
-.editorToolbar__container {
+.editor-toolbar__container {
   display: flex;
   flex-direction: column;
   background-color: $light-gray;
@@ -11,11 +11,11 @@
   z-index: 100;
 }
 
-.editorToolbar__item {
+.editor-toolbar__item {
   @extend %small-button;
 }
 
-.editorToolbar__svg{
+.editor-toolbar__svg{
   border: none;
   border-radius: $small-border-radius;
   width: 1.5rem;
@@ -29,14 +29,14 @@
   }
 }
 
-.editorToolbar__svg:hover #playPause {
+.editor-toolbar__svg:hover #playPause {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
   fill:$light-gray;
   stroke:$light-gray;
 }
 
-.editorToolbar {
+.editor-toolbar {
   &__files {
     display: flex;
     margin: 0;
@@ -54,7 +54,7 @@
       background-color: white;
       color: gray;
       height:100%;
-      &:hover, &--selected {
+      &:hover, &--selected { // sass-lint:disable-line class-name-format
         border: none;
         background-color: $lighter-gray;
         color: $black;
