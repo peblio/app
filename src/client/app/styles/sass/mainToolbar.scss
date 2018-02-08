@@ -1,7 +1,16 @@
+
+.mainToolbar__container{
+  // position: fixed;
+  // z-index: 10;
+  width: 100%;
+
+}
 .mainToolbar{
   padding: 0 $large-padding $small-padding 0;
   background-color: $black;
   height: 3.5em;
+  // position: fixed;
+  // z-index: 10;
   // box-shadow: 3px 5px 5px $light-gray;
 }
 

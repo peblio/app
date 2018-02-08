@@ -21,7 +21,7 @@ class MainToolbar extends React.Component {
     }
 
     return (
-      <div>
+      <div className="mainToolbar__container">
         <div className="demoNotice">
           This is a demo version of Peblio. Feel free to play around but projects will not yet be permanently saved. <a target="_blank" href="http://peblio-splash-page.webflow.io/#contact">Contact us</a> with feedback. We would love to hear from you!
         </div>
