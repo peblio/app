@@ -105,7 +105,11 @@ class EditorContainer extends React.Component {
                 }
                 </div>
                 <div className="code-editor__output">
-                  <div className={`code-editor__output-overlay ${this.state.isResizing ? 'code-editor__output-overlay--show' : ''}`}>
+                  <div
+                    className={`code-editor__output-overlay
+                      ${this.state.isResizing ?
+                      'code-editor__output-overlay--show' : ''}`}
+                  >
                   </div>
                   { this.props.isPlaying && (
                 this.props.editorMode === 'p5' ? (
@@ -156,14 +160,18 @@ EditorContainer.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
+  innerHeight: PropTypes.number.isRequired,
+  innerWidth: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isRefreshing: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
   removeEditor: PropTypes.func.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
-  setEditorMode: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
+  setEditorMode: PropTypes.func.isRequired,
+  setInnerHeight: PropTypes.func.isRequired,
+  setInnerWidth: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,

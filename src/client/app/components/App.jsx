@@ -130,7 +130,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div
+      <div // eslint-disable-line
         tabIndex="0"
         onKeyDown={this.onKeyPressed}
       >

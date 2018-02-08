@@ -127,6 +127,8 @@ Canvas.propTypes = {
   setEditorPosition: PropTypes.func.isRequired,
   setEditorSize: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired,
+  setInnerHeight: PropTypes.func.isRequired,
+  setInnerWidth: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
