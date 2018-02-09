@@ -130,7 +130,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div
+      <div // eslint-disable-line
         tabIndex="0"
         onKeyDown={this.onKeyPressed}
       >
@@ -149,6 +149,7 @@ class App extends React.Component {
             setPageTitle={this.props.setPageTitle}
             savePage={this.savePage}
             toggleFileDropdown={this.props.toggleFileDropdown}
+            toggleAccountDropdown={this.props.toggleAccountDropdown}
             togglePreviewMode={this.props.togglePreviewMode}
             unsavedChanges={this.props.unsavedChanges}
             viewExamplesModal={this.props.viewExamplesModal}
@@ -173,7 +174,6 @@ class App extends React.Component {
           stopCode={this.props.stopCode}
           startCodeRefresh={this.props.startCodeRefresh}
           stopCodeRefresh={this.props.stopCodeRefresh}
-          updateCode={this.props.updateCode}
           clearConsoleOutput={this.props.clearConsoleOutput}
           updateConsoleOutput={this.props.updateConsoleOutput}
           setEditorMode={this.props.setEditorMode}
@@ -264,6 +264,7 @@ App.propTypes = {
   name: PropTypes.string.isRequired,
 
   isFileDropdownOpen: PropTypes.bool.isRequired,
+  isAccountDropdownOpen: PropTypes.bool.isRequired,
   isPagesModalOpen: PropTypes.bool.isRequired,
   isLoginModalOpen: PropTypes.bool.isRequired,
   isSignUpModalOpen: PropTypes.bool.isRequired,
@@ -282,7 +283,6 @@ App.propTypes = {
   stopCode: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
-  updateCode: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
   clearConsoleOutput: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
@@ -324,8 +324,8 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    editors: state.editors.editors,
-    editorIndex: state.editors.editorIndex,
+    editors: state.editorsReducer.editors,
+    editorIndex: state.editorsReducer.editorIndex,
 
     pageTitle: state.page.pageTitle,
     id: state.page.id,

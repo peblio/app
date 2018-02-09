@@ -35,17 +35,22 @@ class TextEditor extends React.Component {
           id={this.props.id}
           toolbarOnFocus
           toolbar={{
-            options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'emoji','embedded', 'image','history'], //eslint-disable-line
+            options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'emoji','history'], //eslint-disable-line
             inline: {
               options: ['bold', 'italic', 'underline', 'strikethrough']
             },
+            blockType: {
+              isDropDown: true,
+              options: ['H1', 'H2', 'Blockquote', 'Code'],
+            },
             list: {
-              inDropdown: false,
+              inDropdown: true,
               className: undefined,
               component: undefined,
               dropdownClassName: undefined,
               options: ['unordered', 'ordered'],
             },
+            textAlign: { inDropdown: true },
             link: { inDropdown: true },
             history: { inDropdown: true },
             image: { className: 'text-editor__image', popupClassName: 'text-editor__imagePopup' },
@@ -53,7 +58,6 @@ class TextEditor extends React.Component {
           }}
           toolbarClassName="text-editor__toolbar"
           editorClassName="text-editor__content"
-          // wrapperClassName="wrapperClassName"
           editorState={this.props.editorState}
           onEditorStateChange={this.onChange.bind(this)}
           placeholder="Enter some text..."
