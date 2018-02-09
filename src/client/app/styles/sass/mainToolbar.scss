@@ -33,8 +33,8 @@
 }
 
 .main-toolbar__accountButton{
-  margin: $medium-margin $small-margin;
-  padding: $medium-padding/2 $medium-padding;
+  margin: $small-margin;
+  padding: $small-padding;
   border: none;
   background: $black;
   -webkit-transition-duration: 150ms; /* Safari */
@@ -65,6 +65,7 @@
   padding: $small-padding;
   position: absolute;
   border-radius: $medium-border-radius;
+  margin-left: -20px;
 }
 
 .main-toolbar__preview {
