@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import FileModal from './FileModal.jsx';
 import InsertToolbar from './InsertToolbar.jsx';
 import ToolbarLogo from '../images/logo.svg';
-import EditorSVG from '../images/editor.svg';
 import CheckSVG from '../images/check.svg';
 import PreviewOnSVG from '../images/previewOnSVG.svg';
 import PreviewOffSVG from '../images/previewOffSVG.svg';
@@ -23,7 +22,17 @@ class MainToolbar extends React.Component {
     return (
       <div className="main-toolbar__container">
         <div className="demo-notice">
-          This is a demo version of Peblio. Feel free to play around but projects will not yet be permanently saved. <a target="_blank" href="http://peblio-splash-page.webflow.io/#contact">Contact us</a> with feedback. We would love to hear from you!
+          This is a demo version of Peblio.
+          &nbsp;Feel free to play around but projects will not yet be permanently saved.&nbsp;
+          <a
+            target="_blank"
+            href="http://peblio-splash-page.webflow.io/#contact"
+            rel="noopener noreferrer"
+          >
+          Contact us
+          </a>
+          &nbsp;with feedback.
+          &nbsp;We would love to hear from you!
         </div>
         <div className="main-toolbar">
           <div className="main-toolbar__div-left">

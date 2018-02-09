@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 
-import editors from './editors.jsx';
+import editorsReducer from './editors.jsx';
 import mainToolbar from './mainToolbar.jsx';
 import page from './page.jsx';
 import user from './user.jsx';
 
 const rootReducer = combineReducers({
-  editors,
+  editorsReducer,
   mainToolbar,
   page,
   user

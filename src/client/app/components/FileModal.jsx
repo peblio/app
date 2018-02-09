@@ -11,7 +11,7 @@ class FileModal extends React.Component {
         { this.props.name &&
           <div>
             <li className="file-modal__item">
-              <a
+              <a // eslint-disable-line
                 className="file-modal__link" onClick={() => {
                   this.props.viewPagesModal();
                   this.props.toggleFileDropdown();
@@ -21,7 +21,7 @@ class FileModal extends React.Component {
               </a>
             </li>
             <li className="file-modal__item">
-              <a
+              <a  // eslint-disable-line
                 className="file-modal__link" onClick={() => {
                   this.props.savePage();
                   this.props.toggleFileDropdown();

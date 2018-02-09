@@ -3,9 +3,7 @@ import React from 'react';
 import SplitPane from 'react-split-pane';
 
 import P5Editor from './P5Editor.jsx';
-import JavascriptEditor from './JavascriptEditor.jsx';
 import P5Output from './P5Output.jsx';
-import JavascriptOutput from './JavascriptOutput.jsx';
 import EditorToolbar from './EditorToolbar.jsx';
 import ConsoleOutput from './ConsoleOutput.jsx';
 import DragSVG from '../images/drag.svg';
@@ -28,7 +26,6 @@ class EditorContainer extends React.Component {
     this.setInnerHeight = value => this.props.setInnerHeight(this.props.id, value);
     this.startCodeRefresh = () => this.props.startCodeRefresh(this.props.id);
     this.stopCodeRefresh = () => this.props.stopCodeRefresh(this.props.id);
-    this.updateCode = val => this.props.updateCode(this.props.id, val);
     this.updateFile = (index, file) => this.props.updateFile(this.props.id, index, file);
     this.setCurrentFile = index => this.props.setCurrentFile(this.props.id, index);
     this.clearConsoleOutput = () => this.props.clearConsoleOutput(this.props.id);
@@ -89,46 +86,32 @@ class EditorContainer extends React.Component {
                 onDragFinished={(size) => { this.finishResize(); this.setInnerWidth(size); }}
               >
                 <div className="code-editor__input">
-                  { this.props.editorMode === 'p5' ? (
+                  { this.props.editorMode === 'p5' &&
                     <P5Editor
                       currentFile={this.props.currentFile}
-                      editorCode={this.props.code}
                       files={this.props.files}
-                      updateCode={this.updateCode}
                       updateFile={this.updateFile}
                     />
-                ) : this.props.editorMode === 'javascript' &&
-                  <JavascriptEditor
-                    editorCode={this.props.code}
-                    updateCode={this.updateCode}
-                  />
-                }
+                  }
                 </div>
                 <div className="code-editor__output">
-                  <div className={`code-editor__output-overlay ${this.state.isResizing ? 'code-editor__output-overlay--show' : ''}`}>
+                  <div
+                    className={`code-editor__output-overlay
+                      ${this.state.isResizing ?
+                      'code-editor__output-overlay--show' : ''}`}
+                  >
                   </div>
                   { this.props.isPlaying && (
-                this.props.editorMode === 'p5' ? (
+                this.props.editorMode === 'p5' &&
                   <P5Output
                     clearConsoleOutput={this.clearConsoleOutput}
-                    editorCode={this.props.code}
                     files={this.props.files}
                     isPlaying={this.props.isPlaying}
                     isRefreshing={this.props.isRefreshing}
                     stopCodeRefresh={this.stopCodeRefresh}
-                    updateCode={this.updateCode}
                     updateConsoleOutput={this.updateConsoleOutput}
                   />
-                ) : this.props.editorMode === 'javascript' && (
-                  <JavascriptOutput
-                    editorCode={this.props.code}
-                    updateCode={this.updateCode}
-                    isPlaying={this.props.isPlaying}
-                    updateConsoleOutput={this.updateConsoleOutput}
-                    consoleOutputText={this.props.consoleOutputText}
-                  />
-                )
-              )}
+                )}
                 </div>
               </SplitPane>
             </div>
@@ -148,7 +131,6 @@ class EditorContainer extends React.Component {
 EditorContainer.propTypes = {
   id: PropTypes.string.isRequired,
   clearConsoleOutput: PropTypes.func.isRequired,
-  code: PropTypes.string.isRequired,
   consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired,
   currentFile: PropTypes.number.isRequired,
   editorMode: PropTypes.string.isRequired,
@@ -156,18 +138,21 @@ EditorContainer.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
+  innerHeight: PropTypes.number.isRequired,
+  innerWidth: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isRefreshing: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
   removeEditor: PropTypes.func.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
-  setEditorMode: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
+  setEditorMode: PropTypes.func.isRequired,
+  setInnerHeight: PropTypes.func.isRequired,
+  setInnerWidth: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
-  updateCode: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired
 };
