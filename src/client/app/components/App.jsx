@@ -172,7 +172,6 @@ class App extends React.Component {
           stopCode={this.props.stopCode}
           startCodeRefresh={this.props.startCodeRefresh}
           stopCodeRefresh={this.props.stopCodeRefresh}
-          updateCode={this.props.updateCode}
           clearConsoleOutput={this.props.clearConsoleOutput}
           updateConsoleOutput={this.props.updateConsoleOutput}
           setEditorMode={this.props.setEditorMode}
@@ -281,7 +280,6 @@ App.propTypes = {
   stopCode: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
-  updateCode: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
   clearConsoleOutput: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
@@ -322,8 +320,8 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    editors: state.editors.editors,
-    editorIndex: state.editors.editorIndex,
+    editors: state.editorsReducer.editors,
+    editorIndex: state.editorsReducer.editorIndex,
 
     pageTitle: state.page.pageTitle,
     id: state.page.id,

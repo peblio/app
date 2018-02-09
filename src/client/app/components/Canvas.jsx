@@ -32,7 +32,6 @@ class Canvas extends React.Component {
         setInnerHeight={this.props.setInnerHeight}
         stopCode={this.props.stopCode}
         stopCodeRefresh={this.props.stopCodeRefresh}
-        updateCode={this.props.updateCode}
         updateConsoleOutput={this.props.updateConsoleOutput}
         updateFile={this.props.updateFile}
       />
@@ -132,7 +131,6 @@ Canvas.propTypes = {
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
-  updateCode: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired
