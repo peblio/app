@@ -84,13 +84,24 @@ class MainToolbar extends React.Component {
             <button className="main-toolbar__button" onClick={this.props.viewShareModal}>
               Share
             </button>
+
+            <button className="upper-toolbar__dropdown" onClick={this.props.toggleAccountDropdown}>
+            ACCOUNT
+            </button>
+            { this.props.isAccountDropdownOpen &&
+              <FileModal
+                name={this.props.name}
+                savePage={this.props.savePage}
+                toggleFileDropdown={this.props.toggleFileDropdown}
+                viewPagesModal={this.props.viewPagesModal}
+              />
+            }
             { this.props.name ? (
-              <div>
-                <a className="main-toolbar__button" href="/logout">Logout</a>
-                <p className="main-toolbar__welcome">
-                      Welcome {this.props.name}!
-                </p>
-              </div>
+              <a className="main-toolbar__button" href="/logout">Logout</a>
+              // <p className="main-toolbar__welcome">
+              //       Welcome {this.props.name}!
+              // </p>
+
             ) : (
               <div>
                 <button className="main-toolbar__button" onClick={this.props.viewLoginModal}>Log In</button>

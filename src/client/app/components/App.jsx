@@ -141,6 +141,7 @@ class App extends React.Component {
             addIframe={this.props.addIframe}
             canEdit={this.props.canEdit}
             isFileDropdownOpen={this.props.isFileDropdownOpen}
+            isAccountDropdownOpen={this.props.isAccountDropdownOpen}
             name={this.props.name}
             pageTitle={this.props.pageTitle}
             preview={this.props.preview}
@@ -311,6 +312,7 @@ App.propTypes = {
   viewSignUpModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
+  toggleAccountDropdown: PropTypes.func.isRequired,
   isShareModalOpen: PropTypes.bool.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
@@ -336,6 +338,7 @@ function mapStateToProps(state) {
     loginPassword: state.user.loginPassword,
     name: state.user.name,
 
+    isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
     isExamplesModalOpen: state.mainToolbar.isExamplesModalOpen,
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isPagesModalOpen: state.mainToolbar.isPagesModalOpen,
