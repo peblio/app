@@ -138,6 +138,7 @@ class App extends React.Component {
           <MainToolbar
             addCodeEditor={this.props.addCodeEditor}
             addTextEditor={this.props.addTextEditor}
+            addQuestionEditor={this.props.addQuestionEditor}
             addIframe={this.props.addIframe}
             canEdit={this.props.canEdit}
             isFileDropdownOpen={this.props.isFileDropdownOpen}
@@ -177,8 +178,13 @@ class App extends React.Component {
           setEditorMode={this.props.setEditorMode}
           setInnerWidth={this.props.setInnerWidth}
           setInnerHeight={this.props.setInnerHeight}
+
           updateTextChange={this.props.updateTextChange}
+
           setIframeURL={this.props.setIframeURL}
+
+          updateQuestionChange={this.props.updateQuestionChange}
+          updateAnswerChange={this.props.updateAnswerChange}
         />
         <Modal
           size="large"
@@ -284,6 +290,7 @@ App.propTypes = {
   clearConsoleOutput: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
+  addQuestionEditor: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired,
@@ -291,6 +298,8 @@ App.propTypes = {
   setCurrentFile: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
   setInnerHeight: PropTypes.func.isRequired,
+  updateQuestionChange: PropTypes.func.isRequired,
+  updateAnswerChange: PropTypes.func.isRequired,
 
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,

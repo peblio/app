@@ -1,0 +1,18 @@
+.question__container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.question__question {
+  background: $black;
+  color: $white;
+  font-family: $helvetica;
+  font-size: $medium-font-size;
+}
+
+.question__answer {
+  height: -webkit-fill-available;
+  font-family: $helvetica;
+  font-size: $normal-font-size;
+}

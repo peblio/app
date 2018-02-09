@@ -111,6 +111,7 @@ class MainToolbar extends React.Component {
         { this.props.preview ||
           <InsertToolbar
             addCodeEditor={this.props.addCodeEditor}
+            addQuestionEditor={this.props.addQuestionEditor}
             addTextEditor={this.props.addTextEditor}
             addIframe={this.props.addIframe}
           />

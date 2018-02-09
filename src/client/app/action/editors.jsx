@@ -194,6 +194,38 @@ export function updateTextChange(id, state) {
   };
 }
 
+/** QUESTION EDITOR */
+export function addQuestionEditor() {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.ADD_QUESTION_EDITOR
+    });
+  };
+}
+
+export function updateQuestionChange(id, text) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.UPDATE_QUESTION_CHANGE,
+      id,
+      text
+    });
+  };
+}
+
+export function updateAnswerChange(id, text) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.UPDATE_ANSWER_CHANGE,
+      id,
+      text
+    });
+  };
+}
+
 /** IFRAME */
 export function addIframe() {
   return (dispatch) => {

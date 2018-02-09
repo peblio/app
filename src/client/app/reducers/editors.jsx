@@ -184,6 +184,36 @@ const editorsReducer = (state = initialState, action) => {
       editors[action.id].editorState = action.state;
       return { ...state, editors };
 
+
+    /** QUESTION EDITOR */
+    case ActionTypes.ADD_QUESTION_EDITOR: {
+      const id = `editor-${state.editorIndex}`;
+      editors[id] = {
+        type: 'question',
+        id,
+        index: stack.length,
+        question: '',
+        answer: '',
+        x: 0,
+        y: 0,
+        width: 500,
+        height: 100,
+        minWidth: 350,
+        minHeight: 100
+      };
+      stack.push(id);
+      const editorIndex = state.editorIndex + 1;
+      return { editors, editorIndex };
+    }
+
+    case ActionTypes.UPDATE_QUESTION_CHANGE:
+      editors[action.id].question = action.text;
+      return { ...state, editors };
+
+    case ActionTypes.UPDATE_ANSWER_CHANGE:
+      editors[action.id].answer = action.text;
+      return { ...state, editors };
+
     /** IFRAME */
     case ActionTypes.ADD_IFRAME: {
       const id = `editor-${state.editorIndex}`;
