@@ -142,6 +142,7 @@ class App extends React.Component {
             addIframe={this.props.addIframe}
             canEdit={this.props.canEdit}
             isFileDropdownOpen={this.props.isFileDropdownOpen}
+            isAccountDropdownOpen={this.props.isAccountDropdownOpen}
             name={this.props.name}
             pageTitle={this.props.pageTitle}
             preview={this.props.preview}
@@ -149,6 +150,7 @@ class App extends React.Component {
             setPageTitle={this.props.setPageTitle}
             savePage={this.savePage}
             toggleFileDropdown={this.props.toggleFileDropdown}
+            toggleAccountDropdown={this.props.toggleAccountDropdown}
             togglePreviewMode={this.props.togglePreviewMode}
             unsavedChanges={this.props.unsavedChanges}
             viewExamplesModal={this.props.viewExamplesModal}
@@ -268,6 +270,7 @@ App.propTypes = {
   name: PropTypes.string.isRequired,
 
   isFileDropdownOpen: PropTypes.bool.isRequired,
+  isAccountDropdownOpen: PropTypes.bool.isRequired,
   isPagesModalOpen: PropTypes.bool.isRequired,
   isLoginModalOpen: PropTypes.bool.isRequired,
   isSignUpModalOpen: PropTypes.bool.isRequired,
@@ -318,6 +321,7 @@ App.propTypes = {
   viewSignUpModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
+  toggleAccountDropdown: PropTypes.func.isRequired,
   isShareModalOpen: PropTypes.bool.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
@@ -343,6 +347,7 @@ function mapStateToProps(state) {
     loginPassword: state.user.loginPassword,
     name: state.user.name,
 
+    isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
     isExamplesModalOpen: state.mainToolbar.isExamplesModalOpen,
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isPagesModalOpen: state.mainToolbar.isPagesModalOpen,

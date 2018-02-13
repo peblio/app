@@ -8,6 +8,14 @@ export function toggleFileDropdown() {
   };
 }
 
+export function toggleAccountDropdown() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.TOGGLE_ACCOUNT_DROPDOWN
+    });
+  };
+}
+
 export function viewPagesModal() {
   return (dispatch) => {
     dispatch({
