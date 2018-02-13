@@ -32,7 +32,7 @@
   @extend %mainToolbar__blueButton
 }
 
-.main-toolbar__accountButton{
+.main-toolbar__account-button{
   margin: $small-margin;
   padding: $small-padding;
   border: none;
@@ -46,16 +46,17 @@
   }
 }
 
-.main-toolbar__accountButton:hover #accountMan{
+.main-toolbar__account-button:hover #accountMan{
     fill:$blue;
 }
 
 .main-toolbar__welcome {
   color: $black;
-  float: right;
+  padding-left: 0.5rem;
   font-size: 14px;
   font-weight: bold;
-  float: right;
+
+
 }
 
 .main-toolbar__account{

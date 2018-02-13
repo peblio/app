@@ -97,7 +97,7 @@ class MainToolbar extends React.Component {
 
             { this.props.name ? (
               <div>
-                <button onClick={this.props.toggleAccountDropdown} className="main-toolbar__accountButton">
+                <button onClick={this.props.toggleAccountDropdown} className="main-toolbar__account-button">
                   <AccountSVG alt="account man" />
                 </button>
                 { this.props.isAccountDropdownOpen &&
