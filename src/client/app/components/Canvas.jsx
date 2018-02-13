@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Rnd from 'react-rnd';
 
 import EditorContainer from './EditorContainer.jsx';
+import Questions from './Questions.jsx';
 import Iframe from './Iframe.jsx';
 import TextEditor from './TextEditor.jsx';
 
@@ -65,6 +66,20 @@ class Canvas extends React.Component {
     );
   }
 
+  renderQuestion(editor) {
+    return (
+      <Questions
+        id={editor.id}
+        answer={editor.answer}
+        preview={this.props.preview}
+        question={editor.question}
+        removeEditor={this.props.removeEditor}
+        setCurrentEditor={this.props.setCurrentEditor}
+        updateAnswerChange={this.props.updateAnswerChange}
+        updateQuestionChange={this.props.updateQuestionChange}
+      />
+    );
+  }
   render() {
     const extendsProps = id => ({
       onMouseEnter: () => { this.props.setCurrentEditor(id); }
@@ -104,6 +119,7 @@ class Canvas extends React.Component {
                 case 'code': return this.renderCodeEditor(this.props.editors[id]);
                 case 'text': return this.renderTextEditor(this.props.editors[id]);
                 case 'iframe': return this.renderIframe(this.props.editors[id]);
+                case 'question': return this.renderQuestion(this.props.editors[id]);
                 default: return null;
               }
             })()}
@@ -131,8 +147,10 @@ Canvas.propTypes = {
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
+  updateAnswerChange: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
+  updateQuestionChange: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired
 };
 

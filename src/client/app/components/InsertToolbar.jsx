@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import EditorSVG from '../images/editor.svg';
-import TextSVG from '../images/text.svg';
 import EmbedSVG from '../images/embed.svg';
+import QuestionSVG from '../images/question.svg';
+import TextSVG from '../images/text.svg';
 
 class InsertToolbar extends React.Component {
   render() {
@@ -29,6 +31,13 @@ class InsertToolbar extends React.Component {
           <EmbedSVG alt="add embed" />
           Embed
         </button>
+        <button
+          onClick={this.props.addQuestionEditor}
+          id="elementButton" className="insert-toolbar__button"
+        >
+          <QuestionSVG alt="add question" />
+          Question
+        </button>
       </div>
     );
   }
@@ -38,7 +47,8 @@ class InsertToolbar extends React.Component {
 InsertToolbar.propTypes = {
   addCodeEditor: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
-  addTextEditor: PropTypes.func.isRequired
+  addTextEditor: PropTypes.func.isRequired,
+  addQuestionEditor: PropTypes.func.isRequired
 };
 
 export default InsertToolbar;

@@ -1,0 +1,22 @@
+.question__container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: $small-padding;
+}
+
+.question__question {
+  background: $black;
+  color: $white;
+  font-family: $helvetica;
+  font-size: $medium-font-size;
+  border-radius: $medium-border-radius $medium-border-radius 0 0;
+}
+
+.question__answer {
+  height: -webkit-fill-available;
+  font-family: $helvetica;
+  font-size: $normal-font-size;
+  border-radius: 0 0  $medium-border-radius $medium-border-radius;
+  border: 1px solid $medium-gray;
+}
