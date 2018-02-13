@@ -31,13 +31,42 @@
 .main-toolbar__save {
   @extend %mainToolbar__blueButton
 }
+
+.main-toolbar__account-button{
+  margin: $small-margin;
+  padding: $small-padding;
+  border: none;
+  background: $black;
+  -webkit-transition-duration: 150ms; /* Safari */
+  transition-duration: 150ms;
+  &:hover {
+    cursor: pointer;
+    background: $black;
+    border: none;
+  }
+}
+
+.main-toolbar__account-button:hover #accountMan{
+    fill:$blue;
+}
+
 .main-toolbar__welcome {
-  color: $white;
-  margin: $medium-margin $small-margin;
-  padding: $medium-padding/2 $medium-padding;
-  float: right;
+  color: $black;
+  padding-left: 0.5rem;
   font-size: 14px;
   font-weight: bold;
+
+
+}
+
+.main-toolbar__account{
+  background-color: $white;
+  border: 2px solid;
+  border-color: $light-gray;
+  padding: $small-padding;
+  position: absolute;
+  border-radius: $medium-border-radius;
+  margin-left: -20px;
 }
 
 .main-toolbar__preview {

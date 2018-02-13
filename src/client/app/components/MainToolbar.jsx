@@ -6,6 +6,7 @@ import ToolbarLogo from '../images/logo.svg';
 import CheckSVG from '../images/check.svg';
 import PreviewOnSVG from '../images/previewOnSVG.svg';
 import PreviewOffSVG from '../images/previewOffSVG.svg';
+import AccountSVG from '../images/account.svg';
 
 
 class MainToolbar extends React.Component {
@@ -93,12 +94,21 @@ class MainToolbar extends React.Component {
             <button className="main-toolbar__button" onClick={this.props.viewShareModal}>
               Share
             </button>
+
             { this.props.name ? (
               <div>
-                <a className="main-toolbar__button" href="/logout">Logout</a>
-                <p className="main-toolbar__welcome">
-                      Welcome {this.props.name}!
-                </p>
+                <button onClick={this.props.toggleAccountDropdown} className="main-toolbar__account-button">
+                  <AccountSVG alt="account man" />
+                </button>
+                { this.props.isAccountDropdownOpen &&
+                  <div className="main-toolbar__account">
+                    <p className="main-toolbar__welcome">
+                      Hi {this.props.name}!
+                    </p>
+                    <a className="file-modal__link" href="/logout">Logout</a>
+
+                  </div>
+              }
               </div>
             ) : (
               <div>
@@ -126,6 +136,7 @@ MainToolbar.propTypes = {
   addIframe: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
+  isAccountDropdownOpen: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
@@ -133,6 +144,7 @@ MainToolbar.propTypes = {
   setPageTitle: PropTypes.func.isRequired,
   savePage: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
+  toggleAccountDropdown: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   viewExamplesModal: PropTypes.func.isRequired,
