@@ -73,6 +73,8 @@ class Canvas extends React.Component {
         answer={editor.answer}
         preview={this.props.preview}
         question={editor.question}
+        removeEditor={this.props.removeEditor}
+        setCurrentEditor={this.props.setCurrentEditor}
         updateAnswerChange={this.props.updateAnswerChange}
         updateQuestionChange={this.props.updateQuestionChange}
       />
@@ -145,8 +147,10 @@ Canvas.propTypes = {
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
+  updateAnswerChange: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
+  updateQuestionChange: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired
 };
 

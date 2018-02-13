@@ -192,7 +192,7 @@ const editorsReducer = (state = initialState, action) => {
         type: 'question',
         id,
         index: stack.length,
-        question: '',
+        question: 'Question',
         answer: '',
         x: 0,
         y: 0,

@@ -123,6 +123,7 @@ class MainToolbar extends React.Component {
 
 MainToolbar.propTypes = {
   addCodeEditor: PropTypes.func.isRequired,
+  addQuestionEditor: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,

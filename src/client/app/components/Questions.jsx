@@ -33,8 +33,19 @@ class Questions extends React.Component {
           </nav>
         }
         <section className="question__container">
-          <textarea className="question__question" onChange={this.updateQuestionChange} defaultValue="Question" value={this.props.question}></textarea>
-          <textarea className="question__answer" onChange={this.updateAnswerChange} defaultValue="This is an answer" value={this.props.answer}></textarea>
+          <textarea
+            className="question__question"
+            onChange={this.updateQuestionChange}
+            value={this.props.question}
+            readOnly={this.props.preview}
+          >
+          </textarea>
+          <textarea
+            className="question__answer"
+            onChange={this.updateAnswerChange}
+            value={this.props.answer}
+          >
+          </textarea>
         </section>
       </div>
     );
@@ -43,11 +54,13 @@ class Questions extends React.Component {
 
 Questions.propTypes = {
   id: PropTypes.string.isRequired,
-  // editorState: PropTypes.shape.isRequired,
-  // onChange: PropTypes.func.isRequired,
-  // preview: PropTypes.bool.isRequired,
-  // setCurrentEditor: PropTypes.func.isRequired,
-  // removeEditor: PropTypes.func.isRequired
+  answer: PropTypes.string.isRequired,
+  preview: PropTypes.bool.isRequired,
+  question: PropTypes.string.isRequired,
+  removeEditor: PropTypes.func.isRequired,
+  setCurrentEditor: PropTypes.func.isRequired,
+  updateAnswerChange: PropTypes.func.isRequired,
+  updateQuestionChange: PropTypes.func.isRequired
 };
 
 export default Questions;
