@@ -11,12 +11,26 @@ import AccountSVG from '../images/account.svg';
 
 class MainToolbar extends React.Component {
   render() {
-    let saveButtonText = <CheckSVG alt="check svg" />;
-    if (this.props.unsavedChanges) {
-      if (this.props.canEdit) {
-        saveButtonText = 'Save';
-      } else {
+    let saveButtonText = 'Fork';
+    if (this.props.name) { // user is logged in
+      if (this.props.canEdit) { // it is users sketch
+        if (this.props.unsavedChanges) { // there are some unsaved changes
+          saveButtonText = 'Save';
+        } else { // there are no unsaved changes
+          if (this.props.projectID()) { // it is not a new sketch
+            saveButtonText = <CheckSVG alt="check svg" />;
+          } else { // it is a new sketch
+            saveButtonText = 'Save';
+          }
+        }
+      } else { // it is not users sketch
         saveButtonText = 'Fork';
+      }
+    } else { // user is not logged in
+      if (this.props.projectID()) { // it is not a new sketch
+        saveButtonText = 'Fork';
+      } else { // it is a new sketch
+        saveButtonText = 'Save';
       }
     }
 
@@ -84,13 +98,9 @@ class MainToolbar extends React.Component {
               </span>
 
             </label>
-            {(this.props.projectID() || this.props.unsavedChanges) &&
-              (
-                <button className="main-toolbar__save" onClick={this.props.savePage}>
-                  {saveButtonText}
-                </button>
-              )
-            }
+            <button className="main-toolbar__save" onClick={this.props.savePage}>
+              {saveButtonText}
+            </button>
             <button className="main-toolbar__button" onClick={this.props.viewShareModal}>
               Share
             </button>
