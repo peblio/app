@@ -1,5 +1,5 @@
 .DraftEditor-editorContainer { // sass-lint:disable-line class-name-format
-  margin-top: -5px;
+  // margin-top: -5px;
   height: 100%;
 }
 
@@ -8,15 +8,19 @@
   margin: 0;
 }
 
-.text-editor__nav {
-  width: 100%;
-  margin: 0;
-}
+// .text-editor__nav {
+//   width: 100%;
+//   margin: 0;
+// }
 
 .text-editor__toolbar {
   position: absolute;
-  transform: translateY(100%);
+  transform: translateY(-115%);
   z-index: 100;
+  width: 500px;
+  border-color: $light-gray;
+  border-radius: $small-border-radius;
+  margin-left: -10px;
 }
 
 .rdw-image-modal-btn{
@@ -27,12 +31,8 @@
   color:black;
 }
 
-.text-editor__content {
-  padding: 10px;
-}
-
 .element__control{
-  fill: black;
+  fill: $black;
 
   &:hover {
     fill: $light-gray;
@@ -52,6 +52,10 @@
   @extend %element_controls;
 }
 
+#ShapeCNTRL{
+  fill:$blue;
+}
+
 .element__close:hover #ShapeCNTRL{
   fill:$light-gray;
 }
@@ -59,4 +63,12 @@
 .dragClassName{ // sass-lint:disable-line class-name-format
   @extend %element_controls;
 
+}
+
+.element__nav{
+  float:right;
+  display: inline-block;
+  width:35px;
+  margin-right: -45px;
+  margin-top: -15px;
 }

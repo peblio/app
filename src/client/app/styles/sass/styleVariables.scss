@@ -32,15 +32,19 @@
 
 //deleting and moving elements on the canvas
 %element_controls{
-  border: none;
   background-color: white;
   outline: 0;
   -webkit-transition-duration: .5s;
   transition-duration: .5s;
-  margin: -20px 0 0px 0px !important;
+  margin-bottom: 5px !important;
+  fill: $blue;
+  border-radius: $medium-border-radius;
+  padding:$small-padding;
+  border: none;
+  // border-color:$light-gray;
+
   &:hover{
     cursor: pointer;
-    fill: black;
     border: none;
     fill: $light-gray;
   }

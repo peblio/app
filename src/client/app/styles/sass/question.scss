@@ -2,21 +2,27 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: $small-padding;
+  // margin: $small-padding;
 }
 
 .question__question {
   background: $black;
   color: $white;
+  height:2rem;
   font-family: $helvetica;
   font-size: $medium-font-size;
-  border-radius: $medium-border-radius $medium-border-radius 0 0;
+  border-radius: $small-border-radius $small-border-radius 0 0;
+  min-width: 100%;
+  max-width: 100%;
+
 }
 
 .question__answer {
   height: -webkit-fill-available;
   font-family: $helvetica;
   font-size: $normal-font-size;
-  border-radius: 0 0  $medium-border-radius $medium-border-radius;
+  border-radius: 0 0  $small-border-radius $small-border-radius;
   border: 1px solid $medium-gray;
+  min-width: 100%;
+  max-width: 100%;
 }

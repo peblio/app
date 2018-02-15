@@ -8,7 +8,7 @@ class EditorToolbar extends React.Component {
   render() {
     return (
       <div className="editor-toolbar__container">
-        <div>
+        <div className="editor-toolbar__button-container">
           <select
             className="editor-toolbar__item"
             id="test"

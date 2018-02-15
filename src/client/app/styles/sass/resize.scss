@@ -1,7 +1,9 @@
 .resize-container{
-  min-width: 100px;
+  // min-width: 100px;
   min-height: auto !important;
   border: none;
+  padding: $small-padding;
+
 
   &:hover {
     z-index: 10;
