@@ -47,61 +47,62 @@ class EditorContainer extends React.Component {
 
   render() {
     return (
-      <div className="code-editor_total-container" onFocus={this.setCurrentEditor}>
+      <div className="code-editor__outside-container" onFocus={this.setCurrentEditor}>
         { this.props.preview ||
-          <nav>
-            <button
-              className="element__close"
-              onClick={this.removeEditor}
-            >
-              <CloseSVG alt="close element" />
-            </button>
-            <button className={`element__close drag__${this.props.id}`}>
-              <DragSVG alt="drag element" />
-            </button>
-          </nav>
-        }
-        <EditorToolbar
-          currentFile={this.props.currentFile}
-          files={this.props.files}
-          isPlaying={this.props.isPlaying}
-          playCode={this.playCode}
-          setCurrentFile={this.setCurrentFile}
-          setEditorMode={this.setEditorMode}
-          startCodeRefresh={this.startCodeRefresh}
-          stopCode={this.stopCode}
-        />
-        <div className="code-editor__container">
-          <SplitPane
-            split="horizontal"
-            defaultSize={this.props.innerHeight}
-            onDragStarted={this.startResize}
-            onDragFinished={(size) => { this.finishResize(); this.setInnerHeight(size); }}
+        <nav className="element__nav">
+          <button
+            className="element__close"
+            onClick={this.removeEditor}
           >
-            <div className="code-editor__sub-container">
-              <SplitPane
-                split="vertical"
-                defaultSize={this.props.innerWidth}
-                onDragStarted={this.startResize}
-                onDragFinished={(size) => { this.finishResize(); this.setInnerWidth(size); }}
-              >
-                <div className="code-editor__input">
-                  { this.props.editorMode === 'p5' &&
+            <CloseSVG alt="close element" />
+          </button>
+          <button className={`element__close drag__${this.props.id}`}>
+            <DragSVG alt="drag element" />
+          </button>
+        </nav>
+        }
+        <div className="code-editor__total-container" onFocus={this.setCurrentEditor}>
+          <EditorToolbar
+            currentFile={this.props.currentFile}
+            files={this.props.files}
+            isPlaying={this.props.isPlaying}
+            playCode={this.playCode}
+            setCurrentFile={this.setCurrentFile}
+            setEditorMode={this.setEditorMode}
+            startCodeRefresh={this.startCodeRefresh}
+            stopCode={this.stopCode}
+          />
+          <div className="code-editor__container">
+            <SplitPane
+              split="horizontal"
+              defaultSize={this.props.innerHeight}
+              onDragStarted={this.startResize}
+              onDragFinished={(size) => { this.finishResize(); this.setInnerHeight(size); }}
+            >
+              <div className="code-editor__sub-container">
+                <SplitPane
+                  split="vertical"
+                  defaultSize={this.props.innerWidth}
+                  onDragStarted={this.startResize}
+                  onDragFinished={(size) => { this.finishResize(); this.setInnerWidth(size); }}
+                >
+                  <div className="code-editor__input">
+                    { this.props.editorMode === 'p5' &&
                     <P5Editor
                       currentFile={this.props.currentFile}
                       files={this.props.files}
                       updateFile={this.updateFile}
                     />
                   }
-                </div>
-                <div className="code-editor__output">
-                  <div
-                    className={`code-editor__output-overlay
+                  </div>
+                  <div className="code-editor__output">
+                    <div
+                      className={`code-editor__output-overlay
                       ${this.state.isResizing ?
                       'code-editor__output-overlay--show' : ''}`}
-                  >
-                  </div>
-                  { this.props.isPlaying && (
+                    >
+                    </div>
+                    { this.props.isPlaying && (
                 this.props.editorMode === 'p5' &&
                   <P5Output
                     clearConsoleOutput={this.clearConsoleOutput}
@@ -112,16 +113,18 @@ class EditorContainer extends React.Component {
                     updateConsoleOutput={this.updateConsoleOutput}
                   />
                 )}
-                </div>
-              </SplitPane>
-            </div>
-            <div className="code-editor__console">
-              <ConsoleOutput
-                consoleOutputText={this.props.consoleOutputText}
-              />
-            </div>
-          </SplitPane>
+                  </div>
+                </SplitPane>
+              </div>
+              <div className="code-editor__console">
+                <ConsoleOutput
+                  consoleOutputText={this.props.consoleOutputText}
+                />
+              </div>
+            </SplitPane>
+          </div>
         </div>
+
       </div>
     );
   }

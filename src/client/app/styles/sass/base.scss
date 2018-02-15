@@ -20,6 +20,7 @@ body, html, h1, h2, h3{
   border: $small-border solid $black;
   border-radius: $medium-border-radius;
   margin: $large-margin;
+  padding: $small-padding/2;
 }
 
 button {

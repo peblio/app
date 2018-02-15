@@ -86,7 +86,7 @@ const editorsReducer = (state = initialState, action) => {
         x: 0,
         y: 0,
         innerWidth: 250,
-        innerHeight: 270,
+        innerHeight: 200,
         width: 500,
         height: 300,
         minWidth: 500,

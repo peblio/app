@@ -19,7 +19,7 @@ class TextEditor extends React.Component {
     return (
       <div id={this.props.id} onFocus={this.setCurrentEditor.bind(this)} className="text-editor__container">
         { this.props.preview ||
-          <nav>
+          <nav className="element__nav">
             <button
               className="element__close"
               onClick={this.removeEditor.bind(this)}

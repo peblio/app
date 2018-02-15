@@ -25,7 +25,7 @@ class Questions extends React.Component {
     return (
       <div id={this.props.id} className="question__main-container">
         { this.props.preview ||
-          <nav>
+          <nav className="element__nav">
             <button className="element__close" onClick={this.removeEditor.bind(this)}>
               <CloseSVG alt="close element" />
             </button>
