@@ -47,7 +47,7 @@ class EditorContainer extends React.Component {
 
   render() {
     return (
-      <div className="code-editor_outside-container" onFocus={this.setCurrentEditor}>
+      <div className="code-editor__outside-container" onFocus={this.setCurrentEditor}>
         { this.props.preview ||
         <nav className="element__nav">
           <button
