@@ -61,7 +61,7 @@ class EditorContainer extends React.Component {
           </button>
         </nav>
         }
-        <div className="code-editor_total-container" onFocus={this.setCurrentEditor}>
+        <div className="code-editor__total-container" onFocus={this.setCurrentEditor}>
           <EditorToolbar
             currentFile={this.props.currentFile}
             files={this.props.files}

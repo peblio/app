@@ -1,5 +1,4 @@
 .DraftEditor-editorContainer { // sass-lint:disable-line class-name-format
-  // margin-top: -5px;
   height: 100%;
 }
 
@@ -8,16 +7,11 @@
   margin: 0;
 }
 
-// .text-editor__nav {
-//   width: 100%;
-//   margin: 0;
-// }
-
 .text-editor__toolbar {
   position: absolute;
   transform: translateY(-115%);
-  z-index: 100;
-  width: 500px;
+  z-index: $z-index-layer-2;
+  width: $toolbar-width;
   border-color: $light-gray;
   border-radius: $small-border-radius;
   margin-left: -10px;
@@ -71,7 +65,7 @@
 .element__nav{
   float:right;
   display: inline-block;
-  width:35px;
+  width:$nav-width;
   margin-right: -45px;
   margin-top: -15px;
 }

@@ -7,32 +7,22 @@ iframe{
 
 .element__iframe{
   min-height:auto;
-  // padding: $small-padding;
   min-width: 300px;
   display: flex;
   flex-direction: column;
   overflow-y: visible;
 }
 
-// .element__iframe-container:hover .element__add-url{
-//   min-height:40px;
-//   display: flex;
-//   flex-direction: row;
-//   background-color: black;
-// }
-
 .resize-container:hover .element__add-url{
   min-height:40px;
   display: flex;
   flex-direction: row;
-  z-index: 1000;
+  z-index: $z-index-layer-2;
 }
 
 .element__add-url{
   display: none;
   min-height:40px;
-
-  // margin-top: -40px;
   background-color: $black;
   color: white;
   position: absolute;

@@ -1,5 +1,5 @@
 .ReactModal__Overlay { // sass-lint:disable-line class-name-format
-  z-index: 1000;
+  z-index: $z-index-layer-3;
 }
 
 .modal__large{
