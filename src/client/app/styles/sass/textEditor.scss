@@ -32,10 +32,10 @@
 }
 
 .element__control{
-  fill: $black;
-
   &:hover {
-    fill: $light-gray;
+    cursor: pointer;
+  }
+  &:focus {
     cursor: pointer;
   }
 }
@@ -48,6 +48,9 @@
   display: inline-block;
 }
 
+.resize-container:focus .element__close {
+  display: inline-block;
+}
 .element__close{
   @extend %element_controls;
 }

@@ -19,12 +19,12 @@ class Iframe extends React.Component {
     return (
       <div className="element__iframe-container" id={this.props.id} onFocus={this.setCurrentEditor}>
         { this.props.preview ||
-          <div className="element__nav">
+          <nav className="element__nav">
             <button className="element__close" onClick={this.removeEditor.bind(this)}>
               <CloseSVG alt="close element" />
             </button>
             <button className={`element__close drag__${this.props.id}`}><DragSVG alt="drag element" /></button>
-          </div>
+          </nav>
         }
         <div className="element__iframe">
           <iframe src={this.props.iframeURL} />

@@ -14,20 +14,39 @@ iframe{
   overflow-y: visible;
 }
 
-.element__iframe-container:hover .element__add-url{
+// .element__iframe-container:hover .element__add-url{
+//   min-height:40px;
+//   display: flex;
+//   flex-direction: row;
+//   background-color: black;
+// }
+
+.resize-container:hover .element__add-url{
   min-height:40px;
   display: flex;
   flex-direction: row;
-  background-color: black;
+  z-index: 1000;
 }
 
 .element__add-url{
   display: none;
-  margin-top: -40px;
+  min-height:40px;
+
+  // margin-top: -40px;
+  background-color: $black;
+  color: white;
+  position: absolute;
+  margin-bottom: 0;
+  bottom: 5px;
+  width:calc(100% - 15px);
+
+}
+
+.preview-mode .element__add-url{
+  display:none !important;
 }
 
 .element__add-url:hover {
-  min-height:40px;
   display: flex;
   flex-direction: row;
 }

@@ -67,6 +67,7 @@
   position: absolute;
   border-radius: $medium-border-radius;
   margin-left: -20px;
+  z-index: 1000;
 }
 
 .main-toolbar__preview {

@@ -49,7 +49,7 @@ class EditorContainer extends React.Component {
     return (
       <div className="code-editor_outside-container" onFocus={this.setCurrentEditor}>
         { this.props.preview ||
-        <div className="element__nav">
+        <nav className="element__nav">
           <button
             className="element__close"
             onClick={this.removeEditor}
@@ -59,7 +59,7 @@ class EditorContainer extends React.Component {
           <button className={`element__close drag__${this.props.id}`}>
             <DragSVG alt="drag element" />
           </button>
-        </div>
+        </nav>
         }
         <div className="code-editor_total-container" onFocus={this.setCurrentEditor}>
           <EditorToolbar
