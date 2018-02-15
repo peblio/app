@@ -8,7 +8,12 @@ class SignUp extends React.Component {
   }
 
   signUpSuccessful(response) {
+    this.props.setUserName(response.data.user.name);
     this.props.closeSignUpModal();
+  }
+
+  submitLoginUser(event, name, password) {
+    event.preventDefault();
   }
 
   submitSignUpUser(event, name, password) {
@@ -17,7 +22,16 @@ class SignUp extends React.Component {
       password
     })
     .then((response) => {
-      this.signUpSuccessful(response);
+      axios.post('/api/login', {
+        name,
+        password
+      })
+        .then((response) => {
+          this.signUpSuccessful(response);
+        })
+        .catch(function(error) { // eslint-disable-line
+          console.log('Login Failed');
+        });
     })
     .catch(function(error) { // eslint-disable-line
       console.log('Sign up failed');
