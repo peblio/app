@@ -2,7 +2,7 @@ body, html, h1, h2, h3{
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;;
-  background-color: $lighter-gray;
+  background-color: $white;
 }
 
 .canvas{
@@ -10,10 +10,13 @@ body, html, h1, h2, h3{
   width:$total-width;
   min-height:80vh;
   padding: $large-padding;
-  box-shadow: -8px 0px 10px $light-gray;
+  // box-shadow: -8px 0px 10px $light-gray;
   // overflow-y: scroll;
+  margin-top: 10%;
+}
 
-
+.canvas-extra-margin {
+  margin-top: 17%;
 }
 
 .resize-container {

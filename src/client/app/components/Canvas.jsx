@@ -86,7 +86,7 @@ class Canvas extends React.Component {
     });
     const ids = Object.keys(this.props.editors);
     return (
-      <section className={`canvas ${this.props.preview ? 'preview-mode' : ''}`}>
+      <section className={`canvas ${this.props.preview ? 'preview-mode' : 'canvas-extra-margin'}`}>
         { ids.map(id => (
           <Rnd
             key={id}
