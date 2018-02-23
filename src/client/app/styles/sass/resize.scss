@@ -3,9 +3,8 @@
   border: none;
   padding: $small-padding;
 
-
   &:hover {
-    z-index: $z-index-layer-2;
+    z-index: $z-index-layer-4 !important;
     border: 2px dashed $light-gray;
     border-radius: $small-border-radius;
   }

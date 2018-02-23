@@ -4,7 +4,7 @@
   @include flex;
   flex-direction: row;
   width: 100%;
-  padding: 0 $small-padding $small-padding 0;
+  padding: $small-padding;
   min-height: 2em;
   background-color: $lighter-gray;
   z-index: $z-index-layer-1;
