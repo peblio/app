@@ -7,7 +7,13 @@ import Questions from './Questions.jsx';
 import Iframe from './Iframe.jsx';
 import TextEditor from './TextEditor.jsx';
 
+const ReactGridLayout = require('react-grid-layout').Responsive;
+
 class Canvas extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onLayoutChange = (layout) => { console.log(layout); };
+  }
   renderCodeEditor(editor) {
     return (
       <EditorContainer
@@ -87,44 +93,26 @@ class Canvas extends React.Component {
     const ids = Object.keys(this.props.editors);
     return (
       <section className={`canvas ${this.props.preview ? 'preview-mode' : 'canvas-extra-margin'}`}>
-        { ids.map(id => (
-          <Rnd
-            key={id}
-            className="resize-container"
-            size={{ width: this.props.editors[id].width, height: this.props.editors[id].height }}
-            position={{ x: this.props.editors[id].x, y: this.props.editors[id].y }}
-            onDragStop={(e, d) => { this.props.setEditorPosition(id, d.x, d.y); }}
-            dragHandleClassName={`.drag__${id}`}
-            onResize={(e, direction, ref, delta, position) => {
-              this.props.setEditorSize(id, ref.offsetWidth, ref.offsetHeight);
-            }}
-            minWidth={this.props.editors[id].minWidth}
-            minHeight={this.props.editors[id].minHeight}
-            extendsProps={extendsProps(id)}
-            bounds=".canvas"
-            enableResizing={{
-              bottom: !this.props.preview,
-              bottomLeft: !this.props.preview,
-              bottomRight: !this.props.preview,
-              left: !this.props.preview,
-              right: !this.props.preview,
-              top: !this.props.preview,
-              topLeft: !this.props.preview,
-              topRight: !this.props.preview
-            }}
-            z={this.props.editors[id].index + 50}
-          >
-            {(() => {
-              switch (this.props.editors[id].type) {
-                case 'code': return this.renderCodeEditor(this.props.editors[id]);
-                case 'text': return this.renderTextEditor(this.props.editors[id]);
-                case 'iframe': return this.renderIframe(this.props.editors[id]);
-                case 'question': return this.renderQuestion(this.props.editors[id]);
-                default: return null;
-              }
-            })()}
-          </Rnd>
+        <ReactGridLayout
+          breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+          cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+          width={1200}
+          onLayoutChange={this.onLayoutChange}
+        >
+          { ids.map(id => (
+            <div key={id}>
+              {(() => {
+                switch (this.props.editors[id].type) {
+                  case 'code': return this.renderCodeEditor(this.props.editors[id]);
+                  case 'text': return this.renderTextEditor(this.props.editors[id]);
+                  case 'iframe': return this.renderIframe(this.props.editors[id]);
+                  case 'question': return this.renderQuestion(this.props.editors[id]);
+                  default: return null;
+                }
+              })()}
+            </div>
         ))}
+        </ReactGridLayout>
       </section>
     );
   }
