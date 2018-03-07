@@ -25,7 +25,7 @@ class TextEditor extends React.Component {
             >
               <CloseSVG alt="close element" />
             </button>
-            <button className={`element__close drag__${this.props.id}`}>
+            <button className={`element__close element__drag drag__${this.props.id}`}>
               <Drag alt="drag element" />
             </button>
           </nav>

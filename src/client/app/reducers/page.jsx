@@ -2,6 +2,14 @@ import * as ActionTypes from '../constants.jsx';
 
 const initialState = {
   id: '',
+  rgl: {
+    cols: 15,
+    margin: [50, 30],
+    padding: [0, 0],
+    rowHeight: 100,
+    width: 1440,
+  },
+  layout: [],
   pages: [],
   pageTitle: '',
   parentId: '',
@@ -25,6 +33,11 @@ const page = (state = initialState, action) => {
         pageTitle: action.event.target.value
       });
 
+    case ActionTypes.SET_PAGE_LAYOUT:
+      return Object.assign({}, state, {
+        layout: action.value
+      });
+
     case ActionTypes.SET_PAGE_ID:
       return Object.assign({}, state, {
         id: action.id
@@ -34,7 +47,8 @@ const page = (state = initialState, action) => {
       return Object.assign({}, state, {
         id: action.id,
         pageTitle: action.title,
-        preview: action.preview
+        preview: action.preview,
+        layout: action.layout
       });
 
     case ActionTypes.SET_ALL_PAGES:

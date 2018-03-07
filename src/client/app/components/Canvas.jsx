@@ -1,19 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Rnd from 'react-rnd';
 
 import EditorContainer from './EditorContainer.jsx';
 import Questions from './Questions.jsx';
 import Iframe from './Iframe.jsx';
 import TextEditor from './TextEditor.jsx';
 
-const ReactGridLayout = require('react-grid-layout').Responsive;
+const ReactGridLayout = require('react-grid-layout');
 
 class Canvas extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onLayoutChange = (layout) => { console.log(layout); };
-  }
+
   renderCodeEditor(editor) {
     return (
       <EditorContainer
@@ -61,47 +57,73 @@ class Canvas extends React.Component {
 
   renderIframe(editor) {
     return (
-      <Iframe
-        id={editor.id}
-        iframeURL={editor.url}
-        preview={this.props.preview}
-        removeEditor={this.props.removeEditor}
-        setCurrentEditor={this.props.setCurrentEditor}
-        setIframeURL={this.props.setIframeURL}
-      />
+      <div key={editor.id}>
+        <Iframe
+          id={editor.id}
+          iframeURL={editor.url}
+          preview={this.props.preview}
+          removeEditor={this.props.removeEditor}
+          setCurrentEditor={this.props.setCurrentEditor}
+          setIframeURL={this.props.setIframeURL}
+        />
+      </div>
     );
   }
 
   renderQuestion(editor) {
     return (
-      <Questions
-        id={editor.id}
-        answer={editor.answer}
-        preview={this.props.preview}
-        question={editor.question}
-        removeEditor={this.props.removeEditor}
-        setCurrentEditor={this.props.setCurrentEditor}
-        updateAnswerChange={this.props.updateAnswerChange}
-        updateQuestionChange={this.props.updateQuestionChange}
-      />
+      <div key={editor.id}>
+        <Questions
+          id={editor.id}
+          answer={editor.answer}
+          preview={this.props.preview}
+          question={editor.question}
+          removeEditor={this.props.removeEditor}
+          setCurrentEditor={this.props.setCurrentEditor}
+          updateAnswerChange={this.props.updateAnswerChange}
+          updateQuestionChange={this.props.updateQuestionChange}
+        />
+      </div>
     );
   }
+
   render() {
     const extendsProps = id => ({
       onMouseEnter: () => { this.props.setCurrentEditor(id); }
     });
     const ids = Object.keys(this.props.editors);
+    const toRender = [];
+    const storageLayout = this.props.layout;
+    const localLayout = {};
+    storageLayout.map((x) => {
+      const key = x.i;
+      localLayout[key] = x;
+    });
+
     return (
       <section className={`canvas ${this.props.preview ? 'preview-mode' : 'canvas-extra-margin'}`}>
         <ReactGridLayout
-          breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-          cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-          width={1200}
-          onLayoutChange={this.onLayoutChange}
+          cols={this.props.rgl.col}
+          width={this.props.rgl.width}
+          rowHeight={this.props.rgl.rowHeight}
+          layout={this.props.layout}
+          onLayoutChange={this.props.setPageLayout}
+          compactType={null}
+          margin={this.props.rgl.margin}
+          draggableHandle=".element__drag"
+          containerPadding={this.props.rgl.padding}
         >
-          { ids.map(id => (
-            <div key={id}>
+          {ids.map(id => (
+            <div
+              key={id}
+              data-grid={localLayout[id]}
+            >
               {(() => {
+                // if (this.props.editors[id].type === 'code') {
+                //   return this.renderCodeEditor(this.props.editors[id]);
+                // } else if (this.props.editors[id].type === 'text') {
+                //   return this.renderTextEditor(this.props.editors[id]);
+                // }
                 switch (this.props.editors[id].type) {
                   case 'code': return this.renderCodeEditor(this.props.editors[id]);
                   case 'text': return this.renderTextEditor(this.props.editors[id]);
@@ -121,17 +143,18 @@ class Canvas extends React.Component {
 Canvas.propTypes = {
   clearConsoleOutput: PropTypes.func.isRequired,
   editors: PropTypes.shape.isRequired,
+  layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   preview: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
+  rgl: PropTypes.shape.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
-  setEditorPosition: PropTypes.func.isRequired,
-  setEditorSize: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired,
   setInnerHeight: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
+  setPageLayout: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,

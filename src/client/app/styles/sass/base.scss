@@ -2,16 +2,16 @@ body, html, h1, h2, h3{
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;;
-  background-color: $white;
+  background-color: $canvas-gray;
 }
 
 .canvas{
-  background-color: white;
-  width:$total-width;
+  background-color: $canvas-gray;
+  width: $total-width;
   min-height:80vh;
   padding: $large-padding;
+  margin: 0 auto;
   margin-top: 7%;
-  background-color: $light-gray;
 }
 
 .canvas-extra-margin {

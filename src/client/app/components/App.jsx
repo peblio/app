@@ -64,7 +64,7 @@ class App extends React.Component {
       const projectID = this.projectID();
       axios.get(`/api/page/${this.projectID()}`)
         .then((res) => {
-          this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].preview);
+          this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].preview, res.data[0].layout);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
           axios.get('/api/user')
             .then((res1) => {
@@ -103,7 +103,8 @@ class App extends React.Component {
           this.props.pageTitle,
           this.props.preview,
           this.props.editors,
-          this.props.editorIndex
+          this.props.editorIndex,
+          this.props.layout
         );
       } else if (this.props.canEdit) {
         this.props.updatePage(
@@ -111,7 +112,8 @@ class App extends React.Component {
           this.props.pageTitle,
           this.props.preview,
           this.props.editors,
-          this.props.editorIndex
+          this.props.editorIndex,
+          this.props.layout
         );
       } else {
         // this is for fork and save
@@ -120,7 +122,8 @@ class App extends React.Component {
           `${this.props.pageTitle}-copy`,
           this.props.preview,
           this.props.editors,
-          this.props.editorIndex
+          this.props.editorIndex,
+          this.props.layout
         );
       }
     } else {
@@ -162,6 +165,9 @@ class App extends React.Component {
         </nav>
         <Canvas
           preview={this.props.preview}
+          layout={this.props.layout}
+          rgl={this.props.rgl}
+          setPageLayout={this.props.setPageLayout}
 
           updateFile={this.props.updateFile}
           editors={this.props.editors}
@@ -260,6 +266,8 @@ App.propTypes = {
 
   pageTitle: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  rgl: PropTypes.shape.isRequired,
   pages: PropTypes.arrayOf(PropTypes.shape).isRequired,
   preview: PropTypes.bool.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
@@ -306,6 +314,7 @@ App.propTypes = {
 
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
+  setPageLayout: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
   loadPage: PropTypes.func.isRequired,
@@ -336,6 +345,8 @@ function mapStateToProps(state) {
     editors: state.editorsReducer.editors,
     editorIndex: state.editorsReducer.editorIndex,
 
+    layout: state.page.layout,
+    rgl: state.page.rgl,
     pageTitle: state.page.pageTitle,
     id: state.page.id,
     pages: state.page.pages,

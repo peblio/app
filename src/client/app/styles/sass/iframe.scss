@@ -21,26 +21,20 @@ iframe{
 }
 
 .element__add-url{
-  display: none;
   min-height:40px;
   background-color: $black;
   color: white;
   position: absolute;
   margin-bottom: 0;
-  bottom: 5px;
-  width:calc(100% - 15px);
-
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
 .preview-mode .element__add-url{
   display:none !important;
 }
-
-.element__add-url:hover {
-  display: flex;
-  flex-direction: row;
-}
-
 
 .element__label{
   margin-right: $small-margin;

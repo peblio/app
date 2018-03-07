@@ -83,14 +83,8 @@ const editorsReducer = (state = initialState, action) => {
         isPlaying: false,
         isRefreshing: false,
         editorMode: 'p5',
-        x: 0,
-        y: window.pageYOffset,
         innerWidth: 250,
-        innerHeight: 200,
-        width: 500,
-        height: 300,
-        minWidth: 500,
-        minHeight: 300
+        innerHeight: 200
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -167,13 +161,7 @@ const editorsReducer = (state = initialState, action) => {
         type: 'text',
         id,
         index: stack.length,
-        editorState: EditorState.createEmpty(),
-        x: 0,
-        y: window.pageYOffset,
-        width: 500,
-        height: 100,
-        minWidth: 350,
-        minHeight: 100
+        editorState: EditorState.createEmpty()
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -193,13 +181,7 @@ const editorsReducer = (state = initialState, action) => {
         id,
         index: stack.length,
         question: 'Enter question here ',
-        answer: 'Enter answer here..',
-        x: 0,
-        y: window.pageYOffset,
-        width: 500,
-        height: 100,
-        minWidth: 350,
-        minHeight: 100
+        answer: 'Enter answer here..'
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -221,13 +203,7 @@ const editorsReducer = (state = initialState, action) => {
         type: 'iframe',
         id,
         index: stack.length,
-        url: '',
-        x: 0,
-        y: window.pageYOffset,
-        width: 400,
-        height: 300,
-        minWidth: 400,
-        minHeight: 300,
+        url: ''
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
