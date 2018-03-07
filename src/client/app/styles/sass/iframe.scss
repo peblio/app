@@ -13,6 +13,10 @@ iframe{
   overflow-y: visible;
 }
 
+.element__iframe-container{
+  position: relative;
+}
+
 .resize-container:hover .element__add-url{
   min-height:40px;
   display: flex;
@@ -21,10 +25,10 @@ iframe{
 }
 
 .element__add-url{
+  position: absolute;
   min-height:40px;
   background-color: $black;
   color: white;
-  position: absolute;
   margin-bottom: 0;
   bottom: 0;
   width: 100%;

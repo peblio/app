@@ -112,18 +112,15 @@ class Canvas extends React.Component {
           margin={this.props.rgl.margin}
           draggableHandle=".element__drag"
           containerPadding={this.props.rgl.padding}
+          isResizable={!this.props.preview}
         >
           {ids.map(id => (
             <div
               key={id}
               data-grid={localLayout[id]}
+              className={`${this.props.editors[id].type === 'text' ? 'canvas-high' : ''}`}
             >
               {(() => {
-                // if (this.props.editors[id].type === 'code') {
-                //   return this.renderCodeEditor(this.props.editors[id]);
-                // } else if (this.props.editors[id].type === 'text') {
-                //   return this.renderTextEditor(this.props.editors[id]);
-                // }
                 switch (this.props.editors[id].type) {
                   case 'code': return this.renderCodeEditor(this.props.editors[id]);
                   case 'text': return this.renderTextEditor(this.props.editors[id]);

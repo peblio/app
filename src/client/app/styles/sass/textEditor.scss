@@ -5,7 +5,10 @@
 .text-editor__container {
   width: 100%;
   margin: 0;
-  background: $white;
+  background: none;
+  &--edit {
+    border: $gray dashed 1px;
+  }
 }
 
 .text-editor__toolbar {
@@ -68,5 +71,5 @@
   display: inline-block;
   width:$nav-width;
   margin-right: -45px;
-  margin-top: -15px;
+  margin-top: -5px;
 }

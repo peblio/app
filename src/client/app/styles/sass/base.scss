@@ -18,6 +18,14 @@ body, html, h1, h2, h3{
   margin-top: 10%;
 }
 
+.canvas-high {
+  z-index: 200;
+}
+
+.react-grid-item {
+  padding: 0 0.5rem 0.5rem 0;
+}
+
 .resize-container {
   border: $small-border solid $black;
   border-radius: $medium-border-radius;
