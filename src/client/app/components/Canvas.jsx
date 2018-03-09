@@ -88,16 +88,48 @@ class Canvas extends React.Component {
   }
 
   render() {
-    const extendsProps = id => ({
-      onMouseEnter: () => { this.props.setCurrentEditor(id); }
-    });
     const ids = Object.keys(this.props.editors);
-    const toRender = [];
     const storageLayout = this.props.layout;
     const localLayout = {};
-    storageLayout.map((x) => {
+    storageLayout.map((x) => { // eslint-disable-line
       const key = x.i;
+
+      /* TODO: change the code to simplify the layout logic */
       localLayout[key] = x;
+      localLayout[key].maxW = 12;
+      localLayout[key].maxH = 12;
+
+      if (this.props.editors[key]) {
+        switch (this.props.editors[key].type) {
+          case 'text': {
+            localLayout[key].minW = 1;
+            localLayout[key].w = (localLayout[key].w < 1) ? 1 : localLayout[key].w;
+            break;
+          }
+          case 'code': {
+            localLayout[key].minW = 5;
+            localLayout[key].w = (localLayout[key].w < 5) ? 5 : localLayout[key].w;
+            localLayout[key].minH = 3;
+            localLayout[key].h = (localLayout[key].h < 3) ? 3 : localLayout[key].h;
+            break;
+          }
+          case 'question' : {
+            localLayout[key].minW = 3;
+            localLayout[key].w = (localLayout[key].w < 3) ? 3 : localLayout[key].w;
+            break;
+          }
+          case 'iframe' : {
+            localLayout[key].minW = 3;
+            localLayout[key].w = (localLayout[key].w < 3) ? 3 : localLayout[key].w;
+            localLayout[key].minH = 2;
+            localLayout[key].h = (localLayout[key].h < 2) ? 2 : localLayout[key].h;
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      }
     });
 
     return (

@@ -78,8 +78,6 @@ function deletePage(req, res) {
 }
 
 function updatePage(req, res) {
-  console.log('***');
-  console.log(req.body.layout);
   Page.update({ id: req.body.id }, {
     title: req.body.title,
     preview: req.body.preview,
