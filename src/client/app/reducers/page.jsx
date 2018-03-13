@@ -3,10 +3,10 @@ import * as ActionTypes from '../constants.jsx';
 const initialState = {
   id: '',
   rgl: {
-    cols: 15,
+    cols: 30,
     margin: [50, 50],
     padding: [0, 0],
-    rowHeight: 100,
+    rowHeight: 50,
     width: 1440,
   },
   layout: [],

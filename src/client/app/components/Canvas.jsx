@@ -96,33 +96,33 @@ class Canvas extends React.Component {
 
       /* TODO: change the code to simplify the layout logic */
       localLayout[key] = x;
-      localLayout[key].maxW = 12;
+      localLayout[key].maxW = 30;
       localLayout[key].maxH = 12;
 
       if (this.props.editors[key]) {
         switch (this.props.editors[key].type) {
           case 'text': {
-            localLayout[key].minW = 1;
-            localLayout[key].w = (localLayout[key].w < 1) ? 1 : localLayout[key].w;
+            localLayout[key].minW = 4;
+            localLayout[key].w = (localLayout[key].w < 4) ? 4 : localLayout[key].w;
             break;
           }
           case 'code': {
-            localLayout[key].minW = 5;
-            localLayout[key].w = (localLayout[key].w < 5) ? 5 : localLayout[key].w;
+            localLayout[key].minW = 10;
+            localLayout[key].w = (localLayout[key].w < 10) ? 10 : localLayout[key].w;
             localLayout[key].minH = 3;
             localLayout[key].h = (localLayout[key].h < 3) ? 3 : localLayout[key].h;
             break;
           }
           case 'question' : {
-            localLayout[key].minW = 3;
-            localLayout[key].w = (localLayout[key].w < 3) ? 3 : localLayout[key].w;
+            localLayout[key].minW = 6;
+            localLayout[key].w = (localLayout[key].w < 6) ? 6 : localLayout[key].w;
             break;
           }
           case 'iframe' : {
-            localLayout[key].minW = 3;
-            localLayout[key].w = (localLayout[key].w < 3) ? 3 : localLayout[key].w;
-            localLayout[key].minH = 2;
-            localLayout[key].h = (localLayout[key].h < 2) ? 2 : localLayout[key].h;
+            localLayout[key].minW = 10;
+            localLayout[key].w = (localLayout[key].w < 10) ? 10 : localLayout[key].w;
+            localLayout[key].minH = 3;
+            localLayout[key].h = (localLayout[key].h < 3) ? 3 : localLayout[key].h;
             break;
           }
           default: {
@@ -135,7 +135,7 @@ class Canvas extends React.Component {
     return (
       <section className={`canvas ${this.props.preview ? 'preview-mode' : 'canvas-extra-margin'}`}>
         <ReactGridLayout
-          cols={this.props.rgl.col}
+          cols={this.props.rgl.cols}
           width={this.props.rgl.width}
           rowHeight={this.props.rgl.rowHeight}
           layout={this.props.layout}

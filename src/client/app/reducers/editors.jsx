@@ -84,7 +84,7 @@ const editorsReducer = (state = initialState, action) => {
         isRefreshing: false,
         editorMode: 'p5',
         innerWidth: 250,
-        innerHeight: 200
+        innerHeight: 160
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
