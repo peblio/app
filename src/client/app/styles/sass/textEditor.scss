@@ -5,11 +5,15 @@
 .text-editor__container {
   width: 100%;
   margin: 0;
+  background: none;
+  &--edit { // sass-lint:disable-line class-name-format
+    border: $gray dashed 1px;
+  }
 }
 
 .text-editor__toolbar {
   position: absolute;
-  transform: translateY(-115%);
+  top: 100%;
   z-index: $z-index-layer-2;
   width: $toolbar-width;
   border-color: $light-gray;
@@ -67,5 +71,5 @@
   display: inline-block;
   width:$nav-width;
   margin-right: -45px;
-  margin-top: -15px;
+  margin-top: -5px;
 }

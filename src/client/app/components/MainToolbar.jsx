@@ -17,7 +17,8 @@ class MainToolbar extends React.Component {
         if (this.props.unsavedChanges) { // there are some unsaved changes
           saveButtonText = 'Save';
         } else { // there are no unsaved changes
-          if (this.props.projectID()) { // it is not a new sketch
+          if (this.props.projectID()) { // eslint-disable-line
+            // it is not a new sketch
             saveButtonText = <CheckSVG alt="check svg" />;
           } else { // it is a new sketch
             saveButtonText = 'Save';
@@ -27,7 +28,8 @@ class MainToolbar extends React.Component {
         saveButtonText = 'Fork';
       }
     } else { // user is not logged in
-      if (this.props.projectID()) { // it is not a new sketch
+      if (this.props.projectID()) { // eslint-disable-line
+        // it is not a new sketch
         saveButtonText = 'Fork';
       } else { // it is a new sketch
         saveButtonText = 'Save';

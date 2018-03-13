@@ -16,7 +16,11 @@ class TextEditor extends React.Component {
 
   render() {
     return (
-      <div id={this.props.id} onFocus={this.setCurrentEditor.bind(this)} className="text-editor__container">
+      <div
+        id={this.props.id}
+        onFocus={this.setCurrentEditor.bind(this)}
+        className={`text-editor__container ${this.props.preview ? '' : 'text-editor__container--edit'}`}
+      >
         { this.props.preview ||
           <nav className="element__nav">
             <button
@@ -25,7 +29,7 @@ class TextEditor extends React.Component {
             >
               <CloseSVG alt="close element" />
             </button>
-            <button className={`element__close drag__${this.props.id}`}>
+            <button className={`element__close element__drag drag__${this.props.id}`}>
               <Drag alt="drag element" />
             </button>
           </nav>

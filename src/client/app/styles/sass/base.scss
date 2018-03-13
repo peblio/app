@@ -2,19 +2,28 @@ body, html, h1, h2, h3{
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;;
-  background-color: $white;
+  background-color: $canvas-gray;
 }
 
 .canvas{
-  background-color: white;
-  width:$total-width;
+  background-color: $canvas-gray;
+  width: $total-width;
   min-height:80vh;
   padding: $large-padding;
+  margin: 0 auto;
   margin-top: 7%;
 }
 
 .canvas-extra-margin {
   margin-top: 10%;
+}
+
+.canvas-high {
+  z-index: 200;
+}
+
+.react-grid-item {
+  padding: 0 0.5rem 0.5rem 0;
 }
 
 .resize-container {

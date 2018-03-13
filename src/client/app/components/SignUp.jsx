@@ -86,7 +86,8 @@ class SignUp extends React.Component {
 
 SignUp.propTypes = {
   authLoadedPage: PropTypes.func.isRequired,
-  closeSignUpModal: PropTypes.func.isRequired
+  closeSignUpModal: PropTypes.func.isRequired,
+  setUserName: PropTypes.func.isRequired
 };
 
 export default SignUp;

@@ -22,13 +22,24 @@ export function setPageTitle(event) {
   };
 }
 
-export function loadPage(id, title, preview) {
+export function setPageLayout(value) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.SET_PAGE_LAYOUT,
+      value
+    });
+  };
+}
+
+export function loadPage(id, title, preview, layout) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
       id,
       title,
-      preview
+      preview,
+      layout
     });
   };
 }
@@ -60,7 +71,7 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, preview, editors, editorIndex) {
+export function submitPage(parentId, title, preview, editors, editorIndex, layout) {
   const id = shortid.generate();
   axios.post('/pages/save', {
     parentId,
@@ -68,7 +79,8 @@ export function submitPage(parentId, title, preview, editors, editorIndex) {
     title,
     preview,
     editors: convertEditorsToRaw(editors),
-    editorIndex
+    editorIndex,
+    layout
   }).then(() => window.location.replace(`${window.location.origin}/pebl/${id}`))
     .catch(error => console.error(error));
 
@@ -81,13 +93,14 @@ export function submitPage(parentId, title, preview, editors, editorIndex) {
   };
 }
 
-export function updatePage(id, title, preview, editors, editorIndex) {
+export function updatePage(id, title, preview, editors, editorIndex, layout) {
   axios.post('/pages/update', {
     id,
     title,
     preview,
     editors: convertEditorsToRaw(editors),
-    editorIndex
+    editorIndex,
+    layout
   }).then(response => console.log('Page update', response))
     .catch(error => console.error('Page update error', error));
 
