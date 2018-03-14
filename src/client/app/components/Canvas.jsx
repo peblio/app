@@ -118,8 +118,8 @@ class Canvas extends React.Component {
           case 'question' : {
             localLayout[key].minW = 6;
             localLayout[key].w = (localLayout[key].w < 6) ? 6 : localLayout[key].w;
-            localLayout[key].minH = 2;
-            localLayout[key].h = (localLayout[key].h < 2) ? 2 : localLayout[key].h;
+            localLayout[key].minH = 3;
+            localLayout[key].h = (localLayout[key].h < 3) ? 3 : localLayout[key].h;
             break;
           }
           case 'iframe' : {
