@@ -38,19 +38,7 @@ class MainToolbar extends React.Component {
 
     return (
       <div className="main-toolbar__container">
-        <div className="demo-notice">
-          This is a demo version of Peblio.
-          &nbsp;Feel free to play around but projects will not yet be permanently saved.&nbsp;
-          <a
-            target="_blank"
-            href="http://peblio-splash-page.webflow.io/#contact"
-            rel="noopener noreferrer"
-          >
-          Contact us
-          </a>
-          &nbsp;with feedback.
-          &nbsp;We would love to hear from you!
-        </div>
+
         <div className="main-toolbar">
           <div className="main-toolbar__div-left">
             <div className="logo_toolbar">
@@ -82,37 +70,30 @@ class MainToolbar extends React.Component {
             onChange={this.props.setPageTitle}
           ></input>
           <div className="main-toolbar__div-right">
-            <label className="main-toolbar__preview" htmlFor="main-toolbar__checkbox">
-              <input
-                id="main-toolbar__checkbox"
-                onChange={this.props.togglePreviewMode}
-                type="checkbox"
-                checked={this.props.preview}
-              />
-              <span className="main-toolbar__preview-on">
-                <PreviewOnSVG alt="preview on" />
-                <span className="main-toolbar__preview-title">Preview On</span>
-
-              </span>
-              <span className="main-toolbar__preview-off">
-                <PreviewOffSVG alt="preview Off" />
-                <span className="main-toolbar__preview-title">Preview Off</span>
-              </span>
-
-            </label>
-            <button className="main-toolbar__save" onClick={this.props.savePage}>
-              {saveButtonText}
-            </button>
-            <button className="main-toolbar__button" onClick={this.props.viewShareModal}>
+            <div className="main-toolbar__div-right-inside">
+              <label className="main-toolbar__preview" htmlFor="main-toolbar__checkbox">
+                <input
+                  id="main-toolbar__checkbox"
+                  onChange={this.props.togglePreviewMode}
+                  type="checkbox"
+                  checked={this.props.preview}
+                />
+                <div className="main-toolbar__slider"></div>
+              </label>
+              <span className="main-toolbar__preview-title">Edit Mode</span>
+              <button className="main-toolbar__save" onClick={this.props.savePage}>
+                {saveButtonText}
+              </button>
+              <button className="main-toolbar__button" onClick={this.props.viewShareModal}>
               Share
-            </button>
+              </button>
 
-            { this.props.name ? (
-              <div>
-                <button onClick={this.props.toggleAccountDropdown} className="main-toolbar__account-button">
-                  <AccountSVG alt="account man" />
-                </button>
-                { this.props.isAccountDropdownOpen &&
+              { this.props.name ? (
+                <div>
+                  <button onClick={this.props.toggleAccountDropdown} className="main-toolbar__account-button">
+                    <AccountSVG alt="account man" />
+                  </button>
+                  { this.props.isAccountDropdownOpen &&
                   <div className="main-toolbar__account">
                     <p className="main-toolbar__welcome">
                       Hi {this.props.name}!
@@ -121,13 +102,14 @@ class MainToolbar extends React.Component {
 
                   </div>
               }
-              </div>
+                </div>
             ) : (
               <div>
                 <button className="main-toolbar__button" onClick={this.props.viewLoginModal}>Log In</button>
                 <button className="main-toolbar__button" onClick={this.props.viewSignUpModal}>Sign Up</button>
               </div>
             ) }
+            </div>
           </div>
         </div>
         { this.props.preview ||
