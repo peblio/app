@@ -6,7 +6,7 @@ const initialState = {
     cols: 30,
     margin: [50, 50],
     padding: [0, 0],
-    rowHeight: 50,
+    rowHeight: 1,
     width: 1440,
   },
   layout: [],

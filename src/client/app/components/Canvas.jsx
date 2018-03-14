@@ -104,25 +104,29 @@ class Canvas extends React.Component {
           case 'text': {
             localLayout[key].minW = 4;
             localLayout[key].w = (localLayout[key].w < 4) ? 4 : localLayout[key].w;
+            localLayout[key].minH = 2;
+            localLayout[key].h = (localLayout[key].h < 2) ? 2 : localLayout[key].h;
             break;
           }
           case 'code': {
             localLayout[key].minW = 10;
             localLayout[key].w = (localLayout[key].w < 10) ? 10 : localLayout[key].w;
-            localLayout[key].minH = 3;
-            localLayout[key].h = (localLayout[key].h < 3) ? 3 : localLayout[key].h;
+            localLayout[key].minH = 6;
+            localLayout[key].h = (localLayout[key].h < 6) ? 6 : localLayout[key].h;
             break;
           }
           case 'question' : {
             localLayout[key].minW = 6;
             localLayout[key].w = (localLayout[key].w < 6) ? 6 : localLayout[key].w;
+            localLayout[key].minH = 2;
+            localLayout[key].h = (localLayout[key].h < 2) ? 2 : localLayout[key].h;
             break;
           }
           case 'iframe' : {
             localLayout[key].minW = 10;
             localLayout[key].w = (localLayout[key].w < 10) ? 10 : localLayout[key].w;
-            localLayout[key].minH = 3;
-            localLayout[key].h = (localLayout[key].h < 3) ? 3 : localLayout[key].h;
+            localLayout[key].minH = 6;
+            localLayout[key].h = (localLayout[key].h < 6) ? 6 : localLayout[key].h;
             break;
           }
           default: {
@@ -141,6 +145,7 @@ class Canvas extends React.Component {
           layout={this.props.layout}
           onLayoutChange={this.props.setPageLayout}
           compactType={null}
+          autoSize
           margin={this.props.rgl.margin}
           draggableHandle=".element__drag"
           containerPadding={this.props.rgl.padding}
