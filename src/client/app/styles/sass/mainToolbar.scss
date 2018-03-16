@@ -10,9 +10,8 @@
 }
 
 .main-toolbar{
-  padding: 0 $large-padding $small-padding 0;
   background-color: $black;
-  height: 4.5em;
+  height: $main-toolbar-height;
 }
 
 .logo_toolbar{
@@ -81,6 +80,50 @@
   color: $white;
   margin: $medium-margin $small-margin;
   padding: $medium-padding/2 $medium-padding;
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 20px;
+}
+
+.main-toolbar__slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #009887;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: $small-border-radius;
+
+}
+
+.main-toolbar__slider:before {
+  position: absolute;
+  content: "";
+  height: 80%;
+  width: 26px;
+  left: 32px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: $small-border-radius;
+
+}
+
+input:checked + .main-toolbar__slider {
+  background-color: #ccc;
+  border-radius: $small-border-radius;
+
+}
+
+input:checked + .main-toolbar__slider:before {
+  -webkit-transform: translateX(-26px);
+  -ms-transform: translateX(-26px);
+  transform: translateX(-26px);
 }
 
 .main-toolbar__file{
@@ -123,8 +166,13 @@
   float: right;
 }
 
+.main-toolbar__div-right-inside{
+  @include flex;
+  padding-right: 10px;
+}
+
 input[type="checkbox"] {
-  display: none;
+display:none;
 }
 label {
   cursor: pointer;
@@ -149,6 +197,10 @@ input[type="checkbox"] ~ .main-toolbar__preview-off {
   display: inline-block;
   vertical-align: middle;
   padding-left: $small-padding;
+  color:white;
+  padding:1.5rem .5rem;
+  font-size: 16px;
+  font-weight: bold;
 
 }
 
@@ -156,13 +208,6 @@ input[type="checkbox"] ~ .main-toolbar__preview-off {
   color: $blue;
 }
 
-.main-toolbar__preview:hover #preview-on {
-  fill: $blue;
-}
-
-.main-toolbar__preview:hover #preview-off {
-  fill: $blue;
-}
 
 .demo-notice{
   padding:$small-padding $medium-padding;
