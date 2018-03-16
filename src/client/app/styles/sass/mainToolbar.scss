@@ -10,7 +10,6 @@
 }
 
 .main-toolbar{
-    // padding: 0 $large-padding $small-padding 0;
   background-color: $black;
   height: $main-toolbar-height;
 }
@@ -98,7 +97,6 @@
   -webkit-transition: .4s;
   transition: .4s;
   border-radius: $small-border-radius;
-  @extend %inset__shadow ;
 
 }
 
@@ -113,17 +111,14 @@
   -webkit-transition: .4s;
   transition: .4s;
   border-radius: $small-border-radius;
-  @extend %outset__shadow ;
 
 }
 
 input:checked + .main-toolbar__slider {
   background-color: #ccc;
   border-radius: $small-border-radius;
-  @extend %inset__shadow ;
 
 }
-
 
 input:checked + .main-toolbar__slider:before {
   -webkit-transform: translateX(-26px);
