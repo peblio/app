@@ -5,7 +5,7 @@
   flex-direction: row;
   width: 100%;
   padding: $small-padding;
-  min-height: 2em;
+  height: $insert-toolbar-height;
   background-color: $lighter-gray;
   z-index: $z-index-layer-1;
 
