@@ -4,7 +4,7 @@ const initialState = {
   id: '',
   rgl: {
     cols: 30,
-    margin: [50, 50],
+    margin: [50, 25],
     padding: [0, 0],
     rowHeight: 1,
     width: 1440,
