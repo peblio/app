@@ -11,7 +11,7 @@ const initialState = {
   },
   layout: [],
   pages: [],
-  pageTitle: '',
+  pageTitle: 'Untitled',
   parentId: '',
   preview: false,
   unsavedChanges: false
