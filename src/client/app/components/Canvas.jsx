@@ -76,11 +76,12 @@ class Canvas extends React.Component {
       <div key={editor.id}>
         <Image
           id={editor.id}
+          imageURL={editor.url}
+          onChange={this.props.updateImageChange}
           preview={this.props.preview}
-          imageState={editor.imageState}
           removeEditor={this.props.removeEditor}
           setCurrentEditor={this.props.setCurrentEditor}
-          onChange={this.props.updateImageChange}
+          setImageURL={this.props.setImageURL}
         />
       </div>
     );

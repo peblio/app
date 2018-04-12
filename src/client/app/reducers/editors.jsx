@@ -221,15 +221,15 @@ const editorsReducer = (state = initialState, action) => {
         type: 'image',
         id,
         index: stack.length,
-        imageState: EditorState.createEmpty()
+        url: ''
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
       return { editors, editorIndex };
     }
 
-    case ActionTypes.UPDATE_IMAGE_CHANGE:
-      editors[action.id].imageState = action.state;
+    case ActionTypes.SET_IMAGE_URL:
+      editors[action.id].url = action.url;
       return { ...state, editors };
 
     default:

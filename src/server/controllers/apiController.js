@@ -35,7 +35,7 @@ apiRoutes.route('/page/:id').get(getPage);
 apiRoutes.route('/user').get(getUser);
 apiRoutes.route('/sketches').get(getSketches);
 apiRoutes.route('/login').post(loginUser);
-apiRoutes.route('/upload').post(upload.single('theseNamesMustMatch'), uploadFiles);
+apiRoutes.route('/upload').post(upload.single('uploadImageFile'), uploadFiles);
 
 function uploadFiles(req, res) {
   console.log(req);

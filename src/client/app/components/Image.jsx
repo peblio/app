@@ -14,26 +14,27 @@ class Image extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: '',
+      url: 'https://s3.amazonaws.com/peblio-files/potato.png'
     };
     this.setCurrentEditor = () => { this.props.setCurrentEditor(this.props.id); };
     this.removeEditor = () => { this.props.removeEditor(this.props.id); };
     this.onChange = (state) => { this.props.onChange(this.props.id, state); };
+    this.setImageURL = url => this.props.setImageURL(this.props.id, url);
     this.onDrop = this.onDrop.bind(this);
   }
 
   onDrop(file) {
     upload.post('/api/upload')
-      .attach('theseNamesMustMatch', file[0])
+      .attach('uploadImageFile', file[0])
       .end((err, res) => {
         if (err) console.log(err);
-        console.log(res);
         const imageName = res.text.replace(/\s/g, '+');
-        this.setState({ url: `https://s3.amazonaws.com/peblio-files/${imageName}` });
+        this.setImageURL(`https://s3.amazonaws.com/peblio-files/${imageName}`);
       });
   }
-
+  componentDidUpdate
   render() {
+    console.log(this.props.imageURL);
     return (
       <div
         id={this.props.id}
@@ -54,7 +55,7 @@ class Image extends React.Component {
           </nav>
         }
 
-        {!this.state.url &&
+        {!this.props.imageURL &&
           <div>
             <Dropzone
               onDrop={this.onDrop}
@@ -64,7 +65,7 @@ class Image extends React.Component {
             </Dropzone>
           </div>
       }
-        { this.state.url && <img className="element__image" src={this.state.url} />}
+        {this.props.imageURL && <img className="element__image" src={this.props.imageURL} /> }
       </div>
     );
   }
@@ -72,7 +73,8 @@ class Image extends React.Component {
 
 Image.propTypes = {
   id: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  ImageURL: PropTypes.string.isRequired,
+  setImageURL: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
   setCurrentEditor: PropTypes.func.isRequired
 };

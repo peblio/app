@@ -257,13 +257,13 @@ export function addImage() {
   };
 }
 
-export function updateImageChange(id, state) {
+export function setImageURL(id, url) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
     dispatch({
-      type: ActionTypes.UPDATE_IMAGE_CHANGE,
+      type: ActionTypes.SET_IMAGE_URL,
       id,
-      state
+      url
     });
   };
 }
