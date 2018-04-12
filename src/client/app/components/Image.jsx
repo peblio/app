@@ -21,6 +21,10 @@ class Image extends React.Component {
     this.onChange = (state) => { this.props.onChange(this.props.id, state); };
     this.setImageURL = url => this.props.setImageURL(this.props.id, url);
     this.onDrop = this.onDrop.bind(this);
+    this.urlSubmitted = (event) => {
+      this.props.setImageURL(this.props.id, this.url.value);
+      event.preventDefault();
+    };
   }
 
   onDrop(file) {
@@ -55,14 +59,32 @@ class Image extends React.Component {
           </nav>
         }
 
-        {!this.props.imageURL &&
+        {!this.props.imageURL && !this.props.name &&
+        <div>
+          Please Login to upload images
+        </div>
+        }
+        {!this.props.imageURL && this.props.name &&
           <div>
             <Dropzone
               onDrop={this.onDrop}
-              className="element__image"
+              className="element-image"
             >
               <div>Try dropping a file here, or click to select a file to upload.</div>
             </Dropzone>
+            <form className="element-image__add-url" onSubmit={this.urlSubmitted.bind(this)}>
+              <label htmlFor="element-image-name" className="element-image__label"> URL
+                <input
+                  id="element-image-name"
+                  className="element-image__input"
+                  type="text"
+                  ref={(element) => { this.url = element; }}
+                  defaultValue={this.props.imageURL}
+                  readOnly={this.props.preview}
+                />
+              </label>
+              <input className="element__button" type="submit" value="Submit" />
+            </form>
           </div>
       }
         {this.props.imageURL && <img className="element__image" src={this.props.imageURL} /> }
