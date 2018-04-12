@@ -144,7 +144,7 @@ class Canvas extends React.Component {
           rowHeight={this.props.rgl.rowHeight}
           layout={this.props.layout}
           onLayoutChange={this.props.setPageLayout}
-          compactType={null}
+          compactType="vertical"
           autoSize
           margin={this.props.rgl.margin}
           draggableHandle=".element__drag"
