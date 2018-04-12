@@ -1,6 +1,5 @@
 {
 	"extends": "airbnb",
-	"parser": "babel-eslint",
 	"env": {
     "browser": true,
     "node": true,
@@ -11,6 +10,7 @@
     "es6": true,
     "classes": true
   },
+  "parser": "babel-eslint",
   "rules": {
   	"react/no-multi-comp": 0,
     "import/extensions": 0,

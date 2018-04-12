@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import EditorContainer from './EditorContainer.jsx';
 import Questions from './Questions.jsx';
 import Iframe from './Iframe.jsx';
+import Image from './Image.jsx';
 import TextEditor from './TextEditor.jsx';
 
 const ReactGridLayout = require('react-grid-layout');
@@ -70,6 +71,21 @@ class Canvas extends React.Component {
     );
   }
 
+  renderImage(editor) {
+    return (
+      <div key={editor.id}>
+        <Image
+          id={editor.id}
+          preview={this.props.preview}
+          imageState={editor.imageState}
+          removeEditor={this.props.removeEditor}
+          setCurrentEditor={this.props.setCurrentEditor}
+          onChange={this.props.updateImageChange}
+        />
+      </div>
+    );
+  }
+
   renderQuestion(editor) {
     return (
       <div key={editor.id}>
@@ -129,6 +145,13 @@ class Canvas extends React.Component {
             localLayout[key].h = (localLayout[key].h < 12) ? 12 : localLayout[key].h;
             break;
           }
+          case 'image' : {
+            localLayout[key].minW = 10;
+            localLayout[key].w = (localLayout[key].w < 10) ? 10 : localLayout[key].w;
+            localLayout[key].minH = 12;
+            localLayout[key].h = (localLayout[key].h < 12) ? 12 : localLayout[key].h;
+            break;
+          }
           default: {
             break;
           }
@@ -162,6 +185,7 @@ class Canvas extends React.Component {
                   case 'code': return this.renderCodeEditor(this.props.editors[id]);
                   case 'text': return this.renderTextEditor(this.props.editors[id]);
                   case 'iframe': return this.renderIframe(this.props.editors[id]);
+                  case 'image': return this.renderImage(this.props.editors[id]);
                   case 'question': return this.renderQuestion(this.props.editors[id]);
                   default: return null;
                 }

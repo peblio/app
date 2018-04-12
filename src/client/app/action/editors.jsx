@@ -246,3 +246,24 @@ export function setIframeURL(id, url) {
     });
   };
 }
+
+/** IMAGE */
+export function addImage() {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.ADD_IMAGE
+    });
+  };
+}
+
+export function updateImageChange(id, state) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.UPDATE_IMAGE_CHANGE,
+      id,
+      state
+    });
+  };
+}
