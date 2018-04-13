@@ -4,6 +4,8 @@ import CodeMirror from 'codemirror';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/htmlmixed/htmlmixed';
+import 'codemirror/mode/css/css';
 
 require('../styles/codemirror.css');
 require('../styles/3024-night.css');

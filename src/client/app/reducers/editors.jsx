@@ -203,7 +203,7 @@ const editorsReducer = (state = initialState, action) => {
         type: 'iframe',
         id,
         index: stack.length,
-        url: ''
+        url: 'https://peblio.github.io/instructions/embed.html'
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -211,6 +211,24 @@ const editorsReducer = (state = initialState, action) => {
     }
 
     case ActionTypes.SET_IFRAME_URL:
+      editors[action.id].url = action.url;
+      return { ...state, editors };
+
+    /** IMAGE */
+    case ActionTypes.ADD_IMAGE: {
+      const id = `editor-${state.editorIndex}`;
+      editors[id] = {
+        type: 'image',
+        id,
+        index: stack.length,
+        url: ''
+      };
+      stack.push(id);
+      const editorIndex = state.editorIndex + 1;
+      return { editors, editorIndex };
+    }
+
+    case ActionTypes.SET_IMAGE_URL:
       editors[action.id].url = action.url;
       return { ...state, editors };
 

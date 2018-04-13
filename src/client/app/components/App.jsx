@@ -143,6 +143,7 @@ class App extends React.Component {
             addTextEditor={this.props.addTextEditor}
             addQuestionEditor={this.props.addQuestionEditor}
             addIframe={this.props.addIframe}
+            addImage={this.props.addImage}
             canEdit={this.props.canEdit}
             isFileDropdownOpen={this.props.isFileDropdownOpen}
             isAccountDropdownOpen={this.props.isAccountDropdownOpen}
@@ -188,11 +189,14 @@ class App extends React.Component {
           setInnerHeight={this.props.setInnerHeight}
 
           updateTextChange={this.props.updateTextChange}
+          updateImageChange={this.props.updateImageChange}
 
           setIframeURL={this.props.setIframeURL}
 
           updateQuestionChange={this.props.updateQuestionChange}
           updateAnswerChange={this.props.updateAnswerChange}
+
+          setImageURL={this.props.setImageURL}
         />
         <Modal
           size="large"
@@ -311,6 +315,8 @@ App.propTypes = {
   setInnerHeight: PropTypes.func.isRequired,
   updateQuestionChange: PropTypes.func.isRequired,
   updateAnswerChange: PropTypes.func.isRequired,
+  addImage: PropTypes.func.isRequired,
+  setImageURL: PropTypes.func.isRequired,
 
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,

@@ -6,13 +6,54 @@ const Page = require('../models/page.js');
 const User = require('../models/user.js');
 const passport = require('passport');
 
+const multer = require('multer');
+const AWS = require('aws-sdk');
+const fs = require('fs');
+
 const apiRoutes = express.Router();
+
+// Amazon s3 config
+const s3 = new AWS.S3();
+
+const credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
+AWS.config.credentials = credentials;
+console.log(credentials);
+// credentials. = 'AKIAI57NL46VTTDUCRCA';
+// credentials. = 'znlA6cGcqxg2nYhXf4enc4of9AV1bKXdS7amv++/';
+
+const myBucket = 'peblio-files';
+// Multer config
+// memory storage keeps file data in a buffer
+const upload = multer({
+  storage: multer.memoryStorage(),
+    // file size limitation in bytes
+  limits: { fileSize: 52428800 },
+});
 
 apiRoutes.route('/examples').get(getExamples);
 apiRoutes.route('/page/:id').get(getPage);
 apiRoutes.route('/user').get(getUser);
 apiRoutes.route('/sketches').get(getSketches);
 apiRoutes.route('/login').post(loginUser);
+apiRoutes.route('/upload').post(upload.single('uploadImageFile'), uploadFiles);
+
+function uploadFiles(req, res) {
+  console.log(req);
+  const params = {
+    Bucket: myBucket,
+    Key: req.file.originalname,
+    Body: req.file.buffer,
+    ACL: 'public-read'
+  };
+  s3.putObject(params, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Successfully uploaded data to myBucket/myKey');
+      res.send(req.file.originalname);
+    }
+  });
+}
 
 function getPage(req, res) {
   Page.find({ id: req.params.id }, (err, data) => {
