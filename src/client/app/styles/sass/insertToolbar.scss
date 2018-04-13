@@ -36,7 +36,12 @@
 #Shape{
   fill:$black;
   stroke:none;
+  height: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 .insert-toolbar__button:hover #Shape {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.2s;

@@ -4,6 +4,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DragSVG from '../images/drag.svg';
 import CloseSVG from '../images/close.svg';
+import UploadSVG from '../images/upload.svg';
+
 
 import Dropzone from 'react-dropzone';
 
@@ -60,8 +62,15 @@ class Image extends React.Component {
         }
 
         {!this.props.imageURL && !this.props.name &&
-        <div>
-          Please Login to upload images
+        <div className="image__login">
+          <div className="image__content">
+            <div className="image__title">
+                Please Log In to Upload Images
+            </div>
+            <div className="image__svg">
+              <UploadSVG alt="upload image" />
+            </div>
+          </div>
         </div>
         }
         {!this.props.imageURL && this.props.name &&

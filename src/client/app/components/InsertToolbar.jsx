@@ -6,6 +6,8 @@ import EmbedSVG from '../images/embed.svg';
 import ImageSVG from '../images/text.svg';
 import QuestionSVG from '../images/question.svg';
 import TextSVG from '../images/text.svg';
+import AddImageSVG from '../images/image.svg';
+
 
 class InsertToolbar extends React.Component {
   render() {
@@ -43,7 +45,7 @@ class InsertToolbar extends React.Component {
           onClick={this.props.addImage}
           id="elementButton" className="insert-toolbar__button"
         >
-          <QuestionSVG alt="add image" />
+          <AddImageSVG alt="add image" />
           Image
         </button>
       </div>
