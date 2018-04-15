@@ -2,11 +2,11 @@ body, html{
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;;
-  background-color: $canvas-gray;
+  background-color: $whitish;
 }
 
 .canvas{
-  background-color: $canvas-gray;
+  background-color: $whitish;
   width: $total-width;
   min-height:80vh;
   padding: $large-padding;

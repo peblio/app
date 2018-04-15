@@ -74,27 +74,44 @@ class Image extends React.Component {
         </div>
         }
         {!this.props.imageURL && this.props.name &&
-          <div>
-            <Dropzone
-              onDrop={this.onDrop}
-              className="element-image"
-            >
-              <div>Try dropping a file here, or click to select a file to upload.</div>
-            </Dropzone>
-            <form className="element-image__add-url" onSubmit={this.urlSubmitted.bind(this)}>
-              <label htmlFor="element-image-name" className="element-image__label"> URL
-                <input
-                  id="element-image-name"
-                  className="element-image__input"
-                  type="text"
-                  ref={(element) => { this.url = element; }}
-                  defaultValue={this.props.imageURL}
-                  readOnly={this.props.preview}
-                />
-              </label>
-              <input className="element__button" type="submit" value="Submit" />
-            </form>
+          <div className="image__login">
+            <div className="image__content">
+              <Dropzone
+                onDrop={this.onDrop}
+                className="element-image"
+              >
+                <div className="image__title">
+                Upload a file
+                </div>
+                <div className="image__drop">
+                  <div className="image__svg">
+                    <UploadSVG alt="upload image" />
+                  </div>
+                  <div className="image__svg">Drop a file or click to upload</div>
+                </div>
+              </Dropzone>
+              <div className="image__title">
+              or add a URL
+              </div>
+              <div className="image__url">
+
+                <form className="element-image__add-url" onSubmit={this.urlSubmitted.bind(this)}>
+                  <label htmlFor="element-image-name" className="element-image__label">
+                    <input
+                      id="element-image-name"
+                      className="element-image__input"
+                      type="text"
+                      ref={(element) => { this.url = element; }}
+                      defaultValue={this.props.imageURL}
+                      readOnly={this.props.preview}
+                    />
+                  </label>
+                  <input className="element__button" type="submit" value="Submit" />
+                </form>
+              </div>
+            </div>
           </div>
+
       }
         {this.props.imageURL && <img className="element__image" src={this.props.imageURL} /> }
       </div>
