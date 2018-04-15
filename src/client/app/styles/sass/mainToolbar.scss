@@ -83,7 +83,8 @@
   position: relative;
   display: inline-block;
   width: 30px;
-  height: 20px;
+  height: 15px;
+  top: 5%;
 }
 
 .main-toolbar__slider {
@@ -96,7 +97,7 @@
   background-color: #009887;
   -webkit-transition: .4s;
   transition: .4s;
-  border-radius: $small-border-radius;
+  border-radius: $medium-border-radius;
 
 }
 
@@ -110,13 +111,13 @@
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
-  border-radius: $small-border-radius;
+  border-radius: $medium-border-radius;
 
 }
 
 input:checked + .main-toolbar__slider {
   background-color: #ccc;
-  border-radius: $small-border-radius;
+  border-radius: $medium-border-radius;
 
 }
 
