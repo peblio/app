@@ -77,6 +77,7 @@ class Canvas extends React.Component {
         <Image
           id={editor.id}
           imageURL={editor.url}
+          name={this.props.name}
           onChange={this.props.updateImageChange}
           preview={this.props.preview}
           removeEditor={this.props.removeEditor}

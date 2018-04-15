@@ -38,7 +38,7 @@ class Image extends React.Component {
   }
   componentDidUpdate
   render() {
-    console.log(this.props.imageURL);
+    console.log(this.props.name);
     return (
       <div
         id={this.props.id}
@@ -59,7 +59,7 @@ class Image extends React.Component {
           </nav>
         }
 
-        {!this.props.imageURL && !this.props.name &&
+        {(!this.props.imageURL && !this.props.name) &&
         <div>
           Please Login to upload images
         </div>

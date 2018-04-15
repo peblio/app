@@ -165,8 +165,9 @@ class App extends React.Component {
           />
         </nav>
         <Canvas
-          preview={this.props.preview}
           layout={this.props.layout}
+          name={this.props.name}
+          preview={this.props.preview}
           rgl={this.props.rgl}
           setPageLayout={this.props.setPageLayout}
 
