@@ -23,19 +23,7 @@ class Questions extends React.Component {
 
   render() {
     return (
-      <div id={this.props.id} className="question__main-container">
-        { this.props.preview ||
-          <nav className="element__nav">
-            <button className="element__close" onClick={this.removeEditor.bind(this)}>
-              <CloseSVG alt="close element" />
-            </button>
-            <button
-              className={`element__close element__drag drag__${this.props.id}`}
-            >
-              <DragSVG alt="drag element" />
-            </button>
-          </nav>
-        }
+      <div>
         <section className="question__container">
           <textarea
             className="question__question"

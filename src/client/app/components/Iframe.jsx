@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DragSVG from '../images/drag.svg';
 import CloseSVG from '../images/close.svg';
+import WidgetNav from './WidgetNav.jsx';
 
 class Iframe extends React.Component {
   constructor(props) {
     super(props);
 
     this.setCurrentEditor = () => { this.props.setCurrentEditor(this.props.id); };
-    this.removeEditor = () => { this.props.removeEditor(this.props.id); };
     this.urlSubmitted = (event) => {
       this.props.setIframeURL(this.props.id, this.url.value);
       event.preventDefault();
@@ -17,19 +17,7 @@ class Iframe extends React.Component {
 
   render() {
     return (
-      <div className="element__iframe-container" id={this.props.id} onFocus={this.setCurrentEditor}>
-        { this.props.preview ||
-          <nav className="element__nav">
-            <button className="element__close" onClick={this.removeEditor.bind(this)}>
-              <CloseSVG alt="close element" />
-            </button>
-            <button
-              className={`element__close element__drag drag__${this.props.id}`}
-            >
-              <DragSVG alt="drag element" />
-            </button>
-          </nav>
-        }
+      <div>
         <div className="element__iframe">
           <iframe src={this.props.iframeURL} />
         </div>

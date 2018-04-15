@@ -5,6 +5,7 @@ import EditorContainer from './EditorContainer.jsx';
 import Questions from './Questions.jsx';
 import Iframe from './Iframe.jsx';
 import TextEditor from './TextEditor.jsx';
+import WidgetNav from './WidgetNav.jsx';
 
 const ReactGridLayout = require('react-grid-layout');
 
@@ -157,15 +158,23 @@ class Canvas extends React.Component {
               data-grid={localLayout[id]}
               className={`${this.props.editors[id].type === 'text' ? 'canvas-high' : ''}`}
             >
-              {(() => {
-                switch (this.props.editors[id].type) {
-                  case 'code': return this.renderCodeEditor(this.props.editors[id]);
-                  case 'text': return this.renderTextEditor(this.props.editors[id]);
-                  case 'iframe': return this.renderIframe(this.props.editors[id]);
-                  case 'question': return this.renderQuestion(this.props.editors[id]);
-                  default: return null;
-                }
-              })()}
+              <div className="element__iframe-container" id={this.props.id} onFocus={this.setCurrentEditor}>
+                { this.props.preview ||
+                <WidgetNav
+                  id={id}
+                  removeEditor={this.props.removeEditor}
+                />
+              }
+                {(() => {
+                  switch (this.props.editors[id].type) {
+                    case 'code': return this.renderCodeEditor(this.props.editors[id]);
+                    case 'text': return this.renderTextEditor(this.props.editors[id]);
+                    case 'iframe': return this.renderIframe(this.props.editors[id]);
+                    case 'question': return this.renderQuestion(this.props.editors[id]);
+                    default: return null;
+                  }
+                })()}
+              </div>
             </div>
         ))}
         </ReactGridLayout>

@@ -47,20 +47,7 @@ class EditorContainer extends React.Component {
 
   render() {
     return (
-      <div className="code-editor__outside-container" onFocus={this.setCurrentEditor}>
-        { this.props.preview ||
-        <nav className="element__nav">
-          <button
-            className="element__close"
-            onClick={this.removeEditor}
-          >
-            <CloseSVG alt="close element" />
-          </button>
-          <button className={`element__close element__drag drag__${this.props.id}`}>
-            <DragSVG alt="drag element" />
-          </button>
-        </nav>
-        }
+      <div>
         <div className="code-editor__total-container" onFocus={this.setCurrentEditor}>
           <EditorToolbar
             currentFile={this.props.currentFile}
