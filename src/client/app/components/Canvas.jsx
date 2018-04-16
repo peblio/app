@@ -90,11 +90,11 @@ class Canvas extends React.Component {
 
   render() {
     const ids = Object.keys(this.props.editors);
+    console.log(this.props.layout);
     const storageLayout = this.props.layout;
     const localLayout = {};
     storageLayout.map((x) => { // eslint-disable-line
       const key = x.i;
-
       /* TODO: change the code to simplify the layout logic */
       localLayout[key] = x;
       localLayout[key].maxW = 30;
@@ -162,6 +162,8 @@ class Canvas extends React.Component {
                 { this.props.preview ||
                 <WidgetNav
                   id={id}
+                  layout={this.props.layout}
+                  setPageLayout={this.props.setPageLayout}
                   editors={this.props.editors}
                   editorIndex={this.props.editorIndex}
                   removeEditor={this.props.removeEditor}
