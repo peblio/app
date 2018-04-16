@@ -7,7 +7,9 @@ class WidgetNav extends React.Component {
   constructor(props) {
     super(props);
     this.removeEditor = () => { this.props.removeEditor(this.props.id); };
+    this.duplicateEditor = () => { this.props.duplicateEditor(this.props.id); };
   }
+
   render() {
     return (
       <nav className="element__nav">
@@ -19,6 +21,9 @@ class WidgetNav extends React.Component {
         >
           <DragSVG alt="drag element" />
         </button>
+        <button className="element__close" onClick={this.duplicateEditor.bind(this)}>
+          <DragSVG alt="duplicate element" />
+        </button>
       </nav>
     );
   }
@@ -26,6 +31,8 @@ class WidgetNav extends React.Component {
 
 WidgetNav.propTypes = {
   id: PropTypes.string.isRequired,
+  editorIndex: PropTypes.number.isRequired,
+  editors: PropTypes.shape.isRequired,
   removeEditor: PropTypes.func.isRequired,
 };
 

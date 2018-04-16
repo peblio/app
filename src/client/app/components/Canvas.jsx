@@ -162,7 +162,10 @@ class Canvas extends React.Component {
                 { this.props.preview ||
                 <WidgetNav
                   id={id}
+                  editors={this.props.editors}
+                  editorIndex={this.props.editorIndex}
                   removeEditor={this.props.removeEditor}
+                  duplicateEditor={this.props.duplicateEditor}
                 />
               }
                 {(() => {
