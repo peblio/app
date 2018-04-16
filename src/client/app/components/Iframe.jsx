@@ -2,15 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DragSVG from '../images/drag.svg';
 import CloseSVG from '../images/close.svg';
+import ReactHtmlParser from 'react-html-parser';
 
 class Iframe extends React.Component {
   constructor(props) {
     super(props);
-
     this.setCurrentEditor = () => { this.props.setCurrentEditor(this.props.id); };
     this.removeEditor = () => { this.props.removeEditor(this.props.id); };
     this.urlSubmitted = (event) => {
-      this.props.setIframeURL(this.props.id, this.url.value);
+      const tempString = this.url.value;
+      const src = ReactHtmlParser(tempString)[0].props ? ReactHtmlParser(tempString)[0].props.src : tempString;
+      this.props.setIframeURL(this.props.id, src);
       event.preventDefault();
     };
   }
