@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DragSVG from '../images/drag.svg';
 import CloseSVG from '../images/close.svg';
+import CopySVG from '../images/copy.svg';
+import DragSVG from '../images/drag.svg';
 
 class WidgetNav extends React.Component {
   constructor(props) {
     super(props);
     this.removeEditor = () => { this.props.removeEditor(this.props.id); };
-    this.duplicateEditor = () => { this.props.duplicateEditor(this.props.id); };
+    this.duplicateEditor = () => {
+      this.props.duplicateEditor(this.props.id);
+    };
   }
 
   render() {
@@ -22,7 +25,7 @@ class WidgetNav extends React.Component {
           <DragSVG alt="drag element" />
         </button>
         <button className="element__close" onClick={this.duplicateEditor.bind(this)}>
-          <DragSVG alt="duplicate element" />
+          <CopySVG alt="duplicate element" />
         </button>
       </nav>
     );

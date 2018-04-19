@@ -16,7 +16,8 @@ class TextEditor extends React.Component {
 
   render() {
     return (
-      <div>
+
+      <div className={`text-editor__container${this.props.preview ? '' : '--edit'}`}>
         <Editor
           id={this.props.id}
           toolbarOnFocus
