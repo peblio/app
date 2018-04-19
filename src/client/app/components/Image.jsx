@@ -1,15 +1,12 @@
-import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import React from 'react';
+import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import DragSVG from '../images/drag.svg';
 import CloseSVG from '../images/close.svg';
 import UploadSVG from '../images/upload.svg';
 
-
-import Dropzone from 'react-dropzone';
-
-const axios = require('axios');
 const upload = require('superagent');
 
 class Image extends React.Component {
@@ -29,6 +26,7 @@ class Image extends React.Component {
     };
   }
 
+
   onDrop(file) {
     upload.post('/api/upload')
       .attach('uploadImageFile', file[0])
@@ -38,9 +36,7 @@ class Image extends React.Component {
         this.setImageURL(`https://s3.amazonaws.com/peblio-files/${imageName}`);
       });
   }
-  componentDidUpdate
   render() {
-    console.log(this.props.name);
     return (
       <div
         id={this.props.id}
@@ -121,10 +117,13 @@ class Image extends React.Component {
 
 Image.propTypes = {
   id: PropTypes.string.isRequired,
-  ImageURL: PropTypes.string.isRequired,
-  setImageURL: PropTypes.func.isRequired,
+  imageURL: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  preview: PropTypes.bool.isRequired,
   removeEditor: PropTypes.func.isRequired,
-  setCurrentEditor: PropTypes.func.isRequired
+  setCurrentEditor: PropTypes.func.isRequired,
+  setImageURL: PropTypes.func.isRequired,
 };
 
 export default Image;

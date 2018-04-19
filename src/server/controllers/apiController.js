@@ -1,25 +1,21 @@
+const AWS = require('aws-sdk');
 const express = require('express');
+const multer = require('multer');
+const passport = require('passport');
+const shortid = require('shortid');
 
+const apiRoutes = express.Router();
 const Router = express.Router();
 
 const Page = require('../models/page.js');
 const User = require('../models/user.js');
-const passport = require('passport');
-
-const multer = require('multer');
-const AWS = require('aws-sdk');
-const fs = require('fs');
-
-const apiRoutes = express.Router();
 
 // Amazon s3 config
 const s3 = new AWS.S3();
 
 const credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
 AWS.config.credentials = credentials;
-console.log(credentials);
-// credentials. = 'AKIAI57NL46VTTDUCRCA';
-// credentials. = 'znlA6cGcqxg2nYhXf4enc4of9AV1bKXdS7amv++/';
+
 
 const myBucket = 'peblio-files';
 // Multer config
@@ -39,9 +35,10 @@ apiRoutes.route('/upload').post(upload.single('uploadImageFile'), uploadFiles);
 
 function uploadFiles(req, res) {
   console.log(req);
+  const fileName = `test/${shortid.generate()}_${req.file.originalname}`;
   const params = {
     Bucket: myBucket,
-    Key: req.file.originalname,
+    Key: fileName,
     Body: req.file.buffer,
     ACL: 'public-read'
   };
@@ -50,7 +47,7 @@ function uploadFiles(req, res) {
       console.log(err);
     } else {
       console.log('Successfully uploaded data to myBucket/myKey');
-      res.send(req.file.originalname);
+      res.send(fileName);
     }
   });
 }

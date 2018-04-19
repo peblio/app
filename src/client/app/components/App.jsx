@@ -318,6 +318,7 @@ App.propTypes = {
   updateAnswerChange: PropTypes.func.isRequired,
   addImage: PropTypes.func.isRequired,
   setImageURL: PropTypes.func.isRequired,
+  updateImageChange: PropTypes.func.isRequired,
 
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
