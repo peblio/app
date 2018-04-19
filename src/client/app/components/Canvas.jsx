@@ -26,8 +26,6 @@ class Canvas extends React.Component {
         isPlaying={editor.isPlaying}
         isRefreshing={editor.isRefreshing}
         playCode={this.props.playCode}
-        preview={this.props.preview}
-        removeEditor={this.props.removeEditor}
         setCurrentEditor={this.props.setCurrentEditor}
         setEditorMode={this.props.setEditorMode}
         startCodeRefresh={this.props.startCodeRefresh}
@@ -51,7 +49,6 @@ class Canvas extends React.Component {
         onChange={this.props.updateTextChange}
         preview={this.props.preview}
         setCurrentEditor={this.props.setCurrentEditor}
-        removeEditor={this.props.removeEditor}
       />
     );
   }
@@ -63,7 +60,6 @@ class Canvas extends React.Component {
           id={editor.id}
           iframeURL={editor.url}
           preview={this.props.preview}
-          removeEditor={this.props.removeEditor}
           setCurrentEditor={this.props.setCurrentEditor}
           setIframeURL={this.props.setIframeURL}
         />
@@ -79,7 +75,6 @@ class Canvas extends React.Component {
           answer={editor.answer}
           preview={this.props.preview}
           question={editor.question}
-          removeEditor={this.props.removeEditor}
           setCurrentEditor={this.props.setCurrentEditor}
           updateAnswerChange={this.props.updateAnswerChange}
           updateQuestionChange={this.props.updateQuestionChange}
@@ -163,8 +158,6 @@ class Canvas extends React.Component {
                   id={id}
                   layout={this.props.layout}
                   setPageLayout={this.props.setPageLayout}
-                  editors={this.props.editors}
-                  editorIndex={this.props.editorIndex}
                   removeEditor={this.props.removeEditor}
                   duplicateEditor={this.props.duplicateEditor}
                 />
@@ -189,7 +182,9 @@ class Canvas extends React.Component {
 
 Canvas.propTypes = {
   clearConsoleOutput: PropTypes.func.isRequired,
+  duplicateEditor: PropTypes.func.isRequired,
   editors: PropTypes.shape.isRequired,
+  id: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   preview: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,

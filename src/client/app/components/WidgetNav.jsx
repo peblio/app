@@ -33,9 +33,8 @@ class WidgetNav extends React.Component {
 }
 
 WidgetNav.propTypes = {
+  duplicateEditor: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
-  editorIndex: PropTypes.number.isRequired,
-  editors: PropTypes.shape.isRequired,
   removeEditor: PropTypes.func.isRequired,
 };
 

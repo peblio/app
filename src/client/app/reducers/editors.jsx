@@ -60,7 +60,7 @@ const editorsReducer = (state = initialState, action) => {
       delete editors[action.id];
       return { ...state, editors: updateIndices(editors) };
 
-    case ActionTypes.DUPLICATE_EDITOR:
+    case ActionTypes.DUPLICATE_EDITOR: {
       let newEditor;
       if (state.editors[action.id].type === 'text') {
         newEditor = { ...state.editors[action.id] };
@@ -70,9 +70,9 @@ const editorsReducer = (state = initialState, action) => {
       newEditor.id = `editor-${state.editorIndex}`;
       const editorIndex = state.editorIndex + 1;
       stack.push(newEditor.id);
-      console.log(editors);
       editors[newEditor.id] = newEditor;
       return { ...state, editors: updateIndices(editors), editorIndex };
+    }
 
     case ActionTypes.SET_EDITOR_POSITION:
       editors[action.id].x = action.x;

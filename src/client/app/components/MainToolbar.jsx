@@ -4,10 +4,7 @@ import FileModal from './FileModal.jsx';
 import InsertToolbar from './InsertToolbar.jsx';
 import ToolbarLogo from '../images/logo.svg';
 import CheckSVG from '../images/check.svg';
-import PreviewOnSVG from '../images/previewOnSVG.svg';
-import PreviewOffSVG from '../images/previewOffSVG.svg';
 import AccountSVG from '../images/account.svg';
-
 
 class MainToolbar extends React.Component {
   render() {

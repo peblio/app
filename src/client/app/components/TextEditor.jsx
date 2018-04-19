@@ -2,8 +2,6 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Drag from '../images/drag.svg';
-import CloseSVG from '../images/close.svg';
 
 class TextEditor extends React.Component {
   constructor(props) {

@@ -1,8 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DragSVG from '../images/drag.svg';
-import CloseSVG from '../images/close.svg';
-import WidgetNav from './WidgetNav.jsx';
 
 class Iframe extends React.Component {
   constructor(props) {
@@ -43,7 +40,6 @@ Iframe.propTypes = {
   id: PropTypes.string.isRequired,
   iframeURL: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
-  removeEditor: PropTypes.func.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired
 };
