@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import EditorContainer from './EditorContainer.jsx';
 import Questions from './Questions.jsx';
 import Iframe from './Iframe.jsx';
+import Image from './Image.jsx';
 import TextEditor from './TextEditor.jsx';
 import WidgetNav from './WidgetNav.jsx';
 
@@ -67,6 +68,23 @@ class Canvas extends React.Component {
     );
   }
 
+  renderImage(editor) {
+    return (
+      <div key={editor.id}>
+        <Image
+          id={editor.id}
+          imageURL={editor.url}
+          name={this.props.name}
+          onChange={this.props.updateImageChange}
+          preview={this.props.preview}
+          removeEditor={this.props.removeEditor}
+          setCurrentEditor={this.props.setCurrentEditor}
+          setImageURL={this.props.setImageURL}
+        />
+      </div>
+    );
+  }
+
   renderQuestion(editor) {
     return (
       <div key={editor.id}>
@@ -124,6 +142,13 @@ class Canvas extends React.Component {
             localLayout[key].h = (localLayout[key].h < 12) ? 12 : localLayout[key].h;
             break;
           }
+          case 'image' : {
+            localLayout[key].minW = 10;
+            localLayout[key].w = (localLayout[key].w < 10) ? 10 : localLayout[key].w;
+            localLayout[key].minH = 12;
+            localLayout[key].h = (localLayout[key].h < 12) ? 12 : localLayout[key].h;
+            break;
+          }
           default: {
             break;
           }
@@ -165,9 +190,10 @@ class Canvas extends React.Component {
                 {(() => {
                   switch (this.props.editors[id].type) {
                     case 'code': return this.renderCodeEditor(this.props.editors[id]);
-                    case 'text': return this.renderTextEditor(this.props.editors[id]);
-                    case 'iframe': return this.renderIframe(this.props.editors[id]);
                     case 'question': return this.renderQuestion(this.props.editors[id]);
+                    case 'iframe': return this.renderIframe(this.props.editors[id]);
+                    case 'image': return this.renderImage(this.props.editors[id]);
+                    case 'text': return this.renderTextEditor(this.props.editors[id]);
                     default: return null;
                   }
                 })()}
@@ -186,6 +212,7 @@ Canvas.propTypes = {
   editors: PropTypes.shape.isRequired,
   id: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  name: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
@@ -194,6 +221,7 @@ Canvas.propTypes = {
   setCurrentFile: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired,
+  setImageURL: PropTypes.func.isRequired,
   setInnerHeight: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
@@ -203,6 +231,7 @@ Canvas.propTypes = {
   updateAnswerChange: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
+  updateImageChange: PropTypes.func.isRequired,
   updateQuestionChange: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired
 };

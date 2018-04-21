@@ -115,6 +115,7 @@ class MainToolbar extends React.Component {
             addQuestionEditor={this.props.addQuestionEditor}
             addTextEditor={this.props.addTextEditor}
             addIframe={this.props.addIframe}
+            addImage={this.props.addImage}
           />
         }
       </div>
@@ -127,6 +128,7 @@ MainToolbar.propTypes = {
   addQuestionEditor: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
+  addImage: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,

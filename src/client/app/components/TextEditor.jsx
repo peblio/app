@@ -37,8 +37,7 @@ class TextEditor extends React.Component {
             },
             textAlign: { inDropdown: true },
             link: { inDropdown: true },
-            history: { inDropdown: true },
-            image: { className: 'text-editor__image', popupClassName: 'text-editor__imagePopup' },
+            history: { inDropdown: true }
 
           }}
           toolbarClassName="text-editor__toolbar"
