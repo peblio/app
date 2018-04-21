@@ -36,3 +36,13 @@ body, html{
 button {
   @extend %menu-item ;
 }
+
+@media screen and (max-width: 1025px) {
+  .canvas{
+    margin-top: 150px;
+  }
+
+  .canvas-extra-margin {
+    margin-top: 210px;
+  }
+}

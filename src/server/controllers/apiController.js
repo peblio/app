@@ -34,7 +34,6 @@ apiRoutes.route('/login').post(loginUser);
 apiRoutes.route('/upload').post(upload.single('uploadImageFile'), uploadFiles);
 
 function uploadFiles(req, res) {
-  console.log(req);
   const fileName = `test/${shortid.generate()}_${req.file.originalname}`;
   const params = {
     Bucket: myBucket,
@@ -46,7 +45,7 @@ function uploadFiles(req, res) {
     if (err) {
       console.log(err);
     } else {
-      console.log('Successfully uploaded data to myBucket/myKey');
+      console.log(`Successfully uploaded data to${myBucket}/${fileName}`);
       res.send(fileName);
     }
   });

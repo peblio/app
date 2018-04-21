@@ -16,7 +16,6 @@ class ImageBackUp extends React.Component {
   }
 
   uploadImageCallBack(file) {
-    console.log(file);
     return new Promise(
     (resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -28,7 +27,6 @@ class ImageBackUp extends React.Component {
       xhr.addEventListener('load', () => {
         const response = JSON.parse(xhr.responseText);
         resolve(response);
-        console.log(response);
       });
       xhr.addEventListener('error', () => {
         const error = JSON.parse(xhr.responseText);

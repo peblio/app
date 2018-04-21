@@ -6,6 +6,7 @@ import Questions from './Questions.jsx';
 import Iframe from './Iframe.jsx';
 import Image from './Image.jsx';
 import TextEditor from './TextEditor.jsx';
+import WidgetNav from './WidgetNav.jsx';
 
 const ReactGridLayout = require('react-grid-layout');
 
@@ -26,8 +27,6 @@ class Canvas extends React.Component {
         isPlaying={editor.isPlaying}
         isRefreshing={editor.isRefreshing}
         playCode={this.props.playCode}
-        preview={this.props.preview}
-        removeEditor={this.props.removeEditor}
         setCurrentEditor={this.props.setCurrentEditor}
         setEditorMode={this.props.setEditorMode}
         startCodeRefresh={this.props.startCodeRefresh}
@@ -51,7 +50,6 @@ class Canvas extends React.Component {
         onChange={this.props.updateTextChange}
         preview={this.props.preview}
         setCurrentEditor={this.props.setCurrentEditor}
-        removeEditor={this.props.removeEditor}
       />
     );
   }
@@ -63,7 +61,6 @@ class Canvas extends React.Component {
           id={editor.id}
           iframeURL={editor.url}
           preview={this.props.preview}
-          removeEditor={this.props.removeEditor}
           setCurrentEditor={this.props.setCurrentEditor}
           setIframeURL={this.props.setIframeURL}
         />
@@ -96,7 +93,6 @@ class Canvas extends React.Component {
           answer={editor.answer}
           preview={this.props.preview}
           question={editor.question}
-          removeEditor={this.props.removeEditor}
           setCurrentEditor={this.props.setCurrentEditor}
           updateAnswerChange={this.props.updateAnswerChange}
           updateQuestionChange={this.props.updateQuestionChange}
@@ -111,7 +107,6 @@ class Canvas extends React.Component {
     const localLayout = {};
     storageLayout.map((x) => { // eslint-disable-line
       const key = x.i;
-
       /* TODO: change the code to simplify the layout logic */
       localLayout[key] = x;
       localLayout[key].maxW = 30;
@@ -182,16 +177,27 @@ class Canvas extends React.Component {
               data-grid={localLayout[id]}
               className={`${this.props.editors[id].type === 'text' ? 'canvas-high' : ''}`}
             >
-              {(() => {
-                switch (this.props.editors[id].type) {
-                  case 'code': return this.renderCodeEditor(this.props.editors[id]);
-                  case 'text': return this.renderTextEditor(this.props.editors[id]);
-                  case 'iframe': return this.renderIframe(this.props.editors[id]);
-                  case 'image': return this.renderImage(this.props.editors[id]);
-                  case 'question': return this.renderQuestion(this.props.editors[id]);
-                  default: return null;
-                }
-              })()}
+              <div className="element__iframe-container" id={this.props.id} onFocus={this.setCurrentEditor}>
+                { this.props.preview ||
+                <WidgetNav
+                  id={id}
+                  layout={this.props.layout}
+                  setPageLayout={this.props.setPageLayout}
+                  removeEditor={this.props.removeEditor}
+                  duplicateEditor={this.props.duplicateEditor}
+                />
+              }
+                {(() => {
+                  switch (this.props.editors[id].type) {
+                    case 'code': return this.renderCodeEditor(this.props.editors[id]);
+                    case 'question': return this.renderQuestion(this.props.editors[id]);
+                    case 'iframe': return this.renderIframe(this.props.editors[id]);
+                    case 'image': return this.renderImage(this.props.editors[id]);
+                    case 'text': return this.renderTextEditor(this.props.editors[id]);
+                    default: return null;
+                  }
+                })()}
+              </div>
             </div>
         ))}
         </ReactGridLayout>
@@ -202,8 +208,11 @@ class Canvas extends React.Component {
 
 Canvas.propTypes = {
   clearConsoleOutput: PropTypes.func.isRequired,
+  duplicateEditor: PropTypes.func.isRequired,
   editors: PropTypes.shape.isRequired,
+  id: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  name: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
@@ -212,6 +221,7 @@ Canvas.propTypes = {
   setCurrentFile: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired,
+  setImageURL: PropTypes.func.isRequired,
   setInnerHeight: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
@@ -221,6 +231,7 @@ Canvas.propTypes = {
   updateAnswerChange: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
+  updateImageChange: PropTypes.func.isRequired,
   updateQuestionChange: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired
 };

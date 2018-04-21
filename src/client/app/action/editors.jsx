@@ -21,6 +21,16 @@ export function removeEditor(id) {
   };
 }
 
+export function duplicateEditor(id) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.DUPLICATE_EDITOR,
+      id
+    });
+  };
+}
+
 export function loadEditors(editors, editorIndex) {
   return (dispatch) => {
     dispatch({
