@@ -2,8 +2,6 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Drag from '../images/drag.svg';
-import CloseSVG from '../images/close.svg';
 
 class TextEditor extends React.Component {
   constructor(props) {
@@ -16,24 +14,8 @@ class TextEditor extends React.Component {
 
   render() {
     return (
-      <div
-        id={this.props.id}
-        onFocus={this.setCurrentEditor.bind(this)}
-        className={`text-editor__container ${this.props.preview ? '' : 'text-editor__container--edit'}`}
-      >
-        { this.props.preview ||
-          <nav className="element__nav">
-            <button
-              className="element__close"
-              onClick={this.removeEditor.bind(this)}
-            >
-              <CloseSVG alt="close element" />
-            </button>
-            <button className={`element__close element__drag drag__${this.props.id}`}>
-              <Drag alt="drag element" />
-            </button>
-          </nav>
-        }
+
+      <div className={`text-editor__container${this.props.preview ? '' : '--edit'}`}>
         <Editor
           id={this.props.id}
           toolbarOnFocus

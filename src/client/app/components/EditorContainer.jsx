@@ -6,9 +6,6 @@ import P5Editor from './P5Editor.jsx';
 import P5Output from './P5Output.jsx';
 import EditorToolbar from './EditorToolbar.jsx';
 import ConsoleOutput from './ConsoleOutput.jsx';
-import DragSVG from '../images/drag.svg';
-import CloseSVG from '../images/close.svg';
-
 
 class EditorContainer extends React.Component {
   constructor(props) {
@@ -47,20 +44,7 @@ class EditorContainer extends React.Component {
 
   render() {
     return (
-      <div className="code-editor__outside-container" onFocus={this.setCurrentEditor}>
-        { this.props.preview ||
-        <nav className="element__nav">
-          <button
-            className="element__close"
-            onClick={this.removeEditor}
-          >
-            <CloseSVG alt="close element" />
-          </button>
-          <button className={`element__close element__drag drag__${this.props.id}`}>
-            <DragSVG alt="drag element" />
-          </button>
-        </nav>
-        }
+      <div>
         <div className="code-editor__total-container" onFocus={this.setCurrentEditor}>
           <EditorToolbar
             currentFile={this.props.currentFile}
@@ -146,7 +130,6 @@ EditorContainer.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   isRefreshing: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
-  preview: PropTypes.bool.isRequired,
   removeEditor: PropTypes.func.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,

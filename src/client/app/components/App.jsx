@@ -168,11 +168,13 @@ class App extends React.Component {
           layout={this.props.layout}
           rgl={this.props.rgl}
           setPageLayout={this.props.setPageLayout}
+          editorIndex={this.props.editorIndex}
 
           updateFile={this.props.updateFile}
           editors={this.props.editors}
           setCurrentEditor={this.props.setCurrentEditor}
           removeEditor={this.props.removeEditor}
+          duplicateEditor={this.props.duplicateEditor}
           setEditorSize={this.props.setEditorSize}
           setEditorPosition={this.props.setEditorPosition}
           setCurrentFile={this.props.setCurrentFile}
@@ -289,6 +291,7 @@ App.propTypes = {
 
   setCurrentEditor: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
+  duplicateEditor: PropTypes.func.isRequired,
   loadEditors: PropTypes.func.isRequired,
   setEditorPosition: PropTypes.func.isRequired,
   setEditorSize: PropTypes.func.isRequired,
