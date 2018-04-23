@@ -86,14 +86,17 @@ class Canvas extends React.Component {
   }
 
   renderQuestion(editor) {
+    console.log(editor);
     return (
       <div key={editor.id}>
         <Questions
           id={editor.id}
           answer={editor.answer}
+          innerHeight={editor.innerHeight}
           preview={this.props.preview}
           question={editor.question}
           setCurrentEditor={this.props.setCurrentEditor}
+          setQuestionInnerHeight={this.props.setQuestionInnerHeight}
           updateAnswerChange={this.props.updateAnswerChange}
           updateQuestionChange={this.props.updateQuestionChange}
         />
@@ -225,6 +228,7 @@ Canvas.propTypes = {
   setInnerHeight: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
+  setQuestionInnerHeight: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,

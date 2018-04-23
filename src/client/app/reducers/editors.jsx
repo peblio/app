@@ -195,11 +195,19 @@ const editorsReducer = (state = initialState, action) => {
         id,
         index: stack.length,
         question: 'Enter question here ',
-        answer: 'Enter answer here..'
+        answer: 'Enter answer here..',
+        innerHeight: 12
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
       return { editors, editorIndex };
+    }
+
+    case ActionTypes.SET_QUESTION_INNER_HEIGHT: {
+      editors[action.id].innerHeight = action.value;
+      return Object.assign({}, state, {
+        editors
+      });
     }
 
     case ActionTypes.UPDATE_QUESTION_CHANGE:
