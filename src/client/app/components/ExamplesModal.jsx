@@ -12,10 +12,8 @@ class ExamplesModal extends React.Component {
   }
   componentDidMount() {
     const temp = [];
-    console.log('asda');
     axios.get('/api/examples')
       .then((res) => {
-        console.log(res.data);
         res.data.forEach((example) => {
           temp.push({
             id: example.id,

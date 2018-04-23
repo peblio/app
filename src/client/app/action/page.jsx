@@ -101,7 +101,7 @@ export function updatePage(id, title, preview, editors, editorIndex, layout) {
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout
-  }).then(response => console.log('Page update', response))
+  }).then(response => console.log('Page update'))
     .catch(error => console.error('Page update error', error));
 
   return (dispatch) => {

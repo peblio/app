@@ -143,6 +143,7 @@ class App extends React.Component {
             addTextEditor={this.props.addTextEditor}
             addQuestionEditor={this.props.addQuestionEditor}
             addIframe={this.props.addIframe}
+            addImage={this.props.addImage}
             canEdit={this.props.canEdit}
             isFileDropdownOpen={this.props.isFileDropdownOpen}
             isAccountDropdownOpen={this.props.isAccountDropdownOpen}
@@ -164,15 +165,18 @@ class App extends React.Component {
           />
         </nav>
         <Canvas
-          preview={this.props.preview}
           layout={this.props.layout}
+          name={this.props.name}
+          preview={this.props.preview}
           rgl={this.props.rgl}
           setPageLayout={this.props.setPageLayout}
+          editorIndex={this.props.editorIndex}
 
           updateFile={this.props.updateFile}
           editors={this.props.editors}
           setCurrentEditor={this.props.setCurrentEditor}
           removeEditor={this.props.removeEditor}
+          duplicateEditor={this.props.duplicateEditor}
           setEditorSize={this.props.setEditorSize}
           setEditorPosition={this.props.setEditorPosition}
           setCurrentFile={this.props.setCurrentFile}
@@ -188,11 +192,14 @@ class App extends React.Component {
           setInnerHeight={this.props.setInnerHeight}
 
           updateTextChange={this.props.updateTextChange}
+          updateImageChange={this.props.updateImageChange}
 
           setIframeURL={this.props.setIframeURL}
 
           updateQuestionChange={this.props.updateQuestionChange}
           updateAnswerChange={this.props.updateAnswerChange}
+
+          setImageURL={this.props.setImageURL}
         />
         <Modal
           size="large"
@@ -289,6 +296,7 @@ App.propTypes = {
 
   setCurrentEditor: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
+  duplicateEditor: PropTypes.func.isRequired,
   loadEditors: PropTypes.func.isRequired,
   setEditorPosition: PropTypes.func.isRequired,
   setEditorSize: PropTypes.func.isRequired,
@@ -311,6 +319,9 @@ App.propTypes = {
   setInnerHeight: PropTypes.func.isRequired,
   updateQuestionChange: PropTypes.func.isRequired,
   updateAnswerChange: PropTypes.func.isRequired,
+  addImage: PropTypes.func.isRequired,
+  setImageURL: PropTypes.func.isRequired,
+  updateImageChange: PropTypes.func.isRequired,
 
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,

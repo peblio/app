@@ -26,8 +26,8 @@ class SignUp extends React.Component {
         name,
         password
       })
-        .then((response) => {
-          this.signUpSuccessful(response);
+        .then((responseInner) => {
+          this.signUpSuccessful(responseInner);
         })
         .catch(function(error) { // eslint-disable-line
           console.log('Login Failed');

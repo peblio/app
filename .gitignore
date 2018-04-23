@@ -2,3 +2,4 @@
 node_modules/
 src/client/public/bundle.js
 src/client/public/*.svg
+.env

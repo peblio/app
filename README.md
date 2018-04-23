@@ -11,6 +11,7 @@
 * [another reference](https://scotch.io/tutorials/react-on-the-server-for-beginners-build-a-universal-react-and-node-app)
 * [eslint reference](https://www.robinwieruch.de/react-eslint-webpack-babel/)
 * [Using draft-js to create and inline text-editor](https://draftjs.org/docs/quickstart-api-basics.html#content)
+* [Upload to aws s3](https://medium.com/@tewolfe2/5-steps-to-uploading-files-and-images-to-s3-in-react-using-express-superagent-multer-and-46a9e72244a2)
 
 
 python
