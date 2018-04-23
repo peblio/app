@@ -86,7 +86,6 @@ class Canvas extends React.Component {
   }
 
   renderQuestion(editor) {
-    console.log(editor);
     return (
       <div key={editor.id}>
         <Questions
