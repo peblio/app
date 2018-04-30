@@ -257,7 +257,9 @@ class App extends React.Component {
           isOpen={this.props.isShareModalOpen}
           closeModal={this.props.closeShareModal}
         >
-          <ShareModal />
+          <ShareModal
+            pageTitle={this.props.pageTitle}
+          />
         </Modal>
       </div>
     );
