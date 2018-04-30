@@ -16,7 +16,8 @@
 }
 
 .question__answer {
-  height: -webkit-fill-available;
+  position: absolute;
+  height: 100%;
   resize: none;
   font-family: $helvetica;
   font-size: $normal-font-size;

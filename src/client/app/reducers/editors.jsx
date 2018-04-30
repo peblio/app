@@ -196,7 +196,7 @@ const editorsReducer = (state = initialState, action) => {
         index: stack.length,
         question: 'Enter question here ',
         answer: 'Enter answer here..',
-        innerHeight: 12
+        innerHeight: 50
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
