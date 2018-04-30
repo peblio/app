@@ -35,6 +35,7 @@ class Questions extends React.Component {
         <section className="question__container">
           <SplitPane
             split="horizontal"
+            minSize={this.props.minHeight}
             defaultSize={this.props.innerHeight}
             onDragStarted={this.startResize}
             onDragFinished={(size) => {
@@ -66,6 +67,7 @@ Questions.propTypes = {
   id: PropTypes.string.isRequired,
   answer: PropTypes.string.isRequired,
   innerHeight: PropTypes.number.isRequired,
+  minHeight: PropTypes.number.isRequired,
   preview: PropTypes.bool.isRequired,
   question: PropTypes.string.isRequired,
   removeEditor: PropTypes.func.isRequired,

@@ -92,6 +92,7 @@ class Canvas extends React.Component {
           id={editor.id}
           answer={editor.answer}
           innerHeight={editor.innerHeight}
+          minHeight={editor.minHeight}
           preview={this.props.preview}
           question={editor.question}
           setCurrentEditor={this.props.setCurrentEditor}

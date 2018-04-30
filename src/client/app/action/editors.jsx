@@ -216,7 +216,6 @@ export function addQuestionEditor() {
 
 export function setQuestionInnerHeight(id, value) {
   return (dispatch) => {
-    console.log(value);
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_QUESTION_INNER_HEIGHT,
