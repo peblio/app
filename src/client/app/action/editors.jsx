@@ -214,6 +214,16 @@ export function addQuestionEditor() {
   };
 }
 
+export function setQuestionInnerHeight(id, value) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.SET_QUESTION_INNER_HEIGHT,
+      id,
+      value
+    });
+  };
+}
 export function updateQuestionChange(id, text) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));

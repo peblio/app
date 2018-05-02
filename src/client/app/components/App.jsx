@@ -196,6 +196,7 @@ class App extends React.Component {
 
           setIframeURL={this.props.setIframeURL}
 
+          setQuestionInnerHeight={this.props.setQuestionInnerHeight}
           updateQuestionChange={this.props.updateQuestionChange}
           updateAnswerChange={this.props.updateAnswerChange}
 
@@ -319,6 +320,7 @@ App.propTypes = {
   setCurrentFile: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
   setInnerHeight: PropTypes.func.isRequired,
+  setQuestionInnerHeight: PropTypes.func.isRequired,
   updateQuestionChange: PropTypes.func.isRequired,
   updateAnswerChange: PropTypes.func.isRequired,
   addImage: PropTypes.func.isRequired,
