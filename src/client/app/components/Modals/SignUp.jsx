@@ -22,7 +22,7 @@ class SignUp extends React.Component {
       password
     })
     .then((response) => {
-      axios.post('/api/login', {
+      axios.post('/users/login', {
         name,
         password
       })

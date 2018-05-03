@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Canvas from './Canvas.jsx';
-import ExamplesModal from './ExamplesModal.jsx';
-import Login from './Login.jsx';
-import MainToolbar from './MainToolbar.jsx';
-import Modal from './Modal.jsx';
-import PagesList from './PagesList.jsx';
-import ShareModal from './ShareModal.jsx';
-import SignUp from './SignUp.jsx';
+import ExamplesModal from './Modals/ExamplesModal.jsx';
+import Login from './Modals/Login.jsx';
+import Modal from './Modals/Modal.jsx';
+import ShareModal from './Modals/ShareModal.jsx';
+import SignUp from './Modals/SignUp.jsx';
+
+import Canvas from './Page/Canvas.jsx';
+import MainToolbar from './Page/MainToolbar.jsx';
+import PagesList from './Page/PagesList.jsx';
 
 import * as editorActions from '../action/editors.jsx';
 import * as mainToolbarActions from '../action/mainToolbar.jsx';

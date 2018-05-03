@@ -7,8 +7,8 @@ import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/mode/css/css';
 
-require('../styles/codemirror.css');
-require('../styles/3024-night.css');
+require('../../styles/codemirror.css');
+require('../../styles/3024-night.css');
 
 class P5Editor extends React.Component {
   componentDidMount() {
