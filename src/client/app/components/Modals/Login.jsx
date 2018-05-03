@@ -53,12 +53,6 @@ class Login extends React.Component {
 
           <input className="login-modal__button" type="submit" value="Submit" />
         </form>
-        <button
-          className="login-modal__button"
-          onClick={() => { console.log('forgot'); }}
-        >
-          Forgot Password
-        </button>
       </div>
     );
   }

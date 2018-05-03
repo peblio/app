@@ -6,7 +6,6 @@ const User = require('../models/user.js');
 
 const userRoutes = express.Router();
 
-userRoutes.route('/forgot').post(forgotPassword);
 userRoutes.route('/login').post(loginUser);
 userRoutes.route('/signup').post(createUser);
 
@@ -20,15 +19,11 @@ function createUser(req, res) {
 
   user.save((err, user) => {
     if (err) {
-      res.status(422).json({ error: saveErr });
+      res.status(422).json({ error: err });
     } else {
       return res.send({ success: true, message: 'signup succeeded', user });
     }
   });
-}
-
-function forgotPassword(req, res) {
-
 }
 
 function loginUser(req, res, next) {
