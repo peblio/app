@@ -6,8 +6,10 @@ import { bindActionCreators } from 'redux';
 import ExamplesModal from './Modals/ExamplesModal.jsx';
 import Login from './Modals/Login.jsx';
 import Modal from './Modals/Modal.jsx';
+import PasswordForgot from './Modals/PasswordForgot.jsx';
 import ShareModal from './Modals/ShareModal.jsx';
 import SignUp from './Modals/SignUp.jsx';
+import PasswordReset from './Modals/PasswordReset.jsx';
 
 import Canvas from './Page/Canvas.jsx';
 import MainToolbar from './Page/MainToolbar.jsx';
@@ -26,11 +28,16 @@ class App extends React.Component {
     this.authAndLoadPage = this.authAndLoadPage.bind(this);
     this.authLoadedPage = this.authLoadedPage.bind(this);
     this.projectID = this.projectID.bind(this);
+    this.resetPage = this.resetPage.bind(this);
     this.savePage = this.savePage.bind(this);
   }
 
   componentDidMount() {
     this.authAndLoadPage();
+  }
+
+  componentDidUpdate() {
+    console.log(this.props.isForgotModalOpen);
   }
 
   onKeyPressed(e) {
@@ -59,7 +66,16 @@ class App extends React.Component {
     return projectID ? projectID[1] : null;
   }
 
+  resetPage() {
+    const location = this.props.location.pathname;
+    const tokenID = location.match(/\/reset\/([\w-].*)/);
+    return tokenID ? tokenID[1] : null;
+  }
+
   authAndLoadPage() {
+    if (this.resetPage()) {
+      this.props.viewResetModal();
+    }
     if (this.projectID()) {
       this.props.setEditAccess(false);
       const projectID = this.projectID();
@@ -236,8 +252,32 @@ class App extends React.Component {
             updateUserPassword={this.props.updateUserPassword}
             setUserName={this.props.setUserName}
             closeLoginModal={this.props.closeLoginModal}
+            viewForgotModal={this.props.viewForgotModal}
+            isForgotModalOpen={this.props.isForgotModalOpen}
           />
         </Modal>
+
+        <Modal
+          size="large"
+          isOpen={this.props.isForgotModalOpen}
+          closeModal={this.props.closeForgotModal}
+        >
+          <PasswordForgot
+            isForgotModalOpen={this.props.isForgotModalOpen}
+          />
+        </Modal>
+
+        <Modal
+          size="large"
+          isOpen={this.props.isResetModalOpen}
+          closeModal={this.props.closeResetModal}
+        >
+          <PasswordReset
+            isResetModalOpen={this.props.isResetModalOpen}
+            location={this.props.location}
+          />
+        </Modal>
+
         <Modal
           size="large"
           isOpen={this.props.isSignUpModalOpen}
@@ -292,7 +332,9 @@ App.propTypes = {
   isAccountDropdownOpen: PropTypes.bool.isRequired,
   isPagesModalOpen: PropTypes.bool.isRequired,
   isLoginModalOpen: PropTypes.bool.isRequired,
+  isForgotModalOpen: PropTypes.bool.isRequired,
   isSignUpModalOpen: PropTypes.bool.isRequired,
+  isResetModalOpen: PropTypes.bool.isRequired,
 
   isExamplesModalOpen: PropTypes.bool.isRequired,
   viewExamplesModal: PropTypes.func.isRequired,
@@ -350,6 +392,10 @@ App.propTypes = {
   isShareModalOpen: PropTypes.bool.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
+  closeForgotModal: PropTypes.func.isRequired,
+  viewForgotModal: PropTypes.func.isRequired,
+  closeResetModal: PropTypes.func.isRequired,
+  viewResetModal: PropTypes.func.isRequired,
 
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
@@ -381,6 +427,8 @@ function mapStateToProps(state) {
     isShareModalOpen: state.mainToolbar.isShareModalOpen,
     isLoginModalOpen: state.mainToolbar.isLoginModalOpen,
     isSignUpModalOpen: state.mainToolbar.isSignUpModalOpen,
+    isForgotModalOpen: state.mainToolbar.isForgotModalOpen,
+    isResetModalOpen: state.mainToolbar.isResetModalOpen,
   };
 }
 

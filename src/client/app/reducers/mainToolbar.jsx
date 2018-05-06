@@ -7,6 +7,8 @@ const initialState = {
   isPagesModalOpen: false,
   isShareModalOpen: false,
   isLoginModalOpen: false,
+  isForgotModalOpen: false,
+  isResetModalOpen: false,
   isSignUpModalOpen: false
 };
 
@@ -71,6 +73,27 @@ const mainToolbar = (state = initialState, action) => {
     case ActionTypes.CLOSE_SIGN_UP_MODAL:
       return Object.assign({}, state, {
         isSignUpModalOpen: false
+      });
+
+    case ActionTypes.VIEW_FORGOT_MODAL:
+      return Object.assign({}, state, {
+        isForgotModalOpen: true
+      });
+
+    case ActionTypes.CLOSE_FORGOT_MODAL:
+      return Object.assign({}, state, {
+        isForgotModalOpen: false
+      });
+
+    case ActionTypes.VIEW_RESET_MODAL:
+      console.log('in here');
+      return Object.assign({}, state, {
+        isResetModalOpen: true
+      });
+
+    case ActionTypes.CLOSE_RESET_MODAL:
+      return Object.assign({}, state, {
+        isResetModalOpen: false
       });
 
     default:

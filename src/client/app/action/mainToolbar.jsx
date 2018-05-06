@@ -95,3 +95,36 @@ export function closeSignUpModal() {
     });
   };
 }
+
+export function viewForgotModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_FORGOT_MODAL
+    });
+  };
+}
+
+export function closeForgotModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_FORGOT_MODAL
+    });
+  };
+}
+
+export function viewResetModal() {
+  console.log('in actiosn');
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_RESET_MODAL
+    });
+  };
+}
+
+export function closeResetModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_RESET_MODAL
+    });
+  };
+}

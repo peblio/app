@@ -53,6 +53,15 @@ class Login extends React.Component {
 
           <input className="login-modal__button" type="submit" value="Submit" />
         </form>
+        <button
+          className="login-modal__button"
+          onClick={() => {
+            this.props.viewForgotModal();
+            this.props.closeLoginModal();
+          }}
+        >
+          Forgot password
+        </button>
       </div>
     );
   }
@@ -62,7 +71,8 @@ class Login extends React.Component {
 Login.propTypes = {
   authLoadedPage: PropTypes.func.isRequired,
   closeLoginModal: PropTypes.func.isRequired,
-  setUserName: PropTypes.func.isRequired
+  setUserName: PropTypes.func.isRequired,
+  viewForgotModal: PropTypes.func.isRequired
 };
 
 export default Login;
