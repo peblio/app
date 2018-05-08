@@ -6,10 +6,27 @@ class PasswordReset extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      showNotice: false,
+      notice: ''
+    };
     this.resetToken = this.resetToken.bind(this);
+    this.resetFailed = this.resetFailed.bind(this);
+    this.resetSuccess = this.resetSuccess.bind(this);
   }
-  sentEmail(response) {
-    console.log('email sent');
+
+  resetSuccess() {
+    this.setState({
+      showNotice: true,
+      notice: 'Password successfully reset!'
+    });
+  }
+
+  resetFailed() {
+    this.setState({
+      showNotice: true,
+      notice: 'Password reset failed. Please try again'
+    });
   }
 
   resetToken() {
@@ -24,18 +41,17 @@ class PasswordReset extends React.Component {
       token
     })
       .then((response) => {
-        this.sentEmail(response);
+        this.resetSuccess(response);
       })
       .catch(function(error) { // eslint-disable-line
-        console.log('Login Failed');
-        console.log(error);
+        this.emailFailed(error);
       });
     event.preventDefault();
   }
   render() {
     return (
       <div className="reset-modal__content">
-        <h5 className="reset-modal__title">Reset Password</h5>
+        <h1 className="reset-modal__title">Reset Password</h1>
         <form
           onSubmit={(event) => {
             this.submitResetPassword(event, this.password.value, this.resetToken());
@@ -46,13 +62,20 @@ class PasswordReset extends React.Component {
               <input
                 id="reset-modal-password"
                 className="reset-modal__input"
-                type="text"
+                type="password"
                 ref={(password) => { this.password = password; }}
               />
             </label>
           </div>
-          <input className="reset-modal__button" type="submit" value="Submit" />
+          <button className="forgot-modal__button" type="submit" value="Submit" >
+            Submit
+          </button>
         </form>
+        {this.state.showNotice &&
+          <p className="forgot-modal__notice">
+            {this.state.notice}
+          </p>
+        }
       </div>
     );
   }

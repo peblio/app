@@ -42,7 +42,7 @@ class SignUp extends React.Component {
   render() {
     return (
       <div className="signup-modal__content">
-        <h5 className="signup-modal__title">Sign Up</h5>
+        <h1 className="signup-modal__title">Sign Up</h1>
         <form onSubmit={(event) => { this.submitSignUpUser(event, this.userName.value, this.userPassword.value); }}>
           <div className="signup-modal__div">
             <label
@@ -72,11 +72,9 @@ class SignUp extends React.Component {
               />
             </label>
           </div>
-          <input
-            className="signup-modal__button"
-            type="submit"
-            value="Submit"
-          />
+          <button className="forgot-modal__button" type="submit" value="Submit" >
+            Submit
+          </button>
         </form>
       </div>
     );

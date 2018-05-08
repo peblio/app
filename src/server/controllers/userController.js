@@ -31,8 +31,7 @@ function createUser(req, res) {
   });
 }
 
-function sendSuccessfulResetMail(email) {
-  console.log('going to send email');
+function sendMail(mailOptions) {
   const options = {
     auth: {
       api_user: 'Peblio',
@@ -41,14 +40,6 @@ function sendSuccessfulResetMail(email) {
   };
 
   const client = nodemailer.createTransport(sgTransport(options));
-
-  const mailOptions = {
-    to: email,
-    from: 'passwordreset@peblio.co',
-    subject: 'Peblio Password Reset Successful',
-    text: `${'Hello,\n\n' +
-        'This is a confirmation that the password for your account '}${email} has just been changed.\n`
-  };
   client.sendMail(mailOptions, (err, info) => {
     if (err) {
       console.log(err);
@@ -58,17 +49,18 @@ function sendSuccessfulResetMail(email) {
   });
 }
 
-function sendResetMail(email, token, req) {
-  console.log('going to send email');
-  const options = {
-    auth: {
-      api_user: 'Peblio',
-      api_key: '#Peblio123'
-    }
+function sendSuccessfulResetMail(email) {
+  const mailOptions = {
+    to: email,
+    from: 'passwordreset@peblio.co',
+    subject: 'Peblio Password Reset Successful',
+    text: `${'Hello,\n\n' +
+        'This is a confirmation that the password for your account '}${email} has just been changed.\n`
   };
+  sendMail(mailOptions);
+}
 
-  const client = nodemailer.createTransport(sgTransport(options));
-
+function sendResetMail(email, token, req) {
   const mailOptions = {
     to: email,
     from: 'passwordreset@peblio.co',
@@ -78,29 +70,25 @@ function sendResetMail(email, token, req) {
             'http://'}${req.headers.host}/reset/${token}\n\n` +
             'If you did not request this, please ignore this email and your password will remain unchanged.\n'
   };
-  console.log(mailOptions);
-  client.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.log(error);
-    } else {
-      console.log(`Message sent: ${info.response}`);
-    }
-  });
+  sendMail(mailOptions);
 }
 
 function forgotPassword(req, res) {
   User.findOne({ email: req.body.email }, (err, user) => {
-    console.log(user);
-    user.resetPasswordToken = shortid.generate();
-    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-    user.save((err, user) => {
-      if (err) {
-        res.status(422).json({ error: err });
-      } else {
-        sendResetMail(req.body.email, user.resetPasswordToken, req);
-        return res.send({ success: true, message: 'sending reset info', user });
-      }
-    });
+    if (user) {
+      user.resetPasswordToken = shortid.generate();
+      user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+      user.save((err, user) => {
+        if (err) {
+          res.status(422).json({ error: err });
+        } else {
+          sendResetMail(req.body.email, user.resetPasswordToken, req);
+          return res.send({ success: true, message: 'sending reset info', user });
+        }
+      });
+    } else {
+      res.status(404).json({ error: 'user not found' });
+    }
   });
 }
 

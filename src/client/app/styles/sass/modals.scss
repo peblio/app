@@ -58,14 +58,15 @@
 
 
 %modal__title{
-  font-size: 35px;
+  font-size: $large-font-size;
+  font-weight: $medium-font-weight;
   display: block;
   text-align: center;
   margin: $small-margin;
 }
 
 %modal__label{
-  font-size: 20px;
+  font-size: $medium-font-size;
   font-style: bold;
   text-align: left;
   display: block;
@@ -74,7 +75,7 @@
 }
 
 %modal__button {
-  font-size: 20px;
+  font-size: $medium-font-size;
   background-color: $gray;
   display: block;
   color: $white;
@@ -91,4 +92,9 @@
   background-color: $lighter-gray;
   border: 2px $gray;
   padding: $small-padding $medium-padding;
+}
+
+%modal__notice {
+  font-size: $normal-font-size;
+  color: $blue;
 }

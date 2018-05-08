@@ -28,7 +28,7 @@ class Login extends React.Component {
   render() {
     return (
       <div className="login-modal__content">
-        <h5 className="login-modal__title">Log In</h5>
+        <h1 className="login-modal__title">Log In</h1>
         <form onSubmit={(event) => { this.submitLoginUser(event, this.userName.value, this.userPassword.value); }}>
           <div className="login-modal__div">
             <label htmlFor="login-modal-name" className="login-modal__label"> Name
@@ -51,7 +51,9 @@ class Login extends React.Component {
             </label>
           </div>
 
-          <input className="login-modal__button" type="submit" value="Submit" />
+          <button className="forgot-modal__button" type="submit" value="Submit" >
+            Submit
+          </button>
         </form>
         <button
           className="login-modal__button"

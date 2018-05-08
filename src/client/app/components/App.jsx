@@ -9,11 +9,11 @@ import Modal from './Modals/Modal.jsx';
 import PasswordForgot from './Modals/PasswordForgot.jsx';
 import ShareModal from './Modals/ShareModal.jsx';
 import SignUp from './Modals/SignUp.jsx';
+import PagesList from './Modals/PagesList.jsx';
 import PasswordReset from './Modals/PasswordReset.jsx';
 
 import Canvas from './Page/Canvas.jsx';
 import MainToolbar from './Page/MainToolbar.jsx';
-import PagesList from './Page/PagesList.jsx';
 
 import * as editorActions from '../action/editors.jsx';
 import * as mainToolbarActions from '../action/mainToolbar.jsx';
@@ -34,10 +34,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.authAndLoadPage();
-  }
-
-  componentDidUpdate() {
-    console.log(this.props.isForgotModalOpen);
   }
 
   onKeyPressed(e) {
@@ -309,6 +305,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+  history: PropTypes.object.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,

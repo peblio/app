@@ -86,12 +86,12 @@ const mainToolbar = (state = initialState, action) => {
       });
 
     case ActionTypes.VIEW_RESET_MODAL:
-      console.log('in here');
       return Object.assign({}, state, {
         isResetModalOpen: true
       });
 
     case ActionTypes.CLOSE_RESET_MODAL:
+      window.location.replace(`${window.location.origin}`);
       return Object.assign({}, state, {
         isResetModalOpen: false
       });

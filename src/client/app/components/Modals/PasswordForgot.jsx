@@ -4,8 +4,26 @@ import axios from 'axios';
 
 class PasswordForgot extends React.Component {
 
-  sentEmail(response) {
-    console.log('email sent');
+  constructor(props) {
+    super(props);
+    this.state = {
+      showNotice: false,
+      notice: ''
+    };
+  }
+
+  emailSuccess() {
+    this.setState({
+      showNotice: true,
+      notice: 'Please check your email to reset your password.'
+    });
+  }
+
+  emailFailed() {
+    this.setState({
+      showNotice: true,
+      notice: 'Password reset mail not sent. Please verify your email id.'
+    });
   }
 
   submitForgotPassword(event, email) {
@@ -13,17 +31,17 @@ class PasswordForgot extends React.Component {
       email
     })
       .then((response) => {
-        this.sentEmail(response);
+        this.emailSuccess(response);
       })
-      .catch(function(error) { // eslint-disable-line
-        console.log('Login Failed');
+      .catch((error) => {
+        this.emailFailed(error);
       });
     event.preventDefault();
   }
   render() {
     return (
       <div className="forgot-modal__content">
-        <h5 className="forgot-modal__title">Reset Password</h5>
+        <h1 className="forgot-modal__title">Reset Password</h1>
         <form onSubmit={(event) => { this.submitForgotPassword(event, this.email.value); }}>
           <div className="forgot-modal__div">
             <label htmlFor="forgot-modal-email" className="forgot-modal__label"> Email
@@ -35,8 +53,15 @@ class PasswordForgot extends React.Component {
               />
             </label>
           </div>
-          <input className="forgot-modal__button" type="submit" value="Submit" />
+          <button className="forgot-modal__button" type="submit" value="Submit" >
+            Submit
+          </button>
         </form>
+        {this.state.showNotice &&
+          <p className="forgot-modal__notice">
+            {this.state.notice}
+          </p>
+        }
       </div>
     );
   }
