@@ -1,5 +1,6 @@
 .ReactModal__Overlay { // sass-lint:disable-line class-name-format
   z-index: $z-index-layer-4;
+  background-color: $modal-overlay !important;
 }
 
 .modal__large{
@@ -11,7 +12,6 @@
 .modal__small{
   @extend %modal;
   width: 60%;
-  height: 10%;
 }
 
 .modal__close-button{

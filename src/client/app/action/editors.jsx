@@ -21,6 +21,16 @@ export function removeEditor(id) {
   };
 }
 
+export function duplicateEditor(id) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.DUPLICATE_EDITOR,
+      id
+    });
+  };
+}
+
 export function loadEditors(editors, editorIndex) {
   return (dispatch) => {
     dispatch({
@@ -204,6 +214,16 @@ export function addQuestionEditor() {
   };
 }
 
+export function setQuestionInnerHeight(id, value) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.SET_QUESTION_INNER_HEIGHT,
+      id,
+      value
+    });
+  };
+}
 export function updateQuestionChange(id, text) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
@@ -241,6 +261,27 @@ export function setIframeURL(id, url) {
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_IFRAME_URL,
+      id,
+      url
+    });
+  };
+}
+
+/** IMAGE */
+export function addImage() {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.ADD_IMAGE
+    });
+  };
+}
+
+export function setImageURL(id, url) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.SET_IMAGE_URL,
       id,
       url
     });

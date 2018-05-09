@@ -4,10 +4,7 @@ import FileModal from './FileModal.jsx';
 import InsertToolbar from './InsertToolbar.jsx';
 import ToolbarLogo from '../images/logo.svg';
 import CheckSVG from '../images/check.svg';
-import PreviewOnSVG from '../images/previewOnSVG.svg';
-import PreviewOffSVG from '../images/previewOffSVG.svg';
 import AccountSVG from '../images/account.svg';
-
 
 class MainToolbar extends React.Component {
   render() {
@@ -118,6 +115,7 @@ class MainToolbar extends React.Component {
             addQuestionEditor={this.props.addQuestionEditor}
             addTextEditor={this.props.addTextEditor}
             addIframe={this.props.addIframe}
+            addImage={this.props.addImage}
           />
         }
       </div>
@@ -130,6 +128,7 @@ MainToolbar.propTypes = {
   addQuestionEditor: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
+  addImage: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,
