@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DeleteIcon from '../images/trash.svg';
+import DeleteIcon from '../../images/trash.svg';
 
 
 const axios = require('axios');

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import EditorSVG from '../images/editor.svg';
-import EmbedSVG from '../images/embed.svg';
-import ImageSVG from '../images/image.svg';
-import QuestionSVG from '../images/question.svg';
-import TextSVG from '../images/text.svg';
+import EditorSVG from '../../images/editor.svg';
+import EmbedSVG from '../../images/embed.svg';
+import ImageSVG from '../../images/image.svg';
+import QuestionSVG from '../../images/question.svg';
+import TextSVG from '../../images/text.svg';
 
 class InsertToolbar extends React.Component {
   render() {
