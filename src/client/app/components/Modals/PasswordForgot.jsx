@@ -22,7 +22,7 @@ class PasswordForgot extends React.Component {
   emailFailed() {
     this.setState({
       showNotice: true,
-      notice: 'Password reset mail not sent. Please verify your email id.'
+      notice: 'Password reset failed.'
     });
   }
 

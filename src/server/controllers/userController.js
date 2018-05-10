@@ -15,9 +15,11 @@ userRoutes.route('/forgot').post(forgotPassword);
 userRoutes.route('/reset').post(resetPassword);
 
 function createUser(req, res) {
+  const email = req.body.mail;
   const name = req.body.name;
   const password = req.body.password;
   const user = new User({
+    email,
     name,
     password
   });
@@ -34,8 +36,8 @@ function createUser(req, res) {
 function sendMail(mailOptions) {
   const options = {
     auth: {
-      api_user: 'Peblio',
-      api_key: '#Peblio123'
+      api_user: process.env.PEBLIO_SENDGRID_USER,
+      api_key: process.env.PEBLIO_SENDGRID_PASSWORD
     }
   };
 
@@ -52,7 +54,7 @@ function sendMail(mailOptions) {
 function sendSuccessfulResetMail(email) {
   const mailOptions = {
     to: email,
-    from: 'passwordreset@peblio.co',
+    from: process.env.PEBLIO_SENDGRID_MAIL,
     subject: 'Peblio Password Reset Successful',
     text: `${'Hello,\n\n' +
         'This is a confirmation that the password for your account '}${email} has just been changed.\n`
@@ -63,7 +65,7 @@ function sendSuccessfulResetMail(email) {
 function sendResetMail(email, token, req) {
   const mailOptions = {
     to: email,
-    from: 'passwordreset@peblio.co',
+    from: process.env.PEBLIO_SENDGRID_MAIL,
     subject: 'Peblio Password Reset',
     text: `${'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
             'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
@@ -94,26 +96,27 @@ function forgotPassword(req, res) {
 
 function resetPassword(req, res) {
   User.findOne({ resetPasswordToken: req.body.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
-    if (!user) {
+    if (err || !user) {
       res.status(422).json({ error: 'token expired' });
+    } else {
+      user.password = req.body.password;
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpires = undefined;
+      user.save((err) => {
+        if (err) {
+          res.status(422).json({ error: err });
+        } else {
+          sendSuccessfulResetMail(user.email);
+          req.logIn(user, (err) => {
+            if (err) {
+              res.status(422).json({ error: err });
+            } else {
+              return res.send({ success: true, message: 'sending reset info', user });
+            }
+          });
+        }
+      });
     }
-    user.password = req.body.password;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
-    user.save((err) => {
-      if (err) {
-        res.status(422).json({ error: err });
-      } else {
-        sendSuccessfulResetMail(user.email);
-        req.logIn(user, (err) => {
-          if (err) {
-            res.status(422).json({ error: err });
-          } else {
-            return res.send({ success: true, message: 'sending reset info', user });
-          }
-        });
-      }
-    });
   });
 }
 

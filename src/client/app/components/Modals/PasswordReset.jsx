@@ -10,9 +10,22 @@ class PasswordReset extends React.Component {
       showNotice: false,
       notice: ''
     };
+    this.passwordMatch = this.passwordMatch.bind(this);
+    this.passwordMatchFailed = this.passwordMatchFailed.bind(this);
     this.resetToken = this.resetToken.bind(this);
     this.resetFailed = this.resetFailed.bind(this);
     this.resetSuccess = this.resetSuccess.bind(this);
+  }
+
+  passwordMatch(a, b) {
+    return (a === b);
+  }
+
+  passwordMatchFailed() {
+    this.setState({
+      showNotice: true,
+      notice: 'Passwords did not match.'
+    });
   }
 
   resetSuccess() {
@@ -36,16 +49,20 @@ class PasswordReset extends React.Component {
   }
 
   submitResetPassword(event, password, token) {
-    axios.post('/users/reset', {
-      password,
-      token
-    })
+    if (this.passwordMatch(this.password.value, this.passwordConfirm.value)) {
+      axios.post('/users/reset', {
+        password,
+        token
+      })
       .then((response) => {
         this.resetSuccess(response);
       })
-      .catch(function(error) { // eslint-disable-line
-        this.emailFailed(error);
+      .catch((error) => { // eslint-disable-line
+        this.resetFailed(error);
       });
+    } else {
+      this.passwordMatchFailed();
+    }
     event.preventDefault();
   }
   render() {
@@ -58,12 +75,20 @@ class PasswordReset extends React.Component {
           }}
         >
           <div className="reset-modal__div">
-            <label htmlFor="reset-modal-email" className="reset-modal__label"> New Password
+            <label htmlFor="reset-modal-password" className="reset-modal__label"> New Password
               <input
                 id="reset-modal-password"
                 className="reset-modal__input"
                 type="password"
                 ref={(password) => { this.password = password; }}
+              />
+            </label>
+            <label htmlFor="reset-modal-confirm" className="reset-modal__label"> Confirm Password
+              <input
+                id="reset-modal-confirm"
+                className="reset-modal__input"
+                type="password"
+                ref={(passwordConfirm) => { this.passwordConfirm = passwordConfirm; }}
               />
             </label>
           </div>

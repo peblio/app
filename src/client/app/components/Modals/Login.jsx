@@ -3,8 +3,23 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showNotice: false,
+      notice: ''
+    };
+    this.loginFailed = this.loginFailed.bind(this);
+  }
   componentWillUnmount() {
     this.props.authLoadedPage();
+  }
+
+  loginFailed() {
+    this.setState({
+      showNotice: true,
+      notice: 'Login failed'
+    });
   }
 
   loginSuccessful(response) {
@@ -20,8 +35,8 @@ class Login extends React.Component {
       .then((response) => {
         this.loginSuccessful(response);
       })
-      .catch(function(error) { // eslint-disable-line
-        console.log('Login Failed');
+      .catch((error) => { // eslint-disable-line
+        this.loginFailed();
       });
     event.preventDefault();
   }
@@ -64,6 +79,11 @@ class Login extends React.Component {
         >
           Forgot password
         </button>
+        {this.state.showNotice &&
+          <p className="forgot-modal__notice">
+            {this.state.notice}
+          </p>
+        }
       </div>
     );
   }
