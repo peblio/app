@@ -41,9 +41,11 @@ class MainToolbar extends React.Component {
             <div className="logo_toolbar">
               <ToolbarLogo alt="logo in toolbar" />
             </div>
-            <button className="upper-toolbar__dropdown" onClick={this.props.viewExamplesModal}>
+            <div className="file-modal__container">
+              <button className="upper-toolbar__dropdown" onClick={this.props.viewExamplesModal}>
             Examples
-            </button>
+              </button>
+            </div>
             <div className="file-modal__container">
               <button className="upper-toolbar__dropdown" onClick={this.props.toggleFileDropdown}>
               File
@@ -68,6 +70,8 @@ class MainToolbar extends React.Component {
           ></input>
           <div className="main-toolbar__div-right">
             <div className="main-toolbar__div-right-inside">
+              <span className="main-toolbar__preview-title">Edit Mode</span>
+
               <label className="main-toolbar__preview" htmlFor="main-toolbar__checkbox">
                 <input
                   id="main-toolbar__checkbox"
@@ -77,13 +81,14 @@ class MainToolbar extends React.Component {
                 />
                 <div className="main-toolbar__slider"></div>
               </label>
-              <span className="main-toolbar__preview-title">Edit Mode</span>
-              <button className="main-toolbar__save" onClick={this.props.savePage}>
-                {saveButtonText}
-              </button>
-              <button className="main-toolbar__button" onClick={this.props.viewShareModal}>
+              <div>
+                <button className="main-toolbar__save" onClick={this.props.savePage}>
+                  {saveButtonText}
+                </button>
+                <button className="main-toolbar__button" onClick={this.props.viewShareModal}>
               Share
-              </button>
+                </button>
+              </div>
 
               { this.props.name ? (
                 <div>

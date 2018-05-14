@@ -9,7 +9,7 @@ $hover-gray:#CFCFCF;
 $canvas-gray: #E6E6E6;
 
 $gray: #888;
-$black: #000;
+$black: #1C2524;
 $dark-gray:#242424;
 
 $blue: #009887;
@@ -24,6 +24,7 @@ $total-width: 1440px;
 $small-padding: .5rem;
 $medium-padding: 1rem;
 $large-padding: 1.5rem;
+$main-toolbar-padding:17 10 15 10;
 
 //stroke width
 $thin-border-width: 1px;
@@ -54,8 +55,8 @@ $medium-font-weight: 400;
 //sizes
 $nav-width:35px;
 $toolbar-width: 500px;
-$main-toolbar-height:80px;
-$insert-toolbar-height:40px;
+$main-toolbar-height:54px;
+$insert-toolbar-height:30px;
 
 //z-indexes
 $z-index-layer-0: 0;

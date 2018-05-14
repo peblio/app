@@ -13,8 +13,8 @@
 .insert-toolbar__button{
   color:$black;
   // @extend %menu-item;
-  margin: 0 $small-margin;
-  padding: $small-padding/2 $small-padding;
+  // margin: 0 $small-margin;
+  padding: 0 $medium-padding;
   background-color: $lighter-gray;
   border:none !important;
   text-transform: uppercase;
@@ -22,7 +22,7 @@
   &:hover{
     color:$blue;
     box-shadow: none;
-    background-color: $hover-gray;
+    background-color: $lighter-gray;
   }
 }
 
