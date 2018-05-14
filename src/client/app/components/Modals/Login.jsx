@@ -36,6 +36,7 @@ class Login extends React.Component {
         this.loginSuccessful(response);
       })
       .catch((error) => { // eslint-disable-line
+        console.log(error.response);
         this.loginFailed();
       });
     event.preventDefault();

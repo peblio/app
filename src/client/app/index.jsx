@@ -27,6 +27,7 @@ class Main extends React.Component {
             <Route exact path="/" component={App} />
             <Route path="/pebl" component={App} />
             <Route path="/reset" component={App} />
+            <Route path="/confirmation" component={App} />
             <Route exact path="/pebls" component={App} />
           </div>
         </Router>

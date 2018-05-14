@@ -2,13 +2,14 @@ import * as ActionTypes from '../constants.jsx';
 
 const initialState = {
   isAccountDropdownOpen: false,
+  isConfirmUserModalOpen: false,
   isExamplesModalOpen: false,
   isFileDropdownOpen: false,
-  isPagesModalOpen: false,
-  isShareModalOpen: false,
-  isLoginModalOpen: false,
   isForgotModalOpen: false,
+  isLoginModalOpen: false,
+  isPagesModalOpen: false,
   isResetModalOpen: false,
+  isShareModalOpen: false,
   isSignUpModalOpen: false
 };
 
@@ -94,6 +95,17 @@ const mainToolbar = (state = initialState, action) => {
       window.location.replace(`${window.location.origin}`);
       return Object.assign({}, state, {
         isResetModalOpen: false
+      });
+
+    case ActionTypes.VIEW_CONFIRM_USER_MODAL:
+      return Object.assign({}, state, {
+        isConfirmUserModalOpen: true
+      });
+
+    case ActionTypes.CLOSE_CONFIRM_USER_MODAL:
+      window.location.replace(`${window.location.origin}`);
+      return Object.assign({}, state, {
+        isConfirmUserModalOpen: false
       });
 
     default:

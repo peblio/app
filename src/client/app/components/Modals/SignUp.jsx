@@ -12,7 +12,6 @@ class SignUp extends React.Component {
     };
     this.passwordMatch = this.passwordMatch.bind(this);
     this.passwordMatchFailed = this.passwordMatchFailed.bind(this);
-    this.loginFailed = this.loginFailed.bind(this);
     this.signUpFailed = this.signUpFailed.bind(this);
   }
 
@@ -31,23 +30,18 @@ class SignUp extends React.Component {
     });
   }
 
-  loginFailed() {
+  signUpFailed(msg) {
     this.setState({
       showNotice: true,
-      notice: 'Login failed'
+      notice: msg
     });
   }
 
-  signUpFailed() {
+  signUpSuccessful(msg) {
     this.setState({
       showNotice: true,
-      notice: 'Sign up failed'
+      notice: msg
     });
-  }
-
-  signUpSuccessful(response) {
-    this.props.setUserName(response.data.user.name);
-    this.props.closeSignUpModal();
   }
 
   submitLoginUser(event, name, password) {
@@ -55,30 +49,17 @@ class SignUp extends React.Component {
   }
 
   submitSignUpUser(event, mail, name, password) {
-    console.log(mail);
-    console.log(name);
-    console.log(password);
     if (this.passwordMatch(this.password.value, this.passwordConfirm.value)) {
       axios.post('/users/signup', {
         mail,
         name,
         password
       })
-    .then((response) => {
-      axios.post('/users/login', {
-        name,
-        password
-      })
-        .then((responseInner) => {
-          this.signUpSuccessful(responseInner);
-        })
-        .catch((error)=> { // eslint-disable-line
-          this.loginFailed();
-        });
+    .then((res) => {
+      this.signUpSuccessful(res.data.msg);
     })
     .catch((error) => { // eslint-disable-line
-      console.log(error);
-      this.signUpFailed();
+      this.signUpFailed(error.response.data.msg);
     });
     } else {
       this.passwordMatchFailed();

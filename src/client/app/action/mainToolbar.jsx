@@ -113,7 +113,6 @@ export function closeForgotModal() {
 }
 
 export function viewResetModal() {
-  console.log('in actiosn');
   return (dispatch) => {
     dispatch({
       type: ActionTypes.VIEW_RESET_MODAL
@@ -125,6 +124,22 @@ export function closeResetModal() {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.CLOSE_RESET_MODAL
+    });
+  };
+}
+
+export function viewConfirmUserModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_CONFIRM_USER_MODAL
+    });
+  };
+}
+
+export function closeConfirmUserModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_CONFIRM_USER_MODAL
     });
   };
 }

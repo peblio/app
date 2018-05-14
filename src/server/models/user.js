@@ -21,19 +21,18 @@ const userSchema = new Schema({
     required: true,
     unique: true
   },
+  isVerified: { type: Boolean, default: false },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   pages: { type: Array },
 });
 
-userSchema.pre('save', function checkPassword(next) { // eslint-disable-line consistent-return
-  const user = this;
-  bcrypt.hash(user.password, null, null, (innerErr, hash) => {
+userSchema.methods.hashPassword = function hashPassword(password) {
+  bcrypt.hash(this.password, null, null, (innerErr, hash) => {
     if (innerErr) { return next(innerErr); }
-    user.password = hash;
-    return next();
+    this.password = hash;
   });
-});
+};
 
 userSchema.methods.verifyPassword = function verifyPassword(password, cb) {
   bcrypt.compare(password, this.password, (err, isMatch) => {

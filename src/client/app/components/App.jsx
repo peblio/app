@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import ConfirmUser from './Modals/ConfirmUser.jsx';
 import ExamplesModal from './Modals/ExamplesModal.jsx';
 import Login from './Modals/Login.jsx';
 import Modal from './Modals/Modal.jsx';
@@ -68,11 +69,18 @@ class App extends React.Component {
     return tokenID ? tokenID[1] : null;
   }
 
+  userConfirmation() {
+    const location = this.props.location.pathname;
+    const tokenID = location.match(/\/confirmation\/([\w-].*)/);
+    return tokenID ? tokenID[1] : null;
+  }
+
   authAndLoadPage() {
-    if (this.resetPage()) {
+    if (this.userConfirmation()) {
+      this.props.viewConfirmUserModal();
+    } else if (this.resetPage()) {
       this.props.viewResetModal();
-    }
-    if (this.projectID()) {
+    } else if (this.projectID()) {
       this.props.setEditAccess(false);
       const projectID = this.projectID();
       axios.get(`/api/page/${this.projectID()}`)
@@ -292,6 +300,15 @@ class App extends React.Component {
         </Modal>
         <Modal
           size="small"
+          isOpen={this.props.isConfirmUserModalOpen}
+          closeModal={this.props.closeConfirmUserModal}
+        >
+          <ConfirmUser
+            location={this.props.location}
+          />
+        </Modal>
+        <Modal
+          size="small"
           isOpen={this.props.isShareModalOpen}
           closeModal={this.props.closeShareModal}
         >
@@ -299,6 +316,7 @@ class App extends React.Component {
             pageTitle={this.props.pageTitle}
           />
         </Modal>
+
       </div>
     );
   }
@@ -393,6 +411,9 @@ App.propTypes = {
   viewForgotModal: PropTypes.func.isRequired,
   closeResetModal: PropTypes.func.isRequired,
   viewResetModal: PropTypes.func.isRequired,
+  closeConfirmUserModal: PropTypes.func.isRequired,
+  viewConfirmUserModal: PropTypes.func.isRequired,
+
 
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
@@ -422,10 +443,12 @@ function mapStateToProps(state) {
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isPagesModalOpen: state.mainToolbar.isPagesModalOpen,
     isShareModalOpen: state.mainToolbar.isShareModalOpen,
+
     isLoginModalOpen: state.mainToolbar.isLoginModalOpen,
     isSignUpModalOpen: state.mainToolbar.isSignUpModalOpen,
     isForgotModalOpen: state.mainToolbar.isForgotModalOpen,
     isResetModalOpen: state.mainToolbar.isResetModalOpen,
+    isConfirmUserModalOpen: state.mainToolbar.isConfirmUserModalOpen,
   };
 }
 
