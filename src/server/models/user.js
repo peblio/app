@@ -28,7 +28,10 @@ const userSchema = new Schema({
 });
 
 userSchema.methods.hashPassword = function hashPassword(password) {
-  bcrypt.hash(this.password, null, null, (innerErr, hash) => {
+  console.log('%%%');
+  console.log(password);
+  console.log('%%%');
+  bcrypt.hash(password, null, null, (innerErr, hash) => {
     if (innerErr) { return next(innerErr); }
     this.password = hash;
   });

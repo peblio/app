@@ -22,7 +22,7 @@ function createUser(req, res) {
   const name = req.body.name;
   const password = req.body.password;
   let user;
-  User.findOne({ email: req.body.email }, (err, user) => {
+  User.findOne({ email: req.body.mail }, (err, user) => {
     if (user) {
       return res.status(400).send(
         { msg: 'The email address you have entered is already associated with another account.' }
@@ -36,7 +36,7 @@ function createUser(req, res) {
     user.hashPassword(password);
     user.save((err, user) => {
       if (err) {
-        res.status(422).json({ msg: err });
+        res.status(422).json({ msg: 'Sign up failed' });
       } else {
         const token = new Token({
           _userId: user._id,
@@ -44,7 +44,7 @@ function createUser(req, res) {
         });
         token.save((err) => {
           if (err) {
-            return res.status(500).send({ msg: err });
+            return res.status(500).send({ msg: 'Sign up failed' });
           }
           sendSignUpConfirmationMail(user.email, token.token, req);
         });
@@ -83,16 +83,10 @@ function resetPassword(req, res) {
       user.resetPasswordExpires = undefined;
       user.save((err) => {
         if (err) {
-          res.status(422).json({ error: err });
+          res.status(422).json({ msg: 'Failed to update password' });
         } else {
           sendSuccessfulResetMail(user.email);
-          req.logIn(user, (err) => {
-            if (err) {
-              res.status(422).json({ error: err });
-            } else {
-              return res.send({ success: true, message: 'sending reset info', user });
-            }
-          });
+          return res.send({ success: true, msg: 'sending reset info', user });
         }
       });
     }
@@ -131,7 +125,7 @@ function confirmUser(req, res) {
       // Verify and save the user
       user.isVerified = true;
       user.save((err) => {
-        if (err) { return res.status(500).send({ msg: err.message }); }
+        if (err) { return res.status(500).send({ msg: 'Failed to complete sign up' }); }
         res.status(200).send({ msg: 'The account has been verified. Please log in.' });
       });
     });
@@ -151,7 +145,7 @@ function resendConfirmUser(req, res) {
 
     // Save the token
     token.save((err) => {
-      if (err) { return res.status(500).send({ msg: err.message }); }
+      if (err) { return res.status(500).send({ msg: 'Failed to complete sign up' }); }
       sendSignUpConfirmationMail(user.email, token.token, req);
     });
     return res.status(200).send({ success: true, msg: 'Please check mail to finish the sign up', user });

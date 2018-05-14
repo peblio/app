@@ -59,6 +59,7 @@ class SignUp extends React.Component {
       this.signUpSuccessful(res.data.msg);
     })
     .catch((error) => { // eslint-disable-line
+      console.log(error.response);
       this.signUpFailed(error.response.data.msg);
     });
     } else {
