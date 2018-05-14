@@ -115,8 +115,6 @@
 
 input:checked + .main-toolbar__slider {
   background-color: $hover-gray;
-  border-radius: $large-border-radius;
-
 }
 
 input:checked + .main-toolbar__slider:before {
