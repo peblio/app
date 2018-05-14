@@ -37,8 +37,8 @@
 }
 
 .main-toolbar__account-button{
-  margin: $small-margin;
-  padding: $small-padding;
+  margin: 0.2rem $large-padding;
+  padding: $small-padding $medium-padding;
   border: none;
   background: $black;
   -webkit-transition-duration: 150ms; /* Safari */
@@ -81,8 +81,8 @@
   position: relative;
   display: inline-block;
   width: 20px;
-  height: 5px;
-  top: 10px;
+  height: 12px;
+  top: 5px;
 }
 
 .main-toolbar__slider {
@@ -105,7 +105,7 @@
   height: 18px;
   width: 18px;
   left: 32px;
-  top: -6px;
+  top: -3px;
   // background-color: $white;
   -webkit-transition: .4s;
   transition: .4s;
@@ -226,4 +226,11 @@ input[type="checkbox"] ~ .main-toolbar__preview-off {
     @include flex;
     margin-left: 1rem;
   }
+}
+
+.main-toolbar__spacer{
+  height: 18px;
+  width: 1px;
+  background-color: #a2aeb5;
+  margin: $medium-margin 0; 
 }

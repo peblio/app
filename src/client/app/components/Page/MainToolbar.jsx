@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FileModal from './FileModal.jsx';
+import FileModal from './../Modals/FileModal.jsx';
 import InsertToolbar from './InsertToolbar.jsx';
-import ToolbarLogo from '../images/logo.svg';
-import CheckSVG from '../images/check.svg';
-import AccountSVG from '../images/account.svg';
+import ToolbarLogo from '../../images/logo.svg';
+import CheckSVG from '../../images/check.svg';
+import AccountSVG from '../../images/account.svg';
 
 class MainToolbar extends React.Component {
   render() {
@@ -41,11 +41,9 @@ class MainToolbar extends React.Component {
             <div className="logo_toolbar">
               <ToolbarLogo alt="logo in toolbar" />
             </div>
-            <div className="file-modal__container">
-              <button className="upper-toolbar__dropdown" onClick={this.props.viewExamplesModal}>
+            <button className="upper-toolbar__dropdown" onClick={this.props.viewExamplesModal}>
             Examples
-              </button>
-            </div>
+            </button>
             <div className="file-modal__container">
               <button className="upper-toolbar__dropdown" onClick={this.props.toggleFileDropdown}>
               File
@@ -70,8 +68,6 @@ class MainToolbar extends React.Component {
           ></input>
           <div className="main-toolbar__div-right">
             <div className="main-toolbar__div-right-inside">
-              <span className="main-toolbar__preview-title">Edit Mode</span>
-
               <label className="main-toolbar__preview" htmlFor="main-toolbar__checkbox">
                 <input
                   id="main-toolbar__checkbox"
@@ -81,18 +77,13 @@ class MainToolbar extends React.Component {
                 />
                 <div className="main-toolbar__slider"></div>
               </label>
-              <div>
-                <button className="main-toolbar__save" onClick={this.props.savePage}>
-                  {saveButtonText}
-                </button>
-              </div>
-              <div className="main-toolbar__spacer"></div>
-              <div>
-                <button className="main-toolbar__button" onClick={this.props.viewShareModal}>
+              <span className="main-toolbar__preview-title">Edit Mode</span>
+              <button className="main-toolbar__save" onClick={this.props.savePage}>
+                {saveButtonText}
+              </button>
+              <button className="main-toolbar__button" onClick={this.props.viewShareModal}>
               Share
-                </button>
-              </div>
-              <div className="main-toolbar__spacer"></div>
+              </button>
               { this.props.name ? (
                 <div>
                   <button onClick={this.props.toggleAccountDropdown} className="main-toolbar__account-button">
