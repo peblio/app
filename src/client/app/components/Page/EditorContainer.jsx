@@ -28,7 +28,6 @@ class EditorContainer extends React.Component {
     this.clearConsoleOutput = () => this.props.clearConsoleOutput(this.props.id);
     this.updateConsoleOutput = (e) => {
       // There's a memory leak in the Javascript editor. Watch the console after clicking Play.
-      // console.log(e);
       this.props.updateConsoleOutput(this.props.id, e);
     };
     this.setEditorMode = mode => this.props.setEditorMode(this.props.id, mode);

@@ -9,19 +9,13 @@ class PasswordForgot extends React.Component {
       showNotice: false,
       notice: ''
     };
+    this.emailResponse = this.emailResponse.bind(this);
   }
 
-  emailSuccess() {
+  emailResponse(msg) {
     this.setState({
       showNotice: true,
-      notice: 'Please check your email to reset your password.'
-    });
-  }
-
-  emailFailed() {
-    this.setState({
-      showNotice: true,
-      notice: 'Password reset failed.'
+      notice: msg
     });
   }
 
@@ -30,10 +24,10 @@ class PasswordForgot extends React.Component {
       email
     })
       .then((response) => {
-        this.emailSuccess(response);
+        this.emailResponse(response.data.msg);
       })
       .catch((error) => {
-        this.emailFailed(error);
+        this.emailResponse(error.response.data.msg);
       });
     event.preventDefault();
   }

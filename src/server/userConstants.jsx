@@ -14,4 +14,12 @@ module.exports = Object.freeze({
   LOGIN_SUCCESS: 'Login Successful',
   LOGIN_USER_NOT_VERIFIED: 'Your account has not been verified. \n <a href="/confirmation"> Resend email verification</a>',
 
+  PASSWORD_RESET_FAILED: 'Password reset failed',
+  PASSWORD_RESET_SENT_MAIL: 'Please check your email to reset your password',
+  PASSWORD_RESET_NO_USER: 'Please verify your email and try again',
+
+  PASSWORD_RESET_TOKEN_EXP: 'Looks like your reset link expired!',
+  PASSWORD_RESET_SUCCESSFUL: 'Password successfully reset! Please login to use Peblio.'
+
+
 });

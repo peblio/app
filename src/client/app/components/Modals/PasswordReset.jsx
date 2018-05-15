@@ -13,8 +13,7 @@ class PasswordReset extends React.Component {
     this.passwordMatch = this.passwordMatch.bind(this);
     this.passwordMatchFailed = this.passwordMatchFailed.bind(this);
     this.resetToken = this.resetToken.bind(this);
-    this.resetFailed = this.resetFailed.bind(this);
-    this.resetSuccess = this.resetSuccess.bind(this);
+    this.resetResponse = this.resetResponse.bind(this);
   }
 
   passwordMatch(a, b) {
@@ -28,17 +27,10 @@ class PasswordReset extends React.Component {
     });
   }
 
-  resetSuccess() {
+  resetResponse(msg) {
     this.setState({
       showNotice: true,
-      notice: 'Password successfully reset!'
-    });
-  }
-
-  resetFailed() {
-    this.setState({
-      showNotice: true,
-      notice: 'Password reset failed. Please try again'
+      notice: msg
     });
   }
 
@@ -55,10 +47,10 @@ class PasswordReset extends React.Component {
         token
       })
       .then((response) => {
-        this.resetSuccess(response);
+        this.resetResponse(response.data.msg);
       })
       .catch((error) => { // eslint-disable-line
-        this.resetFailed(error);
+        this.resetResponse(error.response.data.msg);
       });
     } else {
       this.passwordMatchFailed();

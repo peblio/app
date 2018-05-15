@@ -68,14 +68,21 @@ function forgotPassword(req, res) {
       user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
       user.save((err, user) => {
         if (err) {
-          res.status(422).json({ error: err });
+          res.status(422).json({
+            msg: UserConst.PASSWORD_RESET_FAILED
+          });
         } else {
           sendResetMail(req.body.email, user.resetPasswordToken, req);
-          return res.send({ success: true, msg: 'sending reset info', user });
+          return res.send({
+            msg: UserConst.PASSWORD_RESET_SENT_MAIL,
+            user
+          });
         }
       });
     } else {
-      res.status(404).send({ msg: 'user not found' });
+      res.status(404).send({
+        msg: UserConst.PASSWORD_RESET_NO_USER
+      });
     }
   });
 }
@@ -83,17 +90,24 @@ function forgotPassword(req, res) {
 function resetPassword(req, res) {
   User.findOne({ resetPasswordToken: req.body.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
     if (err || !user) {
-      res.status(422).json({ error: 'token expired' });
+      res.status(422).json({
+        error: UserConst.PASSWORD_RESET_TOKEN_EXP
+      });
     } else {
       user.hashPassword(req.body.password);
       user.resetPasswordToken = undefined;
       user.resetPasswordExpires = undefined;
       user.save((err) => {
         if (err) {
-          res.status(422).json({ msg: 'Failed to update password' });
+          res.status(422).json({
+            msg: UserConst.PASSWORD_RESET_FAILED
+          });
         } else {
           sendSuccessfulResetMail(user.email);
-          return res.send({ success: true, msg: 'sending reset info', user });
+          return res.send({
+            msg: UserConst.PASSWORD_RESET_SUCCESSFUL,
+            user
+          });
         }
       });
     }

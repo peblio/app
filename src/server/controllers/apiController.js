@@ -43,7 +43,6 @@ function uploadFiles(req, res) {
     if (err) {
       console.log(err);
     } else {
-      console.log(`Successfully uploaded data to${myBucket}/${fileName}`);
       res.send(fileName);
     }
   });
