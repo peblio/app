@@ -7,6 +7,7 @@ const shortid = require('shortid');
 const Router = express.Router();
 const User = require('../models/user.js');
 const Token = require('../models/token.js');
+const UserConst = require('../userConstants.jsx');
 
 const userRoutes = express.Router();
 
@@ -24,9 +25,9 @@ function createUser(req, res) {
   let user;
   User.findOne({ email: req.body.mail }, (err, user) => {
     if (user) {
-      return res.status(400).send(
-        { msg: 'The email address you have entered is already associated with another account.' }
-      );
+      return res.status(400).send({
+        msg: UserConst.SIGN_UP_DUPLICATE_EMAIL
+      });
     }
     user = new User({
       email,
@@ -36,7 +37,9 @@ function createUser(req, res) {
     user.hashPassword(password);
     user.save((err, user) => {
       if (err) {
-        res.status(422).json({ msg: 'Sign up failed' });
+        res.status(422).json({
+          msg: UserConst.SIGN_UP_FAILED
+        });
       } else {
         const token = new Token({
           _userId: user._id,
@@ -44,11 +47,15 @@ function createUser(req, res) {
         });
         token.save((err) => {
           if (err) {
-            return res.status(500).send({ msg: 'Sign up failed' });
+            return res.status(500).send({
+              msg: UserConst.SIGN_UP_FAILED
+            });
           }
           sendSignUpConfirmationMail(user.email, token.token, req);
         });
-        return res.status(200).send({ msg: 'Please check mail to finish the sign up', user });
+        return res.status(200).send({
+          msg: UserConst.SIGN_UP_CHECK_MAIL, user
+        });
       }
     });
   });
@@ -64,11 +71,11 @@ function forgotPassword(req, res) {
           res.status(422).json({ error: err });
         } else {
           sendResetMail(req.body.email, user.resetPasswordToken, req);
-          return res.send({ success: true, message: 'sending reset info', user });
+          return res.send({ success: true, msg: 'sending reset info', user });
         }
       });
     } else {
-      res.status(404).json({ error: 'user not found' });
+      res.status(404).send({ msg: 'user not found' });
     }
   });
 }
@@ -100,33 +107,67 @@ function loginUser(req, res, next) {
     }
     // Generate a JSON response reflecting authentication status
     if (!user) {
-      return res.status(401).send({ success: false, msg: 'authentication failed' });
-    } else if (!user.isVerified) return res.status(401).send({ msg: 'Your account has not been verified.' });
+      return res.status(401).send({
+        msg: UserConst.LOGIN_FAILED
+      });
+    } else if (!user.isVerified) {
+      return res.status(401).send({
+        msg: UserConst.LOGIN_USER_NOT_VERIFIED
+      });
+    }
 
     req.login(user, (err) => {
       if (err) {
-        return res.send({ msg: err });
+        return res.send({
+          msg: err
+        });
       }
-      return res.send({ success: true, msg: 'Login Successful', user: { name: user.name } });
+      return res.send({
+        msg: UserConst.LOGIN_SUCCESS,
+        user: { name: user.name }
+      });
     });
   })(req, res, next);
 }
 
 function confirmUser(req, res) {
+  if (!req.body.token) {
+    return res.status(400).send({
+      msg: ''
+    });
+  }
   Token.findOne({ token: req.body.token }, (err, token) => {
-    if (!token) return res.status(400).send({ msg: 'We were unable to find a valid token. Your token my have expired.' });
+    if (!token) {
+      return res.status(400).send({
+        msg: UserConst.CONFIRM_TOKEN_EXPIRED
+      });
+    }
 
     // If we found a token, find a matching user
 
     User.findOne({ _id: token._userId }, (err, user) => {
-      if (!user) return res.status(400).send({ msg: 'We were unable to find a user for this token.' });
-      if (user.isVerified) return res.status(400).send({ msg: 'This user has already been verified.' });
+      if (!user) {
+        return res.status(400).send({
+          msg: UserConst.CONFIRM_NO_USER
+        });
+      }
+      if (user.isVerified) {
+        return res.status(400).send({
+          msg: UserConst.CONFIRM_USER_ALREADY_VERIFIED
+        });
+      }
 
       // Verify and save the user
       user.isVerified = true;
       user.save((err) => {
-        if (err) { return res.status(500).send({ msg: 'Failed to complete sign up' }); }
-        res.status(200).send({ msg: 'The account has been verified. Please log in.' });
+        if (err) {
+          return res.status(500).send({
+            msg: UserConst.SIGN_UP_FAILED
+          });
+        }
+        res.status(200).send({
+          msg: UserConst.CONFIRM_USER_VERIFIED
+        });
       });
     });
   });
@@ -134,8 +175,16 @@ function confirmUser(req, res) {
 
 function resendConfirmUser(req, res) {
   User.findOne({ email: req.body.email }, (err, user) => {
-    if (!user) return res.status(400).send({ msg: 'We were unable to find a user with that email.' });
-    if (user.isVerified) return res.status(400).send({ msg: 'This account has already been verified. Please log in.' });
+    if (!user) {
+      return res.status(400).send({
+        msg: UserConst.CONFIRM_NO_EMAIL
+      });
+    }
+    if (user.isVerified) {
+      return res.status(400).send({
+        msg: UserConst.CONFIRM_USER_ALREADY_VERIFIED
+      });
+    }
 
     // Create a verification token, save it, and send email
     const token = new Token({
@@ -145,10 +194,18 @@ function resendConfirmUser(req, res) {
 
     // Save the token
     token.save((err) => {
-      if (err) { return res.status(500).send({ msg: 'Failed to complete sign up' }); }
+      if (err) {
+        return res.status(500).send({
+          msg: UserConst.SIGN_UP_FAILED
+        });
+      }
       sendSignUpConfirmationMail(user.email, token.token, req);
     });
-    return res.status(200).send({ success: true, msg: 'Please check mail to finish the sign up', user });
+    return res.status(200).send({
+      success: true,
+      msg: UserConst.SIGN_UP_CHECK_MAIL,
+      user
+    });
   });
 }
 

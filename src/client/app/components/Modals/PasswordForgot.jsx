@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 
 class PasswordForgot extends React.Component {
@@ -67,10 +66,5 @@ class PasswordForgot extends React.Component {
   }
 
 }
-
-PasswordForgot.propTypes = {
-  closeLoginModal: PropTypes.func.isRequired,
-  setUserName: PropTypes.func.isRequired
-};
 
 export default PasswordForgot;

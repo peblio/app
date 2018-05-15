@@ -7,7 +7,7 @@ class ConfrmUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showReset: false,
+      showReset: true,
       notice: ''
     };
     this.confirmSuccess = this.confirmSuccess.bind(this);
@@ -15,6 +15,10 @@ class ConfrmUser extends React.Component {
     this.confirmToken = this.confirmToken.bind(this);
     this.submitConfirmUser = this.submitConfirmUser.bind(this);
     this.resendConfirmUser = this.resendConfirmUser.bind(this);
+  }
+
+  componentDidMount() {
+    this.submitConfirmUser(this.confirmToken());
   }
 
   confirmSuccess(msg) {
@@ -57,14 +61,9 @@ class ConfrmUser extends React.Component {
       this.confirmSuccess(res.data.msg);
     })
     .catch((err) => {
-      console.log(err);
       this.confirmFailed(err.response.data.msg);
     });
     event.preventDefault();
-  }
-
-  componentDidMount() {
-    this.submitConfirmUser(this.confirmToken());
   }
 
   render() {
@@ -100,8 +99,9 @@ class ConfrmUser extends React.Component {
 }
 
 ConfrmUser.propTypes = {
-  closeLoginModal: PropTypes.func.isRequired,
-  setUserName: PropTypes.func.isRequired
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired
 };
 
 export default ConfrmUser;

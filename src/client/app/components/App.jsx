@@ -71,8 +71,8 @@ class App extends React.Component {
 
   userConfirmation() {
     const location = this.props.location.pathname;
-    const tokenID = location.match(/\/confirmation\/([\w-].*)/);
-    return tokenID ? tokenID[1] : null;
+    const tokenID = location.match(/\/confirmation/);
+    return tokenID ? true : null;
   }
 
   authAndLoadPage() {
@@ -323,7 +323,6 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  history: PropTypes.object.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
@@ -413,6 +412,7 @@ App.propTypes = {
   viewResetModal: PropTypes.func.isRequired,
   closeConfirmUserModal: PropTypes.func.isRequired,
   viewConfirmUserModal: PropTypes.func.isRequired,
+  isConfirmUserModalOpen: PropTypes.bool.isRequired,
 
 
   updateUserName: PropTypes.func.isRequired,

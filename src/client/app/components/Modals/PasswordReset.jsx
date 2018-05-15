@@ -108,8 +108,9 @@ class PasswordReset extends React.Component {
 }
 
 PasswordReset.propTypes = {
-  closeLoginModal: PropTypes.func.isRequired,
-  setUserName: PropTypes.func.isRequired
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired
 };
 
 export default PasswordReset;

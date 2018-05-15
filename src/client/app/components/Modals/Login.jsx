@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import ReactHtmlParser from 'react-html-parser';
 
 class Login extends React.Component {
   constructor(props) {
@@ -15,10 +16,10 @@ class Login extends React.Component {
     this.props.authLoadedPage();
   }
 
-  loginFailed() {
+  loginFailed(msg) {
     this.setState({
       showNotice: true,
-      notice: 'Login failed'
+      notice: msg
     });
   }
 
@@ -36,8 +37,7 @@ class Login extends React.Component {
         this.loginSuccessful(response);
       })
       .catch((error) => { // eslint-disable-line
-        console.log(error.response);
-        this.loginFailed();
+        this.loginFailed(error.response.data.msg);
       });
     event.preventDefault();
   }
@@ -82,7 +82,7 @@ class Login extends React.Component {
         </button>
         {this.state.showNotice &&
           <p className="forgot-modal__notice">
-            {this.state.notice}
+            {ReactHtmlParser(this.state.notice)}
           </p>
         }
       </div>
