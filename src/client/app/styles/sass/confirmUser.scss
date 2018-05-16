@@ -1,26 +1,30 @@
-.signup-modal__content{
+.confirm-modal__content{
   margin: auto;
   width: 45%;
   padding-top: 5%;
 }
 
-.signup-modal__div{
+.confirm-modal__div{
   display: block;
   text-align: left;
 }
 
-.signup-modal__title{
+.confirm-modal__title{
   @extend %modal__title;
 }
 
-.signup-modal__label{
+.confirm-modal__label{
   @extend %modal__label;
 }
 
-.signup-modal__input{
+.confirm-modal__input{
   @extend %modal__input;
 }
 
-.signup-modal__button{
+.confirm-modal__button{
   @extend %modal__button;
+}
+
+.confirm-modal__notice {
+  @extend %modal__notice;
 }

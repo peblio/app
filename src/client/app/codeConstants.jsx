@@ -17,7 +17,6 @@ const defaultP5HTML =
 
 const defaultP5JS = `function setup() {
   createCanvas(400, 400);
-  console.log("drawing a canvas");
 }
 function draw() {
   background(220);

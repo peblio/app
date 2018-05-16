@@ -1,0 +1,122 @@
+.nav__container {
+  background-color: $blue;
+  padding-top: $nav-top-padding;
+  margin: 0 auto;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  &-left {
+    width:35%;
+    margin-left: 4%; //5% of 80%
+    display: flex;
+  }
+  &-right{
+    width: 40%;
+    // margin-right: 4%; //5% of 80%
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-transform: uppercase;
+  }
+  &-right-burger {
+    display: none;
+  }
+  &-about {
+    text-transform: uppercase;
+    font-family: 'Cicle';
+    letter-spacing: 3.5px;
+    font-size: 1rem;
+    &--selected {
+      color: $white;
+    }
+  }
+}
+
+.nav__heading {
+  width: 100%;
+  height: $nav-height;
+  background: white;
+  border: none;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  font-family: 'Cicle';
+  letter-spacing: 2.5px;
+  line-height: $nav-height;
+  width: 100%;
+  :after {
+    content:'';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -50px;
+    width: 0;
+    height: 0;
+    border-top: solid 50px #e15915;
+    border-left: solid 50px transparent;
+    border-right: solid 50px transparent;
+  }
+}
+
+.nav__image {
+  max-width: 75%;
+  max-height: 1.8rem;
+  &-container {
+    width: 35%;
+    background: $dark-blue;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background: #264f52;
+    &:hover {
+      background-color: $itp-hover-gray;
+      cursor: pointer;
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .nav__container {
+    &-right {
+      width: 50%;
+    }
+    &-left {
+      width:40%;
+      margin-left: 4%; //5% of 80%
+      display: flex;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .nav__container {
+    width: 90%;
+    display: flex;
+    padding-top: $nav-top-padding-mobile;
+    background-color: $white;
+    flex-direction: column;
+    &-left {
+      width: 100%;
+      margin: 0;
+    }
+    &-right {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      background-color: #63a6ac;
+      padding-top: 0.5rem;
+      &--show {
+        display: flex;
+      }
+    }
+    &-right-burger {
+      width: 20%;
+      display: block;
+      line-height: $nav-height-mobile;
+    }
+  }
+  .nav__heading {
+    line-height: $nav-height-mobile;
+    height: $nav-height-mobile;
+    font-size: 1rem;
+  }
+}
