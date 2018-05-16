@@ -23,40 +23,48 @@ function createUser(req, res) {
   const name = req.body.name;
   const password = req.body.password;
   let user;
-  User.findOne({ email: req.body.mail }, (err, user) => {
+  User.findOne({ name }, (err, user) => {
     if (user) {
       return res.status(400).send({
-        msg: UserConst.SIGN_UP_DUPLICATE_EMAIL
+        msg: UserConst.SIGN_UP_DUPLICATE_USER
       });
     }
-    user = new User({
-      email,
-      name,
-      password
-    });
-    user.hashPassword(password);
-    user.save((err, user) => {
-      if (err) {
-        res.status(422).json({
-          msg: UserConst.SIGN_UP_FAILED
-        });
-      } else {
-        const token = new Token({
-          _userId: user._id,
-          token: shortid.generate()
-        });
-        token.save((err) => {
-          if (err) {
-            return res.status(500).send({
-              msg: UserConst.SIGN_UP_FAILED
-            });
-          }
-          sendSignUpConfirmationMail(user.email, token.token, req);
-        });
-        return res.status(200).send({
-          msg: UserConst.SIGN_UP_CHECK_MAIL, user
+
+    User.findOne({ email: req.body.mail }, (err, user) => {
+      if (user) {
+        return res.status(400).send({
+          msg: UserConst.SIGN_UP_DUPLICATE_EMAIL
         });
       }
+      user = new User({
+        email,
+        name,
+        password
+      });
+      user.hashPassword(password);
+      user.save((err, user) => {
+        if (err) {
+          res.status(422).json({
+            msg: UserConst.SIGN_UP_FAILED
+          });
+        } else {
+          const token = new Token({
+            _userId: user._id,
+            token: shortid.generate()
+          });
+          token.save((err) => {
+            if (err) {
+              return res.status(500).send({
+                msg: UserConst.SIGN_UP_FAILED
+              });
+            }
+            sendSignUpConfirmationMail(user.email, token.token, req);
+          });
+          return res.status(200).send({
+            msg: UserConst.SIGN_UP_CHECK_MAIL, user
+          });
+        }
+      });
     });
   });
 }

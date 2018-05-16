@@ -1,6 +1,7 @@
 module.exports = Object.freeze({
 
   SIGN_UP_DUPLICATE_EMAIL: 'The email address you have entered is already associated with another account.',
+  SIGN_UP_DUPLICATE_USER: 'Username not available! Please try another name',
   SIGN_UP_FAILED: 'Sign up failed',
   SIGN_UP_CHECK_MAIL: 'Please check mail to finish the sign up',
 
