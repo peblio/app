@@ -15,32 +15,30 @@
 }
 
 .logo_toolbar{
-  margin: $medium-margin $small-margin;
-  padding: $medium-padding/2 $medium-padding;
+  // margin: $medium-margin $small-margin;
+  padding: 12 20 10 20;
 }
 
 .main-toolbar__title{
-  height:35px;
-  margin: $medium-padding 0 0;
-  padding: $small-padding;
-  background-color: $black;
-  border-top:  $black;
-  border-left:  $black;
-  border-right:  $black;
-  border-color: $light-gray;
-  color:$gray;
-  font-size: 1em;
-  width:15%;
+  height: 35px;
+  margin: 8 0 8 0;
+  padding: 4 15;
+  background-color: #ffffff21;
+  border: none;
+  border-radius: 5px;
+  color: #f1f1f1;
+  font-size: 14px;
+  width: 20%;
   float: left;
  }
 
 .main-toolbar__save {
-  @extend %mainToolbar__blueButton
+  @extend %mainToolbar__button
 }
 
 .main-toolbar__account-button{
-  margin: $small-margin;
-  padding: $small-padding;
+  margin: 0.2rem $large-padding;
+  padding: $small-padding $medium-padding;
   border: none;
   background: $black;
   -webkit-transition-duration: 150ms; /* Safari */
@@ -79,12 +77,12 @@
 .main-toolbar__preview {
   color: $white;
   margin: $medium-margin $small-margin;
-  padding: $medium-padding/2 $medium-padding;
+  padding: 0 $medium-padding;
   position: relative;
   display: inline-block;
-  width: 30px;
-  height: 15px;
-  top: 5%;
+  width: 20px;
+  height: 12px;
+  top: 5px;
 }
 
 .main-toolbar__slider {
@@ -97,28 +95,27 @@
   background-color: $blue;
   -webkit-transition: .4s;
   transition: .4s;
-  border-radius: $medium-border-radius;
+  border-radius: $large-border-radius;
 
 }
 
 .main-toolbar__slider:before {
   position: absolute;
   content: "";
-  height: 80%;
-  width: 26px;
+  height: 18px;
+  width: 18px;
   left: 32px;
-  bottom: 4px;
-  background-color: $white;
+  top: -3px;
+  // background-color: $white;
   -webkit-transition: .4s;
   transition: .4s;
-  border-radius: $medium-border-radius;
+  border-radius: $large-border-radius;
+  background-color: $white;
 
 }
 
 input:checked + .main-toolbar__slider {
   background-color: $hover-gray;
-  border-radius: $small-border-radius;
-
 }
 
 input:checked + .main-toolbar__slider:before {
@@ -150,15 +147,19 @@ input:checked + .main-toolbar__slider:before {
 }
 
 .upper-toolbar__dropdown{
-  margin: $medium-padding $small-padding 0;
   border: none;
   border-radius: 0;
-  width: 80px;
-  color: $gray;
-  background: none;
-  height:40px;
-  font-style: bold;
-  font-size: 1em;
+  padding:$main-toolbar-padding;
+  width: 100;
+  color: $white;
+  font-style: normal;
+  font-size: 14;
+  &:hover {
+    cursor: pointer;
+    color: $gray;
+    background: $black;
+    border: none;
+  }
 }
 
 
@@ -197,17 +198,16 @@ input[type="checkbox"] ~ .main-toolbar__preview-off {
 .main-toolbar__preview-title {
   display: inline-block;
   vertical-align: middle;
-  padding-left: $small-padding;
-  color:white;
-  padding:1.5rem .5rem;
-  font-size: 16px;
-  font-weight: bold;
+  padding:$main-toolbar-padding;
+  color: $white;
+  font-size: 14px;
+  font-weight: normal;
 
 }
 
-.main-toolbar__preview:hover .main-toolbar__preview-title {
-  color: $blue;
-}
+// .main-toolbar__preview:hover .main-toolbar__preview-title {
+//   color: $blue;
+// }
 
 
 @media screen and (max-width: 1025px) {
@@ -226,4 +226,11 @@ input[type="checkbox"] ~ .main-toolbar__preview-off {
     @include flex;
     margin-left: 1rem;
   }
+}
+
+.main-toolbar__spacer{
+  height: 18px;
+  width: 1px;
+  background-color: #a2aeb5;
+  margin: $medium-margin 0; 
 }
