@@ -1,10 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import ReactHtmlParser from 'react-html-parser';
 
 class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showNotice: false,
+      notice: ''
+    };
+    this.loginFailed = this.loginFailed.bind(this);
+  }
   componentWillUnmount() {
     this.props.authLoadedPage();
+  }
+
+  loginFailed(msg) {
+    this.setState({
+      showNotice: true,
+      notice: msg
+    });
   }
 
   loginSuccessful(response) {
@@ -13,27 +29,27 @@ class Login extends React.Component {
   }
 
   submitLoginUser(event, name, password) {
-    axios.post('/api/login', {
+    axios.post('/users/login', {
       name,
       password
     })
       .then((response) => {
         this.loginSuccessful(response);
       })
-      .catch(function(error) { // eslint-disable-line
-        console.log('Login Failed');
+      .catch((error) => { // eslint-disable-line
+        this.loginFailed(error.response.data.msg);
       });
     event.preventDefault();
   }
   render() {
     return (
       <div className="login-modal__content">
-        <h5 className="login-modal__title">Log In</h5>
+        <h1 className="login-modal__title">Log In</h1>
         <form onSubmit={(event) => { this.submitLoginUser(event, this.userName.value, this.userPassword.value); }}>
           <div className="login-modal__div">
-            <label htmlFor="login-modal_-name" className="login-modal__label"> Name
+            <label htmlFor="login-modal-name" className="login-modal__label"> Name
               <input
-                id="login-modal_-name"
+                id="login-modal-name"
                 className="login-modal__input"
                 type="text"
                 ref={(userName) => { this.userName = userName; }}
@@ -41,9 +57,9 @@ class Login extends React.Component {
             </label>
           </div>
           <div className="login-modal__div">
-            <label htmlFor="login-modal_-password" className="login-modal__label"> Password
+            <label htmlFor="login-modal-password" className="login-modal__label"> Password
               <input
-                id="login-modal_-password"
+                id="login-modal-password"
                 className="login-modal__input"
                 type="password"
                 ref={(userPassword) => { this.userPassword = userPassword; }}
@@ -51,8 +67,24 @@ class Login extends React.Component {
             </label>
           </div>
 
-          <input className="login-modal__button" type="submit" value="Submit" />
+          <button className="forgot-modal__button" type="submit" value="Submit" >
+            Submit
+          </button>
         </form>
+        <button
+          className="login-modal__button"
+          onClick={() => {
+            this.props.viewForgotModal();
+            this.props.closeLoginModal();
+          }}
+        >
+          Forgot password
+        </button>
+        {this.state.showNotice &&
+          <p className="forgot-modal__notice">
+            {ReactHtmlParser(this.state.notice)}
+          </p>
+        }
       </div>
     );
   }
@@ -62,7 +94,8 @@ class Login extends React.Component {
 Login.propTypes = {
   authLoadedPage: PropTypes.func.isRequired,
   closeLoginModal: PropTypes.func.isRequired,
-  setUserName: PropTypes.func.isRequired
+  setUserName: PropTypes.func.isRequired,
+  viewForgotModal: PropTypes.func.isRequired
 };
 
 export default Login;

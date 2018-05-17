@@ -1,7 +1,6 @@
 const AWS = require('aws-sdk');
 const express = require('express');
 const multer = require('multer');
-const passport = require('passport');
 const shortid = require('shortid');
 
 const apiRoutes = express.Router();
@@ -30,7 +29,6 @@ apiRoutes.route('/examples').get(getExamples);
 apiRoutes.route('/page/:id').get(getPage);
 apiRoutes.route('/user').get(getUser);
 apiRoutes.route('/sketches').get(getSketches);
-apiRoutes.route('/login').post(loginUser);
 apiRoutes.route('/upload').post(upload.single('uploadImageFile'), uploadFiles);
 
 function uploadFiles(req, res) {
@@ -45,7 +43,6 @@ function uploadFiles(req, res) {
     if (err) {
       console.log(err);
     } else {
-      console.log(`Successfully uploaded data to${myBucket}/${fileName}`);
       res.send(fileName);
     }
   });
@@ -100,24 +97,6 @@ function getExamples(req, res) {
       });
     }
   });
-}
-
-function loginUser(req, res, next) {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) {
-      return next(err); // will generate a 500 error
-    }
-    // Generate a JSON response reflecting authentication status
-    if (!user) {
-      return res.send(401, { success: false, message: 'authentication failed' });
-    }
-    req.login(user, (err) => {
-      if (err) {
-        return next(err);
-      }
-      return res.send({ success: true, message: 'authentication succeeded', user: { name: user.name } });
-    });
-  })(req, res, next);
 }
 
 module.exports = apiRoutes;

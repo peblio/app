@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Canvas from './Canvas.jsx';
-import ExamplesModal from './ExamplesModal.jsx';
-import Login from './Login.jsx';
-import MainToolbar from './MainToolbar.jsx';
-import Modal from './Modal.jsx';
-import PagesList from './PagesList.jsx';
-import ShareModal from './ShareModal.jsx';
-import SignUp from './SignUp.jsx';
+import ConfirmUser from './Modals/ConfirmUser.jsx';
+import ExamplesModal from './Modals/ExamplesModal.jsx';
+import Login from './Modals/Login.jsx';
+import Modal from './Modals/Modal.jsx';
+import PasswordForgot from './Modals/PasswordForgot.jsx';
+import ShareModal from './Modals/ShareModal.jsx';
+import SignUp from './Modals/SignUp.jsx';
+import PagesList from './Modals/PagesList.jsx';
+import PasswordReset from './Modals/PasswordReset.jsx';
+
+import Canvas from './Page/Canvas.jsx';
+import MainToolbar from './Page/MainToolbar.jsx';
 
 import * as editorActions from '../action/editors.jsx';
 import * as mainToolbarActions from '../action/mainToolbar.jsx';
@@ -25,6 +29,7 @@ class App extends React.Component {
     this.authAndLoadPage = this.authAndLoadPage.bind(this);
     this.authLoadedPage = this.authLoadedPage.bind(this);
     this.projectID = this.projectID.bind(this);
+    this.resetPage = this.resetPage.bind(this);
     this.savePage = this.savePage.bind(this);
   }
 
@@ -58,8 +63,24 @@ class App extends React.Component {
     return projectID ? projectID[1] : null;
   }
 
+  resetPage() {
+    const location = this.props.location.pathname;
+    const tokenID = location.match(/\/reset\/([\w-].*)/);
+    return tokenID ? tokenID[1] : null;
+  }
+
+  userConfirmation() {
+    const location = this.props.location.pathname;
+    const tokenID = location.match(/\/confirmation/);
+    return tokenID ? true : null;
+  }
+
   authAndLoadPage() {
-    if (this.projectID()) {
+    if (this.userConfirmation()) {
+      this.props.viewConfirmUserModal();
+    } else if (this.resetPage()) {
+      this.props.viewResetModal();
+    } else if (this.projectID()) {
       this.props.setEditAccess(false);
       const projectID = this.projectID();
       axios.get(`/api/page/${this.projectID()}`)
@@ -235,8 +256,32 @@ class App extends React.Component {
             updateUserPassword={this.props.updateUserPassword}
             setUserName={this.props.setUserName}
             closeLoginModal={this.props.closeLoginModal}
+            viewForgotModal={this.props.viewForgotModal}
+            isForgotModalOpen={this.props.isForgotModalOpen}
           />
         </Modal>
+
+        <Modal
+          size="large"
+          isOpen={this.props.isForgotModalOpen}
+          closeModal={this.props.closeForgotModal}
+        >
+          <PasswordForgot
+            isForgotModalOpen={this.props.isForgotModalOpen}
+          />
+        </Modal>
+
+        <Modal
+          size="large"
+          isOpen={this.props.isResetModalOpen}
+          closeModal={this.props.closeResetModal}
+        >
+          <PasswordReset
+            isResetModalOpen={this.props.isResetModalOpen}
+            location={this.props.location}
+          />
+        </Modal>
+
         <Modal
           size="large"
           isOpen={this.props.isSignUpModalOpen}
@@ -255,6 +300,15 @@ class App extends React.Component {
         </Modal>
         <Modal
           size="small"
+          isOpen={this.props.isConfirmUserModalOpen}
+          closeModal={this.props.closeConfirmUserModal}
+        >
+          <ConfirmUser
+            location={this.props.location}
+          />
+        </Modal>
+        <Modal
+          size="small"
           isOpen={this.props.isShareModalOpen}
           closeModal={this.props.closeShareModal}
         >
@@ -262,6 +316,7 @@ class App extends React.Component {
             pageTitle={this.props.pageTitle}
           />
         </Modal>
+
       </div>
     );
   }
@@ -291,7 +346,9 @@ App.propTypes = {
   isAccountDropdownOpen: PropTypes.bool.isRequired,
   isPagesModalOpen: PropTypes.bool.isRequired,
   isLoginModalOpen: PropTypes.bool.isRequired,
+  isForgotModalOpen: PropTypes.bool.isRequired,
   isSignUpModalOpen: PropTypes.bool.isRequired,
+  isResetModalOpen: PropTypes.bool.isRequired,
 
   isExamplesModalOpen: PropTypes.bool.isRequired,
   viewExamplesModal: PropTypes.func.isRequired,
@@ -349,6 +406,14 @@ App.propTypes = {
   isShareModalOpen: PropTypes.bool.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
+  closeForgotModal: PropTypes.func.isRequired,
+  viewForgotModal: PropTypes.func.isRequired,
+  closeResetModal: PropTypes.func.isRequired,
+  viewResetModal: PropTypes.func.isRequired,
+  closeConfirmUserModal: PropTypes.func.isRequired,
+  viewConfirmUserModal: PropTypes.func.isRequired,
+  isConfirmUserModalOpen: PropTypes.bool.isRequired,
+
 
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
@@ -378,8 +443,12 @@ function mapStateToProps(state) {
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isPagesModalOpen: state.mainToolbar.isPagesModalOpen,
     isShareModalOpen: state.mainToolbar.isShareModalOpen,
+
     isLoginModalOpen: state.mainToolbar.isLoginModalOpen,
     isSignUpModalOpen: state.mainToolbar.isSignUpModalOpen,
+    isForgotModalOpen: state.mainToolbar.isForgotModalOpen,
+    isResetModalOpen: state.mainToolbar.isResetModalOpen,
+    isConfirmUserModalOpen: state.mainToolbar.isConfirmUserModalOpen,
   };
 }
 

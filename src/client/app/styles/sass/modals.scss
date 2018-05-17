@@ -55,3 +55,48 @@
 .file-modal__list ol li a{
   color: $gray;
 }
+
+
+%modal__title{
+  font-size: $large-font-size;
+  font-weight: $medium-font-weight;
+  display: block;
+  text-align: center;
+  margin: $small-margin;
+}
+
+%modal__label{
+  font-size: $medium-font-size;
+  font-style: bold;
+  text-align: left;
+  display: block;
+  color: $light-gray;
+  margin-top: $medium-margin;
+}
+
+%modal__button {
+  font-size: $medium-font-size;
+  background-color: $gray;
+  display: block;
+  color: $white;
+  margin-top: $large-margin;
+  width: 100%;
+  padding: 10px;
+}
+
+%modal__input {
+  border-radius: $small-border-radius;
+  width:100%;
+  height: 35px;
+  display: block;
+  background-color: $lighter-gray;
+  border: 2px $gray;
+  padding: $small-padding $medium-padding;
+}
+
+%modal__notice {
+  font-size: $normal-font-size;
+  color: $blue;
+  justify-content: center;
+  display: flex;
+}
