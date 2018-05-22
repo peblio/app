@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import EditorContainer from './EditorContainer.jsx';
-import Questions from './Questions.jsx';
-import Iframe from './Iframe.jsx';
-import Image from './Image.jsx';
-import TextEditor from './TextEditor.jsx';
-import WidgetNav from './WidgetNav.jsx';
+import EditorContainer from './EditorContainer/EditorContainer.jsx';
+import Questions from './Questions/Questions.jsx';
+import Iframe from './Iframe/Iframe.jsx';
+import Image from './Image/Image.jsx';
+import TextEditor from './TextEditor/TextEditor.jsx';
+import WidgetNav from './WidgetNav/WidgetNav.jsx';
 
 const ReactGridLayout = require('react-grid-layout');
 

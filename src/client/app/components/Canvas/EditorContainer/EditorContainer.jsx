@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import SplitPane from 'react-split-pane';
 
-import P5Editor from './P5Editor.jsx';
-import P5Output from './P5Output.jsx';
-import EditorToolbar from './EditorToolbar.jsx';
-import ConsoleOutput from './ConsoleOutput.jsx';
+import P5Editor from './P5Editor/P5Editor.jsx';
+import P5Output from './P5Output/P5Output.jsx';
+import EditorToolbar from './EditorToolbar/EditorToolbar.jsx';
+import ConsoleOutput from './ConsoleOutput/ConsoleOutput.jsx';
 
 class EditorContainer extends React.Component {
   constructor(props) {

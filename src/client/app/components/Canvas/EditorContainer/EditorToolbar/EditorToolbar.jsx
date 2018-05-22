@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import PlaySVG from '../../images/play.svg';
-import PauseSVG from '../../images/pause.svg';
+import PlaySVG from '../../../../images/play.svg';
+import PauseSVG from '../../../../images/pause.svg';
 
 class EditorToolbar extends React.Component {
   render() {

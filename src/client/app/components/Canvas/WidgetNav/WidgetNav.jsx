@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CloseSVG from '../../images/close.svg';
-import CopySVG from '../../images/copy.svg';
-import DragSVG from '../../images/drag.svg';
+import CloseSVG from '../../../images/close.svg';
+import CopySVG from '../../../images/copy.svg';
+import DragSVG from '../../../images/drag.svg';
 
 class WidgetNav extends React.Component {
   constructor(props) {
