@@ -1,3 +1,6 @@
+@import 'variables';
+@import 'mixins';
+
 .main-nav {
   position: fixed;
   top: 0;
@@ -205,10 +208,6 @@ input[type="checkbox"] ~ .main-toolbar__preview-off {
 
 }
 
-// .main-toolbar__preview:hover .main-toolbar__preview-title {
-//   color: $blue;
-// }
-
 
 @media screen and (max-width: 1025px) {
 
@@ -232,5 +231,25 @@ input[type="checkbox"] ~ .main-toolbar__preview-off {
   height: 18px;
   width: 1px;
   background-color: #a2aeb5;
-  margin: $medium-margin 0; 
+  margin: $medium-margin 0;
+}
+
+%mainToolbar__button{
+  margin: 0 $small-margin;
+  padding: $main-toolbar-padding;
+  float: right;
+  font-size: 14px;
+  font-weight: normal;
+  border: none;
+  // border-radius: $small-border-radius;
+  color: $white;
+  // background-color: none;
+  -webkit-transition-duration: 150ms; /* Safari */
+  transition-duration: 150ms;
+  &:hover {
+    border: none;
+    color: $light-gray;
+    background: none;
+    cursor: pointer;
+  }
 }

@@ -7,6 +7,8 @@ import ImageSVG from '../../../images/image.svg';
 import QuestionSVG from '../../../images/question.svg';
 import TextSVG from '../../../images/text.svg';
 
+require('./insertToolbar.scss');
+
 class InsertToolbar extends React.Component {
   render() {
     return (

@@ -25,7 +25,26 @@ const config = {
       },
       {
         test: /\.(scss|css)$/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader']
+        use: [
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              includePaths: [
+                path.resolve(APP_DIR, 'styles/sass'),
+              ],
+              sourceMap: true
+
+            }
+          }
+        ]
+
       },
       {
         test: /\.svg$/,

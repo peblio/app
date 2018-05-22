@@ -7,6 +7,8 @@ import P5Output from './P5Output/P5Output.jsx';
 import EditorToolbar from './EditorToolbar/EditorToolbar.jsx';
 import ConsoleOutput from './ConsoleOutput/ConsoleOutput.jsx';
 
+require('./editorContainer.scss');
+
 class EditorContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -44,7 +46,7 @@ class EditorContainer extends React.Component {
   render() {
     return (
       <div>
-        <div className="code-editor__total-container" onFocus={this.setCurrentEditor}>
+        <div className="editor__total-container" onFocus={this.setCurrentEditor}>
           <EditorToolbar
             currentFile={this.props.currentFile}
             files={this.props.files}
@@ -55,21 +57,21 @@ class EditorContainer extends React.Component {
             startCodeRefresh={this.startCodeRefresh}
             stopCode={this.stopCode}
           />
-          <div className="code-editor__container">
+          <div className="editor__container">
             <SplitPane
               split="horizontal"
               defaultSize={this.props.innerHeight}
               onDragStarted={this.startResize}
               onDragFinished={(size) => { this.finishResize(); this.setInnerHeight(size); }}
             >
-              <div className="code-editor__sub-container">
+              <div className="editor__sub-container">
                 <SplitPane
                   split="vertical"
                   defaultSize={this.props.innerWidth}
                   onDragStarted={this.startResize}
                   onDragFinished={(size) => { this.finishResize(); this.setInnerWidth(size); }}
                 >
-                  <div className="code-editor__input">
+                  <div className="editor__input">
                     { this.props.editorMode === 'p5' &&
                     <P5Editor
                       currentFile={this.props.currentFile}
@@ -78,11 +80,11 @@ class EditorContainer extends React.Component {
                     />
                   }
                   </div>
-                  <div className="code-editor__output">
+                  <div className="editor__output">
                     <div
-                      className={`code-editor__output-overlay
+                      className={`editor__output-overlay
                       ${this.state.isResizing ?
-                      'code-editor__output-overlay--show' : ''}`}
+                      'editor__output-overlay--show' : ''}`}
                     >
                     </div>
                     { this.props.isPlaying && (
@@ -99,7 +101,7 @@ class EditorContainer extends React.Component {
                   </div>
                 </SplitPane>
               </div>
-              <div className="code-editor__console">
+              <div className="editor__console">
                 <ConsoleOutput
                   consoleOutputText={this.props.consoleOutputText}
                 />

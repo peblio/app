@@ -1,0 +1,45 @@
+@import 'variables';
+@import 'mixins';
+
+.widget__nav{
+  float:right;
+  display: inline-block;
+  width:$nav-width;
+  margin-right: -45px;
+  margin-top: -5px;
+}
+
+.widget__close{
+  @extend %widget_controls;
+}
+
+#ShapeCNTRL{
+  fill:$blue;
+}
+
+.widget__close:hover #ShapeCNTRL{
+  fill:$light-gray;
+}
+
+.dragClassName{ // sass-lint:disable-line class-name-format
+  @extend %widget_controls;
+}
+
+//deleting and moving widgets on the canvas
+%widget_controls{
+  background-color: $lighter-gray;
+  outline: 0;
+  -webkit-transition-duration: .5s;
+  transition-duration: .5s;
+  margin-bottom: 5px !important;
+  fill: $blue;
+  border-radius: $large-border-radius;
+  padding:$small-padding/2;
+  border: none;
+
+  &:hover{
+    cursor: pointer;
+    border: none;
+    fill: $light-gray;
+  }
+}

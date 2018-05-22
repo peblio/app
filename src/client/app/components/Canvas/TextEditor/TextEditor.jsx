@@ -3,6 +3,8 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 
+require('./textEditor.scss');
+
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);

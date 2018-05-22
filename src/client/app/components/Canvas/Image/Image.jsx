@@ -5,6 +5,7 @@ import React from 'react';
 
 import UploadSVG from '../../../images/upload.svg';
 
+require('./image.scss');
 const upload = require('superagent');
 
 class Image extends React.Component {

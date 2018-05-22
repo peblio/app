@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+require('./consoleOutput.scss');
+
 class ConsoleOutput extends React.Component {
 
   render() {

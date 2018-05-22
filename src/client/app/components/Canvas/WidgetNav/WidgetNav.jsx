@@ -4,6 +4,8 @@ import CloseSVG from '../../../images/close.svg';
 import CopySVG from '../../../images/copy.svg';
 import DragSVG from '../../../images/drag.svg';
 
+require('./widgetNav.scss');
+
 class WidgetNav extends React.Component {
   constructor(props) {
     super(props);
@@ -15,17 +17,17 @@ class WidgetNav extends React.Component {
 
   render() {
     return (
-      <nav className="element__nav">
-        <button className="element__close" onClick={this.removeEditor.bind(this)}>
+      <nav className="widget__nav">
+        <button className="widget__close" onClick={this.removeEditor.bind(this)}>
           <CloseSVG alt="close element" />
         </button>
         <button
-          className={`element__close element__drag drag__${this.props.id}`}
+          className={`widget__close widget__drag drag__${this.props.id}`}
         >
-          <DragSVG alt="drag element" />
+          <DragSVG alt="drag widget" />
         </button>
-        <button className="element__close" onClick={this.duplicateEditor.bind(this)}>
-          <CopySVG alt="duplicate element" />
+        <button className="widget__close" onClick={this.duplicateEditor.bind(this)}>
+          <CopySVG alt="duplicate widget" />
         </button>
       </nav>
     );

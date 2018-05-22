@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import PlaySVG from '../../../../images/play.svg';
 import PauseSVG from '../../../../images/pause.svg';
 
+require('./editorToolbar.scss');
+
 class EditorToolbar extends React.Component {
   render() {
     return (

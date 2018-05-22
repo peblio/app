@@ -3,3 +3,5 @@ node_modules/
 src/client/public/bundle.js
 src/client/public/*.svg
 **/.DS_Store
+src/client/.sass-cache/
+**/*.css.map

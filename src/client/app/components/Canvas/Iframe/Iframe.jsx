@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 
+require('./iframe.scss');
+
 class Iframe extends React.Component {
   constructor(props) {
     super(props);

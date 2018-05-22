@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SplitPane from 'react-split-pane';
 
+require('./question.scss');
+
 class Questions extends React.Component {
   constructor(props) {
     super(props);

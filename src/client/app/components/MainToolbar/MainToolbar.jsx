@@ -6,6 +6,8 @@ import ToolbarLogo from '../../images/logo.svg';
 import CheckSVG from '../../images/check.svg';
 import AccountSVG from '../../images/account.svg';
 
+require('./mainToolbar.scss');
+
 class MainToolbar extends React.Component {
   render() {
     let saveButtonText = 'Fork';

@@ -1,26 +1,29 @@
+@import 'variables';
+@import 'mixins';
+
 .CodeMirror-scroll { // sass-lint:disable-line class-name-format
   z-index: $z-index-layer-0;
 }
 
-.code-editor__container {
+.editor__container {
   position: relative;
   width: 100%;
   height: calc(100% - 60px);
 }
 
-.code-editor__sub-container {
+.editor__sub-container {
   display: flex;
   flex-direction: row;
   border: none;
 }
 
-.code-editor__input {
+.editor__input {
   height: 100%;
   border-right: $thin-border-width solid $gray;
   overflow:scroll;
 
 }
-.code-editor__output-overlay {
+.editor__output-overlay {
   height: 100%;
   width: 100%;
   position: absolute;
@@ -30,7 +33,7 @@
   }
 }
 
-.code-editor__output {
+.editor__output {
   width: 100%;
   height: 100%;
   overflow:scroll;
@@ -40,7 +43,7 @@
   z-index: $z-index-layer-1;
 }
 
-.code-editor__output-text {
+.editor__output-text {
   color:$white;
 }
 
@@ -59,20 +62,14 @@ canvas{
   margin: 0;
 }
 
-.code-editor__total-container{
+.editor__total-container{
   display: flex;
   flex-direction: column;
   margin: 0;
   width: auto;
 }
 
-.console__output-text{
-  font-family: 'Inconsolata', monospace !important;
-  margin: 0;
-  padding: $small-padding;
-}
-
-.code-editor__console{
+.editor__console{
   border-radius: 0 0  $medium-border-radius $medium-border-radius;
   background-color: $dark-gray;
   height: 100%;

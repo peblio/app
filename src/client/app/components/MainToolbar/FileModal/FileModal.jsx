@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+require('./fileModal.scss');
+
 class FileModal extends React.Component {
   render() {
     return (

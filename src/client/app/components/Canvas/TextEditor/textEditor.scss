@@ -1,3 +1,6 @@
+@import 'variables';
+@import 'mixins';
+
 .DraftEditor-editorContainer { // sass-lint:disable-line class-name-format
   height: 100%;
 }
@@ -30,50 +33,18 @@
   color:black;
 }
 
-.element__control{
-  &:hover {
-    cursor: pointer;
-  }
-  &:focus {
-    cursor: pointer;
-  }
-}
-
-.resize-container .element__close{
-  display: none;
-}
-
-.resize-container:hover .element__close {
-  display: inline-block;
-}
-
-.resize-container:focus .element__close {
-  display: inline-block;
-}
-.element__close{
-  @extend %element_controls;
-}
-
-#ShapeCNTRL{
-  fill:$blue;
-}
-
-.element__close:hover #ShapeCNTRL{
-  fill:$light-gray;
-}
-
-.dragClassName{ // sass-lint:disable-line class-name-format
-  @extend %element_controls;
-
-}
-
-.element__nav{
-  float:right;
-  display: inline-block;
-  width:$nav-width;
-  margin-right: -45px;
-  margin-top: -5px;
-}
+//
+// .resize-container .widget__close{
+//   display: none;
+// }
+//
+// .resize-container:hover .widget__close {
+//   display: inline-block;
+// }
+//
+// .resize-container:focus .widget__close {
+//   display: inline-block;
+// }
 
 .text-editor__container h1{
   font-size: 32;

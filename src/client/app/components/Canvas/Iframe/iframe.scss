@@ -1,8 +1,10 @@
+@import 'variables';
+@import 'mixins';
+
 iframe{
   width:100%;
   height: 100%;
   background-color: $lighter-gray;
-
 }
 
 .element__iframe{

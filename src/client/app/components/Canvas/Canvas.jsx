@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import EditorContainer from './EditorContainer/EditorContainer.jsx';
-import Questions from './Questions/Questions.jsx';
+import Questions from './Question/Question.jsx';
 import Iframe from './Iframe/Iframe.jsx';
 import Image from './Image/Image.jsx';
 import TextEditor from './TextEditor/TextEditor.jsx';
@@ -170,7 +170,7 @@ class Canvas extends React.Component {
           compactType="vertical"
           autoSize
           margin={this.props.rgl.margin}
-          draggableHandle=".element__drag"
+          draggableHandle=".widget__drag"
           containerPadding={this.props.rgl.padding}
           isResizable={!this.props.preview}
         >
