@@ -5,44 +5,22 @@ body, html{
   background-color: $whitish;
 }
 
-.canvas{
-  background-color: $whitish;
-  width: $total-width;
-  min-height:80vh;
-  padding: $large-padding;
-  margin: 0 auto;
-  margin-top: 80px;
-}
-
-.canvas-extra-margin {
-  margin-top: 100px;
-}
-
-.canvas-high {
-  z-index: 200;
-}
-
-.react-grid-item {
-  padding: 0 0.5rem 0.5rem 0;
-}
-
-.resize-container {
-  border: $small-border solid $black;
-  border-radius: $medium-border-radius;
-  margin: $large-margin;
-  padding: $small-padding/2;
-}
-
 button {
   @extend %menu-item ;
 }
 
-@media screen and (max-width: 1025px) {
-  .canvas{
-    margin-top: 150px;
-  }
-
-  .canvas-extra-margin {
-    margin-top: 210px;
+%menu-item {
+  border: $thin-border-width solid $white;
+  border-radius: $small-border-radius;
+  color: $white;
+  fill:$white;
+  background-color: $dark-gray;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  &:hover {
+    border: $thin-border-width solid $gray;
+    color: $black;
+    background: $white;
+    cursor: pointer;
   }
 }

@@ -2,6 +2,8 @@ import axios from 'axios';
 import React from 'react';
 import PropTypes from 'prop-types';
 
+require('./signup.scss');
+
 class SignUp extends React.Component {
 
   constructor(props) {

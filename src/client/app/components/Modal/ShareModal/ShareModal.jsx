@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+require('./shareModal.scss');
+
 class Share extends React.Component {
   constructor(props) {
     super(props);

@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-class ConfrmUser extends React.Component {
+require('./confirmUser.scss');
+
+class ConfirmUser extends React.Component {
 
   constructor(props) {
     super(props);
@@ -98,10 +100,10 @@ class ConfrmUser extends React.Component {
 
 }
 
-ConfrmUser.propTypes = {
+ConfirmUser.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired
 };
 
-export default ConfrmUser;
+export default ConfirmUser;

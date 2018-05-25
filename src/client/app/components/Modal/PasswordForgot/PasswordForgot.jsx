@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
+require('./passwordForgot.scss');
+
 class PasswordForgot extends React.Component {
 
   constructor(props) {

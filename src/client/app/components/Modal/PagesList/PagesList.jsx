@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DeleteIcon from '../../../images/trash.svg';
 
-
 const axios = require('axios');
+require('./pagesList.scss');
 
 class PagesList extends React.Component {
   componentDidMount() {

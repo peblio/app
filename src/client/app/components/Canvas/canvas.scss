@@ -1,0 +1,56 @@
+@import 'variables';
+@import 'mixins';
+
+.resize-container{
+  min-height: auto !important;
+  border: none;
+  padding: $small-padding;
+
+  &:hover {
+    z-index: $z-index-layer-4 !important;
+    border: 2px dashed $light-gray;
+    border-radius: $small-border-radius;
+  }
+}
+
+.preview-mode .resize-container {
+  border: none;
+}
+
+.canvas{
+  background-color: $whitish;
+  width: $total-width;
+  min-height:80vh;
+  padding: $large-padding;
+  margin: 0 auto;
+  margin-top: 80px;
+}
+
+.canvas-extra-margin {
+  margin-top: 100px;
+}
+
+.canvas-high {
+  z-index: 200;
+}
+
+.react-grid-item {
+  padding: 0 0.5rem 0.5rem 0;
+}
+
+.resize-container {
+  border: $small-border solid $black;
+  border-radius: $medium-border-radius;
+  margin: $large-margin;
+  padding: $small-padding/2;
+}
+
+@media screen and (max-width: 1025px) {
+  .canvas{
+    margin-top: 150px;
+  }
+
+  .canvas-extra-margin {
+    margin-top: 210px;
+  }
+}

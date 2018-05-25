@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import ConfirmUser from './Modals/ConfirmUser/ConfirmUser.jsx';
-import ExamplesModal from './Modals/ExamplesModal/ExamplesModal.jsx';
-import Login from './Modals/Login/Login.jsx';
-import Modal from './Modals/Modal/Modal.jsx';
-import PasswordForgot from './Modals/PasswordForgot/PasswordForgot.jsx';
-import ShareModal from './Modals/ShareModal/ShareModal.jsx';
-import SignUp from './Modals/SignUp/SignUp.jsx';
-import PagesList from './Modals/PagesList/PagesList.jsx';
-import PasswordReset from './Modals/PasswordReset/PasswordReset.jsx';
+import ConfirmUser from './Modal/ConfirmUser/ConfirmUser.jsx';
+import ExamplesModal from './Modal/ExamplesModal/ExamplesModal.jsx';
+import Login from './Modal/Login/Login.jsx';
+import Modal from './Modal/Modal.jsx';
+import PasswordForgot from './Modal/PasswordForgot/PasswordForgot.jsx';
+import ShareModal from './Modal/ShareModal/ShareModal.jsx';
+import SignUp from './Modal/SignUp/SignUp.jsx';
+import PagesList from './Modal/PagesList/PagesList.jsx';
+import PasswordReset from './Modal/PasswordReset/PasswordReset.jsx';
 
 import Canvas from './Canvas/Canvas.jsx';
 import MainToolbar from './MainToolbar/MainToolbar.jsx';

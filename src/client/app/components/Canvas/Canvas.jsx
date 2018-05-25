@@ -10,6 +10,8 @@ import WidgetNav from './WidgetNav/WidgetNav.jsx';
 
 const ReactGridLayout = require('react-grid-layout');
 
+require('./canvas.scss');
+
 class Canvas extends React.Component {
 
   renderCodeEditor(editor) {

@@ -16,7 +16,6 @@ const store = createStore(
   )
 );
 
-require('./styles/sass/main.scss');
 
 class Main extends React.Component {
   render() {

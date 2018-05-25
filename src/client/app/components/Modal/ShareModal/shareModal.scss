@@ -1,3 +1,6 @@
+@import 'variables';
+@import 'base';
+@import 'mixins';
 .share {
   &__button {
     font-size: $medium-font-size;

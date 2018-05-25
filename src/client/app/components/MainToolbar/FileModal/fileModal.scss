@@ -18,6 +18,24 @@
   z-index: $z-index-layer-4;
 }
 
+.file-modal__list ol{
+  list-style-position: inside;
+  -webkit-margin-before: 0;
+  -webkit-padding-start: 0px;
+}
+.file-modal__list ol li{
+  padding: 1.5rem;
+  color: $gray;
+}
+
+.file-modal__list ol li:nth-child(odd){
+  background: $lighter-gray;
+}
+
+.file-modal__list ol li a{
+  color: $gray;
+}
+
 .file-modal__item {
   list-style: none;
   padding: $medium-padding/2 $medium-padding;

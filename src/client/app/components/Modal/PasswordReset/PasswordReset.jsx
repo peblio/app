@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+require('./passwordReset.scss');
+
 class PasswordReset extends React.Component {
 
   constructor(props) {

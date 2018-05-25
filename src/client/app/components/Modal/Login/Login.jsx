@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import ReactHtmlParser from 'react-html-parser';
 
+require('./login.scss');
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
