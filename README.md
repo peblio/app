@@ -1,19 +1,24 @@
+# Peblio
+
+Peblio is an instructional tool and lesson sharing platform for middle and high school Computer Science teachers. The goal is to democratize quality instructional materials and provide CS teachers with a streamlined workflow for finding and adapting lessons and managing student work.
+
 ## To get started
-* Clone the repo
-* To build all the files, run `npm run dev` in source folder
-* To start the app, run `npm start` in root folder
-* App should be running in `localhost:8080`
 
-## References
+1. Fork this repository.
+1. Clone the forked repository and cd into it
+1. `$ npm install`
+1. Install MongoDB and make sure it is running
+  * For Mac OSX with [homebrew](https://brew.sh/): `brew install mongodb` then `brew services start mongodb`
+  * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
+1. Create a .env in the root of the directory that looks like
+```
+AWS_ACCESS_KEY=<your-aws-access-key>
+AWS_SECRET_KEY=<your-aws-secret-key>
+S3_BUCKET=<your-s3-bucket>
+ ```
+ If you don't care about being able to upload media files to S3 , you can drop in the file exactly how it is. Or, if you don't want to do that, just ask me to send you mine.
 
-* [react setup Reference](https://www.codementor.io/tamizhvendan/beginner-guide-setup-reactjs-environment-npm-babel-6-webpack-du107r9zr)
-* [yet another react referece](http://andrewhfarmer.com/build-your-own-starter/#8-done)
-* [another reference](https://scotch.io/tutorials/react-on-the-server-for-beginners-build-a-universal-react-and-node-app)
-* [eslint reference](https://www.robinwieruch.de/react-eslint-webpack-babel/)
-* [Using draft-js to create and inline text-editor](https://draftjs.org/docs/quickstart-api-basics.html#content)
-* [Upload to aws s3](https://medium.com/@tewolfe2/5-steps-to-uploading-files-and-images-to-s3-in-react-using-express-superagent-multer-and-46a9e72244a2)
-
-
-python
-https://www.npmjs.com/package/brython
-http://www.infoworld.com/article/3033047/javascript/4-tools-to-convert-python-to-javascript-and-back-again.html
+1. To build all the files, run `npm run dev` in source folder and keep it running
+1. To start the app, run `npm start` in root folder
+1. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+1. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
