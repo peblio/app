@@ -6,7 +6,22 @@
   "scripts": {
     "start": "nodemon",
     "dev": "webpack -d --watch",
-    "postinstall": "webpack -p --config ./webpack.config.js --progress"
+    "postinstall": "webpack -p --config ./webpack.config.js --progress",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "jest": {
+    "setupFiles": [
+      "./test/jestsetup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/__mocks__/fileMock.js",
+      "\\.(css|scss)$": "<rootDir>/test/__mocks__/styleMock.js"
+    }
   },
   "author": "",
   "license": "ISC",
@@ -70,8 +85,13 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
+    "babel-jest": "^23.0.1",
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.4",
+    "deepmerge": "^2.1.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-15": "^1.0.5",
+    "enzyme-to-json": "^3.3.4",
     "eslint": "^3.13.0",
     "eslint-config-airbnb": "^14.0.0",
     "eslint-config-standard": "^11.0.0-beta.0",
@@ -80,6 +100,8 @@
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-react": "^7.5.1"
+    "eslint-plugin-react": "^7.5.1",
+    "jest": "^23.0.1",
+    "react-test-renderer": "^16.4.0"
   }
 }
