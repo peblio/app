@@ -9,7 +9,7 @@ const config = {
   entry: `${APP_DIR}/index.jsx`,
   output: {
     path: BUILD_DIR,
-    filename: 'bundle.js'
+    filename: 'bundle.min.js'
   },
   module: {
     loaders: [
@@ -41,6 +41,9 @@ const config = {
       configFile: '.sass-lint.yml',
       glob: 'src/**/*.s?(a|c)ss',
     }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: { warnings: false }
+    })
   ]
 };
 
