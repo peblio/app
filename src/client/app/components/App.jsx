@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import ConfirmUser from './Modals/ConfirmUser.jsx';
-import ExamplesModal from './Modals/ExamplesModal.jsx';
-import Login from './Modals/Login.jsx';
-import Modal from './Modals/Modal.jsx';
-import PasswordForgot from './Modals/PasswordForgot.jsx';
-import ShareModal from './Modals/ShareModal.jsx';
-import SignUp from './Modals/SignUp.jsx';
-import PagesList from './Modals/PagesList.jsx';
-import PasswordReset from './Modals/PasswordReset.jsx';
+import ConfirmUser from './Modal/ConfirmUser/ConfirmUser.jsx';
+import ExamplesModal from './Modal/ExamplesModal/ExamplesModal.jsx';
+import Login from './Modal/Login/Login.jsx';
+import Modal from './Modal/Modal.jsx';
+import PasswordForgot from './Modal/PasswordForgot/PasswordForgot.jsx';
+import ShareModal from './Modal/ShareModal/ShareModal.jsx';
+import SignUp from './Modal/SignUp/SignUp.jsx';
+import PagesList from './Modal/PagesList/PagesList.jsx';
+import PasswordReset from './Modal/PasswordReset/PasswordReset.jsx';
 
-import Canvas from './Page/Canvas.jsx';
-import MainToolbar from './Page/MainToolbar.jsx';
+import Canvas from './Canvas/Canvas.jsx';
+import MainToolbar from './MainToolbar/MainToolbar.jsx';
 
 import * as editorActions from '../action/editors.jsx';
 import * as mainToolbarActions from '../action/mainToolbar.jsx';

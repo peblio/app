@@ -1,0 +1,32 @@
+@import 'variables';
+@import 'mixins';
+@import 'modal';
+
+.login-modal {
+  &__content{
+    margin: auto;
+    width: 45%;
+    padding-top: 5%;
+  }
+
+  &__div{
+    display: block;
+    text-align: left;
+  }
+
+  &__title{
+    @extend %modal__title;
+  }
+
+  &__label{
+    @extend %modal__label;
+  }
+
+  &__input{
+    @extend %modal__input;
+  }
+
+  &__button{
+    @extend %modal__button;
+  }
+}

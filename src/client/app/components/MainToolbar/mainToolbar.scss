@@ -1,0 +1,255 @@
+@import 'variables';
+@import 'mixins';
+
+.main-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: $z-index-layer-3;
+}
+
+.main-toolbar__container{
+  width: 100%;
+}
+
+.main-toolbar{
+  background-color: $black;
+  height: $main-toolbar-height;
+}
+
+.logo_toolbar{
+  // margin: $medium-margin $small-margin;
+  padding: 12 20 10 20;
+}
+
+.main-toolbar__title{
+  height: 35px;
+  margin: 8 0 8 0;
+  padding: 4 15;
+  background-color: #ffffff21;
+  border: none;
+  border-radius: 5px;
+  color: #f1f1f1;
+  font-size: 14px;
+  width: 20%;
+  float: left;
+ }
+
+.main-toolbar__save {
+  @extend %mainToolbar__button
+}
+
+.main-toolbar__account-button{
+  margin: 0.2rem $large-padding;
+  padding: $small-padding $medium-padding;
+  border: none;
+  background: $black;
+  -webkit-transition-duration: 150ms; /* Safari */
+  transition-duration: 150ms;
+  &:hover {
+    cursor: pointer;
+    background: $black;
+    border: none;
+  }
+}
+
+.main-toolbar__account-button:hover #accountMan{
+  fill:$blue;
+}
+
+.main-toolbar__welcome {
+  color: $black;
+  padding-left: 0.5rem;
+  font-size: 14px;
+  font-weight: bold;
+
+
+}
+
+.main-toolbar__account{
+  background-color: $white;
+  border: 2px solid;
+  border-color: $light-gray;
+  padding: $small-padding;
+  position: absolute;
+  border-radius: $medium-border-radius;
+  margin-left: -20px;
+  z-index: $z-index-layer-2;
+}
+
+.main-toolbar__preview {
+  color: $white;
+  margin: $medium-margin $small-margin;
+  padding: 0 $medium-padding;
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 12px;
+  top: 5px;
+}
+
+.main-toolbar__slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $blue;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: $large-border-radius;
+
+}
+
+.main-toolbar__slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 32px;
+  top: -3px;
+  // background-color: $white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: $large-border-radius;
+  background-color: $white;
+
+}
+
+input:checked + .main-toolbar__slider {
+  background-color: $hover-gray;
+}
+
+input:checked + .main-toolbar__slider:before {
+  -webkit-transform: translateX(-26px);
+  -ms-transform: translateX(-26px);
+  transform: translateX(-26px);
+}
+
+.main-toolbar__file{
+  @extend %mainToolbar__button;
+  position: relative;
+}
+
+.main-toolbar__button{
+  @extend %mainToolbar__button;
+}
+
+.main-toolbar__new{
+  @extend %mainToolbar__button;
+}
+
+.main-toolbar__open{
+  @extend %mainToolbar__button;
+
+}
+.main-toolbar__div-left{
+  @include flex;
+  float: left;
+}
+
+.upper-toolbar__dropdown{
+  border: none;
+  border-radius: 0;
+  padding:$main-toolbar-padding;
+  width: 100;
+  color: $white;
+  font-style: normal;
+  font-size: 14;
+  &:hover {
+    cursor: pointer;
+    color: $gray;
+    background: $black;
+    border: none;
+  }
+}
+
+
+.main-toolbar__div-right{
+  @include flex;
+  float: right;
+}
+
+.main-toolbar__div-right-inside{
+  @include flex;
+  padding-right: 10px;
+}
+
+input[type="checkbox"] {
+  display:none;
+}
+label {
+  cursor: pointer;
+}
+.main-toolbar__preview-on{
+  display: none;
+}
+
+input[type="checkbox"]:checked ~ .main-toolbar__preview-on {
+  display:  inline-block;
+}
+
+input[type="checkbox"]:checked ~ .main-toolbar__preview-off {
+  display: none;
+}
+
+input[type="checkbox"] ~ .main-toolbar__preview-off {
+  display: inline-block;
+}
+
+.main-toolbar__preview-title {
+  display: inline-block;
+  vertical-align: middle;
+  padding:$main-toolbar-padding;
+  color: $white;
+  font-size: 14px;
+  font-weight: normal;
+
+}
+
+
+@media screen and (max-width: 1025px) {
+
+  .main-toolbar__div-right{
+    width:100%;
+    margin: none;
+    background-color: $dark-gray;
+  }
+
+  .main-toolbar__preview-title{
+    display: none;
+  }
+
+  .main-toolbar__div-right-inside{
+    @include flex;
+    margin-left: 1rem;
+  }
+}
+
+.main-toolbar__spacer{
+  height: 18px;
+  width: 1px;
+  background-color: #a2aeb5;
+  margin: $medium-margin 0;
+}
+
+%mainToolbar__button{
+  margin: 0 $small-margin;
+  padding: $main-toolbar-padding;
+  float: right;
+  font-size: 14px;
+  font-weight: normal;
+  border: none;
+  // border-radius: $small-border-radius;
+  color: $white;
+  // background-color: none;
+  -webkit-transition-duration: 150ms; /* Safari */
+  transition-duration: 150ms;
+  &:hover {
+    border: none;
+    color: $light-gray;
+    background: none;
+    cursor: pointer;
+  }
+}

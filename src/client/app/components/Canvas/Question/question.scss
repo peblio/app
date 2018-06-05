@@ -1,0 +1,30 @@
+@import 'variables';
+@import 'mixins';
+
+.question__container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.question__question {
+  background: $black;
+  border-radius: $small-border-radius $small-border-radius 0 0;
+  color: $white;
+  font-family: $helvetica;
+  font-size: $medium-font-size;
+  min-width: 100%;
+  max-width: 100%;
+  resize: none;
+}
+
+.question__answer {
+  position: absolute;
+  height: 100%;
+  resize: none;
+  font-family: $helvetica;
+  font-size: $normal-font-size;
+  border-radius: 0 0  $small-border-radius $small-border-radius;
+  border: 1px solid $medium-gray;
+  width: 100%;
+}

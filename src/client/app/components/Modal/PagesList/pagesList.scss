@@ -1,0 +1,60 @@
+@import 'variables';
+@import 'mixins';
+@import 'modal';
+
+.pages_title{
+  margin-left: $large-margin;
+  color: $light-gray;
+
+}
+
+.pages_list{
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+  max-height: 80%;
+  width: 100%;
+  padding-top: $large-margin;
+  z-index: $z-index-layer-4;
+  overflow-y: scroll;
+}
+
+
+.pages_list ol{
+  list-style-position: inside;
+  -webkit-margin-before: 0;
+  -webkit-padding-start: 0px;
+}
+.pages_list ol li{
+  padding: 1.5rem;
+  color: $gray;
+}
+
+.pages_list ol li:nth-child(odd){
+  background: $lighter-gray;
+}
+
+.pages_list ol li a{
+  color: $gray;
+}
+
+
+.pages__delete{
+  margin: -10px;
+  border: none;
+  background: none;
+  float:right;
+  fill: $medium-gray;
+  &:hover {
+    border: none;
+    background: none;
+    float:right;
+    box-shadow: none;
+    fill: $dark-gray;
+  }
+}
+
+.modal__close-button{
+  float:right;
+  padding: 4px;
+}

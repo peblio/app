@@ -2,4 +2,6 @@
 node_modules/
 src/client/public/bundle.min.js
 src/client/public/*.svg
-.env
+**/.DS_Store
+src/client/.sass-cache/
+**/*.css.map
