@@ -5,6 +5,8 @@ const express = require('express'); // include the express library
 const path = require('path');
 const passport = require('passport');
 
+require('dotenv').config();
+
 const app = express();
 const Page = require('./models/page.js');
 const session = require('express-session');

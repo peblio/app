@@ -7,7 +7,7 @@ const shortid = require('shortid');
 const Router = express.Router();
 const User = require('../models/user.js');
 const Token = require('../models/token.js');
-const UserConst = require('../userConstants.jsx');
+const UserConst = require('../userConstants.js');
 
 const userRoutes = express.Router();
 
@@ -17,6 +17,13 @@ userRoutes.route('/forgot').post(forgotPassword);
 userRoutes.route('/reset').post(resetPassword);
 userRoutes.route('/confirmation').post(confirmUser);
 userRoutes.route('/resendconfirmation').post(resendConfirmUser);
+userRoutes.route('/auth/google').get(
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] })
+);
+userRoutes.route('/auth/google/callback').get(
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  loginWithGoogle
+);
 
 function createUser(req, res) {
   const email = req.body.mail;
@@ -229,6 +236,10 @@ function resendConfirmUser(req, res) {
       user
     });
   });
+}
+
+function loginWithGoogle(req, res) {
+  res.redirect('/');
 }
 
 // EMAIL HELPERS

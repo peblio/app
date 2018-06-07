@@ -25,6 +25,16 @@ const userSchema = new Schema({
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   pages: { type: Array },
+  googleId: {
+    type: String,
+    // enforce uniqueness but allow multiple documents with null and undefined values
+    index: {
+      unique: true,
+      partialFilterExpression: {
+        googleId: { $type: 'string' }
+      }
+    }
+  }
 });
 
 userSchema.methods.hashPassword = function hashPassword(password) {
