@@ -18,6 +18,11 @@ S3_BUCKET=<your-s3-bucket>
  ```
  If you don't care about being able to upload media files to S3 , you can drop in the file exactly how it is. Or, if you don't want to do that, just ask me to send you mine.
 
+If you're developing on OSX and you encounter an error like `npm ERR! cb() never called!` when running `npm install`, using [yarn](https://yarnpkg.com/lang/en/) to install dependencies seems to get around this issue:
+```
+brew install yarn
+yarn install
+```
 1. To build all the files, run `npm run dev` in source folder and keep it running
 1. To start the app, run `npm start` in root folder
 1. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
