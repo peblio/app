@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import ReactHtmlParser from 'react-html-parser';
 
+import GoogleLoginButton from '../GoogleLoginButton/GoogleLoginButton.jsx';
+
 require('./login.scss');
 
 class Login extends React.Component {
@@ -12,16 +14,18 @@ class Login extends React.Component {
       showNotice: false,
       notice: ''
     };
+    this.loginSuccessful = this.loginSuccessful.bind(this);
     this.loginFailed = this.loginFailed.bind(this);
   }
+
   componentWillUnmount() {
     this.props.authLoadedPage();
   }
 
-  loginFailed(msg) {
+  loginFailed(error) {
     this.setState({
       showNotice: true,
-      notice: msg
+      notice: error.response.data.msg
     });
   }
 
@@ -35,14 +39,11 @@ class Login extends React.Component {
       name,
       password
     })
-      .then((response) => {
-        this.loginSuccessful(response);
-      })
-      .catch((error) => { // eslint-disable-line
-        this.loginFailed(error.response.data.msg);
-      });
+      .then(this.loginSuccessful)
+      .catch(this.loginFailed);
     event.preventDefault();
   }
+
   render() {
     return (
       <div className="login-modal__content">
@@ -73,6 +74,12 @@ class Login extends React.Component {
             Submit
           </button>
         </form>
+
+        <GoogleLoginButton
+          onLoginSuccess={this.loginSuccessful}
+          onLoginFailure={this.loginFailed}
+        />
+
         <button
           className="login-modal__button"
           onClick={() => {
