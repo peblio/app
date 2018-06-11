@@ -7,8 +7,9 @@ const userSchema = new Schema({
   email: {
     type: String,
     default: '',
-    required: true,
-    unique: true
+    unique: true,
+    sparse: true,
+    required() { return this.loginType === 'password'; }
   },
   name: {
     type: String,
@@ -18,22 +19,23 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
-    unique: true
+    index: true,
+    required() { return this.loginType === 'password'; },
   },
   isVerified: { type: Boolean, default: false },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   pages: { type: Array },
+  loginType: {
+    type: 'string',
+    enum: ['password', 'google'],
+    required: true
+  },
   googleId: {
     type: String,
-    // enforce uniqueness but allow multiple documents with null and undefined values
-    index: {
-      unique: true,
-      partialFilterExpression: {
-        googleId: { $type: 'string' }
-      }
-    }
+    unique: true,
+    sparse: true,
+    required() { return this.loginType === 'google'; }
   }
 });
 

@@ -1,6 +1,5 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 const User = require('../models/user.js');
 
@@ -42,28 +41,3 @@ passport.use(new LocalStrategy({
   });
 }
 ));
-
-// reference for callbackURL value:
-// https://stackoverflow.com/questions/12869514/how-to-set-the-current-host-for-passport-strategy-callbackurl
-passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: '/auth/google/callback'
-}, (accessToken, refreshToken, profile, done) => {
-  // find or create user
-  User.findOne({ googleId: profile.id }, (err, user) => {
-    if (err) { return done(err); }
-    if (user) {
-      return done(null, user);
-    }
-    const newUser = new User({
-      googleId: profile.id,
-      name: profile.displayName,
-      isVerified: true // if they sign in through OAuth, we know they own their email account
-    });
-    newUser.save((err) => {
-      if (err) { return done(err); }
-      return done(null, newUser);
-    });
-  });
-}));
