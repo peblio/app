@@ -22,11 +22,14 @@ export function removeEditor(id) {
 }
 
 export function duplicateEditor(id) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { editorsReducer } = getState();
+    const duplicateEditorId = `editor-${editorsReducer.editorIndex}`;
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.DUPLICATE_EDITOR,
-      id
+      originalEditorId: id,
+      duplicateEditorId
     });
   };
 }

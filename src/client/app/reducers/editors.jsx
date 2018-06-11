@@ -61,13 +61,14 @@ const editorsReducer = (state = initialState, action) => {
       return { ...state, editors: updateIndices(editors) };
 
     case ActionTypes.DUPLICATE_EDITOR: {
+      const originalEditor = state.editors[action.originalEditorId];
       let newEditor;
-      if (state.editors[action.id].type === 'text') {
-        newEditor = { ...state.editors[action.id] };
+      if (originalEditor.type === 'text') {
+        newEditor = { ...originalEditor };
       } else {
-        newEditor = JSON.parse(JSON.stringify(state.editors[action.id])); // Quicker than spread.
+        newEditor = JSON.parse(JSON.stringify(originalEditor)); // Quicker than spread.
       }
-      newEditor.id = `editor-${state.editorIndex}`;
+      newEditor.id = action.duplicateEditorId;
       const editorIndex = state.editorIndex + 1;
       stack.push(newEditor.id);
       editors[newEditor.id] = newEditor;

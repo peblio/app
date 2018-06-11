@@ -110,7 +110,7 @@ class Canvas extends React.Component {
     const ids = Object.keys(this.props.editors);
     const storageLayout = this.props.layout;
     const localLayout = {};
-    storageLayout.map((x) => { // eslint-disable-line
+    storageLayout.forEach((x) => { // eslint-disable-line
       const key = x.i;
       /* TODO: change the code to simplify the layout logic */
       localLayout[key] = x;

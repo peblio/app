@@ -66,6 +66,18 @@ const page = (state = initialState, action) => {
         preview: !state.preview
       });
 
+    case ActionTypes.DUPLICATE_EDITOR: {
+      const layout = state.layout;
+      const originalEditor = layout.find(x => x.i === action.originalEditorId);
+      const duplicateEditor = { ...originalEditor };
+      duplicateEditor.i = action.duplicateEditorId;
+      duplicateEditor.y = originalEditor.y + originalEditor.h;
+      layout.push(duplicateEditor);
+      return Object.assign({}, state, {
+        layout
+      });
+    }
+
     default:
       return state;
   }
