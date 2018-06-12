@@ -3,11 +3,12 @@ const passport = require('passport');
 const nodemailer = require('nodemailer');
 const sgTransport = require('nodemailer-sendgrid-transport');
 const shortid = require('shortid');
+const { OAuth2Client } = require('google-auth-library');
 
 const Router = express.Router();
 const User = require('../models/user.js');
 const Token = require('../models/token.js');
-const UserConst = require('../userConstants.jsx');
+const UserConst = require('../userConstants.js');
 
 const userRoutes = express.Router();
 
@@ -17,6 +18,7 @@ userRoutes.route('/forgot').post(forgotPassword);
 userRoutes.route('/reset').post(resetPassword);
 userRoutes.route('/confirmation').post(confirmUser);
 userRoutes.route('/resendconfirmation').post(resendConfirmUser);
+userRoutes.route('/login/google').post(loginWithGoogle);
 
 function createUser(req, res) {
   const email = req.body.mail;
@@ -39,7 +41,8 @@ function createUser(req, res) {
       user = new User({
         email,
         name,
-        password
+        password,
+        loginType: 'password'
       });
       user.hashPassword(password);
       user.save((err, user) => {
@@ -229,6 +232,47 @@ function resendConfirmUser(req, res) {
       user
     });
   });
+}
+
+function loginWithGoogle(req, res) {
+  if (!req.body.google_id_token) {
+    return res.status(400).send({ msg: '' });
+  }
+  const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+  return client.verifyIdToken({
+    idToken: req.body.google_id_token,
+    audience: process.env.GOOGLE_CLIENT_ID
+  }).then((ticket) => {
+    const payload = ticket.getPayload();
+    const googleId = payload.sub;
+
+    User.findOne({ googleId }, (err, user) => {
+      if (err) { return req.send({ msg: err }); }
+
+      let userPromise = Promise.resolve(user);
+      if (!user) {
+        const newUser = new User({
+          googleId,
+          loginType: 'google',
+          name: payload.name,
+          isVerified: true
+        });
+        userPromise = newUser.save();
+      }
+
+      return userPromise.then((user) => {
+        req.login(user, (err) => {
+          if (err) {
+            return res.send({ msg: err });
+          }
+          return res.send({
+            msg: UserConst.LOGIN_SUCCESS,
+            user: { name: user.name }
+          });
+        });
+      });
+    });
+  }).catch(err => res.status(401).send({ msg: UserConst.LOGIN_FAILED }));
 }
 
 // EMAIL HELPERS

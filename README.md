@@ -15,6 +15,8 @@ Peblio is an instructional tool and lesson sharing platform for middle and high 
 AWS_ACCESS_KEY=<your-aws-access-key>
 AWS_SECRET_KEY=<your-aws-secret-key>
 S3_BUCKET=<your-s3-bucket>
+GOOGLE_CLIENT_ID=<peblio-google-client-id>
+GOOGLE_CLIENT_SECRET=<peblio-client-secret>
  ```
  If you don't care about being able to upload media files to S3 , you can drop in the file exactly how it is. Or, if you don't want to do that, just ask me to send you mine.
 

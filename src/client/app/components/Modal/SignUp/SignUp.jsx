@@ -2,6 +2,8 @@ import axios from 'axios';
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import GoogleLoginButton from '../../shared/GoogleLoginButton/GoogleLoginButton.jsx';
+
 require('./signup.scss');
 
 class SignUp extends React.Component {
@@ -15,6 +17,7 @@ class SignUp extends React.Component {
     this.passwordMatch = this.passwordMatch.bind(this);
     this.passwordMatchFailed = this.passwordMatchFailed.bind(this);
     this.signUpFailed = this.signUpFailed.bind(this);
+    this.googleLoginSuccessful = this.googleLoginSuccessful.bind(this);
   }
 
   componentWillUnmount() {
@@ -32,10 +35,10 @@ class SignUp extends React.Component {
     });
   }
 
-  signUpFailed(msg) {
+  signUpFailed(error) {
     this.setState({
       showNotice: true,
-      notice: msg
+      notice: error.response.data.msg
     });
   }
 
@@ -46,8 +49,9 @@ class SignUp extends React.Component {
     });
   }
 
-  submitLoginUser(event, name, password) {
-    event.preventDefault();
+  googleLoginSuccessful(response) {
+    this.props.setUserName(response.data.user.name);
+    this.props.closeSignUpModal();
   }
 
   submitSignUpUser(event, mail, name, password) {
@@ -57,12 +61,8 @@ class SignUp extends React.Component {
         name,
         password
       })
-    .then((res) => {
-      this.signUpSuccessful(res.data.msg);
-    })
-    .catch((error) => { // eslint-disable-line
-      this.signUpFailed(error.response.data.msg);
-    });
+      .then(res => this.signUpSuccessful(res.data.msg))
+      .catch(this.signUpFailed);
     } else {
       this.passwordMatchFailed();
     }
@@ -132,6 +132,13 @@ class SignUp extends React.Component {
             Submit
           </button>
         </form>
+
+
+        <GoogleLoginButton
+          onLoginSuccess={this.googleLoginSuccessful}
+          onLoginFailure={this.signUpFailed}
+        />
+
         {this.state.showNotice &&
           <p className="forgot-modal__notice">
             {this.state.notice}
@@ -144,7 +151,9 @@ class SignUp extends React.Component {
 }
 
 SignUp.propTypes = {
-  authLoadedPage: PropTypes.func.isRequired
+  authLoadedPage: PropTypes.func.isRequired,
+  closeSignUpModal: PropTypes.func.isRequired,
+  setUserName: PropTypes.func.isRequired
 };
 
 export default SignUp;
