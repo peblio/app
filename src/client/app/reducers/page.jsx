@@ -66,6 +66,21 @@ const page = (state = initialState, action) => {
         preview: !state.preview
       });
 
+    case ActionTypes.DUPLICATE_EDITOR: {
+      const layout = state.layout;
+      const originalEditorIndex = layout.findIndex(x => x.i === action.originalEditorId);
+      const originalEditor = layout[originalEditorIndex];
+      const duplicateEditor = { ...originalEditor };
+      duplicateEditor.i = action.duplicateEditorId;
+      // setting the duplicate's y to 1 less than the original's y + height
+      // seems to place the duplicate directly below the original
+      duplicateEditor.y = originalEditor.y + originalEditor.h + -1;
+      layout.splice(originalEditorIndex, 0, duplicateEditor);
+      return Object.assign({}, state, {
+        layout
+      });
+    }
+
     default:
       return state;
   }
