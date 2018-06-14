@@ -177,6 +177,7 @@ class Canvas extends React.Component {
           draggableHandle=".widget__drag"
           containerPadding={this.props.rgl.padding}
           isResizable={!this.props.preview}
+          onResize={i => console.log(i)}
         >
           {ids.map(id => (
             <div
@@ -184,7 +185,7 @@ class Canvas extends React.Component {
               data-grid={localLayout[id]}
               className={`${this.props.editors[id].type === 'text' ? 'canvas-high' : ''}`}
             >
-              <div className="element__iframe-container" id={this.props.id} onFocus={this.setCurrentEditor}>
+              <div className="element__iframe-container" id={id} onFocus={this.setCurrentEditor}>
                 { this.props.preview ||
                 <WidgetNav
                   id={id}
@@ -216,14 +217,19 @@ class Canvas extends React.Component {
 Canvas.propTypes = {
   clearConsoleOutput: PropTypes.func.isRequired,
   duplicateEditor: PropTypes.func.isRequired,
-  editors: PropTypes.shape.isRequired,
-  id: PropTypes.string.isRequired,
+  editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   name: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
-  rgl: PropTypes.shape.isRequired,
+  rgl: PropTypes.shape({
+    cols: PropTypes.number,
+    margin: PropTypes.arrayOf(PropTypes.number),
+    padding: PropTypes.arrayOf(PropTypes.number),
+    rowHeight: PropTypes.number,
+    width: PropTypes.number
+  }).isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,

@@ -327,13 +327,13 @@ App.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
-  editors: PropTypes.shape.isRequired,
+  editors: PropTypes.shape({}).isRequired,
   editorIndex: PropTypes.number.isRequired,
 
   pageTitle: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  rgl: PropTypes.shape.isRequired,
+  rgl: PropTypes.shape({}).isRequired,
   pages: PropTypes.arrayOf(PropTypes.shape).isRequired,
   preview: PropTypes.bool.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
