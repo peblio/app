@@ -64,3 +64,7 @@
 .public-DraftStyleDefault-block { // sass-lint:disable-line class-name-format
   margin: .1em .1em;
 }
+
+.text-editor__content .public-DraftEditor-content { // sass-lint:disable-line class-name-format
+  overflow-y: auto;
+}
