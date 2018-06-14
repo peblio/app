@@ -10,6 +10,7 @@ const initialState = {
     width: 1440,
   },
   layout: [],
+  textHeights: {},
   pages: [],
   pageTitle: 'Untitled',
   parentId: '',
@@ -82,6 +83,7 @@ const page = (state = initialState, action) => {
     case ActionTypes.UPDATE_TEXT_SIZE: {
       const { margin, rowHeight } = state.rgl;
       const layout = JSON.parse(JSON.stringify(state.layout));
+      const textHeights = state.textHeights;
       const gridItemIndex = layout.findIndex(x => x.i === action.id);
       // need to create copy of the grid item because ReactGridLayout tests
       // for object equality when deciding whether to re-render grid items
@@ -90,11 +92,13 @@ const page = (state = initialState, action) => {
 
       // convert from pixel height to grid units
       // reference: https://github.com/STRML/react-grid-layout/issues/190#issuecomment-200864419
-      const h = ((action.height - margin[1]) / (rowHeight + margin[1])) + 2;
-      gridItem.h = Math.min(Math.max(gridItem.minH, h), gridItem.maxH);
+      let h = ((action.height - margin[1]) / (rowHeight + margin[1])) + 2;
+      h = Math.min(Math.max(3, h), gridItem.maxH);
+      gridItem.h = h;
+      textHeights[action.id] = h;
 
       layout[gridItemIndex] = gridItem;
-      return Object.assign({}, state, { layout });
+      return Object.assign({}, state, { layout, textHeights });
     }
 
     default:

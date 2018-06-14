@@ -13,6 +13,30 @@ const ReactGridLayout = require('react-grid-layout');
 require('./canvas.scss');
 
 class Canvas extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isResizingGridItems: {}
+    };
+  }
+
+  handleGridItemResizeStart = (gridItems) => {
+    this.setState(prevState => ({
+      isResizingGridItems: {
+        ...prevState.isResizingGridItems,
+        ...gridItems.reduce((accum, gridItem) => ({ ...accum, [gridItem.i]: true }), {})
+      }
+    }));
+  }
+
+  handleGridItemResizeStop = (gridItems) => {
+    this.setState(prevState => ({
+      isResizingGridItems: {
+        ...prevState.isResizingGridItems,
+        ...gridItems.reduce((accum, gridItem) => ({ ...accum, [gridItem.i]: false }), {})
+      }
+    }));
+  }
 
   renderCodeEditor(editor) {
     return (
@@ -55,6 +79,7 @@ class Canvas extends React.Component {
         preview={this.props.preview}
         setCurrentEditor={this.props.setCurrentEditor}
         updateTextBackColor={this.props.updateTextBackColor}
+        isResizing={this.state.isResizingGridItems[editor.id] || false}
       />
     );
   }
@@ -125,7 +150,7 @@ class Canvas extends React.Component {
           case 'text': {
             localLayout[key].minW = 4;
             localLayout[key].w = (localLayout[key].w < 4) ? 4 : localLayout[key].w;
-            localLayout[key].minH = 3;
+            localLayout[key].minH = this.props.textHeights[key] || 3;
             localLayout[key].h = (localLayout[key].h < 3) ? 3 : localLayout[key].h;
             break;
           }
@@ -177,6 +202,8 @@ class Canvas extends React.Component {
           draggableHandle=".widget__drag"
           containerPadding={this.props.rgl.padding}
           isResizable={!this.props.preview}
+          onResizeStart={this.handleGridItemResizeStart}
+          onResizeStop={this.handleGridItemResizeStop}
           autoSize
         >
           {ids.map(id => (
@@ -249,7 +276,8 @@ Canvas.propTypes = {
   updateImageChange: PropTypes.func.isRequired,
   updateQuestionChange: PropTypes.func.isRequired,
   updateTextBackColor: PropTypes.func.isRequired,
-  updateTextChange: PropTypes.func.isRequired
+  updateTextChange: PropTypes.func.isRequired,
+  textHeights: PropTypes.shape({}).isRequired
 };
 
 export default Canvas;

@@ -12,12 +12,45 @@ class TextEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: false
+      didResize: false,
+      expanded: false,
+      isResizing: false
     };
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (state.isResizing !== props.isResizing) {
+      if (props.isResizing === false) {
+        return {
+          didResize: true,
+          isResizing: false
+        };
+      }
+      return {
+        didResize: false,
+        isResizing: true
+      };
+    }
+
+    return { didResize: false };
   }
 
   componentDidMount() {
     this.setBackColor(this.props.backColor);
+  }
+
+  onChange = (state) => {
+    this.props.onChange(this.props.id, state);
+  }
+
+  onResize = (contentRect) => {
+    if (this.props.preview || this.props.isResizing || this.state.didResize) {
+      console.log('not resizing');
+      return;
+    }
+    console.log('resizing');
+    const { height } = contentRect.bounds;
+    this.props.onResize(this.props.id, height);
   }
 
   setBackColor = (color) => {
@@ -26,8 +59,12 @@ class TextEditor extends React.Component {
     this.updateTextBackColor(color);
   }
 
-  updateTextBackColor = (color) => {
-    this.props.updateTextBackColor(this.props.id, color);
+  setCurrentEditor = () => {
+    this.props.setCurrentEditor(this.props.id);
+  }
+
+  removeEditor = () => {
+    this.props.removeEditor(this.props.id);
   }
 
   toggleCollapse = () => {
@@ -36,24 +73,8 @@ class TextEditor extends React.Component {
     });
   }
 
-  onChange = (state) => {
-    this.props.onChange(this.props.id, state);
-  }
-
-  onResize = (contentRect) => {
-    if (this.props.preview) {
-      return;
-    }
-    const { height } = contentRect.bounds;
-    this.props.onResize(this.props.id, height);
-  }
-
-  setCurrentEditor = () => {
-    this.props.setCurrentEditor(this.props.id);
-  }
-
-  removeEditor = () => {
-    this.props.removeEditor(this.props.id);
+  updateTextBackColor = (color) => {
+    this.props.updateTextBackColor(this.props.id, color);
   }
 
   render() {
@@ -122,7 +143,8 @@ TextEditor.propTypes = {
   preview: PropTypes.bool.isRequired,
   removeEditor: PropTypes.func.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
-  updateTextBackColor: PropTypes.func.isRequired
+  updateTextBackColor: PropTypes.func.isRequired,
+  isResizing: PropTypes.bool.isRequired
 };
 
 export default TextEditor;

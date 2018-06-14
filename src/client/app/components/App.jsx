@@ -192,6 +192,7 @@ class App extends React.Component {
           rgl={this.props.rgl}
           setPageLayout={this.props.setPageLayout}
           editorIndex={this.props.editorIndex}
+          textHeights={this.props.textHeights}
 
           updateFile={this.props.updateFile}
           editors={this.props.editors}
@@ -338,6 +339,7 @@ App.propTypes = {
   pages: PropTypes.arrayOf(PropTypes.shape).isRequired,
   preview: PropTypes.bool.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
+  textHeights: PropTypes.shape({}).isRequired,
 
   canEdit: PropTypes.bool.isRequired,
   loginName: PropTypes.string.isRequired,
@@ -436,6 +438,7 @@ function mapStateToProps(state) {
     pages: state.page.pages,
     preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,
+    textHeights: state.page.textHeights,
 
     canEdit: state.user.canEdit,
     loginName: state.user.loginName,
