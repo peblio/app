@@ -51,6 +51,7 @@ class Canvas extends React.Component {
         backColor={editor.backColor}
         editorState={editor.editorState}
         onChange={this.props.updateTextChange}
+        onResize={this.props.resizeTextEditor}
         preview={this.props.preview}
         setCurrentEditor={this.props.setCurrentEditor}
         updateTextBackColor={this.props.updateTextBackColor}
@@ -172,12 +173,11 @@ class Canvas extends React.Component {
           layout={this.props.layout}
           onLayoutChange={this.props.setPageLayout}
           compactType="vertical"
-          autoSize
           margin={this.props.rgl.margin}
           draggableHandle=".widget__drag"
           containerPadding={this.props.rgl.padding}
           isResizable={!this.props.preview}
-          onResize={i => console.log(i)}
+          autoSize
         >
           {ids.map(id => (
             <div
@@ -223,6 +223,7 @@ Canvas.propTypes = {
   preview: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
+  resizeTextEditor: PropTypes.func.isRequired,
   rgl: PropTypes.shape({
     cols: PropTypes.number,
     margin: PropTypes.arrayOf(PropTypes.number),

@@ -76,9 +76,25 @@ const page = (state = initialState, action) => {
       // seems to place the duplicate directly below the original
       duplicateEditor.y = originalEditor.y + originalEditor.h + -1;
       layout.splice(originalEditorIndex, 0, duplicateEditor);
-      return Object.assign({}, state, {
-        layout
-      });
+      return Object.assign({}, state, { layout });
+    }
+
+    case ActionTypes.UPDATE_TEXT_SIZE: {
+      const { margin, rowHeight } = state.rgl;
+      const layout = JSON.parse(JSON.stringify(state.layout));
+      const gridItemIndex = layout.findIndex(x => x.i === action.id);
+      // need to create copy of the grid item because ReactGridLayout tests
+      // for object equality when deciding whether to re-render grid items
+      // reference: https://github.com/STRML/react-grid-layout/issues/382#issuecomment-299734450
+      const gridItem = JSON.parse(JSON.stringify(layout[gridItemIndex]));
+
+      // convert from pixel height to grid units
+      // reference: https://github.com/STRML/react-grid-layout/issues/190#issuecomment-200864419
+      const h = ((action.height - margin[1]) / (rowHeight + margin[1])) + 2;
+      gridItem.h = Math.min(Math.max(gridItem.minH, h), gridItem.maxH);
+
+      layout[gridItemIndex] = gridItem;
+      return Object.assign({}, state, { layout });
     }
 
     default:
