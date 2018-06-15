@@ -134,21 +134,3 @@ export function togglePreviewMode(value) {
     });
   };
 }
-
-export function convertIsoDateToReadableDate(isoDate) {
-  let readableDate = '';
-
-  if (isoDate === '' || isoDate === null) {
-    return readableDate;
-  }
-
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  const date = new Date(isoDate);
-  const month = date.getMonth();
-  const year = date.getFullYear();
-  const day = date.getDay();
-  const monthString = months[month];
-  readableDate = day + ' ' + monthString + ', ' + year;
-
-  return readableDate;
-}

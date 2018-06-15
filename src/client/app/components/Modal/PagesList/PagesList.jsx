@@ -18,7 +18,7 @@ function convertIsoDateToReadableDate(isoDate) {
   const year = date.getFullYear();
   const day = date.getDay();
   const monthString = months[month];
-  readableDate = day + ' ' + monthString + ', ' + year;
+  readableDate = `${day} ${monthString}, ${year}`;
 
   return readableDate;
 }
