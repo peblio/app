@@ -71,7 +71,7 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, preview, editors, editorIndex, layout) {
+export function submitPage(parentId, title, preview, editors, editorIndex, layout, createDate, updateDate) {
   const id = shortid.generate();
   axios.post('/pages/save', {
     parentId,
@@ -80,7 +80,9 @@ export function submitPage(parentId, title, preview, editors, editorIndex, layou
     preview,
     editors: convertEditorsToRaw(editors),
     editorIndex,
-    layout
+    layout,
+    createDate,
+    updateDate
   }).then(() => window.location.replace(`${window.location.origin}/pebl/${id}`))
     .catch(error => console.error(error));
 
@@ -93,14 +95,15 @@ export function submitPage(parentId, title, preview, editors, editorIndex, layou
   };
 }
 
-export function updatePage(id, title, preview, editors, editorIndex, layout) {
+export function updatePage(id, title, preview, editors, editorIndex, layout, updateDate) {
   axios.post('/pages/update', {
     id,
     title,
     preview,
     editors: convertEditorsToRaw(editors),
     editorIndex,
-    layout
+    layout,
+    updateDate
   }).then(response => console.log('Page update'))
     .catch(error => console.error('Page update error', error));
 
@@ -114,7 +117,7 @@ export function updatePage(id, title, preview, editors, editorIndex, layout) {
 }
 
 export function setAllPages(data) {
-  const pages = data.map(page => ({ id: page.id, title: page.title }));
+  const pages = data.map(page => ({ id: page.id, title: page.title, createDate: page.createDate, updateDate: page.updateDate }));
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_ALL_PAGES,
@@ -130,4 +133,22 @@ export function togglePreviewMode(value) {
       type: ActionTypes.TOGGLE_PREVIEW_MODE
     });
   };
+}
+
+export function convertIsoDateToReadableDate(isoDate) {
+  let readableDate = '';
+
+  if (isoDate === '' || isoDate === null) {
+    return readableDate;
+  }
+
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const date = new Date(isoDate);
+  const month = date.getMonth();
+  const year = date.getFullYear();
+  const day = date.getDay();
+  const monthString = months[month];
+  readableDate = day + ' ' + monthString + ', ' + year;
+
+  return readableDate;
 }
