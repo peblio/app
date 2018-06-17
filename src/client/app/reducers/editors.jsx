@@ -177,7 +177,7 @@ const editorsReducer = (state = initialState, action) => {
         id,
         index: stack.length,
         editorState: EditorState.createEmpty(),
-        backColor: 'blue'
+        backColor: 'transparent'
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
