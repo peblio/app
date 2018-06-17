@@ -48,10 +48,12 @@ class Canvas extends React.Component {
       <TextEditor
         id={editor.id}
         ref={editor.id}
+        backColor={editor.backColor}
         editorState={editor.editorState}
         onChange={this.props.updateTextChange}
         preview={this.props.preview}
         setCurrentEditor={this.props.setCurrentEditor}
+        updateTextBackColor={this.props.updateTextBackColor}
       />
     );
   }
@@ -239,6 +241,7 @@ Canvas.propTypes = {
   updateFile: PropTypes.func.isRequired,
   updateImageChange: PropTypes.func.isRequired,
   updateQuestionChange: PropTypes.func.isRequired,
+  updateTextBackColor: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired
 };
 
