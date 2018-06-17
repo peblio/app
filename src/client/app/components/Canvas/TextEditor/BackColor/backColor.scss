@@ -1,0 +1,11 @@
+@import 'variables';
+@import 'mixins';
+
+.back-color { // sass-lint:disable-line class-name-format
+  &__sub-container {
+    position: absolute;
+  }
+  &__button {
+    height: auto;
+  }
+}

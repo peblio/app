@@ -176,7 +176,8 @@ const editorsReducer = (state = initialState, action) => {
         type: 'text',
         id,
         index: stack.length,
-        editorState: EditorState.createEmpty()
+        editorState: EditorState.createEmpty(),
+        backColor: 'blue'
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -185,6 +186,10 @@ const editorsReducer = (state = initialState, action) => {
 
     case ActionTypes.UPDATE_TEXT_CHANGE:
       editors[action.id].editorState = action.state;
+      return { ...state, editors };
+
+    case ActionTypes.UPDATE_TEXT_BACK_COLOR:
+      editors[action.id].backColor = action.color;
       return { ...state, editors };
 
 

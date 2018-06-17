@@ -214,6 +214,7 @@ class App extends React.Component {
 
           updateTextChange={this.props.updateTextChange}
           updateImageChange={this.props.updateImageChange}
+          updateTextBackColor={this.props.updateTextBackColor}
 
           setIframeURL={this.props.setIframeURL}
 
@@ -371,6 +372,7 @@ App.propTypes = {
   addTextEditor: PropTypes.func.isRequired,
   addQuestionEditor: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired,
+  updateTextBackColor: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
