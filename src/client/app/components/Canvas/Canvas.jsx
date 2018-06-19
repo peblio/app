@@ -7,6 +7,7 @@ import Iframe from './Iframe/Iframe.jsx';
 import Image from './Image/Image.jsx';
 import TextEditor from './TextEditor/TextEditor.jsx';
 import WidgetNav from './WidgetNav/WidgetNav.jsx';
+import convertPixelHeightToGridHeight from '../../utils/pixel-to-grid.js';
 
 const ReactGridLayout = require('react-grid-layout');
 
@@ -74,8 +75,11 @@ class Canvas extends React.Component {
   }
 
   resizeTextEditor = (id, height) => {
+    const gridItem = this.props.layout.find(x => x.i === id);
+    const { margin, rowHeight } = this.props.rgl;
+    const newHeight = convertPixelHeightToGridHeight(height, margin, rowHeight, gridItem.maxH);
     // don't autosize the text editor if it was just manually resized
-    if (!this.state.didResizeGridItems.has(id)) {
+    if (!this.state.didResizeGridItems.has(id) || newHeight > gridItem.h) {
       this.props.resizeTextEditor(id, height);
     }
   }
