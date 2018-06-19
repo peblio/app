@@ -225,6 +225,7 @@ class App extends React.Component {
 
           setImageURL={this.props.setImageURL}
           resizeTextEditor={this.props.resizeTextEditor}
+          updateTextHeight={this.props.updateTextHeight}
         />
         <Modal
           size="large"
@@ -389,6 +390,7 @@ App.propTypes = {
   setImageURL: PropTypes.func.isRequired,
   updateImageChange: PropTypes.func.isRequired,
   resizeTextEditor: PropTypes.func.isRequired,
+  updateTextHeight: PropTypes.func.isRequired,
 
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,

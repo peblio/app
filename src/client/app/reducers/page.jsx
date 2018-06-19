@@ -18,6 +18,11 @@ const initialState = {
   unsavedChanges: false
 };
 
+const convertPixelHeightToGridHeight = (pixelHeight, margin, gridRowHeight, maxGridHeight) => {
+  const gridHeight = ((pixelHeight - margin[1]) / (gridRowHeight + margin[1])) + 2;
+  return Math.min(Math.max(3, gridHeight), maxGridHeight);
+};
+
 const page = (state = initialState, action) => {
   switch (action.type) {
 
@@ -92,13 +97,23 @@ const page = (state = initialState, action) => {
 
       // convert from pixel height to grid units
       // reference: https://github.com/STRML/react-grid-layout/issues/190#issuecomment-200864419
-      let h = ((action.height - margin[1]) / (rowHeight + margin[1])) + 2;
-      h = Math.min(Math.max(3, h), gridItem.maxH);
+      const h = convertPixelHeightToGridHeight(action.height, margin, rowHeight, gridItem.maxH);
       gridItem.h = h;
       textHeights[action.id] = h;
 
       layout[gridItemIndex] = gridItem;
       return Object.assign({}, state, { layout, textHeights });
+    }
+
+    case ActionTypes.UPDATE_TEXT_HEIGHT: {
+      const { margin, rowHeight } = state.rgl;
+      const gridItem = state.layout.find(x => x.i === action.id);
+      const h = convertPixelHeightToGridHeight(action.height, margin, rowHeight, gridItem.maxH);
+      const textHeights = {
+        ...state.textHeights,
+        [action.id]: h
+      };
+      return Object.assign({}, state, { textHeights });
     }
 
     default:

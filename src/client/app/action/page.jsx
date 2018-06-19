@@ -141,3 +141,13 @@ export function resizeTextEditor(id, height) {
     });
   };
 }
+
+export function updateTextHeight(id, height) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.UPDATE_TEXT_HEIGHT,
+      id,
+      height
+    });
+  };
+}

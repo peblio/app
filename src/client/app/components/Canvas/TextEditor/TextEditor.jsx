@@ -12,27 +12,10 @@ class TextEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      didResize: false,
-      expanded: false,
-      isResizing: false
+      expanded: false
     };
-  }
 
-  static getDerivedStateFromProps(props, state) {
-    if (state.isResizing !== props.isResizing) {
-      if (props.isResizing === false) {
-        return {
-          didResize: true,
-          isResizing: false
-        };
-      }
-      return {
-        didResize: false,
-        isResizing: true
-      };
-    }
-
-    return { didResize: false };
+    this.measureComponent = null;
   }
 
   componentDidMount() {
@@ -44,11 +27,9 @@ class TextEditor extends React.Component {
   }
 
   onResize = (contentRect) => {
-    if (this.props.preview || this.props.isResizing || this.state.didResize) {
-      console.log('not resizing');
+    if (this.props.preview || this.props.isResizing) {
       return;
     }
-    console.log('resizing');
     const { height } = contentRect.bounds;
     this.props.onResize(this.props.id, height);
   }
@@ -79,7 +60,7 @@ class TextEditor extends React.Component {
 
   render() {
     return (
-      <Measure onResize={this.onResize} bounds>
+      <Measure ref={(m) => { this.measureComponent = m; }} onResize={this.onResize} bounds>
         {({ measureRef }) => (
           <div
             ref={(element) => { this.textEditor = element; }}
