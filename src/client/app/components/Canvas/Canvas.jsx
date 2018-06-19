@@ -21,6 +21,13 @@ class Canvas extends React.Component {
     };
 
     this.textEditors = {};
+    this.timeout = null;
+  }
+
+  componentWillUnmount() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
   }
 
   handleGridItemResizeStart = (gridItems) => {
@@ -61,17 +68,14 @@ class Canvas extends React.Component {
         didResizeGridItems
       };
     });
+
+    // clear this.state.didResizeGridItems after a short amount of time
+    this.timeout = setTimeout(() => this.setState({ didResizeGridItems: new Set() }), 100);
   }
 
   resizeTextEditor = (id, height) => {
     // don't autosize the text editor if it was just manually resized
-    if (this.state.didResizeGridItems.has(id)) {
-      this.setState((prevState) => {
-        const { didResizeGridItems } = prevState;
-        didResizeGridItems.delete(id);
-        return { didResizeGridItems };
-      });
-    } else {
+    if (!this.state.didResizeGridItems.has(id)) {
       this.props.resizeTextEditor(id, height);
     }
   }
@@ -191,8 +195,9 @@ class Canvas extends React.Component {
           case 'text': {
             localLayout[key].minW = 4;
             localLayout[key].w = (localLayout[key].w < 4) ? 4 : localLayout[key].w;
-            localLayout[key].minH = this.props.textHeights[key] || 3;
-            localLayout[key].h = (localLayout[key].h < 3) ? 3 : localLayout[key].h;
+            const minH = this.props.textHeights[key] || 3;
+            localLayout[key].minH = minH;
+            localLayout[key].h = Math.max(minH, (localLayout[key].h < 3) ? 3 : localLayout[key].h);
             break;
           }
           case 'code': {
