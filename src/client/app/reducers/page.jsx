@@ -85,7 +85,7 @@ const page = (state = initialState, action) => {
       return Object.assign({}, state, { layout });
     }
 
-    case ActionTypes.UPDATE_TEXT_SIZE: {
+    case ActionTypes.RESIZE_TEXT_EDITOR: {
       const { margin, rowHeight } = state.rgl;
       const layout = JSON.parse(JSON.stringify(state.layout));
       const textHeights = state.textHeights;

@@ -135,7 +135,7 @@ export function togglePreviewMode(value) {
 export function resizeTextEditor(id, height) {
   return (dispatch) => {
     dispatch({
-      type: ActionTypes.UPDATE_TEXT_SIZE,
+      type: ActionTypes.RESIZE_TEXT_EDITOR,
       id,
       height
     });
