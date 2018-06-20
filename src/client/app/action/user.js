@@ -1,4 +1,4 @@
-import * as ActionTypes from '../constants.jsx';
+import * as ActionTypes from '../constants.js';
 
 export function updateUserName(event) {
   return (dispatch) => {

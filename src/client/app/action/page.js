@@ -1,7 +1,7 @@
 import axios from 'axios';
 import shortid from 'shortid';
 import { convertToRaw } from 'draft-js';
-import * as ActionTypes from '../constants.jsx';
+import * as ActionTypes from '../constants.js';
 
 export function setUnsavedChanges(value) {
   return (dispatch) => {

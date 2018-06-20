@@ -1,4 +1,4 @@
-import * as ActionTypes from '../constants.jsx';
+import * as ActionTypes from '../constants.js';
 import convertPixelHeightToGridHeight from '../utils/pixel-to-grid.js';
 
 const initialState = {

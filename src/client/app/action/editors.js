@@ -1,5 +1,5 @@
-import * as ActionTypes from '../constants.jsx';
-import { setUnsavedChanges } from './page.jsx';
+import * as ActionTypes from '../constants.js';
+import { setUnsavedChanges } from './page.js';
 
 /** ALL */
 export function setCurrentEditor(id) {
