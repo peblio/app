@@ -13,6 +13,7 @@ const initialState = {
   layout: [],
   textHeights: {},
   pages: [],
+  folders: [],
   pageTitle: 'Untitled',
   parentId: '',
   preview: false,
@@ -55,7 +56,8 @@ const page = (state = initialState, action) => {
 
     case ActionTypes.SET_ALL_PAGES:
       return Object.assign({}, state, {
-        pages: action.pages
+        pages: action.pages,
+        folders: action.folders
       });
 
     case ActionTypes.SET_UNSAVED_CHANGES:

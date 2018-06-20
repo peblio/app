@@ -115,11 +115,12 @@ export function updatePage(id, title, preview, editors, editorIndex, layout) {
 
 export function fetchAllPages() {
   return (dispatch) => {
-    axios.get('/api/sketches').then((response) => {
-      const pages = response.data.map(page => ({ id: page.id, title: page.title }));
+    axios.get('/api/sketches').then(({ data }) => {
+      const pages = data.pages.map(page => ({ id: page.id, title: page.title }));
       dispatch({
         type: ActionTypes.SET_ALL_PAGES,
-        pages
+        pages,
+        folders: data.folders
       });
     });
   };
