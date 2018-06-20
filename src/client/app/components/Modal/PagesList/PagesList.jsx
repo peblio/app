@@ -2,15 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DeleteIcon from '../../../images/trash.svg';
 
-const axios = require('axios');
 require('./pagesList.scss');
 
 class PagesList extends React.Component {
   componentDidMount() {
-    axios.get('/api/sketches')
-      .then((res) => {
-        this.props.setAllPages(res.data);
-      });
+    this.props.fetchAllPages();
   }
 
   renderPages() {
@@ -45,7 +41,7 @@ class PagesList extends React.Component {
 PagesList.propTypes = {
   deletePage: PropTypes.func.isRequired,
   pages: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  setAllPages: PropTypes.func.isRequired
+  fetchAllPages: PropTypes.func.isRequired
 };
 
 export default PagesList;

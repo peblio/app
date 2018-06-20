@@ -113,12 +113,14 @@ export function updatePage(id, title, preview, editors, editorIndex, layout) {
   };
 }
 
-export function setAllPages(data) {
-  const pages = data.map(page => ({ id: page.id, title: page.title }));
+export function fetchAllPages() {
   return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_ALL_PAGES,
-      pages
+    axios.get('/api/sketches').then((response) => {
+      const pages = response.data.map(page => ({ id: page.id, title: page.title }));
+      dispatch({
+        type: ActionTypes.SET_ALL_PAGES,
+        pages
+      });
     });
   };
 }
