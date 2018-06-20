@@ -192,16 +192,16 @@ class Canvas extends React.Component {
       /* TODO: change the code to simplify the layout logic */
       localLayout[key] = x;
       localLayout[key].maxW = 30;
-      localLayout[key].maxH = 30;
+      localLayout[key].maxH = 100;
 
       if (this.props.editors[key]) {
         switch (this.props.editors[key].type) {
           case 'text': {
             localLayout[key].minW = 4;
             localLayout[key].w = (localLayout[key].w < 4) ? 4 : localLayout[key].w;
-            const minH = this.props.textHeights[key] || 3;
+            const minH = this.props.textHeights[key] || 2;
             localLayout[key].minH = minH;
-            localLayout[key].h = Math.max(minH, (localLayout[key].h < 3) ? 3 : localLayout[key].h);
+            localLayout[key].h = Math.max(minH, (localLayout[key].h < 2) ? 2 : localLayout[key].h);
             break;
           }
           case 'code': {
@@ -226,10 +226,10 @@ class Canvas extends React.Component {
             break;
           }
           case 'image' : {
-            localLayout[key].minW = 10;
-            localLayout[key].w = (localLayout[key].w < 10) ? 10 : localLayout[key].w;
-            localLayout[key].minH = 12;
-            localLayout[key].h = (localLayout[key].h < 12) ? 12 : localLayout[key].h;
+            localLayout[key].minW = 6;
+            localLayout[key].w = (localLayout[key].w < 6) ? 6 : localLayout[key].w;
+            localLayout[key].minH = 9;
+            localLayout[key].h = (localLayout[key].h < 9) ? 9 : localLayout[key].h;
             break;
           }
           default: {
