@@ -154,3 +154,14 @@ export function updateTextHeight(id, height) {
     });
   };
 }
+
+export function createFolder(data) {
+  return (dispatch) => {
+    axios.post('/folder', data).then((response) => {
+      dispatch({
+        types: ActionTypes.CREATE_FOLDER,
+        folder: response.data.folder
+      });
+    });
+  };
+}

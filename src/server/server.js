@@ -12,6 +12,7 @@ const session = require('express-session');
 const srcpath = path.join(__dirname, '../client');
 const userRoutes = require('./controllers/userController.js');
 const pageRoutes = require('./controllers/pageController.js');
+const folderRoutes = require('./controllers/folderController');
 const apiRoutes = require('./controllers/apiController.js');
 
 require('./config/passport');
@@ -46,8 +47,8 @@ app.use(passport.session());
 
 app.use('/users', userRoutes);
 app.use('/pages', pageRoutes);
+app.use('/folder', folderRoutes);
 app.use('/api', apiRoutes);
-
 
 app.get('/logout', (req, res) => {
   req.logout();

@@ -10,10 +10,9 @@ class PagesList extends React.Component {
   }
 
   renderPages() {
-    const pages = [];
-    this.props.pages.forEach((page, index) => {
+    return this.props.pages.map((page) => {
       const link = `/pebl/${page.id}`;
-      pages.push(
+      return (
         <li key={page.id}>
           <a href={link}> {page.title} </a>
           <button className="pages__delete" onClick={() => { this.props.deletePage({ page }); }}>
@@ -22,7 +21,6 @@ class PagesList extends React.Component {
         </li>
       );
     });
-    return pages;
   }
 
   render() {
@@ -40,7 +38,8 @@ class PagesList extends React.Component {
 
 PagesList.propTypes = {
   deletePage: PropTypes.func.isRequired,
-  pages: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   fetchAllPages: PropTypes.func.isRequired
 };
 

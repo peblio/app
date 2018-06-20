@@ -114,6 +114,13 @@ const page = (state = initialState, action) => {
       return Object.assign({}, state, { textHeights });
     }
 
+    case ActionTypes.CREATE_FOLDER: {
+      return {
+        ...state,
+        folders: state.folders.concat(action.folder)
+      };
+    }
+
     default:
       return state;
   }
