@@ -192,6 +192,7 @@ class App extends React.Component {
           rgl={this.props.rgl}
           setPageLayout={this.props.setPageLayout}
           editorIndex={this.props.editorIndex}
+          textHeights={this.props.textHeights}
 
           updateFile={this.props.updateFile}
           editors={this.props.editors}
@@ -223,6 +224,8 @@ class App extends React.Component {
           updateAnswerChange={this.props.updateAnswerChange}
 
           setImageURL={this.props.setImageURL}
+          resizeTextEditor={this.props.resizeTextEditor}
+          updateTextHeight={this.props.updateTextHeight}
         />
         <Modal
           size="large"
@@ -327,16 +330,17 @@ App.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
-  editors: PropTypes.shape.isRequired,
+  editors: PropTypes.shape({}).isRequired,
   editorIndex: PropTypes.number.isRequired,
 
   pageTitle: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  rgl: PropTypes.shape.isRequired,
+  rgl: PropTypes.shape({}).isRequired,
   pages: PropTypes.arrayOf(PropTypes.shape).isRequired,
   preview: PropTypes.bool.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
+  textHeights: PropTypes.shape({}).isRequired,
 
   canEdit: PropTypes.bool.isRequired,
   loginName: PropTypes.string.isRequired,
@@ -385,6 +389,8 @@ App.propTypes = {
   addImage: PropTypes.func.isRequired,
   setImageURL: PropTypes.func.isRequired,
   updateImageChange: PropTypes.func.isRequired,
+  resizeTextEditor: PropTypes.func.isRequired,
+  updateTextHeight: PropTypes.func.isRequired,
 
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
@@ -434,6 +440,7 @@ function mapStateToProps(state) {
     pages: state.page.pages,
     preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,
+    textHeights: state.page.textHeights,
 
     canEdit: state.user.canEdit,
     loginName: state.user.loginName,

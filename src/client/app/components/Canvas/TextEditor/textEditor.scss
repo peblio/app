@@ -1,17 +1,15 @@
 @import 'variables';
 @import 'mixins';
 
-.DraftEditor-editorContainer { // sass-lint:disable-line class-name-format
-  height: 100%;
-}
-
 .text-editor__container {
   width: 100%;
-  height:100%;
+  min-height: 100%;
   margin: 0;
   background: none;
+
   &--edit { // sass-lint:disable-line class-name-format
     border: $gray dashed 1px;
+    min-height: 100%;
   }
 }
 
@@ -63,4 +61,12 @@
 
 .public-DraftStyleDefault-block { // sass-lint:disable-line class-name-format
   margin: .1em .1em;
+}
+
+.text-editor__content {
+  height: unset;
+
+  .public-DraftEditor-content { // sass-lint:disable-line class-name-format
+    overflow-y: auto;
+  }
 }
