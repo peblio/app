@@ -14,7 +14,7 @@ folderRoutes.route('').post((req, res) => {
   }
 
   const { title, parentId } = req.body;
-  const f = new Folder({ title });
+  const f = new Folder({ title, user: user._id });
   if (parentId) {
     f.parentId = parentId;
   }
