@@ -27,10 +27,10 @@ class TextEditor extends React.Component {
   }
 
   onResize = (contentRect) => {
-    if (this.props.preview || this.props.isResizing) {
+    const { height } = contentRect.bounds;
+    if (this.props.preview || this.props.isResizing || height === 0) {
       return;
     }
-    const { height } = contentRect.bounds;
     this.props.onResize(this.props.id, height);
   }
 
