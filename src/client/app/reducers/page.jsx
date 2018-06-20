@@ -1,4 +1,5 @@
 import * as ActionTypes from '../constants.jsx';
+import convertPixelHeightToGridHeight from '../utils/pixel-to-grid.js';
 
 const initialState = {
   id: '',
@@ -10,6 +11,7 @@ const initialState = {
     width: 1440,
   },
   layout: [],
+  textHeights: {},
   pages: [],
   pageTitle: 'Untitled',
   parentId: '',
@@ -76,9 +78,38 @@ const page = (state = initialState, action) => {
       // seems to place the duplicate directly below the original
       duplicateEditor.y = originalEditor.y + originalEditor.h + -1;
       layout.splice(originalEditorIndex, 0, duplicateEditor);
-      return Object.assign({}, state, {
-        layout
-      });
+      return Object.assign({}, state, { layout });
+    }
+
+    case ActionTypes.RESIZE_TEXT_EDITOR: {
+      const { margin, rowHeight } = state.rgl;
+      const layout = JSON.parse(JSON.stringify(state.layout));
+      const textHeights = state.textHeights;
+      const gridItemIndex = layout.findIndex(x => x.i === action.id);
+      // need to create copy of the grid item because ReactGridLayout tests
+      // for object equality when deciding whether to re-render grid items
+      // reference: https://github.com/STRML/react-grid-layout/issues/382#issuecomment-299734450
+      const gridItem = JSON.parse(JSON.stringify(layout[gridItemIndex]));
+
+      // convert from pixel height to grid units
+      // reference: https://github.com/STRML/react-grid-layout/issues/190#issuecomment-200864419
+      const h = convertPixelHeightToGridHeight(action.height, margin, rowHeight, gridItem.maxH);
+      gridItem.h = h;
+      textHeights[action.id] = h;
+
+      layout[gridItemIndex] = gridItem;
+      return Object.assign({}, state, { layout, textHeights });
+    }
+
+    case ActionTypes.UPDATE_TEXT_HEIGHT: {
+      const { margin, rowHeight } = state.rgl;
+      const gridItem = state.layout.find(x => x.i === action.id);
+      const h = convertPixelHeightToGridHeight(action.height, margin, rowHeight, gridItem.maxH);
+      const textHeights = {
+        ...state.textHeights,
+        [action.id]: h
+      };
+      return Object.assign({}, state, { textHeights });
     }
 
     default:
