@@ -8,6 +8,7 @@ const folderSchema = new Schema({
   parent: { type: Schema.Types.ObjectId, ref: 'Folder' },
   title: { type: String, default: '' },
 }, {
+  timestamps: true,
   toJSON: { virtuals: true },
   toObject: { virtuals: true }
 });
