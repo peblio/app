@@ -26,6 +26,7 @@ const userSchema = new Schema({
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   pages: { type: Array },
+  folders: [{ type: Schema.Types.ObjectId, ref: 'Folder' }],
   loginType: {
     type: 'string',
     enum: ['password', 'google'],
