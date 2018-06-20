@@ -7,12 +7,82 @@ import Iframe from './Iframe/Iframe.jsx';
 import Image from './Image/Image.jsx';
 import TextEditor from './TextEditor/TextEditor.jsx';
 import WidgetNav from './WidgetNav/WidgetNav.jsx';
+import convertPixelHeightToGridHeight from '../../utils/pixel-to-grid.js';
 
 const ReactGridLayout = require('react-grid-layout');
 
 require('./canvas.scss');
 
 class Canvas extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isResizingGridItems: {},
+      didResizeGridItems: new Set(),
+    };
+
+    this.textEditors = {};
+    this.timeout = null;
+  }
+
+  componentWillUnmount() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+  }
+
+  handleGridItemResizeStart = (gridItems) => {
+    this.setState(prevState => ({
+      isResizingGridItems: {
+        ...prevState.isResizingGridItems,
+        ...gridItems.reduce((accum, gridItem) => ({ ...accum, [gridItem.i]: true }), {})
+      },
+      didResizeGridItems: new Set()
+    }));
+  }
+
+  handleGridItemResize = (gridItems) => {
+    for (let gridItemIndex = 0; gridItemIndex < gridItems.length; gridItemIndex += 1) {
+      const gridItem = gridItems[gridItemIndex];
+      if (this.textEditors.hasOwnProperty(gridItem.i) && this.textEditors[gridItem.i]) {
+        const textEditor = this.textEditors[gridItem.i];
+        const measureComponent = textEditor.measureComponent;
+        if (measureComponent) {
+          const height = measureComponent.state.contentRect.bounds.height;
+          this.props.updateTextHeight(gridItem.i, height);
+        }
+      }
+    }
+  }
+
+  handleGridItemResizeStop = (gridItems) => {
+    this.setState((prevState) => {
+      const { didResizeGridItems } = prevState;
+      for (let gridItemIndex = 0; gridItemIndex < gridItems.length; gridItemIndex += 1) {
+        didResizeGridItems.add(gridItems[gridItemIndex].i);
+      }
+      return {
+        isResizingGridItems: {
+          ...prevState.isResizingGridItems,
+          ...gridItems.reduce((accum, gridItem) => ({ ...accum, [gridItem.i]: false }), {})
+        },
+        didResizeGridItems
+      };
+    });
+
+    // clear this.state.didResizeGridItems after a short amount of time
+    this.timeout = setTimeout(() => this.setState({ didResizeGridItems: new Set() }), 100);
+  }
+
+  resizeTextEditor = (id, height) => {
+    const gridItem = this.props.layout.find(x => x.i === id);
+    const { margin, rowHeight } = this.props.rgl;
+    const newHeight = convertPixelHeightToGridHeight(height, margin, rowHeight, gridItem.maxH);
+    // don't autosize the text editor if it was just manually resized
+    if (!this.state.didResizeGridItems.has(id) || newHeight > gridItem.h) {
+      this.props.resizeTextEditor(id, height);
+    }
+  }
 
   renderCodeEditor(editor) {
     return (
@@ -47,11 +117,15 @@ class Canvas extends React.Component {
     return (
       <TextEditor
         id={editor.id}
-        ref={editor.id}
+        ref={(textEditor) => { if (textEditor) { this.textEditors[editor.id] = textEditor; } }}
+        backColor={editor.backColor}
         editorState={editor.editorState}
         onChange={this.props.updateTextChange}
+        onResize={this.resizeTextEditor}
         preview={this.props.preview}
         setCurrentEditor={this.props.setCurrentEditor}
+        updateTextBackColor={this.props.updateTextBackColor}
+        isResizing={this.state.isResizingGridItems[editor.id] || false}
       />
     );
   }
@@ -108,9 +182,12 @@ class Canvas extends React.Component {
 
   render() {
     const ids = Object.keys(this.props.editors);
-    const storageLayout = this.props.layout;
+    // need to create copy of the layout because ReactGridLayout tests
+    // for object equality when deciding whether to re-render grid items
+    // reference: https://github.com/STRML/react-grid-layout/issues/382#issuecomment-299734450
+    const storageLayout = JSON.parse(JSON.stringify(this.props.layout));
     const localLayout = {};
-    storageLayout.forEach((x) => { // eslint-disable-line
+    storageLayout.forEach((x) => {
       const key = x.i;
       /* TODO: change the code to simplify the layout logic */
       localLayout[key] = x;
@@ -122,8 +199,9 @@ class Canvas extends React.Component {
           case 'text': {
             localLayout[key].minW = 4;
             localLayout[key].w = (localLayout[key].w < 4) ? 4 : localLayout[key].w;
-            localLayout[key].minH = 3;
-            localLayout[key].h = (localLayout[key].h < 3) ? 3 : localLayout[key].h;
+            const minH = this.props.textHeights[key] || 3;
+            localLayout[key].minH = minH;
+            localLayout[key].h = Math.max(minH, (localLayout[key].h < 3) ? 3 : localLayout[key].h);
             break;
           }
           case 'code': {
@@ -167,14 +245,17 @@ class Canvas extends React.Component {
           cols={this.props.rgl.cols}
           width={this.props.rgl.width}
           rowHeight={this.props.rgl.rowHeight}
-          layout={this.props.layout}
+          layout={storageLayout}
           onLayoutChange={this.props.setPageLayout}
           compactType="vertical"
-          autoSize
           margin={this.props.rgl.margin}
           draggableHandle=".widget__drag"
           containerPadding={this.props.rgl.padding}
           isResizable={!this.props.preview}
+          onResizeStart={this.handleGridItemResizeStart}
+          onResize={this.handleGridItemResize}
+          onResizeStop={this.handleGridItemResizeStop}
+          autoSize
         >
           {ids.map(id => (
             <div
@@ -182,11 +263,11 @@ class Canvas extends React.Component {
               data-grid={localLayout[id]}
               className={`${this.props.editors[id].type === 'text' ? 'canvas-high' : ''}`}
             >
-              <div className="element__iframe-container" id={this.props.id} onFocus={this.setCurrentEditor}>
+              <div className="element__iframe-container" id={id} onFocus={this.setCurrentEditor}>
                 { this.props.preview ||
                 <WidgetNav
                   id={id}
-                  layout={this.props.layout}
+                  layout={storageLayout}
                   setPageLayout={this.props.setPageLayout}
                   removeEditor={this.props.removeEditor}
                   duplicateEditor={this.props.duplicateEditor}
@@ -214,14 +295,20 @@ class Canvas extends React.Component {
 Canvas.propTypes = {
   clearConsoleOutput: PropTypes.func.isRequired,
   duplicateEditor: PropTypes.func.isRequired,
-  editors: PropTypes.shape.isRequired,
-  id: PropTypes.string.isRequired,
+  editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   name: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
-  rgl: PropTypes.shape.isRequired,
+  resizeTextEditor: PropTypes.func.isRequired,
+  rgl: PropTypes.shape({
+    cols: PropTypes.number,
+    margin: PropTypes.arrayOf(PropTypes.number),
+    padding: PropTypes.arrayOf(PropTypes.number),
+    rowHeight: PropTypes.number,
+    width: PropTypes.number
+  }).isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
@@ -239,7 +326,10 @@ Canvas.propTypes = {
   updateFile: PropTypes.func.isRequired,
   updateImageChange: PropTypes.func.isRequired,
   updateQuestionChange: PropTypes.func.isRequired,
-  updateTextChange: PropTypes.func.isRequired
+  updateTextBackColor: PropTypes.func.isRequired,
+  updateTextChange: PropTypes.func.isRequired,
+  updateTextHeight: PropTypes.func.isRequired,
+  textHeights: PropTypes.shape({}).isRequired
 };
 
 export default Canvas;

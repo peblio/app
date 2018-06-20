@@ -16,7 +16,7 @@ function convertIsoDateToReadableDate(isoDate) {
   const date = new Date(isoDate);
   const month = date.getMonth();
   const year = date.getFullYear();
-  const day = date.getDay();
+  const day = date.getDate();
   const monthString = months[month];
   readableDate = `${day} ${monthString}, ${year}`;
 
@@ -56,13 +56,15 @@ class PagesList extends React.Component {
     return (
       <div className="pages__list">
         <table className="pages__table">
-          <tr className="pages__headrow">
-            <th className="pages__header">Title</th>
-            <th className="pages__header">Creation Date</th>
-            <th className="pages__header">Update Date</th>
-            <th className="pages__header"></th>
-          </tr>
-          {Pages}
+          <tbody>
+            <tr className="pages__headrow">
+              <th className="pages__header">Title</th>
+              <th className="pages__header">Creation Date</th>
+              <th className="pages__header">Update Date</th>
+              <th className="pages__header"></th>
+            </tr>
+            {Pages}
+          </tbody>
         </table>
       </div>
     );

@@ -207,6 +207,17 @@ export function updateTextChange(id, state) {
   };
 }
 
+export function updateTextBackColor(id, color) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.UPDATE_TEXT_BACK_COLOR,
+      id,
+      color
+    });
+  };
+}
+
 /** QUESTION EDITOR */
 export function addQuestionEditor() {
   return (dispatch) => {
