@@ -71,7 +71,7 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, preview, editors, editorIndex, layout) {
+export function submitPage(parentId, title, preview, editors, editorIndex, layout, createDate, updateDate) {
   const id = shortid.generate();
   axios.post('/pages/save', {
     parentId,
@@ -80,7 +80,9 @@ export function submitPage(parentId, title, preview, editors, editorIndex, layou
     preview,
     editors: convertEditorsToRaw(editors),
     editorIndex,
-    layout
+    layout,
+    createDate,
+    updateDate
   }).then(() => window.location.replace(`${window.location.origin}/pebl/${id}`))
     .catch(error => console.error(error));
 
@@ -93,14 +95,15 @@ export function submitPage(parentId, title, preview, editors, editorIndex, layou
   };
 }
 
-export function updatePage(id, title, preview, editors, editorIndex, layout) {
+export function updatePage(id, title, preview, editors, editorIndex, layout, updateDate) {
   axios.post('/pages/update', {
     id,
     title,
     preview,
     editors: convertEditorsToRaw(editors),
     editorIndex,
-    layout
+    layout,
+    updateDate
   }).then(response => console.log('Page update'))
     .catch(error => console.error('Page update error', error));
 
@@ -114,7 +117,7 @@ export function updatePage(id, title, preview, editors, editorIndex, layout) {
 }
 
 export function setAllPages(data) {
-  const pages = data.map(page => ({ id: page.id, title: page.title }));
+  const pages = data.map(page => ({ id: page.id, title: page.title, createDate: page.createDate, updateDate: page.updateDate }));
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_ALL_PAGES,

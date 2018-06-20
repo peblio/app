@@ -117,6 +117,8 @@ class App extends React.Component {
   }
 
   savePage() {
+    let now = new Date();
+    now = now.toISOString();
     if (this.props.name) {
       if (this.props.id.length === 0) {
         this.props.submitPage(
@@ -125,7 +127,9 @@ class App extends React.Component {
           this.props.preview,
           this.props.editors,
           this.props.editorIndex,
-          this.props.layout
+          this.props.layout,
+          now,
+          now
         );
       } else if (this.props.canEdit) {
         this.props.updatePage(
@@ -134,7 +138,8 @@ class App extends React.Component {
           this.props.preview,
           this.props.editors,
           this.props.editorIndex,
-          this.props.layout
+          this.props.layout,
+          now
         );
       } else {
         // this is for fork and save
@@ -144,7 +149,9 @@ class App extends React.Component {
           this.props.preview,
           this.props.editors,
           this.props.editorIndex,
-          this.props.layout
+          this.props.layout,
+          now,
+          now
         );
       }
     } else {
@@ -440,6 +447,7 @@ function mapStateToProps(state) {
     pages: state.page.pages,
     preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,
+    createDate: state.page.createDate,
     textHeights: state.page.textHeights,
 
     canEdit: state.user.canEdit,
