@@ -83,10 +83,10 @@ class SignUp extends React.Component {
               className="signup-modal__label"
               htmlFor="signup-modal-mail"
             >
-              Email
               <input
                 className="signup-modal__input"
                 id="signup-modal-mail"
+                placeholder="email"
                 ref={(userMail) => { this.userMail = userMail; }}
                 type="text"
               />
@@ -97,10 +97,10 @@ class SignUp extends React.Component {
               className="signup-modal__label"
               htmlFor="signup-modal-name"
             >
-              Name
               <input
                 className="signup-modal__input"
                 id="signup-modal-name"
+                placeholder="name"
                 ref={(userName) => { this.userName = userName; }}
                 type="text"
               />
@@ -111,26 +111,29 @@ class SignUp extends React.Component {
               className="signup-modal__label"
               htmlFor="signup-modal-password"
             >
-              Password
               <input
                 className="signup-modal__input"
                 id="signup-modal-password"
+                placeholder="password"
                 ref={(password) => { this.password = password; }}
                 type="password"
               />
             </label>
-            <label htmlFor="reset-modal-confirm" className="reset-modal__label"> Confirm Password
+            <label htmlFor="reset-modal-confirm" className="reset-modal__label">
               <input
                 id="reset-modal-confirm"
                 className="reset-modal__input"
+                placeholder="retype password"
                 type="password"
                 ref={(passwordConfirm) => { this.passwordConfirm = passwordConfirm; }}
               />
             </label>
           </div>
-          <button className="forgot-modal__button" type="submit" value="Submit" >
-            Submit
-          </button>
+          <div className="signup-modal__buttonholder">
+            <button className="forgot-modal__button" type="submit" value="Submit" >
+              Submit
+            </button>
+          </div>
         </form>
 
 
