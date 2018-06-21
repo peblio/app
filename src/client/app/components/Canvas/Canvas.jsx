@@ -9,6 +9,8 @@ import TextEditor from './TextEditor/TextEditor.jsx';
 import WidgetNav from './WidgetNav/WidgetNav.jsx';
 import convertPixelHeightToGridHeight from '../../utils/pixel-to-grid.js';
 
+import * as WidgetSize from '../../constants/widgetConstants.js';
+
 const ReactGridLayout = require('react-grid-layout');
 
 require('./canvas.scss');
@@ -197,39 +199,50 @@ class Canvas extends React.Component {
       if (this.props.editors[key]) {
         switch (this.props.editors[key].type) {
           case 'text': {
-            localLayout[key].minW = 4;
-            localLayout[key].w = (localLayout[key].w < 4) ? 4 : localLayout[key].w;
-            const minH = this.props.textHeights[key] || 2;
+            localLayout[key].minW = WidgetSize.TEXT_MIN_WIDTH;
+            localLayout[key].w =
+              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            const minH = this.props.textHeights[key] || WidgetSize.TEXT_MIN_HEIGHT;
             localLayout[key].minH = minH;
-            localLayout[key].h = Math.max(minH, (localLayout[key].h < 2) ? 2 : localLayout[key].h);
+            localLayout[key].h =
+              Math.max(minH, (localLayout[key].h < WidgetSize.TEXT_MIN_HEIGHT) ?
+              WidgetSize.TEXT_MIN_HEIGHT : localLayout[key].h);
             break;
           }
           case 'code': {
-            localLayout[key].minW = 10;
-            localLayout[key].w = (localLayout[key].w < 10) ? 10 : localLayout[key].w;
-            localLayout[key].minH = 11;
-            localLayout[key].h = (localLayout[key].h < 11) ? 11 : localLayout[key].h;
+            localLayout[key].minW = WidgetSize.CODE_MIN_WIDTH;
+            localLayout[key].w =
+              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            localLayout[key].minH = WidgetSize.CODE_MIN_HEIGHT;
+            localLayout[key].h =
+              (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
             break;
           }
           case 'question' : {
-            localLayout[key].minW = 6;
-            localLayout[key].w = (localLayout[key].w < 6) ? 6 : localLayout[key].w;
-            localLayout[key].minH = 5;
-            localLayout[key].h = (localLayout[key].h < 5) ? 5 : localLayout[key].h;
+            localLayout[key].minW = WidgetSize.QUESTION_MIN_WIDTH;
+            localLayout[key].w =
+              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            localLayout[key].minH = WidgetSize.QUESTION_MIN_HEIGHT;
+            localLayout[key].h =
+              (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
             break;
           }
           case 'iframe' : {
-            localLayout[key].minW = 10;
-            localLayout[key].w = (localLayout[key].w < 10) ? 10 : localLayout[key].w;
-            localLayout[key].minH = 12;
-            localLayout[key].h = (localLayout[key].h < 12) ? 12 : localLayout[key].h;
+            localLayout[key].minW = WidgetSize.IFRAME_MIN_WIDTH;
+            localLayout[key].w =
+              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            localLayout[key].minH = WidgetSize.IFRAME_MIN_HEIGHT;
+            localLayout[key].h =
+              (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
             break;
           }
           case 'image' : {
-            localLayout[key].minW = 6;
-            localLayout[key].w = (localLayout[key].w < 6) ? 6 : localLayout[key].w;
-            localLayout[key].minH = 9;
-            localLayout[key].h = (localLayout[key].h < 9) ? 9 : localLayout[key].h;
+            localLayout[key].minW = WidgetSize.IMAGE_MIN_WIDTH;
+            localLayout[key].w =
+              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            localLayout[key].minH = WidgetSize.IMAGE_MIN_HEIGHT;
+            localLayout[key].h =
+              (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
             break;
           }
           default: {

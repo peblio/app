@@ -1,4 +1,4 @@
-import * as ActionTypes from '../constants.jsx';
+import * as ActionTypes from '../constants/reduxConstants.js';
 import { setUnsavedChanges } from './page.jsx';
 
 /** ALL */

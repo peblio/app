@@ -1,6 +1,6 @@
 import { EditorState, convertFromRaw } from 'draft-js';
-import * as ActionTypes from '../constants.jsx';
-import * as Code from '../codeConstants.jsx';
+import * as ActionTypes from '../constants/reduxConstants.js';
+import * as Code from '../constants/codeConstants.js';
 
 const initialState = {
   editors: {},
