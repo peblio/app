@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon",
     "dev": "webpack -d --watch",
-    "postinstall": "webpack -p --config ./webpack.config.js --progress",
+    "build": "webpack -p --config ./webpack.config.js --progress",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
