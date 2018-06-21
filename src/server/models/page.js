@@ -9,7 +9,8 @@ const pageSchema = new Schema({
   preview: { type: Boolean, default: false },
   editors: { type: Object, default: {} },
   editorIndex: { type: Number, default: 0 },
-  layout: { type: Array, default: [] }
+  layout: { type: Array, default: [] },
+  folder: { type: Schema.Types.ObjectId, ref: 'Folder' }
 }, { minimize: false });
 
-module.exports = mongoose.model('page', pageSchema);
+module.exports = mongoose.model('Page', pageSchema);
