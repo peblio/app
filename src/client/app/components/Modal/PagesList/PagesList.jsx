@@ -38,7 +38,6 @@ class PagesList extends React.Component {
 
 PagesList.propTypes = {
   deletePage: PropTypes.func.isRequired,
-  folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   fetchAllPages: PropTypes.func.isRequired
 };
