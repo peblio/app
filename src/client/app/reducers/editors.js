@@ -128,10 +128,8 @@ const editorsReducer = (state = initialState, action) => {
       return { ...state, editors };
 
     case ActionTypes.UPDATE_CONSOLE_OUTPUT: {
-      console.log(action.id);
-      console.log(action.event);
       const tempOutput = editors[action.id].consoleOutputText.slice();
-      if (action.event.data.arguments) {
+      if (action.event.data.arguments && (action.event.data.test == action.id)) {
         tempOutput.push(action.event.data.arguments.join());
       }
       editors[action.id].consoleOutputText = tempOutput;

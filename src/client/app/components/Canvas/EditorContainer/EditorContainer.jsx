@@ -90,6 +90,7 @@ class EditorContainer extends React.Component {
                     { this.props.isPlaying && (
                 this.props.editorMode === 'p5' &&
                   <P5Output
+                    id={this.props.id}
                     clearConsoleOutput={this.clearConsoleOutput}
                     files={this.props.files}
                     isPlaying={this.props.isPlaying}

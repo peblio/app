@@ -1,4 +1,4 @@
-var MYLIBRARY = MYLIBRARY || (function () {
+var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
   let _args = {}; // private
 
   const iframeWindow = window;
@@ -9,15 +9,12 @@ var MYLIBRARY = MYLIBRARY || (function () {
     'debug', 'clear', 'error', 'info', 'log', 'warn'
   ];
 
-  const LOGWAIT = 1000;
-
-
   return {
     init(Args) {
       _args = Args;
             // some other initialising
     },
-    helloWorld() {
+    callConsole() {
       methods.forEach((method) => {
         iframeWindow.console[method] = function () {
               // originalConsole[method].apply(originalConsole, arguments);

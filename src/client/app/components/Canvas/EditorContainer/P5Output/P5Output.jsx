@@ -96,15 +96,20 @@ class P5Output extends React.Component {
   }
 
   injectLocalFiles(sketchDoc) {
-    const scriptsToInject =
+    const scriptsToInject = [
       '/hijackConsole.js'
     ];
     scriptsToInject.forEach((scriptToInject) => {
       const script = sketchDoc.createElement('script');
       script.src = scriptToInject;
       sketchDoc.head.appendChild(script);
-      script.data-id = "test";
     });
+    const injectScript = sketchDoc.createElement('script');
+    injectScript.innerHTML =
+    `CONSOLEOUTPUT.init(["${this.props.id}"]);
+    CONSOLEOUTPUT.callConsole();`;
+    sketchDoc.head.appendChild(injectScript);
+
     return sketchDoc;
   }
 
@@ -118,6 +123,7 @@ class P5Output extends React.Component {
 }
 
 P5Output.propTypes = {
+  id: PropTypes.string.isRequired,
   clearConsoleOutput: PropTypes.func.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
