@@ -26,7 +26,6 @@ const userSchema = new Schema({
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   pages: { type: Array },
-  folders: [{ type: Schema.Types.ObjectId, ref: 'Folder' }],
   loginType: {
     type: 'string',
     enum: ['password', 'google'],
@@ -38,6 +37,15 @@ const userSchema = new Schema({
     sparse: true,
     required() { return this.loginType === 'google'; }
   }
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+});
+
+userSchema.virtual('folders', {
+  ref: 'Folder',
+  localField: '_id',
+  foreignField: 'user'
 });
 
 userSchema.methods.hashPassword = function hashPassword(password) {
