@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
-import rootReducer from './reducers/rootReducer.jsx';
+import rootReducer from './reducers/rootReducer.js';
 import App from './components/App.jsx';
 import withTracker from './withTracker.jsx';
 

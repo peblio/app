@@ -37,6 +37,15 @@ const userSchema = new Schema({
     sparse: true,
     required() { return this.loginType === 'google'; }
   }
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+});
+
+userSchema.virtual('folders', {
+  ref: 'Folder',
+  localField: '_id',
+  foreignField: 'user'
 });
 
 userSchema.methods.hashPassword = function hashPassword(password) {
