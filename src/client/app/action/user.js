@@ -1,4 +1,4 @@
-import * as ActionTypes from '../constants.js';
+import * as ActionTypes from '../constants/reduxConstants.js';
 
 export function updateUserName(event) {
   return (dispatch) => {
