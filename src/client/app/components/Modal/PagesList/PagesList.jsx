@@ -2,22 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DeleteIcon from '../../../images/trash.svg';
 
-const axios = require('axios');
 require('./pagesList.scss');
 
 class PagesList extends React.Component {
   componentDidMount() {
-    axios.get('/api/sketches')
-      .then((res) => {
-        this.props.setAllPages(res.data);
-      });
+    this.props.fetchAllPages();
   }
 
   renderPages() {
-    const pages = [];
-    this.props.pages.forEach((page, index) => {
+    return this.props.pages.map((page) => {
       const link = `/pebl/${page.id}`;
-      pages.push(
+      return (
         <li key={page.id}>
           <a href={link}> {page.title} </a>
           <button className="pages__delete" onClick={() => { this.props.deletePage({ page }); }}>
@@ -26,7 +21,6 @@ class PagesList extends React.Component {
         </li>
       );
     });
-    return pages;
   }
 
   render() {
@@ -44,8 +38,8 @@ class PagesList extends React.Component {
 
 PagesList.propTypes = {
   deletePage: PropTypes.func.isRequired,
-  pages: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  setAllPages: PropTypes.func.isRequired
+  pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  fetchAllPages: PropTypes.func.isRequired
 };
 
 export default PagesList;
