@@ -125,6 +125,7 @@ export function setEditorMode(id, value) {
 }
 
 export function updateConsoleOutput(id, event) {
+  console.log(id);
   return (dispatch) => {
     dispatch({
       type: ActionTypes.UPDATE_CONSOLE_OUTPUT,

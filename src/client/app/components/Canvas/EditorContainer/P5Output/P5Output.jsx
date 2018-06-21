@@ -96,13 +96,14 @@ class P5Output extends React.Component {
   }
 
   injectLocalFiles(sketchDoc) {
-    const scriptsToInject = [
+    const scriptsToInject =
       '/hijackConsole.js'
     ];
     scriptsToInject.forEach((scriptToInject) => {
       const script = sketchDoc.createElement('script');
       script.src = scriptToInject;
       sketchDoc.head.appendChild(script);
+      script.data-id = "test";
     });
     return sketchDoc;
   }
