@@ -1,5 +1,8 @@
+import { normalize } from 'normalizr';
+
 import * as ActionTypes from '../constants/reduxConstants.js';
 import convertPixelHeightToGridHeight from '../utils/pixel-to-grid.js';
+import { folderSchema, pageSchema } from '../schema.js';
 
 const initialState = {
   id: '',
@@ -12,8 +15,14 @@ const initialState = {
   },
   layout: [],
   textHeights: {},
-  pages: [],
-  folders: [],
+  pages: {
+    byId: {},
+    allIds: [] // keeps track of display order
+  },
+  folders: {
+    byId: {},
+    allIds: []
+  },
   pageTitle: 'Untitled',
   parentId: '',
   preview: false,
@@ -54,11 +63,25 @@ const page = (state = initialState, action) => {
         layout: action.layout
       });
 
-    case ActionTypes.SET_ALL_PAGES:
+    case ActionTypes.SET_ALL_PAGES: {
+      const normalizedPageData = normalize(action.pages, [pageSchema]);
+      const normalizedFolderData = normalize(action.folders, [folderSchema]);
       return Object.assign({}, state, {
-        pages: action.pages,
-        folders: action.folders
+        pages: {
+          byId: {
+            ...normalizedPageData.entities.pages,
+            ...normalizedFolderData.entities.pages
+          },
+          allIds: normalizedPageData.result
+            .concat(Object.keys(normalizedFolderData.entities.pages))
+            .filter((elem, pos, arr) => arr.indexOf(elem) === pos) // filter uniques
+        },
+        folders: {
+          byId: normalizedFolderData.entities.folders,
+          allIds: normalizedFolderData.result
+        }
       });
+    }
 
     case ActionTypes.SET_UNSAVED_CHANGES:
       return Object.assign({}, state, {
@@ -115,9 +138,78 @@ const page = (state = initialState, action) => {
     }
 
     case ActionTypes.CREATE_FOLDER: {
+      const { folders } = state;
+      const normalizedFolderData = normalize(action.folder, folderSchema);
       return {
         ...state,
-        folders: state.folders.concat(action.folder)
+        folders: {
+          ...folders,
+          byId: {
+            ...folders.byId,
+            ...normalizedFolderData.entities.folders,
+          },
+          allIds: folders.allIds.concat(normalizedFolderData.result)
+        }
+      };
+    }
+
+    case ActionTypes.MOVE_PAGE_TO_TOP_LEVEL: {
+      const pageId = action.pageId;
+      const { folders, pages } = state;
+      const pageToMove = pages.byId[pageId];
+      const folderId = pageToMove.folder;
+      if (!folderId) {
+        return state;
+      }
+
+      const folder = folders.byId[folderId];
+      folder.files = folder.files.filter(pId => pId !== pageId);
+
+      pageToMove.folder = null;
+      return {
+        ...state,
+        folders: {
+          ...folders,
+          byId: {
+            ...folders.byId,
+            [folderId]: folder
+          }
+        },
+        pages: {
+          ...pages,
+          byId: {
+            ...pages.byId,
+            [pageId]: pageToMove
+          }
+        }
+      };
+    }
+
+    case ActionTypes.MOVE_PAGE_TO_FOLDER: {
+      const { folderId, pageId } = action;
+      const { folders, pages } = state;
+
+      const pageToMove = pages.byId[pageId];
+      pageId.folder = folderId;
+
+      const folder = folders.byId[folderId];
+      folder.files = folder.files.concat(pageId);
+      return {
+        ...state,
+        folders: {
+          ...folders,
+          byId: {
+            ...folders.byId,
+            [folderId]: folder
+          }
+        },
+        pages: {
+          ...pages,
+          byId: {
+            ...pages.byId,
+            [pageId]: pageToMove
+          }
+        }
       };
     }
 

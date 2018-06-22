@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DeleteIcon from '../../../images/trash.svg';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import PageRow from './PageRow.jsx';
+import Modal from '../Modal.jsx';
+import { fetchAllPages } from '../../../action/page.js';
 
 require('./pagesList.scss');
 
@@ -9,37 +14,36 @@ class PagesList extends React.Component {
     this.props.fetchAllPages();
   }
 
-  renderPages() {
-    return this.props.pages.map((page) => {
-      const link = `/pebl/${page.id}`;
-      return (
-        <li key={page.id}>
-          <a href={link}> {page.title} </a>
-          <button className="pages__delete" onClick={() => { this.props.deletePage({ page }); }}>
-            <DeleteIcon alt="delete page" />
-          </button>
-        </li>
-      );
-    });
-  }
-
   render() {
-    const Pages = this.renderPages();
+    const { closeModal, isOpen, topLevelPageIds } = this.props;
     return (
-      <div className="pages_list">
-        <p className="pages_title">Title</p>
-        <ol>
-          {Pages}
-        </ol>
-      </div>
+      <Modal size="large" isOpen={isOpen} closeModal={closeModal}>
+        <div className="pages_list">
+          <p className="pages_title">Title</p>
+          <ol>
+            {topLevelPageIds.map(pageId => (
+              <PageRow id={pageId} />
+            ))}
+          </ol>
+        </div>
+      </Modal>
     );
   }
 }
 
 PagesList.propTypes = {
-  deletePage: PropTypes.func.isRequired,
-  pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  topLevelFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  topLevelPageIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchAllPages: PropTypes.func.isRequired
 };
 
-export default PagesList;
+const mapStateToProps = state => ({
+  topLevelFolderIds: Object.values(state.page.folders.allIds).filter(folderId => !state.page.folders.byId[folderId].parent),
+  topLevelPageIds: Object.values(state.page.pages.allIds).filter(pageId => !state.page.pages.byId[pageId].folder)
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({ fetchAllPages }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(PagesList);

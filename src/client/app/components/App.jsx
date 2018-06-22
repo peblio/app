@@ -228,18 +228,11 @@ class App extends React.Component {
           resizeTextEditor={this.props.resizeTextEditor}
           updateTextHeight={this.props.updateTextHeight}
         />
-        <Modal
-          size="large"
+
+        <PagesList
           isOpen={this.props.isPagesModalOpen}
           closeModal={this.props.closePagesModal}
-        >
-          <PagesList
-            folders={this.props.folders}
-            pages={this.props.pages}
-            deletePage={this.props.deletePage}
-            fetchAllPages={this.props.fetchAllPages}
-          />
-        </Modal>
+        />
 
         <Modal
           size="large"
@@ -339,8 +332,6 @@ App.propTypes = {
   id: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   rgl: PropTypes.shape({}).isRequired,
-  folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   preview: PropTypes.bool.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   textHeights: PropTypes.shape({}).isRequired,
@@ -402,8 +393,6 @@ App.propTypes = {
   updatePage: PropTypes.func.isRequired,
   loadPage: PropTypes.func.isRequired,
   setUserName: PropTypes.func.isRequired,
-  deletePage: PropTypes.func.isRequired,
-  fetchAllPages: PropTypes.func.isRequired,
   setEditAccess: PropTypes.func.isRequired,
 
   viewPagesModal: PropTypes.func.isRequired,
@@ -440,8 +429,6 @@ function mapStateToProps(state) {
     rgl: state.page.rgl,
     pageTitle: state.page.pageTitle,
     id: state.page.id,
-    folders: state.page.folders,
-    pages: state.page.pages,
     preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,
     textHeights: state.page.textHeights,

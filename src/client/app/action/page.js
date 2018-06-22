@@ -116,10 +116,9 @@ export function updatePage(id, title, preview, editors, editorIndex, layout) {
 export function fetchAllPages() {
   return (dispatch) => {
     axios.get('/api/sketches').then(({ data }) => {
-      const pages = data.pages.map(page => ({ id: page.id, title: page.title }));
       dispatch({
         type: ActionTypes.SET_ALL_PAGES,
-        pages,
+        pages: data.pages,
         folders: data.folders
       });
     });
@@ -161,6 +160,33 @@ export function createFolder(data) {
       dispatch({
         types: ActionTypes.CREATE_FOLDER,
         folder: response.data.folder
+      });
+    });
+  };
+}
+
+export function movePageToTopLevel(pageId) {
+  return (dispatch) => {
+    axios.post(`/page/${pageId}/move`, {}).then((response) => {
+      dispatch({
+        types: ActionTypes.MOVE_PAGE_TO_TOP_LEVEL,
+        pageId
+      });
+    });
+  };
+}
+
+export function movePageToFolder(pageId, folderId) {
+  return (dispatch) => {
+    const data = {};
+    if (folderId) {
+      data.folderId = folderId;
+    }
+    axios.post(`/page/${pageId}/move`, { folderId }).then((response) => {
+      dispatch({
+        types: ActionTypes.MOVE_PAGE_TO_FOLDER,
+        pageId,
+        folderId
       });
     });
   };
