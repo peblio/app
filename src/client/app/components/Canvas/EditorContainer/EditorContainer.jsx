@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import SplitPane from 'react-split-pane';
 
-import P5Editor from './P5Editor/P5Editor.jsx';
-import P5Output from './P5Output/P5Output.jsx';
+import CodeEditor from './CodeEditor/CodeEditor.jsx';
+import CodeOutput from './CodeOutput/CodeOutput.jsx';
 import EditorToolbar from './EditorToolbar/EditorToolbar.jsx';
 import ConsoleOutput from './ConsoleOutput/ConsoleOutput.jsx';
 
@@ -32,7 +32,6 @@ class EditorContainer extends React.Component {
       // There's a memory leak in the Javascript editor. Watch the console after clicking Play.
       this.props.updateConsoleOutput(this.props.id, e);
     };
-    this.setEditorMode = mode => this.props.setEditorMode(this.props.id, mode);
   }
 
   startResize() {
@@ -49,15 +48,17 @@ class EditorContainer extends React.Component {
         <div className="editor__total-container" onFocus={this.setCurrentEditor}>
           <EditorToolbar
             currentFile={this.props.currentFile}
+            editorMode={this.props.editorMode}
             files={this.props.files}
             isPlaying={this.props.isPlaying}
             playCode={this.playCode}
             setCurrentFile={this.setCurrentFile}
-            setEditorMode={this.setEditorMode}
             startCodeRefresh={this.startCodeRefresh}
             stopCode={this.stopCode}
           />
           <div className="editor__container">
+
+
             <SplitPane
               split="horizontal"
               defaultSize={this.props.innerHeight}
@@ -72,13 +73,13 @@ class EditorContainer extends React.Component {
                   onDragFinished={(size) => { this.finishResize(); this.setInnerWidth(size); }}
                 >
                   <div className="editor__input">
-                    { this.props.editorMode === 'p5' &&
-                    <P5Editor
+
+                    <CodeEditor
                       currentFile={this.props.currentFile}
                       files={this.props.files}
                       updateFile={this.updateFile}
                     />
-                  }
+
                   </div>
                   <div className="editor__output">
                     <div
@@ -87,18 +88,17 @@ class EditorContainer extends React.Component {
                       'editor__output-overlay--show' : ''}`}
                     >
                     </div>
-                    { this.props.isPlaying && (
-                this.props.editorMode === 'p5' &&
-                  <P5Output
-                    id={this.props.id}
-                    clearConsoleOutput={this.clearConsoleOutput}
-                    files={this.props.files}
-                    isPlaying={this.props.isPlaying}
-                    isRefreshing={this.props.isRefreshing}
-                    stopCodeRefresh={this.stopCodeRefresh}
-                    updateConsoleOutput={this.updateConsoleOutput}
-                  />
-                )}
+                    { this.props.isPlaying &&
+                    <CodeOutput
+                      id={this.props.id}
+                      clearConsoleOutput={this.clearConsoleOutput}
+                      files={this.props.files}
+                      isPlaying={this.props.isPlaying}
+                      isRefreshing={this.props.isRefreshing}
+                      stopCodeRefresh={this.stopCodeRefresh}
+                      updateConsoleOutput={this.updateConsoleOutput}
+                    />
+                  }
                   </div>
                 </SplitPane>
               </div>
@@ -108,6 +108,7 @@ class EditorContainer extends React.Component {
                 />
               </div>
             </SplitPane>
+
           </div>
         </div>
 
@@ -135,7 +136,6 @@ EditorContainer.propTypes = {
   removeEditor: PropTypes.func.isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
-  setEditorMode: PropTypes.func.isRequired,
   setInnerHeight: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,

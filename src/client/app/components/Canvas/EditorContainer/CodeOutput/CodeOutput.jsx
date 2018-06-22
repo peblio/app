@@ -4,7 +4,7 @@ import srcDoc from 'srcdoc-polyfill';
 
 const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
 
-class P5Output extends React.Component {
+class CodeOutput extends React.Component {
 
   constructor(props) {
     super(props);
@@ -122,7 +122,7 @@ class P5Output extends React.Component {
   }
 }
 
-P5Output.propTypes = {
+CodeOutput.propTypes = {
   id: PropTypes.string.isRequired,
   clearConsoleOutput: PropTypes.func.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
@@ -134,4 +134,4 @@ P5Output.propTypes = {
   updateConsoleOutput: PropTypes.func.isRequired
 };
 
-export default P5Output;
+export default CodeOutput;

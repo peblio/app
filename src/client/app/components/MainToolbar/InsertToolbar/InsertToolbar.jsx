@@ -9,16 +9,73 @@ import TextSVG from '../../../images/text.svg';
 
 require('./insertToolbar.scss');
 
+
 class InsertToolbar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      editorExpanded: false
+    };
+    this.toggleEditorOptions = this.toggleEditorOptions.bind(this);
+  }
+
+  toggleEditorOptions() {
+    this.setState({
+      editorExpanded: !this.state.editorExpanded
+    });
+  }
+
   render() {
     return (
-      <div className="insert-toolbar__container">
+      <div className="insert-toolbar__container insert-toolbar__expand">
         <button
-          onClick={this.props.addCodeEditor}
-          className="insert-toolbar__button"
+          className="insert-toolbar__button "
+          onClick={this.toggleEditorOptions}
         >
           <EditorSVG alt="add code editor" />
           Editor
+          {this.state.editorExpanded &&
+          <div className="insert-toolbar__sub-menu">
+            <ul className="insert-toolbar__list">
+              <li className="insert-toolbar__list-item">
+                <button
+                  className="insert-toolbar__list-button"
+                  onClick={() => {
+                    this.props.addCodeEditor('html');
+                    this.toggleEditorOptions();
+                  }
+                  }
+                >
+                   HTML
+                </button>
+              </li>
+              <li className="insert-toolbar__list-item">
+                <button
+                  className="insert-toolbar__list-button"
+                  onClick={() => {
+                    this.props.addCodeEditor('webdev');
+                    this.toggleEditorOptions();
+                  }
+                  }
+                >
+                   HTML/JS/CSS
+                </button>
+              </li>
+              <li className="insert-toolbar__list-item">
+                <button
+                  className="insert-toolbar__list-button"
+                  onClick={() => {
+                    this.props.addCodeEditor('p5');
+                    this.toggleEditorOptions();
+                  }
+                  }
+                >
+                   P5
+                </button>
+              </li>
+            </ul>
+          </div>
+        }
         </button>
         <button
           onClick={this.props.addTextEditor}

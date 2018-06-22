@@ -27,7 +27,7 @@ var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
           const consoleEvent = {
             method,
             arguments: args,
-            test: _args[0]
+            id: _args[0]
           };
           window.parent.postMessage(consoleEvent, '*');
         };

@@ -68,6 +68,11 @@
       }
     }
   }
+  &__title {
+    color: $white;
+    display: inline;
+    margin: 0 2rem;
+  }
 }
 
 // used for editor toolbar

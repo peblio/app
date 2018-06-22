@@ -173,6 +173,7 @@ class App extends React.Component {
             preview={this.props.preview}
             projectID={this.projectID}
             setPageTitle={this.props.setPageTitle}
+            setEditorMode={this.props.setEditorMode}
             savePage={this.savePage}
             toggleFileDropdown={this.props.toggleFileDropdown}
             toggleAccountDropdown={this.props.toggleAccountDropdown}
@@ -209,7 +210,7 @@ class App extends React.Component {
           stopCodeRefresh={this.props.stopCodeRefresh}
           clearConsoleOutput={this.props.clearConsoleOutput}
           updateConsoleOutput={this.props.updateConsoleOutput}
-          setEditorMode={this.props.setEditorMode}
+
           setInnerWidth={this.props.setInnerWidth}
           setInnerHeight={this.props.setInnerHeight}
 
