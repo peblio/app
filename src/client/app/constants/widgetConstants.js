@@ -13,5 +13,5 @@ export const CODE_MIN_HEIGHT = 11;
 export const QUESTION_MIN_WIDTH = 6;
 export const QUESTION_MIN_HEIGHT = 5;
 
-export const IMAGE_MIN_WIDTH = 6;
-export const IMAGE_MIN_HEIGHT = 9;
+export const IMAGE_MIN_WIDTH = 8;
+export const IMAGE_MIN_HEIGHT = 12;
