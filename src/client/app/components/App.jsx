@@ -16,10 +16,10 @@ import PasswordReset from './Modal/PasswordReset/PasswordReset.jsx';
 import Canvas from './Canvas/Canvas.jsx';
 import MainToolbar from './MainToolbar/MainToolbar.jsx';
 
-import * as editorActions from '../action/editors.jsx';
-import * as mainToolbarActions from '../action/mainToolbar.jsx';
-import * as pageActions from '../action/page.jsx';
-import * as userActions from '../action/user.jsx';
+import * as editorActions from '../action/editors.js';
+import * as mainToolbarActions from '../action/mainToolbar.js';
+import * as pageActions from '../action/page.js';
+import * as userActions from '../action/user.js';
 
 const axios = require('axios');
 
@@ -180,6 +180,7 @@ class App extends React.Component {
             preview={this.props.preview}
             projectID={this.projectID}
             setPageTitle={this.props.setPageTitle}
+            setEditorMode={this.props.setEditorMode}
             savePage={this.savePage}
             toggleFileDropdown={this.props.toggleFileDropdown}
             toggleAccountDropdown={this.props.toggleAccountDropdown}
@@ -216,7 +217,7 @@ class App extends React.Component {
           stopCodeRefresh={this.props.stopCodeRefresh}
           clearConsoleOutput={this.props.clearConsoleOutput}
           updateConsoleOutput={this.props.updateConsoleOutput}
-          setEditorMode={this.props.setEditorMode}
+
           setInnerWidth={this.props.setInnerWidth}
           setInnerHeight={this.props.setInnerHeight}
 
@@ -240,9 +241,10 @@ class App extends React.Component {
           closeModal={this.props.closePagesModal}
         >
           <PagesList
+            folders={this.props.folders}
             pages={this.props.pages}
             deletePage={this.props.deletePage}
-            setAllPages={this.props.setAllPages}
+            fetchAllPages={this.props.fetchAllPages}
           />
         </Modal>
 
@@ -342,9 +344,10 @@ App.propTypes = {
 
   pageTitle: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   rgl: PropTypes.shape({}).isRequired,
-  pages: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   preview: PropTypes.bool.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   textHeights: PropTypes.shape({}).isRequired,
@@ -407,7 +410,7 @@ App.propTypes = {
   loadPage: PropTypes.func.isRequired,
   setUserName: PropTypes.func.isRequired,
   deletePage: PropTypes.func.isRequired,
-  setAllPages: PropTypes.func.isRequired,
+  fetchAllPages: PropTypes.func.isRequired,
   setEditAccess: PropTypes.func.isRequired,
 
   viewPagesModal: PropTypes.func.isRequired,
@@ -444,6 +447,7 @@ function mapStateToProps(state) {
     rgl: state.page.rgl,
     pageTitle: state.page.pageTitle,
     id: state.page.id,
+    folders: state.page.folders,
     pages: state.page.pages,
     preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,

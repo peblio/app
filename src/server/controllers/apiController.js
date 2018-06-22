@@ -4,8 +4,8 @@ const multer = require('multer');
 const shortid = require('shortid');
 
 const apiRoutes = express.Router();
-const Router = express.Router();
 
+const Folder = require('../models/folder.js');
 const Page = require('../models/page.js');
 const User = require('../models/user.js');
 
@@ -69,18 +69,19 @@ function getUser(req, res) {
 }
 
 function getSketches(req, res) {
-  const sketches = [];
-  let globalerr;
-  if (req.user) {
-    const user = req.user;
-    Page.find({ id: { $in: user.pages } }, (err, data) => {
-      if (err) {
-        res.send(err);
-      } else {
-        res.send(data);
-      }
-    });
+  if (!req.user) {
+    res.status(403).send({ error: 'Please log in first' });
+    return;
   }
+  const user = req.user;
+  Promise.all([
+    Page.find({ id: { $in: user.pages } }).exec(),
+    Folder.find({ user: user._id }).exec()
+  ])
+  .then(([pages, folders]) => {
+    res.send({ pages, folders });
+  })
+  .catch(err => res.send(err));
 }
 
 function getExamples(req, res) {

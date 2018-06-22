@@ -11,7 +11,8 @@ const pageSchema = new Schema({
   editorIndex: { type: Number, default: 0 },
   layout: { type: Array, default: [] },
   createDate: {type: Date, default:''},
-  updateDate: {type:Date, default:''}
+  updateDate: {type:Date, default:''},
+  folder: { type: Schema.Types.ObjectId, ref: 'Folder' }
 }, { minimize: false });
 
-module.exports = mongoose.model('page', pageSchema);
+module.exports = mongoose.model('Page', pageSchema);

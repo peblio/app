@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon",
     "dev": "webpack -d --watch",
-    "postinstall": "webpack -p --config ./webpack.config.js --progress",
+    "build": "webpack -p --config ./webpack.config.js --progress",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
@@ -43,6 +43,7 @@
     "google-auth-library": "^1.6.1",
     "mongodb": "^2.2.33",
     "mongoose": "^4.11.0",
+    "mongoose-autopopulate": "^0.7.0",
     "multer": "^1.3.0",
     "node-sass": "^4.5.3",
     "nodemailer": "^4.6.4",

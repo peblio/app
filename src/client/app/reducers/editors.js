@@ -1,6 +1,6 @@
 import { EditorState, convertFromRaw } from 'draft-js';
-import * as ActionTypes from '../constants.jsx';
-import * as Code from '../codeConstants.jsx';
+import * as ActionTypes from '../constants/reduxConstants.js';
+import * as Code from '../constants/codeConstants.js';
 
 const initialState = {
   editors: {},
@@ -93,11 +93,11 @@ const editorsReducer = (state = initialState, action) => {
         id,
         index: stack.length,
         consoleOutputText: [],
-        currentFile: 1,
-        files: Code.FILES.p5,
+        currentFile: Code.STARTFILE[action.mode],
+        files: Code.FILES[action.mode],
         isPlaying: false,
         isRefreshing: false,
-        editorMode: 'p5',
+        editorMode: action.mode,
         innerWidth: 250,
         innerHeight: 160
       };
@@ -129,7 +129,7 @@ const editorsReducer = (state = initialState, action) => {
 
     case ActionTypes.UPDATE_CONSOLE_OUTPUT: {
       const tempOutput = editors[action.id].consoleOutputText.slice();
-      if (action.event.data.arguments) {
+      if (action.event.data.arguments && (action.event.data.id == action.id)) {
         tempOutput.push(action.event.data.arguments.join());
       }
       editors[action.id].consoleOutputText = tempOutput;

@@ -1,4 +1,4 @@
-import * as ActionTypes from '../constants.jsx';
+import * as ActionTypes from '../constants/reduxConstants.js';
 
 export function toggleFileDropdown() {
   return (dispatch) => {

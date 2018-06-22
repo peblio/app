@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import editorsReducer from './editors.jsx';
-import mainToolbar from './mainToolbar.jsx';
-import page from './page.jsx';
-import user from './user.jsx';
+import editorsReducer from './editors.js';
+import mainToolbar from './mainToolbar.js';
+import page from './page.js';
+import user from './user.js';
 
 const rootReducer = combineReducers({
   editorsReducer,

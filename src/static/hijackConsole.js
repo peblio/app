@@ -1,27 +1,37 @@
-var iframeWindow = window;
-var originalConsole = iframeWindow.console;
-iframeWindow.console = {};
+var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
+  let _args = {}; // private
 
-var methods = [
-  'debug', 'clear', 'error', 'info', 'log', 'warn'
-];
+  const iframeWindow = window;
+  const originalConsole = iframeWindow.console;
+  iframeWindow.console = {};
 
-var LOGWAIT = 1000;
+  const methods = [
+    'debug', 'clear', 'error', 'info', 'log', 'warn'
+  ];
 
-methods.forEach( function(method) {
-  iframeWindow.console[method] = function() {
-    // originalConsole[method].apply(originalConsole, arguments);
+  return {
+    init(Args) {
+      _args = Args;
+            // some other initialising
+    },
+    callConsole() {
+      methods.forEach((method) => {
+        iframeWindow.console[method] = function () {
+              // originalConsole[method].apply(originalConsole, arguments);
 
-    var args = Array.from(arguments);
-    args = args.map(function(i) {
-      // catch objects
-      return (typeof i === 'string') ? i : JSON.stringify(i);
-    });
+          let args = Array.from(arguments);
+          args = args.map(i =>
+                // catch objects
+                 (typeof i === 'string') ? i : JSON.stringify(i));
 
-    var consoleEvent = {
-      method: method,
-      arguments: args
-    };
-    window.parent.postMessage(consoleEvent, '*');
+          const consoleEvent = {
+            method,
+            arguments: args,
+            id: _args[0]
+          };
+          window.parent.postMessage(consoleEvent, '*');
+        };
+      });
+    }
   };
-});
+}());

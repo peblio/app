@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DeleteIcon from '../../../images/trash.svg';
 
-const axios = require('axios');
 require('./pagesList.scss');
 
 function convertIsoDateToReadableDate(isoDate) {
@@ -25,15 +24,11 @@ function convertIsoDateToReadableDate(isoDate) {
 
 class PagesList extends React.Component {
   componentDidMount() {
-    axios.get('/api/sketches')
-      .then((res) => {
-        this.props.setAllPages(res.data);
-      });
+    this.props.fetchAllPages();
   }
 
   renderPages() {
-    const pages = [];
-    this.props.pages.forEach((page, index) => {
+    return this.props.pages.map((page) => {
       const link = `/pebl/${page.id}`;
       pages.push(
         <tr className="pages__row" key={page.id}>
@@ -48,7 +43,6 @@ class PagesList extends React.Component {
         </tr>
       );
     });
-    return pages;
   }
 
   render() {
@@ -73,8 +67,8 @@ class PagesList extends React.Component {
 
 PagesList.propTypes = {
   deletePage: PropTypes.func.isRequired,
-  pages: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  setAllPages: PropTypes.func.isRequired
+  pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  fetchAllPages: PropTypes.func.isRequired
 };
 
 export default PagesList;

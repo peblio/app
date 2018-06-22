@@ -1,7 +1,7 @@
 import axios from 'axios';
 import shortid from 'shortid';
 import { convertToRaw } from 'draft-js';
-import * as ActionTypes from '../constants.jsx';
+import * as ActionTypes from '../constants/reduxConstants.js';
 
 export function setUnsavedChanges(value) {
   return (dispatch) => {
@@ -116,12 +116,15 @@ export function updatePage(id, title, preview, editors, editorIndex, layout, upd
   };
 }
 
-export function setAllPages(data) {
-  const pages = data.map(page => ({ id: page.id, title: page.title, createDate: page.createDate, updateDate: page.updateDate }));
+export function fetchAllPages() {
   return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_ALL_PAGES,
-      pages
+    axios.get('/api/sketches').then(({ data }) => {
+      const pages = data.pages.map(page => ({ id: page.id, title: page.title, createDate: page.createDate, updateDate: page.updateDate }));
+      dispatch({
+        type: ActionTypes.SET_ALL_PAGES,
+        pages,
+        folders: data.folders
+      });
     });
   };
 }
@@ -151,6 +154,17 @@ export function updateTextHeight(id, height) {
       type: ActionTypes.UPDATE_TEXT_HEIGHT,
       id,
       height
+    });
+  };
+}
+
+export function createFolder(data) {
+  return (dispatch) => {
+    axios.post('/folder', data).then((response) => {
+      dispatch({
+        types: ActionTypes.CREATE_FOLDER,
+        folder: response.data.folder
+      });
     });
   };
 }
