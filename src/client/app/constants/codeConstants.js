@@ -30,6 +30,51 @@ html,body{
 }
 `;
 
+const defaultWebDevHTML =
+`<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+      <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <script src="app.js"></script>
+  </body>
+</html>
+
+`;
+
+const defaultWebDevJS = '';
+
+const defaultWebDevCSS = `
+html,body{
+  background: white;
+  margin: 0;
+  padding: 0;
+}
+`;
+
+
+const defaultHTML =
+`<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+  </body>
+</html>
+
+`;
+
+export const STARTFILE = {
+  p5: 1,
+  html: 0,
+  webdev: 0
+};
+
 export const FILES = {
   p5: [
     {
@@ -44,7 +89,27 @@ export const FILES = {
       name: 'style.css',
       content: defaultP5CSS
     }
-  ]
+  ],
+  html: [
+    {
+      name: 'index.html',
+      content: defaultHTML
+    }
+  ],
+  webdev: [
+    {
+      name: 'index.html',
+      content: defaultWebDevHTML
+    },
+    {
+      name: 'app.js',
+      content: defaultWebDevJS
+    },
+    {
+      name: 'style.css',
+      content: defaultWebDevCSS
+    }
+  ],
 };
 
 export { FILES as default };

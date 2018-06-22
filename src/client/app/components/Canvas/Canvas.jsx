@@ -102,7 +102,6 @@ class Canvas extends React.Component {
         isRefreshing={editor.isRefreshing}
         playCode={this.props.playCode}
         setCurrentEditor={this.props.setCurrentEditor}
-        setEditorMode={this.props.setEditorMode}
         startCodeRefresh={this.props.startCodeRefresh}
         setCurrentFile={this.props.setCurrentFile}
         setInnerWidth={this.props.setInnerWidth}
@@ -324,7 +323,6 @@ Canvas.propTypes = {
   }).isRequired,
   setCurrentEditor: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
-  setEditorMode: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired,
   setImageURL: PropTypes.func.isRequired,
   setInnerHeight: PropTypes.func.isRequired,

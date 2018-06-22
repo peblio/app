@@ -69,11 +69,12 @@ export function setEditorSize(id, width, height) {
 }
 
 /** CODE EDITOR */
-export function addCodeEditor() {
+export function addCodeEditor(mode) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
     dispatch({
-      type: ActionTypes.ADD_CODE_EDITOR
+      type: ActionTypes.ADD_CODE_EDITOR,
+      mode
     });
   };
 }
@@ -110,16 +111,6 @@ export function stopCodeRefresh(id) {
     dispatch({
       type: ActionTypes.STOP_CODE_REFRESH,
       id
-    });
-  };
-}
-
-export function setEditorMode(id, value) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_EDITOR_MODE,
-      id,
-      value
     });
   };
 }

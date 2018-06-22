@@ -1,37 +1,67 @@
 @import 'variables';
 @import 'mixins';
 
-.insert-toolbar__container {
-  display: flex;
-  // position: fixed;
-  @include flex;
-  flex-direction: row;
-  width: 100%;
-  padding: $small-padding;
-  height: $insert-toolbar-height;
-  background-color: $lighter-gray;
-  z-index: $z-index-layer-1;
-
-}
-.insert-toolbar__button{
-  color:$black;
-  padding: 0 $medium-padding;
-  background-color: $lighter-gray;
-  border:none !important;
-  text-transform: uppercase;
-  // box-shadow: 3px 5px 5px $boxShaddow-gray;
-  &:hover{
-    color:$blue;
-    box-shadow: none;
+.insert-toolbar {
+  &__container {
+    display: flex;
+    // position: fixed;
+    @include flex;
+    flex-direction: row;
+    width: 100%;
+    padding: $small-padding;
+    height: $insert-toolbar-height;
     background-color: $lighter-gray;
+    z-index: $z-index-layer-1;
   }
-}
+  &__button{
+    width: 7%;
+    color:$black;
+    padding: 0 $medium-padding;
+    background-color: $lighter-gray;
+    border:none !important;
+    text-transform: uppercase;
+    // box-shadow: 3px 5px 5px $boxShaddow-gray;
+    &:focus {
+      outline:0;
+    }
+    &:hover{
+      color:$blue;
+      box-shadow: none;
+      background-color: $lighter-gray;
+    }
+    &:hover #Shape {
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.2s;
+      fill:$blue;
+    }
+  }
 
-.insert-toolbar__icon{
-  display: block;
-  width: 20px;
-  margin: auto;
-  margin-bottom: $small-margin/2;
+  &__icon{
+    display: block;
+    width: 20px;
+    margin: auto;
+    margin-bottom: $small-margin/2;
+  }
+  &__list {
+    list-style: none;
+    background: $lighter-gray;
+    width: fit-content;
+    margin: 0;
+    padding: 0;
+  }
+  &__list-item {
+    padding: $small-padding;
+  }
+  &__list-button {
+    background: none;
+    border: none;
+    color: $light-gray;
+    &:hover {
+      background: none;
+      border: none;
+      color: $dark-gray;
+    }
+  }
 }
 
 #Shape{
@@ -41,11 +71,4 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-}
-
-.insert-toolbar__button:hover #Shape {
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.2s;
-  fill:$blue;
-
 }

@@ -11,13 +11,9 @@ class EditorToolbar extends React.Component {
     return (
       <div className="editor-toolbar__container">
         <div className="editor-toolbar__button-container">
-          <select
-            className="editor-toolbar__item"
-            id="test"
-            onChange={(event) => { this.props.setEditorMode(event.target.value); }}
-          >
-            <option value="p5">p5</option>
-          </select>
+          <p className="editor-toolbar__title">
+            {this.props.editorMode} Editor
+          </p>
           <button
             className="editor-toolbar__svg"
             onClick={() => {
@@ -60,6 +56,7 @@ class EditorToolbar extends React.Component {
 
 EditorToolbar.propTypes = {
   currentFile: PropTypes.number.isRequired,
+  editorMode: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
@@ -68,7 +65,6 @@ EditorToolbar.propTypes = {
   playCode: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
-  setEditorMode: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired
 };
 

@@ -10,7 +10,7 @@ import 'codemirror/mode/css/css';
 require('../../../../styles/codemirror.css');
 require('../../../../styles/3024-night.css');
 
-class P5Editor extends React.Component {
+class CodeEditor extends React.Component {
   componentDidMount() {
     const file = this.props.files[this.props.currentFile];
     this.cm = CodeMirror(this.codemirrorContainer, {
@@ -59,7 +59,7 @@ class P5Editor extends React.Component {
   }
 }
 
-P5Editor.propTypes = {
+CodeEditor.propTypes = {
   currentFile: PropTypes.number.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
@@ -68,4 +68,4 @@ P5Editor.propTypes = {
   updateFile: PropTypes.func.isRequired
 };
 
-export default P5Editor;
+export default CodeEditor;
