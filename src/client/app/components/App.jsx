@@ -308,6 +308,8 @@ class App extends React.Component {
             updateUserPassword={this.props.updateUserPassword}
             signUserUp={this.props.signUserUp}
             setUserName={this.props.setUserName}
+            setUserType={this.props.setUserType}
+            userType={this.props.userType}
             closeSignUpModal={this.props.closeSignUpModal}
           />
         </Modal>
@@ -356,6 +358,9 @@ App.propTypes = {
   loginName: PropTypes.string.isRequired,
   loginPassword: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  userType: PropTypes.string.isRequired,
+  setUserName: PropTypes.func.isRequired,
+  setUserType: PropTypes.func.isRequired,
 
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,
@@ -408,7 +413,6 @@ App.propTypes = {
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
   loadPage: PropTypes.func.isRequired,
-  setUserName: PropTypes.func.isRequired,
   deletePage: PropTypes.func.isRequired,
   fetchAllPages: PropTypes.func.isRequired,
   setEditAccess: PropTypes.func.isRequired,
@@ -458,6 +462,7 @@ function mapStateToProps(state) {
     loginName: state.user.loginName,
     loginPassword: state.user.loginPassword,
     name: state.user.name,
+    userType: state.user.type,
 
     isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
     isExamplesModalOpen: state.mainToolbar.isExamplesModalOpen,

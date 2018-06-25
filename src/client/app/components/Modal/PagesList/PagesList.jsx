@@ -11,7 +11,11 @@ function convertIsoDateToReadableDate(isoDate) {
     return readableDate;
   }
 
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const months = [
+    'January', 'February', 'March', 'April',
+    'May', 'June', 'July', 'August',
+    'September', 'October', 'November', 'December'
+  ];
   const date = new Date(isoDate);
   const month = date.getMonth();
   const year = date.getFullYear();
@@ -30,7 +34,7 @@ class PagesList extends React.Component {
   renderPages() {
     return this.props.pages.map((page) => {
       const link = `/pebl/${page.id}`;
-      pages.push(
+      return (
         <tr className="pages__row" key={page.id}>
           <td className="pages__col" > <a className="pages__link" href={link}> {page.title} </a> </td>
           <td className="pages__col" > {convertIsoDateToReadableDate(page.createDate)} </td>

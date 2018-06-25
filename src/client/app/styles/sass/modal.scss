@@ -9,7 +9,8 @@
 .modal__large{
   @extend %modal;
   width: 60%;
-  height:70%;
+  height: fit-content;
+  min-height: 60%;
 }
 
 .modal__small{
@@ -123,4 +124,9 @@
 
 %modal__buttonholder {
   text-align: $center-align;
+}
+
+%modal__radio {
+  text-align: $center-align;
+  margin-right: $small-margin;
 }

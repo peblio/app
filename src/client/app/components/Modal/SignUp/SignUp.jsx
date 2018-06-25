@@ -54,11 +54,12 @@ class SignUp extends React.Component {
     this.props.closeSignUpModal();
   }
 
-  submitSignUpUser(event, mail, name, password) {
+  submitSignUpUser(event, mail, name, userType, password) {
     if (this.passwordMatch(this.password.value, this.passwordConfirm.value)) {
       axios.post('/users/signup', {
         mail,
         name,
+        userType,
         password
       })
       .then(res => this.signUpSuccessful(res.data.msg))
@@ -75,7 +76,13 @@ class SignUp extends React.Component {
         <h1 className="signup-modal__title">Sign Up</h1>
         <form
           onSubmit={(event) => {
-            this.submitSignUpUser(event, this.userMail.value, this.userName.value, this.password.value);
+            this.submitSignUpUser(
+              event,
+              this.userMail.value,
+              this.userName.value,
+              this.props.userType,
+              this.password.value
+            );
           }}
         >
           <div className="signup-modal__div">
@@ -100,7 +107,7 @@ class SignUp extends React.Component {
               <input
                 className="signup-modal__input"
                 id="signup-modal-name"
-                placeholder="name"
+                placeholder="username"
                 ref={(userName) => { this.userName = userName; }}
                 type="text"
               />
@@ -129,6 +136,40 @@ class SignUp extends React.Component {
               />
             </label>
           </div>
+          <div className="signup-modal__radio-holder">
+            <ul className="signup-modal__list">
+              <li className="signup-modal__listitem">
+                <input
+                  type="radio"
+                  className="signup-modal__radio"
+                  name="type"
+                  value="Student"
+                  onChange={(e) => { this.props.setUserType(e.target.value); }}
+                />
+                <label className="signup-modal__label" htmlFor="student">Student</label>
+              </li>
+              <li className="signup-modal__listitem">
+                <input
+                  type="radio"
+                  className="signup-modal__radio"
+                  name="type"
+                  value="Teacher"
+                  onChange={(e) => { this.props.setUserType(e.target.value); }}
+                />
+                <label className="signup-modal__label" htmlFor="teacher">Teacher</label>
+              </li>
+              <li className="signup-modal__listitem">
+                <input
+                  type="radio"
+                  className="signup-modal__radio"
+                  name="type"
+                  value="Other"
+                  onChange={(e) => { this.props.setUserType(e.target.value); }}
+                />
+                <label className="signup-modal__label" htmlFor="teacher">Other</label>
+              </li>
+            </ul>
+          </div>
           <div className="signup-modal__buttonholder">
             <button className="forgot-modal__button" type="submit" value="Submit" >
               Submit
@@ -156,7 +197,9 @@ class SignUp extends React.Component {
 SignUp.propTypes = {
   authLoadedPage: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
-  setUserName: PropTypes.func.isRequired
+  setUserName: PropTypes.func.isRequired,
+  setUserType: PropTypes.func.isRequired,
+  userType: PropTypes.string.isRequired
 };
 
 export default SignUp;

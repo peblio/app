@@ -53,3 +53,12 @@ export function setEditAccess(value) {
     });
   };
 }
+
+export function setUserType(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_USER_TYPE,
+      value
+    });
+  };
+}
