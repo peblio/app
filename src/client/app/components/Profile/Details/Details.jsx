@@ -2,29 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 
+const axios = require('axios');
 const upload = require('superagent');
 
 class Details extends React.Component {
 
   constructor(props) {
     super(props);
-    this.uploadImage = this.uploadImage.bind(this);
     this.onDrop = this.onDrop.bind(this);
   }
-  uploadImage() {
-    console.log('hi hi hi');
-  }
-  componentDidUpdate() {
-    console.log(this.props.image);
-  }
+
   onDrop(file) {
     upload.post(`/api/upload/${this.props.name}/profile`)
       .attach('uploadImageFile', file[0])
       .end((err, res) => {
         if (err) console.log(err);
         const imageName = res.text.replace(/\s/g, '+');
+        const imageURL = `https://s3.amazonaws.com/peblio-files-staging/${imageName}`;
         // TODO: CHANGE THE folder to env
-        this.props.setProfileImage(`https://s3.amazonaws.com/peblio-files-staging/${imageName}`);
+        this.props.setProfileImage(imageURL);
+        axios.post('/profile/save', {
+          name: this.props.name,
+          imageURL
+        }).then(() => { console.log('saved'); })
+          .catch(error => console.error(error));
       });
   }
   render() {

@@ -9,8 +9,6 @@ class Pebls extends React.Component {
 
   renderPebls() {
     return this.props.pebls.map((pebl) => {
-      console.log(pebl.id);
-      console.log(pebl.title);
       const link = `/pebl/${pebl.id}`;
       const iframeLink = window.location.origin + link;
       return (

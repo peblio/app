@@ -24,24 +24,19 @@ class Profile extends React.Component {
     this.loadProfileDetails();
   }
 
-
   profileName() {
-    console.log(this.props.image);
     const location = this.props.location.pathname;
-    console.log(location);
     const profileName = location.match(/\/user\/([\w-].*)/);
-    console.log(profileName[1]);
     return profileName ? profileName[1] : null;
   }
 
   loadProfileDetails() {
     if (this.profileName()) {
       const profileName = this.profileName();
-      console.log(`/profile/user/${profileName}`);
       axios.get(`/profile/user/${profileName}`)
         .then((res) => {
-          console.log(res.data);
           this.props.setProfileName(res.data.name);
+          this.props.setProfileImage(res.data.image);
           this.props.setProfilePebls(res.data.pebls);
           this.props.setProfileFolders(res.data.folders);
           axios.get('/api/user')

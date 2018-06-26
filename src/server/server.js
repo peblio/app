@@ -51,7 +51,6 @@ app.use('/pages', pageRoutes);
 app.use('/folder', folderRoutes);
 app.use('/api', apiRoutes);
 app.use('/profile', profileRoutes);
-console.log(profileRoutes);
 
 app.get('/logout', (req, res) => {
   req.logout();
