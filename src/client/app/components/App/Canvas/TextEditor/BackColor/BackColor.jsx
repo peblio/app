@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SketchPicker } from 'react-color';
-import BackColorSVG from '../../../../images/backColor.svg';
+import BackColorSVG from '../../../../../images/backColor.svg';
 
 require('./backColor.scss');
 

@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FileModal from './FileModal/FileModal.jsx';
 import InsertToolbar from './InsertToolbar/InsertToolbar.jsx';
-import ToolbarLogo from '../../images/logo.svg';
-import CheckSVG from '../../images/check.svg';
-import AccountSVG from '../../images/account.svg';
+import ToolbarLogo from '../../../images/logo.svg';
+import CheckSVG from '../../../images/check.svg';
+import AccountSVG from '../../../images/account.svg';
 
 require('./mainToolbar.scss');
 

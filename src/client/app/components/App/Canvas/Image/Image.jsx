@@ -3,7 +3,7 @@ import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import UploadSVG from '../../../images/upload.svg';
+import UploadSVG from '../../../../images/upload.svg';
 
 require('./image.scss');
 const upload = require('superagent');

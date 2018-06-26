@@ -16,10 +16,10 @@ import PasswordReset from './Modal/PasswordReset/PasswordReset.jsx';
 import Canvas from './Canvas/Canvas.jsx';
 import MainToolbar from './MainToolbar/MainToolbar.jsx';
 
-import * as editorActions from '../action/editors.js';
-import * as mainToolbarActions from '../action/mainToolbar.js';
-import * as pageActions from '../action/page.js';
-import * as userActions from '../action/user.js';
+import * as editorActions from '../../action/editors.js';
+import * as mainToolbarActions from '../../action/mainToolbar.js';
+import * as pageActions from '../../action/page.js';
+import * as userActions from '../../action/user.js';
 
 const axios = require('axios');
 
