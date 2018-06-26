@@ -19,7 +19,7 @@ class Pebls extends React.Component {
             <div className="pebls__wrap">
               <iframe
                 className="pebls__iframe"
-                src={iframeLink}
+
               ></iframe>
             </div>
             <h2 className="pebls__title">{pebl.title} </h2>

@@ -3,15 +3,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import Details from './Details/Details.jsx';
 import Pebls from './Pebls/Pebls.jsx';
 
 import * as profileActions from '../../action/profile.js';
 
 const axios = require('axios');
+const upload = require('superagent');
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      userName: ''
+    };
     this.loadProfileDetails = this.loadProfileDetails.bind(this);
   }
 
@@ -19,24 +24,32 @@ class Profile extends React.Component {
     this.loadProfileDetails();
   }
 
-  userName() {
+
+  profileName() {
+    console.log(this.props.image);
     const location = this.props.location.pathname;
     console.log(location);
-    const userName = location.match(/\/user\/([\w-].*)/);
-    console.log(userName[1]);
-    return userName ? userName[1] : null;
+    const profileName = location.match(/\/user\/([\w-].*)/);
+    console.log(profileName[1]);
+    return profileName ? profileName[1] : null;
   }
 
   loadProfileDetails() {
-    if (this.userName()) {
-      const userName = this.userName();
-      console.log(`/profile/user/${userName}`);
-      axios.get(`/profile/user/${userName}`)
+    if (this.profileName()) {
+      const profileName = this.profileName();
+      console.log(`/profile/user/${profileName}`);
+      axios.get(`/profile/user/${profileName}`)
         .then((res) => {
           console.log(res.data);
           this.props.setProfileName(res.data.name);
           this.props.setProfilePebls(res.data.pebls);
           this.props.setProfileFolders(res.data.folders);
+          axios.get('/api/user')
+            .then((res1) => {
+              if (res1.data.name == this.props.name) {
+                this.props.setIsOwner(true);
+              }
+            });
         });
     }
   }
@@ -44,7 +57,12 @@ class Profile extends React.Component {
   render() {
     return (
       <div>
-        Welcome {this.props.name} !
+        <Details
+          isOwner={this.props.isOwner}
+          name={this.props.name}
+          image={this.props.image}
+          setProfileImage={this.props.setProfileImage}
+        />
         <Pebls
           pebls={this.props.pebls}
         />
@@ -55,9 +73,13 @@ class Profile extends React.Component {
 
 Profile.propTypes = {
   name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  isOwner: PropTypes.bool.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
+  setIsOwner: PropTypes.func.isRequired,
+  setProfileImage: PropTypes.func.isRequired,
   setProfileName: PropTypes.func.isRequired,
   setProfilePebls: PropTypes.func.isRequired,
   setProfileFolders: PropTypes.func.isRequired,
@@ -65,9 +87,11 @@ Profile.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    folders: state.profile.folders,
+    image: state.profile.image,
+    isOwner: state.profile.isOwner,
     name: state.profile.name,
     pebls: state.profile.pebls,
-    folders: state.profile.folders,
   };
 }
 

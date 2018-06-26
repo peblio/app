@@ -6,13 +6,12 @@ import React from 'react';
 import UploadSVG from '../../../../images/upload.svg';
 
 require('./image.scss');
-const upload = require('superagent');
 
 class Image extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: 'https://s3.amazonaws.com/peblio-files/potato.png'
+      url: ''
     };
     this.setCurrentEditor = () => { this.props.setCurrentEditor(this.props.id); };
     this.removeEditor = () => { this.props.removeEditor(this.props.id); };
@@ -27,12 +26,13 @@ class Image extends React.Component {
 
 
   onDrop(file) {
-    upload.post('/api/upload')
+    upload.post(`/api/upload/${this.props.name}/images`)
       .attach('uploadImageFile', file[0])
       .end((err, res) => {
         if (err) console.log(err);
         const imageName = res.text.replace(/\s/g, '+');
-        this.setImageURL(`https://s3.amazonaws.com/peblio-files/${imageName}`);
+        // TODO: CHANGE THE folder to env
+        this.setImageURL(`https://s3.amazonaws.com/peblio-files-staging/${imageName}`);
       });
   }
   render() {

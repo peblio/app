@@ -16,7 +16,7 @@ const credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
 AWS.config.credentials = credentials;
 
 
-const myBucket = 'peblio-files';
+const myBucket = process.env.S3_BUCKET;
 // Multer config
 // memory storage keeps file data in a buffer
 const upload = multer({
@@ -29,10 +29,11 @@ apiRoutes.route('/examples').get(getExamples);
 apiRoutes.route('/page/:id').get(getPage);
 apiRoutes.route('/user').get(getUser);
 apiRoutes.route('/sketches').get(getSketches);
-apiRoutes.route('/upload').post(upload.single('uploadImageFile'), uploadFiles);
+apiRoutes.route('/upload/:user/:type').post(upload.single('uploadImageFile'), uploadFiles);
 
 function uploadFiles(req, res) {
-  const fileName = `test/${shortid.generate()}_${req.file.originalname}`;
+  const fileName =
+  `${req.params.user}/${req.params.type}/${shortid.generate()}_${req.file.originalname}`;
   const params = {
     Bucket: myBucket,
     Key: fileName,
