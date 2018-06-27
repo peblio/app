@@ -8,7 +8,7 @@ const initialState = {
     margin: [50, 25],
     padding: [0, 0],
     rowHeight: 1,
-    width: 1440,
+    width: 1200,
   },
   layout: [],
   textHeights: {},
@@ -68,6 +68,11 @@ const page = (state = initialState, action) => {
     case ActionTypes.TOGGLE_PREVIEW_MODE:
       return Object.assign({}, state, {
         preview: !state.preview
+      });
+
+    case ActionTypes.SET_PREVIEW_MODE:
+      return Object.assign({}, state, {
+        preview: action.value
       });
 
     case ActionTypes.DUPLICATE_EDITOR: {

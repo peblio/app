@@ -85,8 +85,9 @@ class App extends React.Component {
       const projectID = this.projectID();
       axios.get(`/api/page/${this.projectID()}`)
         .then((res) => {
-          this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].preview, res.data[0].layout);
+          this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].layout);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
+          this.props.setPreviewMode(true);
           axios.get('/api/user')
             .then((res1) => {
               if (res1.data.pages && res1.data.pages.includes(projectID)) {
@@ -395,6 +396,7 @@ App.propTypes = {
   resizeTextEditor: PropTypes.func.isRequired,
   updateTextHeight: PropTypes.func.isRequired,
 
+  setPreviewMode: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
@@ -424,7 +426,6 @@ App.propTypes = {
   closeConfirmUserModal: PropTypes.func.isRequired,
   viewConfirmUserModal: PropTypes.func.isRequired,
   isConfirmUserModalOpen: PropTypes.bool.isRequired,
-
 
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
