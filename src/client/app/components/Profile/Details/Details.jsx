@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 
+require('./details.scss');
+
 const axios = require('axios');
 const upload = require('superagent');
 
@@ -30,27 +32,24 @@ class Details extends React.Component {
   }
   render() {
     return (
-      <div>
-        {this.props.isOwner &&
-          <p>
-          Welcome {this.props.name} !
-          </p>
-        }
-        <h1> {this.props.name} </h1>
-        <Dropzone
-          onDrop={this.onDrop}
-          className="element-image"
-        >
+      <div className="details__content">
+        <div className="details__title">
+          {this.props.isOwner &&
+            <p>
+            Welcome {this.props.name} !
+            </p>
+          }
+          <Dropzone
+            onDrop={this.onDrop}
+            className="element-image"
+          >
+          <img className="details__image" src={this.props.image} alt="profile-image"/>
           <div className="image__title">
-            Upload a file
           </div>
-          <img src={this.props.image} />
-        </Dropzone>
-        <button
-          onClick={this.uploadImage}
-        >
-            Click here to upload image
-        </button>
+          </Dropzone>
+          <div className="details__text-primary"> {this.props.name} </div>
+          <div className="details__text-secondary"> Lorem Ipsum And Such </div>
+        </div>
       </div>
     );
   }
