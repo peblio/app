@@ -57,8 +57,8 @@ class PagesList extends React.Component {
           <tbody>
             <tr className="pages__headrow">
               <th className="pages__header">Title</th>
-              <th className="pages__header">Creation Date</th>
-              <th className="pages__header">Update Date</th>
+              <th className="pages__header">Date Created</th>
+              <th className="pages__header">Date Updated</th>
               <th className="pages__header"></th>
             </tr>
             {Pages}

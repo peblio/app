@@ -25,7 +25,6 @@ function createUser(req, res) {
   const name = req.body.name;
   const type = req.body.userType;
   const password = req.body.password;
-  console.log(req.body.userType);
   let user;
   User.findOne({ name }, (err, user) => {
     if (user) {
