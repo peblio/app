@@ -156,7 +156,7 @@ export function updateTextHeight(id, height) {
 
 export function createFolder(data) {
   return (dispatch) => {
-    axios.post('/folder', data).then((response) => {
+    axios.post('/folders', data).then((response) => {
       dispatch({
         types: ActionTypes.CREATE_FOLDER,
         folder: response.data.folder
@@ -167,7 +167,7 @@ export function createFolder(data) {
 
 export function movePageToTopLevel(pageId) {
   return (dispatch) => {
-    axios.post(`/page/${pageId}/move`, {}).then((response) => {
+    axios.post(`/pages/${pageId}/move`, {}).then((response) => {
       dispatch({
         types: ActionTypes.MOVE_PAGE_TO_TOP_LEVEL,
         pageId
@@ -182,7 +182,7 @@ export function movePageToFolder(pageId, folderId) {
     if (folderId) {
       data.folderId = folderId;
     }
-    axios.post(`/page/${pageId}/move`, { folderId }).then((response) => {
+    axios.post(`/pages/${pageId}/move`, { folderId }).then((response) => {
       dispatch({
         types: ActionTypes.MOVE_PAGE_TO_FOLDER,
         pageId,

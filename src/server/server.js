@@ -47,7 +47,7 @@ app.use(passport.session());
 
 app.use('/users', userRoutes);
 app.use('/pages', pageRoutes);
-app.use('/folder', folderRoutes);
+app.use('/folders', folderRoutes);
 app.use('/api', apiRoutes);
 
 app.get('/logout', (req, res) => {
