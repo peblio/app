@@ -41,6 +41,7 @@
     "express": "^4.15.3",
     "express-session": "^1.15.6",
     "google-auth-library": "^1.6.1",
+    "moment": "^2.22.2",
     "mongodb": "^2.2.33",
     "mongoose": "^4.11.0",
     "mongoose-autopopulate": "^0.7.0",

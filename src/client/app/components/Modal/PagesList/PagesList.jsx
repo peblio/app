@@ -18,13 +18,20 @@ class PagesList extends React.Component {
     const { closeModal, isOpen, topLevelPageIds } = this.props;
     return (
       <Modal size="large" isOpen={isOpen} closeModal={closeModal}>
-        <div className="pages_list">
-          <p className="pages_title">Title</p>
-          <ol>
-            {topLevelPageIds.map(pageId => (
-              <PageRow id={pageId} />
-            ))}
-          </ol>
+        <div className="pages__list">
+          <table className="pages__table">
+            <tbody>
+              <tr className="pages__headrow">
+                <th className="pages__header">Title</th>
+                <th className="pages__header">Date Created</th>
+                <th className="pages__header">Date Updated</th>
+                <th className="pages__header"></th>
+              </tr>
+              {topLevelPageIds.map(pageId => (
+                <PageRow key={pageId} id={pageId} />
+              ))}
+            </tbody>
+          </table>
         </div>
       </Modal>
     );
