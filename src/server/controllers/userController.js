@@ -23,6 +23,7 @@ userRoutes.route('/login/google').post(loginWithGoogle);
 function createUser(req, res) {
   const email = req.body.mail;
   const name = req.body.name;
+  const type = req.body.userType;
   const password = req.body.password;
   let user;
   User.findOne({ name }, (err, user) => {
@@ -41,12 +42,14 @@ function createUser(req, res) {
       user = new User({
         email,
         name,
+        type,
         password,
         loginType: 'password'
       });
       user.hashPassword(password);
       user.save((err, user) => {
         if (err) {
+          console.log(err);
           res.status(422).json({
             msg: UserConst.SIGN_UP_FAILED
           });

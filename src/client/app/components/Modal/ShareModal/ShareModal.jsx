@@ -32,7 +32,7 @@ class Share extends React.Component {
     return (
       <section className="share__container">
         <div className="share__option">
-          <h2 className="share__text"> Share {this.props.pageTitle} via Link </h2>
+          <h2 className="share__text-primary"> Share {this.props.pageTitle} via Link </h2>
           <input
             className="share__input"
             ref={(element) => { this.input = element; }}
@@ -41,15 +41,33 @@ class Share extends React.Component {
           >
           </input>
           <button
-            className="share__button"
+            className="share__link"
             onClick={this.copyShareLink}
           >
-            Copy Link
+            copy to clipboard
           </button>
         </div>
-        <p className="share__or">or</p>
+        <p className="share__text-secondary">or</p>
+        {/*
         <div className="share__option">
-          <h2 className="share__text"> share to Google Classroom </h2>
+          <h2 className="share__text-primary"> Share via email </h2>
+          <div>
+            <input
+              className="share__input-email"
+              ref={(element) => { this.input = element; }}
+              value={window.location.href}
+              readOnly
+            >
+            </input>
+            <button className="share__button" type="submit" value="Submit" >
+              Send
+            </button>
+          </div>
+        </div>
+        <p className="share__text-secondary">or</p>
+        */}
+        <div className="share__option">
+          <h2 className="share__text-primary"> share to Google Classroom </h2>
           <div
             id="widget-div"
             ref={(element) => { this.widget = element; }}
