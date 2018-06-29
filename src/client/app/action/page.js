@@ -165,6 +165,17 @@ export function createFolder(data) {
   };
 }
 
+export function deleteFolder(folderId) {
+  return (dispatch) => {
+    axios.delete(`/folders/${folderId}`).then(() => {
+      dispatch({
+        types: ActionTypes.DELETE_FOLDER,
+        folderId
+      });
+    });
+  };
+}
+
 export function movePageToTopLevel(pageId) {
   return (dispatch) => {
     axios.post(`/pages/${pageId}/move`, {}).then((response) => {

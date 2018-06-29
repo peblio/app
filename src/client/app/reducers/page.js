@@ -29,6 +29,17 @@ const initialState = {
   unsavedChanges: false
 };
 
+function findChildFolderIds(foldersById = {}, folderId = '') {
+  const folder = foldersById[folderId];
+  if (!folder) {
+    return [];
+  }
+  return [folderId, ...folder.children.reduce((accum, childId) => [
+    ...accum,
+    ...findChildFolderIds(foldersById, childId)
+  ], [])];
+}
+
 const page = (state = initialState, action) => {
   switch (action.type) {
 
@@ -149,6 +160,33 @@ const page = (state = initialState, action) => {
             ...normalizedFolderData.entities.folders,
           },
           allIds: folders.allIds.concat(normalizedFolderData.result)
+        }
+      };
+    }
+
+    case ActionTypes.DELETE_FOLDER: {
+      const { folders, pages } = state;
+      const folderIdsToDelete = findChildFolderIds(folders.byId, action.folderId);
+      const pageIdsToDelete = pages.allIds.filter(pageId => folderIdsToDelete.includes(pages.byId[pageId].folder));
+      return {
+        ...state,
+        folders: {
+          byId: Object.values(folders.byId).reduce((accum, folder) => {
+            if (folderIdsToDelete.includes(folder._id)) {
+              return accum;
+            }
+            return { ...accum, [folder._id]: folder };
+          }, {}),
+          allIds: folders.allIds.filter(folderId => !folderIdsToDelete.includes(folderId))
+        },
+        pages: {
+          byId: Object.values(pages.byId).reduce((accum, p) => {
+            if (pageIdsToDelete.includes(p._id)) {
+              return accum;
+            }
+            return { ...accum, [p._id]: p };
+          }, {}),
+          allIds: pages.allIds.filter(pageId => !pageIdsToDelete.includes(pageId))
         }
       };
     }
