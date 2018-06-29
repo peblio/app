@@ -43,13 +43,17 @@ function findChildFolderIds(foldersById = {}, folderId = '') {
 const page = (state = initialState, action) => {
   switch (action.type) {
 
-    case ActionTypes.DELETE_PAGE:
-      {
-        const pages = state.pages.filter(id => id.id !== action.id);
-        return Object.assign({}, state, {
-          pages
-        });
-      }
+    case ActionTypes.DELETE_PAGE: {
+      const { pages } = state;
+      delete pages.byId[action.pageId];
+      return {
+        ...state,
+        pages: {
+          byId: { ...pages.byId },
+          allIds: pages.allIds.filter(pageId => pageId !== action.pageId)
+        }
+      };
+    }
 
     case ActionTypes.SET_PAGE_TITLE:
       return Object.assign({}, state, {
@@ -80,16 +84,16 @@ const page = (state = initialState, action) => {
       return Object.assign({}, state, {
         pages: {
           byId: {
-            ...normalizedPageData.entities.pages,
-            ...normalizedFolderData.entities.pages
+            ...(normalizedPageData.entities.pages || {}),
+            ...(normalizedFolderData.entities.pages || {})
           },
-          allIds: normalizedPageData.result
-            .concat(Object.keys(normalizedFolderData.entities.pages))
+          allIds: (normalizedPageData.result || [])
+            .concat(Object.keys(normalizedFolderData.entities.pages || {}))
             .filter((elem, pos, arr) => arr.indexOf(elem) === pos) // filter uniques
         },
         folders: {
-          byId: normalizedFolderData.entities.folders,
-          allIds: normalizedFolderData.result
+          byId: (normalizedFolderData.entities.folders || {}),
+          allIds: (normalizedFolderData.result || [])
         }
       });
     }
@@ -157,9 +161,9 @@ const page = (state = initialState, action) => {
           ...folders,
           byId: {
             ...folders.byId,
-            ...normalizedFolderData.entities.folders,
+            ...(normalizedFolderData.entities.folders || {}),
           },
-          allIds: folders.allIds.concat(normalizedFolderData.result)
+          allIds: folders.allIds.concat(normalizedFolderData.result || [])
         }
       };
     }

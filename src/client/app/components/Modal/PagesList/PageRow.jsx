@@ -35,6 +35,7 @@ import DeleteIcon from '../../../images/trash.svg';
 
 class PageRow extends Component {
   render() {
+    // page.id is a shortid that is NOT the same thing as page._id or the id prop
     const { id, page } = this.props;
     const link = `/pebl/${page.id}`;
     return (
@@ -43,7 +44,7 @@ class PageRow extends Component {
         <td className="pages__col" > {formatDate(page.createdAt)} </td>
         <td className="pages__col" > {formatDate(page.updatedAt)} </td>
         <td className="pages__col" >
-          <button className="pages__delete" onClick={() => { this.props.deletePage({ page }); }}>
+          <button className="pages__delete" onClick={() => { this.props.deletePage(id); }}>
             <DeleteIcon alt="delete page" />
           </button>
         </td>

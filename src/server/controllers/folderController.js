@@ -24,7 +24,7 @@ folderRoutes.route('').post(async (req, res) => {
     const folder = await f.save();
     return res.status(201).send({ folder });
   } catch (err) {
-    return res.send(err);
+    return res.status(500).send({ error: err.message });
   }
 });
 
@@ -46,7 +46,7 @@ folderRoutes.route('/:folderId').delete(async (req, res) => {
 
   const { folderId } = req.params;
   try {
-    const folder = Folder.findOne({ _id: folderId, user: user._id }).exec();
+    const folder = await Folder.findOne({ _id: folderId, user: user._id }).exec();
     if (!folder) {
       return res.status(404).send({ error: `Folder with id ${folderId} not found` });
     }
@@ -55,7 +55,7 @@ folderRoutes.route('/:folderId').delete(async (req, res) => {
     await Folder.deleteMany({ _id: { $in: folderIdsToDelete }, user: user._id }).exec();
     return res.sendStatus(204);
   } catch (err) {
-    return res.send(err);
+    return res.status(500).send({ error: err.message });
   }
 });
 

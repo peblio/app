@@ -9,7 +9,7 @@ const pageRoutes = express.Router();
 pageRoutes.route('/:pageId/move').post(movePage);
 pageRoutes.route('/save').post(savePage);
 pageRoutes.route('/update').post(updatePage);
-pageRoutes.route('/delete').post(deletePage);
+pageRoutes.route('/:pageId').delete(deletePage);
 
 function savePage(req, res) {
   const user = req.user;
@@ -46,36 +46,18 @@ function savePage(req, res) {
   }
 }
 
-function deletePage(req, res) {
-  const user = req.user;
-  let data;
-  Page.remove({ id: req.body.id },
-  (err, data) => {
-    if (err) {
-      data = err;
-    } else {
-      data = 'Record has been Deleted..!!';
-    }
-  });
+async function deletePage(req, res) {
+  const { pageId } = req.params;
+  await Page.deleteOne({ _id: pageId });
 
-  User.find({ _id: user._id }, (err, data) => {
-    if (err) {
-      data = err;
-    } else {
-      const pages = data[0].pages.filter(id => id !== req.body.id);
-      User.update({ _id: user._id }, {
-        pages
-      },
-      (err, data) => {
-        if (err) {
-          data = err;
-        } else {
-          data = 'Single Page removed from User!!';
-        }
-      });
-    }
-  });
-  res.send(data);
+  try {
+    const user = await User.findOne({ _id: req.user._id }).exec();
+    const pages = user.pages.filter(id => id !== pageId);
+    await User.updateOne({ _id: user._id }, { pages }).exec();
+    return res.sendStatus(204);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
 }
 
 function updatePage(req, res) {
@@ -127,7 +109,7 @@ async function movePage(req, res) {
     const savedPage = await page.save();
     return res.status(200).send({ page: savedPage });
   } catch (err) {
-    return res.send(err);
+    return res.status(500).send({ error: err.message });
   }
 }
 

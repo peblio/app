@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+// use the native Promise object for Mongoose's promises
+mongoose.Promise = Promise;
 const bodyParser = require('body-parser');
 const express = require('express'); // include the express library
 const path = require('path');

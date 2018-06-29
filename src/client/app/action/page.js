@@ -44,16 +44,14 @@ export function loadPage(id, title, preview, layout) {
   };
 }
 
-export function deletePage(page) {
-  const id = page.page.id;
-  axios.post('/pages/delete', { id })
-    .then(() => console.log('Page deleted'))
-    .catch(error => console.error('Error deleting page', error));
+export function deletePage(pageId) {
   return (dispatch) => {
-    dispatch({
-      type: ActionTypes.DELETE_PAGE,
-      id
-    });
+    axios.delete(`/pages/${pageId}`).then(() => {
+      dispatch({
+        type: ActionTypes.DELETE_PAGE,
+        pageId
+      });
+    })
   };
 }
 
