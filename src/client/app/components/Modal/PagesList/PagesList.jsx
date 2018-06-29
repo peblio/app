@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import FolderRow from './FolderRow.jsx';
 import PageRow from './PageRow.jsx';
 import Modal from '../Modal.jsx';
 import { fetchAllPages } from '../../../action/page.js';
@@ -15,23 +16,40 @@ class PagesList extends React.Component {
   }
 
   render() {
-    const { closeModal, isOpen, topLevelPageIds } = this.props;
+    const { closeModal, isOpen, topLevelFolderIds, topLevelPageIds } = this.props;
     return (
       <Modal size="large" isOpen={isOpen} closeModal={closeModal}>
         <div className="pages__list">
-          <table className="pages__table">
-            <tbody>
-              <tr className="pages__headrow">
-                <th className="pages__header">Title</th>
-                <th className="pages__header">Date Created</th>
-                <th className="pages__header">Date Updated</th>
-                <th className="pages__header"></th>
-              </tr>
-              {topLevelPageIds.map(pageId => (
-                <PageRow key={pageId} id={pageId} />
-              ))}
-            </tbody>
-          </table>
+          {topLevelFolderIds.length &&
+            <table className="pages__table">
+              <tbody>
+                <tr className="pages__headrow">
+                  <th className="pages__header">Folders</th>
+                  <th className="pages__header">Created</th>
+                  <th className="pages__header">Updated</th>
+                  <th className="pages__header"></th>
+                </tr>
+                {topLevelFolderIds.map(folderId => (
+                  <FolderRow key={folderId} id={folderId} />
+                ))}
+              </tbody>
+            </table>
+          }
+          {topLevelPageIds.length &&
+            <table className="pages__table">
+              <tbody>
+                <tr className="pages__headrow">
+                  <th className="pages__header">Files</th>
+                  <th className="pages__header">Created</th>
+                  <th className="pages__header">Updated</th>
+                  <th className="pages__header"></th>
+                </tr>
+                {topLevelPageIds.map(pageId => (
+                  <PageRow key={pageId} id={pageId} />
+                ))}
+              </tbody>
+            </table>
+          }
         </div>
       </Modal>
     );
