@@ -20,6 +20,7 @@ const userSchema = new Schema({
   type: {
     type: String,
     default: '',
+    enum: ['Student', 'Teacher', 'Other'],
     required: true
   },
   password: {
