@@ -8,6 +8,8 @@ import Pebls from './Pebls/Pebls.jsx';
 
 import * as profileActions from '../../action/profile.js';
 
+require('./profile.scss');
+
 const axios = require('axios');
 const upload = require('superagent');
 
@@ -41,7 +43,7 @@ class Profile extends React.Component {
           this.props.setProfileFolders(res.data.folders);
           axios.get('/api/user')
             .then((res1) => {
-              if (res1.data.name == this.props.name) {
+              if (res1.data.name === this.props.name) {
                 this.props.setIsOwner(true);
               }
             });
@@ -51,7 +53,7 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="profile__content">
         <Details
           isOwner={this.props.isOwner}
           name={this.props.name}

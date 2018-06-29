@@ -12,17 +12,16 @@ class Pebls extends React.Component {
       const link = `/pebl/${pebl.id}`;
       const iframeLink = window.location.origin + link;
       return (
-        <li key={pebl.id}>
-          <a href={link}>
-            <div className="pebls__wrap">
-              <iframe
-                className="pebls__iframe"
-
-              ></iframe>
-            </div>
-            <h2 className="pebls__title">{pebl.title} </h2>
-          </a>
-        </li>
+          <li className="pebls__file" key={pebl.id}>
+            <a className="pebls__link" href={link}>
+              <div className="pebls__wrap">
+                <iframe
+                  className="pebls__iframe"
+                ></iframe>
+              </div>
+              <p className="pebls__title">{pebl.title} </p>
+            </a>
+          </li>
       );
     });
   }
@@ -30,8 +29,18 @@ class Pebls extends React.Component {
   render() {
     const Pebls = this.renderPebls();
     return (
-      <div>
-        <ol className="pebls__list">
+      <div className="pebls__content">
+        <div className="pebls__heading">
+          <p> All Work </p>
+        </div>
+
+        <div className="pebls__subheading">
+          <p> FOLDERS </p>
+        </div>
+        <div className="pebls__subheading">
+          <p> FILES </p>
+        </div>
+        <ol className="pebls__files">
           {Pebls}
         </ol>
       </div>
