@@ -1,7 +1,6 @@
 @import 'variables';
 
 .pebls {
-
   &__content {
     width: 75%;
     height: 100%;
@@ -20,21 +19,21 @@
   }
 
   &__iframe {
-   width: 1280px;
-   height: 786px;
-   border: 0;
+    width: 1280px;
+    height: 786px;
+    border: 0;
 
-   -ms-transform: scale(0.25);
-   -moz-transform: scale(0.25);
-   -o-transform: scale(0.25);
-   -webkit-transform: scale(0.25);
-   transform: scale(0.25);
+    -ms-transform: scale(0.25);
+    -moz-transform: scale(0.25);
+    -o-transform: scale(0.25);
+    -webkit-transform: scale(0.25);
+    transform: scale(0.25);
 
-   -ms-transform-origin: 0 0;
-   -moz-transform-origin: 0 0;
-   -o-transform-origin: 0 0;
-   -webkit-transform-origin: 0 0;
-   transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    -o-transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
   }
 
   &__heading {
@@ -54,7 +53,7 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    border-top: $medium-border-width solid $yellow;
+    border-top: $large-border solid $yellow;
     width: 30%;
     display: flex;
     flex-direction: row;
@@ -66,7 +65,7 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    border: $medium-border-width solid $yellow;
+    border: $large-border solid $yellow;
     width: 30%;
     display: flex;
     flex-direction: row;

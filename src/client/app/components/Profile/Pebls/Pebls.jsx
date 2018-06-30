@@ -12,16 +12,16 @@ class Pebls extends React.Component {
       const link = `/pebl/${pebl.id}`;
       const iframeLink = window.location.origin + link;
       return (
-          <li className="pebls__file" key={pebl.id}>
-            <a className="pebls__link" href={link}>
-              <div className="pebls__wrap">
-                <iframe
-                  className="pebls__iframe"
-                ></iframe>
-              </div>
-              <p className="pebls__title">{pebl.title} </p>
-            </a>
-          </li>
+        <li className="pebls__file" key={pebl.id}>
+          <a className="pebls__link" href={link}>
+            <div className="pebls__wrap">
+              <iframe
+                className="pebls__iframe"
+              ></iframe>
+            </div>
+            <p className="pebls__title">{pebl.title} </p>
+          </a>
+        </li>
       );
     });
   }

@@ -2,38 +2,40 @@
 @import 'mixins';
 
 .details {
-    &__content {
-        width: 25%;
-        height: 100%;
-        float: left;
-        color: $white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: $profile-gray;
-        text-align: center;
-    }
+  &__content {
+    width: 25%;
+    height: 100%;
+    float: left;
+    color: $white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $profile-gray;
+    text-align: center;
+  }
 
-    &__text-primary {
-        margin: $medium-margin;
-        color: $white;
-        font-size: $large-font-size;
-    }
+  &__text-primary {
+    margin: $medium-margin;
+    color: $white;
+    font-size: $large-font-size;
+  }
 
-    &__text-secondary {
-        color: $white;
-        font-size: $small-font-size;
-        padding: $medium-padding;
-        margin-top: $large-margin;
-    }
+  &__text-secondary {
+    color: $white;
+    font-size: $small-font-size;
+    padding: $medium-padding;
+    margin-top: $large-margin;
+  }
 
-    &__title {
-        margin: auto;
-    }
+  &__title {
+    margin: auto;
+  }
 
-    &__image {
-        max-width: 70%;
-        height: auto;
-        border-radius: 50%;
-    }
+  &__image {
+    max-width: 90%;
+    height: auto;
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+  }
 }
