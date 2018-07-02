@@ -18,8 +18,25 @@
 }
 
 .modal__close-button{
-  float:right;
+  position: absolute;
+  top: 5px;
+  right: 5px;
   padding: 4px;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  color: black;
+  fill: transparent;
+  font-size: 14px;
+  text-transform: uppercase;
+  -webkit-transition-duration: unset;
+  transition-duration: unset;
+
+  &:hover {
+    border: none;
+    color: black;
+    background: transparent;
+  }
 }
 
 %modal{
@@ -30,6 +47,7 @@
   border-radius: $medium-border-radius;
   border: 2px solid $gray;
   padding: 10px;
+  position: relative;
 }
 
 %modal__title{

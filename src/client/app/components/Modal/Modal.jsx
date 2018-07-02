@@ -3,15 +3,22 @@ import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 
 class Modal extends React.Component {
+  static defaultProps = {
+    style: {
+      content: {},
+      overlay: {}
+    }
+  }
+
   componentWillMount() {
     ReactModal.setAppElement('body');
   }
 
   render() {
     return (
-      <ReactModal className={`modal__${this.props.size}`} isOpen={this.props.isOpen}>
+      <ReactModal className={`modal__${this.props.size}`} isOpen={this.props.isOpen} style={this.props.style}>
         <nav>
-          <button className="modal__close-button" onClick={this.props.closeModal}>Close</button>
+          <button className="modal__close-button" onClick={this.props.closeModal}>╳</button>
         </nav>
         {this.props.children}
       </ReactModal>
@@ -26,7 +33,11 @@ Modal.propTypes = {
   ]).isRequired,
   closeModal: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  size: PropTypes.string.isRequired
+  size: PropTypes.string.isRequired,
+  style: PropTypes.shape({
+    content: PropTypes.shape({}),
+    overlay: PropTypes.shape({})
+  })
 };
 
 export default Modal;
