@@ -19,12 +19,12 @@
   overflow-y: scroll;
 }
 
-
 .pages_list ol{
   list-style-position: inside;
   -webkit-margin-before: 0;
   -webkit-padding-start: 0px;
 }
+
 .pages_list ol li{
   padding: 1.5rem;
   color: $gray;
@@ -38,6 +38,38 @@
   color: $gray;
 }
 
+.pages__table{
+  width: 100%;
+  list-style-position: inside;
+  padding-top: $medium-padding;
+  -webkit-margin-before: 0;
+  -webkit-padding-start: 0px;
+}
+
+.pages__row{
+  width: 100%;
+  color: $gray;
+}
+
+.pages__col{
+  text-align: $left-align;
+  padding: $medium-padding;
+}
+
+.pages__row:nth-child(odd){
+  background: $lighter-gray;
+}
+
+.pages__link{
+  color: $gray;
+}
+
+.pages__header{
+  padding: $medium-padding;
+  background: $lighter-gray;
+  text-align: $left-align;
+  text-transform: uppercase;
+}
 
 .pages__delete{
   margin: -10px;
