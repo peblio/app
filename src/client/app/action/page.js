@@ -112,15 +112,13 @@ export function updatePage(id, title, preview, editors, editorIndex, layout) {
 }
 
 export function fetchAllPages() {
-  return (dispatch) => {
-    axios.get('/api/sketches').then(({ data }) => {
-      dispatch({
-        type: ActionTypes.SET_ALL_PAGES,
-        pages: data.pages,
-        folders: data.folders
-      });
+  return dispatch => axios.get('/api/sketches').then(({ data }) => {
+    dispatch({
+      type: ActionTypes.SET_ALL_PAGES,
+      pages: data.pages,
+      folders: data.folders
     });
-  };
+  });
 }
 
 export function togglePreviewMode(value) {

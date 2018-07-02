@@ -24,15 +24,6 @@ import * as userActions from '../action/user.js';
 const axios = require('axios');
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.authAndLoadPage = this.authAndLoadPage.bind(this);
-    this.authLoadedPage = this.authLoadedPage.bind(this);
-    this.projectID = this.projectID.bind(this);
-    this.resetPage = this.resetPage.bind(this);
-    this.savePage = this.savePage.bind(this);
-  }
-
   componentDidMount() {
     this.authAndLoadPage();
   }
@@ -57,25 +48,25 @@ class App extends React.Component {
     }
   }
 
-  projectID() {
+  projectID = () => {
     const location = this.props.location.pathname;
     const projectID = location.match(/\/pebl\/([\w-].*)/);
     return projectID ? projectID[1] : null;
   }
 
-  resetPage() {
+  resetPage = () => {
     const location = this.props.location.pathname;
     const tokenID = location.match(/\/reset\/([\w-].*)/);
     return tokenID ? tokenID[1] : null;
   }
 
-  userConfirmation() {
+  userConfirmation = () => {
     const location = this.props.location.pathname;
     const tokenID = location.match(/\/confirmation/);
     return tokenID ? true : null;
   }
 
-  authAndLoadPage() {
+  authAndLoadPage = () => {
     if (this.userConfirmation()) {
       this.props.viewConfirmUserModal();
     } else if (this.resetPage()) {
@@ -99,11 +90,12 @@ class App extends React.Component {
       .then((res) => {
         if (res.data.name) {
           this.props.setUserName(res.data.name);
+          this.props.fetchAllPages();
         }
       });
   }
 
-  authLoadedPage() {
+  authLoadedPage = () => {
     if (this.projectID()) {
       this.props.setEditAccess(false);
       const projectID = this.projectID();
@@ -116,7 +108,7 @@ class App extends React.Component {
     }
   }
 
-  savePage() {
+  savePage = () => {
     if (this.props.name) {
       if (this.props.id.length === 0) {
         this.props.submitPage(
@@ -414,10 +406,10 @@ App.propTypes = {
   viewConfirmUserModal: PropTypes.func.isRequired,
   isConfirmUserModalOpen: PropTypes.bool.isRequired,
 
-
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
-  signUserUp: PropTypes.func.isRequired
+  signUserUp: PropTypes.func.isRequired,
+  fetchAllPages: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -453,11 +445,11 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({},
-    editorActions,
-    mainToolbarActions,
-    pageActions,
-    userActions),
-  dispatch);
+  return bindActionCreators({
+    ...editorActions,
+    ...mainToolbarActions,
+    ...pageActions,
+    ...userActions
+  }, dispatch);
 }
 export default (connect(mapStateToProps, mapDispatchToProps)(App));

@@ -12,8 +12,10 @@ import compareTimestamps from '../../../utils/compare-timestamps';
 require('./pagesList.scss');
 
 class PagesList extends React.Component {
-  componentDidMount() {
-    this.props.fetchAllPages();
+  componentDidUpdate(prevProps) {
+    if (!prevProps.isOpen && this.props.isOpen) {
+      this.props.fetchAllPages();
+    }
   }
 
   render() {
