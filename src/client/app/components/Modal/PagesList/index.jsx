@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
-import FolderRow from './FolderRow';
-import PageRow from './PageRow';
+import FoldersTable from './FoldersTable';
+import PagesTable from './PagesTable';
 import Modal from '../Modal';
 import { fetchAllPages } from '../../../action/page';
 import compareTimestamps from '../../../utils/compare-timestamps';
@@ -24,33 +26,9 @@ class PagesList extends React.Component {
       <Modal size="large" isOpen={isOpen} closeModal={closeModal}>
         <div className="pages__list">
           {topLevelFolders.length > 0 &&
-            <table className="pages__table">
-              <tbody>
-                <tr className="pages__headrow">
-                  <th className="pages__header">Folders</th>
-                  <th className="pages__header">Created</th>
-                  <th className="pages__header">Updated</th>
-                  <th className="pages__header"></th>
-                </tr>
-                {topLevelFolders.map(folder => (
-                  <FolderRow key={folder._id} folder={folder} />
-                ))}
-              </tbody>
-            </table>
+            <FoldersTable folders={topLevelFolders} />
           }
-          <table className="pages__table">
-            <tbody>
-              <tr className="pages__headrow">
-                <th className="pages__header">Files</th>
-                <th className="pages__header">Created</th>
-                <th className="pages__header">Updated</th>
-                <th className="pages__header"></th>
-              </tr>
-              {topLevelPages.map(page => (
-                <PageRow key={page._id} page={page} />
-              ))}
-            </tbody>
-          </table>
+          <PagesTable pages={topLevelPages} />
         </div>
       </Modal>
     );
@@ -65,6 +43,8 @@ PagesList.propTypes = {
   fetchAllPages: PropTypes.func.isRequired
 };
 
+const DragDropPagesList = DragDropContext(HTML5Backend)(PagesList);
+
 const mapStateToProps = state => ({
   topLevelFolders: Object.values(state.page.folders.byId).filter(folder => !folder.parent).sort(compareTimestamps),
   topLevelPages: Object.values(state.page.pages.byId).filter(page => !page.folder).sort(compareTimestamps)
@@ -72,4 +52,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({ fetchAllPages }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(PagesList);
+export default connect(mapStateToProps, mapDispatchToProps)(DragDropPagesList);
