@@ -90,7 +90,7 @@ async function movePage(req, res) {
   const { folderId } = req.body;
 
   try {
-    const page = await Page.findOne({ _id: pageId, user: user._id }).exec();
+    const page = await Page.findOne({ _id: pageId }).exec();
     if (!page) {
       return res.status(404).send({ error: `Page with id ${pageId} not found` });
     }

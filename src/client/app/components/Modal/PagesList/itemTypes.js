@@ -1,4 +1,4 @@
 export default {
-  Page: 'Page',
-  Folder: 'Folder'
+  PAGE: 'PAGE',
+  FOLDER: 'FOLDER'
 };

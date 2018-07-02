@@ -59,4 +59,33 @@ folderRoutes.route('/:folderId').delete(async (req, res) => {
   }
 });
 
+folderRoutes.route('/:folderId/move').post(async (req, res) => {
+  const user = req.user;
+  if (!user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  }
+
+  const childFolderId = req.params.folderId;
+  const parentFolderId = req.body.parentFolderId;
+  try {
+    const childFolder = await Folder.findOne({ _id: childFolderId, user: user._id }).exec();
+    if (!childFolder) {
+      return res.status(404).send({ error: `Folder with id ${childFolderId} not found` });
+    }
+    if (parentFolderId) {
+      const parentFolderCount = await Folder.count({ _id: parentFolderId, user: user._id }).exec();
+      if (!parentFolderCount) {
+        return res.status(404).send({ error: `Folder with id ${parentFolderId} not found` });
+      }
+      childFolder.parent = parentFolderId;
+    } else {
+      delete childFolder.parent;
+    }
+    const savedChildFolder = await childFolder.save();
+    return res.status(200).send({ folder: savedChildFolder });
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+});
+
 module.exports = folderRoutes;

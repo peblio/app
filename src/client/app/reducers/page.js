@@ -214,14 +214,14 @@ const page = (state = initialState, action) => {
           ...folders,
           byId: {
             ...folders.byId,
-            [folderId]: folder
+            [folderId]: { ...folder }
           }
         },
         pages: {
           ...pages,
           byId: {
             ...pages.byId,
-            [pageId]: pageToMove
+            [pageId]: { ...pageToMove }
           }
         }
       };
@@ -232,7 +232,7 @@ const page = (state = initialState, action) => {
       const { folders, pages } = state;
 
       const pageToMove = pages.byId[pageId];
-      pageId.folder = folderId;
+      pageToMove.folder = folderId;
 
       const folder = folders.byId[folderId];
       folder.files = folder.files.concat(pageId);
@@ -242,16 +242,64 @@ const page = (state = initialState, action) => {
           ...folders,
           byId: {
             ...folders.byId,
-            [folderId]: folder
+            [folderId]: { ...folder }
           }
         },
         pages: {
           ...pages,
           byId: {
             ...pages.byId,
-            [pageId]: pageToMove
+            [pageId]: { ...pageToMove }
           }
         }
+      };
+    }
+
+    case ActionTypes.MOVE_FOLDER_TO_TOP_LEVEL: {
+      const childFolderId = action.folderId;
+      const { folders } = state;
+      const childFolder = folders.byId[childFolderId];
+      const parentFolderId = childFolder.parent;
+      if (!parentFolderId) {
+        return state;
+      }
+
+      const parentFolder = folders.byId[parentFolderId];
+      parentFolder.children = parentFolder.children.filter(folderId => folderId !== childFolderId);
+
+      childFolder.parent = null;
+      return {
+        ...state,
+        folders: {
+          ...folders,
+          byId: {
+            ...folders.byId,
+            [childFolderId]: { ...childFolder },
+            [parentFolderId]: { ...parentFolder }
+          }
+        }
+      };
+    }
+
+    case ActionTypes.MOVE_FOLDER_TO_FOLDER: {
+      const { childFolderId, parentFolderId } = action;
+      const { folders, } = state;
+
+      const childFolder = folders.byId[childFolderId];
+      childFolder.parent = parentFolderId;
+
+      const parentFolder = folders.byId[parentFolderId];
+      parentFolder.children = parentFolder.children.concat(childFolderId);
+      return {
+        ...state,
+        folders: {
+          ...folders,
+          byId: {
+            ...folders.byId,
+            [childFolderId]: { ...childFolder },
+            [parentFolderId]: { ...parentFolder }
+          }
+        },
       };
     }
 

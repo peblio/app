@@ -154,7 +154,7 @@ export function createFolder(data) {
   return (dispatch) => {
     axios.post('/folders', data).then((response) => {
       dispatch({
-        types: ActionTypes.CREATE_FOLDER,
+        type: ActionTypes.CREATE_FOLDER,
         folder: response.data.folder
       });
     });
@@ -165,7 +165,7 @@ export function deleteFolder(folderId) {
   return (dispatch) => {
     axios.delete(`/folders/${folderId}`).then(() => {
       dispatch({
-        types: ActionTypes.DELETE_FOLDER,
+        type: ActionTypes.DELETE_FOLDER,
         folderId
       });
     });
@@ -173,10 +173,15 @@ export function deleteFolder(folderId) {
 }
 
 export function movePageToTopLevel(pageId) {
-  return (dispatch) => {
-    axios.post(`/pages/${pageId}/move`, {}).then((response) => {
+  return (dispatch, getState) => {
+    const { page } = getState();
+    const pageToMove = page.pages.byId[pageId];
+    if (!pageToMove.folder) {
+      return Promise.resolve();
+    }
+    return axios.post(`/pages/${pageId}/move`, {}).then((response) => {
       dispatch({
-        types: ActionTypes.MOVE_PAGE_TO_TOP_LEVEL,
+        type: ActionTypes.MOVE_PAGE_TO_TOP_LEVEL,
         pageId
       });
     });
@@ -184,17 +189,43 @@ export function movePageToTopLevel(pageId) {
 }
 
 export function movePageToFolder(pageId, folderId) {
-  return (dispatch) => {
-    const data = {};
-    if (folderId) {
-      data.folderId = folderId;
+  if (!folderId) {
+    return movePageToTopLevel(pageId);
+  }
+  return dispatch => axios.post(`/pages/${pageId}/move`, { folderId }).then((response) => {
+    dispatch({
+      type: ActionTypes.MOVE_PAGE_TO_FOLDER,
+      pageId,
+      folderId
+    });
+  });
+}
+
+export function moveFolderToTopLevel(folderId) {
+  return (dispatch, getState) => {
+    const { page } = getState();
+    const folder = page.folders.byId[folderId];
+    if (!folder.parent) {
+      return Promise.resolve();
     }
-    axios.post(`/pages/${pageId}/move`, { folderId }).then((response) => {
+    return axios.post(`/folders/${folderId}/move`, {}).then((response) => {
       dispatch({
-        types: ActionTypes.MOVE_PAGE_TO_FOLDER,
-        pageId,
+        type: ActionTypes.MOVE_FOLDER_TO_TOP_LEVEL,
         folderId
       });
     });
   };
+}
+
+export function moveFolderToFolder(childFolderId, parentFolderId) {
+  if (!parentFolderId) {
+    return moveFolderToTopLevel(childFolderId);
+  }
+  return dispatch => axios.post(`/pages/${childFolderId}/move`, { folderId: parentFolderId }).then((response) => {
+    dispatch({
+      type: ActionTypes.MOVE_FOLDER_TO_FOLDER,
+      childFolderId,
+      parentFolderId
+    });
+  });
 }

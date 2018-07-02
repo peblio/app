@@ -11,17 +11,7 @@ import DeleteIcon from '../../../../images/trash.svg';
 
 const pageSource = {
   beginDrag(props) {
-    return { pageId: props._id };
-  },
-
-  endDrag(props, monitor, component) {
-    if (!monitor.didDrop()) {
-      return;
-    }
-
-    const item = monitor.getItem();
-    const dropResult = monitor.getDropResult();
-    // CardActions.moveCardToList(item.id, dropResult.listId);
+    return { pageId: props.page._id };
   }
 };
 
@@ -66,6 +56,6 @@ PageRow.propTypes = {
 
 const mapDispatchToProps = dispatch => bindActionCreators({ deletePage }, dispatch);
 
-const DraggablePageRow = DragSource(ItemTypes.Page, pageSource, collect)(PageRow);
+const DraggablePageRow = DragSource(ItemTypes.PAGE, pageSource, collect)(PageRow);
 
 export default connect(null, mapDispatchToProps)(DraggablePageRow);
