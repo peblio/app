@@ -10,7 +10,7 @@ const initialState = {
   isPagesModalOpen: false,
   isResetModalOpen: false,
   isShareModalOpen: false,
-  isSignUpModalOpen: true
+  isSignUpModalOpen: false
 };
 
 const mainToolbar = (state = initialState, action) => {

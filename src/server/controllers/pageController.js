@@ -67,7 +67,6 @@ function updatePage(req, res) {
     editors: req.body.editors,
     editorIndex: req.body.editorIndex,
     layout: req.body.layout,
-    updateDate: req.body.updateDate
   },
   (err, data) => {
     if (err) {

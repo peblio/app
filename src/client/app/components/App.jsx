@@ -236,10 +236,13 @@ class App extends React.Component {
           updateTextHeight={this.props.updateTextHeight}
         />
 
-        <PagesList
+        <Modal
+          size="large"
           isOpen={this.props.isPagesModalOpen}
           closeModal={this.props.closePagesModal}
-        />
+        >
+          <PagesList />
+        </Modal>
 
         <Modal
           size="large"
@@ -443,7 +446,6 @@ function mapStateToProps(state) {
     id: state.page.id,
     preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,
-    createDate: state.page.createDate,
     textHeights: state.page.textHeights,
 
     canEdit: state.user.canEdit,
