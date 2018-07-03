@@ -207,7 +207,7 @@ const page = (state = initialState, action) => {
       const folder = folders.byId[folderId];
       folder.files = folder.files.filter(pId => pId !== pageId);
 
-      pageToMove.folder = null;
+      delete pageToMove.folder;
       return {
         ...state,
         folders: {
@@ -267,7 +267,7 @@ const page = (state = initialState, action) => {
       const parentFolder = folders.byId[parentFolderId];
       parentFolder.children = parentFolder.children.filter(folderId => folderId !== childFolderId);
 
-      childFolder.parent = null;
+      delete childFolder.parent;
       return {
         ...state,
         folders: {

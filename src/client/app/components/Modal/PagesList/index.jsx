@@ -5,11 +5,9 @@ import { bindActionCreators } from 'redux';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import FoldersTable from './FoldersTable';
-import PagesTable from './PagesTable';
+import FolderContainer from './FolderContainer';
 import Modal from '../Modal';
 import { fetchAllPages } from '../../../action/page';
-import compareTimestamps from '../../../utils/compare-timestamps';
 
 require('./pagesList.scss');
 
@@ -21,14 +19,17 @@ class PagesList extends React.Component {
   }
 
   render() {
-    const { closeModal, isOpen, topLevelFolders, topLevelPages } = this.props;
+    const { closeModal, isOpen } = this.props;
+    const modalStyle = {
+      content: {
+        background: '#EAE8E8',
+        padding: '30px'
+      }
+    };
     return (
-      <Modal size="large" isOpen={isOpen} closeModal={closeModal}>
+      <Modal size="large" isOpen={isOpen} closeModal={closeModal} style={modalStyle}>
         <div className="pages__list">
-          {topLevelFolders.length > 0 &&
-            <FoldersTable folders={topLevelFolders} />
-          }
-          <PagesTable pages={topLevelPages} />
+          <FolderContainer />
         </div>
       </Modal>
     );
@@ -38,18 +39,11 @@ class PagesList extends React.Component {
 PagesList.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
-  topLevelFolders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  topLevelPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   fetchAllPages: PropTypes.func.isRequired
 };
 
 const DragDropPagesList = DragDropContext(HTML5Backend)(PagesList);
 
-const mapStateToProps = state => ({
-  topLevelFolders: Object.values(state.page.folders.byId).filter(folder => !folder.parent).sort(compareTimestamps),
-  topLevelPages: Object.values(state.page.pages.byId).filter(page => !page.folder).sort(compareTimestamps)
-});
-
 const mapDispatchToProps = dispatch => bindActionCreators({ fetchAllPages }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(DragDropPagesList);
+export default connect(null, mapDispatchToProps)(DragDropPagesList);

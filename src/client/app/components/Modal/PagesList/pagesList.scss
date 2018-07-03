@@ -5,7 +5,6 @@
 .pages_title{
   margin-left: $large-margin;
   color: $light-gray;
-
 }
 
 .pages_list{
@@ -38,55 +37,121 @@
   color: $gray;
 }
 
-.pages__table{
+.pages__list {
+  clear: both;
+}
+
+.pages__folder-container {
+  background: white;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.pages__folder-container-header {
+  background-color: #C4C4C4;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $medium-padding;
+}
+
+.pages__folder-container-title {
+  font-size: 18px;
+}
+
+.pages__folder-container-new {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  color: black;
+  fill: transparent;
+  font-size: 14px;
+  text-transform: uppercase;
+  -webkit-transition-duration: unset;
+  transition-duration: unset;
+
+  &:hover {
+    border: none;
+    color: black;
+    background: transparent;
+  }
+}
+
+.pages__table-container {
+  flex: 1;
+  overflow-y: scroll;
+  padding: $medium-padding;
+}
+
+.pages__table {
+  border-spacing: 0 5px;
   width: 100%;
   list-style-position: inside;
-  padding-top: $medium-padding;
   -webkit-margin-before: 0;
   -webkit-padding-start: 0px;
 }
 
-.pages__row{
+.pages__row {
+  color: black;
   width: 100%;
-  color: $gray;
 }
 
-.pages__col{
+.pages__col {
+  background: #EAE8E8;
+  padding-top: $small-padding;
+  padding-bottom: $small-padding;
   text-align: $left-align;
-  padding: $medium-padding;
-}
+  width: 25%;
 
-.pages__row:nth-child(odd){
-  background: $lighter-gray;
-}
+  &:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    padding-left: 0.3rem;
+  }
 
-.pages__link{
-  color: $gray;
-}
+  &:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding-right: 0.3rem;
+  }
 
-.pages__header{
-  padding: $medium-padding;
-  background: $lighter-gray;
-  text-align: $left-align;
-  text-transform: uppercase;
-}
-
-.pages__delete{
-  margin: -10px;
-  border: none;
-  background: none;
-  float:right;
-  fill: $medium-gray;
-  &:hover {
-    border: none;
-    background: none;
-    float:right;
-    box-shadow: none;
-    fill: $dark-gray;
+  &_title {
+    width: 33%;
   }
 }
 
-.modal__close-button{
-  float:right;
-  padding: 4px;
+.pages__link {
+  color: $gray;
+}
+
+.pages__header {
+  background: white;
+  color: #AFAFAF;
+  font-size: 12px;
+  font-weight: normal;
+  padding: $medium-padding 0 $small-padding;
+  text-align: $left-align;
+
+  &_uppercase {
+    text-transform: uppercase;
+  }
+}
+
+.pages__delete {
+  border: none;
+  background: none;
+  float: right;
+  fill: $medium-gray;
+
+  &:hover {
+    border: none;
+    background: none;
+    float: right;
+    box-shadow: none;
+    fill: $dark-gray;
+  }
 }

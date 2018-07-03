@@ -34,10 +34,12 @@ class PageRow extends Component {
     const link = `/pebl/${page.id}`;
     return connectDragSource(
       <tr className="pages__row">
-        <td className="pages__col" > <a className="pages__link" href={link}> {page.title} </a> </td>
-        <td className="pages__col" > {formatDate(page.createdAt)} </td>
-        <td className="pages__col" > {formatDate(page.updatedAt)} </td>
-        <td className="pages__col" >
+        <td className="pages__col pages__col_title">
+          <a className="pages__link" href={link}>{page.title}</a>
+        </td>
+        <td className="pages__col">{formatDate(page.createdAt)}</td>
+        <td className="pages__col">{formatDate(page.updatedAt)}</td>
+        <td className="pages__col">
           <button className="pages__delete" onClick={this.deletePage}>
             <DeleteIcon alt="delete page" />
           </button>
@@ -50,7 +52,9 @@ class PageRow extends Component {
 PageRow.propTypes = {
   connectDragSource: PropTypes.func.isRequired,
   deletePage: PropTypes.func.isRequired,
+  /* eslint-disable react/no-unused-prop-types */
   isDragging: PropTypes.bool.isRequired,
+  /* eslint-enable react/no-unused-prop-types */
   page: PropTypes.shape({ _id: PropTypes.string }).isRequired
 };
 

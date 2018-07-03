@@ -24,7 +24,7 @@ function collect(_connect, monitor) {
 
 class FoldersTable extends Component {
   static defaultProps = {
-    folderId: null,
+    folderId: undefined,
   }
 
   render() {
@@ -34,8 +34,8 @@ class FoldersTable extends Component {
         <tbody>
           <tr className="pages__headrow">
             <th className="pages__header">Folders</th>
-            <th className="pages__header">Created</th>
-            <th className="pages__header">Updated</th>
+            <th className="pages__header pages__header_uppercase">Date Created</th>
+            <th className="pages__header pages__header_uppercase">Last Update</th>
             <th className="pages__header"></th>
           </tr>
           {this.props.folders.map(folder => <FolderRow key={folder._id} folder={folder} />)}
@@ -47,10 +47,12 @@ class FoldersTable extends Component {
 
 FoldersTable.propTypes = {
   connectDropTarget: PropTypes.func.isRequired,
+  /* eslint-disable react/no-unused-prop-types */
   folderId: PropTypes.string,
-  folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isOver: PropTypes.bool.isRequired,
-  moveFolderToFolder: PropTypes.func.isRequired
+  moveFolderToFolder: PropTypes.func.isRequired,
+  /* eslint-enable react/no-unused-prop-types */
+  folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 const DroppableFoldersTable = DropTarget(ItemTypes.FOLDER, foldersTableTarget, collect)(FoldersTable);

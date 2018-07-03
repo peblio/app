@@ -24,7 +24,7 @@ function collect(_connect, monitor) {
 
 class PagesTable extends Component {
   static defaultProps = {
-    folderId: null,
+    folderId: undefined,
   }
 
   render() {
@@ -34,8 +34,8 @@ class PagesTable extends Component {
         <tbody>
           <tr className="pages__headrow">
             <th className="pages__header">Files</th>
-            <th className="pages__header">Created</th>
-            <th className="pages__header">Updated</th>
+            <th className="pages__header pages__header_uppercase">Date Created</th>
+            <th className="pages__header pages__header_uppercase">Last Update</th>
             <th className="pages__header"></th>
           </tr>
           {this.props.pages.map(page => <PageRow key={page._id} page={page} />)}
@@ -47,8 +47,10 @@ class PagesTable extends Component {
 
 PagesTable.propTypes = {
   connectDropTarget: PropTypes.func.isRequired,
+  /* eslint-disable react/no-unused-prop-types */
   folderId: PropTypes.string,
   movePageToFolder: PropTypes.func.isRequired,
+  /* eslint-enable react/no-unused-prop-types */
   pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 };
 

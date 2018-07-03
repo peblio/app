@@ -57,10 +57,10 @@ class FolderRow extends Component {
     const { connectDragSource, connectDropTarget, folder } = this.props;
     return connectDragSource(connectDropTarget(
       <tr className="pages__row">
-        <td className="pages__col" >{folder.title}</td>
-        <td className="pages__col" > {formatDate(folder.createdAt)} </td>
-        <td className="pages__col" > {formatDate(folder.updatedAt)} </td>
-        <td className="pages__col" >
+        <td className="pages__col pages__col_title">{folder.title}</td>
+        <td className="pages__col">{formatDate(folder.createdAt)}</td>
+        <td className="pages__col">{formatDate(folder.updatedAt)}</td>
+        <td className="pages__col">
           <button className="pages__delete" onClick={this.deleteFolder}>
             <DeleteIcon alt="delete page" />
           </button>
@@ -75,10 +75,12 @@ FolderRow.propTypes = {
   connectDropTarget: PropTypes.func.isRequired,
   deleteFolder: PropTypes.func.isRequired,
   folder: PropTypes.shape({ _id: PropTypes.string }).isRequired,
+  /* eslint-disable react/no-unused-prop-types */
   isDragging: PropTypes.bool.isRequired,
   isOver: PropTypes.bool.isRequired,
   moveFolderToFolder: PropTypes.func.isRequired,
   movePageToFolder: PropTypes.func.isRequired
+  /* eslint-enable react/no-unused-prop-types */
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -88,6 +90,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 const DraggableFolderRow = DragSource(ItemTypes.FOLDER, folderSource, collectDragSource)(FolderRow);
+/* eslint-disable max-len */
 const DroppableFolderRow = DropTarget([ItemTypes.PAGE, ItemTypes.FOLDER], folderTarget, collectDropTarget)(DraggableFolderRow);
+/* eslint-enable max-len */
 
 export default connect(null, mapDispatchToProps)(DroppableFolderRow);
