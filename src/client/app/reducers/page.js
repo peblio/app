@@ -232,16 +232,25 @@ const page = (state = initialState, action) => {
       const { folders, pages } = state;
 
       const pageToMove = pages.byId[pageId];
+
+      const prevFolderById = {};
+      if (pageToMove.folder) {
+        const prevFolder = folders.byId[pageToMove.folder];
+        prevFolder.files = (prevFolder.files || []).filter(pId => pId !== pageId);
+        prevFolderById[pageToMove.folder] = { ...prevFolder };
+      }
+
       pageToMove.folder = folderId;
 
       const folder = folders.byId[folderId];
-      folder.files = folder.files.concat(pageId);
+      folder.files = (folder.files || []).concat(pageId);
       return {
         ...state,
         folders: {
           ...folders,
           byId: {
             ...folders.byId,
+            ...prevFolderById,
             [folderId]: { ...folder }
           }
         },
@@ -283,23 +292,47 @@ const page = (state = initialState, action) => {
 
     case ActionTypes.MOVE_FOLDER_TO_FOLDER: {
       const { childFolderId, parentFolderId } = action;
-      const { folders, } = state;
+      const { folders } = state;
 
       const childFolder = folders.byId[childFolderId];
+
+      const prevParentFolderById = {};
+      if (childFolder.parent) {
+        const prevParentFolder = folders.byId[childFolder.parent];
+        prevParentFolder.children = (prevParentFolder.children || []).filter(folderId => folderId !== childFolderId);
+        prevParentFolderById[childFolder.parent] = { ...prevParentFolder };
+      }
+
       childFolder.parent = parentFolderId;
 
       const parentFolder = folders.byId[parentFolderId];
-      parentFolder.children = parentFolder.children.concat(childFolderId);
+      parentFolder.children = (parentFolder.children || []).concat(childFolderId);
       return {
         ...state,
         folders: {
           ...folders,
           byId: {
             ...folders.byId,
+            ...prevParentFolderById,
             [childFolderId]: { ...childFolder },
             [parentFolderId]: { ...parentFolder }
           }
         },
+      };
+    }
+
+    case ActionTypes.CREATE_PAGE: {
+      const { pages } = state;
+      const normalizedPageData = normalize(action.page, pageSchema);
+      return {
+        ...state,
+        pages: {
+          byId: {
+            ...pages.byId,
+            ...(normalizedPageData.entities.pages || {}),
+          },
+          allIds: pages.allIds.concat(normalizedPageData.result || [])
+        }
       };
     }
 

@@ -14,10 +14,10 @@ folderRoutes.route('').post(async (req, res) => {
     return res.sendStatus(400);
   }
 
-  const { title, parentId } = req.body;
+  const { title, parent } = req.body;
   const f = new Folder({ title, user: user._id });
-  if (parentId) {
-    f.parentId = parentId;
+  if (parent) {
+    f.parent = parent;
   }
 
   try {
@@ -32,7 +32,7 @@ function findChildFolderIds(folder) {
   if (!folder) {
     return [];
   }
-  return [folder._id, ...folder.children.reduce((accum, child) => [
+  return [folder._id, ...(folder.children || []).reduce((accum, child) => [
     ...accum,
     ...findChildFolderIds(child)
   ], [])];
@@ -66,7 +66,12 @@ folderRoutes.route('/:folderId/move').post(async (req, res) => {
   }
 
   const childFolderId = req.params.folderId;
-  const parentFolderId = req.body.parentFolderId;
+  const parentFolderId = req.body.folderId;
+
+  if (childFolderId === parentFolderId) {
+    return res.status(422).send({ error: 'Cannot move a folder into itself.' });
+  }
+
   try {
     const childFolder = await Folder.findOne({ _id: childFolderId, user: user._id }).exec();
     if (!childFolder) {

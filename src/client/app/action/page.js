@@ -91,6 +91,22 @@ export function submitPage(parentId, title, preview, editors, editorIndex, layou
   };
 }
 
+export function createPage(title, folder) {
+  return (dispatch) => {
+    const id = shortid.generate();
+    const data = { id, title };
+    if (folder) {
+      data.folder = folder;
+    }
+    return axios.post('/pages/save', data).then((response) => {
+      dispatch({
+        type: ActionTypes.CREATE_PAGE,
+        page: response.data.page
+      });
+    });
+  };
+}
+
 export function updatePage(id, title, preview, editors, editorIndex, layout) {
   axios.post('/pages/update', {
     id,
@@ -150,9 +166,13 @@ export function updateTextHeight(id, height) {
   };
 }
 
-export function createFolder(data) {
+export function createFolder(title, parent) {
   return (dispatch) => {
-    axios.post('/folders', data).then((response) => {
+    const data = { title };
+    if (parent) {
+      data.parent = parent;
+    }
+    return axios.post('/folders', data).then((response) => {
       dispatch({
         type: ActionTypes.CREATE_FOLDER,
         folder: response.data.folder
@@ -221,7 +241,7 @@ export function moveFolderToFolder(childFolderId, parentFolderId) {
   if (!parentFolderId) {
     return moveFolderToTopLevel(childFolderId);
   }
-  return dispatch => axios.post(`/pages/${childFolderId}/move`, { folderId: parentFolderId }).then((response) => {
+  return dispatch => axios.post(`/folders/${childFolderId}/move`, { folderId: parentFolderId }).then((response) => {
     dispatch({
       type: ActionTypes.MOVE_FOLDER_TO_FOLDER,
       childFolderId,

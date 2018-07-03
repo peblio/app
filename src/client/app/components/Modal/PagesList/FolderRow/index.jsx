@@ -28,7 +28,9 @@ const folderTarget = {
       props.movePageToFolder(pageId, props.folder._id);
     } else if (itemType === ItemTypes.FOLDER) {
       const { folderId } = item;
-      props.moveFolderToFolder(folderId, props.folder._id);
+      if (folderId !== props.folder._id) {
+        props.moveFolderToFolder(folderId, props.folder._id);
+      }
     }
   }
 };
