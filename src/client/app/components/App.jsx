@@ -117,8 +117,6 @@ class App extends React.Component {
   }
 
   savePage() {
-    let now = new Date();
-    now = now.toISOString();
     if (this.props.name) {
       if (this.props.id.length === 0) {
         this.props.submitPage(

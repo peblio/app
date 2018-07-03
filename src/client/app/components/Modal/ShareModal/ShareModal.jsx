@@ -48,24 +48,6 @@ class Share extends React.Component {
           </button>
         </div>
         <p className="share__text-secondary">or</p>
-        {/*
-        <div className="share__option">
-          <h2 className="share__text-primary"> Share via email </h2>
-          <div>
-            <input
-              className="share__input-email"
-              ref={(element) => { this.input = element; }}
-              value={window.location.href}
-              readOnly
-            >
-            </input>
-            <button className="share__button" type="submit" value="Submit" >
-              Send
-            </button>
-          </div>
-        </div>
-        <p className="share__text-secondary">or</p>
-        */}
         <div className="share__option">
           <h2 className="share__text-primary"> share to Google Classroom </h2>
           <div
