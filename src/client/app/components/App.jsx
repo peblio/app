@@ -404,8 +404,6 @@ App.propTypes = {
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
   loadPage: PropTypes.func.isRequired,
-  deletePage: PropTypes.func.isRequired,
-  fetchAllPages: PropTypes.func.isRequired,
 
   setEditAccess: PropTypes.func.isRequired,
 
