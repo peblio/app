@@ -85,6 +85,7 @@ class App extends React.Component {
       const projectID = this.projectID();
       axios.get(`/api/page/${this.projectID()}`)
         .then((res) => {
+          console.log(res);
           this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].layout);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
           this.props.setPreviewMode(true);
@@ -123,7 +124,6 @@ class App extends React.Component {
         this.props.submitPage(
           '',
           this.props.pageTitle,
-          this.props.preview,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout
@@ -132,7 +132,6 @@ class App extends React.Component {
         this.props.updatePage(
           this.props.id,
           this.props.pageTitle,
-          this.props.preview,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout
@@ -142,7 +141,6 @@ class App extends React.Component {
         this.props.submitPage(
           this.props.id,
           `${this.props.pageTitle}-copy`,
-          this.props.preview,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout
