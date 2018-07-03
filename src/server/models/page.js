@@ -10,6 +10,8 @@ const pageSchema = new Schema({
   editors: { type: Object, default: {} },
   editorIndex: { type: Number, default: 0 },
   layout: { type: Array, default: [] },
+  createDate: {type: Date, default:''},
+  updateDate: {type:Date, default:''},
   folder: { type: Schema.Types.ObjectId, ref: 'Folder' }
 }, {
   minimize: false,

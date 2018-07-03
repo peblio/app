@@ -78,10 +78,11 @@ class ConfirmUser extends React.Component {
           this.state.showReset &&
           <form onSubmit={(event) => { this.resendConfirmUser(event, this.email.value); }}>
             <div className="confirm-modal__div">
-              <label htmlFor="confirm-modal-email" className="confirm-modal__label"> Email
+              <label htmlFor="confirm-modal-email" className="confirm-modal__label">
                 <input
                   id="confirm-modal-email"
                   className="confirm-modal__input"
+                  placeholder="email"
                   type="text"
                   ref={(email) => { this.email = email; }}
                 />

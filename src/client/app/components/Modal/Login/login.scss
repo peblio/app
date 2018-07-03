@@ -5,7 +5,7 @@
 .login-modal {
   &__content{
     margin: auto;
-    width: 45%;
+    width: 50%;
     padding-top: 5%;
   }
 
@@ -28,5 +28,14 @@
 
   &__button{
     @extend %modal__button;
+  }
+
+  &__buttonholder {
+    @extend %modal__buttonholder;
+  }
+
+  &__link {
+    @extend %modal__link;
+    margin-bottom: $large-margin;
   }
 }
