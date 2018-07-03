@@ -39,6 +39,8 @@
 
 .pages__list {
   clear: both;
+  display: flex;
+  overflow-x: scroll;
 }
 
 .pages__folder-container {
@@ -47,6 +49,12 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-width: 25%;
+
+  &:last-child {
+    flex: 1;
+    min-width: 50%;
+  }
 
   &:not(:last-child) {
     margin-right: 10px;
@@ -115,24 +123,31 @@
 .pages__table-container {
   flex: 1;
   overflow-y: scroll;
-  padding: $medium-padding;
 }
 
 .pages__table {
   border-spacing: 0 12px;
+  padding: $medium-padding;
   width: 100%;
   list-style-position: inside;
-  -webkit-margin-before: 0;
-  -webkit-padding-start: 0px;
+
+  &_drop-target {
+    background: $lighter-gray;
+  }
 }
 
 .pages__row {
   color: black;
   width: 100%;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .pages__col {
   background: #EAE8E8;
+  border: 1px solid transparent;
   padding-top: $small-padding;
   padding-bottom: $small-padding;
   text-align: $left-align;
@@ -153,6 +168,41 @@
   &_title {
     width: 33%;
   }
+
+  &_selected-folder {
+    background: #FFC5BF;
+    border-top: 1px solid #E07063;
+    border-bottom: 3px solid #E07063;
+
+    &:first-child {
+      border-left: 1px solid #E07063;
+    }
+
+    &:last-child {
+      border-right: 1px solid #E07063;
+    }
+  }
+
+  &_selected-page {
+    background: #7C7C7C;
+  }
+
+  &_drop-target {
+    border-top: 1px solid $blue;
+    border-bottom: 1px solid $blue;
+
+    &:first-child {
+      border-left: 1px solid $blue;
+    }
+
+    &:last-child {
+      border-right: 1px solid $blue;
+    }
+
+    &.pages__col_selected-folder {
+      border-bottom: 3px solid $blue;
+    }
+  }
 }
 
 .pages__link {
@@ -160,12 +210,17 @@
 }
 
 .pages__header {
-  background: white;
+  background: transparent;
   color: #AFAFAF;
   font-size: 12px;
   font-weight: normal;
   padding: $medium-padding 0 $small-padding;
   text-align: $left-align;
+  width: 25%;
+
+  &_title {
+    width: 33%;
+  }
 
   &_uppercase {
     text-transform: uppercase;

@@ -16,7 +16,12 @@ class Modal extends React.Component {
 
   render() {
     return (
-      <ReactModal className={`modal__${this.props.size}`} isOpen={this.props.isOpen} style={this.props.style}>
+      <ReactModal
+        className={`modal__${this.props.size}`}
+        isOpen={this.props.isOpen}
+        onRequestClose={this.props.closeModal}
+        style={this.props.style}
+      >
         <nav>
           <button className="modal__close-button" onClick={this.props.closeModal}>╳</button>
         </nav>

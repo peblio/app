@@ -16,10 +16,13 @@ class PagesList extends React.Component {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.props.fetchAllPages();
     }
+    if (this.containerEl && this.props.selectedFolderIds.length >= 2) {
+      this.containerEl.scrollLeft = this.containerEl.scrollWidth - this.containerEl.clientWidth;
+    }
   }
 
   render() {
-    const { closeModal, isOpen } = this.props;
+    const { closeModal, isOpen, selectedFolderIds } = this.props;
     const modalStyle = {
       content: {
         background: '#EAE8E8',
@@ -27,9 +30,12 @@ class PagesList extends React.Component {
       }
     };
     return (
-      <Modal size="large" isOpen={isOpen} closeModal={closeModal} style={modalStyle}>
-        <div className="pages__list">
+      <Modal size="xlarge" isOpen={isOpen} closeModal={closeModal} style={modalStyle}>
+        <div className="pages__list" ref={(el) => { this.containerEl = el; }}>
           <FolderContainer />
+          {selectedFolderIds.map((selectedFolderId, index) => (
+            <FolderContainer key={selectedFolderId} folderId={selectedFolderId} folderDepth={index + 1} />
+          ))}
         </div>
       </Modal>
     );
@@ -39,11 +45,16 @@ class PagesList extends React.Component {
 PagesList.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
-  fetchAllPages: PropTypes.func.isRequired
+  fetchAllPages: PropTypes.func.isRequired,
+  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 const DragDropPagesList = DragDropContext(HTML5Backend)(PagesList);
 
+const mapStateToProps = state => ({
+  selectedFolderIds: state.page.selectedFolderIds
+});
+
 const mapDispatchToProps = dispatch => bindActionCreators({ fetchAllPages }, dispatch);
 
-export default connect(null, mapDispatchToProps)(DragDropPagesList);
+export default connect(mapStateToProps, mapDispatchToProps)(DragDropPagesList);

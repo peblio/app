@@ -241,11 +241,40 @@ export function moveFolderToFolder(childFolderId, parentFolderId) {
   if (!parentFolderId) {
     return moveFolderToTopLevel(childFolderId);
   }
-  return dispatch => axios.post(`/folders/${childFolderId}/move`, { folderId: parentFolderId }).then((response) => {
-    dispatch({
-      type: ActionTypes.MOVE_FOLDER_TO_FOLDER,
-      childFolderId,
-      parentFolderId
+  return (dispatch, getState) => {
+    const { page } = getState();
+    const childFolder = page.folders.byId[childFolderId];
+    if (childFolder.parent === parentFolderId) {
+      return Promise.resolve();
+    }
+    return axios.post(`/folders/${childFolderId}/move`, { folderId: parentFolderId }).then((response) => {
+      dispatch({
+        type: ActionTypes.MOVE_FOLDER_TO_FOLDER,
+        childFolderId,
+        parentFolderId
+      });
     });
+  };
+}
+
+export function viewFolder(folderId, depth) {
+  return dispatch => dispatch({
+    type: ActionTypes.VIEW_FOLDER,
+    folderId,
+    depth
+  });
+}
+
+export function viewPage(pageId) {
+  return dispatch => dispatch({
+    type: ActionTypes.VIEW_PAGE,
+    pageId
+  });
+}
+
+export function clearSelectedFolders(depth) {
+  return dispatch => dispatch({
+    type: ActionTypes.CLEAR_SELECTED_FOLDERS,
+    depth
   });
 }

@@ -5,12 +5,13 @@ import { bindActionCreators } from 'redux';
 
 import FoldersTable from '../FoldersTable';
 import PagesTable from '../PagesTable';
-import { createFolder, createPage } from '../../../../action/page';
+import { clearSelectedFolders, createFolder, createPage } from '../../../../action/page';
 import compareTimestamps from '../../../../utils/compare-timestamps';
 import PlusIcon from '../../../../images/plus.svg';
 
 class FolderContainer extends Component {
   static defaultProps = {
+    folderDepth: 0,
     folderId: undefined,
     folder: {}
   }
@@ -20,34 +21,45 @@ class FolderContainer extends Component {
     this.state = { newFolderDropdownIsOpen: false };
   }
 
+  clearSelectedFolders = () => {
+    this.props.clearSelectedFolders(this.props.folderDepth);
+  }
+
   createFolder = (e) => {
-    e.preventDefault();
+    e.stopPropagation();
     this.props.createFolder('New Folder', this.props.folderId);
     this.hideNewFolderDropdown();
   }
 
   createPage = (e) => {
-    e.preventDefault();
+    e.stopPropagation();
     this.props.createPage('New Page', this.props.folderId);
     this.hideNewFolderDropdown();
+  }
+
+  handleClick = () => {
+    this.hideNewFolderDropdown();
+    this.clearSelectedFolders();
   }
 
   hideNewFolderDropdown = () => {
     this.setState({ newFolderDropdownIsOpen: false });
   }
 
-  toggleNewFolderDropdown = () => {
+  toggleNewFolderDropdown = (e) => {
+    e.stopPropagation();
     this.setState(prevState => ({
       newFolderDropdownIsOpen: !prevState.newFolderDropdownIsOpen
     }));
   }
 
   render() {
-    const { childFolders, childPages, folderId, folder } = this.props;
+    const { childFolders, childPages, folderDepth, folderId, folder } = this.props;
     const { newFolderDropdownIsOpen } = this.state;
     const title = folderId ? folder.title : 'My files';
     return (
-      <div className="pages__folder-container">
+      /* eslint-disable jsx-a11y/no-static-element-interactions */
+      <div className="pages__folder-container" onClick={this.handleClick}>
         <div className="pages__folder-container-header">
           <span className="pages__folder-title">{title}</span>
           <div className="pages__new-folder-wrapper">
@@ -58,23 +70,24 @@ class FolderContainer extends Component {
             </button>
             {newFolderDropdownIsOpen &&
               <ul className="pages__new-folder-dropdown">
-                {/* eslint-disable jsx-a11y/no-static-element-interactions */}
-                <li className="pages__new-folder-dropdown-item">
-                  <a onClick={this.createFolder}>Folder</a>
+                <li className="pages__new-folder-dropdown-item" onClick={this.createFolder}>
+                  Folder
                 </li>
-                <li className="pages__new-folder-dropdown-item">
-                  <a onClick={this.createPage}>Page</a>
+                <li className="pages__new-folder-dropdown-item" onClick={this.createPage}>
+                  Page
                 </li>
-                {/* eslint-enable jsx-a11y/no-static-element-interactions */}
               </ul>
             }
           </div>
         </div>
         <div className="pages__table-container">
-          {childFolders.length > 0 && <FoldersTable folders={childFolders} folderId={folderId} />}
+          {childFolders.length > 0 &&
+            <FoldersTable folders={childFolders} folderId={folderId} folderDepth={folderDepth} />
+          }
           <PagesTable pages={childPages} folderId={folderId} />
         </div>
       </div>
+      /* eslint-enable jsx-a11y/no-static-element-interactions */
     );
   }
 }
@@ -82,8 +95,10 @@ class FolderContainer extends Component {
 FolderContainer.propTypes = {
   childFolders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   childPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  clearSelectedFolders: PropTypes.func.isRequired,
   createFolder: PropTypes.func.isRequired,
   createPage: PropTypes.func.isRequired,
+  folderDepth: PropTypes.number,
   folderId: PropTypes.string,
   folder: PropTypes.shape({})
 };
@@ -99,6 +114,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  clearSelectedFolders,
   createFolder,
   createPage
 }, dispatch);

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import classNames from 'classnames';
+import Measure from 'react-measure';
 
 import PageRow from '../PageRow';
 import ItemTypes from '../itemTypes';
@@ -27,19 +29,41 @@ class PagesTable extends Component {
     folderId: undefined,
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      width: 0
+    };
+  }
+
+  handleResize = (contentRect) => {
+    const { width } = contentRect.bounds;
+    this.setState({ width });
+  }
+
   render() {
-    const { connectDropTarget } = this.props;
+    const { connectDropTarget, isOver } = this.props;
+    const { width } = this.state;
+    const tableClassName = classNames('pages__table', { 'pages__table_drop-target': isOver });
     return connectDropTarget(
-      <table className="pages__table">
-        <tbody>
-          <tr className="pages__headrow">
-            <th className="pages__header">Files</th>
-            <th className="pages__header pages__header_uppercase">Date Created</th>
-            <th className="pages__header pages__header_uppercase">Last Update</th>
-            <th className="pages__header"></th>
-          </tr>
-          {this.props.pages.map(page => <PageRow key={page._id} page={page} />)}
-        </tbody>
+      <table className={tableClassName}>
+        <Measure bounds onResize={this.handleResize}>
+          {({ measureRef }) => (
+            <tbody ref={measureRef}>
+              <tr className="pages__headrow">
+                <th className="pages__header pages__header_title">Files</th>
+                {width > 350 &&
+                  <React.Fragment>
+                    <th className="pages__header pages__header_uppercase">Date Created</th>
+                    <th className="pages__header pages__header_uppercase">Last Update</th>
+                  </React.Fragment>
+                }
+                <th className="pages__header"></th>
+              </tr>
+              {this.props.pages.map(page => <PageRow key={page._id} page={page} width={width} />)}
+            </tbody>
+          )}
+        </Measure>
       </table>
     );
   }
@@ -49,6 +73,7 @@ PagesTable.propTypes = {
   connectDropTarget: PropTypes.func.isRequired,
   /* eslint-disable react/no-unused-prop-types */
   folderId: PropTypes.string,
+  isOver: PropTypes.bool.isRequired,
   movePageToFolder: PropTypes.func.isRequired,
   /* eslint-enable react/no-unused-prop-types */
   pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired

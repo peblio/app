@@ -6,6 +6,12 @@
   background-color: $modal-overlay !important;
 }
 
+.modal__xlarge {
+  @extend %modal;
+  width: 75%;
+  height: 70%;
+}
+
 .modal__large{
   @extend %modal;
   width: 60%;

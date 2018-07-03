@@ -26,6 +26,8 @@ const initialState = {
   pageTitle: 'Untitled',
   parentId: '',
   preview: false,
+  selectedFolderIds: [],
+  selectedPageId: null,
   unsavedChanges: false
 };
 
@@ -34,7 +36,7 @@ function findChildFolderIds(foldersById = {}, folderId = '') {
   if (!folder) {
     return [];
   }
-  return [folderId, ...folder.children.reduce((accum, childId) => [
+  return [folderId, ...(folder.children || []).reduce((accum, childId) => [
     ...accum,
     ...findChildFolderIds(foldersById, childId)
   ], [])];
@@ -44,14 +46,15 @@ const page = (state = initialState, action) => {
   switch (action.type) {
 
     case ActionTypes.DELETE_PAGE: {
-      const { pages } = state;
+      const { pages, selectedPageId } = state;
       delete pages.byId[action.pageId];
       return {
         ...state,
         pages: {
           byId: { ...pages.byId },
           allIds: pages.allIds.filter(pageId => pageId !== action.pageId)
-        }
+        },
+        selectedPageId: selectedPageId !== action.pageId ? selectedPageId : null
       };
     }
 
@@ -155,6 +158,13 @@ const page = (state = initialState, action) => {
     case ActionTypes.CREATE_FOLDER: {
       const { folders } = state;
       const normalizedFolderData = normalize(action.folder, folderSchema);
+      const parentFolderById = {};
+      const parentFolderId = action.folder.parent;
+      if (parentFolderId) {
+        const parentFolder = folders.byId[parentFolderId];
+        parentFolder.children = (parentFolder.children || []).concat(action.folder._id);
+        parentFolderById[parentFolderId] = parentFolder;
+      }
       return {
         ...state,
         folders: {
@@ -162,6 +172,7 @@ const page = (state = initialState, action) => {
           byId: {
             ...folders.byId,
             ...(normalizedFolderData.entities.folders || {}),
+            ...parentFolderById
           },
           allIds: folders.allIds.concat(normalizedFolderData.result || [])
         }
@@ -169,7 +180,7 @@ const page = (state = initialState, action) => {
     }
 
     case ActionTypes.DELETE_FOLDER: {
-      const { folders, pages } = state;
+      const { folders, pages, selectedFolderIds } = state;
       const folderIdsToDelete = findChildFolderIds(folders.byId, action.folderId);
       const pageIdsToDelete = pages.allIds.filter(pageId => folderIdsToDelete.includes(pages.byId[pageId].folder));
       return {
@@ -191,7 +202,8 @@ const page = (state = initialState, action) => {
             return { ...accum, [p._id]: p };
           }, {}),
           allIds: pages.allIds.filter(pageId => !pageIdsToDelete.includes(pageId))
-        }
+        },
+        selectedFolderIds: selectedFolderIds.filter(selectedFolderId => !folderIdsToDelete.includes(selectedFolderId))
       };
     }
 
@@ -274,7 +286,7 @@ const page = (state = initialState, action) => {
       }
 
       const parentFolder = folders.byId[parentFolderId];
-      parentFolder.children = parentFolder.children.filter(folderId => folderId !== childFolderId);
+      parentFolder.children = (parentFolder.children || []).filter(folderId => folderId !== childFolderId);
 
       delete childFolder.parent;
       return {
@@ -333,6 +345,42 @@ const page = (state = initialState, action) => {
           },
           allIds: pages.allIds.concat(normalizedPageData.result || [])
         }
+      };
+    }
+
+    case ActionTypes.VIEW_FOLDER: {
+      const { folderId, depth } = action;
+      const { selectedFolderIds } = state;
+      selectedFolderIds.splice(depth, selectedFolderIds.length - depth, folderId);
+      return {
+        ...state,
+        selectedFolderIds: [...selectedFolderIds]
+      };
+    }
+
+    case ActionTypes.VIEW_PAGE: {
+      return {
+        ...state,
+        selectedPageId: action.pageId
+      };
+    }
+
+    case ActionTypes.CLEAR_SELECTED_FOLDERS: {
+      const { depth } = action;
+      if (!depth) {
+        return {
+          ...state,
+          selectedFolderIds: [],
+          selectedPageId: null
+        };
+      }
+
+      const { selectedFolderIds } = state;
+      selectedFolderIds.splice(depth, selectedFolderIds.length - depth);
+      return {
+        ...state,
+        selectedFolderIds: [...selectedFolderIds],
+        selectedPageId: null
       };
     }
 
