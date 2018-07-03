@@ -127,9 +127,7 @@ class App extends React.Component {
           this.props.preview,
           this.props.editors,
           this.props.editorIndex,
-          this.props.layout,
-          now,
-          now
+          this.props.layout
         );
       } else if (this.props.canEdit) {
         this.props.updatePage(
@@ -138,8 +136,7 @@ class App extends React.Component {
           this.props.preview,
           this.props.editors,
           this.props.editorIndex,
-          this.props.layout,
-          now
+          this.props.layout
         );
       } else {
         // this is for fork and save
@@ -149,9 +146,7 @@ class App extends React.Component {
           this.props.preview,
           this.props.editors,
           this.props.editorIndex,
-          this.props.layout,
-          now,
-          now
+          this.props.layout
         );
       }
     } else {

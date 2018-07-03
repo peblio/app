@@ -180,10 +180,10 @@ class SignUp extends React.Component {
                     type="password"
                   />
                 </label>
-                <label htmlFor="reset-modal-confirm" className="reset-modal__label">
+                <label htmlFor="signup-modal-confirm" className="signup-modal__label">
                   <input
-                    id="reset-modal-confirm"
-                    className="reset-modal__input"
+                    id="signup-modal-confirm"
+                    className="signup-modal__input"
                     placeholder="retype password"
                     type="password"
                     ref={(passwordConfirm) => { this.passwordConfirm = passwordConfirm; }}
@@ -191,7 +191,7 @@ class SignUp extends React.Component {
                 </label>
               </div>
               <div className="signup-modal__buttonholder">
-                <button className="forgot-modal__button" type="submit" value="Submit" >
+                <button className="signup-modal__button" type="submit" value="Submit" >
               Submit
                 </button>
               </div>
@@ -207,7 +207,7 @@ class SignUp extends React.Component {
       }
 
         {this.state.showNotice &&
-          <p className="forgot-modal__notice">
+          <p className="signUserUp-modal__notice">
             {this.state.notice}
           </p>
         }
