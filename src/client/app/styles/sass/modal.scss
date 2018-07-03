@@ -11,11 +11,19 @@
   width: 60%;
   height: fit-content;
   min-height: 60%;
+  max-height: 80%;
+  overflow-y: scroll;
 }
 
 .modal__small{
   @extend %modal;
   width: 40%;
+}
+
+.modal__auto{
+  @extend %modal;
+  width: 60%;
+  height: fit-content;
 }
 
 .modal__close-button{
@@ -33,18 +41,23 @@
   padding: 10px;
 }
 
+%modal__content {
+  margin: auto;
+  padding: 5% 0;
+  width: 45%;
+}
+
 %modal__title{
   font-size: $large-font-size;
   font-weight: $medium-font-weight;
   display: block;
   color: $green;
   text-align: center;
-  margin-bottom: $xlarge-margin;
+  margin-bottom: $large-margin;
 }
 
 %modal__subtitle{
-  font-size: $large-font-size;
-  font-weight: $medium-font-weight;
+  font-size: $medium-font-size;
   display: block;
   text-align: center;
   margin: $small-margin;
@@ -96,6 +109,8 @@
   text-align: $left-align;
   padding: $medium-padding;
   margin-bottom: $large-margin;
+  border-radius: $small-border-radius;
+  border: $small-border solid $lighter-gray;
 }
 
 %modal__input::placeholder {

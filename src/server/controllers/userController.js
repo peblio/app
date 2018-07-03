@@ -25,7 +25,6 @@ function createUser(req, res) {
   const name = req.body.name;
   const type = req.body.userType;
   const password = req.body.password;
-  console.log(req.body.userType);
   let user;
   User.findOne({ name }, (err, user) => {
     if (user) {
@@ -50,7 +49,6 @@ function createUser(req, res) {
       user.hashPassword(password);
       user.save((err, user) => {
         if (err) {
-          console.log(err);
           res.status(422).json({
             msg: UserConst.SIGN_UP_FAILED
           });
@@ -242,6 +240,7 @@ function loginWithGoogle(req, res) {
   if (!req.body.google_id_token) {
     return res.status(400).send({ msg: '' });
   }
+  const type = req.body.userType;
   const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
   return client.verifyIdToken({
     idToken: req.body.google_id_token,
@@ -257,6 +256,7 @@ function loginWithGoogle(req, res) {
       if (!user) {
         const newUser = new User({
           googleId,
+          type,
           loginType: 'google',
           name: payload.name,
           isVerified: true

@@ -289,7 +289,7 @@ class App extends React.Component {
         </Modal>
 
         <Modal
-          size="large"
+          size="auto"
           isOpen={this.props.isSignUpModalOpen}
           closeModal={this.props.closeSignUpModal}
         >
