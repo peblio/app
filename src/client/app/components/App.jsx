@@ -221,10 +221,13 @@ class App extends React.Component {
           updateTextHeight={this.props.updateTextHeight}
         />
 
-        <PagesList
+        <Modal
+          size="xlarge"
           isOpen={this.props.isPagesModalOpen}
           closeModal={this.props.closePagesModal}
-        />
+        >
+          <PagesList />
+        </Modal>
 
         <Modal
           size="large"
