@@ -78,15 +78,13 @@ class ConfirmUser extends React.Component {
           this.state.showReset &&
           <form onSubmit={(event) => { this.resendConfirmUser(event, this.email.value); }}>
             <div className="confirm-modal__div">
-              <label htmlFor="confirm-modal-email" className="confirm-modal__label">
-                <input
-                  id="confirm-modal-email"
-                  className="confirm-modal__input"
-                  placeholder="email"
-                  type="text"
-                  ref={(email) => { this.email = email; }}
-                />
-              </label>
+              <input
+                id="confirm-modal-email"
+                className="confirm-modal__input"
+                placeholder="email"
+                type="text"
+                ref={(email) => { this.email = email; }}
+              />
             </div>
             <button className="confirm-modal__button" type="submit" value="Submit" >
             Resend Token

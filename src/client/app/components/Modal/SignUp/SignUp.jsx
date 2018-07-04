@@ -140,55 +140,38 @@ class SignUp extends React.Component {
           {this.state.isUserTypeSelected &&
             <div>
               <div className="signup-modal__div">
-                <label
-                  className="signup-modal__label"
-                  htmlFor="signup-modal-mail"
-                >
-                  <input
-                    className="signup-modal__input"
-                    id="signup-modal-mail"
-                    placeholder="email"
-                    ref={(userMail) => { this.userMail = userMail; }}
-                    type="text"
-                  />
-                </label>
+                <input
+                  className="signup-modal__input"
+                  id="signup-modal-mail"
+                  placeholder="email"
+                  ref={(userMail) => { this.userMail = userMail; }}
+                  type="text"
+                />
               </div>
               <div className="signup-modal__div">
-                <label
-                  className="signup-modal__label"
-                  htmlFor="signup-modal-name"
-                >
-                  <input
-                    className="signup-modal__input"
-                    id="signup-modal-name"
-                    placeholder="username"
-                    ref={(userName) => { this.userName = userName; }}
-                    type="text"
-                  />
-                </label>
+                <input
+                  className="signup-modal__input"
+                  id="signup-modal-name"
+                  placeholder="username"
+                  ref={(userName) => { this.userName = userName; }}
+                  type="text"
+                />
               </div>
               <div className="signup-modal__div">
-                <label
-                  className="signup-modal__label"
-                  htmlFor="signup-modal-password"
-                >
-                  <input
-                    className="signup-modal__input"
-                    id="signup-modal-password"
-                    placeholder="password"
-                    ref={(password) => { this.password = password; }}
-                    type="password"
-                  />
-                </label>
-                <label htmlFor="signup-modal-confirm" className="signup-modal__label">
-                  <input
-                    id="signup-modal-confirm"
-                    className="signup-modal__input"
-                    placeholder="retype password"
-                    type="password"
-                    ref={(passwordConfirm) => { this.passwordConfirm = passwordConfirm; }}
-                  />
-                </label>
+                <input
+                  className="signup-modal__input"
+                  id="signup-modal-password"
+                  placeholder="password"
+                  ref={(password) => { this.password = password; }}
+                  type="password"
+                />
+                <input
+                  id="signup-modal-confirm"
+                  className="signup-modal__input"
+                  placeholder="retype password"
+                  type="password"
+                  ref={(passwordConfirm) => { this.passwordConfirm = passwordConfirm; }}
+                />
               </div>
               <div className="signup-modal__buttonholder">
                 <button className="signup-modal__button" type="submit" value="Submit" >
