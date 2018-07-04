@@ -190,7 +190,7 @@ class SignUp extends React.Component {
       }
 
         {this.state.showNotice &&
-          <p className="signUserUp-modal__notice">
+          <p className="signup-modal__notice">
             {this.state.notice}
           </p>
         }

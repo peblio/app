@@ -61,4 +61,8 @@
     margin-left: $micro-margin;
     margin-right: $micro-margin;
   }
+
+  &__notice {
+    @extend %modal__notice;
+  }
 }

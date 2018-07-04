@@ -38,4 +38,8 @@
     @extend %modal__link;
     margin-bottom: $large-margin;
   }
+
+  &__notice {
+    @extend %modal__notice;
+  }
 }
