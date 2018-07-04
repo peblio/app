@@ -2,11 +2,10 @@
 @import 'mixins';
 
 .widget__nav{
-  float:right;
-  display: inline-block;
-  width:$nav-width;
-  margin-right: -45px;
+  display: flex;
+  justify-content: flex-end;
   margin-top: -5px;
+  background-color: $light-green;
 }
 
 .widget__close{
@@ -14,7 +13,7 @@
 }
 
 #ShapeCNTRL{
-  fill:$blue;
+  fill:$white;
 }
 
 .widget__close:hover #ShapeCNTRL{
@@ -27,11 +26,12 @@
 
 //deleting and moving widgets on the canvas
 %widget_controls{
-  background-color: $lighter-gray;
+  background-color: $light-green;
   outline: 0;
   -webkit-transition-duration: .5s;
   transition-duration: .5s;
   margin-bottom: 5px !important;
+  margin-top: 5px;
   fill: $blue;
   border-radius: $large-border-radius;
   padding:$small-padding/2;
