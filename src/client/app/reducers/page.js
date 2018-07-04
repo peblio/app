@@ -1,5 +1,8 @@
+import { normalize } from 'normalizr';
+
 import * as ActionTypes from '../constants/reduxConstants.js';
 import convertPixelHeightToGridHeight from '../utils/pixel-to-grid.js';
+import { folderSchema, pageSchema } from '../schema.js';
 
 const initialState = {
   id: '',
@@ -12,24 +15,45 @@ const initialState = {
   },
   layout: [],
   textHeights: {},
-  pages: [],
-  folders: [],
+  pages: {
+    byId: {},
+    allIds: [] // keeps track of display order
+  },
+  folders: {
+    byId: {},
+    allIds: []
+  },
   pageTitle: 'Untitled',
   parentId: '',
   preview: false,
   unsavedChanges: false
 };
 
+function findChildFolderIds(foldersById = {}, folderId = '') {
+  const folder = foldersById[folderId];
+  if (!folder) {
+    return [];
+  }
+  return [folderId, ...folder.children.reduce((accum, childId) => [
+    ...accum,
+    ...findChildFolderIds(foldersById, childId)
+  ], [])];
+}
+
 const page = (state = initialState, action) => {
   switch (action.type) {
 
-    case ActionTypes.DELETE_PAGE:
-      {
-        const pages = state.pages.filter(id => id.id !== action.id);
-        return Object.assign({}, state, {
-          pages
-        });
-      }
+    case ActionTypes.DELETE_PAGE: {
+      const { pages } = state;
+      delete pages.byId[action.pageId];
+      return {
+        ...state,
+        pages: {
+          byId: { ...pages.byId },
+          allIds: pages.allIds.filter(pageId => pageId !== action.pageId)
+        }
+      };
+    }
 
     case ActionTypes.SET_PAGE_TITLE:
       return Object.assign({}, state, {
@@ -54,11 +78,25 @@ const page = (state = initialState, action) => {
         layout: action.layout
       });
 
-    case ActionTypes.SET_ALL_PAGES:
+    case ActionTypes.SET_ALL_PAGES: {
+      const normalizedPageData = normalize(action.pages, [pageSchema]);
+      const normalizedFolderData = normalize(action.folders, [folderSchema]);
       return Object.assign({}, state, {
-        pages: action.pages,
-        folders: action.folders
+        pages: {
+          byId: {
+            ...(normalizedPageData.entities.pages || {}),
+            ...(normalizedFolderData.entities.pages || {})
+          },
+          allIds: (normalizedPageData.result || [])
+            .concat(Object.keys(normalizedFolderData.entities.pages || {}))
+            .filter((elem, pos, arr) => arr.indexOf(elem) === pos) // filter uniques
+        },
+        folders: {
+          byId: (normalizedFolderData.entities.folders || {}),
+          allIds: (normalizedFolderData.result || [])
+        }
       });
+    }
 
     case ActionTypes.SET_UNSAVED_CHANGES:
       return Object.assign({}, state, {
@@ -115,9 +153,105 @@ const page = (state = initialState, action) => {
     }
 
     case ActionTypes.CREATE_FOLDER: {
+      const { folders } = state;
+      const normalizedFolderData = normalize(action.folder, folderSchema);
       return {
         ...state,
-        folders: state.folders.concat(action.folder)
+        folders: {
+          ...folders,
+          byId: {
+            ...folders.byId,
+            ...(normalizedFolderData.entities.folders || {}),
+          },
+          allIds: folders.allIds.concat(normalizedFolderData.result || [])
+        }
+      };
+    }
+
+    case ActionTypes.DELETE_FOLDER: {
+      const { folders, pages } = state;
+      const folderIdsToDelete = findChildFolderIds(folders.byId, action.folderId);
+      const pageIdsToDelete = pages.allIds.filter(pageId => folderIdsToDelete.includes(pages.byId[pageId].folder));
+      return {
+        ...state,
+        folders: {
+          byId: Object.values(folders.byId).reduce((accum, folder) => {
+            if (folderIdsToDelete.includes(folder._id)) {
+              return accum;
+            }
+            return { ...accum, [folder._id]: folder };
+          }, {}),
+          allIds: folders.allIds.filter(folderId => !folderIdsToDelete.includes(folderId))
+        },
+        pages: {
+          byId: Object.values(pages.byId).reduce((accum, p) => {
+            if (pageIdsToDelete.includes(p._id)) {
+              return accum;
+            }
+            return { ...accum, [p._id]: p };
+          }, {}),
+          allIds: pages.allIds.filter(pageId => !pageIdsToDelete.includes(pageId))
+        }
+      };
+    }
+
+    case ActionTypes.MOVE_PAGE_TO_TOP_LEVEL: {
+      const pageId = action.pageId;
+      const { folders, pages } = state;
+      const pageToMove = pages.byId[pageId];
+      const folderId = pageToMove.folder;
+      if (!folderId) {
+        return state;
+      }
+
+      const folder = folders.byId[folderId];
+      folder.files = folder.files.filter(pId => pId !== pageId);
+
+      pageToMove.folder = null;
+      return {
+        ...state,
+        folders: {
+          ...folders,
+          byId: {
+            ...folders.byId,
+            [folderId]: folder
+          }
+        },
+        pages: {
+          ...pages,
+          byId: {
+            ...pages.byId,
+            [pageId]: pageToMove
+          }
+        }
+      };
+    }
+
+    case ActionTypes.MOVE_PAGE_TO_FOLDER: {
+      const { folderId, pageId } = action;
+      const { folders, pages } = state;
+
+      const pageToMove = pages.byId[pageId];
+      pageId.folder = folderId;
+
+      const folder = folders.byId[folderId];
+      folder.files = folder.files.concat(pageId);
+      return {
+        ...state,
+        folders: {
+          ...folders,
+          byId: {
+            ...folders.byId,
+            [folderId]: folder
+          }
+        },
+        pages: {
+          ...pages,
+          byId: {
+            ...pages.byId,
+            [pageId]: pageToMove
+          }
+        }
       };
     }
 

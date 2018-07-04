@@ -55,6 +55,9 @@ const config = {
       }
     ]
   },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   node: {
     fs: 'empty'
   },

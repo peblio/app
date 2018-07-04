@@ -44,16 +44,14 @@ export function loadPage(id, title, preview, layout) {
   };
 }
 
-export function deletePage(page) {
-  const id = page.page.id;
-  axios.post('/pages/delete', { id })
-    .then(() => console.log('Page deleted'))
-    .catch(error => console.error('Error deleting page', error));
+export function deletePage(pageId) {
   return (dispatch) => {
-    dispatch({
-      type: ActionTypes.DELETE_PAGE,
-      id
-    });
+    axios.delete(`/pages/${pageId}`).then(() => {
+      dispatch({
+        type: ActionTypes.DELETE_PAGE,
+        pageId
+      });
+    })
   };
 }
 
@@ -116,10 +114,9 @@ export function updatePage(id, title, preview, editors, editorIndex, layout) {
 export function fetchAllPages() {
   return (dispatch) => {
     axios.get('/api/sketches').then(({ data }) => {
-      const pages = data.pages.map(page => ({ id: page.id, title: page.title }));
       dispatch({
         type: ActionTypes.SET_ALL_PAGES,
-        pages,
+        pages: data.pages,
         folders: data.folders
       });
     });
@@ -157,10 +154,48 @@ export function updateTextHeight(id, height) {
 
 export function createFolder(data) {
   return (dispatch) => {
-    axios.post('/folder', data).then((response) => {
+    axios.post('/folders', data).then((response) => {
       dispatch({
         types: ActionTypes.CREATE_FOLDER,
         folder: response.data.folder
+      });
+    });
+  };
+}
+
+export function deleteFolder(folderId) {
+  return (dispatch) => {
+    axios.delete(`/folders/${folderId}`).then(() => {
+      dispatch({
+        types: ActionTypes.DELETE_FOLDER,
+        folderId
+      });
+    });
+  };
+}
+
+export function movePageToTopLevel(pageId) {
+  return (dispatch) => {
+    axios.post(`/pages/${pageId}/move`, {}).then((response) => {
+      dispatch({
+        types: ActionTypes.MOVE_PAGE_TO_TOP_LEVEL,
+        pageId
+      });
+    });
+  };
+}
+
+export function movePageToFolder(pageId, folderId) {
+  return (dispatch) => {
+    const data = {};
+    if (folderId) {
+      data.folderId = folderId;
+    }
+    axios.post(`/pages/${pageId}/move`, { folderId }).then((response) => {
+      dispatch({
+        types: ActionTypes.MOVE_PAGE_TO_FOLDER,
+        pageId,
+        folderId
       });
     });
   };
