@@ -6,6 +6,8 @@ const express = require('express'); // include the express library
 const path = require('path');
 const passport = require('passport');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
@@ -35,8 +37,8 @@ mongoose.connection.on('open', () => {
 });
 
 app.use(cors({ credentials: true, origin: true }));
-
-app.use(session({
+app.use(cookieParser())
+app.use(cookieSession({
   secret: 'ASQ12345678gfd4jh234oiuy',
   resave: true,
   saveUninitialized: true,
