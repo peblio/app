@@ -6,7 +6,7 @@ const express = require('express'); // include the express library
 const path = require('path');
 const passport = require('passport');
 
-require('dotenv').config();
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
 const session = require('express-session');

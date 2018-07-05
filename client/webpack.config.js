@@ -71,7 +71,7 @@ const config = {
       compress: { warnings: false },
       sourceMap: true
     }),
-    new Dotenv()
+    new Dotenv({ path: path.resolve(__dirname, '../.env') })
   ]
 };
 
