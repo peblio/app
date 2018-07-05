@@ -61,3 +61,5 @@ app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
+
+console.log('NODE_ENV: ' + process.env.NODE_ENV);
