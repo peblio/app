@@ -75,7 +75,7 @@ const config = {
       sourceMap: true
     }),
     new Dotenv({
-      path: path.resolve(__dirname, process.env.NODE_ENV === 'production' ? '../.env.production' : '../.env')
+      path: path.resolve(__dirname, process.env.ENVIRONMENT === 'production' ? '../.env.production' : '../.env')
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(SRC_DIR, 'index.html'),
