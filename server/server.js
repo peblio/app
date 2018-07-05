@@ -36,13 +36,12 @@ mongoose.connection.on('open', () => {
   // process.exit(1);
 });
 
-app.use(cors({ credentials: true, origin: true }));
-app.use(cookieParser())
-app.use(cookieSession({
+// app.use(cors({ credentials: true, origin: true }));
+// app.use(cookieParser())
+app.use(session({
   secret: 'ASQ12345678gfd4jh234oiuy',
   resave: true,
-  saveUninitialized: true,
-  cookie: { domain: process.env.NODE_ENV === 'production' ? '.peblio.co' : 'localhost' }
+  saveUninitialized: true
 }));
 // add body parser
 app.use(bodyParser.urlencoded({ extended: true }));
