@@ -39,7 +39,8 @@ app.use(cors({ credentials: true, origin: true }));
 app.use(session({
   secret: 'ASQ12345678gfd4jh234oiuy',
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: { domain: process.env.NODE_ENV === 'production' ? '.peblio.co' : 'localhost' }
 }));
 // add body parser
 app.use(bodyParser.urlencoded({ extended: true }));
