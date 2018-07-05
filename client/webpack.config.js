@@ -12,7 +12,7 @@ const config = {
   entry: `${APP_DIR}/index.jsx`,
   output: {
     path: BUILD_DIR,
-    filename: 'bundle.min.js'
+    filename: '[name].[chunkhash].js'
   },
   module: {
     loaders: [
