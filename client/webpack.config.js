@@ -2,9 +2,11 @@ const webpack = require('webpack');
 const path = require('path');
 const SassLintPlugin = require('sasslint-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const BUILD_DIR = path.resolve(__dirname, 'build');
-const APP_DIR = path.resolve(__dirname, 'src/app');
+const SRC_DIR = path.resolve(__dirname, 'src');
+const APP_DIR = path.resolve(SRC_DIR, 'app');
 
 const config = {
   entry: `${APP_DIR}/index.jsx`,
@@ -71,8 +73,17 @@ const config = {
       compress: { warnings: false },
       sourceMap: true
     }),
-    new Dotenv({ path: path.resolve(__dirname, '../.env') })
-  ]
+    new Dotenv({ path: path.resolve(__dirname, '../.env') }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(SRC_DIR, 'index.html'),
+      favicon: path.resolve(APP_DIR, 'images/favicon.ico')
+    })
+  ],
+  devServer: {
+    proxy: {
+      '/api': { target: 'http://localhost:8081' }
+    }
+  }
 };
 
 module.exports = config;

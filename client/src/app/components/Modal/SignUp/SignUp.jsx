@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from '../../../utils/axios';
 
 import GoogleLoginButton from '../../shared/GoogleLoginButton/GoogleLoginButton.jsx';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import axios from '../../../utils/axios';
 
 require('./confirmUser.scss');
 

@@ -21,7 +21,12 @@ import * as mainToolbarActions from '../action/mainToolbar.js';
 import * as pageActions from '../action/page.js';
 import * as userActions from '../action/user.js';
 
-const axios = require('axios');
+import axios from '../utils/axios';
+
+import '../styles/Draft.css';
+import '../styles/reactGrid.css';
+import '../styles/reactResize.css';
+
 
 class App extends React.Component {
   componentDidMount() {
@@ -74,11 +79,11 @@ class App extends React.Component {
     } else if (this.projectID()) {
       this.props.setEditAccess(false);
       const projectID = this.projectID();
-      axios.get(`/api/page/${this.projectID()}`)
+      axios.get(`/page/${this.projectID()}`)
         .then((res) => {
           this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].preview, res.data[0].layout);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
-          axios.get('/api/user')
+          axios.get('/user')
             .then((res1) => {
               if (res1.data.pages && res1.data.pages.includes(projectID)) {
                 this.props.setEditAccess(true);
@@ -86,7 +91,7 @@ class App extends React.Component {
             });
         });
     }
-    axios.get('/api/user')
+    axios.get('/user')
       .then((res) => {
         if (res.data.name) {
           this.props.setUserName(res.data.name);
@@ -99,7 +104,7 @@ class App extends React.Component {
     if (this.projectID()) {
       this.props.setEditAccess(false);
       const projectID = this.projectID();
-      axios.get('/api/user')
+      axios.get('/user')
         .then((res1) => {
           if (res1.data.pages && res1.data.pages.includes(projectID)) {
             this.props.setEditAccess(true);

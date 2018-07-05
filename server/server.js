@@ -19,7 +19,9 @@ const apiRoutes = require('./controllers/apiController.js');
 require('./config/passport');
 
 // start the server:
-app.listen(process.env.PORT || 8080);
+const listener = app.listen(process.env.PORT || 8081, function() {
+  console.log('Listening on port ' + listener.address().port);
+});
 
 mongoose.connect('mongodb://localhost:27017/peblio-file');
 mongoose.connection.on('error', () => {
@@ -45,10 +47,12 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/users', userRoutes);
-app.use('/pages', pageRoutes);
-app.use('/folders', folderRoutes);
-app.use('/api', apiRoutes);
+const router = express.Router();
+router.use('/users', userRoutes);
+router.use('/pages', pageRoutes);
+router.use('/folders', folderRoutes);
+router.use('/', apiRoutes);
+app.use('/api', router);
 
 app.get('/logout', (req, res) => {
   req.logout();

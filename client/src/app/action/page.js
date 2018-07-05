@@ -1,7 +1,7 @@
-import axios from 'axios';
 import shortid from 'shortid';
 import { convertToRaw } from 'draft-js';
 import * as ActionTypes from '../constants/reduxConstants.js';
+import axios from '../utils/axios';
 
 export function setUnsavedChanges(value) {
   return (dispatch) => {
@@ -128,7 +128,7 @@ export function updatePage(id, title, preview, editors, editorIndex, layout) {
 }
 
 export function fetchAllPages() {
-  return dispatch => axios.get('/api/sketches').then(({ data }) => {
+  return dispatch => axios.get('/sketches').then(({ data }) => {
     dispatch({
       type: ActionTypes.SET_ALL_PAGES,
       pages: data.pages,

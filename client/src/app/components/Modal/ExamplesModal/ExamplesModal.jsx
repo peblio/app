@@ -1,6 +1,6 @@
 import React from 'react';
 
-const axios = require('axios');
+import axios from '../../../utils/axios';
 
 class ExamplesModal extends React.Component {
   constructor(props) {
