@@ -38,7 +38,6 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
-app.use(express.static(path.resolve(__dirname, './static')));
 // add body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

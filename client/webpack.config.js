@@ -3,6 +3,7 @@ const path = require('path');
 const SassLintPlugin = require('sasslint-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const BUILD_DIR = path.resolve(__dirname, 'build');
 const SRC_DIR = path.resolve(__dirname, 'src');
@@ -77,7 +78,10 @@ const config = {
     new HtmlWebpackPlugin({
       template: path.resolve(SRC_DIR, 'index.html'),
       favicon: path.resolve(APP_DIR, 'images/favicon.ico')
-    })
+    }),
+    new CopyWebpackPlugin([
+      { from: path.resolve(SRC_DIR, 'static') }
+    ], { copyUnmodified: true })
   ],
   devServer: {
     proxy: {
