@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const express = require('express'); // include the express library
 const path = require('path');
 const passport = require('passport');
+const cors = require('cors');
 
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
@@ -32,6 +33,8 @@ mongoose.connection.on('open', () => {
   console.log('MongoDB Connection success.');
   // process.exit(1);
 });
+
+app.use(cors());
 
 app.use(session({
   secret: 'ASQ12345678gfd4jh234oiuy',
