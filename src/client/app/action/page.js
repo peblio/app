@@ -192,6 +192,16 @@ export function deleteFolder(folderId) {
   };
 }
 
+export function renameFolder(folderId, folderName) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.RENAME_FOLDER,
+      folderId,
+      folderName
+    });
+  };
+}
+
 export function movePageToTopLevel(pageId) {
   return (dispatch, getState) => {
     const { page } = getState();

@@ -11,6 +11,7 @@ import {
   deleteFolder,
   moveFolderToFolder,
   movePageToFolder,
+  renameFolder,
   viewFolder
 } from '../../../../action/page.js';
 import DeleteIcon from '../../../../images/trash.svg';
@@ -59,6 +60,9 @@ class FolderRow extends Component {
 
   editTitle = (e) => {
     if (this.props.isSelected) {
+      console.log(this.props.folder.id);
+      console.log(this.props.folder.title);
+
       // TODO: put the folder row into editing mode
     }
   }
@@ -118,6 +122,7 @@ FolderRow.propTypes = {
   /* eslint-disable react/no-unused-prop-types */
   moveFolderToFolder: PropTypes.func.isRequired,
   movePageToFolder: PropTypes.func.isRequired,
+  renameFolder: PropTypes.func.isRequired,
   /* eslint-enable react/no-unused-prop-types */
   viewFolder: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired
@@ -129,6 +134,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   deleteFolder,
+  renameFolder,
   moveFolderToFolder,
   movePageToFolder,
   viewFolder

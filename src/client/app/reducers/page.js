@@ -207,6 +207,11 @@ const page = (state = initialState, action) => {
       };
     }
 
+    case ActionTypes.RENAME_FOLDER : {
+      console.lod(action.folderId);
+      console.lod(action.folderName);
+    }
+
     case ActionTypes.MOVE_PAGE_TO_TOP_LEVEL: {
       const pageId = action.pageId;
       const { folders, pages } = state;
