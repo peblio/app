@@ -3,8 +3,8 @@ const path = require('path');
 const SassLintPlugin = require('sasslint-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
-const BUILD_DIR = path.resolve(__dirname, 'src/client/public');
-const APP_DIR = path.resolve(__dirname, 'src/client/app');
+const BUILD_DIR = path.resolve(__dirname, 'build');
+const APP_DIR = path.resolve(__dirname, 'src/app');
 
 const config = {
   entry: `${APP_DIR}/index.jsx`,

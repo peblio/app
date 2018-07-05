@@ -11,7 +11,6 @@ require('dotenv').config();
 const app = express();
 const session = require('express-session');
 
-const srcpath = path.join(__dirname, '../client');
 const userRoutes = require('./controllers/userController.js');
 const pageRoutes = require('./controllers/pageController.js');
 const folderRoutes = require('./controllers/folderController');
@@ -21,7 +20,6 @@ require('./config/passport');
 
 // start the server:
 app.listen(process.env.PORT || 8080);
-app.use('/', express.static('src/client/')); // set a static file directory
 
 mongoose.connect('mongodb://localhost:27017/peblio-file');
 mongoose.connection.on('error', () => {
@@ -38,7 +36,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
-app.use(express.static(path.resolve(__dirname, '../static')));
+app.use(express.static(path.resolve(__dirname, './static')));
 // add body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -55,9 +53,4 @@ app.use('/api', apiRoutes);
 app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
-});
-
-// call by default index.html page
-app.get('*', (req, res) => {
-  res.sendFile(`${srcpath}/index.html`);
 });
