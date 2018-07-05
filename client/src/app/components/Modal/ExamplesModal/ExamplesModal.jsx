@@ -12,7 +12,7 @@ class ExamplesModal extends React.Component {
   }
   componentDidMount() {
     const temp = [];
-    axios.get('/api/examples')
+    axios.get('/examples')
       .then((res) => {
         res.data.forEach((example) => {
           temp.push({
