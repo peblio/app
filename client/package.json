@@ -5,7 +5,9 @@
   "main": "build/bundle.min.js",
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "webpack -p --config ./webpack.config.js --progress"
+    "build": "ENVIRONMENT=local webpack -p --config ./webpack.config.js --progress",
+    "build:staging": "ENVIRONMENT=staging webpack -p --config ./webpack.config.js --progress",
+    "build:production": "ENVIRONMENT=production webpack -p --config ./webpack.config.js --progress"
   },
   "author": "",
   "license": "ISC",
