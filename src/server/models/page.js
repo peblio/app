@@ -10,6 +10,9 @@ const pageSchema = new Schema({
   editorIndex: { type: Number, default: 0 },
   layout: { type: Array, default: [] },
   folder: { type: Schema.Types.ObjectId, ref: 'Folder' }
-}, { minimize: false });
+}, {
+  minimize: false,
+  timestamps: true
+});
 
 module.exports = mongoose.model('Page', pageSchema);

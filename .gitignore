@@ -7,3 +7,4 @@ src/client/public/*.svg
 **/.DS_Store
 src/client/.sass-cache/
 **/*.css.map
+.python-version

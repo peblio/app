@@ -2,29 +2,67 @@
 @import 'mixins';
 @import 'modal';
 
-.signup-modal__content{
-  margin: auto;
-  width: 45%;
-  padding-top: 5%;
-}
+.signup-modal {
+  &__content{
+    @extend %modal__content;
+  }
 
-.signup-modal__div{
-  display: block;
-  text-align: left;
-}
+  &__div{
+    display: block;
+    text-align: left;
+  }
 
-.signup-modal__title{
-  @extend %modal__title;
-}
+  &__title{
+    @extend %modal__title;
+  }
+  &__subtitle {
+    @extend %modal__subtitle;
+  }
 
-.signup-modal__label{
-  @extend %modal__label;
-}
+  &__label{
+    @extend %modal__label;
+    display: inline;
+  }
 
-.signup-modal__input{
-  @extend %modal__input;
-}
+  &__input{
+    @extend %modal__input;
+  }
 
-.signup-modal__button{
-  @extend %modal__button;
+  &__button{
+    @extend %modal__button;
+  }
+
+  &__buttonholder {
+    @extend %modal__buttonholder;
+    width: 100%;
+    margin-top: 0px;
+  }
+
+  &__radio-holder {
+    width: 100%;
+  }
+
+  &__radio {
+    @extend %modal__radio;
+  }
+
+  &__list {
+    justify-content: $center-align;
+    padding: $small-padding;
+    list-style-type: none;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__listitem {
+    padding-right: $small-padding;
+    padding-left: $small-padding;
+    margin-left: $micro-margin;
+    margin-right: $micro-margin;
+  }
+
+  &__notice {
+    @extend %modal__notice;
+  }
 }

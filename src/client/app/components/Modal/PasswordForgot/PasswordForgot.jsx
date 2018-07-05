@@ -36,21 +36,27 @@ class PasswordForgot extends React.Component {
   render() {
     return (
       <div className="forgot-modal__content">
-        <h1 className="forgot-modal__title">Reset Password</h1>
+        <h1 className="forgot-modal__title">Forgot Password?</h1>
+        <div className="forgot-modal__text">
+          Enter your email address and we&lsquo;ll send you a link to reset your password.
+        </div>
         <form onSubmit={(event) => { this.submitForgotPassword(event, this.email.value); }}>
           <div className="forgot-modal__div">
-            <label htmlFor="forgot-modal-email" className="forgot-modal__label"> Email
+            <label htmlFor="forgot-modal-email" className="forgot-modal__label">
               <input
                 id="forgot-modal-email"
                 className="forgot-modal__input"
                 type="text"
+                placeholder="email"
                 ref={(email) => { this.email = email; }}
               />
             </label>
           </div>
-          <button className="forgot-modal__button" type="submit" value="Submit" >
-            Submit
-          </button>
+          <div className="forgot-modal__buttonholder">
+            <button className="forgot-modal__button" type="submit" value="Submit" >
+              Submit
+            </button>
+          </div>
         </form>
         {this.state.showNotice &&
           <p className="forgot-modal__notice">
