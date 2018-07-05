@@ -26,6 +26,8 @@ const initialState = {
   pageTitle: 'Untitled',
   parentId: '',
   preview: false,
+  selectedFolderIds: [],
+  selectedPageId: null,
   unsavedChanges: false
 };
 
@@ -34,7 +36,7 @@ function findChildFolderIds(foldersById = {}, folderId = '') {
   if (!folder) {
     return [];
   }
-  return [folderId, ...folder.children.reduce((accum, childId) => [
+  return [folderId, ...(folder.children || []).reduce((accum, childId) => [
     ...accum,
     ...findChildFolderIds(foldersById, childId)
   ], [])];
@@ -44,14 +46,15 @@ const page = (state = initialState, action) => {
   switch (action.type) {
 
     case ActionTypes.DELETE_PAGE: {
-      const { pages } = state;
+      const { pages, selectedPageId } = state;
       delete pages.byId[action.pageId];
       return {
         ...state,
         pages: {
           byId: { ...pages.byId },
           allIds: pages.allIds.filter(pageId => pageId !== action.pageId)
-        }
+        },
+        selectedPageId: selectedPageId !== action.pageId ? selectedPageId : null
       };
     }
 
@@ -155,6 +158,13 @@ const page = (state = initialState, action) => {
     case ActionTypes.CREATE_FOLDER: {
       const { folders } = state;
       const normalizedFolderData = normalize(action.folder, folderSchema);
+      const parentFolderById = {};
+      const parentFolderId = action.folder.parent;
+      if (parentFolderId) {
+        const parentFolder = folders.byId[parentFolderId];
+        parentFolder.children = (parentFolder.children || []).concat(action.folder._id);
+        parentFolderById[parentFolderId] = parentFolder;
+      }
       return {
         ...state,
         folders: {
@@ -162,6 +172,7 @@ const page = (state = initialState, action) => {
           byId: {
             ...folders.byId,
             ...(normalizedFolderData.entities.folders || {}),
+            ...parentFolderById
           },
           allIds: folders.allIds.concat(normalizedFolderData.result || [])
         }
@@ -169,7 +180,7 @@ const page = (state = initialState, action) => {
     }
 
     case ActionTypes.DELETE_FOLDER: {
-      const { folders, pages } = state;
+      const { folders, pages, selectedFolderIds } = state;
       const folderIdsToDelete = findChildFolderIds(folders.byId, action.folderId);
       const pageIdsToDelete = pages.allIds.filter(pageId => folderIdsToDelete.includes(pages.byId[pageId].folder));
       return {
@@ -191,7 +202,8 @@ const page = (state = initialState, action) => {
             return { ...accum, [p._id]: p };
           }, {}),
           allIds: pages.allIds.filter(pageId => !pageIdsToDelete.includes(pageId))
-        }
+        },
+        selectedFolderIds: selectedFolderIds.filter(selectedFolderId => !folderIdsToDelete.includes(selectedFolderId))
       };
     }
 
@@ -207,21 +219,21 @@ const page = (state = initialState, action) => {
       const folder = folders.byId[folderId];
       folder.files = folder.files.filter(pId => pId !== pageId);
 
-      pageToMove.folder = null;
+      delete pageToMove.folder;
       return {
         ...state,
         folders: {
           ...folders,
           byId: {
             ...folders.byId,
-            [folderId]: folder
+            [folderId]: { ...folder }
           }
         },
         pages: {
           ...pages,
           byId: {
             ...pages.byId,
-            [pageId]: pageToMove
+            [pageId]: { ...pageToMove }
           }
         }
       };
@@ -232,26 +244,143 @@ const page = (state = initialState, action) => {
       const { folders, pages } = state;
 
       const pageToMove = pages.byId[pageId];
-      pageId.folder = folderId;
+
+      const prevFolderById = {};
+      if (pageToMove.folder) {
+        const prevFolder = folders.byId[pageToMove.folder];
+        prevFolder.files = (prevFolder.files || []).filter(pId => pId !== pageId);
+        prevFolderById[pageToMove.folder] = { ...prevFolder };
+      }
+
+      pageToMove.folder = folderId;
 
       const folder = folders.byId[folderId];
-      folder.files = folder.files.concat(pageId);
+      folder.files = (folder.files || []).concat(pageId);
       return {
         ...state,
         folders: {
           ...folders,
           byId: {
             ...folders.byId,
-            [folderId]: folder
+            ...prevFolderById,
+            [folderId]: { ...folder }
           }
         },
         pages: {
           ...pages,
           byId: {
             ...pages.byId,
-            [pageId]: pageToMove
+            [pageId]: { ...pageToMove }
           }
         }
+      };
+    }
+
+    case ActionTypes.MOVE_FOLDER_TO_TOP_LEVEL: {
+      const childFolderId = action.folderId;
+      const { folders } = state;
+      const childFolder = folders.byId[childFolderId];
+      const parentFolderId = childFolder.parent;
+      if (!parentFolderId) {
+        return state;
+      }
+
+      const parentFolder = folders.byId[parentFolderId];
+      parentFolder.children = (parentFolder.children || []).filter(folderId => folderId !== childFolderId);
+
+      delete childFolder.parent;
+      return {
+        ...state,
+        folders: {
+          ...folders,
+          byId: {
+            ...folders.byId,
+            [childFolderId]: { ...childFolder },
+            [parentFolderId]: { ...parentFolder }
+          }
+        }
+      };
+    }
+
+    case ActionTypes.MOVE_FOLDER_TO_FOLDER: {
+      const { childFolderId, parentFolderId } = action;
+      const { folders } = state;
+
+      const childFolder = folders.byId[childFolderId];
+
+      const prevParentFolderById = {};
+      if (childFolder.parent) {
+        const prevParentFolder = folders.byId[childFolder.parent];
+        prevParentFolder.children = (prevParentFolder.children || []).filter(folderId => folderId !== childFolderId);
+        prevParentFolderById[childFolder.parent] = { ...prevParentFolder };
+      }
+
+      childFolder.parent = parentFolderId;
+
+      const parentFolder = folders.byId[parentFolderId];
+      parentFolder.children = (parentFolder.children || []).concat(childFolderId);
+      return {
+        ...state,
+        folders: {
+          ...folders,
+          byId: {
+            ...folders.byId,
+            ...prevParentFolderById,
+            [childFolderId]: { ...childFolder },
+            [parentFolderId]: { ...parentFolder }
+          }
+        },
+      };
+    }
+
+    case ActionTypes.CREATE_PAGE: {
+      const { pages } = state;
+      const normalizedPageData = normalize(action.page, pageSchema);
+      return {
+        ...state,
+        pages: {
+          byId: {
+            ...pages.byId,
+            ...(normalizedPageData.entities.pages || {}),
+          },
+          allIds: pages.allIds.concat(normalizedPageData.result || [])
+        }
+      };
+    }
+
+    case ActionTypes.VIEW_FOLDER: {
+      const { folderId, depth } = action;
+      const { selectedFolderIds } = state;
+      selectedFolderIds.splice(depth, selectedFolderIds.length - depth, folderId);
+      return {
+        ...state,
+        selectedFolderIds: [...selectedFolderIds]
+      };
+    }
+
+    case ActionTypes.VIEW_PAGE: {
+      return {
+        ...state,
+        selectedPageId: action.pageId
+      };
+    }
+
+    case ActionTypes.CLEAR_SELECTED_FOLDERS: {
+      const { depth } = action;
+      if (!depth) {
+        return {
+          ...state,
+          selectedFolderIds: [],
+          selectedPageId: null
+        };
+      }
+
+      const { selectedFolderIds } = state;
+      selectedFolderIds.splice(depth, selectedFolderIds.length - depth);
+      return {
+        ...state,
+        selectedFolderIds: [...selectedFolderIds],
+        selectedPageId: null
       };
     }
 

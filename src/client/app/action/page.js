@@ -91,6 +91,22 @@ export function submitPage(parentId, title, preview, editors, editorIndex, layou
   };
 }
 
+export function createPage(title, folder) {
+  return (dispatch) => {
+    const id = shortid.generate();
+    const data = { id, title };
+    if (folder) {
+      data.folder = folder;
+    }
+    return axios.post('/pages/save', data).then((response) => {
+      dispatch({
+        type: ActionTypes.CREATE_PAGE,
+        page: response.data.page
+      });
+    });
+  };
+}
+
 export function updatePage(id, title, preview, editors, editorIndex, layout) {
   axios.post('/pages/update', {
     id,
@@ -112,15 +128,13 @@ export function updatePage(id, title, preview, editors, editorIndex, layout) {
 }
 
 export function fetchAllPages() {
-  return (dispatch) => {
-    axios.get('/api/sketches').then(({ data }) => {
-      dispatch({
-        type: ActionTypes.SET_ALL_PAGES,
-        pages: data.pages,
-        folders: data.folders
-      });
+  return dispatch => axios.get('/api/sketches').then(({ data }) => {
+    dispatch({
+      type: ActionTypes.SET_ALL_PAGES,
+      pages: data.pages,
+      folders: data.folders
     });
-  };
+  });
 }
 
 export function togglePreviewMode(value) {
@@ -152,11 +166,15 @@ export function updateTextHeight(id, height) {
   };
 }
 
-export function createFolder(data) {
+export function createFolder(title, parent) {
   return (dispatch) => {
-    axios.post('/folders', data).then((response) => {
+    const data = { title };
+    if (parent) {
+      data.parent = parent;
+    }
+    return axios.post('/folders', data).then((response) => {
       dispatch({
-        types: ActionTypes.CREATE_FOLDER,
+        type: ActionTypes.CREATE_FOLDER,
         folder: response.data.folder
       });
     });
@@ -167,7 +185,7 @@ export function deleteFolder(folderId) {
   return (dispatch) => {
     axios.delete(`/folders/${folderId}`).then(() => {
       dispatch({
-        types: ActionTypes.DELETE_FOLDER,
+        type: ActionTypes.DELETE_FOLDER,
         folderId
       });
     });
@@ -175,10 +193,15 @@ export function deleteFolder(folderId) {
 }
 
 export function movePageToTopLevel(pageId) {
-  return (dispatch) => {
-    axios.post(`/pages/${pageId}/move`, {}).then((response) => {
+  return (dispatch, getState) => {
+    const { page } = getState();
+    const pageToMove = page.pages.byId[pageId];
+    if (!pageToMove.folder) {
+      return Promise.resolve();
+    }
+    return axios.post(`/pages/${pageId}/move`, {}).then((response) => {
       dispatch({
-        types: ActionTypes.MOVE_PAGE_TO_TOP_LEVEL,
+        type: ActionTypes.MOVE_PAGE_TO_TOP_LEVEL,
         pageId
       });
     });
@@ -186,17 +209,72 @@ export function movePageToTopLevel(pageId) {
 }
 
 export function movePageToFolder(pageId, folderId) {
-  return (dispatch) => {
-    const data = {};
-    if (folderId) {
-      data.folderId = folderId;
+  if (!folderId) {
+    return movePageToTopLevel(pageId);
+  }
+  return dispatch => axios.post(`/pages/${pageId}/move`, { folderId }).then((response) => {
+    dispatch({
+      type: ActionTypes.MOVE_PAGE_TO_FOLDER,
+      pageId,
+      folderId
+    });
+  });
+}
+
+export function moveFolderToTopLevel(folderId) {
+  return (dispatch, getState) => {
+    const { page } = getState();
+    const folder = page.folders.byId[folderId];
+    if (!folder.parent) {
+      return Promise.resolve();
     }
-    axios.post(`/pages/${pageId}/move`, { folderId }).then((response) => {
+    return axios.post(`/folders/${folderId}/move`, {}).then((response) => {
       dispatch({
-        types: ActionTypes.MOVE_PAGE_TO_FOLDER,
-        pageId,
+        type: ActionTypes.MOVE_FOLDER_TO_TOP_LEVEL,
         folderId
       });
     });
   };
+}
+
+export function moveFolderToFolder(childFolderId, parentFolderId) {
+  if (!parentFolderId) {
+    return moveFolderToTopLevel(childFolderId);
+  }
+  return (dispatch, getState) => {
+    const { page } = getState();
+    const childFolder = page.folders.byId[childFolderId];
+    if (childFolder.parent === parentFolderId) {
+      return Promise.resolve();
+    }
+    return axios.post(`/folders/${childFolderId}/move`, { folderId: parentFolderId }).then((response) => {
+      dispatch({
+        type: ActionTypes.MOVE_FOLDER_TO_FOLDER,
+        childFolderId,
+        parentFolderId
+      });
+    });
+  };
+}
+
+export function viewFolder(folderId, depth) {
+  return dispatch => dispatch({
+    type: ActionTypes.VIEW_FOLDER,
+    folderId,
+    depth
+  });
+}
+
+export function viewPage(pageId) {
+  return dispatch => dispatch({
+    type: ActionTypes.VIEW_PAGE,
+    pageId
+  });
+}
+
+export function clearSelectedFolders(depth) {
+  return dispatch => dispatch({
+    type: ActionTypes.CLEAR_SELECTED_FOLDERS,
+    depth
+  });
 }
