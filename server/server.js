@@ -34,7 +34,7 @@ mongoose.connection.on('open', () => {
   // process.exit(1);
 });
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: true }));
 
 app.use(session({
   secret: 'ASQ12345678gfd4jh234oiuy',
