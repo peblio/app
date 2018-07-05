@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
-import FolderRow from './FolderRow';
-import PageRow from './PageRow';
+import FolderContainer from './FolderContainer';
 import { fetchAllPages } from '../../../action/page';
-import compareTimestamps from '../../../utils/compare-timestamps';
 
 require('./pagesList.scss');
 
@@ -15,55 +15,36 @@ class PagesList extends React.Component {
     this.props.fetchAllPages();
   }
 
-  render() {
-    const { topLevelFolders, topLevelPages } = this.props;
-    return (
+  componentDidUpdate() {
+    if (this.containerEl && this.props.selectedFolderIds.length >= 2) {
+      this.containerEl.scrollLeft = this.containerEl.scrollWidth - this.containerEl.clientWidth;
+    }
+  }
 
-      <div className="pages__list">
-        {topLevelFolders.length > 0 &&
-        <table className="pages__table">
-          <tbody>
-            <tr className="pages__headrow">
-              <th className="pages__header">Folders</th>
-              <th className="pages__header">Created</th>
-              <th className="pages__header">Updated</th>
-              <th className="pages__header"></th>
-            </tr>
-            {topLevelFolders.map(folder => (
-              <FolderRow key={folder._id} folder={folder} />
-                ))}
-          </tbody>
-        </table>
-          }
-        <table className="pages__table">
-          <tbody>
-            <tr className="pages__headrow">
-              <th className="pages__header">Files</th>
-              <th className="pages__header">Created</th>
-              <th className="pages__header">Updated</th>
-              <th className="pages__header"></th>
-            </tr>
-            {topLevelPages.map(page => (
-              <PageRow key={page._id} page={page} />
-              ))}
-          </tbody>
-        </table>
+  render() {
+    const { selectedFolderIds } = this.props;
+    return (
+      <div className="pages__list" ref={(el) => { this.containerEl = el; }}>
+        <FolderContainer />
+        {selectedFolderIds.map((selectedFolderId, index) => (
+          <FolderContainer key={selectedFolderId} folderId={selectedFolderId} folderDepth={index + 1} />
+        ))}
       </div>
     );
   }
 }
 
 PagesList.propTypes = {
-  topLevelFolders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  topLevelPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  fetchAllPages: PropTypes.func.isRequired
+  fetchAllPages: PropTypes.func.isRequired,
+  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
+const DragDropPagesList = DragDropContext(HTML5Backend)(PagesList);
+
 const mapStateToProps = state => ({
-  topLevelFolders: Object.values(state.page.folders.byId).filter(folder => !folder.parent).sort(compareTimestamps),
-  topLevelPages: Object.values(state.page.pages.byId).filter(page => !page.folder).sort(compareTimestamps)
+  selectedFolderIds: state.page.selectedFolderIds
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ fetchAllPages }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(PagesList);
+export default connect(mapStateToProps, mapDispatchToProps)(DragDropPagesList);

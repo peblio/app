@@ -6,5 +6,5 @@ export default function formatDate(dateString = '') {
   }
 
   // format looks like: January 1, 2018
-  return moment.utc(dateString).format('MMMM D, YYYY');
+  return moment.utc(dateString).format('M/D/YYYY');
 }

@@ -6,31 +6,6 @@
   background-color: $modal-overlay !important;
 }
 
-.modal__large{
-  @extend %modal;
-  width: 60%;
-  height: fit-content;
-  min-height: 60%;
-  max-height: 80%;
-  overflow-y: scroll;
-}
-
-.modal__small{
-  @extend %modal;
-  width: 40%;
-}
-
-.modal__auto{
-  @extend %modal;
-  width: 60%;
-  height: fit-content;
-}
-
-.modal__close-button{
-  float:right;
-  padding: 4px;
-}
-
 %modal{
   background: $white;
   margin: auto;
@@ -38,7 +13,9 @@
   margin-bottom: 5%;
   border-radius: $medium-border-radius;
   border: 2px solid $gray;
+  outline: 0;
   padding: 10px;
+  position: relative;
 }
 
 %modal__content {
@@ -136,7 +113,6 @@
   justify-content: center;
   display: flex;
 }
-
 %modal__buttonholder {
   text-align: $center-align;
 }
@@ -144,4 +120,54 @@
 %modal__radio {
   text-align: $center-align;
   margin-right: $small-margin;
+}
+.modal__xlarge {
+  @extend %modal;
+  width: 75%;
+  height: 70%;
+  background: #EAE8E8;
+  padding: 30px;
+}
+
+.modal__large{
+  @extend %modal;
+  width: 60%;
+  height: fit-content;
+  min-height: 60%;
+  max-height: 80%;
+  overflow-y: scroll;
+}
+
+.modal__small{
+  @extend %modal;
+  width: 60%;
+}
+
+.modal__auto{
+  @extend %modal;
+  width: 60%;
+  height: fit-content;
+}
+
+.modal__close-button{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 4px;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  color: black;
+  fill: transparent;
+  font-size: 14px;
+  text-transform: uppercase;
+  -webkit-transition-duration: unset;
+  transition-duration: unset;
+
+  &:hover {
+    border: none;
+    color: black;
+    background: transparent;
+  }
+
 }
