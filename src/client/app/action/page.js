@@ -51,7 +51,7 @@ export function deletePage(pageId) {
         type: ActionTypes.DELETE_PAGE,
         pageId
       });
-    })
+    });
   };
 }
 

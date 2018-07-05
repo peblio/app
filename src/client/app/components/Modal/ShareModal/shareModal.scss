@@ -1,18 +1,23 @@
 @import 'variables';
 @import 'base';
 @import 'mixins';
+@import 'modal';
+
 .share {
+  &__link {
+    @extend %modal__link;
+    color: $medium-gray;
+  }
+
   &__button {
-    font-size: $medium-font-size;
-    background: none;
-    color: $blue;
-    border: 0;
-    &:hover {
-      border: 0;
-    }
+    @extend %modal__button;
+    width:20%;
+    float: right;
+    margin-top: 0px;
   }
 
   &__container {
+    margin-top: $medium-margin;
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -22,11 +27,13 @@
   }
 
   &__input {
-    width: 100%;
-    font-size: $medium-font-size;
-    margin: $medium-margin;
-    color: $gray;
+    @extend %modal__input;
     text-align: center;
+  }
+
+  &__input-email {
+    width: 80%;
+    @extend %modal__input;
   }
 
   &__modal {
@@ -41,14 +48,17 @@
     flex-direction: column;
   }
 
-  &__text {
-    font-weight: $medium-font-weight;
-    text-align: center;
-    margin: $small-margin;
+  &__text-primary {
+    @extend %modal__title;
+    margin-bottom: $medium-margin;
+  }
+
+  &__text-secondary {
+    @extend %modal__text;
   }
 
 }
 
 #widget-div {
-  margin: 0 auto !important;
+  margin: $small-margin auto !important;
 }
