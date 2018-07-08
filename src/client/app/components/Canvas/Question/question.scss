@@ -3,13 +3,13 @@
 
 .question__container {
   display: flex;
+  position: relative;
   height: 100%;
   flex-direction: column;
 }
 
 .question__question {
   background: $black;
-  border-radius: $small-border-radius $small-border-radius 0 0;
   color: $white;
   font-family: $helvetica;
   font-size: $medium-font-size;
