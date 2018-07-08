@@ -11,38 +11,20 @@ pageRoutes.route('/save').post(savePage);
 pageRoutes.route('/update').post(updatePage);
 pageRoutes.route('/:pageId').delete(deletePage);
 
-function savePage(req, res) {
+async function savePage(req, res) {
   const user = req.user;
-  const newList = [];
-  if (user) {
-    User.find({ _id: user._id }, (err, data) => {
-      if (err) {
-        res.send(err);
-      } else {
-        data[0].pages.push(req.body.id);
-        User.update({ _id: user._id }, {
-          pages: data[0].pages
-        },
-        (err, data) => {
-          if (err) {
-            res.send(err);
-          } else {
-           // res.send({data:"Record has been Inserted..!!"});
-          }
-        });
-      }
-    });
+  if (!user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  }
+  try {
+    const hydratedUser = await User.findOne({ _id: user._id }).exec();
+    await User.update({ _id: user._id }, { pages: hydratedUser.pages.concat(req.body.id) }).exec();
 
-    const mod = new Page(req.body);
-    mod.save((err, data) => {
-      if (err) {
-        res.send(err);
-      } else {
-        res.send({ data: 'Record has been Inserted..!!' });
-      }
-    });
-  } else {
-    res.status(403).send({ error: 'Please log in first' });
+    const page = new Page(req.body);
+    const savedPage = await page.save();
+    return res.send({ page: savedPage });
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
   }
 }
 
@@ -90,7 +72,7 @@ async function movePage(req, res) {
   const { folderId } = req.body;
 
   try {
-    const page = await Page.findOne({ _id: pageId, user: user._id }).exec();
+    const page = await Page.findOne({ _id: pageId }).exec();
     if (!page) {
       return res.status(404).send({ error: `Page with id ${pageId} not found` });
     }

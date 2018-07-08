@@ -35,6 +35,7 @@ export const SET_IMAGE_URL = 'SET_IMAGE_URL';
 
 export const SET_PAGE_TITLE = 'SET_PAGE_TITLE';
 export const SUBMIT_PAGE = 'SUBMIT_PAGE';
+export const CREATE_PAGE = 'CREATE_PAGE';
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const SET_ALL_PAGES = 'SET_ALL_PAGES';
 export const DELETE_PAGE = 'DELETE_PAGE';
@@ -52,6 +53,7 @@ export const UPDATE_USER_NAME = 'UPDATE_USER_NAME';
 export const SIGN_USER_UP = 'SIGN_USER_UP';
 export const LOGIN_USER = 'LOGIN_USER';
 export const SET_USER_NAME = 'SET_USER_NAME';
+export const SET_USER_TYPE = 'SET_USER_TYPE';
 export const MATCH_USER_NAME = 'MATCH_USER_NAME';
 export const SET_EDIT_ACCESS = 'SET_EDIT_ACCESS';
 
@@ -80,3 +82,8 @@ export const DELETE_FOLDER = 'DELETE_FOLDER';
 export const UPDATE_FOLDER = 'UPDATE_FOLDER';
 export const MOVE_PAGE_TO_TOP_LEVEL = 'MOVE_PAGE_TO_TOP_LEVEL';
 export const MOVE_PAGE_TO_FOLDER = 'MOVE_PAGE_TO_FOLDER';
+export const MOVE_FOLDER_TO_TOP_LEVEL = 'MOVE_FOLDER_TO_TOP_LEVEL';
+export const MOVE_FOLDER_TO_FOLDER = 'MOVE_FOLDER_TO_FOLDER';
+export const VIEW_FOLDER = 'VIEW_FOLDER';
+export const VIEW_PAGE = 'VIEW_PAGE';
+export const CLEAR_SELECTED_FOLDERS = 'CLEAR_SELECTED_FOLDERS';

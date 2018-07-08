@@ -14,10 +14,10 @@ folderRoutes.route('').post(async (req, res) => {
     return res.sendStatus(400);
   }
 
-  const { title, parentId } = req.body;
+  const { title, parent } = req.body;
   const f = new Folder({ title, user: user._id });
-  if (parentId) {
-    f.parentId = parentId;
+  if (parent) {
+    f.parent = parent;
   }
 
   try {
@@ -32,7 +32,7 @@ function findChildFolderIds(folder) {
   if (!folder) {
     return [];
   }
-  return [folder._id, ...folder.children.reduce((accum, child) => [
+  return [folder._id, ...(folder.children || []).reduce((accum, child) => [
     ...accum,
     ...findChildFolderIds(child)
   ], [])];
@@ -54,6 +54,40 @@ folderRoutes.route('/:folderId').delete(async (req, res) => {
     await Page.deleteMany({ folder: { $in: folderIdsToDelete } }).exec();
     await Folder.deleteMany({ _id: { $in: folderIdsToDelete }, user: user._id }).exec();
     return res.sendStatus(204);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+});
+
+folderRoutes.route('/:folderId/move').post(async (req, res) => {
+  const user = req.user;
+  if (!user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  }
+
+  const childFolderId = req.params.folderId;
+  const parentFolderId = req.body.folderId;
+
+  if (childFolderId === parentFolderId) {
+    return res.status(422).send({ error: 'Cannot move a folder into itself.' });
+  }
+
+  try {
+    const childFolder = await Folder.findOne({ _id: childFolderId, user: user._id }).exec();
+    if (!childFolder) {
+      return res.status(404).send({ error: `Folder with id ${childFolderId} not found` });
+    }
+    if (parentFolderId) {
+      const parentFolderCount = await Folder.count({ _id: parentFolderId, user: user._id }).exec();
+      if (!parentFolderCount) {
+        return res.status(404).send({ error: `Folder with id ${parentFolderId} not found` });
+      }
+      childFolder.parent = parentFolderId;
+    } else {
+      delete childFolder.parent;
+    }
+    const savedChildFolder = await childFolder.save();
+    return res.status(200).send({ folder: savedChildFolder });
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }
