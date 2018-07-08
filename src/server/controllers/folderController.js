@@ -84,7 +84,9 @@ folderRoutes.route('/:folderId/move').post(async (req, res) => {
       }
       childFolder.parent = parentFolderId;
     } else {
-      delete childFolder.parent;
+      childFolder.parent = undefined;
+      // could not use delete page.folder -
+      // https://stackoverflow.com/questions/33239464/javascript-delete-object-property-not-working
     }
     const savedChildFolder = await childFolder.save();
     return res.status(200).send({ folder: savedChildFolder });

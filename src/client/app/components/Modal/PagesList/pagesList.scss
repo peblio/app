@@ -130,7 +130,7 @@
   width: 100%;
   list-style-position: inside;
 
-  &--drop-target {
+  &--drop-target { // sass-lint:disable-line class-name-format
     background: $light-gray;
   }
 }
@@ -170,7 +170,7 @@
     border-left: $files-indicator-width solid $tab-yellow;
   }
 
-  &--selected-folder {
+  &--selected-folder { // sass-lint:disable-line class-name-format
     background: $tab-blue;
     color: $white;
     & .pages__input {
@@ -178,11 +178,11 @@
     }
   }
 
-  &--selected-page {
+  &--selected-page { // sass-lint:disable-line class-name-format
     background: $light-gray;
   }
 
-  &--drop-target {
+  &--drop-target { // sass-lint:disable-line class-name-format
     &:first-child {
       border-left: $files-indicator-width solid $tab-blue;
     }
@@ -194,7 +194,7 @@
     }
   }
 
-  &--dragging {
+  &--dragging { // sass-lint:disable-line class-name-format
     opacity: 0.6;
   }
 }
