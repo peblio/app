@@ -93,4 +93,21 @@ folderRoutes.route('/:folderId/move').post(async (req, res) => {
   }
 });
 
+folderRoutes.route('/:folderId/rename/:folderName').post(async (req, res) => {
+  const user = req.user;
+  if (!user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  }
+
+  const { folderId, folderName } = req.params;
+
+  try {
+    const renamedFolder = await Folder.findOne({ _id: folderId }).exec();
+    await Folder.update({ _id: folderId }, { title: folderName }).exec();
+    return res.sendStatus(204);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+});
+
 module.exports = folderRoutes;

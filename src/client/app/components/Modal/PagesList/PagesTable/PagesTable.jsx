@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
 import Measure from 'react-measure';
 
-import PageRow from '../PageRow';
+import PageRow from '../PageRow/PageRow.jsx';
 import ItemTypes from '../itemTypes';
 import { movePageToFolder } from '../../../../action/page.js';
 

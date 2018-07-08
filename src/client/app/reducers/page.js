@@ -208,8 +208,14 @@ const page = (state = initialState, action) => {
     }
 
     case ActionTypes.RENAME_FOLDER : {
-      console.lod(action.folderId);
-      console.lod(action.folderName);
+      const { folders } = state;
+      folders.byId[action.folderId].title = action.folderName;
+      return {
+        ...state,
+        folders: {
+          ...folders
+        }
+      };
     }
 
     case ActionTypes.MOVE_PAGE_TO_TOP_LEVEL: {

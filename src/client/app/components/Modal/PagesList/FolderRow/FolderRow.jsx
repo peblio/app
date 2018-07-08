@@ -53,23 +53,31 @@ function collectDropTarget(_connect, monitor) {
 }
 
 class FolderRow extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      canRenameFolder: false
+    };
+  }
   deleteFolder = (e) => {
     e.stopPropagation();
     this.props.deleteFolder(this.props.folder._id);
   }
 
-  editTitle = (e) => {
+  renameFolder = (e) => {
     if (this.props.isSelected) {
-      console.log(this.props.folder.id);
-      console.log(this.props.folder.title);
-
-      // TODO: put the folder row into editing mode
+      this.props.renameFolder(this.props.folder._id, e.target.value);
     }
   }
 
   viewFolder = (e) => {
     e.stopPropagation();
     this.props.viewFolder(this.props.folder._id, this.props.folderDepth);
+  }
+
+  startRenameFolder = () => {
+    this.setState({ canRenameFolder: true });
+    this.folderTitle.focus();
   }
 
   render() {
@@ -90,8 +98,17 @@ class FolderRow extends Component {
     return connectDragSource(connectDropTarget(
       /* eslint-disable jsx-a11y/no-static-element-interactions */
       <tr className="pages__row" onClick={this.viewFolder}>
-        <td className={classNames(colClassName, 'pages__col_title')} onClick={this.editTitle}>
-          {folder.title}
+        <td className={classNames(colClassName, 'pages__col_title')}>
+          <input
+            ref={(input) => { this.folderTitle = input; }}
+            type="text"
+            defaultValue={folder.title}
+            onBlur={(e) => {
+              console.log(e.target.value);
+              this.renameFolder(e);
+            }}
+            readOnly={!this.state.canRenameFolder}
+          ></input>
         </td>
         {width > 350 &&
           <React.Fragment>
@@ -99,6 +116,11 @@ class FolderRow extends Component {
             <td className={colClassName}>{formatDate(folder.updatedAt)}</td>
           </React.Fragment>
         }
+        <td className={colClassName}>
+          <button className="pages__delete" onClick={this.startRenameFolder}>
+            <DeleteIcon alt="delete page" />
+          </button>
+        </td>
         <td className={colClassName}>
           <button className="pages__delete" onClick={this.deleteFolder}>
             <DeleteIcon alt="delete page" />
@@ -114,7 +136,7 @@ FolderRow.propTypes = {
   connectDragSource: PropTypes.func.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
   deleteFolder: PropTypes.func.isRequired,
-  folder: PropTypes.shape({ _id: PropTypes.string }).isRequired,
+  folder: PropTypes.shape({ _id: PropTypes.string, title: PropTypes.string }).isRequired,
   folderDepth: PropTypes.number.isRequired,
   isDragging: PropTypes.bool.isRequired,
   isSelected: PropTypes.bool.isRequired,

@@ -194,10 +194,12 @@ export function deleteFolder(folderId) {
 
 export function renameFolder(folderId, folderName) {
   return (dispatch) => {
-    dispatch({
-      type: ActionTypes.RENAME_FOLDER,
-      folderId,
-      folderName
+    axios.post(`/folders/${folderId}/rename/${folderName}`).then((response) => {
+      dispatch({
+        type: ActionTypes.RENAME_FOLDER,
+        folderId,
+        folderName
+      });
     });
   };
 }
