@@ -44,7 +44,7 @@ class FoldersTable extends Component {
   render() {
     const { connectDropTarget, folderDepth, isOver } = this.props;
     const { width } = this.state;
-    const tableClassName = classNames('pages__table', { 'pages__table_drop-target': isOver });
+    const tableClassName = classNames('pages__table', { 'pages__table--drop-target': isOver });
     return connectDropTarget(
       <table className={tableClassName}>
         <Measure bounds onResize={this.handleResize}>
