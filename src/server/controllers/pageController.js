@@ -86,7 +86,9 @@ async function movePage(req, res) {
       page.folder = folderId;
     // otherwise, move the page to the top level (remove its folder ID)
     } else {
-      delete page.folder;
+      page.folder = undefined;
+      // could not use delete page.folder -
+      // https://stackoverflow.com/questions/33239464/javascript-delete-object-property-not-working
     }
     const savedPage = await page.save();
     return res.status(200).send({ page: savedPage });

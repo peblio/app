@@ -226,11 +226,11 @@ const page = (state = initialState, action) => {
       if (!folderId) {
         return state;
       }
-
       const folder = folders.byId[folderId];
       folder.files = folder.files.filter(pId => pId !== pageId);
 
       delete pageToMove.folder;
+
       return {
         ...state,
         folders: {
