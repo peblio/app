@@ -56,7 +56,7 @@ class FolderContainer extends Component {
   render() {
     const { childFolders, childPages, folderDepth, folderId, folder } = this.props;
     const { newFolderDropdownIsOpen } = this.state;
-    const title = folderId ? folder.title : 'My files';
+    const title = folderId ? folder.title : 'My Files';
     return (
       /* eslint-disable jsx-a11y/no-static-element-interactions */
       <div className="pages__folder-container" onClick={this.handleClick}>

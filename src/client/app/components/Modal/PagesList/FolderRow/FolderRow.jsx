@@ -15,6 +15,7 @@ import {
   viewFolder
 } from '../../../../action/page.js';
 import DeleteIcon from '../../../../images/trash.svg';
+import RenameIcon from '../../../../images/rename.svg';
 
 const folderSource = {
   beginDrag(props) {
@@ -65,6 +66,7 @@ class FolderRow extends Component {
   }
 
   renameFolder = (e) => {
+    e.stopPropagation();
     if (this.props.isSelected) {
       this.props.renameFolder(this.props.folder._id, e.target.value);
     }
@@ -80,6 +82,10 @@ class FolderRow extends Component {
     this.folderTitle.focus();
   }
 
+  stopRenameFolder = () => {
+    this.setState({ canRenameFolder: false });
+  }
+
   render() {
     const {
       connectDragSource,
@@ -91,25 +97,27 @@ class FolderRow extends Component {
       width
     } = this.props;
     const colClassName = classNames('pages__col', {
-      'pages__col_selected-folder': isSelected,
-      'pages__col_dragging': isDragging,
-      'pages__col_drop-target': isOver
+      'pages__col--selected-folder': isSelected,
+      'pages__co--dragging': isDragging,
+      'pages__col--drop-target': isOver
     });
     return connectDragSource(connectDropTarget(
       /* eslint-disable jsx-a11y/no-static-element-interactions */
       <tr className="pages__row" onClick={this.viewFolder}>
-        <td className={classNames(colClassName, 'pages__col_title')}>
+        <td className={classNames(colClassName, 'folders__col_title')}>
           <input
+            className="pages__input"
             ref={(input) => { this.folderTitle = input; }}
             type="text"
             defaultValue={folder.title}
             onBlur={(e) => {
-              console.log(e.target.value);
               this.renameFolder(e);
+              this.stopRenameFolder();
             }}
             readOnly={!this.state.canRenameFolder}
           ></input>
         </td>
+
         {width > 350 &&
           <React.Fragment>
             <td className={colClassName}>{formatDate(folder.createdAt)}</td>
@@ -117,13 +125,11 @@ class FolderRow extends Component {
           </React.Fragment>
         }
         <td className={colClassName}>
-          <button className="pages__delete" onClick={this.startRenameFolder}>
+          <button className="pages__icon" onClick={this.deleteFolder}>
             <DeleteIcon alt="delete page" />
           </button>
-        </td>
-        <td className={colClassName}>
-          <button className="pages__delete" onClick={this.deleteFolder}>
-            <DeleteIcon alt="delete page" />
+          <button className="pages__icon" onClick={this.startRenameFolder}>
+            <RenameIcon alt="rename folder" />
           </button>
         </td>
       </tr>

@@ -62,7 +62,8 @@
 }
 
 .pages__folder-container-header {
-  background: #C4C4C4;
+  background: $green;
+  color: $white;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   display: flex;
@@ -72,7 +73,7 @@
 }
 
 .pages__folder-title {
-  font-size: 18px;
+  font-size: $medium-font-size;
 }
 
 .pages__new-folder-wrapper {
@@ -83,9 +84,9 @@
   background-color: transparent;
   border: none;
   border-radius: 0;
-  color: black;
+  color: $white;
   fill: transparent;
-  font-size: 14px;
+  font-size: $normal-font-size;
   text-transform: uppercase;
   -webkit-transition-duration: unset;
   transition-duration: unset;
@@ -121,6 +122,7 @@
 }
 
 .pages__table-container {
+  background-color: $lighter-gray;
   flex: 1;
   overflow-y: scroll;
 }
@@ -137,7 +139,7 @@
 }
 
 .pages__row {
-  color: black;
+  color: $black;
   width: 100%;
 
   &:hover {
@@ -146,12 +148,13 @@
 }
 
 .pages__col {
-  background: #EAE8E8;
+  background: $white;
   border: 1px solid transparent;
   padding-top: $small-padding;
   padding-bottom: $small-padding;
   text-align: $left-align;
   width: 25%;
+  font-size: $normal-font-size;
 
   &:first-child {
     border-top-left-radius: 4px;
@@ -167,41 +170,35 @@
 
   &_title {
     width: 33%;
+    border-left: $files-indicator-width solid $tab-yellow;
   }
 
-  &_selected-folder {
-    background: #FFC5BF;
-    border-top: 1px solid #E07063;
-    border-bottom: 3px solid #E07063;
+  &--selected-folder {
+    background: $tab-blue;
+    color: $white;
+    & .pages__input {
+      color: $white;
+    }
+  }
 
+  &--selected-page {
+    background: $gray;
+  }
+
+  &--drop-target {
     &:first-child {
-      border-left: 1px solid #E07063;
+      border-left: $files-indicator-width solid $tab-blue;
     }
-
-    &:last-child {
-      border-right: 1px solid #E07063;
-    }
-  }
-
-  &_selected-page {
-    background: #7C7C7C;
-  }
-
-  &_drop-target {
-    border-top: 1px solid $blue;
-    border-bottom: 1px solid $blue;
-
-    &:first-child {
-      border-left: 1px solid $blue;
-    }
-
-    &:last-child {
-      border-right: 1px solid $blue;
-    }
+    background: $tab-blue;
+    color: $white;
 
     &.pages__col_selected-folder {
-      border-bottom: 3px solid $blue;
+      border-bottom: 3px solid $tab-yellow;
     }
+  }
+
+  &--dragging {
+    opacity: 0.6;
   }
 }
 
@@ -211,8 +208,8 @@
 
 .pages__header {
   background: transparent;
-  color: #AFAFAF;
-  font-size: 12px;
+  color: $gray;
+  font-size: $medium-font-size;
   font-weight: normal;
   padding: $medium-padding 0 $small-padding;
   text-align: $left-align;
@@ -227,7 +224,7 @@
   }
 }
 
-.pages__delete {
+.pages__icon {
   border: none;
   background: none;
   float: right;
@@ -240,4 +237,15 @@
     box-shadow: none;
     fill: $dark-gray;
   }
+}
+
+.pages__input {
+  background: transparent;
+  border: 0px;
+  font-size: $normal-font-size;
+  width: 100%;
+}
+
+.folders__col_title {
+  border-left: $files-indicator-width solid $tab-blue;
 }

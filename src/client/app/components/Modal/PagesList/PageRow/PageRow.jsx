@@ -51,8 +51,8 @@ class PageRow extends Component {
   render() {
     const { connectDragSource, isDragging, isSelected, page, width } = this.props;
     const colClassName = classNames('pages__col', {
-      'pages__col_selected-page': isSelected,
-      'pages__col_dragging': isDragging
+      'pages__col--selected-page': isSelected,
+      'pages__col--dragging': isDragging
     });
     return connectDragSource(
       /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -67,7 +67,7 @@ class PageRow extends Component {
           </React.Fragment>
         }
         <td className={colClassName}>
-          <button className="pages__delete" onClick={this.deletePage}>
+          <button className="pages__icon" onClick={this.deletePage}>
             <DeleteIcon alt="delete page" />
           </button>
         </td>
