@@ -114,7 +114,6 @@ class FolderRow extends Component {
               this.renameFolder(e);
               this.stopRenameFolder();
             }}
-            readOnly={!this.state.canRenameFolder}
           ></input>
         </td>
 
