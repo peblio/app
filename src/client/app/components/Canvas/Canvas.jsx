@@ -276,6 +276,7 @@ class Canvas extends React.Component {
                 className="widget__container element__iframe-container"
                 id={id}
                 onFocus={() => this.props.setCurrentWidget(id)}
+                onMouseOver={() => this.props.setCurrentWidget(id)}
               >
                 { this.props.preview || ((this.props.currentWidget === id) &&
                   <div className="widget-nav__container">
