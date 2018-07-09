@@ -186,10 +186,11 @@ class App extends React.Component {
           setPageLayout={this.props.setPageLayout}
           editorIndex={this.props.editorIndex}
           textHeights={this.props.textHeights}
+          currentWidget={this.props.currentWidget}
 
           updateFile={this.props.updateFile}
           editors={this.props.editors}
-          setCurrentEditor={this.props.setCurrentEditor}
+          setCurrentWidget={this.props.setCurrentWidget}
           removeEditor={this.props.removeEditor}
           duplicateEditor={this.props.duplicateEditor}
           setEditorSize={this.props.setEditorSize}
@@ -324,6 +325,7 @@ App.propTypes = {
   }).isRequired,
   editors: PropTypes.shape({}).isRequired,
   editorIndex: PropTypes.number.isRequired,
+  currentWidget: PropTypes.string.isRequired,
 
   pageTitle: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
@@ -353,7 +355,7 @@ App.propTypes = {
   viewExamplesModal: PropTypes.func.isRequired,
   closeExamplesModal: PropTypes.func.isRequired,
 
-  setCurrentEditor: PropTypes.func.isRequired,
+  setCurrentWidget: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
   duplicateEditor: PropTypes.func.isRequired,
   loadEditors: PropTypes.func.isRequired,
@@ -424,6 +426,7 @@ function mapStateToProps(state) {
   return {
     editors: state.editorsReducer.editors,
     editorIndex: state.editorsReducer.editorIndex,
+    currentWidget: state.editorsReducer.currentWidget,
 
     layout: state.page.layout,
     rgl: state.page.rgl,

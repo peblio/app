@@ -7,7 +7,6 @@ require('./iframe.scss');
 class Iframe extends React.Component {
   constructor(props) {
     super(props);
-    this.setCurrentEditor = () => { this.props.setCurrentEditor(this.props.id); };
     this.urlSubmitted = (event) => {
       const tempString = this.url.value;
       const src = ReactHtmlParser(tempString)[0].props ? ReactHtmlParser(tempString)[0].props.src : tempString;
@@ -44,7 +43,6 @@ Iframe.propTypes = {
   id: PropTypes.string.isRequired,
   iframeURL: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
-  setCurrentEditor: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired
 };
 
