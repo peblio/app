@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import FoldersTable from '../FoldersTable';
-import PagesTable from '../PagesTable';
+import FoldersTable from '../FoldersTable/FoldersTable.jsx';
+import PagesTable from '../PagesTable/PagesTable.jsx';
 import { clearSelectedFolders, createFolder, createPage } from '../../../../action/page';
 import compareTimestamps from '../../../../utils/compare-timestamps';
 import PlusIcon from '../../../../images/plus.svg';
@@ -56,7 +56,7 @@ class FolderContainer extends Component {
   render() {
     const { childFolders, childPages, folderDepth, folderId, folder } = this.props;
     const { newFolderDropdownIsOpen } = this.state;
-    const title = folderId ? folder.title : 'My files';
+    const title = folderId ? folder.title : 'My Files';
     return (
       /* eslint-disable jsx-a11y/no-static-element-interactions */
       <div className="pages__folder-container" onClick={this.handleClick}>

@@ -10,7 +10,7 @@ import Modal from './Modal/Modal.jsx';
 import PasswordForgot from './Modal/PasswordForgot/PasswordForgot.jsx';
 import ShareModal from './Modal/ShareModal/ShareModal.jsx';
 import SignUp from './Modal/SignUp/SignUp.jsx';
-import PagesList from './Modal/PagesList';
+import PagesList from './Modal/PagesList/PagesList.jsx';
 import PasswordReset from './Modal/PasswordReset/PasswordReset.jsx';
 
 import Canvas from './Canvas/Canvas.jsx';

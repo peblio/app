@@ -197,7 +197,20 @@ export function deleteFolder(folderId) {
   };
 }
 
+export function renameFolder(folderId, folderName) {
+  return (dispatch) => {
+    axios.post(`/folders/${folderId}/rename/${folderName}`).then((response) => {
+      dispatch({
+        type: ActionTypes.RENAME_FOLDER,
+        folderId,
+        folderName
+      });
+    });
+  };
+}
+
 export function movePageToTopLevel(pageId) {
+  console.log('in here');
   return (dispatch, getState) => {
     const { page } = getState();
     const pageToMove = page.pages.byId[pageId];
@@ -214,6 +227,7 @@ export function movePageToTopLevel(pageId) {
 }
 
 export function movePageToFolder(pageId, folderId) {
+  console.log(folderId);
   if (!folderId) {
     return movePageToTopLevel(pageId);
   }

@@ -84,10 +84,29 @@ folderRoutes.route('/:folderId/move').post(async (req, res) => {
       }
       childFolder.parent = parentFolderId;
     } else {
-      delete childFolder.parent;
+      childFolder.parent = undefined;
+      // could not use delete page.folder -
+      // https://stackoverflow.com/questions/33239464/javascript-delete-object-property-not-working
     }
     const savedChildFolder = await childFolder.save();
     return res.status(200).send({ folder: savedChildFolder });
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+});
+
+folderRoutes.route('/:folderId/rename/:folderName').post(async (req, res) => {
+  const user = req.user;
+  if (!user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  }
+
+  const { folderId, folderName } = req.params;
+
+  try {
+    const renamedFolder = await Folder.findOne({ _id: folderId }).exec();
+    await Folder.update({ _id: folderId }, { title: folderName }).exec();
+    return res.sendStatus(204);
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }

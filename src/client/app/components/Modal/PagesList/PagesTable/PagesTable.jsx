@@ -6,14 +6,14 @@ import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
 import Measure from 'react-measure';
 
-import FolderRow from '../FolderRow';
+import PageRow from '../PageRow/PageRow.jsx';
 import ItemTypes from '../itemTypes';
-import { moveFolderToFolder } from '../../../../action/page.js';
+import { movePageToFolder } from '../../../../action/page.js';
 
-const foldersTableTarget = {
+const pagesTableTarget = {
   drop(props, monitor) {
-    const { folderId } = monitor.getItem();
-    props.moveFolderToFolder(folderId, props.folderId);
+    const { pageId } = monitor.getItem();
+    props.movePageToFolder(pageId, props.folderId);
   }
 };
 
@@ -24,7 +24,7 @@ function collect(_connect, monitor) {
   };
 }
 
-class FoldersTable extends Component {
+class PagesTable extends Component {
   static defaultProps = {
     folderId: undefined,
   }
@@ -42,16 +42,16 @@ class FoldersTable extends Component {
   }
 
   render() {
-    const { connectDropTarget, folderDepth, isOver } = this.props;
+    const { connectDropTarget, isOver } = this.props;
     const { width } = this.state;
-    const tableClassName = classNames('pages__table', { 'pages__table_drop-target': isOver });
+    const tableClassName = classNames('pages__table', { 'pages__table--drop-target': isOver });
     return connectDropTarget(
       <table className={tableClassName}>
         <Measure bounds onResize={this.handleResize}>
           {({ measureRef }) => (
             <tbody ref={measureRef}>
               <tr className="pages__headrow">
-                <th className="pages__header pages__header_title">Folders</th>
+                <th className="pages__header pages__header_uppercase">Files</th>
                 {width > 350 &&
                   <React.Fragment>
                     <th className="pages__header pages__header_uppercase">Date Created</th>
@@ -60,9 +60,7 @@ class FoldersTable extends Component {
                 }
                 <th className="pages__header"></th>
               </tr>
-              {this.props.folders.map(folder => (
-                <FolderRow key={folder._id} folder={folder} folderDepth={folderDepth} width={width} />
-              ))}
+              {this.props.pages.map(page => <PageRow key={page._id} page={page} width={width} />)}
             </tbody>
           )}
         </Measure>
@@ -71,21 +69,20 @@ class FoldersTable extends Component {
   }
 }
 
-FoldersTable.propTypes = {
+PagesTable.propTypes = {
   connectDropTarget: PropTypes.func.isRequired,
-  folderDepth: PropTypes.number.isRequired,
   /* eslint-disable react/no-unused-prop-types */
   folderId: PropTypes.string,
   isOver: PropTypes.bool.isRequired,
-  moveFolderToFolder: PropTypes.func.isRequired,
+  movePageToFolder: PropTypes.func.isRequired,
   /* eslint-enable react/no-unused-prop-types */
-  folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 };
 
-const DroppableFoldersTable = DropTarget(ItemTypes.FOLDER, foldersTableTarget, collect)(FoldersTable);
+const DroppablePagesTable = DropTarget(ItemTypes.PAGE, pagesTableTarget, collect)(PagesTable);
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  moveFolderToFolder
+  movePageToFolder
 }, dispatch);
 
-export default connect(null, mapDispatchToProps)(DroppableFoldersTable);
+export default connect(null, mapDispatchToProps)(DroppablePagesTable);
