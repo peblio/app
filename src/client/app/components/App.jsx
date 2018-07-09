@@ -76,8 +76,10 @@ class App extends React.Component {
       const projectID = this.projectID();
       axios.get(`/api/page/${this.projectID()}`)
         .then((res) => {
-          this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].preview, res.data[0].layout);
+          console.log(res);
+          this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].layout);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
+          this.props.setPreviewMode(true);
           axios.get('/api/user')
             .then((res1) => {
               if (res1.data.pages && res1.data.pages.includes(projectID)) {
@@ -114,7 +116,6 @@ class App extends React.Component {
         this.props.submitPage(
           '',
           this.props.pageTitle,
-          this.props.preview,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout
@@ -123,7 +124,6 @@ class App extends React.Component {
         this.props.updatePage(
           this.props.id,
           this.props.pageTitle,
-          this.props.preview,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout
@@ -133,7 +133,6 @@ class App extends React.Component {
         this.props.submitPage(
           this.props.id,
           `${this.props.pageTitle}-copy`,
-          this.props.preview,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout
@@ -386,6 +385,7 @@ App.propTypes = {
   resizeTextEditor: PropTypes.func.isRequired,
   updateTextHeight: PropTypes.func.isRequired,
 
+  setPreviewMode: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,

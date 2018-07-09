@@ -45,7 +45,6 @@ async function deletePage(req, res) {
 function updatePage(req, res) {
   Page.update({ id: req.body.id }, {
     title: req.body.title,
-    preview: req.body.preview,
     editors: req.body.editors,
     editorIndex: req.body.editorIndex,
     layout: req.body.layout

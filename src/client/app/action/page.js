@@ -32,13 +32,12 @@ export function setPageLayout(value) {
   };
 }
 
-export function loadPage(id, title, preview, layout) {
+export function loadPage(id, title, layout) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
       id,
       title,
-      preview,
       layout
     });
   };
@@ -69,13 +68,12 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, preview, editors, editorIndex, layout) {
+export function submitPage(parentId, title, editors, editorIndex, layout) {
   const id = shortid.generate();
   axios.post('/pages/save', {
     parentId,
     id,
     title,
-    preview,
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout
@@ -107,11 +105,10 @@ export function createPage(title, folder) {
   };
 }
 
-export function updatePage(id, title, preview, editors, editorIndex, layout) {
+export function updatePage(id, title, editors, editorIndex, layout) {
   axios.post('/pages/update', {
     id,
     title,
-    preview,
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout
@@ -137,11 +134,19 @@ export function fetchAllPages() {
   });
 }
 
-export function togglePreviewMode(value) {
+export function togglePreviewMode() {
   return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.TOGGLE_PREVIEW_MODE
+    });
+  };
+}
+
+export function setPreviewMode(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_PREVIEW_MODE,
+      value
     });
   };
 }
