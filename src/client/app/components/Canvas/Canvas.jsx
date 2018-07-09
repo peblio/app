@@ -101,7 +101,6 @@ class Canvas extends React.Component {
         isPlaying={editor.isPlaying}
         isRefreshing={editor.isRefreshing}
         playCode={this.props.playCode}
-        setCurrentEditor={this.props.setCurrentEditor}
         startCodeRefresh={this.props.startCodeRefresh}
         setCurrentFile={this.props.setCurrentFile}
         setInnerWidth={this.props.setInnerWidth}
@@ -124,7 +123,6 @@ class Canvas extends React.Component {
         onChange={this.props.updateTextChange}
         onResize={this.resizeTextEditor}
         preview={this.props.preview}
-        setCurrentEditor={this.props.setCurrentEditor}
         updateTextBackColor={this.props.updateTextBackColor}
         isResizing={this.state.isResizingGridItems[editor.id] || false}
       />
@@ -138,7 +136,6 @@ class Canvas extends React.Component {
           id={editor.id}
           iframeURL={editor.url}
           preview={this.props.preview}
-          setCurrentEditor={this.props.setCurrentEditor}
           setIframeURL={this.props.setIframeURL}
         />
       </div>
@@ -155,7 +152,6 @@ class Canvas extends React.Component {
           onChange={this.props.updateImageChange}
           preview={this.props.preview}
           removeEditor={this.props.removeEditor}
-          setCurrentEditor={this.props.setCurrentEditor}
           setImageURL={this.props.setImageURL}
         />
       </div>
@@ -172,7 +168,6 @@ class Canvas extends React.Component {
           minHeight={editor.minHeight}
           preview={this.props.preview}
           question={editor.question}
-          setCurrentEditor={this.props.setCurrentEditor}
           setQuestionInnerHeight={this.props.setQuestionInnerHeight}
           updateAnswerChange={this.props.updateAnswerChange}
           updateQuestionChange={this.props.updateQuestionChange}
@@ -273,18 +268,28 @@ class Canvas extends React.Component {
             <div
               key={id}
               data-grid={localLayout[id]}
-              className={`${this.props.editors[id].type === 'text' ? 'canvas-high' : ''}`}
+              className={`${this.props.editors[id].type === 'text' ? 'canvas-high' : ''}`
+            }
             >
-              <div className="element__iframe-container" id={id} onFocus={this.setCurrentEditor}>
-                { this.props.preview ||
-                <WidgetNav
-                  id={id}
-                  layout={storageLayout}
-                  setPageLayout={this.props.setPageLayout}
-                  removeEditor={this.props.removeEditor}
-                  duplicateEditor={this.props.duplicateEditor}
-                />
-              }
+
+              <div
+                className="widget__container element__iframe-container"
+                id={id}
+                onFocus={() => this.props.setCurrentWidget(id)}
+                onMouseOver={() => this.props.setCurrentWidget(id)}
+              >
+                { this.props.preview || ((this.props.currentWidget === id) &&
+                  <div className="widget-nav__container">
+                    <WidgetNav
+                      id={id}
+                      layout={storageLayout}
+                      setPageLayout={this.props.setPageLayout}
+                      removeEditor={this.props.removeEditor}
+                      duplicateEditor={this.props.duplicateEditor}
+                    />
+                  </div>
+                )}
+
                 {(() => {
                   switch (this.props.editors[id].type) {
                     case 'code': return this.renderCodeEditor(this.props.editors[id]);
@@ -306,6 +311,7 @@ class Canvas extends React.Component {
 
 Canvas.propTypes = {
   clearConsoleOutput: PropTypes.func.isRequired,
+  currentWidget: PropTypes.string.isRequired,
   duplicateEditor: PropTypes.func.isRequired,
   editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
@@ -321,7 +327,7 @@ Canvas.propTypes = {
     rowHeight: PropTypes.number,
     width: PropTypes.number
   }).isRequired,
-  setCurrentEditor: PropTypes.func.isRequired,
+  setCurrentWidget: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired,
   setImageURL: PropTypes.func.isRequired,

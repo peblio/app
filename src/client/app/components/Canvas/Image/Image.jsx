@@ -14,7 +14,6 @@ class Image extends React.Component {
     this.state = {
       url: 'https://s3.amazonaws.com/peblio-files/potato.png'
     };
-    this.setCurrentEditor = () => { this.props.setCurrentEditor(this.props.id); };
     this.removeEditor = () => { this.props.removeEditor(this.props.id); };
     this.onChange = (state) => { this.props.onChange(this.props.id, state); };
     this.setImageURL = url => this.props.setImageURL(this.props.id, url);
@@ -104,7 +103,6 @@ Image.propTypes = {
   onChange: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
   removeEditor: PropTypes.func.isRequired,
-  setCurrentEditor: PropTypes.func.isRequired,
   setImageURL: PropTypes.func.isRequired,
 };
 

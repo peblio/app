@@ -18,16 +18,16 @@ class WidgetNav extends React.Component {
   render() {
     return (
       <nav className="widget__nav">
-        <button className="widget__close" onClick={this.removeEditor.bind(this)}>
-          <CloseSVG alt="close element" />
+        <button className="widget__close" onClick={this.duplicateEditor.bind(this)}>
+          <CopySVG alt="duplicate widget" />
         </button>
         <button
           className={`widget__close widget__drag drag__${this.props.id}`}
         >
           <DragSVG alt="drag widget" />
         </button>
-        <button className="widget__close" onClick={this.duplicateEditor.bind(this)}>
-          <CopySVG alt="duplicate widget" />
+        <button className="widget__close" onClick={this.removeEditor.bind(this)}>
+          <CloseSVG alt="close element" />
         </button>
       </nav>
     );

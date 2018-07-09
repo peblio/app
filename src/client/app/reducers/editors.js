@@ -4,7 +4,8 @@ import * as Code from '../constants/codeConstants.js';
 
 const initialState = {
   editors: {},
-  editorIndex: 0
+  editorIndex: 0,
+  currentWidget: ''
 };
 
 let stack = [];
@@ -45,14 +46,8 @@ const editorsReducer = (state = initialState, action) => {
       return { editors: newEditors, editorIndex: action.editorIndex };
     }
 
-    case ActionTypes.SET_CURRENT_EDITOR: {
-      if (editors[action.id].index === stack.length - 1) {
-        // It's not already current
-        return state;
-      }
-      const id = stack.splice(stack.indexOf(action.id), 1)[0];
-      stack.push(id);
-      return { ...state, editors: updateIndices(editors) };
+    case ActionTypes.SET_CURRENT_WIDGET: {
+      return { ...state, currentWidget: action.id };
     }
 
     case ActionTypes.REMOVE_EDITOR:
@@ -103,7 +98,8 @@ const editorsReducer = (state = initialState, action) => {
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
-      return { editors, editorIndex };
+      const currentWidget = id;
+      return { editors, editorIndex, currentWidget };
     }
 
     case ActionTypes.PLAY_CODE:
@@ -181,7 +177,8 @@ const editorsReducer = (state = initialState, action) => {
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
-      return { editors, editorIndex };
+      const currentWidget = id;
+      return { editors, editorIndex, currentWidget };
     }
 
     case ActionTypes.UPDATE_TEXT_CHANGE:
@@ -207,7 +204,8 @@ const editorsReducer = (state = initialState, action) => {
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
-      return { editors, editorIndex };
+      const currentWidget = id;
+      return { editors, editorIndex, currentWidget };
     }
 
     case ActionTypes.SET_QUESTION_INNER_HEIGHT: {
@@ -236,7 +234,8 @@ const editorsReducer = (state = initialState, action) => {
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
-      return { editors, editorIndex };
+      const currentWidget = id;
+      return { editors, editorIndex, currentWidget };
     }
 
     case ActionTypes.SET_IFRAME_URL:
@@ -254,7 +253,8 @@ const editorsReducer = (state = initialState, action) => {
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
-      return { editors, editorIndex };
+      const currentWidget = id;
+      return { editors, editorIndex, currentWidget };
     }
 
     case ActionTypes.SET_IMAGE_URL:

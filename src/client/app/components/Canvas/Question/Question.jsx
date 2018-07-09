@@ -10,7 +10,6 @@ class Questions extends React.Component {
     this.state = {
       isResizing: false
     };
-    this.setCurrentEditor = () => { this.props.setCurrentEditor(this.props.id); };
     this.removeEditor = () => { this.props.removeEditor(this.props.id); };
     this.updateAnswerChange = (event) => {
       this.props.updateAnswerChange(this.props.id, event.target.value);
@@ -73,7 +72,6 @@ Questions.propTypes = {
   preview: PropTypes.bool.isRequired,
   question: PropTypes.string.isRequired,
   removeEditor: PropTypes.func.isRequired,
-  setCurrentEditor: PropTypes.func.isRequired,
   setQuestionInnerHeight: PropTypes.func.isRequired,
   updateAnswerChange: PropTypes.func.isRequired,
   updateQuestionChange: PropTypes.func.isRequired
