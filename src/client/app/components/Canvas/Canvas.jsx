@@ -277,7 +277,7 @@ class Canvas extends React.Component {
                 id={id}
                 onFocus={() => this.props.setCurrentWidget(id)}
               >
-                { ((this.props.currentWidget === id)) &&
+                { this.props.preview || ((this.props.currentWidget === id) &&
                   <div className="widget-nav__container">
                     <WidgetNav
                       id={id}
@@ -287,7 +287,7 @@ class Canvas extends React.Component {
                       duplicateEditor={this.props.duplicateEditor}
                     />
                   </div>
-                }
+                )}
 
                 {(() => {
                   switch (this.props.editors[id].type) {
