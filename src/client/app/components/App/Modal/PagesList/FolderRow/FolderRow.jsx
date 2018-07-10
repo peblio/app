@@ -6,16 +6,16 @@ import { DragSource, DropTarget } from 'react-dnd';
 import classNames from 'classnames';
 
 import ItemTypes from '../itemTypes';
-import formatDate from '../../../../utils/format-date.js';
+import formatDate from '../../../../../utils/format-date.js';
 import {
   deleteFolder,
   moveFolderToFolder,
   movePageToFolder,
   renameFolder,
   viewFolder
-} from '../../../../action/page.js';
-import DeleteIcon from '../../../../images/trash.svg';
-import RenameIcon from '../../../../images/rename.svg';
+} from '../../../../../action/page.js';
+import DeleteIcon from '../../../../../images/trash.svg';
+import RenameIcon from '../../../../../images/rename.svg';
 
 const folderSource = {
   beginDrag(props) {

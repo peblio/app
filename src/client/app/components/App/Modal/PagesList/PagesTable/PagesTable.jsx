@@ -8,7 +8,7 @@ import Measure from 'react-measure';
 
 import PageRow from '../PageRow/PageRow.jsx';
 import ItemTypes from '../itemTypes';
-import { movePageToFolder } from '../../../../action/page.js';
+import { movePageToFolder } from '../../../../../action/page.js';
 
 const pagesTableTarget = {
   drop(props, monitor) {

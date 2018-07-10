@@ -5,9 +5,9 @@ import { bindActionCreators } from 'redux';
 
 import FoldersTable from '../FoldersTable/FoldersTable.jsx';
 import PagesTable from '../PagesTable/PagesTable.jsx';
-import { clearSelectedFolders, createFolder, createPage } from '../../../../action/page';
-import compareTimestamps from '../../../../utils/compare-timestamps';
-import PlusIcon from '../../../../images/plus.svg';
+import { clearSelectedFolders, createFolder, createPage } from '../../../../../action/page';
+import compareTimestamps from '../../../../../utils/compare-timestamps';
+import PlusIcon from '../../../../../images/plus.svg';
 
 class FolderContainer extends Component {
   static defaultProps = {

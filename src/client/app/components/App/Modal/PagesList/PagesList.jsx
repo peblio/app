@@ -6,7 +6,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import FolderContainer from './FolderContainer/FolderContainer.jsx';
-import { fetchAllPages } from '../../../action/page';
+import { fetchAllPages } from '../../../../action/page';
 
 require('./pagesList.scss');
 

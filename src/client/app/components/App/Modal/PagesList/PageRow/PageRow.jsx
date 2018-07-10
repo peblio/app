@@ -6,9 +6,9 @@ import { DragSource } from 'react-dnd';
 import classNames from 'classnames';
 
 import ItemTypes from '../itemTypes';
-import formatDate from '../../../../utils/format-date';
-import { deletePage, viewPage } from '../../../../action/page';
-import DeleteIcon from '../../../../images/trash.svg';
+import formatDate from '../../../../../utils/format-date';
+import { deletePage, viewPage } from '../../../../../action/page';
+import DeleteIcon from '../../../../../images/trash.svg';
 
 const pageSource = {
   beginDrag(props) {

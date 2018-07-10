@@ -8,7 +8,7 @@ import Measure from 'react-measure';
 
 import FolderRow from '../FolderRow/FolderRow.jsx';
 import ItemTypes from '../itemTypes';
-import { moveFolderToFolder } from '../../../../action/page.js';
+import { moveFolderToFolder } from '../../../../../action/page.js';
 
 const foldersTableTarget = {
   drop(props, monitor) {
