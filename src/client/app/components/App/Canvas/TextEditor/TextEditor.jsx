@@ -40,10 +40,6 @@ class TextEditor extends React.Component {
     this.updateTextBackColor(color);
   }
 
-  setCurrentEditor = () => {
-    this.props.setCurrentEditor(this.props.id);
-  }
-
   removeEditor = () => {
     this.props.removeEditor(this.props.id);
   }
@@ -123,7 +119,6 @@ TextEditor.propTypes = {
   onResize: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
   removeEditor: PropTypes.func.isRequired,
-  setCurrentEditor: PropTypes.func.isRequired,
   updateTextBackColor: PropTypes.func.isRequired,
   isResizing: PropTypes.bool.isRequired
 };

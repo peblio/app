@@ -5,7 +5,8 @@ const initialState = {
   loginName: '',
   loginPassword: '',
   canView: true,
-  canEdit: true
+  canEdit: true,
+  type: ''
 };
 
 const user = (state = initialState, action) => {
@@ -29,6 +30,11 @@ const user = (state = initialState, action) => {
     case ActionTypes.SET_EDIT_ACCESS:
       return Object.assign({}, state, {
         canEdit: action.value
+      });
+
+    case ActionTypes.SET_USER_TYPE:
+      return Object.assign({}, state, {
+        type: action.value
       });
 
     default:

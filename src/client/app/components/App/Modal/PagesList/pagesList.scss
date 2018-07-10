@@ -5,7 +5,6 @@
 .pages_title{
   margin-left: $large-margin;
   color: $light-gray;
-
 }
 
 .pages_list{
@@ -19,12 +18,12 @@
   overflow-y: scroll;
 }
 
-
 .pages_list ol{
   list-style-position: inside;
   -webkit-margin-before: 0;
   -webkit-padding-start: 0px;
 }
+
 .pages_list ol li{
   padding: 1.5rem;
   color: $gray;
@@ -38,23 +37,213 @@
   color: $gray;
 }
 
+.pages__list {
+  clear: both;
+  display: flex;
+  overflow-x: scroll;
+}
 
-.pages__delete{
-  margin: -10px;
+.pages__folder-container {
+  background: white;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 25%;
+
+  &:last-child {
+    flex: 1;
+    min-width: 50%;
+  }
+
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+.pages__folder-container-header {
+  background: $green;
+  color: $white;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $medium-padding;
+}
+
+.pages__folder-title {
+  font-size: $medium-font-size;
+}
+
+.pages__new-folder-wrapper {
+  position: relative;
+}
+
+.pages__new-folder {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  color: $white;
+  fill: transparent;
+  font-size: $normal-font-size;
+  text-transform: uppercase;
+  -webkit-transition-duration: unset;
+  transition-duration: unset;
+
+  &:hover {
+    border: none;
+    color: $light-gray;
+    background: transparent;
+  }
+}
+
+.pages__new-folder-dropdown {
+  background: $white;
+  color: $gray;
+  font-size: $normal-font-size;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  list-style-type: none;
+  margin: 15px 0 0;
+  padding: 0;
+  position: absolute;
+}
+
+.pages__new-folder-dropdown-item {
+  padding: 10px 17.5px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.pages__table-container {
+  background-color: $lighter-gray;
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.pages__table {
+  border-spacing: 0 12px;
+  padding: $medium-padding;
+  width: 100%;
+  list-style-position: inside;
+
+  &--drop-target { // sass-lint:disable-line class-name-format
+    background: $light-gray;
+  }
+}
+
+.pages__row {
+  color: $black;
+  width: 100%;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.pages__col {
+  background: $white;
+  border: 1px solid transparent;
+  padding-top: $small-padding;
+  padding-bottom: $small-padding;
+  text-align: $left-align;
+  width: 25%;
+  font-size: $normal-font-size;
+
+  &:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    padding-left: 0.3rem;
+  }
+
+  &:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding-right: 0.3rem;
+  }
+
+  &_title {
+    width: 33%;
+    border-left: $files-indicator-width solid $tab-yellow;
+  }
+
+  &--selected-folder { // sass-lint:disable-line class-name-format
+    background: $tab-blue;
+    color: $white;
+    & .pages__input {
+      color: $white;
+    }
+  }
+
+  &--selected-page { // sass-lint:disable-line class-name-format
+    background: $light-gray;
+  }
+
+  &--drop-target { // sass-lint:disable-line class-name-format
+    &:first-child {
+      border-left: $files-indicator-width solid $tab-blue;
+    }
+    background: $tab-blue;
+    color: $white;
+
+    &.pages__col_selected-folder {
+      border-bottom: 3px solid $tab-yellow;
+    }
+  }
+
+  &--dragging { // sass-lint:disable-line class-name-format
+    opacity: 0.6;
+  }
+}
+
+.pages__link {
+  color: $gray;
+}
+
+.pages__header {
+  background: transparent;
+  color: $gray;
+  font-size: $medium-font-size;
+  font-weight: normal;
+  padding: $medium-padding 0 $small-padding;
+  text-align: $left-align;
+  width: 25%;
+
+  &_title {
+    width: 33%;
+  }
+
+  &_uppercase {
+    text-transform: uppercase;
+  }
+}
+
+.pages__icon {
   border: none;
   background: none;
-  float:right;
+  float: right;
   fill: $medium-gray;
+
   &:hover {
     border: none;
     background: none;
-    float:right;
+    float: right;
     box-shadow: none;
     fill: $dark-gray;
   }
 }
 
-.modal__close-button{
-  float:right;
-  padding: 4px;
+.pages__input {
+  background: transparent;
+  border: 0px;
+  font-size: $normal-font-size;
+  width: 100%;
+}
+
+.folders__col_title {
+  width: 33%;
+  border-left: $files-indicator-width solid $tab-blue;
 }

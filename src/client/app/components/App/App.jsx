@@ -24,15 +24,6 @@ import * as userActions from '../../action/user.js';
 const axios = require('axios');
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.authAndLoadPage = this.authAndLoadPage.bind(this);
-    this.authLoadedPage = this.authLoadedPage.bind(this);
-    this.projectID = this.projectID.bind(this);
-    this.resetPage = this.resetPage.bind(this);
-    this.savePage = this.savePage.bind(this);
-  }
-
   componentDidMount() {
     this.authAndLoadPage();
   }
@@ -57,25 +48,25 @@ class App extends React.Component {
     }
   }
 
-  projectID() {
+  projectID = () => {
     const location = this.props.location.pathname;
     const projectID = location.match(/\/pebl\/([\w-].*)/);
     return projectID ? projectID[1] : null;
   }
 
-  resetPage() {
+  resetPage = () => {
     const location = this.props.location.pathname;
     const tokenID = location.match(/\/reset\/([\w-].*)/);
     return tokenID ? tokenID[1] : null;
   }
 
-  userConfirmation() {
+  userConfirmation = () => {
     const location = this.props.location.pathname;
     const tokenID = location.match(/\/confirmation/);
     return tokenID ? true : null;
   }
 
-  authAndLoadPage() {
+  authAndLoadPage = () => {
     if (this.userConfirmation()) {
       this.props.viewConfirmUserModal();
     } else if (this.resetPage()) {
@@ -85,8 +76,10 @@ class App extends React.Component {
       const projectID = this.projectID();
       axios.get(`/api/page/${this.projectID()}`)
         .then((res) => {
-          this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].preview, res.data[0].layout);
+          console.log(res);
+          this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].layout);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
+          this.props.setPreviewMode(true);
           axios.get('/api/user')
             .then((res1) => {
               if (res1.data.pages && res1.data.pages.includes(projectID)) {
@@ -99,11 +92,12 @@ class App extends React.Component {
       .then((res) => {
         if (res.data.name) {
           this.props.setUserName(res.data.name);
+          this.props.fetchAllPages();
         }
       });
   }
 
-  authLoadedPage() {
+  authLoadedPage = () => {
     if (this.projectID()) {
       this.props.setEditAccess(false);
       const projectID = this.projectID();
@@ -116,13 +110,12 @@ class App extends React.Component {
     }
   }
 
-  savePage() {
+  savePage = () => {
     if (this.props.name) {
       if (this.props.id.length === 0) {
         this.props.submitPage(
           '',
           this.props.pageTitle,
-          this.props.preview,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout
@@ -131,7 +124,6 @@ class App extends React.Component {
         this.props.updatePage(
           this.props.id,
           this.props.pageTitle,
-          this.props.preview,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout
@@ -141,7 +133,6 @@ class App extends React.Component {
         this.props.submitPage(
           this.props.id,
           `${this.props.pageTitle}-copy`,
-          this.props.preview,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout
@@ -194,10 +185,11 @@ class App extends React.Component {
           setPageLayout={this.props.setPageLayout}
           editorIndex={this.props.editorIndex}
           textHeights={this.props.textHeights}
+          currentWidget={this.props.currentWidget}
 
           updateFile={this.props.updateFile}
           editors={this.props.editors}
-          setCurrentEditor={this.props.setCurrentEditor}
+          setCurrentWidget={this.props.setCurrentWidget}
           removeEditor={this.props.removeEditor}
           duplicateEditor={this.props.duplicateEditor}
           setEditorSize={this.props.setEditorSize}
@@ -228,17 +220,13 @@ class App extends React.Component {
           resizeTextEditor={this.props.resizeTextEditor}
           updateTextHeight={this.props.updateTextHeight}
         />
+
         <Modal
-          size="large"
+          size="xlarge"
           isOpen={this.props.isPagesModalOpen}
           closeModal={this.props.closePagesModal}
         >
-          <PagesList
-            folders={this.props.folders}
-            pages={this.props.pages}
-            deletePage={this.props.deletePage}
-            fetchAllPages={this.props.fetchAllPages}
-          />
+          <PagesList />
         </Modal>
 
         <Modal
@@ -289,7 +277,7 @@ class App extends React.Component {
         </Modal>
 
         <Modal
-          size="large"
+          size="auto"
           isOpen={this.props.isSignUpModalOpen}
           closeModal={this.props.closeSignUpModal}
         >
@@ -301,6 +289,8 @@ class App extends React.Component {
             updateUserPassword={this.props.updateUserPassword}
             signUserUp={this.props.signUserUp}
             setUserName={this.props.setUserName}
+            setUserType={this.props.setUserType}
+            userType={this.props.userType}
             closeSignUpModal={this.props.closeSignUpModal}
           />
         </Modal>
@@ -334,13 +324,12 @@ App.propTypes = {
   }).isRequired,
   editors: PropTypes.shape({}).isRequired,
   editorIndex: PropTypes.number.isRequired,
+  currentWidget: PropTypes.string.isRequired,
 
   pageTitle: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   rgl: PropTypes.shape({}).isRequired,
-  folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   preview: PropTypes.bool.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   textHeights: PropTypes.shape({}).isRequired,
@@ -349,6 +338,9 @@ App.propTypes = {
   loginName: PropTypes.string.isRequired,
   loginPassword: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  userType: PropTypes.string.isRequired,
+  setUserName: PropTypes.func.isRequired,
+  setUserType: PropTypes.func.isRequired,
 
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,
@@ -362,7 +354,7 @@ App.propTypes = {
   viewExamplesModal: PropTypes.func.isRequired,
   closeExamplesModal: PropTypes.func.isRequired,
 
-  setCurrentEditor: PropTypes.func.isRequired,
+  setCurrentWidget: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
   duplicateEditor: PropTypes.func.isRequired,
   loadEditors: PropTypes.func.isRequired,
@@ -395,15 +387,14 @@ App.propTypes = {
   resizeTextEditor: PropTypes.func.isRequired,
   updateTextHeight: PropTypes.func.isRequired,
 
+  setPreviewMode: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
   loadPage: PropTypes.func.isRequired,
-  setUserName: PropTypes.func.isRequired,
-  deletePage: PropTypes.func.isRequired,
-  fetchAllPages: PropTypes.func.isRequired,
+
   setEditAccess: PropTypes.func.isRequired,
 
   viewPagesModal: PropTypes.func.isRequired,
@@ -425,23 +416,22 @@ App.propTypes = {
   viewConfirmUserModal: PropTypes.func.isRequired,
   isConfirmUserModalOpen: PropTypes.bool.isRequired,
 
-
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
-  signUserUp: PropTypes.func.isRequired
+  signUserUp: PropTypes.func.isRequired,
+  fetchAllPages: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     editors: state.editorsReducer.editors,
     editorIndex: state.editorsReducer.editorIndex,
+    currentWidget: state.editorsReducer.currentWidget,
 
     layout: state.page.layout,
     rgl: state.page.rgl,
     pageTitle: state.page.pageTitle,
     id: state.page.id,
-    folders: state.page.folders,
-    pages: state.page.pages,
     preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,
     textHeights: state.page.textHeights,
@@ -450,6 +440,7 @@ function mapStateToProps(state) {
     loginName: state.user.loginName,
     loginPassword: state.user.loginPassword,
     name: state.user.name,
+    userType: state.user.type,
 
     isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
     isExamplesModalOpen: state.mainToolbar.isExamplesModalOpen,
@@ -466,11 +457,11 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({},
-    editorActions,
-    mainToolbarActions,
-    pageActions,
-    userActions),
-  dispatch);
+  return bindActionCreators({
+    ...editorActions,
+    ...mainToolbarActions,
+    ...pageActions,
+    ...userActions
+  }, dispatch);
 }
 export default (connect(mapStateToProps, mapDispatchToProps)(App));

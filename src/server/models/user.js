@@ -6,7 +6,6 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   email: {
     type: String,
-    default: '',
     unique: true,
     sparse: true,
     required() { return this.loginType === 'password'; }
@@ -17,15 +16,23 @@ const userSchema = new Schema({
     required: true,
     unique: true
   },
+
   image: {
     type: String,
     default: '',
     required: false,
     unique: false
   },
+
+  type: {
+    type: String,
+    enum: ['student', 'teacher', 'other'],
+    required: true
+  },
   password: {
     type: String,
     index: true,
+    sparse: true,
     required() { return this.loginType === 'password'; },
   },
   isVerified: { type: Boolean, default: false },

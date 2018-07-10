@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CodeMirror from 'codemirror';
-import 'codemirror/keymap/sublime';
+import 'codemirror/addon/comment/comment';
 import 'codemirror/addon/selection/active-line';
+import 'codemirror/keymap/sublime';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/mode/css/css';
@@ -19,6 +20,7 @@ class CodeEditor extends React.Component {
       autoCloseBrackets: true,
       inputStyle: 'contenteditable',
       styleActiveLine: true,
+      keyMap: 'sublime',
     });
     this.cm.on('keyup', () => {
       this.props.updateFile(this.props.currentFile, this.cm.getValue());

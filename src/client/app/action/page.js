@@ -32,27 +32,24 @@ export function setPageLayout(value) {
   };
 }
 
-export function loadPage(id, title, preview, layout) {
+export function loadPage(id, title, layout) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
       id,
       title,
-      preview,
       layout
     });
   };
 }
 
-export function deletePage(page) {
-  const id = page.page.id;
-  axios.post('/pages/delete', { id })
-    .then(() => console.log('Page deleted'))
-    .catch(error => console.error('Error deleting page', error));
+export function deletePage(pageId) {
   return (dispatch) => {
-    dispatch({
-      type: ActionTypes.DELETE_PAGE,
-      id
+    axios.delete(`/pages/${pageId}`).then(() => {
+      dispatch({
+        type: ActionTypes.DELETE_PAGE,
+        pageId
+      });
     });
   };
 }
@@ -71,13 +68,12 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, preview, editors, editorIndex, layout) {
+export function submitPage(parentId, title, editors, editorIndex, layout) {
   const id = shortid.generate();
   axios.post('/pages/save', {
     parentId,
     id,
     title,
-    preview,
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout
@@ -93,11 +89,26 @@ export function submitPage(parentId, title, preview, editors, editorIndex, layou
   };
 }
 
-export function updatePage(id, title, preview, editors, editorIndex, layout) {
+export function createPage(title, folder) {
+  return (dispatch) => {
+    const id = shortid.generate();
+    const data = { id, title };
+    if (folder) {
+      data.folder = folder;
+    }
+    return axios.post('/pages/save', data).then((response) => {
+      dispatch({
+        type: ActionTypes.CREATE_PAGE,
+        page: response.data.page
+      });
+    });
+  };
+}
+
+export function updatePage(id, title, editors, editorIndex, layout) {
   axios.post('/pages/update', {
     id,
     title,
-    preview,
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout
@@ -114,23 +125,28 @@ export function updatePage(id, title, preview, editors, editorIndex, layout) {
 }
 
 export function fetchAllPages() {
+  return dispatch => axios.get('/api/sketches').then(({ data }) => {
+    dispatch({
+      type: ActionTypes.SET_ALL_PAGES,
+      pages: data.pages,
+      folders: data.folders
+    });
+  });
+}
+
+export function togglePreviewMode() {
   return (dispatch) => {
-    axios.get('/api/sketches').then(({ data }) => {
-      const pages = data.pages.map(page => ({ id: page.id, title: page.title }));
-      dispatch({
-        type: ActionTypes.SET_ALL_PAGES,
-        pages,
-        folders: data.folders
-      });
+    dispatch({
+      type: ActionTypes.TOGGLE_PREVIEW_MODE
     });
   };
 }
 
-export function togglePreviewMode(value) {
+export function setPreviewMode(value) {
   return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
     dispatch({
-      type: ActionTypes.TOGGLE_PREVIEW_MODE
+      type: ActionTypes.SET_PREVIEW_MODE,
+      value
     });
   };
 }
@@ -155,13 +171,129 @@ export function updateTextHeight(id, height) {
   };
 }
 
-export function createFolder(data) {
+export function createFolder(title, parent) {
   return (dispatch) => {
-    axios.post('/folder', data).then((response) => {
+    const data = { title };
+    if (parent) {
+      data.parent = parent;
+    }
+    return axios.post('/folders', data).then((response) => {
       dispatch({
-        types: ActionTypes.CREATE_FOLDER,
+        type: ActionTypes.CREATE_FOLDER,
         folder: response.data.folder
       });
     });
   };
+}
+
+export function deleteFolder(folderId) {
+  return (dispatch) => {
+    axios.delete(`/folders/${folderId}`).then(() => {
+      dispatch({
+        type: ActionTypes.DELETE_FOLDER,
+        folderId
+      });
+    });
+  };
+}
+
+export function renameFolder(folderId, folderName) {
+  return (dispatch) => {
+    axios.post(`/folders/${folderId}/rename/${folderName}`).then((response) => {
+      dispatch({
+        type: ActionTypes.RENAME_FOLDER,
+        folderId,
+        folderName
+      });
+    });
+  };
+}
+
+export function movePageToTopLevel(pageId) {
+  console.log('in here');
+  return (dispatch, getState) => {
+    const { page } = getState();
+    const pageToMove = page.pages.byId[pageId];
+    if (!pageToMove.folder) {
+      return Promise.resolve();
+    }
+    return axios.post(`/pages/${pageId}/move`, {}).then((response) => {
+      dispatch({
+        type: ActionTypes.MOVE_PAGE_TO_TOP_LEVEL,
+        pageId
+      });
+    });
+  };
+}
+
+export function movePageToFolder(pageId, folderId) {
+  console.log(folderId);
+  if (!folderId) {
+    return movePageToTopLevel(pageId);
+  }
+  return dispatch => axios.post(`/pages/${pageId}/move`, { folderId }).then((response) => {
+    dispatch({
+      type: ActionTypes.MOVE_PAGE_TO_FOLDER,
+      pageId,
+      folderId
+    });
+  });
+}
+
+export function moveFolderToTopLevel(folderId) {
+  return (dispatch, getState) => {
+    const { page } = getState();
+    const folder = page.folders.byId[folderId];
+    if (!folder.parent) {
+      return Promise.resolve();
+    }
+    return axios.post(`/folders/${folderId}/move`, {}).then((response) => {
+      dispatch({
+        type: ActionTypes.MOVE_FOLDER_TO_TOP_LEVEL,
+        folderId
+      });
+    });
+  };
+}
+
+export function moveFolderToFolder(childFolderId, parentFolderId) {
+  if (!parentFolderId) {
+    return moveFolderToTopLevel(childFolderId);
+  }
+  return (dispatch, getState) => {
+    const { page } = getState();
+    const childFolder = page.folders.byId[childFolderId];
+    if (childFolder.parent === parentFolderId) {
+      return Promise.resolve();
+    }
+    return axios.post(`/folders/${childFolderId}/move`, { folderId: parentFolderId }).then((response) => {
+      dispatch({
+        type: ActionTypes.MOVE_FOLDER_TO_FOLDER,
+        childFolderId,
+        parentFolderId
+      });
+    });
+  };
+}
+
+export function viewFolder(folderId, depth) {
+  return dispatch => dispatch({
+    type: ActionTypes.VIEW_FOLDER,
+    folderId,
+    depth
+  });
+}
+
+export function viewPage(pageId) {
+  return dispatch => dispatch({
+    type: ActionTypes.VIEW_PAGE,
+    pageId
+  });
+}
+
+export function clearSelectedFolders(depth) {
+  return dispatch => dispatch({
+    type: ActionTypes.CLEAR_SELECTED_FOLDERS,
+    depth
+  });
 }

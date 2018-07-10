@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+// use the native Promise object for Mongoose's promises
+mongoose.Promise = Promise;
 const bodyParser = require('body-parser');
 const express = require('express'); // include the express library
 const path = require('path');
@@ -48,7 +50,7 @@ app.use(passport.session());
 
 app.use('/users', userRoutes);
 app.use('/pages', pageRoutes);
-app.use('/folder', folderRoutes);
+app.use('/folders', folderRoutes);
 app.use('/api', apiRoutes);
 app.use('/profile', profileRoutes);
 

@@ -17,7 +17,6 @@ class EditorContainer extends React.Component {
     };
     this.startResize = this.startResize.bind(this);
     this.finishResize = this.finishResize.bind(this);
-    this.setCurrentEditor = () => this.props.setCurrentEditor(this.props.id);
     this.removeEditor = () => this.props.removeEditor(this.props.id);
     this.playCode = () => this.props.playCode(this.props.id);
     this.stopCode = () => this.props.stopCode(this.props.id);
@@ -45,7 +44,7 @@ class EditorContainer extends React.Component {
   render() {
     return (
       <div>
-        <div className="editor__total-container" onFocus={this.setCurrentEditor}>
+        <div className="editor__total-container">
           <EditorToolbar
             currentFile={this.props.currentFile}
             editorMode={this.props.editorMode}
@@ -134,7 +133,6 @@ EditorContainer.propTypes = {
   isRefreshing: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
-  setCurrentEditor: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
   setInnerHeight: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,

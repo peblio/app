@@ -23,6 +23,7 @@ userRoutes.route('/login/google').post(loginWithGoogle);
 function createUser(req, res) {
   const email = req.body.mail;
   const name = req.body.name;
+  const type = req.body.userType;
   const password = req.body.password;
   let user;
   User.findOne({ name }, (err, user) => {
@@ -41,6 +42,7 @@ function createUser(req, res) {
       user = new User({
         email,
         name,
+        type,
         password,
         loginType: 'password'
       });
@@ -238,6 +240,7 @@ function loginWithGoogle(req, res) {
   if (!req.body.google_id_token) {
     return res.status(400).send({ msg: '' });
   }
+  const type = req.body.userType;
   const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
   return client.verifyIdToken({
     idToken: req.body.google_id_token,
@@ -253,6 +256,7 @@ function loginWithGoogle(req, res) {
       if (!user) {
         const newUser = new User({
           googleId,
+          type,
           loginType: 'google',
           name: payload.name,
           isVerified: true

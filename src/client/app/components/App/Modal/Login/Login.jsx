@@ -50,29 +50,38 @@ class Login extends React.Component {
         <h1 className="login-modal__title">Log In</h1>
         <form onSubmit={(event) => { this.submitLoginUser(event, this.userName.value, this.userPassword.value); }}>
           <div className="login-modal__div">
-            <label htmlFor="login-modal-name" className="login-modal__label"> Email / Name
-              <input
-                id="login-modal-name"
-                className="login-modal__input"
-                type="text"
-                ref={(userName) => { this.userName = userName; }}
-              />
-            </label>
+            <input
+              id="login-modal-name"
+              className="login-modal__input"
+              type="text"
+              placeholder="email"
+              ref={(userName) => { this.userName = userName; }}
+            />
           </div>
           <div className="login-modal__div">
-            <label htmlFor="login-modal-password" className="login-modal__label"> Password
-              <input
-                id="login-modal-password"
-                className="login-modal__input"
-                type="password"
-                ref={(userPassword) => { this.userPassword = userPassword; }}
-              />
-            </label>
+            <input
+              id="login-modal-password"
+              className="login-modal__input"
+              type="password"
+              placeholder="password"
+              ref={(userPassword) => { this.userPassword = userPassword; }}
+            />
           </div>
 
-          <button className="forgot-modal__button" type="submit" value="Submit" >
-            Submit
-          </button>
+          <div className="login-modal__buttonholder">
+            <button
+              className="login-modal__link"
+              onClick={() => {
+                this.props.viewForgotModal();
+                this.props.closeLoginModal();
+              }}
+            >
+            forgot password?
+            </button>
+            <button className="forgot-modal__button" type="submit" value="Submit" >
+              Submit
+            </button>
+          </div>
         </form>
 
         <GoogleLoginButton
@@ -80,15 +89,6 @@ class Login extends React.Component {
           onLoginFailure={this.loginFailed}
         />
 
-        <button
-          className="login-modal__button"
-          onClick={() => {
-            this.props.viewForgotModal();
-            this.props.closeLoginModal();
-          }}
-        >
-          Forgot password
-        </button>
         {this.state.showNotice &&
           <p className="forgot-modal__notice">
             {ReactHtmlParser(this.state.notice)}

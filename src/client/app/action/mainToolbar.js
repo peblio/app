@@ -29,6 +29,9 @@ export function closePagesModal() {
     dispatch({
       type: ActionTypes.CLOSE_PAGES_MODAL
     });
+    dispatch({
+      type: ActionTypes.CLEAR_SELECTED_FOLDERS
+    });
   };
 }
 

@@ -1,6 +1,7 @@
 //colors
 $white: #FFFFFF;
 $whitish: #FBFBFB;
+
 $lighter-gray: #F0F0F0;
 $light-gray: #AAAAAA;
 $medium-gray: #B1B1B1;
@@ -9,6 +10,7 @@ $hover-gray:#CFCFCF;
 $canvas-gray: #E6E6E6;
 $profile-gray: #01151E;
 $yellow: #FED034;
+$light-green: #5EC1B8;
 
 $gray: #888;
 $black: #1C2524;
@@ -16,13 +18,21 @@ $dark-gray:#242424;
 
 $blue: #009887;
 $dark-blue: #007C6E;
+$green: #189888;
+
+$tab-yellow: #FFD210;
+$tab-black: #00151F;
+$tab-blue: #006B99;
+$tab-pink: #970075;
+
 
 $modal-overlay: rgba(0,0,0,0.45);
 
 //size
-$total-width: 1440px;
+$total-width: 1200px;
 
 //padding
+$micro-padding: .1rem;
 $small-padding: .5rem;
 $medium-padding: 1rem;
 $large-padding: 1.5rem;
@@ -33,7 +43,7 @@ $micro-margin: .2rem;
 $small-margin: .5rem;
 $medium-margin: 1rem;
 $large-margin: 1.5rem;
-$xlarge-margin: 3rem;
+$xlarge-margin: 3.5rem;
 $xxlarge-margin: 5rem;
 
 //radius
@@ -53,6 +63,11 @@ $medium-font-size: 1rem;
 $normal-font-size: 0.8rem;
 $large-font-size: 1.5rem;
 
+//alignments
+$left-align: LEFT;
+$center-align: CENTER;
+$right-align: RIGHT;
+
 $medium-font-weight: 400;
 $heavy-font-weight: 500;
 
@@ -61,6 +76,7 @@ $nav-width:35px;
 $toolbar-width: 500px;
 $main-toolbar-height:50px;
 $insert-toolbar-height:30px;
+$files-indicator-width:10px;
 
 //z-indexes
 $z-index-layer-0: 0;

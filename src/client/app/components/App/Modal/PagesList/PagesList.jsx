@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DeleteIcon from '../../../../images/trash.svg';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
+import FolderContainer from './FolderContainer/FolderContainer.jsx';
+import { fetchAllPages } from '../../../action/page';
 
 require('./pagesList.scss');
 
@@ -9,37 +15,36 @@ class PagesList extends React.Component {
     this.props.fetchAllPages();
   }
 
-  renderPages() {
-    return this.props.pages.map((page) => {
-      const link = `/pebl/${page.id}`;
-      return (
-        <li key={page.id}>
-          <a href={link}> {page.title} </a>
-          <button className="pages__delete" onClick={() => { this.props.deletePage({ page }); }}>
-            <DeleteIcon alt="delete page" />
-          </button>
-        </li>
-      );
-    });
+  componentDidUpdate() {
+    if (this.containerEl && this.props.selectedFolderIds.length >= 2) {
+      this.containerEl.scrollLeft = this.containerEl.scrollWidth - this.containerEl.clientWidth;
+    }
   }
 
   render() {
-    const Pages = this.renderPages();
+    const { selectedFolderIds } = this.props;
     return (
-      <div className="pages_list">
-        <p className="pages_title">Title</p>
-        <ol>
-          {Pages}
-        </ol>
+      <div className="pages__list" ref={(el) => { this.containerEl = el; }}>
+        <FolderContainer />
+        {selectedFolderIds.map((selectedFolderId, index) => (
+          <FolderContainer key={selectedFolderId} folderId={selectedFolderId} folderDepth={index + 1} />
+        ))}
       </div>
     );
   }
 }
 
 PagesList.propTypes = {
-  deletePage: PropTypes.func.isRequired,
-  pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  fetchAllPages: PropTypes.func.isRequired
+  fetchAllPages: PropTypes.func.isRequired,
+  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
-export default PagesList;
+const DragDropPagesList = DragDropContext(HTML5Backend)(PagesList);
+
+const mapStateToProps = state => ({
+  selectedFolderIds: state.page.selectedFolderIds
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({ fetchAllPages }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(DragDropPagesList);
