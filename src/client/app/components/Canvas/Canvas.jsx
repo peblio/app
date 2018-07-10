@@ -281,7 +281,7 @@ class Canvas extends React.Component {
               <div
                 className="widget__container element__iframe-container"
                 id={id}
-                tabIndex="1"
+                tabIndex="0"
                 onFocus={() => this.props.setCurrentWidget(id)}
                 onMouseOver={() => this.props.setCurrentWidget(id)}
               >
@@ -320,6 +320,7 @@ Canvas.propTypes = {
   clearConsoleOutput: PropTypes.func.isRequired,
   currentWidget: PropTypes.string.isRequired,
   duplicateEditor: PropTypes.func.isRequired,
+  editorIndex: PropTypes.number.isRequired,
   editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   name: PropTypes.string.isRequired,
