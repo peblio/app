@@ -1,57 +1,67 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
+import FolderContainer from './FolderContainer/FolderContainer.jsx';
+import { fetchAllPages } from '../../../action/page';
 
 require('./pebls.scss');
 
 class Pebls extends React.Component {
   componentDidMount() {
+    this.props.fetchAllPages(this.props.profileName);
   }
 
-  renderPebls() {
-    return this.props.pebls.map((pebl) => {
-      const link = `/pebl/${pebl.id}`;
-      const iframeLink = window.location.origin + link;
-      return (
-        <li className="pebls__file" key={pebl.id}>
-          <a className="pebls__link" href={link}>
-            <div className="pebls__wrap">
-              <iframe
-                className="pebls__iframe"
-              ></iframe>
-            </div>
-            <p className="pebls__title">{pebl.title} </p>
-          </a>
-        </li>
-      );
-    });
+  componentDidUpdate() {
+    if (this.containerEl && this.props.selectedFolderIds.length >= 2) {
+      this.containerEl.scrollLeft = this.containerEl.scrollWidth - this.containerEl.clientWidth;
+    }
   }
 
   render() {
-    const Pebls = this.renderPebls();
+    const { selectedFolderIds } = this.props;
     return (
-      <div className="pebls__content">
-        <div className="pebls__heading">
-          <p> All Work </p>
-        </div>
-
-        <div className="pebls__subheading">
-          <p> FOLDERS </p>
-        </div>
-        <div className="pebls__subheading">
-          <p> FILES </p>
-        </div>
-        <ol className="pebls__files">
-          {Pebls}
-        </ol>
+      <div className="pages__list" ref={(el) => { this.containerEl = el; }}>
+        <FolderContainer />
+        {selectedFolderIds.map((selectedFolderId, index) => (
+          <FolderContainer key={selectedFolderId} folderId={selectedFolderId} folderDepth={index + 1} />
+        ))}
       </div>
     );
   }
 }
 
 Pebls.propTypes = {
-  deletePage: PropTypes.func.isRequired,
-  pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  fetchAllPages: PropTypes.func.isRequired
+  fetchAllPages: PropTypes.func.isRequired,
+  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
-export default Pebls;
+const mapStateToProps = state => ({
+  selectedFolderIds: state.page.selectedFolderIds
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({ fetchAllPages }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Pebls);
+
+
+/*
+  <div className="pebls__content">
+    <div className="pebls__heading">
+      <p> All Work </p>
+    </div>
+
+    <div className="pebls__subheading">
+      <p> FOLDERS </p>
+    </div>
+    <div className="pebls__subheading">
+      <p> FILES </p>
+    </div>
+    <ol className="pebls__files">
+      {Pebls}
+    </ol>
+  </div>
+  */

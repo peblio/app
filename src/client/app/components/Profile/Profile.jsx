@@ -52,6 +52,7 @@ class Profile extends React.Component {
   }
 
   render() {
+    this.state.userName = this.profileName();
     return (
       <div className="profile__content">
         <Details
@@ -62,6 +63,8 @@ class Profile extends React.Component {
         />
         <Pebls
           pebls={this.props.pebls}
+          folders={this.props.folders}
+          profileName={this.state.userName}
         />
       </div>
     );

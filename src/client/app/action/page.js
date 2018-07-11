@@ -124,8 +124,12 @@ export function updatePage(id, title, editors, editorIndex, layout) {
   };
 }
 
-export function fetchAllPages() {
-  return dispatch => axios.get('/api/sketches').then(({ data }) => {
+export function fetchAllPages(profileName) {
+  let url = '/api/sketches';
+  if (profileName) {
+    url = `${url}/${profileName}`;
+  }
+  return dispatch => axios.get(url).then(({ data }) => {
     dispatch({
       type: ActionTypes.SET_ALL_PAGES,
       pages: data.pages,
@@ -210,7 +214,6 @@ export function renameFolder(folderId, folderName) {
 }
 
 export function movePageToTopLevel(pageId) {
-  console.log('in here');
   return (dispatch, getState) => {
     const { page } = getState();
     const pageToMove = page.pages.byId[pageId];
@@ -227,7 +230,6 @@ export function movePageToTopLevel(pageId) {
 }
 
 export function movePageToFolder(pageId, folderId) {
-  console.log(folderId);
   if (!folderId) {
     return movePageToTopLevel(pageId);
   }
