@@ -37,6 +37,7 @@ function getUser(req, res) {
 
       res.send({
         name: user.name,
+        type: user.type,
         image: user.image,
         blurb: user.blurb
       });

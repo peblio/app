@@ -81,6 +81,12 @@
     font-size: $small-font-size;
     text-align: center;
   }
+  &__link {
+    height: fit-content;
+    top: 0;
+    left:0;
+    width: fit-content;
+  }
   &__logo {
     position: absolute;
     top: 0;

@@ -19,7 +19,8 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: ''
+      userName: '',
+      userType: 'student'
     };
     this.loadProfileDetails = this.loadProfileDetails.bind(this);
   }
@@ -42,6 +43,7 @@ class Profile extends React.Component {
           this.props.setProfileName(res.data.name);
           this.props.setUserImage(res.data.image);
           this.props.setUserBlurb(res.data.blurb);
+          this.setState({ userType: res.data.type });
           axios.get('/api/user')
             .then((res1) => {
               if (res1.data.name === this.props.name) {
@@ -55,18 +57,24 @@ class Profile extends React.Component {
   render() {
     this.state.userName = this.profileName();
     return (
-      <div className="profile__container">
-        <Details
-          isOwner={this.props.isOwner}
-          name={this.props.name}
-          image={this.props.image}
-          setUserImage={this.props.setUserImage}
-          setUserBlurb={this.props.setUserBlurb}
-          blurb={this.props.blurb}
-        />
-        <Pebls
-          profileName={this.state.userName}
-        />
+      <div>
+        {
+          !(this.state.userType === 'student') &&
+
+          <div className="profile__container">
+            <Details
+              isOwner={this.props.isOwner}
+              name={this.props.name}
+              image={this.props.image}
+              setUserImage={this.props.setUserImage}
+              setUserBlurb={this.props.setUserBlurb}
+              blurb={this.props.blurb}
+            />
+            <Pebls
+              profileName={this.state.userName}
+            />
+          </div>
+    }
       </div>
     );
   }

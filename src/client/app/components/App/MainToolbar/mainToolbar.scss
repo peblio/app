@@ -60,13 +60,13 @@
 .main-toolbar__welcome {
   color: $black;
   padding-left: 0.5rem;
-  font-size: 14px;
+  font-size: $small-font-size;
   font-weight: bold;
-
-
 }
 
 .main-toolbar__account{
+  display: flex;
+  flex-direction: column;
   background-color: $white;
   border: 2px solid;
   border-color: $light-gray;

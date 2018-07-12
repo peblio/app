@@ -46,7 +46,9 @@ class Details extends React.Component {
   render() {
     return (
       <div className="details__content">
-        <ToolbarLogo className="details__logo" alt="logo in toolbar" />
+        <a className="details__link" href="/" target="_blank">
+          <ToolbarLogo className="details__logo" alt="logo in toolbar" />
+        </a>
         <div className="details__title">
           {this.props.isOwner &&
             <p className="details__welcome">

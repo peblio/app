@@ -102,6 +102,13 @@ class MainToolbar extends React.Component {
                     <p className="main-toolbar__welcome">
                       Hi {this.props.name}!
                     </p>
+                    <a
+                      className="file-modal__link"
+                      target="_blank"
+                      href={`/user/${this.props.name}`}
+                    >
+                      Profile
+                    </a>
                     <a className="file-modal__link" href="/logout">Logout</a>
 
                   </div>

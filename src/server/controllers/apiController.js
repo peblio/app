@@ -82,16 +82,18 @@ function getSketches(req, res) {
   if (req.params.user) {
     User.findOne({ name: req.params.user }, (err, data) => {
       if (err) {
+      } else if (data.type === 'student') {
+        res.status(403).send({ error: 'This users data cannot be accessed' });
       } else {
         user = data;
         Promise.all([
           Page.find({ id: { $in: user.pages } }).exec(),
           Folder.find({ user: user._id }).exec()
         ])
-        .then(([pages, folders]) => {
-          res.send({ pages, folders });
-        })
-        .catch(err => res.send(err));
+          .then(([pages, folders]) => {
+            res.send({ pages, folders });
+          })
+          .catch(err => res.send(err));
       }
     });
   } else {
