@@ -62,12 +62,14 @@ function getPage(req, res) {
 
 function getUser(req, res) {
   let name = null;
-  let pages = null;
+  let type = null;
+  const pages = null;
   if (req.user) {
+    console.log(req.user);
     name = req.user.name;
-    pages = req.user.pages;
+    type = req.user.type;
   }
-  res.send({ name, pages });
+  res.send({ name, type });
 }
 
 function getSketches(req, res) {

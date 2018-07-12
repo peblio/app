@@ -10,6 +10,7 @@ require('./mainToolbar.scss');
 
 class MainToolbar extends React.Component {
   render() {
+    console.log(this.props.userType);
     let saveButtonText = 'Fork';
     if (this.props.name) { // user is logged in
       if (this.props.canEdit) { // it is users sketch
@@ -102,6 +103,7 @@ class MainToolbar extends React.Component {
                     <p className="main-toolbar__welcome">
                       Hi {this.props.name}!
                     </p>
+                    {(this.props.userType === 'student') ||
                     <a
                       className="file-modal__link"
                       target="_blank"
@@ -109,6 +111,7 @@ class MainToolbar extends React.Component {
                     >
                       Profile
                     </a>
+                  }
                     <a className="file-modal__link" href="/logout">Logout</a>
 
                   </div>

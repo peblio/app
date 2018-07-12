@@ -92,6 +92,8 @@ class App extends React.Component {
       .then((res) => {
         if (res.data.name) {
           this.props.setUserName(res.data.name);
+          this.props.setUserType(res.data.type);
+          console.log(res.data.type);
           this.props.fetchAllPages();
         }
       });
@@ -170,6 +172,7 @@ class App extends React.Component {
             toggleAccountDropdown={this.props.toggleAccountDropdown}
             togglePreviewMode={this.props.togglePreviewMode}
             unsavedChanges={this.props.unsavedChanges}
+            userType={this.props.userType}
             viewExamplesModal={this.props.viewExamplesModal}
             viewPagesModal={this.props.viewPagesModal}
             viewLoginModal={this.props.viewLoginModal}
@@ -249,9 +252,11 @@ class App extends React.Component {
             updateUserName={this.props.updateUserName}
             updateUserPassword={this.props.updateUserPassword}
             setUserName={this.props.setUserName}
+            setUserType={this.props.setUserType}
             closeLoginModal={this.props.closeLoginModal}
             viewForgotModal={this.props.viewForgotModal}
             isForgotModalOpen={this.props.isForgotModalOpen}
+            userType={this.props.userType}
           />
         </Modal>
 
