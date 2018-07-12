@@ -21,10 +21,15 @@
   }
 
   &__text-secondary {
+    background-color: $profile-gray;
     color: $white;
     font-size: $small-font-size;
     padding: $medium-padding;
-    margin-top: $large-margin;
+    margin-top: $xlarge-margin;
+    width: 100%;
+    border: none;
+    resize: none;
+    text-align: center;
   }
 
   &__title {
@@ -33,7 +38,8 @@
 
   &__image-container {
     display: relative;
-    width: 90%;
+    width: 250px;
+    max-width: 90%;
     margin: 0 auto;
   }
 
@@ -62,6 +68,7 @@
     width: 250px;
     height: 250px;
     align-items: center;
+    justify-content: center;
     border-radius: 50%;
     opacity: 0.8;
     cursor: pointer;
@@ -69,5 +76,15 @@
       display: flex;
     }
 
+  }
+  &__welcome {
+    font-size: $small-font-size;
+    text-align: center;
+  }
+  &__logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: $medium-margin $small-margin;
   }
 }

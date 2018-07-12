@@ -22,7 +22,7 @@ const myBucket = process.env.S3_BUCKET;
 const upload = multer({
   storage: multer.memoryStorage(),
     // file size limitation in bytes
-  limits: { fileSize: 52428800 },
+  limits: { fileSize: 5242880 },
 });
 
 apiRoutes.route('/examples').get(getExamples);

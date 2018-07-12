@@ -19,9 +19,9 @@ const user = (state = initialState, action) => {
         loginName: action.event.target.value
       });
 
-    case ActionTypes.UPDATE_USER_BLURB:
+    case ActionTypes.SET_USER_BLURB:
       return Object.assign({}, state, {
-        blurb: action.event.target.value
+        blurb: action.value
       });
 
     case ActionTypes.UPDATE_USER_PASSWORD:

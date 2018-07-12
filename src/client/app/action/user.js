@@ -1,10 +1,10 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 
-export function updateUserBlurb(event) {
+export function setUserBlurb(value) {
   return (dispatch) => {
     dispatch({
-      type: ActionTypes.UPDATE_USER_BLURB,
-      event
+      type: ActionTypes.SET_USER_BLURB,
+      value
     });
   };
 }

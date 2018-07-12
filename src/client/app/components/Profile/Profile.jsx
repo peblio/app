@@ -35,13 +35,13 @@ class Profile extends React.Component {
   }
 
   loadProfileDetails() {
-    console.log(this.props);
     if (this.profileName()) {
       const profileName = this.profileName();
       axios.get(`/profile/user/${profileName}`)
         .then((res) => {
           this.props.setProfileName(res.data.name);
           this.props.setUserImage(res.data.image);
+          this.props.setUserBlurb(res.data.blurb);
           axios.get('/api/user')
             .then((res1) => {
               if (res1.data.name === this.props.name) {
@@ -61,7 +61,7 @@ class Profile extends React.Component {
           name={this.props.name}
           image={this.props.image}
           setUserImage={this.props.setUserImage}
-          updateUserBlurb={this.props.updateUserBlurb}
+          setUserBlurb={this.props.setUserBlurb}
           blurb={this.props.blurb}
         />
         <Pebls
@@ -73,7 +73,7 @@ class Profile extends React.Component {
 }
 
 Profile.propTypes = {
-  updateUserBlurb: PropTypes.string.isRequired,
+  setUserBlurb: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   isOwner: PropTypes.bool.isRequired,

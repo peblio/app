@@ -12,10 +12,11 @@ profileRoutes.route('/save').post(saveProfile);
 
 function saveProfile(req, res) {
   const name = req.body.name;
-  const imageURL = req.body.imageURL;
+  const update = {};
+  update[req.body.field] = req.body.value;
   const newList = [];
   User.update({ name }, {
-    image: imageURL
+    $set: update
   },
   (err, data) => {
     if (err) {
@@ -37,6 +38,7 @@ function getUser(req, res) {
       res.send({
         name: user.name,
         image: user.image,
+        blurb: user.blurb
       });
     }
   });
