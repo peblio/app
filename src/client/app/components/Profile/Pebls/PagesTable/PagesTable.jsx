@@ -18,31 +18,25 @@ class PagesTable extends Component {
 
 
   render() {
-    const { isOver } = this.props;
-    const tableClassName = classNames('pages__table', { 'pages__table--drop-target': isOver });
     return (
-      <table className={tableClassName}>
-        <tbody >
+      <section className="profile-pages__container">
+        <ul className="profile-pages__list">
           {this.props.pages.map((page) => {
             const link = `/pebl/${page.id}`;
             return (
-              <li className="pebls__file" key={page.id}>
-                <a className="pebls__link" href={link}>
-                  <div className="pebls__wrap">
-                    <img
-                      src="https://placekitten.com/300/200"
-                      className="pebls__iframe"
-                    />
-                  </div>
-                  <p className="pebls__title">{page.title} </p>
-                  <p >{formatDate(page.updatedAt)}</p>
+
+              <li className="profile-pages__list-item" key={page.id}>
+                <a className="profile-pages__link" href={link}>
+                  <h3 className="profile-pages__title">{page.title} </h3>
+                  <p className="profile-pages__sub-title">
+                    last update                      {formatDate(page.updatedAt)}
+                  </p>
                 </a>
               </li>
             );
           }
-        )}
-        </tbody>
-      </table>
+      )}</ul>
+      </section>
     );
   }
 }

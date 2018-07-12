@@ -26,36 +26,24 @@ class FoldersTable extends Component {
   }
 
   render() {
-    const { connectDropTarget, folderDepth, isOver } = this.props;
+    const { folderDepth } = this.props;
     const { width } = this.state;
-    const tableClassName = classNames('pages__table', { 'pages__table--drop-target': isOver });
     return (
-      <ul>
-        {this.props.folders.map(folder =>
-        //   (
-        //   <li className="pages__row" onClick={e => this.viewFolder(e, folder._id, folderDepth)}>
-        //     <h2
-        //       className="pages__input"
-        //     >
-        //       {folder.title}</h2>
-        //   </li>
-        // ))}
-          (
-            <FolderRow key={folder._id} folder={folder} folderDepth={folderDepth} width={width} />
-              ))}
-
-      </ul>
+      <section className="profile-folders__container">
+        <ul className="profile-folders__list">
+          {this.props.folders.map(folder =>
+            (
+              <FolderRow key={folder._id} folder={folder} folderDepth={folderDepth} width={width} />
+                ))}
+        </ul>
+      </section>
 
     );
   }
 }
 
 FoldersTable.propTypes = {
-
   folderDepth: PropTypes.number.isRequired,
-  /* eslint-disable react/no-unused-prop-types */
-
-  /* eslint-enable react/no-unused-prop-types */
   folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 

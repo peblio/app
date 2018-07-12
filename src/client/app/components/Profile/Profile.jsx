@@ -54,7 +54,7 @@ class Profile extends React.Component {
   render() {
     this.state.userName = this.profileName();
     return (
-      <div className="profile__content">
+      <div className="profile__container">
         <Details
           isOwner={this.props.isOwner}
           name={this.props.name}

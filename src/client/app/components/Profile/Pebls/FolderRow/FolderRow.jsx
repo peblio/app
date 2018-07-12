@@ -14,29 +14,25 @@ import {
 
 class FolderRow extends Component {
 
-
   viewFolder = (e) => {
     e.stopPropagation();
+    console.log(this.props.folder._id);
+    console.log(this.props.folderDepth);
     this.props.viewFolder(this.props.folder._id, this.props.folderDepth);
   }
 
-
   render() {
     const {
-      folder,
-      isSelected
+      folder
     } = this.props;
-    console.log(folder);
-    const colClassName = classNames('pages__col', {
-      'pages__col--selected-folder': isSelected,
-    });
     return (
       /* eslint-disable jsx-a11y/no-static-element-interactions */
-      <li className="pages__row" onClick={this.viewFolder}>
-        <h2
-          className="pages__input"
+      <li className="profile-folders__list-item" onClick={this.viewFolder}>
+        <h3
+          className="profile-folders__title"
         >
-          {folder.title}</h2>
+          {folder.title}</h3>
+        <p className="profile-folders__sub-title"> {folder.files.length} files </p>
       </li>
 
 

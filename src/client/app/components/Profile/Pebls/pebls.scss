@@ -1,91 +1,132 @@
 @import 'variables';
+.profile {
 
-.pebls {
-  &__content {
-    width: 75%;
-    height: 100%;
-    overflow-y: scroll;
-    float: right;
-    padding: $large-padding;
-    margin-left: $xxlarge-margin;
-    margin-right: $large-margin;
+  &-pages {
+    &__container {
+    }
+    &__list {
+      @extend %file-folder__list;
+    }
+    &__list-item {
+      @extend %file-folder__list-item;
+      height: 150px;
+      width: 220px;
+      border-top: $files-indicator-width solid $tab-yellow;
+      &:hover {
+        border: $medium-border solid $tab-yellow;
+        border-top: $files-indicator-width solid $tab-yellow;
+      }
+    }
+    &__title {
+      @extend %file-folder__title;
+    }
+    &__sub-title {
+      @extend %file-folder__sub-title;
+    }
   }
 
-  &__subheading {
-    color: $light-gray;
-    font-size: $small-font-size;
-    margin-top: $xlarge-margin;
-    margin-bottom: $large-margin;
+  &-folders {
+
+    &__container {
+    }
+    &__list {
+      @extend %file-folder__list;
+    }
+    &__list-item {
+      @extend %file-folder__list-item;
+      height: 220px;
+      width: 150px;
+      border-left: $files-indicator-width solid $tab-blue;
+      &:hover {
+        border: $medium-border solid $tab-blue;
+        border-left: $files-indicator-width solid $tab-blue;
+      }
+    }
+    &__title {
+      @extend %file-folder__title;
+    }
+    &__sub-title {
+      @extend %file-folder__sub-title;
+    }
   }
 
-  &__iframe {
-    width: 1280px;
-    height: 786px;
-    border: 0;
 
-    -ms-transform: scale(0.25);
-    -moz-transform: scale(0.25);
-    -o-transform: scale(0.25);
-    -webkit-transform: scale(0.25);
-    transform: scale(0.25);
+  &-pebls {
+    &__level {
+      display: none;
+    }
+    &__level:last-of-type {
+      display: block;
+    }
+    &__container {
+      width: 75%;
+      height: 100%;
+      overflow-y: scroll;
+      float: right;
+      background-color: $lighter-gray;
+      padding: $xlarge-padding;
+    }
 
-    -ms-transform-origin: 0 0;
-    -moz-transform-origin: 0 0;
-    -o-transform-origin: 0 0;
-    -webkit-transform-origin: 0 0;
-    transform-origin: 0 0;
+    &__heading {
+      font-size: $large-font-size;
+      font-weight: normal;
+      margin: $small-margin $large-margin;
+    }
+    &__sub-heading {
+      font-size: $small-font-size;
+      font-weight: normal;
+      text-transform: uppercase;
+      color: $gray;
+      margin: $small-margin $large-margin;
+    }
+
+
   }
+}
 
-  &__heading {
-    text-align: left;
-    font-weight: $heavy-font-weight;
+%file-folder {
+
+  &__container {
   }
-
-  &__files {
-    flex-wrap: wrap;
-    list-style: none;
-    list-style-type: none;
-    padding: 0;
+  &__list {
     display: flex;
-  }
-
-  &__file {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    border-top: $large-border solid $yellow;
-    width: 30%;
-    display: flex;
-    flex-direction: row;
-    margin-right: $medium-margin;
-    margin-bottom: $medium-margin;
-  }
-
-  &__file:hover {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    border: $large-border solid $yellow;
-    width: 30%;
-    display: flex;
-    flex-direction: row;
-    margin-right: $medium-margin;
-  }
-
-  &__wrap {
-    height: 192px;
-    padding: 0;
-    overflow: hidden;
-  }
-
-  &__link {
     width: 100%;
-    text-decoration: none;
-    color: inherit;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    flex-wrap: wrap;
   }
-
+  &__list-item {
+    position: relative;
+    background: $white;
+    box-sizing: border-box;
+    border-radius: $small-border-radius;
+    margin: $large-margin;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: $medium-padding;
+    cursor: pointer;
+  }
   &__title {
-    font-size: $medium-font-size;
-    margin-left: $small-margin;
+    text-align: center;
+    font-weight: normal;
+    margin-top: 0;
+  }
+  &__sub-title {
+    left: 0;
+    margin: 0;
+    position: absolute;
+    bottom: 0;
+    border-bottom-right-radius: $small-border-radius;
+    font-size:$small-font-size;
+    padding: $small-padding;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: right;
+    text-transform: uppercase;
+    font-weight: normal;
+    background-color: $light-gray;
+    color:$white;
   }
 }

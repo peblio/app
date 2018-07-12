@@ -25,23 +25,20 @@ class FolderContainer extends Component {
   }
 
   render() {
-    console.log(this.props);
     const { childFolders, childPages, folderDepth, folderId, folder } = this.props;
     const title = folderId ? folder.title : 'All Work';
     return (
       /* eslint-disable jsx-a11y/no-static-element-interactions */
-      <div className="pages__folder-container" onClick={this.handleClick}>
-        <div className="pages__folder-container-header">
-          <span className="pages__folder-title">{title}</span>
-        </div>
-        <div className="pages__table-container">
-          <h2 className="profile__subheadings">folders</h2>
-          {childFolders.length > 0 &&
-            <FoldersTable folders={childFolders} folderId={folderId} folderDepth={folderDepth} />
+      <div onClick={this.handleClick} className="profile-pebls__level">
+        <h1 className="profile-pebls__heading">
+          {title}
+        </h1>
+        <h2 className="profile-pebls__sub-heading">folders</h2>
+        {childFolders.length > 0 &&
+        <FoldersTable folders={childFolders} folderId={folderId} folderDepth={folderDepth} />
           }
-          <h2 className="profile__subheadings">files</h2>
-          <PagesTable pages={childPages} folderId={folderId} />
-        </div>
+        <h2 className="profile-pebls__sub-heading">files</h2>
+        <PagesTable pages={childPages} folderId={folderId} />
       </div>
       /* eslint-enable jsx-a11y/no-static-element-interactions */
     );
