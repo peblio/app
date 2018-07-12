@@ -8,6 +8,10 @@ import Pebls from './Pebls/Pebls.jsx';
 
 import * as profileActions from '../../action/profile.js';
 
+import {
+  updateUserBlurb
+} from '../../action/user.js';
+
 require('./profile.scss');
 
 const axios = require('axios');
@@ -60,6 +64,8 @@ class Profile extends React.Component {
           name={this.props.name}
           image={this.props.image}
           setProfileImage={this.props.setProfileImage}
+          updateUserBlurb={this.props.updateUserBlurb}
+          blurb={this.props.blurb}
         />
         <Pebls
           pebls={this.props.pebls}
@@ -72,6 +78,7 @@ class Profile extends React.Component {
 }
 
 Profile.propTypes = {
+  updateUserBlurb: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   isOwner: PropTypes.bool.isRequired,
@@ -92,12 +99,14 @@ function mapStateToProps(state) {
     isOwner: state.profile.isOwner,
     name: state.profile.name,
     pebls: state.profile.pebls,
+    blurb: state.user.blurb
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
-    profileActions
+    profileActions,
+    updateUserBlurb
   ),
   dispatch);
 }

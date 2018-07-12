@@ -2,6 +2,7 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 
 const initialState = {
   name: '',
+  blurb: 'Hi! I <3 CS',
   loginName: '',
   loginPassword: '',
   canView: true,
@@ -15,6 +16,11 @@ const user = (state = initialState, action) => {
     case ActionTypes.UPDATE_USER_NAME:
       return Object.assign({}, state, {
         loginName: action.event.target.value
+      });
+
+    case ActionTypes.UPDATE_USER_BLURB:
+      return Object.assign({}, state, {
+        blurb: action.event.target.value
       });
 
     case ActionTypes.UPDATE_USER_PASSWORD:

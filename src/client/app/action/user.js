@@ -1,5 +1,14 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 
+export function updateUserBlurb(event) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.UPDATE_USER_BLURB,
+      event
+    });
+  };
+}
+
 export function updateUserName(event) {
   return (dispatch) => {
     dispatch({

@@ -43,12 +43,12 @@ class Details extends React.Component {
             onDrop={this.onDrop}
             className="element-image"
           >
-          <img className="details__image" src={this.props.image} alt="profile-image"/>
-          <div className="image__title">
-          </div>
+            <img className="details__image" src={this.props.image} alt="profile-image" />
+            <div className="image__title">
+            </div>
           </Dropzone>
           <div className="details__text-primary"> {this.props.name} </div>
-          <div className="details__text-secondary"> Lorem Ipsum And Such </div>
+          <div className="details__text-secondary"> {this.props.blurb} </div>
         </div>
       </div>
     );

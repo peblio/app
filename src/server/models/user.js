@@ -16,7 +16,12 @@ const userSchema = new Schema({
     required: true,
     unique: true
   },
-
+  blurb: {
+    type: String,
+    default: '',
+    required: false,
+    unique: false
+  },
   image: {
     type: String,
     default: '',
