@@ -1,6 +1,27 @@
 @import 'variables';
 .profile {
 
+  &-crumbs {
+    &__list {
+      display: flex;
+      list-style: none;
+      margin: $large-margin;
+      padding: 0;
+    }
+    &__list-item {
+      padding-right: $medium-padding;
+      margin-right: $medium-margin;
+      font-size: $small-font-size;
+      color: $gray;
+      cursor: pointer;
+      border-right: $medium-border solid $tab-yellow;
+      &:hover {
+        color: $dark-gray;
+      }
+    }
+
+  }
+
   &-pages {
     &__container {
     }

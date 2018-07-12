@@ -35,29 +35,30 @@ class Pebls extends React.Component {
     }
     const currentFolderIndex = selectedFolderIds ? selectedFolderIds.length - 1 : -1;
     const currentFolderId = selectedFolderIds ? selectedFolderIds[currentFolderIndex] : null;
-    console.log(currentFolderIndex);
-    console.log(currentFolderId);
     return (
       <div className="profile-pebls__container" ref={(el) => { this.containerEl = el; }}>
-        Breadcrumbs
-        <button
-          onClick={() => this.props.clearSelectedFolders(0)}
-        >
-        Home
-        </button>
-        {
+        <ul className="profile-crumbs__list">
+          <li
+            className="profile-crumbs__list-item"
+            onClick={() => this.props.clearSelectedFolders(0)}
+          >
+          Home
+          </li>
+          {
           selectedFolderIds.map((selectedFolderId, index) => {
             const crumbTitle = folderObjects[selectedFolderId].title;
             return (
-              <button
+              <li
+                className="profile-crumbs__list-item"
                 onClick={() => this.props.viewFolder(selectedFolderId, index)}
               >
-                {crumbTitle} >
-              </button>
+                {crumbTitle}
+              </li>
             );
           }
         )
         }
+        </ul>
         <FolderContainer />
         {selectedFolderIds.map((selectedFolderId, index) => (
           <FolderContainer key={selectedFolderId} folderId={selectedFolderId} folderDepth={index + 1} />
