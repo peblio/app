@@ -2,14 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
 
-import FolderContainer from './FolderContainer/FolderContainer.jsx';
+import ProfileLevel from './ProfileLevel/ProfileLevel.jsx';
 import {
   fetchAllPages,
   viewFolder,
-  clearSelectedFolders
 } from '../../../action/page';
 
 require('./pebls.scss');
@@ -30,9 +27,9 @@ class Pebls extends React.Component {
     return (
       <div className="profile-pebls__container" ref={(el) => { this.containerEl = el; }}>
 
-        <FolderContainer />
+        <ProfileLevel />
         {selectedFolderIds.map((selectedFolderId, index) => (
-          <FolderContainer key={selectedFolderId} folderId={selectedFolderId} folderDepth={index + 1} />
+          <ProfileLevel key={selectedFolderId} folderId={selectedFolderId} folderDepth={index + 1} />
           ))}
 
       </div>
@@ -41,8 +38,8 @@ class Pebls extends React.Component {
 }
 
 Pebls.propTypes = {
-  clearSelectedFolders: PropTypes.func.isRequired,
   fetchAllPages: PropTypes.func.isRequired,
+  profileName: PropTypes.string.isRequired,
   selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
@@ -51,7 +48,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  clearSelectedFolders,
   viewFolder,
   fetchAllPages
 }, dispatch);

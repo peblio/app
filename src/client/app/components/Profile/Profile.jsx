@@ -7,13 +7,11 @@ import Details from './Details/Details.jsx';
 import Pebls from './Pebls/Pebls.jsx';
 
 import * as profileActions from '../../action/profile.js';
-
 import * as userActions from '../../action/user.js';
 
 require('./profile.scss');
 
 const axios = require('axios');
-const upload = require('superagent');
 
 class Profile extends React.Component {
   constructor(props) {
@@ -81,7 +79,7 @@ class Profile extends React.Component {
 }
 
 Profile.propTypes = {
-  setUserBlurb: PropTypes.string.isRequired,
+  blurb: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   isOwner: PropTypes.bool.isRequired,
@@ -91,8 +89,7 @@ Profile.propTypes = {
   setIsOwner: PropTypes.func.isRequired,
   setUserImage: PropTypes.func.isRequired,
   setProfileName: PropTypes.func.isRequired,
-  setProfilePebls: PropTypes.func.isRequired,
-  setProfileFolders: PropTypes.func.isRequired,
+  setUserBlurb: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state) {

@@ -107,6 +107,7 @@ class MainToolbar extends React.Component {
                     <a
                       className="file-modal__link"
                       target="_blank"
+                      rel="noopener noreferrer"
                       href={`/user/${this.props.name}`}
                     >
                       Profile
@@ -159,6 +160,7 @@ MainToolbar.propTypes = {
   toggleAccountDropdown: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
+  userType: PropTypes.string.isRequired,
   viewExamplesModal: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired,

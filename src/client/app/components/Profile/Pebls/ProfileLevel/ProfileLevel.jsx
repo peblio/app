@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import FoldersTable from '../FoldersTable/FoldersTable.jsx';
-import PagesTable from '../PagesTable/PagesTable.jsx';
+import Folders from '../Folders/Folders.jsx';
+import Pages from '../Pages/Pages.jsx';
 import { viewFolder, clearSelectedFolders } from '../../../../action/page';
 import compareTimestamps from '../../../../utils/compare-timestamps';
-import PlusIcon from '../../../../images/plus.svg';
 
-class FolderContainer extends Component {
+class ProfileLevel extends Component {
   static defaultProps = {
     folderDepth: 0,
     folderId: undefined,
@@ -44,23 +43,24 @@ class FolderContainer extends Component {
          }
         <h2 className="profile-pebls__sub-heading">folders</h2>
         {childFolders.length > 0 &&
-        <FoldersTable folders={childFolders} folderId={folderId} folderDepth={folderDepth} />
+        <Folders folders={childFolders} folderId={folderId} folderDepth={folderDepth} />
           }
         <h2 className="profile-pebls__sub-heading">files</h2>
-        <PagesTable pages={childPages} folderId={folderId} />
+        <Pages pages={childPages} folderId={folderId} />
       </div>
       /* eslint-enable jsx-a11y/no-static-element-interactions */
     );
   }
 }
 
-FolderContainer.propTypes = {
+ProfileLevel.propTypes = {
   childFolders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   childPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   clearSelectedFolders: PropTypes.func.isRequired,
   folderDepth: PropTypes.number,
   folderId: PropTypes.string,
-  folder: PropTypes.shape({})
+  folder: PropTypes.shape({ parent: PropTypes.string }).isRequired,
+  viewFolder: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => ({
@@ -78,4 +78,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   clearSelectedFolders,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(FolderContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileLevel);

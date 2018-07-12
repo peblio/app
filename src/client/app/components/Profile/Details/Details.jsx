@@ -17,15 +17,6 @@ class Details extends React.Component {
     this.onDrop = this.onDrop.bind(this);
   }
 
-  saveUserBlurb = (blurb) => {
-    axios.post('/profile/save', {
-      name: this.props.name,
-      field: 'blurb',
-      value: blurb
-    }).then(() => { console.log('saved'); })
-      .catch(error => console.error(error));
-  }
-
   onDrop(file) {
     upload.post(`/api/upload/${this.props.name}/profile`)
       .attach('uploadImageFile', file[0])
@@ -43,10 +34,20 @@ class Details extends React.Component {
           .catch(error => console.error(error));
       });
   }
+
+  saveUserBlurb = (blurb) => {
+    axios.post('/profile/save', {
+      name: this.props.name,
+      field: 'blurb',
+      value: blurb
+    }).then(() => { console.log('saved'); })
+        .catch(error => console.error(error));
+  }
+
   render() {
     return (
       <div className="details__content">
-        <a className="details__link" href="/" target="_blank">
+        <a className="details__link" href="/" target="_blank" rel="noopener noreferrer">
           <ToolbarLogo className="details__logo" alt="logo in toolbar" />
         </a>
         <div className="details__title">
@@ -61,7 +62,7 @@ class Details extends React.Component {
             className="details__image-container"
           >
 
-            <img className="details__image" src={this.props.image} alt="profile-image" />
+            <img className="details__image" src={this.props.image} alt="profile" />
             <div className="details__image-upload">
               <ImageUploadSVG alt="upload profile image" />
             </div>
@@ -71,7 +72,7 @@ class Details extends React.Component {
           <div
             className="details__image-container"
           >
-            <img className="details__image" src={this.props.image} alt="profile-image" />
+            <img className="details__image" src={this.props.image} alt="profile" />
           </div>
       }
           <div className="details__text-primary"> {this.props.name} </div>
@@ -97,8 +98,11 @@ class Details extends React.Component {
 
 Details.propTypes = {
   blurb: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  isOwner: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
-  setUserBlurb: PropTypes.func.isRequired
+  setUserBlurb: PropTypes.func.isRequired,
+  setUserImage: PropTypes.func.isRequired
 };
 
 export default Details;

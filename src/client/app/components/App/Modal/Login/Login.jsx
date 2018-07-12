@@ -32,8 +32,6 @@ class Login extends React.Component {
   loginSuccessful(response) {
     this.props.setUserName(response.data.user.name);
     this.props.setUserType(response.data.user.type);
-    console.log(response.data.user);
-    console.log(this.props.userType);
     this.props.closeLoginModal();
   }
 
