@@ -24,7 +24,7 @@ class Details extends React.Component {
         const imageName = res.text.replace(/\s/g, '+');
         const imageURL = `https://s3.amazonaws.com/peblio-files-staging/${imageName}`;
         // TODO: CHANGE THE folder to env
-        this.props.setProfileImage(imageURL);
+        this.props.setUserImage(imageURL);
         axios.post('/profile/save', {
           name: this.props.name,
           imageURL

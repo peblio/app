@@ -8,9 +8,7 @@ import Pebls from './Pebls/Pebls.jsx';
 
 import * as profileActions from '../../action/profile.js';
 
-import {
-  updateUserBlurb
-} from '../../action/user.js';
+import * as userActions from '../../action/user.js';
 
 require('./profile.scss');
 
@@ -37,14 +35,13 @@ class Profile extends React.Component {
   }
 
   loadProfileDetails() {
+    console.log(this.props);
     if (this.profileName()) {
       const profileName = this.profileName();
       axios.get(`/profile/user/${profileName}`)
         .then((res) => {
           this.props.setProfileName(res.data.name);
-          this.props.setProfileImage(res.data.image);
-          this.props.setProfilePebls(res.data.pebls);
-          this.props.setProfileFolders(res.data.folders);
+          this.props.setUserImage(res.data.image);
           axios.get('/api/user')
             .then((res1) => {
               if (res1.data.name === this.props.name) {
@@ -63,13 +60,11 @@ class Profile extends React.Component {
           isOwner={this.props.isOwner}
           name={this.props.name}
           image={this.props.image}
-          setProfileImage={this.props.setProfileImage}
+          setUserImage={this.props.setUserImage}
           updateUserBlurb={this.props.updateUserBlurb}
           blurb={this.props.blurb}
         />
         <Pebls
-          pebls={this.props.pebls}
-          folders={this.props.folders}
           profileName={this.state.userName}
         />
       </div>
@@ -86,7 +81,7 @@ Profile.propTypes = {
     pathname: PropTypes.string.isRequired,
   }).isRequired,
   setIsOwner: PropTypes.func.isRequired,
-  setProfileImage: PropTypes.func.isRequired,
+  setUserImage: PropTypes.func.isRequired,
   setProfileName: PropTypes.func.isRequired,
   setProfilePebls: PropTypes.func.isRequired,
   setProfileFolders: PropTypes.func.isRequired,
@@ -94,11 +89,9 @@ Profile.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    folders: state.profile.folders,
-    image: state.profile.image,
+    image: state.user.image,
     isOwner: state.profile.isOwner,
     name: state.profile.name,
-    pebls: state.profile.pebls,
     blurb: state.user.blurb
   };
 }
@@ -106,7 +99,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
     profileActions,
-    updateUserBlurb
+    userActions
   ),
   dispatch);
 }

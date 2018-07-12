@@ -17,39 +17,3 @@ export function setProfileName(value) {
     });
   };
 }
-
-export function setProfileFolders(value) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_PROFILE_FOLDERS,
-      value
-    });
-  };
-}
-
-export function setProfilePebls(value) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_PROFILE_PEBLS,
-      value
-    });
-  };
-}
-
-export function setProfileImage(value) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_PROFILE_IMAGE,
-      value
-    });
-  };
-}
-
-export function setProfileDesc(value) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_PROFILE_DESC,
-      value
-    });
-  };
-}

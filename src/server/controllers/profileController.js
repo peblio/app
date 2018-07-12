@@ -33,19 +33,11 @@ function getUser(req, res) {
       res.send(err);
     } else {
       const user = data[0];
-      Promise.all([
-        Page.find({ id: { $in: user.pages } }).exec(),
-        Folder.find({ user: user._id }).exec()
-      ])
-      .then(([pages, folders]) => {
-        res.send({
-          name: user.name,
-          image: user.image,
-          pebls: pages,
-          folders
-        });
-      })
-      .catch(err => res.send(err));
+
+      res.send({
+        name: user.name,
+        image: user.image,
+      });
     }
   });
 }

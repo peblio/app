@@ -1,27 +1,6 @@
 @import 'variables';
 .profile {
 
-  &-crumbs {
-    &__list {
-      display: flex;
-      list-style: none;
-      margin: $large-margin;
-      padding: 0;
-    }
-    &__list-item {
-      padding-right: $medium-padding;
-      margin-right: $medium-margin;
-      font-size: $small-font-size;
-      color: $gray;
-      cursor: pointer;
-      border-right: $medium-border solid $tab-yellow;
-      &:hover {
-        color: $dark-gray;
-      }
-    }
-
-  }
-
   &-pages {
     &__link {
       text-decoration: none;
@@ -75,6 +54,15 @@
 
 
   &-pebls {
+    &__back {
+      margin: $large-margin;
+      font-size: $small-font-size;
+      cursor: pointer;
+      color: $light-gray;
+      &:hover {
+        color: $blue
+      }
+    }
     &__level {
       display: none;
     }
@@ -91,6 +79,7 @@
     }
 
     &__heading {
+      display: block !important;
       font-size: $large-font-size;
       font-weight: normal;
       margin: $small-margin $large-margin;

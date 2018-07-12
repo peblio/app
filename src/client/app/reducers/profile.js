@@ -3,10 +3,6 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 const initialState = {
   isOwner: false,
   name: '',
-  image: 'https://placekitten.com/300/300',
-  description: '',
-  folders: [],
-  pebls: []
 };
 
 const profile = (state = initialState, action) => {
@@ -32,15 +28,6 @@ const profile = (state = initialState, action) => {
         folders: action.value
       });
 
-    case ActionTypes.SET_PROFILE_IMAGE:
-      return Object.assign({}, state, {
-        image: action.value
-      });
-
-    case ActionTypes.SET_PROFILE_DESC:
-      return Object.assign({}, state, {
-        description: action.value
-      });
 
     default:
       return state;

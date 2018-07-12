@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import FoldersTable from '../FoldersTable/FoldersTable.jsx';
 import PagesTable from '../PagesTable/PagesTable.jsx';
-import { clearSelectedFolders } from '../../../../action/page';
+import { viewFolder, clearSelectedFolders } from '../../../../action/page';
 import compareTimestamps from '../../../../utils/compare-timestamps';
 import PlusIcon from '../../../../images/plus.svg';
 
@@ -16,12 +16,12 @@ class FolderContainer extends Component {
     folder: {}
   }
 
-  clearSelectedFolders = () => {
-    this.props.clearSelectedFolders(this.props.folderDepth);
-  }
-
   handleClick = () => {
-    this.clearSelectedFolders();
+    if (this.props.folder.parent) {
+      this.props.viewFolder(this.props.folder.parent, this.props.folderDepth);
+    } else {
+      this.props.clearSelectedFolders(0);
+    }
   }
 
   render() {
@@ -29,10 +29,19 @@ class FolderContainer extends Component {
     const title = folderId ? folder.title : 'All Work';
     return (
       /* eslint-disable jsx-a11y/no-static-element-interactions */
-      <div onClick={this.handleClick} className="profile-pebls__level">
+      <div className="profile-pebls__level">
         <h1 className="profile-pebls__heading">
           {title}
         </h1>
+
+        {this.props.folderDepth > 0 &&
+          <div
+            className="profile-pebls__back"
+            onClick={this.handleClick}
+          >
+           &#9664; Back
+          </div>
+         }
         <h2 className="profile-pebls__sub-heading">folders</h2>
         {childFolders.length > 0 &&
         <FoldersTable folders={childFolders} folderId={folderId} folderDepth={folderDepth} />
@@ -65,6 +74,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  viewFolder,
   clearSelectedFolders,
 }, dispatch);
 

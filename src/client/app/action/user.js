@@ -71,3 +71,12 @@ export function setUserType(value) {
     });
   };
 }
+
+export function setUserImage(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_USER_IMAGE,
+      value
+    });
+  };
+}

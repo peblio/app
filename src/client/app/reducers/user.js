@@ -7,6 +7,7 @@ const initialState = {
   loginPassword: '',
   canView: true,
   canEdit: true,
+  image: 'https://placekitten.com/300/300',
   type: ''
 };
 
@@ -41,6 +42,11 @@ const user = (state = initialState, action) => {
     case ActionTypes.SET_USER_TYPE:
       return Object.assign({}, state, {
         type: action.value
+      });
+
+    case ActionTypes.SET_USER_IMAGE:
+      return Object.assign({}, state, {
+        image: action.value
       });
 
     default:
