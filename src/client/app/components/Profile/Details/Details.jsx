@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 
+import ImageUploadSVG from '../../../images/imageUpload.svg';
+
 require('./details.scss');
 
 const axios = require('axios');
@@ -41,10 +43,12 @@ class Details extends React.Component {
           }
           <Dropzone
             onDrop={this.onDrop}
-            className="element-image"
+            className="details__image-container"
           >
+
             <img className="details__image" src={this.props.image} alt="profile-image" />
-            <div className="image__title">
+            <div className="details__image-upload">
+              <ImageUploadSVG alt="upload profile image" />
             </div>
           </Dropzone>
           <div className="details__text-primary"> {this.props.name} </div>
