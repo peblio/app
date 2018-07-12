@@ -26,10 +26,10 @@ class PagesTable extends Component {
             return (
 
               <li className="profile-pages__list-item" key={page.id}>
-                <a className="profile-pages__link" href={link}>
+                <a className="profile-pages__link" href={link} target="_blank">
                   <h3 className="profile-pages__title">{page.title} </h3>
                   <p className="profile-pages__sub-title">
-                    last update                      {formatDate(page.updatedAt)}
+                    last update                                {formatDate(page.updatedAt)}
                   </p>
                 </a>
               </li>

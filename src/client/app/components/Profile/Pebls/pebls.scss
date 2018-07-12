@@ -23,7 +23,9 @@
   }
 
   &-pages {
-    &__container {
+    &__link {
+      text-decoration: none;
+      color :$black;
     }
     &__list {
       @extend %file-folder__list;
