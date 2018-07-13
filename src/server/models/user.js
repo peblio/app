@@ -18,13 +18,13 @@ const userSchema = new Schema({
   },
   blurb: {
     type: String,
-    default: '',
+    default: 'I <3 CS',
     required: false,
     unique: false
   },
   image: {
     type: String,
-    default: '',
+    default: 'https://s3.amazonaws.com/peblio-files-staging/DefaultProfileImage.png',
     required: false,
     unique: false
   },

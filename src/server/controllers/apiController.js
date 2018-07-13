@@ -22,7 +22,7 @@ const myBucket = process.env.S3_BUCKET;
 const upload = multer({
   storage: multer.memoryStorage(),
     // file size limitation in bytes
-  limits: { fileSize: 5242880 },
+  limits: { fileSize: 52428800 },
 });
 
 apiRoutes.route('/examples').get(getExamples);
@@ -63,12 +63,13 @@ function getPage(req, res) {
 function getUser(req, res) {
   let name = null;
   let type = null;
-  const pages = null;
+  let pages = null;
   if (req.user) {
     name = req.user.name;
     type = req.user.type;
+    pages = req.user.pages;
   }
-  res.send({ name, type });
+  res.send({ name, type, pages });
 }
 
 function getSketches(req, res) {
