@@ -32,8 +32,7 @@ class Image extends React.Component {
       .end((err, res) => {
         if (err) console.log(err);
         const imageName = res.text.replace(/\s/g, '+');
-        // TODO: CHANGE THE folder to env
-        this.setImageURL(`https://s3.amazonaws.com/peblio-files-staging/${imageName}`);
+        this.setImageURL(`https://s3.amazonaws.com/${process.env.S3_BUCKET}/${imageName}`);
       });
   }
   render() {
