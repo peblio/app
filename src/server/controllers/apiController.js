@@ -16,7 +16,7 @@ const credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
 AWS.config.credentials = credentials;
 
 
-const myBucket = 'peblio-files';
+const myBucket = process.env.S3_BUCKET;
 // Multer config
 // memory storage keeps file data in a buffer
 const upload = multer({
@@ -29,10 +29,12 @@ apiRoutes.route('/examples').get(getExamples);
 apiRoutes.route('/page/:id').get(getPage);
 apiRoutes.route('/user').get(getUser);
 apiRoutes.route('/sketches').get(getSketches);
-apiRoutes.route('/upload').post(upload.single('uploadImageFile'), uploadFiles);
+apiRoutes.route('/sketches/:user').get(getSketches);
+apiRoutes.route('/upload/:user/:type').post(upload.single('uploadImageFile'), uploadFiles);
 
 function uploadFiles(req, res) {
-  const fileName = `test/${shortid.generate()}_${req.file.originalname}`;
+  const fileName =
+  `${req.params.user}/${req.params.type}/${shortid.generate()}_${req.file.originalname}`;
   const params = {
     Bucket: myBucket,
     Key: fileName,
@@ -60,28 +62,52 @@ function getPage(req, res) {
 
 function getUser(req, res) {
   let name = null;
+  let type = null;
   let pages = null;
   if (req.user) {
     name = req.user.name;
+    type = req.user.type;
     pages = req.user.pages;
   }
-  res.send({ name, pages });
+  res.send({ name, type, pages });
 }
 
 function getSketches(req, res) {
-  if (!req.user) {
-    res.status(403).send({ error: 'Please log in first' });
-    return;
+  // TODO: make the request async
+  if (!req.params.user) {
+    if (!req.user) {
+      res.status(403).send({ error: 'Please log in first or specify a user' });
+      return;
+    }
   }
-  const user = req.user;
-  Promise.all([
-    Page.find({ id: { $in: user.pages } }).exec(),
-    Folder.find({ user: user._id }).exec()
-  ])
-  .then(([pages, folders]) => {
-    res.send({ pages, folders });
-  })
-  .catch(err => res.send(err));
+  let user = req.user;
+  if (req.params.user) {
+    User.findOne({ name: req.params.user }, (err, data) => {
+      if (err) {
+      } else if (data.type === 'student') {
+        res.status(403).send({ error: 'This users data cannot be accessed' });
+      } else {
+        user = data;
+        Promise.all([
+          Page.find({ id: { $in: user.pages } }).exec(),
+          Folder.find({ user: user._id }).exec()
+        ])
+          .then(([pages, folders]) => {
+            res.send({ pages, folders });
+          })
+          .catch(err => res.send(err));
+      }
+    });
+  } else {
+    Promise.all([
+      Page.find({ id: { $in: user.pages } }).exec(),
+      Folder.find({ user: user._id }).exec()
+    ])
+    .then(([pages, folders]) => {
+      res.send({ pages, folders });
+    })
+    .catch(err => res.send(err));
+  }
 }
 
 function getExamples(req, res) {

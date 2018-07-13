@@ -16,6 +16,7 @@ const userRoutes = require('./controllers/userController.js');
 const pageRoutes = require('./controllers/pageController.js');
 const folderRoutes = require('./controllers/folderController');
 const apiRoutes = require('./controllers/apiController.js');
+const profileRoutes = require('./controllers/profileController.js');
 
 require('./config/passport');
 
@@ -51,6 +52,7 @@ app.use('/users', userRoutes);
 app.use('/pages', pageRoutes);
 app.use('/folders', folderRoutes);
 app.use('/api', apiRoutes);
+app.use('/profile', profileRoutes);
 
 app.get('/logout', (req, res) => {
   req.logout();

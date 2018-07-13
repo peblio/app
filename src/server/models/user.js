@@ -16,6 +16,19 @@ const userSchema = new Schema({
     required: true,
     unique: true
   },
+  blurb: {
+    type: String,
+    default: 'I <3 CS',
+    required: false,
+    unique: false
+  },
+  image: {
+    type: String,
+    default: 'https://s3.amazonaws.com/peblio-files-staging/DefaultProfileImage.png',
+    required: false,
+    unique: false
+  },
+
   type: {
     type: String,
     enum: ['student', 'teacher', 'other'],
