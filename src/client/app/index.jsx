@@ -6,7 +6,8 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
 import rootReducer from './reducers/rootReducer.js';
-import App from './components/App.jsx';
+import App from './components/App/App.jsx';
+import Profile from './components/Profile/Profile.jsx';
 import withTracker from './withTracker.jsx';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -27,7 +28,7 @@ class Main extends React.Component {
             <Route path="/pebl" component={withTracker(App)} />
             <Route path="/reset" component={withTracker(App)} />
             <Route path="/confirmation" component={withTracker(App)} />
-            <Route exact path="/pebls" component={App} />
+            <Route path="/user" component={withTracker(Profile)} />
           </div>
         </BrowserRouter>
       </Provider>

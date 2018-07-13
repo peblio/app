@@ -1,5 +1,14 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 
+export function setUserBlurb(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_USER_BLURB,
+      value
+    });
+  };
+}
+
 export function updateUserName(event) {
   return (dispatch) => {
     dispatch({
@@ -58,6 +67,15 @@ export function setUserType(value) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_USER_TYPE,
+      value
+    });
+  };
+}
+
+export function setUserImage(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_USER_IMAGE,
       value
     });
   };

@@ -8,6 +8,8 @@ $medium-gray: #B1B1B1;
 $boxShaddow-gray: #888888;
 $hover-gray:#CFCFCF;
 $canvas-gray: #E6E6E6;
+$profile-gray: #01151E;
+$yellow: #FED034;
 $light-green: #5EC1B8;
 
 $gray: #888;
@@ -34,11 +36,8 @@ $micro-padding: .1rem;
 $small-padding: .5rem;
 $medium-padding: 1rem;
 $large-padding: 1.5rem;
+$xlarge-padding: 2.5rem;
 $main-toolbar-padding:15 10 15 10;
-
-//stroke width
-$thin-border-width: 1px;
-$medium-border-width: 2px;
 
 //margin
 $micro-margin: .2rem;
@@ -46,6 +45,7 @@ $small-margin: .5rem;
 $medium-margin: 1rem;
 $large-margin: 1.5rem;
 $xlarge-margin: 3.5rem;
+$xxlarge-margin: 5rem;
 
 //radius
 $small-border-radius: 6px;
@@ -54,11 +54,14 @@ $large-border-radius: 20px;
 
 //border
 $small-border: 1px;
+$medium-border: 2px;
+$large-border: 5px;
 
 //fonts
 $helvetica: Arial, Helvetica, sans-serif;
+$small-font-size: 0.8rem;
 $medium-font-size: 1rem;
-$normal-font-size: 0.8rem;
+$small-font-size: 0.8rem;
 $large-font-size: 1.5rem;
 
 //alignments
@@ -67,6 +70,7 @@ $center-align: CENTER;
 $right-align: RIGHT;
 
 $medium-font-weight: 400;
+$heavy-font-weight: 500;
 
 //sizes
 $nav-width:35px;
