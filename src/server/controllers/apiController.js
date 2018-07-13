@@ -65,7 +65,6 @@ function getUser(req, res) {
   let type = null;
   const pages = null;
   if (req.user) {
-    console.log(req.user);
     name = req.user.name;
     type = req.user.type;
   }

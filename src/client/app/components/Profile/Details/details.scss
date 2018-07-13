@@ -25,15 +25,18 @@
     color: $white;
     font-size: $small-font-size;
     padding: $medium-padding;
-    margin-top: $xlarge-margin;
+    margin-top: $medium-margin;
     width: 100%;
     border: none;
     resize: none;
     text-align: center;
   }
 
-  &__title {
-    margin: auto;
+  &__container {
+    display: flex;
+    flex-direction: column;
+    padding: $xlarge-padding;
+    margin-top: $xxlarge-margin;
   }
 
   &__image-container {

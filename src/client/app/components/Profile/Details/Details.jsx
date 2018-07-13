@@ -50,7 +50,7 @@ class Details extends React.Component {
         <a className="details__link" href="/" target="_blank" rel="noopener noreferrer">
           <ToolbarLogo className="details__logo" alt="logo in toolbar" />
         </a>
-        <div className="details__title">
+        <div className="details__container">
           {this.props.isOwner &&
             <p className="details__welcome">
             Welcome {this.props.name} ! Feel free to change your profile image and description
@@ -81,7 +81,7 @@ class Details extends React.Component {
             className="details__text-secondary"
             type="text"
             value={this.props.blurb}
-            rows={20}
+            rows={15}
             onChange={(e) => {
               this.props.setUserBlurb(e.target.value);
             }}

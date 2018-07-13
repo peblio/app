@@ -10,7 +10,6 @@ require('./mainToolbar.scss');
 
 class MainToolbar extends React.Component {
   render() {
-    console.log(this.props.userType);
     let saveButtonText = 'Fork';
     if (this.props.name) { // user is logged in
       if (this.props.canEdit) { // it is users sketch

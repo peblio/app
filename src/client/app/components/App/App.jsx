@@ -76,7 +76,6 @@ class App extends React.Component {
       const projectID = this.projectID();
       axios.get(`/api/page/${this.projectID()}`)
         .then((res) => {
-          console.log(res);
           this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].layout);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
           this.props.setPreviewMode(true);
@@ -93,7 +92,6 @@ class App extends React.Component {
         if (res.data.name) {
           this.props.setUserName(res.data.name);
           this.props.setUserType(res.data.type);
-          console.log(res.data.type);
           this.props.fetchAllPages();
         }
       });
