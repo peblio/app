@@ -12,7 +12,13 @@ const cookieSession = require('cookie-session');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
+// const session = require('express-session');
+// const mongoStore = require('connect-mongo')({
+//   session
+// });
+
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const userRoutes = require('./controllers/userController.js');
 const pageRoutes = require('./controllers/pageController.js');
@@ -39,10 +45,20 @@ mongoose.connection.on('open', () => {
 
 app.use(cors({ credentials: true, origin: true }));
 // app.use(cookieParser())
+// app.use(session({
+//   secret: 'ASQ12345678gfd4jh234oiuy',
+//   resave: true,
+//   saveUninitialized: true,
+//   store: new mongoStore({
+//     db: db.connection.db,
+//     collection: config.sessionCollection
+//   })
+// }));
+
+// Basic usage
 app.use(session({
   secret: 'ASQ12345678gfd4jh234oiuy',
-  resave: true,
-  saveUninitialized: true
+  store: new MongoStore({ url: 'mongodb://localhost:27017/session' })
 }));
 // add body parser
 app.use(bodyParser.urlencoded({ extended: true }));
