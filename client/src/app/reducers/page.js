@@ -11,7 +11,7 @@ const initialState = {
     margin: [50, 25],
     padding: [0, 0],
     rowHeight: 1,
-    width: 1440,
+    width: 1200,
   },
   layout: [],
   textHeights: {},
@@ -111,6 +111,11 @@ const page = (state = initialState, action) => {
         preview: !state.preview
       });
 
+    case ActionTypes.SET_PREVIEW_MODE:
+      return Object.assign({}, state, {
+        preview: action.value
+      });
+
     case ActionTypes.DUPLICATE_EDITOR: {
       const layout = state.layout;
       const originalEditorIndex = layout.findIndex(x => x.i === action.originalEditorId);
@@ -207,6 +212,17 @@ const page = (state = initialState, action) => {
       };
     }
 
+    case ActionTypes.RENAME_FOLDER : {
+      const { folders } = state;
+      folders.byId[action.folderId].title = action.folderName;
+      return {
+        ...state,
+        folders: {
+          ...folders
+        }
+      };
+    }
+
     case ActionTypes.MOVE_PAGE_TO_TOP_LEVEL: {
       const pageId = action.pageId;
       const { folders, pages } = state;
@@ -215,11 +231,11 @@ const page = (state = initialState, action) => {
       if (!folderId) {
         return state;
       }
-
       const folder = folders.byId[folderId];
       folder.files = folder.files.filter(pId => pId !== pageId);
 
       delete pageToMove.folder;
+
       return {
         ...state,
         folders: {

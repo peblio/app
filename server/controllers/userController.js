@@ -151,7 +151,7 @@ function loginUser(req, res, next) {
       }
       return res.send({
         msg: UserConst.LOGIN_SUCCESS,
-        user: { name: user.name }
+        user: { name: user.name, type: user.type }
       });
     });
   })(req, res, next);
@@ -271,7 +271,7 @@ function loginWithGoogle(req, res) {
           }
           return res.send({
             msg: UserConst.LOGIN_SUCCESS,
-            user: { name: user.name }
+            user: { name: user.name, type: user.type }
           });
         });
       });

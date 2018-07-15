@@ -10,7 +10,7 @@ button {
 }
 
 %menu-item {
-  border: $thin-border-width solid $white;
+  border: $small-border solid $white;
   border-radius: $small-border-radius;
   color: $white;
   fill:$white;
@@ -18,7 +18,7 @@ button {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
   &:hover {
-    border: $thin-border-width solid $gray;
+    border: $small-border solid $gray;
     color: $black;
     background: $white;
     cursor: pointer;

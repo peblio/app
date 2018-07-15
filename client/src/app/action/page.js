@@ -1,7 +1,7 @@
+import axios from '../utils/axios';
 import shortid from 'shortid';
 import { convertToRaw } from 'draft-js';
 import * as ActionTypes from '../constants/reduxConstants.js';
-import axios from '../utils/axios';
 
 export function setUnsavedChanges(value) {
   return (dispatch) => {
@@ -32,13 +32,12 @@ export function setPageLayout(value) {
   };
 }
 
-export function loadPage(id, title, preview, layout) {
+export function loadPage(id, title, layout) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
       id,
       title,
-      preview,
       layout
     });
   };
@@ -69,13 +68,12 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, preview, editors, editorIndex, layout) {
+export function submitPage(parentId, title, editors, editorIndex, layout) {
   const id = shortid.generate();
   axios.post('/pages/save', {
     parentId,
     id,
     title,
-    preview,
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout
@@ -107,11 +105,10 @@ export function createPage(title, folder) {
   };
 }
 
-export function updatePage(id, title, preview, editors, editorIndex, layout) {
+export function updatePage(id, title, editors, editorIndex, layout) {
   axios.post('/pages/update', {
     id,
     title,
-    preview,
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout
@@ -127,8 +124,12 @@ export function updatePage(id, title, preview, editors, editorIndex, layout) {
   };
 }
 
-export function fetchAllPages() {
-  return dispatch => axios.get('/sketches').then(({ data }) => {
+export function fetchAllPages(profileName) {
+  let url = '/sketches';
+  if (profileName) {
+    url = `${url}/${profileName}`;
+  }
+  return dispatch => axios.get(url).then(({ data }) => {
     dispatch({
       type: ActionTypes.SET_ALL_PAGES,
       pages: data.pages,
@@ -137,11 +138,19 @@ export function fetchAllPages() {
   });
 }
 
-export function togglePreviewMode(value) {
+export function togglePreviewMode() {
   return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.TOGGLE_PREVIEW_MODE
+    });
+  };
+}
+
+export function setPreviewMode(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_PREVIEW_MODE,
+      value
     });
   };
 }
@@ -187,6 +196,18 @@ export function deleteFolder(folderId) {
       dispatch({
         type: ActionTypes.DELETE_FOLDER,
         folderId
+      });
+    });
+  };
+}
+
+export function renameFolder(folderId, folderName) {
+  return (dispatch) => {
+    axios.post(`/folders/${folderId}/rename/${folderName}`).then((response) => {
+      dispatch({
+        type: ActionTypes.RENAME_FOLDER,
+        folderId,
+        folderName
       });
     });
   };

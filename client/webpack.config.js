@@ -13,7 +13,7 @@ const config = {
   entry: `${APP_DIR}/index.jsx`,
   output: {
     path: BUILD_DIR,
-    filename: '[name].[chunkhash].js'
+    filename: '[name].js'
   },
   module: {
     loaders: [
@@ -86,6 +86,8 @@ const config = {
     ], { copyUnmodified: true })
   ],
   devServer: {
+    historyApiFallback: true,
+    port: 8080,
     proxy: {
       '/api': { target: 'http://localhost:8081' }
     }

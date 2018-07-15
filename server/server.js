@@ -18,12 +18,13 @@ const userRoutes = require('./controllers/userController.js');
 const pageRoutes = require('./controllers/pageController.js');
 const folderRoutes = require('./controllers/folderController');
 const apiRoutes = require('./controllers/apiController.js');
+const profileRoutes = require('./controllers/profileController.js');
 
 require('./config/passport');
 
 // start the server:
-const listener = app.listen(process.env.PORT || 8081, function() {
-  console.log('Listening on port ' + listener.address().port);
+const listener = app.listen(process.env.PORT || 8081, () => {
+  console.log(`Listening on port ${listener.address().port}`);
 });
 
 mongoose.connect('mongodb://localhost:27017/peblio-file');
@@ -55,6 +56,7 @@ const router = express.Router();
 router.use('/users', userRoutes);
 router.use('/pages', pageRoutes);
 router.use('/folders', folderRoutes);
+router.use('/profile', profileRoutes);
 router.use('/', apiRoutes);
 app.use('/api', router);
 
@@ -63,4 +65,4 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-console.log('NODE_ENV: ' + process.env.NODE_ENV);
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`);

@@ -6,7 +6,6 @@ const pageSchema = new Schema({
   parentId: { type: String, default: '' },
   id: { type: String, default: '' },
   title: { type: String, default: '' },
-  preview: { type: Boolean, default: false },
   editors: { type: Object, default: {} },
   editorIndex: { type: Number, default: 0 },
   layout: { type: Array, default: [] },

@@ -5,6 +5,7 @@
   "main": "build/bundle.min.js",
   "scripts": {
     "start": "webpack-dev-server",
+    "dev": "webpack -d --watch",
     "build": "ENVIRONMENT=local webpack -p --config ./webpack.config.js --progress",
     "build:staging": "ENVIRONMENT=staging webpack -p --config ./webpack.config.js --progress",
     "build:production": "ENVIRONMENT=production webpack -p --config ./webpack.config.js --progress"
@@ -83,7 +84,7 @@
     "style-loader": "^0.18.2",
     "svg-react-loader": "^0.4.5",
     "url-loader": "^1.0.1",
-    "webpack": "^2.6.1",
+    "webpack": "^2.7.0",
     "webpack-cli": "^3.0.8",
     "webpack-dev-server": "^2.9.1"
   }
