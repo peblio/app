@@ -1,0 +1,15 @@
+@import 'modal';
+.welcome {
+  &__iframe {
+    display: flex;
+    max-width: 80%;
+    margin: 0 auto;
+    padding: $medium-padding 0;
+  }
+  &__title {
+    @extend %modal__title;
+  }
+  &__subtitle {
+    @extend %modal__subtitle;
+  }
+}

@@ -10,7 +10,8 @@ const initialState = {
   isPagesModalOpen: false,
   isResetModalOpen: false,
   isShareModalOpen: false,
-  isSignUpModalOpen: false
+  isSignUpModalOpen: false,
+  isWelcomeModalOpen: false
 };
 
 const mainToolbar = (state = initialState, action) => {
@@ -106,6 +107,16 @@ const mainToolbar = (state = initialState, action) => {
       window.location.replace(`${window.location.origin}`);
       return Object.assign({}, state, {
         isConfirmUserModalOpen: false
+      });
+
+    case ActionTypes.VIEW_WELCOME_MODAL:
+      return Object.assign({}, state, {
+        isWelcomeModalOpen: true
+      });
+
+    case ActionTypes.CLOSE_WELCOME_MODAL:
+      return Object.assign({}, state, {
+        isWelcomeModalOpen: false
       });
 
     default:

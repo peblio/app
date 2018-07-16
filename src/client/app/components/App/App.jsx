@@ -12,6 +12,7 @@ import ShareModal from './Modal/ShareModal/ShareModal.jsx';
 import SignUp from './Modal/SignUp/SignUp.jsx';
 import PagesList from './Modal/PagesList/PagesList.jsx';
 import PasswordReset from './Modal/PasswordReset/PasswordReset.jsx';
+import Welcome from './Modal/Welcome/Welcome.jsx';
 
 import Canvas from './Canvas/Canvas.jsx';
 import MainToolbar from './MainToolbar/MainToolbar.jsx';
@@ -24,6 +25,10 @@ import * as userActions from '../../action/user.js';
 const axios = require('axios');
 
 class App extends React.Component {
+
+  componentWillMount() {
+    this.onUserVisit();
+  }
   componentDidMount() {
     this.authAndLoadPage();
   }
@@ -45,6 +50,17 @@ class App extends React.Component {
         default:
           break;
       }
+    }
+  }
+
+
+  onUserVisit =() => {
+    const isUserFirstVisit = localStorage.getItem(process.env.LOCALSTORAGE_VARIABLE);
+    // check if it is the first visit
+    if (isUserFirstVisit === null || isUserFirstVisit === '') {
+    // set variable to 1
+      localStorage.setItem(process.env.LOCALSTORAGE_VARIABLE, 1);
+      this.props.viewWelcomeModal();
     }
   }
 
@@ -316,6 +332,13 @@ class App extends React.Component {
           />
         </Modal>
 
+        <Modal
+          size="auto"
+          isOpen={this.props.isWelcomeModalOpen}
+          closeModal={this.props.closeWelcomeModal}
+        >
+          <Welcome />
+        </Modal>
       </div>
     );
   }
@@ -418,6 +441,9 @@ App.propTypes = {
   closeConfirmUserModal: PropTypes.func.isRequired,
   viewConfirmUserModal: PropTypes.func.isRequired,
   isConfirmUserModalOpen: PropTypes.bool.isRequired,
+  isWelcomeModalOpen: PropTypes.bool.isRequired,
+  viewWelcomeModal: PropTypes.func.isRequired,
+  closeWelcomeModal: PropTypes.func.isRequired,
 
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
@@ -450,6 +476,7 @@ function mapStateToProps(state) {
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isPagesModalOpen: state.mainToolbar.isPagesModalOpen,
     isShareModalOpen: state.mainToolbar.isShareModalOpen,
+    isWelcomeModalOpen: state.mainToolbar.isWelcomeModalOpen,
 
     isLoginModalOpen: state.mainToolbar.isLoginModalOpen,
     isSignUpModalOpen: state.mainToolbar.isSignUpModalOpen,

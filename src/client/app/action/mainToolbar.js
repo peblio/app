@@ -146,3 +146,19 @@ export function closeConfirmUserModal() {
     });
   };
 }
+
+export function viewWelcomeModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_WELCOME_MODAL
+    });
+  };
+}
+
+export function closeWelcomeModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_WELCOME_MODAL
+    });
+  };
+}
