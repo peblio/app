@@ -17,7 +17,7 @@ class Welcome extends Component {
             className="welcome__iframe"
             width="560"
             height="315"
-            src="https://www.youtube.com/embed/jihVhB_TXeU"
+            src="https://www.youtube.com/embed/wq3CL8LFN-Y"
             frameBorder="0"
             allowFullScreen
           ></iframe>
