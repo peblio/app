@@ -18,6 +18,9 @@ S3_BUCKET=<your-s3-bucket>
 GOOGLE_CLIENT_ID=<peblio-google-client-id>
 GOOGLE_CLIENT_SECRET=<peblio-client-secret>
 GOOGLE_ANALYTICS_TRACKING_ID=<peblio-ga-tracking-id>
+PEBLIO_SENDGRID_PASSWORD=<peblio-sendgrid-password>
+PEBLIO_SENDGRID_MAIL=<peblio-sendgrid-email>
+LOCALSTORAGE_VARIABLE="local_peblio"
  ```
  If you don't care about being able to upload media files to S3 , you can drop in the file exactly how it is. Or, if you don't want to do that, just ask me to send you mine.
 
