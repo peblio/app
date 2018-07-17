@@ -40,7 +40,7 @@
 }
 
 .main-toolbar__account-button{
-  margin: 0.2rem $large-padding;
+  margin: 0.2rem $small-margin 0 $xlarge-margin;
   padding: $small-padding $medium-padding;
   border: none;
   background: $black;
@@ -50,30 +50,64 @@
     cursor: pointer;
     background: $black;
     border: none;
+    & #accountMan {
+      fill: $blue;
+    }
   }
 }
 
-.main-toolbar__account-button:hover #accountMan{
-  fill:$blue;
+.main-toolbar__account-button-clicked{
+  border: none;
+  background: $white;
+  -webkit-transition-duration: 150ms; /* Safari */
+  transition-duration: 150ms;
+  &:hover {
+    cursor: pointer;
+    background: $white;
+    border: none;
+    & #accountMan {
+      fill: $black;
+      float: right;
+    }
+  }
+  & #accountMan {
+    fill: $blue;
+    margin-left: $micro-margin;
+  }
+}
+
+.main-toolbar__list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  list-style-type: none;
+  padding-left: $micro-padding*2;
+  margin: 0;
+}
+
+.main-toolbar__list-item {
+  padding: 0 $small-padding $medium-padding 0;
 }
 
 .main-toolbar__welcome {
-  color: $black;
-  padding-left: 0.5rem;
+  color: $gray;
+  margin-top: $small-margin;
+  margin-bottom: 0;
+  padding-left: $small-padding;
   font-size: $small-font-size;
-  font-weight: bold;
+  font-weight: $medium-font-weight;
 }
 
 .main-toolbar__account{
   display: flex;
+  top: 1px;
+  right: $medium-margin;
   flex-direction: column;
   background-color: $white;
   border: 2px solid;
-  border-color: $light-gray;
-  padding: $small-padding;
+  border-color: $white;
   position: absolute;
   border-radius: $medium-border-radius;
-  margin-left: -20px;
   z-index: $z-index-layer-2;
 }
 
@@ -155,6 +189,7 @@ input:checked + .main-toolbar__slider:before {
   text-align: $left-align;
   width: 80;
   margin: 15px 0px 0px 5px;
+  padding-left: $small-padding*3/2;
   color: $white;
   font-style: normal;
   font-size: 14;
@@ -172,6 +207,7 @@ input:checked + .main-toolbar__slider:before {
   border-bottom-right-radius: 0;
   text-align: $left-align;
   margin: 15px 0px 0px 5px;
+  padding-left: $small-padding*3/2;
   width: 80;
   background: $white;
   color: $dark-gray;
