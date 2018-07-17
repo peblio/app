@@ -145,7 +145,7 @@ class SignUp extends React.Component {
                   id="signup-modal-mail"
                   placeholder="email"
                   ref={(userMail) => { this.userMail = userMail; }}
-                  type="text"
+                  type="email"
                 />
               </div>
               <div className="signup-modal__div">
