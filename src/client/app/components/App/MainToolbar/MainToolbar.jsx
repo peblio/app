@@ -49,9 +49,16 @@ class MainToolbar extends React.Component {
               </button>
             </div>
             <div className="file-modal__container">
-              <button className="upper-toolbar__dropdown" onClick={this.props.toggleFileDropdown}>
-              File
-              </button>
+              { !this.props.isFileDropdownOpen &&
+                <button className="upper-toolbar__dropdown" onClick={this.props.toggleFileDropdown}>
+                  File
+                </button>
+              }
+              { this.props.isFileDropdownOpen &&
+                <button className="upper-toolbar__dropdown-open" onClick={this.props.toggleFileDropdown}>
+                  File
+                </button>
+              }
               { this.props.isFileDropdownOpen &&
                 <FileModal
                   name={this.props.name}

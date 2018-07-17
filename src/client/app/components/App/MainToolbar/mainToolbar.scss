@@ -152,8 +152,9 @@ input:checked + .main-toolbar__slider:before {
 .upper-toolbar__dropdown{
   border: none;
   border-radius: 0;
-  padding:$main-toolbar-padding;
-  width: 100;
+  text-align: $left-align;
+  width: 80;
+  margin: 15px 0px 0px 5px;
   color: $white;
   font-style: normal;
   font-size: 14;
@@ -161,6 +162,25 @@ input:checked + .main-toolbar__slider:before {
     cursor: pointer;
     color: $gray;
     background: $black;
+    border: none;
+  }
+}
+
+.upper-toolbar__dropdown-open{
+  border: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  text-align: $left-align;
+  margin: 15px 0px 0px 5px;
+  width: 80;
+  background: $white;
+  color: $dark-gray;
+  font-style: normal;
+  font-size: 14;
+  &:hover {
+    cursor: pointer;
+    color: $gray;
+    background: $white;
     border: none;
   }
 }
