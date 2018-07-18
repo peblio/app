@@ -40,7 +40,7 @@
 }
 
 .main-toolbar__account-button{
-  margin: 0.2rem $small-margin 0 $xlarge-margin;
+  margin: $mini-padding $medium-margin 0 $medium-margin;
   padding: $small-padding $medium-padding;
   border: none;
   background: $black;
@@ -50,9 +50,6 @@
     cursor: pointer;
     background: $black;
     border: none;
-    & #accountMan {
-      fill: $blue;
-    }
   }
 }
 
@@ -65,13 +62,25 @@
     cursor: pointer;
     background: $white;
     border: none;
-    & #accountMan {
-      fill: $black;
-      float: right;
-    }
   }
-  & #accountMan {
+}
+
+.account-man {
+  & path, & circle {
+    fill: $white;
+  }
+  &:hover path, &:hover circle {
     fill: $blue;
+  }
+}
+
+.account-man__clicked {
+  & path, & circle {
+    fill: $blue;
+    margin-left: $micro-margin;
+  }
+  &:hover path, &:hover circle{
+    fill: $black;
     margin-left: $micro-margin;
   }
 }
@@ -101,7 +110,7 @@
 .main-toolbar__account{
   display: flex;
   top: 1px;
-  right: $medium-margin;
+  right: $large-margin;
   flex-direction: column;
   background-color: $white;
   border: 2px solid;
@@ -185,10 +194,10 @@ input:checked + .main-toolbar__slider:before {
 
 .upper-toolbar__dropdown{
   border: none;
-  border-radius: 0;
   text-align: $left-align;
+  border-radius: 0;
   width: 80;
-  margin: 15px 0px 0px 5px;
+  margin: $medium-margin $small-margin 0px $xlarge-margin/2;
   padding-left: $small-padding*3/2;
   color: $white;
   font-style: normal;
@@ -203,10 +212,10 @@ input:checked + .main-toolbar__slider:before {
 
 .upper-toolbar__dropdown-open{
   border: none;
+  text-align: $left-align;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  text-align: $left-align;
-  margin: 15px 0px 0px 5px;
+  margin: $medium-margin $small-margin 0px $xlarge-margin/2;
   padding-left: $small-padding*3/2;
   width: 80;
   background: $white;
