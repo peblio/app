@@ -54,7 +54,7 @@ class Login extends React.Component {
             <input
               id="login-modal-name"
               className="login-modal__input"
-              type="text"
+              type="email"
               placeholder="email"
               ref={(userName) => { this.userName = userName; }}
             />

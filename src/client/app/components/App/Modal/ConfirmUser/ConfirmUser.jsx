@@ -82,7 +82,7 @@ class ConfirmUser extends React.Component {
                 id="confirm-modal-email"
                 className="confirm-modal__input"
                 placeholder="email"
-                type="text"
+                type="email"
                 ref={(email) => { this.email = email; }}
               />
             </div>
