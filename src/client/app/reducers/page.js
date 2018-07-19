@@ -129,6 +129,23 @@ const page = (state = initialState, action) => {
       return Object.assign({}, state, { layout });
     }
 
+    case ActionTypes.ADD_EDITOR: {
+      const regex = /-?\d+$/;
+      const match = action.currentId.match(regex);
+      const newId = Math.abs(parseInt(match[0]));
+      console.log(state.layout);
+      console.log(state.layout);
+      console.log(action.currentId);
+      const layout = state.layout;
+      const currentEditorIndex = layout.findIndex(x => x.i === action.currentId);
+      const currentEditor = layout[currentEditorIndex];
+      const newEditor = { ...currentEditor };
+      newEditor.i = `editor-${newId + 1}`;// action.newEditorId;
+      newEditor.y = currentEditor.y + currentEditor.h + -1;
+      console.log(newEditor);
+      return Object.assign({}, state, { layout });
+    }
+
     case ActionTypes.RESIZE_TEXT_EDITOR: {
       const { margin, rowHeight } = state.rgl;
       const layout = JSON.parse(JSON.stringify(state.layout));

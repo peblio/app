@@ -178,11 +178,17 @@ export function setInnerHeight(id, value) {
 }
 
 /** TEXT EDITOR */
-export function addTextEditor() {
+export function addTextEditor(currentId) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
+
     dispatch({
       type: ActionTypes.ADD_TEXT_EDITOR
+
+    });
+    dispatch({
+      type: ActionTypes.ADD_EDITOR,
+      currentId
     });
   };
 }

@@ -78,7 +78,7 @@ class InsertToolbar extends React.Component {
         }
         </button>
         <button
-          onClick={this.props.addTextEditor}
+          onClick={() => this.props.addTextEditor(this.props.currentWidget)}
           id="elementButton" className="insert-toolbar__button"
         >
           <TextSVG alt="add text" />

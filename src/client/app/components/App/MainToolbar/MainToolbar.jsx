@@ -133,6 +133,7 @@ class MainToolbar extends React.Component {
             addTextEditor={this.props.addTextEditor}
             addIframe={this.props.addIframe}
             addImage={this.props.addImage}
+            currentWidget={this.props.currentWidget}
           />
         }
       </div>
