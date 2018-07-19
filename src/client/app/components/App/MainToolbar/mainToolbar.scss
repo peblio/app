@@ -118,6 +118,9 @@
   position: absolute;
   border-radius: $medium-border-radius;
   z-index: $z-index-layer-2;
+  box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+  -moz-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+  -webkit-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
 }
 
 .main-toolbar__preview {
@@ -197,7 +200,7 @@ input:checked + .main-toolbar__slider:before {
   text-align: $left-align;
   border-radius: 0;
   width: 80;
-  margin: $medium-margin $small-margin 0px $xlarge-margin/2;
+  margin: $medium-margin $small-margin 0 $xlarge-margin/2;
   padding-left: $small-padding*3/2;
   color: $white;
   font-style: normal;
@@ -215,7 +218,7 @@ input:checked + .main-toolbar__slider:before {
   text-align: $left-align;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  margin: $medium-margin $small-margin 0px $xlarge-margin/2;
+  margin: $medium-margin $small-margin 0 $xlarge-margin/2;
   padding-left: $small-padding*3/2;
   width: 80;
   background: $white;

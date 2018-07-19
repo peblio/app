@@ -5,7 +5,7 @@ $whitish: #FBFBFB;
 $lighter-gray: #F0F0F0;
 $light-gray: #AAAAAA;
 $medium-gray: #B1B1B1;
-$boxShaddow-gray: #888888;
+$boxShadow-gray: #888888;
 $hover-gray:#CFCFCF;
 $canvas-gray: #E6E6E6;
 $profile-gray: #01151E;
@@ -87,3 +87,7 @@ $z-index-layer-1: 100;
 $z-index-layer-2: 200;
 $z-index-layer-3: 300;
 $z-index-layer-4: 400;
+
+//shadow variables
+$shadow-v-offset: 2px;
+$shadow-blur: 4px;

@@ -8,6 +8,9 @@
 .file-modal__list {
   position: absolute;
   background: $white;
+  box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+  -moz-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+  -webkit-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
   top: 25px;
   left: 12px;
   margin: $medium-padding/2;
