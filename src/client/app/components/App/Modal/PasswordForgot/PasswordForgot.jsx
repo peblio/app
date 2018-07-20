@@ -46,7 +46,7 @@ class PasswordForgot extends React.Component {
               <input
                 id="forgot-modal-email"
                 className="forgot-modal__input"
-                type="email"
+                type="text"
                 placeholder="email"
                 ref={(email) => { this.email = email; }}
               />
