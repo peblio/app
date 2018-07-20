@@ -41,7 +41,7 @@ class InsertToolbar extends React.Component {
                 <button
                   className="insert-toolbar__list-button"
                   onClick={() => {
-                    this.props.addCodeEditor('html');
+                    this.props.addCodeEditor('html', this.props.currentWidget);
                     this.toggleEditorOptions();
                   }
                   }
@@ -53,7 +53,7 @@ class InsertToolbar extends React.Component {
                 <button
                   className="insert-toolbar__list-button"
                   onClick={() => {
-                    this.props.addCodeEditor('webdev');
+                    this.props.addCodeEditor('webdev', this.props.currentWidget);
                     this.toggleEditorOptions();
                   }
                   }
@@ -65,7 +65,7 @@ class InsertToolbar extends React.Component {
                 <button
                   className="insert-toolbar__list-button"
                   onClick={() => {
-                    this.props.addCodeEditor('p5');
+                    this.props.addCodeEditor('p5', this.props.currentWidget);
                     this.toggleEditorOptions();
                   }
                   }
@@ -85,21 +85,21 @@ class InsertToolbar extends React.Component {
           Textbox
         </button>
         <button
-          onClick={this.props.addIframe}
+          onClick={() => this.props.addIframe(this.props.currentWidget)}
           className="insert-toolbar__button"
         >
           <EmbedSVG alt="add embed" />
           Embed
         </button>
         <button
-          onClick={this.props.addQuestionEditor}
+          onClick={() => this.props.addQuestionEditor(this.props.currentWidget)}
           id="elementButton" className="insert-toolbar__button"
         >
           <QuestionSVG alt="add question" />
           Question
         </button>
         <button
-          onClick={this.props.addImage}
+          onClick={() => { this.props.addImage(this.props.currentWidget); }}
           id="elementButton" className="insert-toolbar__button"
         >
           <ImageSVG alt="add image" />
