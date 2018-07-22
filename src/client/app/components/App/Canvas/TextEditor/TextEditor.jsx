@@ -84,7 +84,6 @@ class TextEditor extends React.Component {
                 },
                 fontFamily: {
                   options: ['Arial', 'Arial Black', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana', 'Comic Sans MS', 'Trebuchet MS', 'Courier New'],
-                  className: undefined,
                   component: undefined,
                   dropdownClassName: undefined,
                 },
