@@ -131,6 +131,7 @@ class Canvas extends React.Component {
         preview={this.props.preview}
         updateTextBackColor={this.props.updateTextBackColor}
         isResizing={this.state.isResizingGridItems[editor.id] || false}
+        currentWidget={this.props.currentWidget}
       />
     );
   }
@@ -285,7 +286,7 @@ class Canvas extends React.Component {
                 onFocus={() => this.props.setCurrentWidget(id)}
               >
                 {this.props.preview ||
-                  <div className={`widget-nav__container${(this.props.currentWidget === id) ? '--highlighted' : ''}`}>
+                  <div className={`widget-nav__container${(this.props.currentWidget === id) ? '_highlighted' : ''}`}>
                     <WidgetNav
                       id={id}
                       layout={storageLayout}
