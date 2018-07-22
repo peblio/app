@@ -274,7 +274,7 @@ class Canvas extends React.Component {
             <div
               key={id}
               data-grid={localLayout[id]}
-              className={`${this.props.editors[id].type === 'text' ? 'canvas-high' : ''}`
+              className={`${this.props.currentWidget === id ? 'canvas-high' : ''}`
             }
             >
 
