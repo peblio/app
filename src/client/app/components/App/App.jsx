@@ -173,7 +173,6 @@ class App extends React.Component {
             addIframe={this.props.addIframe}
             addImage={this.props.addImage}
             canEdit={this.props.canEdit}
-            currentWidget={this.props.currentWidget}
             isFileDropdownOpen={this.props.isFileDropdownOpen}
             isAccountDropdownOpen={this.props.isAccountDropdownOpen}
             name={this.props.name}
