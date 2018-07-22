@@ -70,10 +70,10 @@ export function setEditorSize(id, width, height) {
 }
 
 /** CODE EDITOR */
-export function addCodeEditor(mode, currentId) {
+export function addCodeEditor(mode) {
   return (dispatch, getState) => {
     const { editorsReducer } = getState();
-    console.log(getState());
+    const currentId = editorsReducer.currentWidget;
     const newEditorId = `editor-${editorsReducer.editorIndex}`;
     dispatch(setUnsavedChanges(true));
     dispatch({
@@ -187,10 +187,10 @@ export function setInnerHeight(id, value) {
 }
 
 /** TEXT EDITOR */
-export function addTextEditor(currentId) {
+export function addTextEditor() {
   return (dispatch, getState) => {
     const { editorsReducer } = getState();
-    console.log(getState());
+    const currentId = editorsReducer.currentWidget;
     const newEditorId = `editor-${editorsReducer.editorIndex}`;
     dispatch(setUnsavedChanges(true));
     dispatch({
@@ -227,10 +227,10 @@ export function updateTextBackColor(id, color) {
 }
 
 /** QUESTION EDITOR */
-export function addQuestionEditor(currentId) {
+export function addQuestionEditor() {
   return (dispatch, getState) => {
     const { editorsReducer } = getState();
-    console.log(getState());
+    const currentId = editorsReducer.currentWidget;
     const newEditorId = `editor-${editorsReducer.editorIndex}`;
     dispatch(setUnsavedChanges(true));
     dispatch({
@@ -277,10 +277,10 @@ export function updateAnswerChange(id, text) {
 }
 
 /** IFRAME */
-export function addIframe(currentId) {
+export function addIframe() {
   return (dispatch, getState) => {
     const { editorsReducer } = getState();
-    console.log(getState());
+    const currentId = editorsReducer.currentWidget;
     const newEditorId = `editor-${editorsReducer.editorIndex}`;
     dispatch(setUnsavedChanges(true));
     dispatch({
@@ -306,10 +306,10 @@ export function setIframeURL(id, url) {
 }
 
 /** IMAGE */
-export function addImage(currentId) {
+export function addImage() {
   return (dispatch, getState) => {
     const { editorsReducer } = getState();
-    console.log(getState());
+    const currentId = editorsReducer.currentWidget;
     const newEditorId = `editor-${editorsReducer.editorIndex}`;
     dispatch(setUnsavedChanges(true));
     dispatch({

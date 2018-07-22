@@ -191,7 +191,7 @@ class Canvas extends React.Component {
     const localLayout = {};
     storageLayout.forEach((x) => {
       const key = x.i;
-      /* TODO: change the code to simplify the layout logic */
+      /* TODO: change the code to simplify the layout logic , ideally the min and default width and height should be contained in the editor object itself */
       localLayout[key] = x;
       localLayout[key].maxW = 30;
       localLayout[key].maxH = 100;

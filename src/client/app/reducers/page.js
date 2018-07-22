@@ -132,11 +132,12 @@ const page = (state = initialState, action) => {
     case ActionTypes.ADD_EDITOR: {
       const layout = state.layout;
       const currentEditorIndex = layout.findIndex(x => x.i === action.currentId);
-      console.log(currentEditorIndex);
       const currentEditor = layout[currentEditorIndex];
       const newEditor = { ...currentEditor };
       newEditor.i = action.newEditorId;
       newEditor.y = currentEditor.y + currentEditor.h + -1;
+      newEditor.w = 0;
+      newEditor.h = 0;
       layout.splice(currentEditorIndex, 0, newEditor);
       return Object.assign({}, state, { layout });
     }

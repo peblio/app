@@ -1,6 +1,7 @@
 import { EditorState, convertFromRaw } from 'draft-js';
 import * as ActionTypes from '../constants/reduxConstants.js';
 import * as Code from '../constants/codeConstants.js';
+import * as WidgetSize from '../constants/widgetConstants.js';
 
 const initialState = {
   editors: {},
@@ -94,7 +95,9 @@ const editorsReducer = (state = initialState, action) => {
         isRefreshing: false,
         editorMode: action.mode,
         innerWidth: 250,
-        innerHeight: 160
+        innerHeight: 160,
+        minLayoutH: WidgetSize.CODE_MIN_HEIGHT,
+        minLayoutW: WidgetSize.CODE_MIN_WIDTH,
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -173,7 +176,9 @@ const editorsReducer = (state = initialState, action) => {
         id,
         index: stack.length,
         editorState: EditorState.createEmpty(),
-        backColor: 'transparent'
+        backColor: 'transparent',
+        minLayoutH: WidgetSize.TEXT_MIN_HEIGHT,
+        minLayoutW: WidgetSize.TEXT_MIN_WIDTH,
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -200,7 +205,9 @@ const editorsReducer = (state = initialState, action) => {
         question: 'Enter question here ',
         answer: 'Enter answer here..',
         minHeight: 30,
-        innerHeight: 30
+        innerHeight: 30,
+        minLayoutH: WidgetSize.QUESTION_MIN_HEIGHT,
+        minLayoutW: WidgetSize.QUESTION_MIN_WIDTH,
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -230,7 +237,9 @@ const editorsReducer = (state = initialState, action) => {
         type: 'iframe',
         id,
         index: stack.length,
-        url: 'https://peblio.github.io/instructions/embed.html'
+        url: 'https://peblio.github.io/instructions/embed.html',
+        minLayoutH: WidgetSize.IFRAME_MIN_HEIGHT,
+        minLayoutW: WidgetSize.IFRAME_MIN_WIDTH,
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -249,7 +258,9 @@ const editorsReducer = (state = initialState, action) => {
         type: 'image',
         id,
         index: stack.length,
-        url: ''
+        url: '',
+        minLayoutH: WidgetSize.IMAGE_MIN_HEIGHT,
+        minLayoutW: WidgetSize.IMAGE_MIN_WIDTH,
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
