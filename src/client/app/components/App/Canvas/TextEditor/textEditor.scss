@@ -6,10 +6,14 @@
   min-height: 100%;
   margin: 0;
   background: none;
+  padding: 0 $small-border/2;
+  min-height: 100%;
 
-  &--edit { // sass-lint:disable-line class-name-format
-    border: $gray dashed 1px;
-    min-height: 100%;
+  &_edit:hover { // sass-lint:disable-line class-name-format
+    border: $gray dashed $small-border;
+  }
+  &_highlight {
+    border: $gray dashed $small-border;
   }
 }
 

@@ -129,6 +129,19 @@ const page = (state = initialState, action) => {
       return Object.assign({}, state, { layout });
     }
 
+    case ActionTypes.ADD_EDITOR: {
+      const layout = state.layout;
+      const currentEditorIndex = layout.findIndex(x => x.i === action.currentId);
+      const currentEditor = layout[currentEditorIndex];
+      const newEditor = { ...currentEditor };
+      newEditor.i = action.newEditorId;
+      newEditor.y = currentEditor.y + currentEditor.h + -1;
+      newEditor.w = 0;
+      newEditor.h = 0;
+      layout.splice(currentEditorIndex, 0, newEditor);
+      return Object.assign({}, state, { layout });
+    }
+
     case ActionTypes.RESIZE_TEXT_EDITOR: {
       const { margin, rowHeight } = state.rgl;
       const layout = JSON.parse(JSON.stringify(state.layout));

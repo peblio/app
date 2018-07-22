@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Editor } from 'react-draft-wysiwyg';
 import Measure from 'react-measure';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import classNames from 'classnames';
 
 import BackColor from './BackColor/BackColor.jsx';
 
@@ -55,12 +56,17 @@ class TextEditor extends React.Component {
   }
 
   render() {
+    const textContainerClassName = classNames('text-editor__container', {
+      'text-editor__container_edit': !this.props.preview,
+      'text-editor__container_highlight':
+      (!this.props.preview && this.props.currentWidget === this.props.id)
+    });
     return (
       <Measure ref={(m) => { this.measureComponent = m; }} onResize={this.onResize} bounds>
         {({ measureRef }) => (
           <div
             ref={(element) => { this.textEditor = element; }}
-            className={`text-editor__container${this.props.preview ? '' : '--edit'}`}
+            className={classNames(textContainerClassName)}
           >
             <Editor
               id={this.props.id}
@@ -114,6 +120,7 @@ class TextEditor extends React.Component {
 TextEditor.propTypes = {
   id: PropTypes.string.isRequired,
   backColor: PropTypes.string.isRequired,
+  currentWidget: PropTypes.string.isRequired,
   editorState: PropTypes.shape({}).isRequired,
   onChange: PropTypes.func.isRequired,
   onResize: PropTypes.func.isRequired,

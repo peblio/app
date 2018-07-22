@@ -54,3 +54,13 @@
     margin-top: 210px;
   }
 }
+
+.widget-nav__container {
+  display: none;
+  &_highlighted {
+    display: block;
+  }
+}
+.widget__container:hover .widget-nav__container {
+  display: block;
+}

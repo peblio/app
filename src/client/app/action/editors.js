@@ -11,6 +11,7 @@ export function setCurrentWidget(id) {
   };
 }
 
+
 export function removeEditor(id) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
@@ -70,11 +71,19 @@ export function setEditorSize(id, width, height) {
 
 /** CODE EDITOR */
 export function addCodeEditor(mode) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { editorsReducer } = getState();
+    const currentId = editorsReducer.currentWidget;
+    const newEditorId = `editor-${editorsReducer.editorIndex}`;
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.ADD_CODE_EDITOR,
       mode
+    });
+    dispatch({
+      type: ActionTypes.ADD_EDITOR,
+      currentId,
+      newEditorId
     });
   };
 }
@@ -179,10 +188,18 @@ export function setInnerHeight(id, value) {
 
 /** TEXT EDITOR */
 export function addTextEditor() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { editorsReducer } = getState();
+    const currentId = editorsReducer.currentWidget;
+    const newEditorId = `editor-${editorsReducer.editorIndex}`;
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.ADD_TEXT_EDITOR
+    });
+    dispatch({
+      type: ActionTypes.ADD_EDITOR,
+      currentId,
+      newEditorId
     });
   };
 }
@@ -211,10 +228,18 @@ export function updateTextBackColor(id, color) {
 
 /** QUESTION EDITOR */
 export function addQuestionEditor() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { editorsReducer } = getState();
+    const currentId = editorsReducer.currentWidget;
+    const newEditorId = `editor-${editorsReducer.editorIndex}`;
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.ADD_QUESTION_EDITOR
+    });
+    dispatch({
+      type: ActionTypes.ADD_EDITOR,
+      currentId,
+      newEditorId
     });
   };
 }
@@ -253,10 +278,18 @@ export function updateAnswerChange(id, text) {
 
 /** IFRAME */
 export function addIframe() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { editorsReducer } = getState();
+    const currentId = editorsReducer.currentWidget;
+    const newEditorId = `editor-${editorsReducer.editorIndex}`;
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.ADD_IFRAME
+    });
+    dispatch({
+      type: ActionTypes.ADD_EDITOR,
+      currentId,
+      newEditorId
     });
   };
 }
@@ -274,10 +307,18 @@ export function setIframeURL(id, url) {
 
 /** IMAGE */
 export function addImage() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { editorsReducer } = getState();
+    const currentId = editorsReducer.currentWidget;
+    const newEditorId = `editor-${editorsReducer.editorIndex}`;
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.ADD_IMAGE
+    });
+    dispatch({
+      type: ActionTypes.ADD_EDITOR,
+      currentId,
+      newEditorId
     });
   };
 }
