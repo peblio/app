@@ -49,9 +49,16 @@ class MainToolbar extends React.Component {
               </button>
             </div>
             <div className="file-modal__container">
-              <button className="upper-toolbar__dropdown" onClick={this.props.toggleFileDropdown}>
-              File
-              </button>
+              { !this.props.isFileDropdownOpen &&
+                <button className="upper-toolbar__dropdown" onClick={this.props.toggleFileDropdown}>
+                  File
+                </button>
+              }
+              { this.props.isFileDropdownOpen &&
+                <button className="upper-toolbar__dropdown-open" onClick={this.props.toggleFileDropdown}>
+                  File
+                </button>
+              }
               { this.props.isFileDropdownOpen &&
                 <FileModal
                   name={this.props.name}
@@ -95,25 +102,44 @@ class MainToolbar extends React.Component {
               { this.props.name ? (
                 <div>
                   <button onClick={this.props.toggleAccountDropdown} className="main-toolbar__account-button">
-                    <AccountSVG alt="account man" />
+                    <AccountSVG
+                      alt="account profile"
+                      className="account-man"
+                    />
                   </button>
                   { this.props.isAccountDropdownOpen &&
                   <div className="main-toolbar__account">
-                    <p className="main-toolbar__welcome">
-                      Hi {this.props.name}!
-                    </p>
-                    {(this.props.userType === 'student') ||
-                    <a
-                      className="file-modal__link"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={`/user/${this.props.name}`}
-                    >
-                      Profile
-                    </a>
-                  }
-                    <a className="file-modal__link" href="/logout">Logout</a>
-
+                    <ul className="main-toolbar__list">
+                      <li className="main-toolbar__list-item">
+                        <p className="main-toolbar__welcome">
+                          Hi {this.props.name}!
+                          <button
+                            onClick={this.props.toggleAccountDropdown}
+                            className="main-toolbar__account-button-clicked"
+                          >
+                            <AccountSVG
+                              alt="account profile"
+                              className="account-man__clicked"
+                            />
+                          </button>
+                        </p>
+                      </li>
+                      {(this.props.userType === 'student') ||
+                      <li className="main-toolbar__list-item">
+                        <a
+                          className="file-modal__link"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={`/user/${this.props.name}`}
+                        >
+                          Profile
+                        </a>
+                      </li>
+                      }
+                      <li className="main-toolbar__list-item">
+                        <a className="file-modal__link" href="/logout">Logout</a>
+                      </li>
+                    </ul>
                   </div>
               }
                 </div>

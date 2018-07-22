@@ -5,7 +5,7 @@ $whitish: #FBFBFB;
 $lighter-gray: #F0F0F0;
 $light-gray: #AAAAAA;
 $medium-gray: #B1B1B1;
-$boxShaddow-gray: #888888;
+$boxShadow-gray: #888888;
 $hover-gray:#CFCFCF;
 $canvas-gray: #E6E6E6;
 $profile-gray: #01151E;
@@ -33,6 +33,7 @@ $total-width: 1200px;
 
 //padding
 $micro-padding: .1rem;
+$mini-padding: .2rem;
 $small-padding: .5rem;
 $medium-padding: 1rem;
 $large-padding: 1.5rem;
@@ -44,7 +45,7 @@ $micro-margin: .2rem;
 $small-margin: .5rem;
 $medium-margin: 1rem;
 $large-margin: 1.5rem;
-$xlarge-margin: 3.5rem;
+$xlarge-margin: 2.5rem;
 $xxlarge-margin: 5rem;
 
 //radius
@@ -69,6 +70,7 @@ $left-align: LEFT;
 $center-align: CENTER;
 $right-align: RIGHT;
 
+$light-font-weight: 300;
 $medium-font-weight: 400;
 $heavy-font-weight: 500;
 
@@ -85,3 +87,7 @@ $z-index-layer-1: 100;
 $z-index-layer-2: 200;
 $z-index-layer-3: 300;
 $z-index-layer-4: 400;
+
+//shadow variables
+$shadow-v-offset: 2px;
+$shadow-blur: 4px;

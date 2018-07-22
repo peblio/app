@@ -8,13 +8,17 @@
 .file-modal__list {
   position: absolute;
   background: $white;
-  top: 40px;
-  left: 0;
+  box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+  -moz-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+  -webkit-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+  top: 25px;
+  left: 12px;
   margin: $medium-padding/2;
   padding: 0;
   color: $black;
   border-radius: $small-border-radius;
-  border: 2px solid $light-gray;
+  border-top-left-radius: 0;
+  border: 2px solid $white;
   z-index: $z-index-layer-4;
 }
 
@@ -38,14 +42,15 @@
 
 .file-modal__item {
   list-style: none;
-  padding: $medium-padding/2 $medium-padding;
+  padding: $medium-padding/1.5 $xlarge-padding $medium-padding/1.5 $micro-padding;
 }
 
 .file-modal__link {
+  text-decoration: none;
   margin: $small-margin;
   font-size: 14px;
-  font-weight: bold;
-  color: $gray;
+  font-weight: 400;
+  color: $dark-gray;
   background-color: $white;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
