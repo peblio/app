@@ -22,6 +22,15 @@ export function setPageTitle(event) {
   };
 }
 
+export function setParentPeblUser(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_PARENT_PEBL_USER,
+      value
+    });
+  };
+}
+
 export function setPageLayout(value) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
@@ -68,10 +77,11 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, editors, editorIndex, layout) {
+export function submitPage(parentId, userName, title, editors, editorIndex, layout) {
   const id = shortid.generate();
   axios.post('/pages/save', {
     parentId,
+    userName,
     id,
     title,
     editors: convertEditorsToRaw(editors),

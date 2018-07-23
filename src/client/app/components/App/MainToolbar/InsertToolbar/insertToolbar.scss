@@ -40,6 +40,21 @@
     }
   }
 
+  &__forked-from {
+    font-size: $medium-font-size;
+    font-weight: $heavy-font-weight;
+    float: right;
+    position: absolute;
+    top: $xlarge-margin + $small-margin;
+    right: $medium-margin;
+  }
+
+  &__link {
+    font-size: $medium-font-size;
+    font-weight: $heavy-font-weight;
+    color: $blue;
+  }
+
   &__icon{
     display: block;
     width: 20px;
