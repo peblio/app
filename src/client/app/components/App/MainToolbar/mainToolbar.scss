@@ -40,7 +40,7 @@
 }
 
 .main-toolbar__account-button{
-  margin: 0.2rem $large-padding;
+  margin: $mini-padding $medium-margin 0 $medium-margin;
   padding: $small-padding $medium-padding;
   border: none;
   background: $black;
@@ -53,28 +53,74 @@
   }
 }
 
-.main-toolbar__account-button:hover #accountMan{
-  fill:$blue;
+.main-toolbar__account-button-clicked{
+  border: none;
+  background: $white;
+  -webkit-transition-duration: 150ms; /* Safari */
+  transition-duration: 150ms;
+  &:hover {
+    cursor: pointer;
+    background: $white;
+    border: none;
+  }
+}
+
+.account-man {
+  & path, & circle {
+    fill: $white;
+  }
+  &:hover path, &:hover circle {
+    fill: $blue;
+  }
+}
+
+.account-man__clicked {
+  & path, & circle {
+    fill: $blue;
+    margin-left: $micro-margin;
+  }
+  &:hover path, &:hover circle{
+    fill: $black;
+    margin-left: $micro-margin;
+  }
+}
+
+.main-toolbar__list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  list-style-type: none;
+  padding-left: $micro-padding*2;
+  margin: 0;
+}
+
+.main-toolbar__list-item {
+  padding: 0 $small-padding $medium-padding 0;
 }
 
 .main-toolbar__welcome {
-  color: $black;
-  padding-left: 0.5rem;
+  color: $gray;
+  margin-top: $small-margin;
+  margin-bottom: 0;
+  padding-left: $small-padding;
   font-size: $small-font-size;
-  font-weight: bold;
+  font-weight: $medium-font-weight;
 }
 
 .main-toolbar__account{
   display: flex;
+  top: 1px;
+  right: $large-margin;
   flex-direction: column;
   background-color: $white;
   border: 2px solid;
-  border-color: $light-gray;
-  padding: $small-padding;
+  border-color: $white;
   position: absolute;
   border-radius: $medium-border-radius;
-  margin-left: -20px;
   z-index: $z-index-layer-2;
+  box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+  -moz-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+  -webkit-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
 }
 
 .main-toolbar__preview {
@@ -151,9 +197,11 @@ input:checked + .main-toolbar__slider:before {
 
 .upper-toolbar__dropdown{
   border: none;
+  text-align: $left-align;
   border-radius: 0;
-  padding:$main-toolbar-padding;
-  width: 100;
+  width: 80;
+  margin: $medium-margin $small-margin 0 $xlarge-margin/2;
+  padding-left: $small-padding*3/2;
   color: $white;
   font-style: normal;
   font-size: 14;
@@ -161,6 +209,26 @@ input:checked + .main-toolbar__slider:before {
     cursor: pointer;
     color: $gray;
     background: $black;
+    border: none;
+  }
+}
+
+.upper-toolbar__dropdown-open{
+  border: none;
+  text-align: $left-align;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  margin: $medium-margin $small-margin 0 $xlarge-margin/2;
+  padding-left: $small-padding*3/2;
+  width: 80;
+  background: $white;
+  color: $dark-gray;
+  font-style: normal;
+  font-size: 14;
+  &:hover {
+    cursor: pointer;
+    color: $gray;
+    background: $white;
     border: none;
   }
 }
