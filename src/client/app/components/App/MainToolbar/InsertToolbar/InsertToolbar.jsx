@@ -105,6 +105,12 @@ class InsertToolbar extends React.Component {
           <ImageSVG alt="add image" />
           Image
         </button>
+
+        <div className="insert-toolbar__forked-from">
+          Forked from <a className="insert-toolbar__link" href={`/user/${this.props.parentPeblUser}`}>
+            {this.props.parentPeblUser}
+          </a>
+        </div>
       </div>
     );
   }
@@ -116,7 +122,8 @@ InsertToolbar.propTypes = {
   addIframe: PropTypes.func.isRequired,
   addImage: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
-  addQuestionEditor: PropTypes.func.isRequired
+  addQuestionEditor: PropTypes.func.isRequired,
+  parentPeblUser: PropTypes.string.isRequired
 };
 
 export default InsertToolbar;

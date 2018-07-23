@@ -25,6 +25,7 @@ const initialState = {
   },
   pageTitle: 'Untitled',
   parentId: '',
+  parentPeblUser: '',
   preview: false,
   selectedFolderIds: [],
   selectedPageId: null,
@@ -114,6 +115,11 @@ const page = (state = initialState, action) => {
     case ActionTypes.SET_PREVIEW_MODE:
       return Object.assign({}, state, {
         preview: action.value
+      });
+
+    case ActionTypes.SET_PARENT_PEBL_USER:
+      return Object.assign({}, state, {
+        parentPeblUser: action.value
       });
 
     case ActionTypes.DUPLICATE_EDITOR: {

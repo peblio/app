@@ -90,17 +90,26 @@ class App extends React.Component {
     } else if (this.projectID()) {
       this.props.setEditAccess(false);
       const projectID = this.projectID();
+      let parentProjectId = '';
       axios.get(`/api/page/${this.projectID()}`)
         .then((res) => {
           this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].layout);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
           this.props.setPreviewMode(true);
+          parentProjectId = res.data[0].parentId;
           axios.get('/api/user')
             .then((res1) => {
               if (res1.data.pages && res1.data.pages.includes(projectID)) {
                 this.props.setEditAccess(true);
               }
             });
+
+          if (parentProjectId) {
+            axios.get(`/api/page/${parentProjectId}`)
+              .then((res2) => {
+                this.props.setParentPeblUser(res2.data[0].userName);
+              });
+          }
         });
     }
     axios.get('/api/user')
@@ -131,6 +140,7 @@ class App extends React.Component {
       if (this.props.id.length === 0) {
         this.props.submitPage(
           '',
+          this.props.name,
           this.props.pageTitle,
           this.props.editors,
           this.props.editorIndex,
@@ -139,6 +149,7 @@ class App extends React.Component {
       } else if (this.props.canEdit) {
         this.props.updatePage(
           this.props.id,
+          this.props.name,
           this.props.pageTitle,
           this.props.editors,
           this.props.editorIndex,
@@ -148,6 +159,7 @@ class App extends React.Component {
         // this is for fork and save
         this.props.submitPage(
           this.props.id,
+          this.props.name,
           `${this.props.pageTitle}-copy`,
           this.props.editors,
           this.props.editorIndex,
@@ -177,6 +189,7 @@ class App extends React.Component {
             isAccountDropdownOpen={this.props.isAccountDropdownOpen}
             name={this.props.name}
             pageTitle={this.props.pageTitle}
+            parentPeblUser={this.props.parentPeblUser}
             preview={this.props.preview}
             projectID={this.projectID}
             setPageTitle={this.props.setPageTitle}
@@ -356,6 +369,7 @@ App.propTypes = {
   id: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   rgl: PropTypes.shape({}).isRequired,
+  parentPeblUser: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   textHeights: PropTypes.shape({}).isRequired,
@@ -417,6 +431,7 @@ App.propTypes = {
   togglePreviewMode: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
+  setParentPeblUser: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
   loadPage: PropTypes.func.isRequired,
@@ -461,6 +476,7 @@ function mapStateToProps(state) {
     rgl: state.page.rgl,
     pageTitle: state.page.pageTitle,
     id: state.page.id,
+    parentPeblUser: state.page.parentPeblUser,
     preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,
     textHeights: state.page.textHeights,

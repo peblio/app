@@ -133,6 +133,7 @@ class MainToolbar extends React.Component {
             addTextEditor={this.props.addTextEditor}
             addIframe={this.props.addIframe}
             addImage={this.props.addImage}
+            parentPeblUser={this.props.parentPeblUser}
           />
         }
       </div>
@@ -151,6 +152,7 @@ MainToolbar.propTypes = {
   isAccountDropdownOpen: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
+  parentPeblUser: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
   projectID: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
