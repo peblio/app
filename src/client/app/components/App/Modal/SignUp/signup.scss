@@ -65,4 +65,8 @@
   &__notice {
     @extend %modal__notice;
   }
+
+  &__text-secondary {
+    @extend %modal__text;
+  }
 }
