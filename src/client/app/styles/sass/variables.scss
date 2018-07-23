@@ -39,6 +39,11 @@ $large-padding: 1.5rem;
 $xlarge-padding: 2.5rem;
 $main-toolbar-padding:15 10 15 10;
 
+//line height
+$h1-line-height:1.3;
+$h2-line-height:1.5;
+$p-line-height:1;
+
 //margin
 $micro-margin: .2rem;
 $small-margin: .5rem;
@@ -59,10 +64,14 @@ $large-border: 5px;
 
 //fonts
 $helvetica: Arial, Helvetica, sans-serif;
+$montserrat: 'Montserrat', sans-serif;
+$roboto: 'Roboto', sans-serif;
+
 $small-font-size: 0.8rem;
 $medium-font-size: 1rem;
 $small-font-size: 0.8rem;
 $large-font-size: 1.5rem;
+$xlarge-font-size: 2rem;
 
 //alignments
 $left-align: LEFT;

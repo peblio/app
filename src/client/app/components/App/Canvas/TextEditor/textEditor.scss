@@ -1,6 +1,5 @@
 @import 'variables';
 @import 'mixins';
-@import url('https://fonts.googleapis.com/css?family=Montserrat|Raleway|Roboto');
 
 .text-editor__container {
   width: 100%;
@@ -45,21 +44,23 @@
 //   display: inline-block;
 // }
 
-.DraftEditor-editorContainer h1{
-  font-size: 32;
-  font-family: 'Montserrat', sans-serif;
-  line-height: $h1-line-height;
-  margin: 0;
-  padding: 0;
-}
+.DraftEditor-editorContainer { // sass-lint:disable-line class-name-format
+  & h1{
+    font-size: $xlarge-font-size;
+    font-family: $montserrat;
+    line-height: $h1-line-height;
+    margin: 0;
+    padding: 0;
+  }
 
-.DraftEditor-editorContainer h2{
-  font-size: 20;
-  font-family: 'Roboto', sans-serif;
-  line-height: $h2-line-height;
-  margin: 0;
-  padding: 0;
-  font-weight: normal;
+  & h2{
+    font-size: $large-font-size;
+    font-family: $roboto;
+    line-height: $h2-line-height;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+  }
 }
 
 .public-DraftStyleDefault-block { // sass-lint:disable-line class-name-format
