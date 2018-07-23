@@ -13,7 +13,11 @@
     background-color: $lighter-gray;
     z-index: $z-index-layer-1;
   }
+  &__sub-menu {
+    position: absolute;
+  }
   &__button{
+    position: relative;
     width: 7%;
     color:$black;
     padding: 0 $medium-padding;

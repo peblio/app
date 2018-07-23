@@ -37,11 +37,14 @@ class Image extends React.Component {
   }
   render() {
     return (
-      <div className={`text-editor__container ${this.props.preview ? '' : 'text-editor__container--edit'}`} >
+      <div className={`image__container ${this.props.preview ? '' : 'image__container--edit'}`} >
 
-        {!this.props.imageURL && !this.props.name &&
+        {!this.props.preview && !this.props.name &&
         <div className="image__login">
-          <div className="image__content">
+          {this.props.imageURL && <img className="element__image" src={this.props.imageURL} alt="" />}
+          <div
+            className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
+          >
             <div className="image__title">
                 Please Log In to Upload Images
             </div>
@@ -51,9 +54,12 @@ class Image extends React.Component {
           </div>
         </div>
         }
-        {!this.props.imageURL && this.props.name &&
+        {!this.props.preview && this.props.name &&
           <div className="image__login">
-            <div className="image__content">
+            {this.props.imageURL && <img className="element__image" src={this.props.imageURL} alt="" />}
+            <div
+              className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
+            >
               <Dropzone
                 onDrop={this.onDrop}
                 className="element-image"
@@ -91,7 +97,9 @@ class Image extends React.Component {
           </div>
 
       }
-        {this.props.imageURL && <img className="element__image" src={this.props.imageURL} alt="" /> }
+        {this.props.preview && this.props.imageURL &&
+          <img className="element__image" src={this.props.imageURL} alt="" />
+        }
       </div>
     );
   }
