@@ -66,6 +66,12 @@ userSchema.virtual('folders', {
   foreignField: 'user'
 });
 
+userSchema.virtual('files', {
+  ref: 'Page',
+  localField: '_id',
+  foreignField: 'user'
+});
+
 userSchema.methods.hashPassword = function hashPassword(password) {
   bcrypt.hash(password, null, null, (innerErr, hash) => {
     if (innerErr) { return next(innerErr); }

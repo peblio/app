@@ -20,7 +20,7 @@ async function savePage(req, res) {
     const hydratedUser = await User.findOne({ _id: user._id }).exec();
     await User.update({ _id: user._id }, { pages: hydratedUser.pages.concat(req.body.id) }).exec();
 
-    const page = new Page(req.body);
+    const page = new Page({ ...req.body, user: user._id });
     const savedPage = await page.save();
     return res.send({ page: savedPage });
   } catch (err) {
@@ -30,12 +30,8 @@ async function savePage(req, res) {
 
 async function deletePage(req, res) {
   const { pageId } = req.params;
-  await Page.deleteOne({ _id: pageId });
-
   try {
-    const user = await User.findOne({ _id: req.user._id }).exec();
-    const pages = user.pages.filter(id => id !== pageId);
-    await User.updateOne({ _id: user._id }, { pages }).exec();
+    await Page.deleteOne({ _id: pageId });
     return res.sendStatus(204);
   } catch (err) {
     return res.status(500).send({ error: err.message });

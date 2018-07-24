@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const pageSchema = new Schema({
+  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   parentId: { type: String, default: '' },
   id: { type: String, default: '' },
   title: { type: String, default: '' },
