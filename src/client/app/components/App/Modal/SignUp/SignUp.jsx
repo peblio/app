@@ -137,8 +137,15 @@ class SignUp extends React.Component {
               </li>
             </ul>
           </div>
+
           {this.state.isUserTypeSelected &&
             <div>
+              <GoogleLoginButton
+                onLoginSuccess={this.googleLoginSuccessful}
+                onLoginFailure={this.signUpFailed}
+                userType={this.props.userType}
+              />
+              <p className="signup-modal__text-secondary">or</p>
               <div className="signup-modal__div">
                 <input
                   className="signup-modal__input"
@@ -181,13 +188,6 @@ class SignUp extends React.Component {
             </div>}
         </form>
 
-        {this.state.isUserTypeSelected &&
-        <GoogleLoginButton
-          onLoginSuccess={this.googleLoginSuccessful}
-          onLoginFailure={this.signUpFailed}
-          userType={this.props.userType}
-        />
-      }
 
         {this.state.showNotice &&
           <p className="signup-modal__notice">
