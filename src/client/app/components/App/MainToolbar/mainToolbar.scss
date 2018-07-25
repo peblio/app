@@ -126,7 +126,7 @@
 .main-toolbar__preview {
   color: $white;
   margin: $medium-margin $small-margin;
-  padding: 0 $medium-padding;
+  padding: 0 $small-padding;
   position: relative;
   display: inline-block;
   width: 20px;
@@ -137,15 +137,14 @@
 .main-toolbar__slider {
   position: absolute;
   cursor: pointer;
-  top: 0;
+  top: -5px;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: $blue;
-  -webkit-transition: .4s;
-  transition: .4s;
   border-radius: $large-border-radius;
-
+  width: $large-border-radius*2;
+  height: $large-border-radius;
 }
 
 .main-toolbar__slider:before {
@@ -153,11 +152,8 @@
   content: "";
   height: 18px;
   width: 18px;
-  left: 32px;
-  top: -3px;
-  // background-color: $white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  left: 20px;
+  top: 1px;
   border-radius: $large-border-radius;
   background-color: $white;
 
@@ -168,9 +164,9 @@ input:checked + .main-toolbar__slider {
 }
 
 input:checked + .main-toolbar__slider:before {
-  -webkit-transform: translateX(-26px);
-  -ms-transform: translateX(-26px);
-  transform: translateX(-26px);
+  -webkit-transform: translateX(-18px);
+  -ms-transform: translateX(-18px);
+  transform: translateX(-18px);
 }
 
 .main-toolbar__file{

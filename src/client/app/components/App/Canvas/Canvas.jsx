@@ -254,7 +254,7 @@ class Canvas extends React.Component {
     });
 
     return (
-      <section className={`canvas ${this.props.preview ? 'preview-mode' : 'canvas-extra-margin'}`}>
+      <section className={`canvas ${this.props.preview ? 'canvas-preview-mode' : 'canvas-edit-mode'}`}>
         <ReactGridLayout
           cols={this.props.rgl.cols}
           width={this.props.rgl.width}
@@ -265,7 +265,6 @@ class Canvas extends React.Component {
           margin={this.props.rgl.margin}
           draggableHandle=".widget__drag"
           containerPadding={this.props.rgl.padding}
-          isResizable={!this.props.preview}
           onResizeStart={this.handleGridItemResizeStart}
           onResize={this.handleGridItemResize}
           onResizeStop={this.handleGridItemResizeStop}
