@@ -79,14 +79,25 @@ class TextEditor extends React.Component {
                 },
                 blockType: {
                   isDropDown: true,
-                  options: ['H1', 'H2', 'Blockquote', 'Code'],
+                  options: ['H1', 'H2', 'Normal', 'Blockquote', 'Code'],
                 },
                 list: {
                   inDropdown: true,
-                  className: undefined,
-                  component: undefined,
-                  dropdownClassName: undefined,
                   options: ['unordered', 'ordered'],
+                },
+                fontFamily: {
+                  options: ['Arial', 'Arial Black', 'Georgia', 'Impact', 'Tahoma',
+                    'Times New Roman', 'Verdana', 'Comic Sans MS', 'Trebuchet MS', 'Courier New'],
+                },
+                colorPicker: {
+
+                  colors: ['rgb(0,152,135)', 'rgb(215,62,44)', 'rgb(0,106,152)',
+                    'rgb(152,0,118)', 'rgb(259,205,17)', 'rgb(55,170,101)', 'rgb(0,21,30)',
+                    'rgb(51,68,75)', 'rgb(102,115,120)', 'rgb(153,161,165)', 'rgb(204,208,210)',
+                    'rgb(242,243,244)', 'rgb(153,214,207)', 'rgb(239,178,171)', 'rgb(166,202,218)',
+                    'rgb(214,153,200)', 'rgb(255,237,160)', 'rgb(175,221,193)', 'rgb(128,179,75)',
+                    'rgb(248,152,56)', 'rgb(135,184,227)', 'rgb(248,214,49)', 'rgb(255,255,255)',
+                    'rgb(0,0,0,0)'],
                 },
                 textAlign: { inDropdown: true },
                 link: { inDropdown: true },
