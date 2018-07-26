@@ -52,7 +52,6 @@ class CodeOutput extends React.Component {
     let endFilenameInd = 0;
     let filename = '';
     let lineOffset = 0;
-    console.log(htmlFile);
     while (found) {
       ind = htmlFile.indexOf(startTag, lastInd);
       if (ind === -1) {
