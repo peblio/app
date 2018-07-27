@@ -43,6 +43,31 @@ class CodeOutput extends React.Component {
     return index;
   }
 
+  getAllScriptOffsets = (htmlFile) => {
+    const startTag = '@fs-';
+    const offs = [];
+    let found = true;
+    let lastInd = 0;
+    let ind = 0;
+    let endFilenameInd = 0;
+    let filename = '';
+    let lineOffset = 0;
+    while (found) {
+      ind = htmlFile.indexOf(startTag, lastInd);
+      if (ind === -1) {
+        found = false;
+      } else {
+        endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 3);
+        filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
+        // the length of hijackConsoleErrorsScript is 33 lines
+        lineOffset = htmlFile.substring(0, ind).split('\n').length + 33;
+        offs.push([lineOffset, filename]);
+        lastInd = ind + 1;
+      }
+    }
+    return offs;
+  };
+
   startSketch() {
     window.addEventListener('message', this.props.updateConsoleOutput, false);
     const htmlFile = this.props.files[this.getHTMLFileIndex(this.props.files)].content;
@@ -69,6 +94,7 @@ class CodeOutput extends React.Component {
         // check if the script name is present in the files that are included for this sketch
         files.forEach((file) => {
           if (file.name === this.getFileName(script.src)) {
+            script.setAttribute('data-tag', `@fs-${file.name}`);
             script.removeAttribute('src');
             script.innerHTML = file.content; // eslint-disable-line
           }
@@ -104,10 +130,18 @@ class CodeOutput extends React.Component {
       script.src = scriptToInject;
       sketchDoc.head.appendChild(script);
     });
+
+    const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
+
+    let scriptOffs = this.getAllScriptOffsets(sketchDocString);
+    scriptOffs = scriptOffs[0];
+
     const injectScript = sketchDoc.createElement('script');
     injectScript.innerHTML =
     `CONSOLEOUTPUT.init(["${this.props.id}"]);
-    CONSOLEOUTPUT.callConsole();`;
+    CONSOLEOUTPUT.callConsole();
+    CONSOLEOUTPUT.callErrorConsole(${scriptOffs[0]}, "${scriptOffs[1]}");
+    `;
     sketchDoc.head.appendChild(injectScript);
 
     return sketchDoc;
