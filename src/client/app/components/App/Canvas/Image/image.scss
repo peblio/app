@@ -1,47 +1,49 @@
 @import 'variables';
 @import 'mixins';
+@import 'modal';
 
 .element__image {
   width: 100%;
   height: 100%;
 }
+
 .image__container {
   width: 100%;
-  min-height: 100%;
+  height: fit-content;
   margin: 0;
-  background: $lighter-gray;
-  &--edit { // sass-lint:disable-line class-name-format
-    border: $gray dashed 1px;
-    min-height: 100%;
+  &-edit {
+    background: $lighter-gray;
+    border-radius: $small-border-radius;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+    -moz-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+    -webkit-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
   }
 }
 
 .image__login{
+  position:relative;
   padding:$small-padding;
   background-color: $lighter-gray;
   height: 90%;
   margin: $small-margin;
-  position:relative;
+}
+
+.image__holder {
+  padding-right: $mini-padding;
+  padding-left: $mini-padding;
+  padding-top: $micro-padding;
+  background: $light-gray;
 }
 
 .image__content{
   flex-direction: column;
   justify-content: center;
-  height: 100%;
   display: flex;
   background: $lighter-gray;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
   width: 100%;
-}
-.image__replace-content{
-  position: absolute;
-  opacity: 0;
-  &:hover {
-    opacity: 0.8;
-  }
 }
 
 .image__title{
@@ -58,7 +60,6 @@
   text-align: center;
   fill:$gray;
   color: $gray;
-
 }
 
 .image__drop{
@@ -68,7 +69,6 @@
   border-radius: $medium-border-radius;
   border: 1px dashed $light-gray;
   color: $gray;
-
 }
 
 .image__url{
@@ -79,16 +79,17 @@
 .element-image__input{
   width:74%;
   border-radius: .5em;
-  margin:auto;
+  margin: $micro-margin;
 }
 
 .element-image__add-url{
   width: 100%;
-  margin: auto;
+  margin-top: $medium-margin;
+  margin-bottom: 0;
   text-align: center;
+  z-index: 1;
 }
 
 .element__button{
-  background-color: $light-gray;
-  width:60px;
+  @extend %modal__canvas-button;
 }
