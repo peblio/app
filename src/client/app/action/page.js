@@ -12,6 +12,31 @@ export function setUnsavedChanges(value) {
   };
 }
 
+export function setIsForkable(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_IS_FORKABLE,
+      value
+    });
+  };
+}
+
+export function viewForkModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_FORK_MODAL
+    });
+  };
+}
+
+export function closeForkModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_FORK_MODAL
+    });
+  };
+}
+
 export function setPageTitle(event) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));

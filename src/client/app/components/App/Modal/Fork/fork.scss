@@ -1,0 +1,56 @@
+@import 'variables';
+@import 'mixins';
+@import 'modal';
+
+.fork-modal {
+  &__content {
+    @extend %modal__content;
+    width: 50%;
+  }
+
+  &__title {
+    text-align: $center-align;
+    font-weight: $medium-font-weight;
+    margin: $large-margin;
+  }
+
+  &__subtitle {
+    text-align: $center-align;
+    font-weight: $light-font-weight;
+  }
+
+  &__form {
+    text-align: $center-align;
+  }
+
+  &__button {
+    text-align: $center-align;
+    font-size: $medium-font-size;
+    background-color: $green;
+    color: $white;
+    margin-top: $large-margin;
+    padding: 10px;
+    width: 45%;
+    margin-left: $medium-margin;
+    border-radius: $small-border-radius;
+    border: solid $small-border $lighter-gray;
+  }
+
+  &__browse-button {
+    text-align: $center-align;
+    font-size: $medium-font-size;
+    background-color: $white;
+    color: $green;
+    margin-top: $large-margin;
+    width: 45%;
+    padding: 10px;
+    margin-right: $medium-margin;
+    border-radius: $small-border-radius;
+    border: solid $small-border $green;
+  }
+
+  &__checkbox {
+    display: block;
+    text-align: $center-align;
+  }
+}
