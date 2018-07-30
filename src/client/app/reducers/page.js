@@ -14,6 +14,9 @@ const initialState = {
     width: 1200,
   },
   layout: [],
+  isForkable: false,
+  isForkModalOpen: false,
+  isShowForkModal: true,
   textHeights: {},
   pages: {
     byId: {},
@@ -63,6 +66,21 @@ const page = (state = initialState, action) => {
         pageTitle: action.event.target.value
       });
 
+    case ActionTypes.SET_IS_FORKABLE:
+      return Object.assign({}, state, {
+        isForkable: action.value
+      });
+
+    case ActionTypes.VIEW_FORK_MODAL:
+      return Object.assign({}, state, {
+        isForkModalOpen: true
+      });
+
+    case ActionTypes.CLOSE_FORK_MODAL:
+      return Object.assign({}, state, {
+        isForkModalOpen: false
+      });
+
     case ActionTypes.SET_PAGE_LAYOUT:
       return Object.assign({}, state, {
         layout: action.value
@@ -109,6 +127,11 @@ const page = (state = initialState, action) => {
     case ActionTypes.TOGGLE_PREVIEW_MODE:
       return Object.assign({}, state, {
         preview: !state.preview
+      });
+
+    case ActionTypes.SET_SHOW_FORK_MODAL:
+      return Object.assign({}, state, {
+        isShowForkModal: action.value
       });
 
     case ActionTypes.SET_PREVIEW_MODE:

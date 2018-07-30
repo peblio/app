@@ -10,6 +10,7 @@ import Modal from './Modal/Modal.jsx';
 import PasswordForgot from './Modal/PasswordForgot/PasswordForgot.jsx';
 import ShareModal from './Modal/ShareModal/ShareModal.jsx';
 import SignUp from './Modal/SignUp/SignUp.jsx';
+import Fork from './Modal/Fork/Fork.jsx';
 import PagesList from './Modal/PagesList/PagesList.jsx';
 import PasswordReset from './Modal/PasswordReset/PasswordReset.jsx';
 import Welcome from './Modal/Welcome/Welcome.jsx';
@@ -98,6 +99,11 @@ class App extends React.Component {
           axios.get(`/api/authenticate/${projectID}`)
             .then((res1) => {
               this.props.setEditAccess(res1.data);
+              if (res1.data) {
+                this.props.setIsForkable(false);
+              } else {
+                this.props.setIsForkable(true);
+              }
             });
         });
     }
@@ -193,6 +199,7 @@ class App extends React.Component {
         </nav>
         <Canvas
           layout={this.props.layout}
+          isForkable={this.props.isForkable}
           name={this.props.name}
           preview={this.props.preview}
           rgl={this.props.rgl}
@@ -211,6 +218,7 @@ class App extends React.Component {
           setCurrentFile={this.props.setCurrentFile}
 
           playCode={this.props.playCode}
+          savePage={this.savePage}
           stopCode={this.props.stopCode}
           startCodeRefresh={this.props.startCodeRefresh}
           stopCodeRefresh={this.props.stopCodeRefresh}
@@ -229,6 +237,7 @@ class App extends React.Component {
           setQuestionInnerHeight={this.props.setQuestionInnerHeight}
           updateQuestionChange={this.props.updateQuestionChange}
           updateAnswerChange={this.props.updateAnswerChange}
+          viewForkModal={this.props.viewForkModal}
 
           setImageURL={this.props.setImageURL}
           resizeTextEditor={this.props.resizeTextEditor}
@@ -268,6 +277,18 @@ class App extends React.Component {
             viewForgotModal={this.props.viewForgotModal}
             isForgotModalOpen={this.props.isForgotModalOpen}
             userType={this.props.userType}
+          />
+        </Modal>
+
+        <Modal
+          size="auto"
+          isOpen={this.props.isShowForkModal && this.props.isForkModalOpen}
+          closeModal={this.props.closeForkModal}
+        >
+          <Fork
+            closeForkModal={this.props.closeForkModal}
+            savePage={this.savePage}
+            setShowForkModal={this.props.setShowForkModal}
           />
         </Modal>
 
@@ -345,9 +366,14 @@ App.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
+  isForkable: PropTypes.bool.isRequired,
   editors: PropTypes.shape({}).isRequired,
   editorIndex: PropTypes.number.isRequired,
   currentWidget: PropTypes.string.isRequired,
+  isForkModalOpen: PropTypes.bool.isRequired,
+  isShowForkModal: PropTypes.bool.isRequired,
+  viewForkModal: PropTypes.func.isRequired,
+  closeForkModal: PropTypes.func.isRequired,
 
   pageTitle: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
@@ -356,6 +382,7 @@ App.propTypes = {
   preview: PropTypes.bool.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   textHeights: PropTypes.shape({}).isRequired,
+  setShowForkModal: PropTypes.func.isRequired,
 
   canEdit: PropTypes.bool.isRequired,
   loginName: PropTypes.string.isRequired,
@@ -412,6 +439,7 @@ App.propTypes = {
 
   setPreviewMode: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
+  setIsForkable: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
@@ -456,6 +484,9 @@ function mapStateToProps(state) {
 
     layout: state.page.layout,
     rgl: state.page.rgl,
+    isForkable: state.page.isForkable,
+    isForkModalOpen: state.page.isForkModalOpen,
+    isShowForkModal: state.page.isShowForkModal,
     pageTitle: state.page.pageTitle,
     id: state.page.id,
     preview: state.page.preview,

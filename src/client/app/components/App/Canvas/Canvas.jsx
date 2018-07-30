@@ -274,8 +274,12 @@ class Canvas extends React.Component {
             <div
               key={id}
               data-grid={localLayout[id]}
-              className={`${this.props.currentWidget === id ? 'canvas-high' : ''}`
-            }
+              className={`${this.props.currentWidget === id ? 'canvas-high' : ''}`}
+              onClick={() => {
+                if (this.props.isForkable && !this.props.preview) {
+                  this.props.viewForkModal();
+                }
+              }}
             >
 
               <div
@@ -321,6 +325,7 @@ Canvas.propTypes = {
   editorIndex: PropTypes.number.isRequired,
   editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  isForkable: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
@@ -352,7 +357,8 @@ Canvas.propTypes = {
   updateTextBackColor: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired,
   updateTextHeight: PropTypes.func.isRequired,
-  textHeights: PropTypes.shape({}).isRequired
+  textHeights: PropTypes.shape({}).isRequired,
+  viewForkModal: PropTypes.func.isRequired
 };
 
 export default Canvas;
