@@ -282,12 +282,13 @@ class App extends React.Component {
 
         <Modal
           size="auto"
-          isOpen={this.props.isForkModalOpen}
+          isOpen={this.props.isShowForkModal && this.props.isForkModalOpen}
           closeModal={this.props.closeForkModal}
         >
           <Fork
             closeForkModal={this.props.closeForkModal}
             savePage={this.savePage}
+            setShowForkModal={this.props.setShowForkModal}
           />
         </Modal>
 
@@ -370,6 +371,7 @@ App.propTypes = {
   editorIndex: PropTypes.number.isRequired,
   currentWidget: PropTypes.string.isRequired,
   isForkModalOpen: PropTypes.bool.isRequired,
+  isShowForkModal: PropTypes.bool.isRequired,
   viewForkModal: PropTypes.func.isRequired,
   closeForkModal: PropTypes.func.isRequired,
 
@@ -380,6 +382,7 @@ App.propTypes = {
   preview: PropTypes.bool.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   textHeights: PropTypes.shape({}).isRequired,
+  setShowForkModal: PropTypes.func.isRequired,
 
   canEdit: PropTypes.bool.isRequired,
   loginName: PropTypes.string.isRequired,
@@ -483,6 +486,7 @@ function mapStateToProps(state) {
     rgl: state.page.rgl,
     isForkable: state.page.isForkable,
     isForkModalOpen: state.page.isForkModalOpen,
+    isShowForkModal: state.page.isShowForkModal,
     pageTitle: state.page.pageTitle,
     id: state.page.id,
     preview: state.page.preview,

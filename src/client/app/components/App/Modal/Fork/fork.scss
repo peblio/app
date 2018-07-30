@@ -49,8 +49,20 @@
     border: solid $small-border $green;
   }
 
-  &__checkbox {
+  &__checkbox[type="checkbox"] {
     display: block;
+    margin-right: $medium-margin;
     text-align: $center-align;
+    &:checked {
+      background-color: $white;
+      color: $green;
+    }
+  }
+
+  &__checkbox-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: $large-margin;
   }
 }

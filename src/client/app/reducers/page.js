@@ -16,6 +16,7 @@ const initialState = {
   layout: [],
   isForkable: false,
   isForkModalOpen: false,
+  isShowForkModal: true,
   textHeights: {},
   pages: {
     byId: {},
@@ -126,6 +127,11 @@ const page = (state = initialState, action) => {
     case ActionTypes.TOGGLE_PREVIEW_MODE:
       return Object.assign({}, state, {
         preview: !state.preview
+      });
+
+    case ActionTypes.SET_SHOW_FORK_MODAL:
+      return Object.assign({}, state, {
+        isShowForkModal: action.value
       });
 
     case ActionTypes.SET_PREVIEW_MODE:

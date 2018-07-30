@@ -4,6 +4,21 @@ import PropTypes from 'prop-types';
 require('./fork.scss');
 
 class Fork extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isChecked: true
+    };
+
+    this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
+  }
+
+  handleCheckBoxChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({ isChecked: value });
+  }
+
   render() {
     return (
       <div className="fork-modal__content">
@@ -19,6 +34,7 @@ class Fork extends React.Component {
               className="fork-modal__browse-button"
               value="Just Browsing"
               onClick={() => {
+                this.props.setShowForkModal(!this.state.isChecked);
                 this.props.closeForkModal();
               }}
             />
@@ -26,11 +42,23 @@ class Fork extends React.Component {
               className="fork-modal__button"
               value="Fork"
               onClick={() => {
+                this.props.setShowForkModal(!this.state.isChecked);
                 this.props.closeForkModal();
                 this.props.savePage();
               }}
             />
           </form>
+          <div className="fork-modal__checkbox-container">
+            <input
+              id="fork-modal__dont-ask"
+              name="fork-modal__dont-ask"
+              type="checkbox"
+              className="fork-modal__checkbox"
+              onChange={this.handleCheckBoxChange}
+              checked={this.state.isChecked}
+            />
+            <label htmlFor="fork-modal__dont-ask">Don‘t ask me again</label>
+          </div>
         </div>
       </div>
     );
@@ -40,7 +68,8 @@ class Fork extends React.Component {
 
 Fork.propTypes = {
   closeForkModal: PropTypes.func.isRequired,
-  savePage: PropTypes.func.isRequired
+  savePage: PropTypes.func.isRequired,
+  setShowForkModal: PropTypes.func.isRequired
 };
 
 export default Fork;

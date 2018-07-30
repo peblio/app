@@ -171,6 +171,15 @@ export function togglePreviewMode() {
   };
 }
 
+export function setShowForkModal(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_SHOW_FORK_MODAL,
+      value
+    });
+  };
+}
+
 export function setPreviewMode(value) {
   return (dispatch) => {
     dispatch({
