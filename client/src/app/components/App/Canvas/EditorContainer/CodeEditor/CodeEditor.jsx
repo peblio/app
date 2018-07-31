@@ -21,6 +21,7 @@ class CodeEditor extends React.Component {
       inputStyle: 'contenteditable',
       styleActiveLine: true,
       keyMap: 'sublime',
+      lineWrapping: true
     });
     this.cm.on('keyup', () => {
       this.props.updateFile(this.props.currentFile, this.cm.getValue());

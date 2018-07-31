@@ -5,3 +5,4 @@ client/build/
 client/src/.sass-cache/
 **/*.css.map
 .python-version
+client/devops/

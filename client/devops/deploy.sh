@@ -13,9 +13,11 @@ ENVIRONMENT=$1
 if [ "$ENVIRONMENT" = "staging" ]; then
   BUILD_COMMAND='npm run build:staging'
   S3_BUCKET="s3://staging.peblio.co"
+  DIST_ID="E2YGCXZ1E4BD88"
 elif [ "$ENVIRONMENT" = "production" ]; then
   BUILD_COMMAND='npm run build:production'
   S3_BUCKET="s3://demo.peblio.co"
+  DIST_ID="E5Q4ZYELRS6K6"
 else
   echo "$ENVIRONMENT is not a valid deployment environment."
   exit 1
@@ -30,4 +32,4 @@ eval $BUILD_COMMAND
 aws s3 sync build/ "$S3_BUCKET" --profile peblio --delete
 
 # invalidate CloudFront caches
-aws cloudfront create-invalidation --distribution-id E5Q4ZYELRS6K6 --paths "/*"
+aws cloudfront create-invalidation --distribution-id $DIST_ID --paths "/*"

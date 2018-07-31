@@ -49,6 +49,11 @@ class Login extends React.Component {
     return (
       <div className="login-modal__content">
         <h1 className="login-modal__title">Log In</h1>
+        <GoogleLoginButton
+          onLoginSuccess={this.loginSuccessful}
+          onLoginFailure={this.loginFailed}
+        />
+        <p className="login-modal__text-secondary">or</p>
         <form onSubmit={(event) => { this.submitLoginUser(event, this.userName.value, this.userPassword.value); }}>
           <div className="login-modal__div">
             <input
@@ -70,6 +75,10 @@ class Login extends React.Component {
           </div>
 
           <div className="login-modal__buttonholder">
+
+            <button className="forgot-modal__button" type="submit" value="Submit" >
+              Submit
+            </button>
             <button
               className="login-modal__link"
               onClick={() => {
@@ -79,16 +88,9 @@ class Login extends React.Component {
             >
             forgot password?
             </button>
-            <button className="forgot-modal__button" type="submit" value="Submit" >
-              Submit
-            </button>
           </div>
         </form>
 
-        <GoogleLoginButton
-          onLoginSuccess={this.loginSuccessful}
-          onLoginFailure={this.loginFailed}
-        />
 
         {this.state.showNotice &&
           <p className="forgot-modal__notice">

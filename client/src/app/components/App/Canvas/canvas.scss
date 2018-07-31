@@ -13,9 +13,15 @@
   }
 }
 
-.preview-mode .resize-container {
-  border: none;
+.canvas-preview-mode{
+  & .resize-container {
+    border: none;
+  }
+  & .react-resizable-handle {
+    display: none;
+  }
 }
+
 
 .canvas{
   background-color: $whitish;
@@ -26,8 +32,11 @@
   margin-top: 80px;
 }
 
-.canvas-extra-margin {
+.canvas-edit-mode {
   margin-top: 100px;
+  & .react-resizable-handle {
+    display: block;
+  }
 }
 
 .canvas-high {
@@ -50,7 +59,7 @@
     margin-top: 150px;
   }
 
-  .canvas-extra-margin {
+  .canvas-edit-mode {
     margin-top: 210px;
   }
 }

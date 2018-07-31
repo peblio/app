@@ -27,10 +27,25 @@ const upload = multer({
 
 apiRoutes.route('/examples').get(getExamples);
 apiRoutes.route('/page/:id').get(getPage);
+apiRoutes.route('/authenticate/:id').get(authenticatePage);
 apiRoutes.route('/user').get(getUser);
 apiRoutes.route('/sketches').get(getSketches);
 apiRoutes.route('/sketches/:user').get(getSketches);
 apiRoutes.route('/upload/:user/:type').post(upload.single('uploadImageFile'), uploadFiles);
+
+function authenticatePage(req, res) {
+  if (!req.user) {
+    res.send(false);
+  } else {
+    Page.find({ id: req.params.id }, (err, data) => {
+      if (err) {
+        res.send(false);
+      } else {
+        res.send(data[0].user.toString() === req.user._id.toString());
+      }
+    });
+  }
+}
 
 function uploadFiles(req, res) {
   const fileName =
@@ -63,13 +78,12 @@ function getPage(req, res) {
 function getUser(req, res) {
   let name = null;
   let type = null;
-  let pages = null;
+  const pages = null;
   if (req.user) {
     name = req.user.name;
     type = req.user.type;
-    pages = req.user.pages;
   }
-  res.send({ name, type, pages });
+  res.send({ name, type });
 }
 
 function getSketches(req, res) {
@@ -89,7 +103,7 @@ function getSketches(req, res) {
       } else {
         user = data;
         Promise.all([
-          Page.find({ id: { $in: user.pages } }).exec(),
+          Page.find({ user: user._id }).exec(),
           Folder.find({ user: user._id }).exec()
         ])
           .then(([pages, folders]) => {
@@ -100,7 +114,7 @@ function getSketches(req, res) {
     });
   } else {
     Promise.all([
-      Page.find({ id: { $in: user.pages } }).exec(),
+      Page.find({ user: user._id }).exec(),
       Folder.find({ user: user._id }).exec()
     ])
     .then(([pages, folders]) => {
@@ -115,7 +129,7 @@ function getExamples(req, res) {
     if (err) {
       res.send(err);
     } else {
-      Page.find({ id: { $in: data[0].pages } }, (err, data) => {
+      Page.find({ user: data[0]._id }, (err, data) => {
         if (err) {
           res.send(err);
         } else {
