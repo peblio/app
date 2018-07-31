@@ -33,7 +33,7 @@ const listener = app.listen(process.env.PORT || 8081, () => {
   console.log(`Listening on port ${listener.address().port}`);
 });
 
-mongoose.connect('mongodb://localhost:27017/peblio-file');
+mongoose.connect(`${process.env.MONGO_DB_PEBLIO}/peblio-file`);
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
@@ -58,7 +58,7 @@ app.use(cors({ credentials: true, origin: true }));
 // Basic usage
 app.use(session({
   secret: 'ASQ12345678gfd4jh234oiuy',
-  store: new MongoStore({ url: 'mongodb://localhost:27017/session' })
+  store: new MongoStore({ url: `${process.env.MONGO_DB_PEBLIO}/session` })
 }));
 // add body parser
 app.use(bodyParser.urlencoded({ extended: true }));
