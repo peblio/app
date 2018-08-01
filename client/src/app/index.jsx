@@ -10,6 +10,10 @@ import App from './components/App/App.jsx';
 import Profile from './components/Profile/Profile.jsx';
 import withTracker from './withTracker.jsx';
 
+import './styles/Draft.css';
+import './styles/reactGrid.css';
+import './styles/reactResize.css';
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   rootReducer,
