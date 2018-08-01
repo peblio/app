@@ -81,4 +81,6 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
+app.get('/healthcheck', (req, res) => res.sendStatus(200));
+
 console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
