@@ -32,4 +32,4 @@ eval $BUILD_COMMAND
 aws s3 sync build/ "$S3_BUCKET" --profile peblio --delete
 
 # invalidate CloudFront caches
-aws cloudfront create-invalidation --distribution-id $DIST_ID --paths "/*"
+aws cloudfront create-invalidation --distribution-id "$DIST_ID" --paths "/*" --profile peblio
