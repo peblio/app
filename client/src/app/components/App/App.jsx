@@ -22,7 +22,7 @@ import * as mainToolbarActions from '../../action/mainToolbar.js';
 import * as pageActions from '../../action/page.js';
 import * as userActions from '../../action/user.js';
 
-const axios = require('axios');
+import axios from '../../utils/axios';
 
 class App extends React.Component {
 
@@ -101,7 +101,7 @@ class App extends React.Component {
             });
         });
     }
-    axios.get('/api/user')
+    axios.get('/user')
       .then((res) => {
         if (res.data.name) {
           this.props.setUserName(res.data.name);
