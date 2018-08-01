@@ -13,6 +13,7 @@ import SignUp from './Modal/SignUp/SignUp.jsx';
 import PagesList from './Modal/PagesList/PagesList.jsx';
 import PasswordReset from './Modal/PasswordReset/PasswordReset.jsx';
 import Welcome from './Modal/Welcome/Welcome.jsx';
+import ForkWarning from './Modal/ForkWarning/ForkWarning.jsx';
 
 import Canvas from './Canvas/Canvas.jsx';
 import MainToolbar from './MainToolbar/MainToolbar.jsx';
@@ -157,6 +158,7 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.props.isForkWarningOpen);
     return (
       <div // eslint-disable-line
         tabIndex="0"
@@ -336,6 +338,16 @@ class App extends React.Component {
         >
           <Welcome />
         </Modal>
+
+        <Modal
+          size="auto"
+          isOpen={this.props.isForkWarningOpen}
+          closeModal={this.props.closeForkWarning}
+        >
+          <ForkWarning
+            closeForkWarning={this.props.closeForkWarning}
+          />
+        </Modal>
       </div>
     );
   }
@@ -441,6 +453,9 @@ App.propTypes = {
   isWelcomeModalOpen: PropTypes.bool.isRequired,
   viewWelcomeModal: PropTypes.func.isRequired,
   closeWelcomeModal: PropTypes.func.isRequired,
+  isForkWarningOpen: PropTypes.bool.isRequired,
+  viewForkWarning: PropTypes.func.isRequired,
+  closeForkWarning: PropTypes.func.isRequired,
 
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
@@ -480,6 +495,7 @@ function mapStateToProps(state) {
     isForgotModalOpen: state.mainToolbar.isForgotModalOpen,
     isResetModalOpen: state.mainToolbar.isResetModalOpen,
     isConfirmUserModalOpen: state.mainToolbar.isConfirmUserModalOpen,
+    isForkWarningOpen: state.mainToolbar.isForkWarningOpen
   };
 }
 

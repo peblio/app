@@ -1,0 +1,24 @@
+@import 'modal';
+.fork-warning {
+  &__button{
+    @extend %modal__button;
+    width: 40%;
+  }
+  &__buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  &__text {
+    text-align: center;
+  }
+  &__content{
+    @extend %modal__content;
+  }
+  &__title {
+    @extend %modal__title;
+  }
+  &__subtitle {
+    @extend %modal__subtitle;
+  }
+}

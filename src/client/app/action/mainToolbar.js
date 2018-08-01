@@ -162,3 +162,19 @@ export function closeWelcomeModal() {
     });
   };
 }
+
+export function viewForkWarning() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_FORK_WARNING
+    });
+  };
+}
+
+export function closeForkWarning() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_FORK_WARNING
+    });
+  };
+}

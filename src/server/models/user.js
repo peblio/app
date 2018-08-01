@@ -57,7 +57,10 @@ const userSchema = new Schema({
   }
 }, {
   toJSON: { virtuals: true },
-  toObject: { virtuals: true }
+  toObject: { virtuals: true },
+  preferences: {
+    forkWarning: { type: Boolean, default: true }
+  }
 });
 
 userSchema.virtual('folders', {

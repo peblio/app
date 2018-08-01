@@ -11,7 +11,8 @@ const initialState = {
   isResetModalOpen: false,
   isShareModalOpen: false,
   isSignUpModalOpen: false,
-  isWelcomeModalOpen: false
+  isWelcomeModalOpen: false,
+  isForkWarningOpen: true
 };
 
 const mainToolbar = (state = initialState, action) => {
@@ -117,6 +118,17 @@ const mainToolbar = (state = initialState, action) => {
     case ActionTypes.CLOSE_WELCOME_MODAL:
       return Object.assign({}, state, {
         isWelcomeModalOpen: false
+      });
+
+    case ActionTypes.VIEW_FORK_WARNING:
+      return Object.assign({}, state, {
+        isForkWarning: true
+      });
+
+    case ActionTypes.CLOSE_FORK_WARNING:
+      console.log('yo');
+      return Object.assign({}, state, {
+        isForkWarning: false
       });
 
     default:
