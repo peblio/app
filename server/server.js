@@ -33,7 +33,7 @@ const listener = app.listen(process.env.PORT || 8081, () => {
   console.log(`Listening on port ${listener.address().port}`);
 });
 
-mongoose.connect(`${process.env.MONGO_DB_PEBLIO}/peblio-file`);
+mongoose.connect(process.env.MONGO_DB_PEBLIO);
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
