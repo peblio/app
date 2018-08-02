@@ -5,9 +5,9 @@ import Dropzone from 'react-dropzone';
 import ImageUploadSVG from '../../../images/imageUpload.svg';
 import ToolbarLogo from '../../../images/logo.svg';
 
-require('./details.scss');
+import axios from '../../../utils/axios';
 
-const axios = require('axios');
+require('./details.scss');
 const upload = require('superagent');
 
 class Details extends React.Component {

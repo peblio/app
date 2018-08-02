@@ -63,11 +63,12 @@ app.use(session({
   proxy: true,
   name: 'peblioSessionId',
   cookie: {
-    httpOnly: true,
+    // domain: 'peblio.co',
+    httpOnly: false,
     secure: false,
   },
   store: new MongoStore({
-    url: url: `${process.env.MONGO_DB_PEBLIO}/session`,
+    url: `${process.env.MONGO_DB_PEBLIO}`,
     autoReconnect: true
   })
 }));

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const axios = require('axios');
+import axios from '../../../../utils/axios';
 
 class ExamplesModal extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class ExamplesModal extends React.Component {
   }
   componentDidMount() {
     const temp = [];
-    axios.get('/api/examples')
+    axios.get('/examples')
       .then((res) => {
         res.data.forEach((example) => {
           temp.push({

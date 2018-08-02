@@ -9,9 +9,9 @@ import Pebls from './Pebls/Pebls.jsx';
 import * as profileActions from '../../action/profile.js';
 import * as userActions from '../../action/user.js';
 
-require('./profile.scss');
+import axios from '../../utils/axios';
 
-const axios = require('axios');
+require('./profile.scss');
 
 class Profile extends React.Component {
   constructor(props) {
