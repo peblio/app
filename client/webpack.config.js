@@ -19,6 +19,7 @@ const config = {
   entry: `${APP_DIR}/index.jsx`,
   output: {
     path: BUILD_DIR,
+    publicPath: '/',
     filename: '[name].js'
   },
   module: {
