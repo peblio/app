@@ -57,8 +57,19 @@ app.use(cors({ credentials: true, origin: true }));
 
 // Basic usage
 app.use(session({
+  resave: true,
+  saveUninitialized: false,
   secret: 'ASQ12345678gfd4jh234oiuy',
-  store: new MongoStore({ url: `${process.env.MONGO_DB_PEBLIO}/session` })
+  proxy: true,
+  name: 'peblioSessionId',
+  cookie: {
+    httpOnly: true,
+    secure: false,
+  },
+  store: new MongoStore({
+    url: url: `${process.env.MONGO_DB_PEBLIO}/session`,
+    autoReconnect: true
+  })
 }));
 // add body parser
 app.use(bodyParser.urlencoded({ extended: true }));
