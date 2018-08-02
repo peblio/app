@@ -27,7 +27,7 @@ class Image extends React.Component {
 
 
   onDrop(file) {
-    upload.post(`/upload/${this.props.name}/../images`)
+    upload.post(`/api/upload/${this.props.name}/../images`)
       .attach('uploadImageFile', file[0])
       .end((err, res) => {
         if (err) console.log(err);
