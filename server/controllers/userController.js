@@ -306,7 +306,7 @@ function sendSignUpConfirmationMail(email, token, req) {
     subject: 'Peblio Confirmation',
     text: `${'You are receiving this because you have signed up for peblio.\n\n' +
     'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-    'http://'}${req.headers.host}/confirmation/${token}\n\n`
+    'http://'}${process.env.PEBLIO_DOMAIN_NAME}/confirmation/${token}\n\n`
   };
   sendMail(mailOptions);
 }
@@ -329,7 +329,7 @@ function sendResetMail(email, token, req) {
     subject: 'Peblio Password Reset',
     text: `${'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
     'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-    'http://'}${req.headers.host}/reset/${token}\n\n` +
+    'http://'}${process.env.PEBLIO_DOMAIN_NAME}/reset/${token}\n\n` +
     'If you did not request this, please ignore this email and your password will remain unchanged.\n'
   };
   sendMail(mailOptions);

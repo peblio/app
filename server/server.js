@@ -72,7 +72,7 @@ app.use('/api', router);
 app.get('/api/logout', (req, res) => {
   req.logout();
   req.session = null;
-  res.redirect('/');
+  res.sendStatus(200);
 });
 
 app.get('/healthcheck', (req, res) => res.sendStatus(200));
