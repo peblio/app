@@ -28,6 +28,8 @@ const profile = (state = initialState, action) => {
         folders: action.value
       });
 
+    case ActionTypes.LOGOUT_USER:
+      return initialState;
 
     default:
       return state;

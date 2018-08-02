@@ -9,6 +9,7 @@ import rootReducer from './reducers/rootReducer.js';
 import App from './components/App/App.jsx';
 import Profile from './components/Profile/Profile.jsx';
 import withTracker from './withTracker.jsx';
+import history from './utils/history';
 
 import './styles/Draft.css';
 import './styles/reactGrid.css';
@@ -26,7 +27,7 @@ class Main extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <BrowserRouter>
+        <BrowserRouter history={history}>
           <div>
             <Route exact path="/" component={withTracker(App)} />
             <Route path="/pebl" component={withTracker(App)} />

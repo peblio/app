@@ -261,6 +261,9 @@ const editorsReducer = (state = initialState, action) => {
       editors[action.id].url = action.url;
       return { ...state, editors };
 
+    case ActionTypes.LOGOUT_USER:
+      return initialState;
+
     default:
       return state;
   }

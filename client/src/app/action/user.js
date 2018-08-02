@@ -1,5 +1,7 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 
+import axios from '../utils/axios';
+
 export function setUserBlurb(value) {
   return (dispatch) => {
     dispatch({
@@ -79,4 +81,13 @@ export function setUserImage(value) {
       value
     });
   };
+}
+
+export function logoutUser() {
+  return dispatch => axios.get('/logout')
+    .then(() => {
+      dispatch({
+        type: ActionTypes.LOGOUT_USER,
+      });
+    });
 }

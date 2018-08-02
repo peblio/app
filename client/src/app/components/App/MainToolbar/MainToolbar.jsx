@@ -1,22 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import history from '../../../utils/history';
 import FileModal from './FileModal/FileModal.jsx';
 import InsertToolbar from './InsertToolbar/InsertToolbar.jsx';
 import ToolbarLogo from '../../../images/logo.svg';
 import CheckSVG from '../../../images/check.svg';
 import AccountSVG from '../../../images/account.svg';
 
-import axios from '../../../utils/axios';
-
 require('./mainToolbar.scss');
 
 class MainToolbar extends React.Component {
-  logout =() => {
-    axios.get('/logout')
-      .then((res) => {
-        window.location = '/';
-      });
+
+  logout = () => {
+    this.props.logoutUser().then(() => {
+      history.push('/');
+    });
   }
+
   render() {
     let saveButtonText = 'Fork';
     if (this.props.name) { // user is logged in
@@ -188,6 +189,7 @@ MainToolbar.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,
+  logoutUser: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,

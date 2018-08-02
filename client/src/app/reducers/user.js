@@ -49,6 +49,9 @@ const user = (state = initialState, action) => {
         image: action.value
       });
 
+    case ActionTypes.LOGOUT_USER:
+      return initialState;
+
     default:
       return state;
   }

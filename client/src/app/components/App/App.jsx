@@ -172,6 +172,7 @@ class App extends React.Component {
             canEdit={this.props.canEdit}
             isFileDropdownOpen={this.props.isFileDropdownOpen}
             isAccountDropdownOpen={this.props.isAccountDropdownOpen}
+            logoutUser={this.props.logoutUser}
             name={this.props.name}
             pageTitle={this.props.pageTitle}
             preview={this.props.preview}
@@ -442,6 +443,7 @@ App.propTypes = {
   viewWelcomeModal: PropTypes.func.isRequired,
   closeWelcomeModal: PropTypes.func.isRequired,
 
+  logoutUser: PropTypes.func.isRequired,
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
   signUserUp: PropTypes.func.isRequired,
