@@ -3,19 +3,10 @@ const mongoose = require('mongoose');
 mongoose.Promise = Promise;
 const bodyParser = require('body-parser');
 const express = require('express'); // include the express library
-const path = require('path');
 const passport = require('passport');
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const cookieSession = require('cookie-session');
-
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
-// const session = require('express-session');
-// const mongoStore = require('connect-mongo')({
-//   session
-// });
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -40,20 +31,9 @@ mongoose.connection.on('error', () => {
 });
 mongoose.connection.on('open', () => {
   console.log('MongoDB Connection success.');
-  // process.exit(1);
 });
 
 app.use(cors({ credentials: true, origin: true }));
-// app.use(cookieParser())
-// app.use(session({
-//   secret: 'ASQ12345678gfd4jh234oiuy',
-//   resave: true,
-//   saveUninitialized: true,
-//   store: new mongoStore({
-//     db: db.connection.db,
-//     collection: config.sessionCollection
-//   })
-// }));
 
 // Basic usage
 app.use(session({
@@ -69,7 +49,7 @@ app.use(session({
     secure: false,
   },
   store: new MongoStore({
-    url: `${process.env.MONGO_DB_PEBLIO}`,
+    url: process.env.MONGO_DB_PEBLIO,
     autoReconnect: true
   })
 }));
@@ -97,4 +77,4 @@ app.get('/api/logout', (req, res) => {
 
 app.get('/healthcheck', (req, res) => res.sendStatus(200));
 
-console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+console.log(`ENVIRONMENT: ${process.env.ENVIRONMENT}`);

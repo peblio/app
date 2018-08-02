@@ -6,9 +6,9 @@
   "scripts": {
     "start": "webpack-dev-server",
     "dev": "webpack -d --watch",
-    "build": "ENVIRONMENT=local webpack -p --config ./webpack.config.js --progress",
-    "build:staging": "ENVIRONMENT=staging webpack -p --config ./webpack.config.js --progress",
-    "build:production": "ENVIRONMENT=production webpack -p --config ./webpack.config.js --progress"
+    "build": "NODE_ENV=development ENVIRONMENT=local webpack -p --config ./webpack.config.js --progress",
+    "build:staging": "NODE_ENV=production ENVIRONMENT=staging webpack -p --config ./webpack.config.js --progress",
+    "build:production": "NODE_ENV=production ENVIRONMENT=production webpack -p --config ./webpack.config.js --progress"
   },
   "author": "",
   "license": "ISC",

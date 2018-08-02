@@ -1,14 +1,23 @@
 module.exports = {
-  apps : [{
-    name      : 'server',
-    script    : 'server.js',
+  apps: [{
+    name: 'server',
+    script: 'run_with_credstash.sh',
+    args: 'node server.js',
     env: {
       PORT: 8081,
-      NODE_ENV: 'development'
+      NODE_ENV: 'development',
+      ENVIRONMENT: 'local',
+      AWS_PROFILE: 'peblio'
     },
-    env_production : {
+    env_staging: {
       PORT: 8080,
-      NODE_ENV: 'production'
+      NODE_ENV: 'production',
+      ENVIRONMENT: 'staging'
+    },
+    env_production: {
+      PORT: 8080,
+      NODE_ENV: 'production',
+      ENVIRONMENT: 'production'
     }
   }]
 };

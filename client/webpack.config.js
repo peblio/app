@@ -10,9 +10,9 @@ const SRC_DIR = path.resolve(__dirname, 'src');
 const APP_DIR = path.resolve(SRC_DIR, 'app');
 
 const envFiles = {
-  local: '../.env',
-  staging: '../.env.staging',
-  production: '../.env.production'
+  local: '.env',
+  staging: '.env.staging',
+  production: '.env.production'
 };
 
 const config = {
@@ -82,7 +82,7 @@ const config = {
       sourceMap: true
     }),
     new Dotenv({
-      path: path.resolve(__dirname, envFiles[process.env.ENVIRONMENT] || '../.env')
+      path: path.resolve(__dirname, envFiles[process.env.ENVIRONMENT] || '.env')
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(SRC_DIR, 'index.html'),
