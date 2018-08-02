@@ -36,13 +36,13 @@ class Profile extends React.Component {
   loadProfileDetails() {
     if (this.profileName()) {
       const profileName = this.profileName();
-      axios.get(`/api/profile/user/${profileName}`)
+      axios.get(`/profile/user/${profileName}`)
         .then((res) => {
           this.props.setProfileName(res.data.name);
           this.props.setUserImage(res.data.image);
           this.props.setUserBlurb(res.data.blurb);
           this.setState({ userType: res.data.type });
-          axios.get('/api/user')
+          axios.get('/user')
             .then((res1) => {
               if (res1.data.name === this.props.name) {
                 this.props.setIsOwner(true);
