@@ -62,6 +62,7 @@ app.use(session({
   secret: 'ASQ12345678gfd4jh234oiuy',
   proxy: true,
   name: 'peblioSessionId',
+  unset: 'destroy',
   cookie: {
     // domain: 'peblio.co',
     httpOnly: false,
@@ -88,8 +89,9 @@ router.use('/profile', profileRoutes);
 router.use('/', apiRoutes);
 app.use('/api', router);
 
-app.get('/logout', (req, res) => {
+app.get('/api/logout', (req, res) => {
   req.logout();
+  req.session = null;
   res.redirect('/');
 });
 

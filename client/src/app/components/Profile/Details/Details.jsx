@@ -18,14 +18,14 @@ class Details extends React.Component {
   }
 
   onDrop(file) {
-    upload.post(`/api/upload/${this.props.name}/profile`)
+    upload.post(`/upload/${this.props.name}/profile`)
       .attach('uploadImageFile', file[0])
       .end((err, res) => {
         if (err) console.log(err);
         const imageName = res.text.replace(/\s/g, '+');
         const imageURL = `https://s3.amazonaws.com/${process.env.S3_BUCKET}/${imageName}`;
         this.props.setUserImage(imageURL);
-        axios.post('/api/profile/save', {
+        axios.post('/profile/save', {
           name: this.props.name,
           field: 'image',
           value: imageURL
@@ -35,7 +35,7 @@ class Details extends React.Component {
   }
 
   saveUserBlurb = (blurb) => {
-    axios.post('/api/profile/save', {
+    axios.post('/profile/save', {
       name: this.props.name,
       field: 'blurb',
       value: blurb

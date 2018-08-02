@@ -6,9 +6,17 @@ import ToolbarLogo from '../../../images/logo.svg';
 import CheckSVG from '../../../images/check.svg';
 import AccountSVG from '../../../images/account.svg';
 
+import axios from '../../../utils/axios';
+
 require('./mainToolbar.scss');
 
 class MainToolbar extends React.Component {
+  logout =() => {
+    axios.get('/logout')
+      .then((res) => {
+        window.location = '/';
+      });
+  }
   render() {
     let saveButtonText = 'Fork';
     if (this.props.name) { // user is logged in
@@ -137,7 +145,12 @@ class MainToolbar extends React.Component {
                       </li>
                       }
                       <li className="main-toolbar__list-item">
-                        <a className="file-modal__link" href="/logout">Logout</a>
+                        <button
+                          className="file-modal__link"
+                          onClick={this.logout}
+                        >
+                          Logout
+                        </button>
                       </li>
                     </ul>
                   </div>

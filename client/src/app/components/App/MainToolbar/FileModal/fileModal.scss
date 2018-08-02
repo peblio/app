@@ -55,8 +55,12 @@
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
   width: 100%;
+  text-align: left;
+  padding: 0;
+  border: none;
   &:hover {
     color: $black;
     cursor: pointer;
+    border: none;
   }
 }
