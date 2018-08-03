@@ -62,7 +62,6 @@ function uploadFiles(req, res) {
       console.log(err);
       res.send(err);
     }
-    console.log(data);
     res.send(data);
   });
 }

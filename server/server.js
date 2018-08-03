@@ -24,7 +24,7 @@ const listener = app.listen(process.env.PORT || 8081, () => {
   console.log(`Listening on port ${listener.address().port}`);
 });
 
-mongoose.connect('mongodb://localhost:27017/peblio-file');
+mongoose.connect(process.env.MONGO_DB_PEBLIO);
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
@@ -49,7 +49,7 @@ app.use(session({
     secure: false,
   },
   store: new MongoStore({
-    url: 'mongodb://localhost:27017/peblio-file',
+    url: process.env.MONGO_DB_PEBLIO,
     autoReconnect: true
   })
 }));
