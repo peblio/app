@@ -31,7 +31,7 @@ apiRoutes.route('/authenticate/:id').get(authenticatePage);
 apiRoutes.route('/user').get(getUser);
 apiRoutes.route('/sketches').get(getSketches);
 apiRoutes.route('/sketches/:user').get(getSketches);
-apiRoutes.route('/upload/:user/:type').post(upload.single('uploadImageFile'), uploadFiles);
+apiRoutes.route('/upload/:user/:type').get(uploadFiles);
 
 function authenticatePage(req, res) {
   if (!req.user) {
@@ -49,19 +49,21 @@ function authenticatePage(req, res) {
 
 function uploadFiles(req, res) {
   const fileName =
-  `${req.params.user}/${req.params.type}/${shortid.generate()}_${req.file.originalname}`;
+  `${req.params.user}/${req.params.type}/${shortid.generate()}_${req.query.filename}`;
   const params = {
     Bucket: myBucket,
     Key: fileName,
-    Body: req.file.buffer,
+    Expires: 60,
+    ContentType: req.query.filetype,
     ACL: 'public-read'
   };
-  s3.putObject(params, (err, data) => {
+  s3.getSignedUrl('putObject', params, (err, data) => {
     if (err) {
       console.log(err);
-    } else {
-      res.send(fileName);
+      res.send(err);
     }
+    console.log(data);
+    res.send(data);
   });
 }
 

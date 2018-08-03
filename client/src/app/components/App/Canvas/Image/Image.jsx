@@ -2,10 +2,13 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
 import React from 'react';
+import axiosOrg from 'axios';
+import URL from 'url';
 
 import UploadSVG from '../../../../images/upload.svg';
 
-const upload = require('superagent');
+import axios from '../../../../utils/axios';
+
 
 require('./image.scss');
 
@@ -26,15 +29,34 @@ class Image extends React.Component {
   }
 
 
-  onDrop(file) {
-    upload.post(`/api/upload/${this.props.name}/images`)
-      .attach('uploadImageFile', file[0])
-      .end((err, res) => {
-        if (err) console.log(err);
-        const imageName = res.text.replace(/\s/g, '+');
-        this.setImageURL(`https://s3.amazonaws.com/${process.env.S3_BUCKET}/${imageName}`);
-      });
+  onDrop(files) {
+    const file = files[0];
+
+    axios.get(`/upload/${this.props.name}/images`, {
+      params: {
+        filename: file.name,
+        filetype: file.type
+      }
+    })
+    .then((result) => {
+      const signedUrl = result.data;
+      const options = {
+        headers: {
+          'Content-Type': file.type
+        }
+      };
+
+      return axiosOrg.put(signedUrl, file, options);
+    })
+    .then((result) => {
+      const url = new URL(result.request.responseURL);
+      this.setImageURL(`https://s3.amazonaws.com/${process.env.S3_BUCKET}/${url.pathname}`);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
+
   render() {
     return (
       <div className={`image__container ${this.props.preview ? '' : 'image__container--edit'}`} >

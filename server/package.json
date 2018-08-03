@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "AWS_PROFILE=peblio ./run_with_credstash.sh nodemon"
+    "start": "nodemon"
   },
   "author": "",
   "license": "ISC",
