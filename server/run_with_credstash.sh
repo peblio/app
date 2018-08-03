@@ -9,7 +9,7 @@ fi
 export ENVIRONMENT=${ENVIRONMENT:-local} # default to local
 
 function get_secret () {
-  echo `credstash get $1.$ENVIRONMENT environment=$ENVIRONMENT`
+  echo `credstash -r us-east-1 get $1.$ENVIRONMENT environment=$ENVIRONMENT`
 }
 
 echo "Fetching environment variables from credstash..."
