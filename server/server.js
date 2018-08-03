@@ -41,7 +41,7 @@ app.use(session({
   saveUninitialized: false,
   secret: 'ASQ12345678gfd4jh234oiuy',
   proxy: true,
-  name: 'peblioSessionId',
+  name: process.env.PEBLIO_COOKIE_NAME,
   unset: 'destroy',
   cookie: {
     domain: process.env.PEBLIO_COOKIE_DOMAIN,

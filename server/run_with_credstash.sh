@@ -23,5 +23,6 @@ export GOOGLE_CLIENT_SECRET=`get_secret google.client_secret`
 export S3_BUCKET=`get_secret s3.bucket`
 export PEBLIO_DOMAIN_NAME=`get_secret domain.name`
 export PEBLIO_COOKIE_DOMAIN=`get_secret cookie.domain`
+export PEBLIO_COOKIE_NAME=`get_secret cookie.name`
 
 "$@"
