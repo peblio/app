@@ -39,7 +39,14 @@ class Details extends React.Component {
     })
     .then((result) => {
       const url = URL.parse(result.request.responseURL);
-      this.props.setUserImage(`https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
+      const imageURL = `https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`;
+      this.props.setUserImage(imageURL);
+      axios.post('/profile/save', {
+        name: this.props.name,
+        field: 'image',
+        value: imageURL
+      }).then(() => { console.log('saved'); })
+        .catch(error => console.error(error));
     })
     .catch((err) => {
       console.log(err);

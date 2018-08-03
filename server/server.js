@@ -44,7 +44,7 @@ app.use(session({
   name: 'peblioSessionId',
   unset: 'destroy',
   cookie: {
-    // domain: 'peblio.co',
+    domain: process.env.PEBLIO_COOKIE_DOMAIN,
     httpOnly: false,
     secure: false,
   },
