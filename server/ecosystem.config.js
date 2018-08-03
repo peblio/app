@@ -7,7 +7,6 @@ module.exports = {
       PORT: 8081,
       NODE_ENV: 'development',
       ENVIRONMENT: 'local',
-      AWS_PROFILE: 'peblio'
     },
     env_staging: {
       PORT: 8080,
