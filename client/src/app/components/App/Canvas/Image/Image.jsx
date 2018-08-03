@@ -49,8 +49,8 @@ class Image extends React.Component {
       return axiosOrg.put(signedUrl, file, options);
     })
     .then((result) => {
-      const url = new URL(result.request.responseURL);
-      this.setImageURL(`https://s3.amazonaws.com/${process.env.S3_BUCKET}/${url.pathname}`);
+      const url = URL.parse(result.request.responseURL);
+      this.setImageURL(`https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
     })
     .catch((err) => {
       console.log(err);

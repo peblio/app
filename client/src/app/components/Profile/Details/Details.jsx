@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
+import axiosOrg from 'axios';
+import URL from 'url';
 
 import ImageUploadSVG from '../../../images/imageUpload.svg';
 import ToolbarLogo from '../../../images/logo.svg';
@@ -8,7 +10,6 @@ import ToolbarLogo from '../../../images/logo.svg';
 import axios from '../../../utils/axios';
 
 require('./details.scss');
-const upload = require('superagent');
 
 class Details extends React.Component {
 
@@ -17,21 +18,32 @@ class Details extends React.Component {
     this.onDrop = this.onDrop.bind(this);
   }
 
-  onDrop(file) {
-    upload.post(`/api/upload/${this.props.name}/profile`)
-      .attach('uploadImageFile', file[0])
-      .end((err, res) => {
-        if (err) console.log(err);
-        const imageName = res.text.replace(/\s/g, '+');
-        const imageURL = `https://s3.amazonaws.com/${process.env.S3_BUCKET}/${imageName}`;
-        this.props.setUserImage(imageURL);
-        axios.post('/profile/save', {
-          name: this.props.name,
-          field: 'image',
-          value: imageURL
-        }).then(() => { console.log('saved'); })
-          .catch(error => console.error(error));
-      });
+  onDrop(files) {
+    const file = files[0];
+
+    axios.get(`/upload/${this.props.name}/profile`, {
+      params: {
+        filename: file.name,
+        filetype: file.type
+      }
+    })
+    .then((result) => {
+      const signedUrl = result.data;
+      const options = {
+        headers: {
+          'Content-Type': file.type
+        }
+      };
+
+      return axiosOrg.put(signedUrl, file, options);
+    })
+    .then((result) => {
+      const url = URL.parse(result.request.responseURL);
+      this.props.setUserImage(`https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   saveUserBlurb = (blurb) => {
