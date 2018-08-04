@@ -117,7 +117,6 @@ class App extends React.Component {
       const projectID = this.projectID();
       axios.get(`/authenticate/${projectID}`)
         .then((res1) => {
-          console.log(res1);
           this.props.setEditAccess(res1.data);
         });
     }
