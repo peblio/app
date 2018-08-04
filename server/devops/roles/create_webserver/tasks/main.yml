@@ -1,0 +1,34 @@
+---
+
+- name: create the EC2 instance
+  ec2:
+    key_name: "{{ key_name }}"
+    instance_type: "{{ instance_type }}"
+    image: "{{ ami_id }}"
+    wait: yes
+    group: "{{ security_group_name }}"
+    vpc_subnet_id: "{{ subnet_id }}"
+    assign_public_ip: yes
+    region: "{{ region }}"
+    instance_profile_name: "{{ webserver_iam_role }}"
+    instance_tags:
+      role: webservers
+      env: "{{ env }}"
+      Name: "{{ env }}-api-server"
+  register: ec2
+
+- name: wait for SSH to come up
+  wait_for: host={{ item.public_dns_name }} port=22 delay=60 timeout=320 state=started
+  with_items: "{{ ec2.instances }}"
+
+- name: scan for ssh key for EC2 instance
+  shell: "ssh-keyscan -t ecdsa {{ item.public_ip }}"
+  with_items: "{{ ec2.instances }}"
+  register: keyscan
+
+- name: add EC2 instance ssh key to ssh known_hosts
+  known_hosts:
+    name: "{{ item.item.public_ip }}"
+    key: "{{ item.stdout }}"
+    path: ~/.ssh/known_hosts
+  with_items: "{{ keyscan.results }}"
