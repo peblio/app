@@ -1,0 +1,2 @@
+awscli==1.15.68
+credstash==1.15.0

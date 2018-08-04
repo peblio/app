@@ -1,10 +1,7 @@
-.env
 node_modules/
-src/client/public/bundle.min.js.map
-src/client/public/bundle.min.js
-src/client/public/bundle.js
-src/client/public/*.svg
+client/build/
 **/.DS_Store
-src/client/.sass-cache/
+client/src/.sass-cache/
 **/*.css.map
 .python-version
+client/devops/
