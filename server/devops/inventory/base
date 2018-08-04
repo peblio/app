@@ -1,0 +1,15 @@
+[tag_env_staging]
+[tag_env_production]
+
+[staging_webservers:children]
+tag_env_staging
+
+[production_webservers:children]
+tag_env_production
+
+[webservers:children]
+staging_webservers
+production_webservers
+
+[webservers:vars]
+ansible_user=ubuntu
