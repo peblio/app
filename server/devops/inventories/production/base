@@ -1,0 +1,7 @@
+[tag_role_webservers]
+
+[webservers:children]
+tag_role_webservers
+
+[local]
+localhost
