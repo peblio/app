@@ -1,7 +1,9 @@
 [tag_role_webservers]
+[new_webserver_instances]
 
 [webservers:children]
 tag_role_webservers
+new_webserver_instances
 
 [local]
 localhost

@@ -3,8 +3,14 @@
   command: "pm2 restart ecosystem.config.js --env {{ env }}"
   args:
     chdir: "{{ ansible_env.HOME }}/{{ webserver_src_dir }}/server"
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.HOME }}/.nvm/versions/node/{{ node_version }}/bin:{{ ansible_env.PATH }}"
+  listen: "restart web services"
 
 - name: restart nginx
   service:
     name: nginx
     state: restarted
+  become: yes
+  become_method: sudo
+  listen: "restart web services"

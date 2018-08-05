@@ -91,9 +91,5 @@
       path: ~/.ssh/known_hosts
     with_items: "{{ github_keyscan.stdout }}"
 
-  - name: Test that git ssh connection is working.
-    command: ssh -T git@github.com
-    become_flags: "-E"
-
   become: yes
   become_method: sudo

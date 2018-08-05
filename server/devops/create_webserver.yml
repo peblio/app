@@ -12,3 +12,9 @@
 
   roles:
     - provision_webserver
+    - deploy_webserver
+
+- hosts: local
+  connection: local
+  roles:
+    - register_webserver
