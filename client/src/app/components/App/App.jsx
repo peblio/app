@@ -37,10 +37,13 @@ class App extends React.Component {
 
   componentWillUpdate(nextProps) {
     const projectID = this.projectID();
+    const localShowWarning = localStorage.getItem(process.env.LOCALSTORAGE_FORK_WARNING_VARIABLE);
+
     if (this.props.unsavedChanges !== nextProps.unsavedChanges && nextProps.unsavedChanges === true) {
       axios.get(`/authenticate/${projectID}`)
         .then((res) => {
-          if (!res.data && this.props.showForkWarning) {
+          if (!res.data && this.props.showForkWarning &&
+            (localShowWarning === null || localShowWarning === '')) {
             this.props.viewForkWarning();
           }
         });

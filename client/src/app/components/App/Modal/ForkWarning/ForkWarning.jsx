@@ -12,6 +12,11 @@ class ForkWarning extends Component {
 
   updateForkWarningPreference = (e) => {
     this.props.updateShowForkWarning(!e.target.checked);
+    if (e.target.checked) {
+      localStorage.setItem(process.env.LOCALSTORAGE_FORK_WARNING_VARIABLE, 1);
+    } else {
+      localStorage.removeItem(process.env.LOCALSTORAGE_FORK_WARNING_VARIABLE);
+    }
   }
   render() {
     return (
