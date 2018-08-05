@@ -1,0 +1,30 @@
+---
+- name: deploy code from git repository
+  git:
+    repo: "{{ git_repository }}"
+    dest: "{{ ansible_env.HOME }}/{{ webserver_src_dir }}"
+    version: "{{ git_branch }}"
+    accept_hostkey: yes
+    force: yes
+  notify:
+    - restart pm2
+
+- name: install python requirements
+  pip:
+    requirements: "{{ ansible_env.HOME }}/{{ webserver_src_dir }}/requirements.txt"
+  notify:
+    - restart pm2
+
+- name: install node packages via npm
+  npm:
+    path: "{{ ansible_env.HOME }}/{{ webserver_src_dir }}/server"
+    executable: /usr/local/bin/npm
+  notify:
+    - restart pm2
+
+- name: create nginx site config
+  template:
+    src: nginx_site.conf
+    dest: /etc/nginx/sites-enabled/default
+  notify:
+    - restart nginx

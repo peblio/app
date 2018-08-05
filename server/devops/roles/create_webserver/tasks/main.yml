@@ -18,7 +18,12 @@
   register: ec2
 
 - name: wait for SSH to come up
-  wait_for: host={{ item.public_dns_name }} port=22 delay=60 timeout=320 state=started
+  wait_for:
+    host: "{{ item.public_dns_name }}"
+    port: 22
+    delay: 60
+    timeout: 320
+    state: started
   with_items: "{{ ec2.instances }}"
 
 - name: scan for ssh key for EC2 instance
@@ -32,3 +37,9 @@
     key: "{{ item.stdout }}"
     path: ~/.ssh/known_hosts
   with_items: "{{ keyscan.results }}"
+
+- name: add EC2 instance to temporary ansible group for provisioning
+  add_host:
+    name: "{{ item.public_ip }}"
+    groups: new_webserver_instances
+  with_items: "{{ ec2.instances }}"

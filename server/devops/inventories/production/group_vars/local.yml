@@ -1,5 +1,4 @@
 ---
-env: production
 elb_name: production-load-balancer
 target_group_name: production-elb-target-group
 instance_type: t2.2xlarge

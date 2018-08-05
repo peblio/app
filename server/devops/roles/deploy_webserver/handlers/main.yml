@@ -1,0 +1,10 @@
+---
+- name: restart pm2
+  command: "pm2 restart ecosystem.config.js --env {{ env }}"
+  args:
+    chdir: "{{ ansible_env.HOME }}/{{ webserver_src_dir }}/server"
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted

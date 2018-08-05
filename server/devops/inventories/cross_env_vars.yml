@@ -1,9 +1,12 @@
 ---
 ansible_user: ubuntu
 ansible_python_interpreter: python
+node_version: v8.7.0
 key_name: Peblios
 security_group_name: peblio-security-group
 ami_id: ami-41e0b93b
 region: us-east-1
 subnet_id: subnet-8065daaf
 webserver_iam_role: peblio-server
+webserver_src_dir: proto-2
+git_repository: git@github.com:peblio/app.git
