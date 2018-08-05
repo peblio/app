@@ -60,7 +60,7 @@ const userSchema = new Schema({
   }
 }, {
   toJSON: { virtuals: true },
-  toObject: { virtuals: true },
+  toObject: { virtuals: true }
 });
 
 userSchema.virtual('folders', {
