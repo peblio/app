@@ -54,13 +54,13 @@ const userSchema = new Schema({
     unique: true,
     sparse: true,
     required() { return this.loginType === 'google'; }
+  },
+  preferences: {
+    forkWarning: { type: Boolean, default: true }
   }
 }, {
   toJSON: { virtuals: true },
   toObject: { virtuals: true },
-  preferences: {
-    forkWarning: { type: Boolean, default: true }
-  }
 });
 
 userSchema.virtual('folders', {

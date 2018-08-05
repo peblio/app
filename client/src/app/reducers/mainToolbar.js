@@ -12,7 +12,7 @@ const initialState = {
   isShareModalOpen: false,
   isSignUpModalOpen: false,
   isWelcomeModalOpen: false,
-  isForkWarningOpen: true
+  isForkWarningOpen: false
 };
 
 const mainToolbar = (state = initialState, action) => {
@@ -122,13 +122,12 @@ const mainToolbar = (state = initialState, action) => {
 
     case ActionTypes.VIEW_FORK_WARNING:
       return Object.assign({}, state, {
-        isForkWarning: true
+        isForkWarningOpen: true
       });
 
     case ActionTypes.CLOSE_FORK_WARNING:
-      console.log('yo');
       return Object.assign({}, state, {
-        isForkWarning: false
+        isForkWarningOpen: false
       });
 
     default:

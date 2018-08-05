@@ -21,6 +21,7 @@ import MainToolbar from './MainToolbar/MainToolbar.jsx';
 import * as editorActions from '../../action/editors.js';
 import * as mainToolbarActions from '../../action/mainToolbar.js';
 import * as pageActions from '../../action/page.js';
+import * as preferencesActions from '../../action/preferences.js';
 import * as userActions from '../../action/user.js';
 
 import axios from '../../utils/axios';
@@ -32,6 +33,18 @@ class App extends React.Component {
   }
   componentDidMount() {
     this.authAndLoadPage();
+  }
+
+  componentWillUpdate(nextProps) {
+    const projectID = this.projectID();
+    if (this.props.unsavedChanges !== nextProps.unsavedChanges && nextProps.unsavedChanges === true) {
+      axios.get(`/authenticate/${projectID}`)
+        .then((res) => {
+          if (!res.data && this.props.showForkWarning) {
+            this.props.viewForkWarning();
+          }
+        });
+    }
   }
 
   onKeyPressed(e) {
@@ -107,6 +120,7 @@ class App extends React.Component {
         if (res.data.name) {
           this.props.setUserName(res.data.name);
           this.props.setUserType(res.data.type);
+          this.props.fetchUserPreferences();
           this.props.fetchAllPages();
         }
       });
@@ -118,7 +132,6 @@ class App extends React.Component {
       const projectID = this.projectID();
       axios.get(`/authenticate/${projectID}`)
         .then((res1) => {
-          console.log(res1);
           this.props.setEditAccess(res1.data);
         });
     }
@@ -158,7 +171,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.props.isForkWarningOpen);
     return (
       <div // eslint-disable-line
         tabIndex="0"
@@ -347,6 +359,7 @@ class App extends React.Component {
         >
           <ForkWarning
             closeForkWarning={this.props.closeForkWarning}
+            savePage={this.savePage}
           />
         </Modal>
       </div>
@@ -433,6 +446,7 @@ App.propTypes = {
 
   setEditAccess: PropTypes.func.isRequired,
 
+  // mainToolBar
   viewPagesModal: PropTypes.func.isRequired,
   closePagesModal: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
@@ -458,6 +472,11 @@ App.propTypes = {
   viewForkWarning: PropTypes.func.isRequired,
   closeForkWarning: PropTypes.func.isRequired,
 
+  // preferences
+  fetchUserPreferences: PropTypes.func.isRequired,
+  showForkWarning: PropTypes.bool.isRequired,
+
+  // user
   logoutUser: PropTypes.func.isRequired,
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
@@ -497,7 +516,9 @@ function mapStateToProps(state) {
     isForgotModalOpen: state.mainToolbar.isForgotModalOpen,
     isResetModalOpen: state.mainToolbar.isResetModalOpen,
     isConfirmUserModalOpen: state.mainToolbar.isConfirmUserModalOpen,
-    isForkWarningOpen: state.mainToolbar.isForkWarningOpen
+    isForkWarningOpen: state.mainToolbar.isForkWarningOpen,
+
+    showForkWarning: state.preferences.showForkWarning
   };
 }
 
@@ -506,6 +527,7 @@ function mapDispatchToProps(dispatch) {
     ...editorActions,
     ...mainToolbarActions,
     ...pageActions,
+    ...preferencesActions,
     ...userActions
   }, dispatch);
 }
