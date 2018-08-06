@@ -2,34 +2,29 @@
 
 Peblio is an instructional tool and lesson sharing platform for middle and high school Computer Science teachers. The goal is to democratize quality instructional materials and provide CS teachers with a streamlined workflow for finding and adapting lessons and managing student work.
 
-## To get started
+## Setup
 
 1. Fork this repository.
-1. Clone the forked repository and cd into it
-1. `$ npm install`
-1. Install MongoDB and make sure it is running
-  * For Mac OSX with [homebrew](https://brew.sh/): `brew install mongodb` then `brew services start mongodb`
-  * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
-1. Create a .env in the root of the directory that looks like
-```
-AWS_ACCESS_KEY=<your-aws-access-key>
-AWS_SECRET_KEY=<your-aws-secret-key>
-S3_BUCKET=<your-s3-bucket>
-GOOGLE_CLIENT_ID=<peblio-google-client-id>
-GOOGLE_CLIENT_SECRET=<peblio-client-secret>
-GOOGLE_ANALYTICS_TRACKING_ID=<peblio-ga-tracking-id>
-PEBLIO_SENDGRID_PASSWORD=<peblio-sendgrid-password>
-PEBLIO_SENDGRID_MAIL=<peblio-sendgrid-email>
-LOCALSTORAGE_VARIABLE="local_peblio"
- ```
- If you don't care about being able to upload media files to S3 , you can drop in the file exactly how it is. Or, if you don't want to do that, just ask me to send you mine.
+2. Clone the forked repository and cd into it.
+3. (Optional) Create a [Python 2 virtualenv](https://docs.python-guide.org/dev/virtualenvs/#lower-level-virtualenv) and activate it.
+4. ```pip install -r requirements.txt```
+5. Make sure that you have [Node.js v8.7.0 or higher installed](https://github.com/creationix/nvm#installation).
+6. ```cd client && npm install```
+7. ```cd ../server && npm install```
+8. Install MongoDB and make sure it is running.
+    * For Mac OSX with [homebrew](https://brew.sh/): `brew install mongodb` then `brew services start mongodb`
+    * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
+9. Get the AWS IAM credentials for the `peblio-local-development` user from Mathura and place them in your `~/.aws/credentials` file under a profile called `peblio`. You should also create a `peblio` profile in `~/.aws/config` with the line `region=us-east-1`. See the [AWS docs](https://docs.aws.amazon.com/cli/latest/userguide/cli-multiple-profiles.html) for more details.
+10. Get the `Peblios.pem` SSH key from Mathura and place it in your `~/.ssh` directory. Then, run the following commands:
+    ```
+    ssh-agent bash
+    ssh-add -K ~/.ssh/Peblios.pem
+    ```
 
-If you're developing on OSX and you encounter an error like `npm ERR! cb() never called!` when running `npm install`, using [yarn](https://yarnpkg.com/lang/en/) to install dependencies seems to get around this issue:
-```
-brew install yarn
-yarn install
-```
-1. To build all the files, run `npm run dev` in source folder and keep it running
-1. To start the app, run `npm start` in root folder
-1. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
-1. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
+## Local Development
+
+1. `cd client && npm start`
+2. In another terminal session, `cd server && npm start`
+3. Navigate to [http://localhost:8080](http://localhost:8080) in your browser.
+4. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
+5. Install the [Redux Developer Tools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en).
