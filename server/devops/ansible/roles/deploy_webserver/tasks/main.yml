@@ -27,6 +27,7 @@
   template:
     src: nginx_site.conf
     dest: /etc/nginx/sites-enabled/default
+    force: yes
   notify:
     - restart nginx
   become: yes

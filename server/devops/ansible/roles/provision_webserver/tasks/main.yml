@@ -60,11 +60,6 @@
       executable: /usr/local/bin/npm
       global: yes
 
-  - name: remove default nginx site
-    file:
-      path: /etc/nginx/sites-enabled/default
-      state: absent
-
   - name: write nginx.conf
     template:
       src: nginx.conf
