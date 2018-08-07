@@ -10,21 +10,24 @@ class FileModal extends React.Component {
         <li className="file-modal__item">
           <a className="file-modal__link" href="/">New</a>
         </li>
-        { this.props.name &&
+        {this.props.name && (
           <div>
             <li className="file-modal__item">
               <a // eslint-disable-line
-                className="file-modal__link" onClick={() => {
+                className="file-modal__link"
+                onClick={() => {
                   this.props.viewPagesModal();
                   this.props.toggleFileDropdown();
                 }}
+                data-test="show-pages-modal"
               >
                 Open
               </a>
             </li>
             <li className="file-modal__item">
               <a  // eslint-disable-line
-                className="file-modal__link" onClick={() => {
+                className="file-modal__link"
+                onClick={() => {
                   this.props.savePage();
                   this.props.toggleFileDropdown();
                 }}
@@ -33,7 +36,7 @@ class FileModal extends React.Component {
               </a>
             </li>
           </div>
-        }
+        )}
       </ul>
     );
   }

@@ -23,7 +23,7 @@ class Modal extends React.Component {
         style={this.props.style}
       >
         <nav>
-          <button className="modal__close-button" onClick={this.props.closeModal}>╳</button>
+          <button className="modal__close-button" onClick={this.props.closeModal} data-test="close-modal">╳</button>
         </nav>
         {this.props.children}
       </ReactModal>

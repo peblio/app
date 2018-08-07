@@ -7,13 +7,12 @@ if ! [ -x "$(command -v credstash)" ]; then
 fi
 
 SECRET_NAME=$1
-SECRET_VALUE=$2
-ENVIRONMENT=$3
+ENVIRONMENT=$2
 
 if [[ "$ENVIRONMENT" != "local" && "$ENVIRONMENT" != "test" && "$ENVIRONMENT" != "staging" && "$ENVIRONMENT" != "production" ]]; then
-  echo "Usage: ./add_credstash_secret.sh <name> <value> <local|test|staging|production>"
+  echo "Usage: ./get_credstash_secret.sh <name> <local|test|staging|production>"
   echo "$ENVIRONMENT is not a valid environment. Please specify local, test, staging, or production as the third argument to this script."
   exit 1
 fi
 
-AWS_PROFILE=peblio credstash -r us-east-1 put "$SECRET_NAME.$ENVIRONMENT" "$SECRET_VALUE" "environment=$ENVIRONMENT" -a
+AWS_PROFILE=peblio credstash -r us-east-1 get "$SECRET_NAME.$ENVIRONMENT" "environment=$ENVIRONMENT"

@@ -56,6 +56,7 @@ The frontend uses the [AWS CLI](https://docs.aws.amazon.com/cli/latest/reference
 #### Staging
 
 ```
+git checkout staging
 cd client
 ./devops/staging_deploy.sh
 ```
@@ -63,9 +64,22 @@ cd client
 #### Production
 
 ```
+git checkout production
 cd client
 ./devops/prod_deploy.sh
 ```
+
+## Git Workflow
+
+The expected git workflow for feature development is:
+
+1. Either create a local branch for your feature, **OR**, fork the repo and create a branch for your feature.
+
+2. When your work is ready, create a pull request against the `master` branch of this repo.
+
+3. Once your pull request to `master` has been merged, create a pull request from `master` to `staging`, merge it, and deploy to the staging environment to manually test your feature.
+
+4. Once you've verified that everything works in the staging environment, you can create a pull request from `staging` to `production`, merge it, and deploy to the production environment.
 
 ## Credstash and Environment Variables
 
@@ -91,7 +105,7 @@ cd server
 ./add_credstash_secret.sh my.secret donttellanyone local
 ```
 
-When adding a new secret, always make sure to add a version for each environment: `local`, `staging`, and `production`.
+When adding a new secret, always make sure to add a version for each of the following environments: `local`, `test`, `staging`, and `production`.
 
 Once you've added a secret, make sure that you also update [server/run_with_credstash.sh](server/run_with_credstash.sh) to map that secret to an environment variable.
 

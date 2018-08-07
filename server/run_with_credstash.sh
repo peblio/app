@@ -12,6 +12,11 @@ function get_secret () {
   echo `credstash -r us-east-1 get $1.$ENVIRONMENT environment=$ENVIRONMENT`
 }
 
+if [[ "$ENVIRONMENT" != "local" && "$ENVIRONMENT" != "test" && "$ENVIRONMENT" != "staging" && "$ENVIRONMENT" != "production" ]]; then
+  echo "$ENVIRONMENT is not a valid environment. Please specify local, test, staging, or production as the second argument to this script."
+  exit 1
+fi
+
 echo "Fetching environment variables from credstash..."
 
 export MONGO_DB_PEBLIO=`get_secret db.connection`
