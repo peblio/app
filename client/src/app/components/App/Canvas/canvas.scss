@@ -30,6 +30,15 @@
   padding: $large-padding;
   margin: 0 auto;
   margin-top: 80px;
+  height: fit-content;
+}
+
+.canvas::after{
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 200px;
+  z-index: 1;
 }
 
 .canvas-edit-mode {
@@ -72,4 +81,13 @@
 }
 .widget__container:hover .widget-nav__container {
   display: block;
+}
+
+.widget__container::before{
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: $widget-nav-height;
+  top: -($widget-nav-height);
+  z-index: -1;
 }
