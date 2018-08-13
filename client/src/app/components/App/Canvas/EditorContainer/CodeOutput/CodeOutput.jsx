@@ -137,12 +137,14 @@ class CodeOutput extends React.Component {
     scriptOffs = scriptOffs[0];
 
     const injectScript = sketchDoc.createElement('script');
-    injectScript.innerHTML =
+    if (scriptOffs) {
+      injectScript.innerHTML =
     `CONSOLEOUTPUT.init(["${this.props.id}"]);
     CONSOLEOUTPUT.callConsole();
     CONSOLEOUTPUT.callErrorConsole(${scriptOffs[0]}, "${scriptOffs[1]}");
     `;
-    sketchDoc.head.appendChild(injectScript);
+      sketchDoc.head.appendChild(injectScript);
+    }
 
     return sketchDoc;
   }
