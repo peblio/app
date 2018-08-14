@@ -1,0 +1,90 @@
+---
+- block:
+  - name: enable SSH forwarding for sudo
+    lineinfile:
+      dest: /etc/sudoers
+      insertafter: '^#?\s*Defaults\s+env_keep\b'
+      line: 'Defaults    env_keep += "SSH_AUTH_SOCK"'
+
+  - name: update and upgrade apt-get
+    apt:
+      update_cache: yes
+      upgrade: dist
+
+  - name: install apt-get dependencies
+    apt:
+      pkg: "{{ item }}"
+    with_items:
+      - build-essential
+      - libssl-dev
+      - libffi-dev
+      - python-dev
+      - python-pip
+      - awscli
+      - nginx
+      - ntp
+      - mongodb
+
+  - name: install nvm
+    git:
+      repo: https://github.com/creationix/nvm.git
+      dest: ~/.nvm
+      version: v0.33.11
+    become_user: ubuntu
+
+  - name: source nvm in ~/.profile
+    lineinfile:
+      dest: ~/.profile
+      line: "source ~/.nvm/nvm.sh"
+      create: yes
+    become_user: ubuntu
+
+  - name: install required node version
+    shell: "sudo -iu ubuntu nvm install {{ node_version }}"
+
+  - name: set default node version
+    shell: "sudo -iu ubuntu nvm alias default {{ node_version }}"
+
+  - name: create symlink from nvm node to /usr/local/bin/node
+    file:
+      src: "/home/ubuntu/.nvm/versions/node/{{ node_version }}/bin/{{ item }}"
+      dest: "/usr/local/bin/{{ item }}"
+      state: link
+    with_items:
+      - node
+      - npm
+
+  - name: install pm2 globally
+    npm:
+      name: pm2
+      executable: /usr/local/bin/npm
+      global: yes
+
+  - name: write nginx.conf
+    template:
+      src: nginx.conf
+      dest: /etc/nginx/nginx.conf
+
+  - name: write mongodb.conf
+    template:
+      src: mongodb.conf
+      dest: /etc/mongodb.conf
+
+  - name: start NTP daemon
+    service:
+      name: ntp
+      state: started
+
+  - name: scan for ssh key for github.com
+    shell: "ssh-keyscan -t rsa github.com"
+    register: github_keyscan
+
+  - name: add github.com ssh key to ssh known hosts
+    known_hosts:
+      name: github.com
+      key: "{{ item }}"
+      path: ~/.ssh/known_hosts
+    with_items: "{{ github_keyscan.stdout }}"
+
+  become: yes
+  become_method: sudo

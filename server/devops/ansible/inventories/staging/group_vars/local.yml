@@ -1,0 +1,3 @@
+---
+target_group_name: staging-elb-target-group
+instance_type: t2.micro

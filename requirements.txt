@@ -1,2 +1,4 @@
 awscli==1.15.68
 credstash==1.15.0
+ansible==2.6.2
+boto==2.49.0
