@@ -34,49 +34,49 @@ class InsertToolbar extends React.Component {
         >
           <EditorSVG alt="add code editor" />
           Editor
-          {this.state.editorExpanded &&
-          <div className="insert-toolbar__sub-menu">
-            <ul className="insert-toolbar__list">
-              <li className="insert-toolbar__list-item">
-                <button
-                  className="insert-toolbar__list-button"
-                  onClick={() => {
-                    this.props.addCodeEditor('html');
-                    this.toggleEditorOptions();
-                  }
-                  }
-                >
-                   HTML
-                </button>
-              </li>
-              <li className="insert-toolbar__list-item">
-                <button
-                  className="insert-toolbar__list-button"
-                  onClick={() => {
-                    this.props.addCodeEditor('webdev');
-                    this.toggleEditorOptions();
-                  }
-                  }
-                >
-                   HTML/JS/CSS
-                </button>
-              </li>
-              <li className="insert-toolbar__list-item">
-                <button
-                  className="insert-toolbar__list-button"
-                  onClick={() => {
-                    this.props.addCodeEditor('p5');
-                    this.toggleEditorOptions();
-                  }
-                  }
-                >
-                   P5
-                </button>
-              </li>
-            </ul>
-          </div>
-        }
         </button>
+        {this.state.editorExpanded &&
+        <div className="insert-toolbar__sub-menu">
+          <ul className="insert-toolbar__list">
+            <li className="insert-toolbar__list-item">
+              <button
+                className="insert-toolbar__list-button"
+                onClick={() => {
+                  this.toggleEditorOptions();
+                  this.props.addCodeEditor('html');
+                }
+                }
+              >
+                 HTML
+              </button>
+            </li>
+            <li className="insert-toolbar__list-item">
+              <button
+                className="insert-toolbar__list-button"
+                onClick={() => {
+                  this.toggleEditorOptions();
+                  this.props.addCodeEditor('webdev');
+                }
+                }
+              >
+                 HTML/JS/CSS
+              </button>
+            </li>
+            <li className="insert-toolbar__list-item">
+              <button
+                className="insert-toolbar__list-button"
+                onClick={() => {
+                  this.toggleEditorOptions();
+                  this.props.addCodeEditor('p5');
+                }
+                }
+              >
+                 P5
+              </button>
+            </li>
+          </ul>
+        </div>
+      }
         <button
           onClick={this.props.addTextEditor}
           id="elementButton" className="insert-toolbar__button"
@@ -105,6 +105,7 @@ class InsertToolbar extends React.Component {
           <ImageSVG alt="add image" />
           Image
         </button>
+
       </div>
     );
   }
