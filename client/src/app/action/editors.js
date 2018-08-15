@@ -145,6 +145,7 @@ export function clearConsoleOutput(id) {
 
 export function updateFile(id, index, content) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.UPDATE_FILE,
       id,

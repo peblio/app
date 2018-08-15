@@ -1,0 +1,16 @@
+---
+- name: wait for the EC2 instance's /healthcheck endpoint to respond with 200 OK
+  uri:
+    url: "http://{{ item.public_dns_name }}/healthcheck"
+  register: result
+  until: result.status == 200
+  retries: 60
+  delay: 1
+  with_items: "{{ ec2.instances }}"
+
+- name: register the EC2 instance to the load balancer target group
+  elb_target:
+    target_group_name: "{{ target_group_name }}"
+    target_id: "{{ item.id }}"
+    state: present
+  with_items: "{{ ec2.instances }}"

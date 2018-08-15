@@ -19,20 +19,6 @@ const profileRoutes = require('./controllers/profileController.js');
 
 require('./config/passport');
 
-// start the server:
-const listener = app.listen(process.env.PORT || 8081, () => {
-  console.log(`Listening on port ${listener.address().port}`);
-});
-
-mongoose.connect(process.env.MONGO_DB_PEBLIO);
-mongoose.connection.on('error', () => {
-  console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
-  process.exit(1);
-});
-mongoose.connection.on('open', () => {
-  console.log('MongoDB Connection success.');
-});
-
 app.use(cors({ credentials: true, origin: true }));
 
 // Basic usage
@@ -77,4 +63,19 @@ app.get('/api/logout', (req, res) => {
 
 app.get('/healthcheck', (req, res) => res.sendStatus(200));
 
-console.log(`ENVIRONMENT: ${process.env.ENVIRONMENT}`);
+function startServer() {
+  const listener = app.listen(process.env.PORT || 8081, () => {
+    console.log(`ENVIRONMENT: ${process.env.ENVIRONMENT}`);
+    console.log(`Listening on port ${listener.address().port}`);
+  });
+}
+
+mongoose.connect(process.env.MONGO_DB_PEBLIO);
+mongoose.connection.on('error', () => {
+  console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
+  process.exit(1);
+});
+mongoose.connection.on('open', () => {
+  console.log('MongoDB Connection success.');
+  startServer();
+});
