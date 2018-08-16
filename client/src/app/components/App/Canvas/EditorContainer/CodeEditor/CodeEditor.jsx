@@ -26,6 +26,7 @@ class CodeEditor extends React.Component {
     this.cm.on('keyup', () => {
       this.props.updateFile(this.props.currentFile, this.cm.getValue());
     });
+    this._cm.getWrapperElement().style['font-size'] = `${this.props.editorFontSize}px`;
   }
 
   componentWillUpdate(nextProps) {
@@ -64,6 +65,7 @@ class CodeEditor extends React.Component {
 
 CodeEditor.propTypes = {
   currentFile: PropTypes.number.isRequired,
+  editorFontSize: PropTypes.number.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired

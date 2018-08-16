@@ -20,6 +20,7 @@ import MainToolbar from './MainToolbar/MainToolbar.jsx';
 import * as editorActions from '../../action/editors.js';
 import * as mainToolbarActions from '../../action/mainToolbar.js';
 import * as pageActions from '../../action/page.js';
+import * as preferencesActions from '../../action/preferences.js';
 import * as userActions from '../../action/user.js';
 
 import axios from '../../utils/axios';
@@ -106,6 +107,7 @@ class App extends React.Component {
         if (res.data.name) {
           this.props.setUserName(res.data.name);
           this.props.setUserType(res.data.type);
+          this.props.fetchUserPreferences();
           this.props.fetchAllPages();
         }
       });
@@ -192,6 +194,8 @@ class App extends React.Component {
           />
         </nav>
         <Canvas
+          editorFontSize={this.props.editorFontSize}
+
           layout={this.props.layout}
           name={this.props.name}
           preview={this.props.preview}
@@ -442,6 +446,11 @@ App.propTypes = {
   viewWelcomeModal: PropTypes.func.isRequired,
   closeWelcomeModal: PropTypes.func.isRequired,
 
+  // preferences
+  fetchUserPreferences: PropTypes.func.isRequired,
+  editorFontSize: PropTypes.number.isRequired,
+  // editorTheme: PropTypes.string.isRequired,
+
   logoutUser: PropTypes.func.isRequired,
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
@@ -481,6 +490,9 @@ function mapStateToProps(state) {
     isForgotModalOpen: state.mainToolbar.isForgotModalOpen,
     isResetModalOpen: state.mainToolbar.isResetModalOpen,
     isConfirmUserModalOpen: state.mainToolbar.isConfirmUserModalOpen,
+
+    editorFontSize: state.preferences.editorFontSize,
+    editorTheme: state.preferences.editorTheme
   };
 }
 
@@ -489,6 +501,7 @@ function mapDispatchToProps(dispatch) {
     ...editorActions,
     ...mainToolbarActions,
     ...pageActions,
+    ...preferencesActions,
     ...userActions
   }, dispatch);
 }

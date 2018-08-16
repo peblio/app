@@ -100,6 +100,7 @@ class Canvas extends React.Component {
         clearConsoleOutput={this.props.clearConsoleOutput}
         code={editor.code}
         consoleOutputText={editor.consoleOutputText}
+        editorFontSize={this.props.editorFontSize}
         editorMode={editor.editorMode}
         files={editor.files}
         innerHeight={editor.innerHeight}
@@ -319,6 +320,7 @@ Canvas.propTypes = {
   currentWidget: PropTypes.string.isRequired,
   duplicateEditor: PropTypes.func.isRequired,
   editorIndex: PropTypes.number.isRequired,
+  editorFontSize: PropTypes.number.isRequired,
   editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   name: PropTypes.string.isRequired,
