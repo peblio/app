@@ -102,6 +102,7 @@ class Canvas extends React.Component {
         consoleOutputText={editor.consoleOutputText}
         editorFontSize={this.props.editorFontSize}
         editorMode={editor.editorMode}
+        editorTheme={this.props.editorTheme}
         files={editor.files}
         innerHeight={editor.innerHeight}
         innerWidth={editor.innerWidth}
@@ -322,6 +323,7 @@ Canvas.propTypes = {
   editorIndex: PropTypes.number.isRequired,
   editorFontSize: PropTypes.number.isRequired,
   editors: PropTypes.shape({}).isRequired,
+  editorTheme: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   name: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,

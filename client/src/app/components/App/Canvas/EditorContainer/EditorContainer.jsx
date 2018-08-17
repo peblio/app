@@ -78,6 +78,7 @@ class EditorContainer extends React.Component {
                       files={this.props.files}
                       updateFile={this.updateFile}
                       editorFontSize={this.props.editorFontSize}
+                      editorTheme={this.props.editorTheme}
                     />
 
                   </div>
@@ -125,6 +126,7 @@ EditorContainer.propTypes = {
   currentFile: PropTypes.number.isRequired,
   editorFontSize: PropTypes.number.isRequired,
   editorMode: PropTypes.string.isRequired,
+  editorTheme: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired

@@ -10,7 +10,7 @@ const preferences = (state = initialState, action) => {
       return Object.assign({}, state, {
         editorTheme: action.value
       });
-    case ActionTypes.UPDATE_FONT_SIZE:
+    case ActionTypes.UPDATE_EDITOR_FONT_SIZE:
       return Object.assign({}, state, {
         editorFontSize: action.value
       });

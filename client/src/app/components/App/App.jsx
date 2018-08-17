@@ -196,6 +196,7 @@ class App extends React.Component {
         </nav>
         <Canvas
           editorFontSize={this.props.editorFontSize}
+          editorTheme={this.props.editorTheme}
 
           layout={this.props.layout}
           name={this.props.name}
@@ -341,7 +342,10 @@ class App extends React.Component {
         >
           <Welcome />
         </Modal>
-        <Preferences />
+        {
+          this.props.preview ||
+          <Preferences />
+        }
       </div>
     );
   }
@@ -451,7 +455,7 @@ App.propTypes = {
   // preferences
   fetchUserPreferences: PropTypes.func.isRequired,
   editorFontSize: PropTypes.number.isRequired,
-  // editorTheme: PropTypes.string.isRequired,
+  editorTheme: PropTypes.string.isRequired,
 
   logoutUser: PropTypes.func.isRequired,
   updateUserName: PropTypes.func.isRequired,

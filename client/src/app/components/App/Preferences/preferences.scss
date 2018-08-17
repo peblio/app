@@ -3,16 +3,41 @@
 
 .preferences {
   &__container {
-    position: absolute;
+    position: fixed;
     display: flex;
     background-color: $black;
-    height: 100%;
+    height: calc(100% - #{$main-toolbar-height} - #{$insert-toolbar-height});
+    bottom: 0;
+    right: 0;
+    width: $preferences-width;
+  }
+  &__container::before {
+    content: '';
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 10px 15px 10px 0;
+    border-color: transparent #dd4397 transparent transparent;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+  &__heading {
+    font-size: $medium-font-size;
+    color: $white;
+    font-weight: $medium-font-weight;
   }
 }
 
 .editor-preferences {
   &__container {
     display: flex;
-    background-color: $dark-gray;
+    flex-direction: column;
+    margin: 0 auto;
+    height: fit-content;
   }
+  &__list {
+    background-color: $pref-gray;
+  }
+
 }
