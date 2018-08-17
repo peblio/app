@@ -1,0 +1,18 @@
+@import 'variables';
+@import 'mixins';
+
+.preferences {
+  &__container {
+    position: absolute;
+    display: flex;
+    background-color: $black;
+    height: 100%;
+  }
+}
+
+.editor-preferences {
+  &__container {
+    display: flex;
+    background-color: $dark-gray;
+  }
+}

@@ -16,6 +16,7 @@ import Welcome from './Modal/Welcome/Welcome.jsx';
 
 import Canvas from './Canvas/Canvas.jsx';
 import MainToolbar from './MainToolbar/MainToolbar.jsx';
+import Preferences from './Preferences/Preferences.jsx';
 
 import * as editorActions from '../../action/editors.js';
 import * as mainToolbarActions from '../../action/mainToolbar.js';
@@ -340,6 +341,7 @@ class App extends React.Component {
         >
           <Welcome />
         </Modal>
+        <Preferences />
       </div>
     );
   }
