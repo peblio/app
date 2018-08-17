@@ -28,7 +28,6 @@ const userSchema = new Schema({
     required: false,
     unique: false
   },
-
   type: {
     type: String,
     enum: ['student', 'teacher', 'other'],
