@@ -22,7 +22,8 @@ class Iframe extends React.Component {
           <iframe className="iframe__main" src={this.props.iframeURL} />
         </div>
         <form className="element__add-url" onSubmit={this.urlSubmitted.bind(this)}>
-          <label htmlFor="element-name" className="element__label"> URL
+          <label htmlFor="element-name" className="element__label">
+            URL
             <input
               id="element-name"
               className="element__input"

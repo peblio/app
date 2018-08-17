@@ -34,7 +34,6 @@ class CodeEditor extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    console.log(this.props.editorTheme)
     // check if files have changed
     if (this.props.currentFile !== nextProps.currentFile) {
       const file = this.props.files[nextProps.currentFile];
@@ -44,7 +43,7 @@ class CodeEditor extends React.Component {
       this.cm.getWrapperElement().style['font-size'] = `${nextProps.editorFontSize}px`;
     }
     if (this.props.editorTheme !== nextProps.editorTheme) {
-      this.cm.setOption('theme',constants.EDITOR_THEME[nextProps.editorTheme]);
+      this.cm.setOption('theme', constants.EDITOR_THEME[nextProps.editorTheme]);
     }
   }
 

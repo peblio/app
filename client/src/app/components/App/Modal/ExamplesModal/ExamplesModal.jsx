@@ -10,6 +10,7 @@ class ExamplesModal extends React.Component {
     };
     this.renderPages = this.renderPages.bind(this);
   }
+
   componentDidMount() {
     const temp = [];
     axios.get('/examples')
@@ -30,7 +31,11 @@ class ExamplesModal extends React.Component {
       const link = `/pebl/${page.id}`;
       pages.push(
         <li key={page.id}>
-          <a href={link}> {page.title} </a>
+          <a href={link}>
+            {' '}
+            {page.title}
+            {' '}
+          </a>
         </li>
       );
     });

@@ -5,7 +5,6 @@ import axios from '../../../../utils/axios';
 require('./passwordReset.scss');
 
 class PasswordReset extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -48,17 +47,18 @@ class PasswordReset extends React.Component {
         password,
         token
       })
-      .then((response) => {
-        this.resetResponse(response.data.msg);
-      })
+        .then((response) => {
+          this.resetResponse(response.data.msg);
+        })
       .catch((error) => { // eslint-disable-line
-        this.resetResponse(error.response.data.msg);
-      });
+          this.resetResponse(error.response.data.msg);
+        });
     } else {
       this.passwordMatchFailed();
     }
     event.preventDefault();
   }
+
   render() {
     return (
       <div className="reset-modal__content">
@@ -89,20 +89,19 @@ class PasswordReset extends React.Component {
             </label>
           </div>
           <div className="reset-modal__buttonholder">
-            <button className="forgot-modal__button" type="submit" value="Submit" >
+            <button className="forgot-modal__button" type="submit" value="Submit">
               Submit
             </button>
           </div>
         </form>
-        {this.state.showNotice &&
+        {this.state.showNotice && (
           <p className="forgot-modal__notice">
             {this.state.notice}
           </p>
-        }
+        )}
       </div>
     );
   }
-
 }
 
 PasswordReset.propTypes = {

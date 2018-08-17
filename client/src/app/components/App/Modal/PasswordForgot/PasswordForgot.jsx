@@ -4,7 +4,6 @@ import axios from '../../../../utils/axios';
 require('./passwordForgot.scss');
 
 class PasswordForgot extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -33,6 +32,7 @@ class PasswordForgot extends React.Component {
       });
     event.preventDefault();
   }
+
   render() {
     return (
       <div className="forgot-modal__content">
@@ -53,20 +53,19 @@ class PasswordForgot extends React.Component {
             </label>
           </div>
           <div className="forgot-modal__buttonholder">
-            <button className="forgot-modal__button" type="submit" value="Submit" >
+            <button className="forgot-modal__button" type="submit" value="Submit">
               Submit
             </button>
           </div>
         </form>
-        {this.state.showNotice &&
+        {this.state.showNotice && (
           <p className="forgot-modal__notice">
             {this.state.notice}
           </p>
-        }
+        )}
       </div>
     );
   }
-
 }
 
 export default PasswordForgot;

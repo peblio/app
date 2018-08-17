@@ -12,7 +12,6 @@ import AccountSVG from '../../../images/account.svg';
 require('./mainToolbar.scss');
 
 class MainToolbar extends React.Component {
-
   logout = () => {
     this.props.logoutUser().then(() => {
       history.push('/');

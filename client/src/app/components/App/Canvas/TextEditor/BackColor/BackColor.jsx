@@ -27,14 +27,14 @@ class BackColor extends React.Component {
           <BackColorSVG alt="background color" />
 
         </button>
-        { this.props.expanded &&
-          <div className="back-color__sub-container" >
+        { this.props.expanded && (
+          <div className="back-color__sub-container">
             <SketchPicker
               color={this.props.backColor}
               onChangeComplete={this.handleChangeComplete}
             />
           </div>
-        }
+        )}
 
       </div>
     );

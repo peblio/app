@@ -27,10 +27,10 @@ import * as userActions from '../../action/user.js';
 import axios from '../../utils/axios';
 
 class App extends React.Component {
-
   componentWillMount() {
     this.onUserVisit();
   }
+
   componentDidMount() {
     this.authAndLoadPage();
   }

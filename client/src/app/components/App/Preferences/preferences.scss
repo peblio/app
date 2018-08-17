@@ -6,21 +6,10 @@
     position: fixed;
     display: flex;
     background-color: $black;
-    height: calc(100% - #{$main-toolbar-height} - #{$insert-toolbar-height});
+    height: calc(100% - #{$main-toolbar-height} - #{1.5*$insert-toolbar-height});
     bottom: 0;
     right: 0;
     width: $preferences-width;
-  }
-  &__container::before {
-    content: '';
-    width: 0px;
-    height: 0px;
-    border-style: solid;
-    border-width: 10px 15px 10px 0;
-    border-color: transparent #dd4397 transparent transparent;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 5px;
   }
   &__heading {
     font-size: $medium-font-size;

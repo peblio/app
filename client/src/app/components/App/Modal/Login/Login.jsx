@@ -92,15 +92,14 @@ class Login extends React.Component {
         </form>
 
 
-        {this.state.showNotice &&
+        {this.state.showNotice && (
           <p className="forgot-modal__notice">
             {ReactHtmlParser(this.state.notice)}
           </p>
-        }
+        )}
       </div>
     );
   }
-
 }
 
 Login.propTypes = {

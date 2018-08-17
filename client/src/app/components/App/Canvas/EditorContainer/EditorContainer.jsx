@@ -85,21 +85,21 @@ class EditorContainer extends React.Component {
                   <div className="editor__output">
                     <div
                       className={`editor__output-overlay
-                      ${this.state.isResizing ?
-                      'editor__output-overlay--show' : ''}`}
+                      ${this.state.isResizing
+        ? 'editor__output-overlay--show' : ''}`}
                     >
                     </div>
-                    { this.props.isPlaying &&
-                    <CodeOutput
-                      id={this.props.id}
-                      clearConsoleOutput={this.clearConsoleOutput}
-                      files={this.props.files}
-                      isPlaying={this.props.isPlaying}
-                      isRefreshing={this.props.isRefreshing}
-                      stopCodeRefresh={this.stopCodeRefresh}
-                      updateConsoleOutput={this.updateConsoleOutput}
-                    />
-                  }
+                    { this.props.isPlaying && (
+                      <CodeOutput
+                        id={this.props.id}
+                        clearConsoleOutput={this.clearConsoleOutput}
+                        files={this.props.files}
+                        isPlaying={this.props.isPlaying}
+                        isRefreshing={this.props.isRefreshing}
+                        stopCodeRefresh={this.stopCodeRefresh}
+                        updateConsoleOutput={this.updateConsoleOutput}
+                      />
+                    )}
                   </div>
                 </SplitPane>
               </div>
@@ -116,7 +116,6 @@ class EditorContainer extends React.Component {
       </div>
     );
   }
-
 }
 
 EditorContainer.propTypes = {

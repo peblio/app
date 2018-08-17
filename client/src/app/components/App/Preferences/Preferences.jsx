@@ -11,6 +11,7 @@ class Preferences extends React.Component {
   componentDidMount() {
     this.editorTheme.value = this.props.editorTheme;
   }
+
   render() {
     return (
       <section className="preferences__container">
