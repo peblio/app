@@ -13,9 +13,9 @@ $yellow: #FED034;
 $light-green: #5EC1B8;
 
 $gray: #888;
-$black: #1C2524;
+$black: #00151E;
 $dark-gray:#242424;
-$pref-gray:#333333;
+$pref-gray:rgba(255, 255, 255, 0.09);
 
 $blue: #009887;
 $dark-blue: #007C6E;
@@ -31,7 +31,7 @@ $modal-overlay: rgba(0,0,0,0.45);
 
 //size
 $total-width: 1200px;
-$preferences-width: 200px;
+$preferences-width: 250px;
 
 //padding
 $micro-padding: .1rem;
@@ -46,6 +46,7 @@ $main-toolbar-padding:15 10 15 10;
 $h1-line-height:1.3;
 $h2-line-height:1.5;
 $p-line-height:1;
+$large-height: 1.5rem;
 
 //margin
 $micro-margin: .2rem;
@@ -89,7 +90,7 @@ $heavy-font-weight: 500;
 $nav-width:35px;
 $toolbar-width: 500px;
 $main-toolbar-height:50px;
-$insert-toolbar-height:30px;
+$insert-toolbar-height:45px;
 $files-indicator-width:10px;
 $widget-nav-height: 20px;
 

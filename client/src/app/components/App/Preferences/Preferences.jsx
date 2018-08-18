@@ -2,19 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import classNames from 'classnames';
 
 import * as preferencesAction from '../../../action/preferences.js';
 
 require('./preferences.scss');
 
 class Preferences extends React.Component {
-  componentDidMount() {
-    this.editorTheme.value = this.props.editorTheme;
+  componentWillUpdate(nextProps) {
+    if (this.props.editorTheme !== nextProps.editorTheme) {
+      this.editorTheme.value = nextProps.editorTheme;
+    }
   }
 
   render() {
+    const { preview, isPreferencesPanelOpen } = this.props;
+    const prefClassName = classNames('preferences__container', {
+      'preferences__container--open': !preview && isPreferencesPanelOpen
+    });
     return (
-      <section className="preferences__container">
+      <section className={classNames(prefClassName)}>
         <div className="editor-preferences__container">
           <h2 className="preferences__heading">
             Code Editor
@@ -22,34 +29,42 @@ class Preferences extends React.Component {
           <ul className="editor-preferences__list">
             <li className="editor-preferences__item">
               <label
+                className="editor-preferences__label"
                 htmlFor="editor-font-size"
               >
-                Font-size
+                <h3 className="editor-preferences__sub-heading">
+                  Font Size
+                </h3>
+                <input
+                  className="editor-preferences__input"
+                  id="editor-font-size"
+                  name="editor-font-size"
+                  type="number"
+                  value={this.props.editorFontSize}
+                  onChange={this.props.updateEditorFontSize}
+                />
               </label>
-              <input
-                className="editor-preferences__input"
-                id="editor-font-size"
-                type="number"
-                value={this.props.editorFontSize}
-                onChange={this.props.updateEditorFontSize}
-              />
             </li>
 
             <li className="editor-preferences__item">
               <label
+                className="editor-preferences__label"
                 htmlFor="editor-theme"
               >
-                Theme
+                <h3 className="editor-preferences__sub-heading">
+                  Theme
+                </h3>
+                <select
+                  className="editor-preferences__dropdown"
+                  id="editor-theme"
+                  name="editor-theme"
+                  onChange={this.props.updateEditorTheme}
+                  ref={(editorTheme) => { this.editorTheme = editorTheme; }}
+                >
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
+                </select>
               </label>
-              <select
-                id="editor-theme"
-                name="theme"
-                onChange={this.props.updateEditorTheme}
-                ref={(editorTheme) => { this.editorTheme = editorTheme; }}
-              >
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-              </select>
             </li>
           </ul>
         </div>
@@ -61,13 +76,17 @@ class Preferences extends React.Component {
 Preferences.propTypes = {
   editorFontSize: PropTypes.number.isRequired,
   editorTheme: PropTypes.string.isRequired,
+  isPreferencesPanelOpen: PropTypes.bool.isRequired,
+  preview: PropTypes.bool.isRequired,
   updateEditorFontSize: PropTypes.func.isRequired,
   updateEditorTheme: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   editorFontSize: state.preferences.editorFontSize,
-  editorTheme: state.preferences.editorTheme
+  editorTheme: state.preferences.editorTheme,
+  isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,
+  preview: state.page.preview
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

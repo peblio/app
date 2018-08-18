@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { hot } from 'react-hot-loader';
 
 import ConfirmUser from './Modal/ConfirmUser/ConfirmUser.jsx';
 import ExamplesModal from './Modal/ExamplesModal/ExamplesModal.jsx';
@@ -164,6 +165,7 @@ class App extends React.Component {
         tabIndex="0"
         onKeyDown={this.onKeyPressed}
       >
+      testingstillsdfsdfsdf
         <nav className="main-nav">
           <MainToolbar
             addCodeEditor={this.props.addCodeEditor}
@@ -174,6 +176,7 @@ class App extends React.Component {
             canEdit={this.props.canEdit}
             isFileDropdownOpen={this.props.isFileDropdownOpen}
             isAccountDropdownOpen={this.props.isAccountDropdownOpen}
+            isPreferencesPanelOpen={this.props.isPreferencesPanelOpen}
             logoutUser={this.props.logoutUser}
             name={this.props.name}
             pageTitle={this.props.pageTitle}
@@ -185,6 +188,7 @@ class App extends React.Component {
             toggleFileDropdown={this.props.toggleFileDropdown}
             toggleAccountDropdown={this.props.toggleAccountDropdown}
             togglePreviewMode={this.props.togglePreviewMode}
+            togglePreferencesPanel={this.props.togglePreferencesPanel}
             unsavedChanges={this.props.unsavedChanges}
             userType={this.props.userType}
             viewExamplesModal={this.props.viewExamplesModal}
@@ -342,10 +346,8 @@ class App extends React.Component {
         >
           <Welcome />
         </Modal>
-        {
-          this.props.preview ||
-          <Preferences />
-        }
+
+        <Preferences />
       </div>
     );
   }
@@ -449,8 +451,10 @@ App.propTypes = {
   viewConfirmUserModal: PropTypes.func.isRequired,
   isConfirmUserModalOpen: PropTypes.bool.isRequired,
   isWelcomeModalOpen: PropTypes.bool.isRequired,
+  isPreferencesPanelOpen: PropTypes.bool.isRequired,
   viewWelcomeModal: PropTypes.func.isRequired,
   closeWelcomeModal: PropTypes.func.isRequired,
+  togglePreferencesPanel: PropTypes.func.isRequired,
 
   // preferences
   fetchUserPreferences: PropTypes.func.isRequired,
@@ -496,6 +500,7 @@ function mapStateToProps(state) {
     isForgotModalOpen: state.mainToolbar.isForgotModalOpen,
     isResetModalOpen: state.mainToolbar.isResetModalOpen,
     isConfirmUserModalOpen: state.mainToolbar.isConfirmUserModalOpen,
+    isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,
 
     editorFontSize: state.preferences.editorFontSize,
     editorTheme: state.preferences.editorTheme
@@ -511,4 +516,4 @@ function mapDispatchToProps(dispatch) {
     ...userActions
   }, dispatch);
 }
-export default (connect(mapStateToProps, mapDispatchToProps)(App));
+export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(App));

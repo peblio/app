@@ -3,40 +3,41 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 
 export function updateEditorTheme(e) {
   const value = e.target.value;
-  return (dispatch) => {
-    axios.post('/users/preferences', {
-      key: 'editorTheme',
-      value
-    })
+  axios.post('/users/preferences', {
+    key: 'editorTheme',
+    value
+  })
     .then((res) => {
-      dispatch({
-        type: ActionTypes.UPDATE_EDITOR_THEME,
-        value
-      });
-      res.sendStatus(200);
+      console.log('preferences updated');
     })
     .catch((err) => {
       console.log(err);
+    });
+
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.UPDATE_EDITOR_THEME,
+      value
     });
   };
 }
 
 export function updateEditorFontSize(e) {
   const value = e.target.value;
-  return (dispatch) => {
-    axios.post('/users/preferences', {
-      key: 'editorFontSize',
-      value
-    })
+  axios.post('/users/preferences', {
+    key: 'editorFontSize',
+    value
+  })
     .then((res) => {
-      dispatch({
-        type: ActionTypes.UPDATE_EDITOR_FONT_SIZE,
-        value
-      });
-      res.sendStatus(200);
+      console.log('preferences updated');
     })
     .catch((err) => {
       console.log(err);
+    });
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.UPDATE_EDITOR_FONT_SIZE,
+      value
     });
   };
 }

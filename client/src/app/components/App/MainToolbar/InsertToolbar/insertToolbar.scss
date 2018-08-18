@@ -2,9 +2,16 @@
 @import 'mixins';
 
 .insert-toolbar {
+  &__pref{
+    transform: rotate(15deg);
+    transition-duration: .5s;
+    &--open{
+      transform: rotate(-15deg);
+      transition-duration: .5s;
+    }
+  }
   &__container {
     display: flex;
-    // position: fixed;
     @include flex;
     flex-direction: row;
     width: 100%;
@@ -12,15 +19,16 @@
     height: $insert-toolbar-height;
     background-color: $lighter-gray;
     z-index: $z-index-layer-1;
+    box-sizing: border-box;
+    justify-content: space-between;
   }
   &__sub-menu {
     position: absolute;
-    top: calc(#{$insert-toolbar-height*3} + #{$small-padding});
+    top: calc(#{$insert-toolbar-height*2} + #{$small-padding});
     left: $large-padding;
   }
   &__button{
     position: relative;
-    width: 7%;
     color:$black;
     padding: 0 $medium-padding;
     background-color: $lighter-gray;
