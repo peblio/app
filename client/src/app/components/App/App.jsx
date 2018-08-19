@@ -164,7 +164,6 @@ class App extends React.Component {
         tabIndex="0"
         onKeyDown={this.onKeyPressed}
       >
-      testingstillsdfsdfsdf
         <nav className="main-nav">
           <MainToolbar
             addCodeEditor={this.props.addCodeEditor}
