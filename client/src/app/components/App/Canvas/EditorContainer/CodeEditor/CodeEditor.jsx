@@ -8,13 +8,17 @@ import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/mode/css/css';
 
+import * as constants from '../../../../../constants/widgetConstants.js';
+
 require('../../../../../styles/codemirror.css');
-require('../../../../../styles/3024-night.css');
+require('../../../../../styles/base16-dark.css');
+require('../../../../../styles/base16-light.css');
 
 class CodeEditor extends React.Component {
   componentDidMount() {
     const file = this.props.files[this.props.currentFile];
     this.cm = CodeMirror(this.codemirrorContainer, {
+      theme: constants.EDITOR_THEME[this.props.editorTheme],
       value: CodeMirror.Doc(file.content, this.getFileMode(file.name)),
       lineNumbers: true,
       autoCloseBrackets: true,
@@ -26,6 +30,7 @@ class CodeEditor extends React.Component {
     this.cm.on('keyup', () => {
       this.props.updateFile(this.props.currentFile, this.cm.getValue());
     });
+    this.cm.getWrapperElement().style['font-size'] = `${this.props.editorFontSize}px`;
   }
 
   componentWillUpdate(nextProps) {
@@ -34,6 +39,15 @@ class CodeEditor extends React.Component {
       const file = this.props.files[nextProps.currentFile];
       this.cm.swapDoc(CodeMirror.Doc(file.content, this.getFileMode(file.name)));
     }
+    if (this.props.editorFontSize !== nextProps.editorFontSize) {
+      this.cm.getWrapperElement().style['font-size'] = `${nextProps.editorFontSize}px`;
+    }
+    if (this.props.editorTheme !== nextProps.editorTheme) {
+      this.cm.setOption('theme', constants.EDITOR_THEME[nextProps.editorTheme]);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
   }
 
   getFileMode(fileName) {
@@ -64,6 +78,8 @@ class CodeEditor extends React.Component {
 
 CodeEditor.propTypes = {
   currentFile: PropTypes.number.isRequired,
+  editorFontSize: PropTypes.number.isRequired,
+  editorTheme: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired

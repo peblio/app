@@ -53,6 +53,10 @@ const userSchema = new Schema({
     unique: true,
     sparse: true,
     required() { return this.loginType === 'google'; }
+  },
+  preferences: {
+    editorFontSize: { type: Number, default: 14 },
+    editorTheme: { type: String, enum: ['light', 'dark'], default: 'light' },
   }
 }, {
   toJSON: { virtuals: true },

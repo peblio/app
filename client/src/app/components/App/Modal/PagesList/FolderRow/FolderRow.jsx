@@ -60,6 +60,7 @@ class FolderRow extends Component {
       canRenameFolder: false
     };
   }
+
   deleteFolder = (e) => {
     e.stopPropagation();
     this.props.deleteFolder(this.props.folder._id);
@@ -114,15 +115,16 @@ class FolderRow extends Component {
               this.renameFolder(e);
               this.stopRenameFolder();
             }}
-          ></input>
+          >
+          </input>
         </td>
 
-        {width > 350 &&
+        {width > 350 && (
           <React.Fragment>
             <td className={colClassName}>{formatDate(folder.createdAt)}</td>
             <td className={colClassName}>{formatDate(folder.updatedAt)}</td>
           </React.Fragment>
-        }
+        )}
         <td className={colClassName}>
           <button className="pages__icon" onClick={this.deleteFolder}>
             <DeleteIcon alt="delete page" />

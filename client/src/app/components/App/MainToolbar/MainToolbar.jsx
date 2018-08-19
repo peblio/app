@@ -12,7 +12,6 @@ import AccountSVG from '../../../images/account.svg';
 require('./mainToolbar.scss');
 
 class MainToolbar extends React.Component {
-
   logout = () => {
     this.props.logoutUser().then(() => {
       history.push('/');
@@ -172,6 +171,8 @@ class MainToolbar extends React.Component {
             addTextEditor={this.props.addTextEditor}
             addIframe={this.props.addIframe}
             addImage={this.props.addImage}
+            isPreferencesPanelOpen={this.props.isPreferencesPanelOpen}
+            togglePreferencesPanel={this.props.togglePreferencesPanel}
           />
         )}
       </div>
@@ -188,6 +189,7 @@ MainToolbar.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,
+  isPreferencesPanelOpen: PropTypes.bool.isRequired,
   logoutUser: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
@@ -198,6 +200,7 @@ MainToolbar.propTypes = {
   toggleFileDropdown: PropTypes.func.isRequired,
   toggleAccountDropdown: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
+  togglePreferencesPanel: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   userType: PropTypes.string.isRequired,
   viewExamplesModal: PropTypes.func.isRequired,

@@ -59,8 +59,14 @@
       font-size: $small-font-size;
       cursor: pointer;
       color: $light-gray;
+      background: transparent;
+      padding: 0;
+      border: none;
       &:hover {
-        color: $blue
+        color: $blue;
+        background: transparent;
+        padding: 0;
+        border: none;
       }
     }
     &__level {
