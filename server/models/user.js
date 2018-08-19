@@ -28,6 +28,7 @@ const userSchema = new Schema({
     required: false,
     unique: false
   },
+
   type: {
     type: String,
     enum: ['student', 'teacher', 'other'],
@@ -53,10 +54,6 @@ const userSchema = new Schema({
     unique: true,
     sparse: true,
     required() { return this.loginType === 'google'; }
-  },
-  preferences: {
-    editorFontSize: { type: Number, default: 14 },
-    editorTheme: { type: String, enum: ['light', 'dark'], default: 'light' },
   }
 }, {
   toJSON: { virtuals: true },

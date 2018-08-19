@@ -1,32 +1,62 @@
 {
-	"extends": "airbnb-base",
+	"extends": "airbnb",
+	"env": {
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
+  "ecmaFeatures": {
+    "jsx": true,
+    "es6": true,
+    "classes": true
+  },
+  "parser": "babel-eslint",
   "rules": {
+  	"react/no-multi-comp": 0,
     "import/extensions": 0,
     "import/default": 0,
     "import/no-duplicates": 0,
     "import/named": 0,
     "import/namespace": 0,
     "import/no-unresolved": 0,
-    "import/no-named-as-default": 0,
-    "import/no-named-as-default-member": 0,
-    "comma-dangle": 0,
+    "import/no-named-as-default": 2,
+    "comma-dangle": 0,  // not sure why airbnb turned this on. gross!
     "indent": [2, 2, {"SwitchCase": 1}],
     "no-console": 0,
     "no-alert": 0,
     "no-prototype-builtins": 0,
     "no-underscore-dangle": 0,
-    "max-len": [1, 120, 2, { "ignoreComments": true }],
+    "max-len": [1, 120, 2, {ignoreComments: true}],
     "quote-props": [1, "consistent-as-needed"],
     "no-unused-vars": [1, {"vars": "local", "args": "none"}],
     "consistent-return": ["error", { "treatUndefinedAsUnspecified": true }],
     "no-param-reassign": [2, { "props": false }],
+    "react/self-closing-comp": ["error", {
+      "component": true,
+      "html": false
+    }],
     "newline-per-chained-call": 0,
+    "react/prefer-stateless-function": [0,
+      { "ignorePureComponents": true
+    }],
     "class-methods-use-this": 0,
-    "no-return-assign": [2, "except-parens"],
-    "operator-linebreak": [2, "after", { "overrides": { "?": "before", ":": "before" } }],
-    "object-curly-newline": 0
+    "react/jsx-no-bind": [2, {"allowBind": true, "allowArrowFunctions": true}],
+    "no-return-assign": [2, "except-parens"]
   },
   "plugins": [
-    "import"
-  ]
+    "react", "jsx-a11y", "import"
+  ],
+  "settings": {
+    "import/parser": "babel-eslint",
+    "import/resolve": {
+      "moduleDirectory": ["node_modules"]
+    }
+  },
+  "globals": {
+    "__DEVELOPMENT__": true,
+    "__CLIENT__": true,
+    "__SERVER__": true,
+    "__DISABLE_SSR__": true,
+    "__DEVTOOLS__": true
+  }
 }

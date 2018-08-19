@@ -52,12 +52,12 @@ class PagesTable extends Component {
             <tbody ref={measureRef}>
               <tr className="pages__headrow">
                 <th className="pages__header pages__header_uppercase">Files</th>
-                {width > 350 && (
+                {width > 350 &&
                   <React.Fragment>
                     <th className="pages__header pages__header_uppercase">Date Created</th>
                     <th className="pages__header pages__header_uppercase">Last Update</th>
                   </React.Fragment>
-                )}
+                }
                 <th className="pages__header"></th>
               </tr>
               {this.props.pages.map(page => <PageRow key={page._id} page={page} width={width} />)}

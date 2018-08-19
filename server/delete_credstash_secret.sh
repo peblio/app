@@ -9,9 +9,9 @@ fi
 SECRET_NAME=$1
 ENVIRONMENT=$2
 
-if [[ "$ENVIRONMENT" != "local" && "$ENVIRONMENT" != "test" && "$ENVIRONMENT" != "staging" && "$ENVIRONMENT" != "production" ]]; then
-  echo "Usage: ./delete_credstash_secret.sh <name> <local|test|staging|production>"
-  echo "$ENVIRONMENT is not a valid environment. Please specify local, test, staging, or production as the second argument to this script."
+if [[ "$ENVIRONMENT" != "local" && "$ENVIRONMENT" != "staging" && "$ENVIRONMENT" != "production" ]]; then
+  echo "Usage: ./delete_credstash_secret <name> <local|staging|production>"
+  echo "$ENVIRONMENT is not a valid environment. Please specify local, staging, or production as the second argument to this script."
   exit 1
 fi
 

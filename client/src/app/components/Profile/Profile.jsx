@@ -57,21 +57,22 @@ class Profile extends React.Component {
     return (
       <div>
         {
-          !(this.state.userType === 'student') && (
-            <div className="profile__container">
-              <Details
-                isOwner={this.props.isOwner}
-                name={this.props.name}
-                image={this.props.image}
-                setUserImage={this.props.setUserImage}
-                setUserBlurb={this.props.setUserBlurb}
-                blurb={this.props.blurb}
-              />
-              <Pebls
-                profileName={this.state.userName}
-              />
-            </div>
-          )}
+          !(this.state.userType === 'student') &&
+
+          <div className="profile__container">
+            <Details
+              isOwner={this.props.isOwner}
+              name={this.props.name}
+              image={this.props.image}
+              setUserImage={this.props.setUserImage}
+              setUserBlurb={this.props.setUserBlurb}
+              blurb={this.props.blurb}
+            />
+            <Pebls
+              profileName={this.state.userName}
+            />
+          </div>
+    }
       </div>
     );
   }
@@ -103,7 +104,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
     profileActions,
-    userActions),
+    userActions
+  ),
   dispatch);
 }
 export default (connect(mapStateToProps, mapDispatchToProps)(Profile));

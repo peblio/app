@@ -15,8 +15,3 @@ export const QUESTION_MIN_HEIGHT = 5;
 
 export const IMAGE_MIN_WIDTH = 8;
 export const IMAGE_MIN_HEIGHT = 12;
-
-export const EDITOR_THEME = {
-  light: 'base16-light',
-  dark: 'base16-dark'
-};

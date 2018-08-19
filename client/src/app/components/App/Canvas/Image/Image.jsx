@@ -38,45 +38,45 @@ class Image extends React.Component {
         filetype: file.type
       }
     })
-      .then((result) => {
-        const signedUrl = result.data;
-        const options = {
-          headers: {
-            'Content-Type': file.type
-          }
-        };
+    .then((result) => {
+      const signedUrl = result.data;
+      const options = {
+        headers: {
+          'Content-Type': file.type
+        }
+      };
 
-        return axiosOrg.put(signedUrl, file, options);
-      })
-      .then((result) => {
-        const url = URL.parse(result.request.responseURL);
-        this.setImageURL(`https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      return axiosOrg.put(signedUrl, file, options);
+    })
+    .then((result) => {
+      const url = URL.parse(result.request.responseURL);
+      this.setImageURL(`https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   render() {
     return (
-      <div className={`image__container ${this.props.preview ? '' : 'image__container--edit'}`}>
+      <div className={`image__container ${this.props.preview ? '' : 'image__container--edit'}`} >
 
-        {!this.props.preview && !this.props.name && (
-          <div className="image__login">
-            {this.props.imageURL && <img className="element__image" src={this.props.imageURL} alt="" />}
-            <div
-              className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
-            >
-              <div className="image__title">
+        {!this.props.preview && !this.props.name &&
+        <div className="image__login">
+          {this.props.imageURL && <img className="element__image" src={this.props.imageURL} alt="" />}
+          <div
+            className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
+          >
+            <div className="image__title">
                 Please Log In to Upload Images
-              </div>
-              <div className="image__svg">
-                <UploadSVG alt="upload image" />
-              </div>
+            </div>
+            <div className="image__svg">
+              <UploadSVG alt="upload image" />
             </div>
           </div>
-        )}
-        {!this.props.preview && this.props.name && (
+        </div>
+        }
+        {!this.props.preview && this.props.name &&
           <div className="image__login">
             {this.props.imageURL && <img className="element__image" src={this.props.imageURL} alt="" />}
             <div
@@ -117,7 +117,8 @@ class Image extends React.Component {
               </div>
             </div>
           </div>
-        )}
+
+      }
         {this.props.preview && this.props.imageURL &&
           <img className="element__image" src={this.props.imageURL} alt="" />
         }

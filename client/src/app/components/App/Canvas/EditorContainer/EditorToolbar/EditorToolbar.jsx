@@ -12,9 +12,7 @@ class EditorToolbar extends React.Component {
       <div className="editor-toolbar__container">
         <div className="editor-toolbar__button-container">
           <p className="editor-toolbar__title">
-            {this.props.editorMode}
-            {' '}
-            Editor
+            {this.props.editorMode} Editor
           </p>
           <button
             className="editor-toolbar__svg"
@@ -46,7 +44,9 @@ class EditorToolbar extends React.Component {
                   {file.name}
                 </button>
               </li>
-            ))
+              )
+
+            )
           }
         </ul>
       </div>
