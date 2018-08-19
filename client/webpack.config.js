@@ -83,10 +83,10 @@ const config = {
   },
   devtool: 'source-map',
   plugins: [
-    // new SassLintPlugin({
-    //   configFile: '.sass-lint.yml',
-    //   glob: 'src/**/*.s?(a|c)ss',
-    // }),
+    new SassLintPlugin({
+      configFile: '.sass-lint.yml',
+      glob: 'src/**/*.s?(a|c)ss',
+    }),
     new Dotenv({
       path: path.resolve(__dirname, envFiles[ENVIRONMENT] || '.env')
     }),

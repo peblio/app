@@ -5,7 +5,7 @@
   &__pref{
     transform: rotate(15deg);
     transition-duration: .5s;
-    &--open{
+    &--open{ // sass-lint:disable-line class-name-format
       transform: rotate(-15deg);
       transition-duration: .5s;
     }
