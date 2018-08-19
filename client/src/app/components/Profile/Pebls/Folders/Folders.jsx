@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import { viewFolder } from '../../../../action/page.js';
 
 class Folders extends Component {
-
   viewFolder = (e, id, folderDepth) => {
     e.stopPropagation();
     this.props.viewFolder(id, folderDepth);
@@ -17,23 +16,23 @@ class Folders extends Component {
     return (
       <section className="profile-folders__container">
         <ul className="profile-folders__list">
-          {this.props.folders.map(folder =>
-
-                (
-                  <li // eslint-disable-line
-                    key={folder._id}
-                    className="profile-folders__list-item"
-                    onClick={e => this.viewFolder(e, folder._id, folderDepth)}
-                  >
-                    <h3
-                      className="profile-folders__title"
-                    >
-                      {folder.title}
-                    </h3>
-                    <p className="profile-folders__sub-title">
-                      {folder.files.length} files
-                    </p>
-                  </li>))}
+          {this.props.folders.map(folder => (
+            <li // eslint-disable-line
+              key={folder._id}
+              className="profile-folders__list-item"
+              onClick={e => this.viewFolder(e, folder._id, folderDepth)}
+            >
+              <h3
+                className="profile-folders__title"
+              >
+                {folder.title}
+              </h3>
+              <p className="profile-folders__sub-title">
+                {folder.files.length}
+                {' '}
+                files
+              </p>
+            </li>))}
         </ul>
       </section>
 

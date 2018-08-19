@@ -33,18 +33,18 @@ class ProfileLevel extends Component {
           {title}
         </h1>
 
-        {this.props.folderDepth > 0 &&
-          <div
+        {this.props.folderDepth > 0 && (
+          <button
             className="profile-pebls__back"
             onClick={this.handleClick}
           >
            &#9664; Back
-          </div>
-         }
+          </button>
+        )}
         <h2 className="profile-pebls__sub-heading">folders</h2>
         {childFolders.length > 0 &&
         <Folders folders={childFolders} folderId={folderId} folderDepth={folderDepth} />
-          }
+        }
         <h2 className="profile-pebls__sub-heading">files</h2>
         <Pages pages={childPages} folderId={folderId} />
       </div>
