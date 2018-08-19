@@ -33,7 +33,6 @@ class Canvas extends React.Component {
       document.getElementById(id).focus({ preventScroll: false });
     }
   }
-
   componentWillUnmount() {
     if (this.timeout) {
       clearTimeout(this.timeout);
@@ -101,9 +100,7 @@ class Canvas extends React.Component {
         clearConsoleOutput={this.props.clearConsoleOutput}
         code={editor.code}
         consoleOutputText={editor.consoleOutputText}
-        editorFontSize={this.props.editorFontSize}
         editorMode={editor.editorMode}
-        editorTheme={this.props.editorTheme}
         files={editor.files}
         innerHeight={editor.innerHeight}
         innerWidth={editor.innerWidth}
@@ -209,8 +206,8 @@ class Canvas extends React.Component {
             const minH = this.props.textHeights[key] || WidgetSize.TEXT_MIN_HEIGHT;
             localLayout[key].minH = minH;
             localLayout[key].h =
-              Math.max(minH, (localLayout[key].h < WidgetSize.TEXT_MIN_HEIGHT)
-                ? WidgetSize.TEXT_MIN_HEIGHT : localLayout[key].h);
+              Math.max(minH, (localLayout[key].h < WidgetSize.TEXT_MIN_HEIGHT) ?
+              WidgetSize.TEXT_MIN_HEIGHT : localLayout[key].h);
             break;
           }
           case 'code': {
@@ -278,7 +275,7 @@ class Canvas extends React.Component {
               key={id}
               data-grid={localLayout[id]}
               className={`${this.props.currentWidget === id ? 'canvas-high' : ''}`
-              }
+            }
             >
 
               <div
@@ -287,7 +284,7 @@ class Canvas extends React.Component {
                 tabIndex="0"
                 onFocus={() => this.props.setCurrentWidget(id)}
               >
-                {this.props.preview || (
+                {this.props.preview ||
                   <div className={`widget-nav__container${(this.props.currentWidget === id) ? '_highlighted' : ''}`}>
                     <WidgetNav
                       id={id}
@@ -297,7 +294,7 @@ class Canvas extends React.Component {
                       duplicateEditor={this.props.duplicateEditor}
                     />
                   </div>
-                )}
+                }
                 {(() => {
                   switch (this.props.editors[id].type) {
                     case 'code': return this.renderCodeEditor(this.props.editors[id]);
@@ -310,7 +307,7 @@ class Canvas extends React.Component {
                 })()}
               </div>
             </div>
-          ))}
+        ))}
         </ReactGridLayout>
       </section>
     );
@@ -322,9 +319,7 @@ Canvas.propTypes = {
   currentWidget: PropTypes.string.isRequired,
   duplicateEditor: PropTypes.func.isRequired,
   editorIndex: PropTypes.number.isRequired,
-  editorFontSize: PropTypes.number.isRequired,
   editors: PropTypes.shape({}).isRequired,
-  editorTheme: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   name: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,

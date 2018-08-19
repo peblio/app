@@ -19,8 +19,6 @@ userRoutes.route('/reset').post(resetPassword);
 userRoutes.route('/confirmation').post(confirmUser);
 userRoutes.route('/resendconfirmation').post(resendConfirmUser);
 userRoutes.route('/login/google').post(loginWithGoogle);
-userRoutes.route('/preferences').post(updatePreferences);
-userRoutes.route('/preferences').get(getUserPreferences);
 
 function createUser(req, res) {
   const email = req.body.mail;
@@ -279,50 +277,6 @@ function loginWithGoogle(req, res) {
       });
     });
   }).catch(err => res.status(401).send({ msg: UserConst.LOGIN_FAILED }));
-}
-
-function updatePreferences(req, res) {
-  const name = req.user ? req.user.name : null;
-  const key = req.body.key;
-  const value = req.body.value;
-  if (name) {
-    User.findOne({ name }, (err, user) => {
-      if (err) {
-        res.status(500).json({ error: err });
-        return;
-      }
-      if (!user) {
-        res.status(404).json({ error: 'Document not found' });
-        return;
-      }
-      const preferences = { ...user.preferences };
-      preferences[key] = value;
-      user.preferences = preferences;
-      user.save((saveErr, user) => {
-        if (saveErr) {
-          res.status(500).json({ error: saveErr });
-          return;
-        }
-        res.json(user.preferences);
-      });
-    });
-  } else {
-    res.sendStatus(403);
-  }
-}
-function getUserPreferences(req, res) {
-  const name = req.user ? req.user.name : null;
-  if (name) {
-    User.findOne({ name }, (err, user) => {
-      if (err) {
-        res.status(500).json({ error: err });
-      } else {
-        res.status(200).send(user.preferences);
-      }
-    });
-  } else {
-    res.sendStatus(403);
-  }
 }
 
 // EMAIL HELPERS

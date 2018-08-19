@@ -68,7 +68,7 @@ class FolderContainer extends Component {
               &nbsp;
               New
             </button>
-            {newFolderDropdownIsOpen && (
+            {newFolderDropdownIsOpen &&
               <ul className="pages__new-folder-dropdown">
                 <li className="pages__new-folder-dropdown-item" onClick={this.createFolder}>
                   Folder
@@ -77,7 +77,7 @@ class FolderContainer extends Component {
                   Page
                 </li>
               </ul>
-            )}
+            }
           </div>
         </div>
         <div className="pages__table-container">

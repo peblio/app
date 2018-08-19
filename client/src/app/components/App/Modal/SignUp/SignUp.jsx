@@ -7,6 +7,7 @@ import GoogleLoginButton from '../../shared/GoogleLoginButton/GoogleLoginButton.
 require('./signup.scss');
 
 class SignUp extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -69,8 +70,8 @@ class SignUp extends React.Component {
         userType,
         password
       })
-        .then(res => this.signUpSuccessful(res.data.msg))
-        .catch(this.signUpFailed);
+      .then(res => this.signUpSuccessful(res.data.msg))
+      .catch(this.signUpFailed);
     } else {
       this.passwordMatchFailed();
     }
@@ -93,7 +94,7 @@ class SignUp extends React.Component {
           }}
         >
           <div className="signup-modal__radio-holder">
-            <h2 className="signup-modal__subtitle"> I am signing up as a...</h2>
+            <h2 className="signup-modal__subtitle" > I am signing up as a...</h2>
             <ul className="signup-modal__list">
               <li className="signup-modal__listitem">
                 <input
@@ -137,7 +138,7 @@ class SignUp extends React.Component {
             </ul>
           </div>
 
-          {this.state.isUserTypeSelected && (
+          {this.state.isUserTypeSelected &&
             <div>
               <GoogleLoginButton
                 onLoginSuccess={this.googleLoginSuccessful}
@@ -180,23 +181,23 @@ class SignUp extends React.Component {
                 />
               </div>
               <div className="signup-modal__buttonholder">
-                <button className="signup-modal__button" type="submit" value="Submit">
+                <button className="signup-modal__button" type="submit" value="Submit" >
               Submit
                 </button>
               </div>
-            </div>
-          )}
+            </div>}
         </form>
 
 
-        {this.state.showNotice && (
+        {this.state.showNotice &&
           <p className="signup-modal__notice">
             {this.state.notice}
           </p>
-        )}
+        }
       </div>
     );
   }
+
 }
 
 SignUp.propTypes = {

@@ -7,6 +7,8 @@ import formatDate from '../../../../utils/format-date';
 
 
 class Pages extends Component {
+
+
   render() {
     return (
       <section className="profile-pages__container">
@@ -14,21 +16,19 @@ class Pages extends Component {
           {this.props.pages.map((page) => {
             const link = `/pebl/${page.id}`;
             return (
+
               <li className="profile-pages__list-item" key={page.id}>
                 <a className="profile-pages__link" href={link} target="_blank" rel="noopener noreferrer">
-                  <h3 className="profile-pages__title">
-                    {page.title}
-                  </h3>
+                  <h3 className="profile-pages__title">{page.title} </h3>
                   <p className="profile-pages__sub-title">
                     last update
-                    {' '}
-                    {formatDate(page.updatedAt)}
+                    &nbsp; {formatDate(page.updatedAt)}
                   </p>
                 </a>
               </li>
             );
-          })}
-        </ul>
+          }
+      )}</ul>
       </section>
     );
   }

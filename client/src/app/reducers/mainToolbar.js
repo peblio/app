@@ -11,8 +11,7 @@ const initialState = {
   isResetModalOpen: false,
   isShareModalOpen: false,
   isSignUpModalOpen: false,
-  isWelcomeModalOpen: false,
-  isPreferencesPanelOpen: false
+  isWelcomeModalOpen: false
 };
 
 const mainToolbar = (state = initialState, action) => {
@@ -118,11 +117,6 @@ const mainToolbar = (state = initialState, action) => {
     case ActionTypes.CLOSE_WELCOME_MODAL:
       return Object.assign({}, state, {
         isWelcomeModalOpen: false
-      });
-
-    case ActionTypes.TOGGLE_PREFERENCES_PANEL:
-      return Object.assign({}, state, {
-        isPreferencesPanelOpen: !state.isPreferencesPanelOpen
       });
 
     default:

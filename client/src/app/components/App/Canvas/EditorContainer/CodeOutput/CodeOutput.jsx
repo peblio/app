@@ -5,6 +5,7 @@ import srcDoc from 'srcdoc-polyfill';
 const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
 
 class CodeOutput extends React.Component {
+
   constructor(props) {
     super(props);
     this.startSketch = this.startSketch.bind(this);

@@ -9,57 +9,25 @@ Peblio is an instructional tool and lesson sharing platform for middle and high 
 3. (Optional) Create a [Python 2 virtualenv](https://docs.python-guide.org/dev/virtualenvs/#lower-level-virtualenv) and activate it.
 4. ```pip install -r requirements.txt```
 5. Make sure that you have [Node.js v8.7.0 or higher installed](https://github.com/creationix/nvm#installation).
-6. ```npm install```
-7. ```cd client && npm install```
-8. ```cd ../server && npm install```
-9. Install MongoDB and make sure it is running.
+6. ```cd client && npm install```
+7. ```cd ../server && npm install```
+8. Install MongoDB and make sure it is running.
     * For Mac OSX with [homebrew](https://brew.sh/): `brew install mongodb` then `brew services start mongodb`
     * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
-10. Get the AWS IAM credentials for the `peblio-local-development` user from Mathura and place them in your `~/.aws/credentials` file under a profile called `peblio`. You should also create a `peblio` profile in `~/.aws/config` with the line `region=us-east-1`. The easiest way to do this is to run `aws configure --profile peblio`. See the [AWS docs](https://docs.aws.amazon.com/cli/latest/userguide/cli-multiple-profiles.html) for more details.
-11. Get the `Peblios.pem` SSH key from Mathura and place it in your `~/.ssh` directory. Then, if you haven't already, [generate an SSH key for your GitHub account](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/). Finally, add the following lines to your `~/.bashrc` or `~/.bash_profile` startup script:
+9. Get the AWS IAM credentials for the `peblio-local-development` user from Mathura and place them in your `~/.aws/credentials` file under a profile called `peblio`. You should also create a `peblio` profile in `~/.aws/config` with the line `region=us-east-1`. The easiest way to do this is to run `aws configure --profile peblio`. See the [AWS docs](https://docs.aws.amazon.com/cli/latest/userguide/cli-multiple-profiles.html) for more details.
+10. Get the `Peblios.pem` SSH key from Mathura and place it in your `~/.ssh` directory. Then, run the following commands:
     ```
-    ssh-add ~/.ssh/Peblios.pem
-    ssh-add ~/.ssh/id_rsa
+    ssh-agent bash
+    ssh-add -K ~/.ssh/Peblios.pem
     ```
-    Alternatively, if you're using OS X, instead of modifying your `~/.bashrc`, you can [configure SSH to use the OS X Keychain to automatically make your private keys available to SSH](https://apple.stackexchange.com/a/250572).
-12. (Optional) Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) and [Redux Developer Tools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) Chrome extensions.
 
 ## Local Development
 
 1. `cd client && npm start`
 2. In another terminal session, `cd server && npm start`
 3. Navigate to [http://localhost:8080](http://localhost:8080) in your browser.
-
-## Tests
-
-This project uses [TestCafe](https://devexpress.github.io/testcafe/documentation/test-api/) to run end-to-end tests against the frontend and backend.
-
-You can run the tests once by running
-```
-npm test
-```
-
-You can run the tests in `watch` mode (using [TestCafe Live](https://github.com/DevExpress/testcafe-live)) by running
-```
-npm run test:watch
-```
-
-By default, these commands run the tests using a headless Firefox browser. However, there are several other test commands defined in [package.json](package.json) that will run the tests against other browsers. For example, to run the tests against Chrome, Firefox, and Safari simultaneously, you could run
-```
-npm run test:all
-```
-
-## Git Workflow
-
-The expected git workflow for feature development is:
-
-1. Either create a local branch for your feature, **OR**, create a branch for your feature in your fork of the repo.
-
-2. When your work is ready, create a pull request against the `master` branch of this repo.
-
-3. Once your pull request to `master` has been merged, create a pull request from `master` to `staging`, merge it, and deploy to the staging environment to manually test your feature.
-
-4. Once you've verified that everything works in the staging environment, you can create a pull request from `staging` to `production`, merge it, and deploy to the production environment.
+4. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
+5. Install the [Redux Developer Tools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en).
 
 ## Deploying
 
@@ -88,7 +56,6 @@ The frontend uses the [AWS CLI](https://docs.aws.amazon.com/cli/latest/reference
 #### Staging
 
 ```
-git checkout staging
 cd client
 ./devops/staging_deploy.sh
 ```
@@ -96,7 +63,6 @@ cd client
 #### Production
 
 ```
-git checkout production
 cd client
 ./devops/prod_deploy.sh
 ```
@@ -125,7 +91,7 @@ cd server
 ./add_credstash_secret.sh my.secret donttellanyone local
 ```
 
-When adding a new secret, always make sure to add a version for each of the following environments: `local`, `test`, `staging`, and `production`.
+When adding a new secret, always make sure to add a version for each environment: `local`, `staging`, and `production`.
 
 Once you've added a secret, make sure that you also update [server/run_with_credstash.sh](server/run_with_credstash.sh) to map that secret to an environment variable.
 
@@ -171,7 +137,7 @@ Roles don't specify which hosts they should run on - that's taken care of by pla
 
 ### Playbooks
 
-Playbooks map host groups to roles. This allows the same role to be used multiple times for different hosts in different contexts, e.g. the `deploy_webserver` role is used in both [create_webserver.yml](server/devops/ansible/create_webserver.yml) and [deploy_webserver.yml](server/devops/ansible/deploy_webserver.yml).
+Playbooks take of mapping host groups to roles. This allows the same role to be used multiple times for different hosts in different contexts, e.g. the `deploy_webserver` role is used in both [create_webserver.yml](server/devops/ansible/create_webserver.yml) and [deploy_webserver.yml](server/devops/ansible/deploy_webserver.yml).
 
 ### Bash Scripts
 

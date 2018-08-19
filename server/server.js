@@ -64,13 +64,13 @@ app.get('/api/logout', (req, res) => {
 app.get('/healthcheck', (req, res) => res.sendStatus(200));
 
 function startServer() {
-  const listener = app.listen(process.env.SERVER_PORT || 8081, () => {
+  const listener = app.listen(process.env.PORT || 8081, () => {
     console.log(`ENVIRONMENT: ${process.env.ENVIRONMENT}`);
     console.log(`Listening on port ${listener.address().port}`);
   });
 }
 
-mongoose.connect(process.env.MONGO_DB_PEBLIO, { useMongoClient: true });
+mongoose.connect(process.env.MONGO_DB_PEBLIO);
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);

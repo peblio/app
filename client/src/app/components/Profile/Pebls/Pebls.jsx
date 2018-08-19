@@ -30,7 +30,7 @@ class Pebls extends React.Component {
         <ProfileLevel />
         {selectedFolderIds.map((selectedFolderId, index) => (
           <ProfileLevel key={selectedFolderId} folderId={selectedFolderId} folderDepth={index + 1} />
-        ))}
+          ))}
 
       </div>
     );

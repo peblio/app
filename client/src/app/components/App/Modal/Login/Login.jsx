@@ -76,7 +76,7 @@ class Login extends React.Component {
 
           <div className="login-modal__buttonholder">
 
-            <button className="forgot-modal__button" type="submit" value="Submit" data-test="submit-login">
+            <button className="forgot-modal__button" type="submit" value="Submit" >
               Submit
             </button>
             <button
@@ -92,14 +92,15 @@ class Login extends React.Component {
         </form>
 
 
-        {this.state.showNotice && (
+        {this.state.showNotice &&
           <p className="forgot-modal__notice">
             {ReactHtmlParser(this.state.notice)}
           </p>
-        )}
+        }
       </div>
     );
   }
+
 }
 
 Login.propTypes = {
