@@ -16,19 +16,21 @@ import Welcome from './Modal/Welcome/Welcome.jsx';
 
 import Canvas from './Canvas/Canvas.jsx';
 import MainToolbar from './MainToolbar/MainToolbar.jsx';
+import Preferences from './Preferences/Preferences.jsx';
 
 import * as editorActions from '../../action/editors.js';
 import * as mainToolbarActions from '../../action/mainToolbar.js';
 import * as pageActions from '../../action/page.js';
+import * as preferencesActions from '../../action/preferences.js';
 import * as userActions from '../../action/user.js';
 
 import axios from '../../utils/axios';
 
 class App extends React.Component {
-
   componentWillMount() {
     this.onUserVisit();
   }
+
   componentDidMount() {
     this.authAndLoadPage();
   }
@@ -106,6 +108,7 @@ class App extends React.Component {
         if (res.data.name) {
           this.props.setUserName(res.data.name);
           this.props.setUserType(res.data.type);
+          this.props.fetchUserPreferences();
           this.props.fetchAllPages();
         }
       });
@@ -161,6 +164,7 @@ class App extends React.Component {
         tabIndex="0"
         onKeyDown={this.onKeyPressed}
       >
+      testingstillsdfsdfsdf
         <nav className="main-nav">
           <MainToolbar
             addCodeEditor={this.props.addCodeEditor}
@@ -171,6 +175,7 @@ class App extends React.Component {
             canEdit={this.props.canEdit}
             isFileDropdownOpen={this.props.isFileDropdownOpen}
             isAccountDropdownOpen={this.props.isAccountDropdownOpen}
+            isPreferencesPanelOpen={this.props.isPreferencesPanelOpen}
             logoutUser={this.props.logoutUser}
             name={this.props.name}
             pageTitle={this.props.pageTitle}
@@ -182,6 +187,7 @@ class App extends React.Component {
             toggleFileDropdown={this.props.toggleFileDropdown}
             toggleAccountDropdown={this.props.toggleAccountDropdown}
             togglePreviewMode={this.props.togglePreviewMode}
+            togglePreferencesPanel={this.props.togglePreferencesPanel}
             unsavedChanges={this.props.unsavedChanges}
             userType={this.props.userType}
             viewExamplesModal={this.props.viewExamplesModal}
@@ -192,6 +198,9 @@ class App extends React.Component {
           />
         </nav>
         <Canvas
+          editorFontSize={this.props.editorFontSize}
+          editorTheme={this.props.editorTheme}
+
           layout={this.props.layout}
           name={this.props.name}
           preview={this.props.preview}
@@ -336,6 +345,8 @@ class App extends React.Component {
         >
           <Welcome />
         </Modal>
+
+        <Preferences />
       </div>
     );
   }
@@ -439,8 +450,15 @@ App.propTypes = {
   viewConfirmUserModal: PropTypes.func.isRequired,
   isConfirmUserModalOpen: PropTypes.bool.isRequired,
   isWelcomeModalOpen: PropTypes.bool.isRequired,
+  isPreferencesPanelOpen: PropTypes.bool.isRequired,
   viewWelcomeModal: PropTypes.func.isRequired,
   closeWelcomeModal: PropTypes.func.isRequired,
+  togglePreferencesPanel: PropTypes.func.isRequired,
+
+  // preferences
+  fetchUserPreferences: PropTypes.func.isRequired,
+  editorFontSize: PropTypes.number.isRequired,
+  editorTheme: PropTypes.string.isRequired,
 
   logoutUser: PropTypes.func.isRequired,
   updateUserName: PropTypes.func.isRequired,
@@ -481,6 +499,10 @@ function mapStateToProps(state) {
     isForgotModalOpen: state.mainToolbar.isForgotModalOpen,
     isResetModalOpen: state.mainToolbar.isResetModalOpen,
     isConfirmUserModalOpen: state.mainToolbar.isConfirmUserModalOpen,
+    isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,
+
+    editorFontSize: state.preferences.editorFontSize,
+    editorTheme: state.preferences.editorTheme
   };
 }
 
@@ -489,7 +511,8 @@ function mapDispatchToProps(dispatch) {
     ...editorActions,
     ...mainToolbarActions,
     ...pageActions,
+    ...preferencesActions,
     ...userActions
   }, dispatch);
 }
-export default (connect(mapStateToProps, mapDispatchToProps)(App));
+export default connect(mapStateToProps, mapDispatchToProps)(App);

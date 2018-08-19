@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import history from '../../../utils/history';
 import FileModal from './FileModal/FileModal.jsx';
@@ -11,7 +12,6 @@ import AccountSVG from '../../../images/account.svg';
 require('./mainToolbar.scss');
 
 class MainToolbar extends React.Component {
-
   logout = () => {
     this.props.logoutUser().then(() => {
       history.push('/');
@@ -44,6 +44,11 @@ class MainToolbar extends React.Component {
       }
     }
 
+    const fileDropDownButtonClassName = classNames({
+      'upper-toolbar__dropdown': !this.props.isFileDropdownOpen,
+      'upper-toolbar__dropdown-open': this.props.isFileDropdownOpen
+    });
+
     return (
       <div className="main-toolbar__container">
 
@@ -58,24 +63,17 @@ class MainToolbar extends React.Component {
               </button>
             </div>
             <div className="file-modal__container">
-              { !this.props.isFileDropdownOpen &&
-                <button className="upper-toolbar__dropdown" onClick={this.props.toggleFileDropdown}>
-                  File
-                </button>
-              }
-              { this.props.isFileDropdownOpen &&
-                <button className="upper-toolbar__dropdown-open" onClick={this.props.toggleFileDropdown}>
-                  File
-                </button>
-              }
-              { this.props.isFileDropdownOpen &&
+              <button className={fileDropDownButtonClassName} onClick={this.props.toggleFileDropdown} data-test="toggle-file-dropdown">
+                File
+              </button>
+              {this.props.isFileDropdownOpen && (
                 <FileModal
                   name={this.props.name}
                   savePage={this.props.savePage}
                   toggleFileDropdown={this.props.toggleFileDropdown}
                   viewPagesModal={this.props.viewPagesModal}
                 />
-              }
+              )}
             </div>
 
           </div>
@@ -85,7 +83,7 @@ class MainToolbar extends React.Component {
             type="text"
             value={this.props.pageTitle}
             onChange={this.props.setPageTitle}
-          ></input>
+          />
           <div className="main-toolbar__div-right">
             <div className="main-toolbar__div-right-inside">
               <span className="main-toolbar__preview-title">Edit Mode</span>
@@ -108,73 +106,75 @@ class MainToolbar extends React.Component {
               </button>
               <div className="main-toolbar__spacer"></div>
 
-              { this.props.name ? (
+              {this.props.name ? (
                 <div>
-                  <button onClick={this.props.toggleAccountDropdown} className="main-toolbar__account-button">
+                  <button onClick={this.props.toggleAccountDropdown} className="main-toolbar__account-button" data-test="account-button">
                     <AccountSVG
                       alt="account profile"
                       className="account-man"
                     />
                   </button>
-                  { this.props.isAccountDropdownOpen &&
-                  <div className="main-toolbar__account">
-                    <ul className="main-toolbar__list">
-                      <li className="main-toolbar__list-item">
-                        <p className="main-toolbar__welcome">
-                          Hi {this.props.name}!
+                  {this.props.isAccountDropdownOpen && (
+                    <div className="main-toolbar__account">
+                      <ul className="main-toolbar__list">
+                        <li className="main-toolbar__list-item">
+                          <p className="main-toolbar__welcome">
+                            {`Hi ${this.props.name}!`}
+                            <button
+                              onClick={this.props.toggleAccountDropdown}
+                              className="main-toolbar__account-button-clicked"
+                            >
+                              <AccountSVG
+                                alt="account profile"
+                                className="account-man__clicked"
+                              />
+                            </button>
+                          </p>
+                        </li>
+                        {(this.props.userType === 'student') || (
+                          <li className="main-toolbar__list-item">
+                            <a
+                              className="file-modal__link"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              href={`/user/${this.props.name}`}
+                            >
+                              Profile
+                            </a>
+                          </li>
+                        )}
+                        <li className="main-toolbar__list-item">
                           <button
-                            onClick={this.props.toggleAccountDropdown}
-                            className="main-toolbar__account-button-clicked"
+                            className="file-modal__link"
+                            onClick={this.logout}
                           >
-                            <AccountSVG
-                              alt="account profile"
-                              className="account-man__clicked"
-                            />
+                            Logout
                           </button>
-                        </p>
-                      </li>
-                      {(this.props.userType === 'student') ||
-                      <li className="main-toolbar__list-item">
-                        <a
-                          className="file-modal__link"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href={`/user/${this.props.name}`}
-                        >
-                          Profile
-                        </a>
-                      </li>
-                      }
-                      <li className="main-toolbar__list-item">
-                        <button
-                          className="file-modal__link"
-                          onClick={this.logout}
-                        >
-                          Logout
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-              }
+                        </li>
+                      </ul>
+                    </div>
+                  )}
                 </div>
-            ) : (
-              <div>
-                <button className="main-toolbar__button" onClick={this.props.viewLoginModal}>Log In</button>
-                <button className="main-toolbar__button" onClick={this.props.viewSignUpModal}>Sign Up</button>
-              </div>
-            ) }
+              ) : (
+                <div>
+                  <button className="main-toolbar__button" onClick={this.props.viewLoginModal} data-test="show-login-modal">Log In</button>
+                  <button className="main-toolbar__button" onClick={this.props.viewSignUpModal}>Sign Up</button>
+                </div>
+              )}
             </div>
           </div>
         </div>
-        { this.props.preview ||
+        {this.props.preview || (
           <InsertToolbar
             addCodeEditor={this.props.addCodeEditor}
             addQuestionEditor={this.props.addQuestionEditor}
             addTextEditor={this.props.addTextEditor}
             addIframe={this.props.addIframe}
             addImage={this.props.addImage}
+            isPreferencesPanelOpen={this.props.isPreferencesPanelOpen}
+            togglePreferencesPanel={this.props.togglePreferencesPanel}
           />
-        }
+        )}
       </div>
     );
   }
@@ -189,6 +189,7 @@ MainToolbar.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,
+  isPreferencesPanelOpen: PropTypes.bool.isRequired,
   logoutUser: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
@@ -199,6 +200,7 @@ MainToolbar.propTypes = {
   toggleFileDropdown: PropTypes.func.isRequired,
   toggleAccountDropdown: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
+  togglePreferencesPanel: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   userType: PropTypes.string.isRequired,
   viewExamplesModal: PropTypes.func.isRequired,

@@ -162,3 +162,11 @@ export function closeWelcomeModal() {
     });
   };
 }
+
+export function togglePreferencesPanel() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.TOGGLE_PREFERENCES_PANEL
+    });
+  };
+}

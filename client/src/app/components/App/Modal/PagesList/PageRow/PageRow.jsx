@@ -57,15 +57,15 @@ class PageRow extends Component {
     return connectDragSource(
       /* eslint-disable jsx-a11y/no-static-element-interactions */
       <tr className="pages__row" onClick={this.handleClick} onDoubleClick={this.handleDoubleClick}>
-        <td className={classNames(colClassName, 'pages__col_title')}>
+        <td className={classNames(colClassName, 'pages__col_title')} data-test="page-title">
           {page.title}
         </td>
-        {width > 350 &&
+        {width > 350 && (
           <React.Fragment>
             <td className={colClassName}>{formatDate(page.createdAt)}</td>
             <td className={colClassName}>{formatDate(page.updatedAt)}</td>
           </React.Fragment>
-        }
+        )}
         <td className={colClassName}>
           <button className="pages__icon" onClick={this.deletePage}>
             <DeleteIcon alt="delete page" />

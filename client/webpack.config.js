@@ -4,6 +4,11 @@ const SassLintPlugin = require('sasslint-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { getIfUtils, removeEmpty } = require('webpack-config-utils');
+
+const ENVIRONMENT = process.env.ENVIRONMENT || 'local';
+
+const { ifNotTest } = getIfUtils(ENVIRONMENT);
 
 const BUILD_DIR = path.resolve(__dirname, 'build');
 const SRC_DIR = path.resolve(__dirname, 'src');
@@ -11,6 +16,7 @@ const APP_DIR = path.resolve(SRC_DIR, 'app');
 
 const envFiles = {
   local: '.env',
+  test: '.env',
   staging: '.env.staging',
   production: '.env.production'
 };
@@ -22,18 +28,22 @@ const config = {
     publicPath: '/',
     filename: '[name].js'
   },
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   module: {
-    loaders: [
+    rules: removeEmpty([
       {
         test: /\.jsx?/,
         include: APP_DIR,
         loader: 'babel-loader'
       },
-      {
+      ifNotTest({
         test: /\.jsx$/,
         exclude: /node_modules/,
-        loader: 'eslint-loader'
-      },
+        loader: 'eslint-loader',
+        options: {
+          emitWarning: true
+        }
+      }),
       {
         test: /\.(scss|css)$/,
         use: [
@@ -63,7 +73,7 @@ const config = {
         test: /\.(png|jpg|gif)$/,
         use: ['url-loader']
       }
-    ]
+    ])
   },
   resolve: {
     extensions: ['.js', '.jsx']
@@ -73,16 +83,12 @@ const config = {
   },
   devtool: 'source-map',
   plugins: [
-    new SassLintPlugin({
-      configFile: '.sass-lint.yml',
-      glob: 'src/**/*.s?(a|c)ss',
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: { warnings: false },
-      sourceMap: true
-    }),
+    // new SassLintPlugin({
+    //   configFile: '.sass-lint.yml',
+    //   glob: 'src/**/*.s?(a|c)ss',
+    // }),
     new Dotenv({
-      path: path.resolve(__dirname, envFiles[process.env.ENVIRONMENT] || '.env')
+      path: path.resolve(__dirname, envFiles[ENVIRONMENT] || '.env')
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(SRC_DIR, 'index.html'),
@@ -94,9 +100,9 @@ const config = {
   ],
   devServer: {
     historyApiFallback: true,
-    port: 8080,
+    port: process.env.CLIENT_PORT || 8080,
     proxy: {
-      '/api': { target: 'http://localhost:8081' }
+      '/api': { target: `http://localhost:${process.env.SERVER_PORT || 8081}` }
     }
   }
 };

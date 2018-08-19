@@ -5,7 +5,6 @@ import axios from '../../../../utils/axios';
 require('./confirmUser.scss');
 
 class ConfirmUser extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -47,24 +46,24 @@ class ConfirmUser extends React.Component {
     axios.post('/users/confirmation', {
       token
     })
-    .then((res) => {
-      this.confirmSuccess(res.data.msg);
-    })
-    .catch((err) => {
-      this.confirmFailed(err.response.data.msg);
-    });
+      .then((res) => {
+        this.confirmSuccess(res.data.msg);
+      })
+      .catch((err) => {
+        this.confirmFailed(err.response.data.msg);
+      });
   }
 
   resendConfirmUser(event, email) {
     axios.post('/users/resendconfirmation', {
       email
     })
-    .then((res) => {
-      this.confirmSuccess(res.data.msg);
-    })
-    .catch((err) => {
-      this.confirmFailed(err.response.data.msg);
-    });
+      .then((res) => {
+        this.confirmSuccess(res.data.msg);
+      })
+      .catch((err) => {
+        this.confirmFailed(err.response.data.msg);
+      });
     event.preventDefault();
   }
 
@@ -75,28 +74,27 @@ class ConfirmUser extends React.Component {
           {this.state.notice}
         </p>
         {
-          this.state.showReset &&
-          <form onSubmit={(event) => { this.resendConfirmUser(event, this.email.value); }}>
-            <div className="confirm-modal__div">
-              <input
-                id="confirm-modal-email"
-                className="confirm-modal__input"
-                placeholder="email"
-                type="text"
-                ref={(email) => { this.email = email; }}
-              />
-            </div>
-            <button className="confirm-modal__button" type="submit" value="Submit" >
+          this.state.showReset && (
+            <form onSubmit={(event) => { this.resendConfirmUser(event, this.email.value); }}>
+              <div className="confirm-modal__div">
+                <input
+                  id="confirm-modal-email"
+                  className="confirm-modal__input"
+                  placeholder="email"
+                  type="text"
+                  ref={(email) => { this.email = email; }}
+                />
+              </div>
+              <button className="confirm-modal__button" type="submit" value="Submit">
             Resend Token
-            </button>
-          </form>
-        }
+              </button>
+            </form>
+          )}
 
 
       </div>
     );
   }
-
 }
 
 ConfirmUser.propTypes = {
