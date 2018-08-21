@@ -1,7 +1,8 @@
-import axios from '../utils/axios';
 import shortid from 'shortid';
 import { convertToRaw } from 'draft-js';
+import axios from '../utils/axios';
 import * as ActionTypes from '../constants/reduxConstants.js';
+import history from '../utils/history';
 
 export function setUnsavedChanges(value) {
   return (dispatch) => {
@@ -77,7 +78,9 @@ export function submitPage(parentId, title, editors, editorIndex, layout) {
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout
-  }).then(() => window.location.replace(`${window.location.origin}/pebl/${id}`))
+  }).then(() => {
+    history.push(`/pebl/${id}`);
+  })
     .catch(error => console.error(error));
 
   return (dispatch) => {

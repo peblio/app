@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -27,7 +27,7 @@ class Main extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <BrowserRouter history={history}>
+        <Router history={history}>
           <div>
             <Route exact path="/" component={withTracker(App)} />
             <Route path="/pebl" component={withTracker(App)} />
@@ -35,7 +35,7 @@ class Main extends React.Component {
             <Route path="/confirmation" component={withTracker(App)} />
             <Route path="/user" component={withTracker(Profile)} />
           </div>
-        </BrowserRouter>
+        </Router>
       </Provider>
     );
   }
