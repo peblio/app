@@ -70,6 +70,18 @@ class FrontEndOutput extends React.Component {
     const processingCanvas = sketchDoc.createElement('canvas');
     processingCanvas.setAttribute('id', 'pjs');
     sketchDoc.body.appendChild(processingCanvas);
+
+    const scriptOffs = [10, 'sketch.pde'];
+    const injectScript = sketchDoc.createElement('script');
+    console.log(scriptOffs);
+    if (scriptOffs) {
+      injectScript.innerHTML =
+    `CONSOLEOUTPUT.init(["${this.props.id}"]);
+    CONSOLEOUTPUT.callConsole();
+    CONSOLEOUTPUT.callErrorConsole(${scriptOffs[0]}, "${scriptOffs[1]}", false);
+    `;
+      sketchDoc.head.appendChild(injectScript);
+    }
     return sketchDoc;
   }
 

@@ -133,6 +133,7 @@ class FrontEndOutput extends React.Component {
     const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
 
     let scriptOffs = this.getAllScriptOffsets(sketchDocString);
+    console.log(scriptOffs);
     scriptOffs = scriptOffs[0];
 
     const injectScript = sketchDoc.createElement('script');
@@ -140,7 +141,7 @@ class FrontEndOutput extends React.Component {
       injectScript.innerHTML =
     `CONSOLEOUTPUT.init(["${this.props.id}"]);
     CONSOLEOUTPUT.callConsole();
-    CONSOLEOUTPUT.callErrorConsole(${scriptOffs[0]}, "${scriptOffs[1]}");
+    CONSOLEOUTPUT.callErrorConsole(${scriptOffs[0]}, "${scriptOffs[1]}",true);
     `;
       sketchDoc.head.appendChild(injectScript);
     }

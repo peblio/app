@@ -15,17 +15,15 @@ var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
   return {
     init(Args) {
       _args = Args;
-            // some other initialising
+      // some other initialising
     },
     callConsole() {
       methods.forEach((method) => {
         iframeWindow.console[method] = function () {
-              // originalConsole[method].apply(originalConsole, arguments);
+          // originalConsole[method].apply(originalConsole, arguments);
 
           let args = Array.from(arguments);
-          args = args.map(i =>
-                // catch objects
-                 (typeof i === 'string') ? i : JSON.stringify(i));
+          args = args.map(i => ((typeof i === 'string') ? i : JSON.stringify(i)));
 
           const consoleEvent = {
             method,
@@ -37,14 +35,16 @@ var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
       });
     },
 
-    callErrorConsole(errorLine, errorFile) {
+    callErrorConsole(errorLine, errorFile, displayLine) {
       iframeWindow.onerror = function (msg, url, lineNumber, columnNo, error) {
         const string = msg.toLowerCase();
         const substring = 'script error';
         const data = {};
 
         // 31 -> number of lines in hijackConsole
-        msg = `${errorFile} : line ${lineNumber - errorLine + 31} - ${msg}`;
+        msg = displayLine
+          ? `${errorFile} : line ${lineNumber - errorLine + 31} - ${msg}`
+          : `${errorFile} : ${msg}`;
         const consoleEvent = {
           method: 'error',
           arguments: [msg],
@@ -53,7 +53,5 @@ var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
         window.parent.postMessage(consoleEvent, '*');
       };
     },
-
-
   };
 }());
