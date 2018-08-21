@@ -69,10 +69,39 @@ const defaultHTML =
 
 `;
 
+const defaultProcessingPDE =
+`void setup() {
+  size(480, 120);
+}
+
+void draw() {
+  if (mousePressed) {
+    fill(0);
+  } else {
+    fill(255);
+  }
+  ellipse(mouseX, mouseY, 80, 80);
+}`;
+
+
+export const defaultProcessingHTML =
+
+`
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Page Title</title>
+  </head>
+  <body>
+    <canvas id="pjs"> </canvas>
+  </body>
+</html>
+`;
 export const STARTFILE = {
   p5: 1,
   html: 0,
-  webdev: 0
+  webdev: 0,
+  processing: 0
 };
 
 export const FILES = {
@@ -110,6 +139,12 @@ export const FILES = {
       content: defaultWebDevCSS
     }
   ],
+  processing: [
+    {
+      name: 'sketch.pde',
+      content: defaultProcessingPDE
+    }
+  ]
 };
 
 export { FILES as default };

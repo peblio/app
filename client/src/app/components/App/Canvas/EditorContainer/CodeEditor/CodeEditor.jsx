@@ -60,6 +60,8 @@ class CodeEditor extends React.Component {
       mode = 'htmlmixed';
     } else if (fileName.match(/.+\.json$/i)) {
       mode = 'application/json';
+    } else if (fileName.match(/.+\.pde$/i)) {
+      mode = 'java';
     } else {
       mode = 'text/plain';
     }

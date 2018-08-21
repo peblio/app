@@ -80,6 +80,18 @@ class InsertToolbar extends React.Component {
                  P5
                   </button>
                 </li>
+                <li className="insert-toolbar__list-item">
+                  <button
+                    className="insert-toolbar__list-button"
+                    onClick={() => {
+                      this.toggleEditorOptions();
+                      this.props.addCodeEditor('processing');
+                    }
+                    }
+                  >
+                 Processing
+                  </button>
+                </li>
               </ul>
             </div>
           )}
