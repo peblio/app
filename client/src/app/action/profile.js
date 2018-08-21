@@ -1,5 +1,7 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 import axios from '../utils/axios';
+import { namespaceActionCreators } from '../utils/namespace-redux';
+import * as folderActions from './folders';
 
 export function setIsOwner(value) {
   return (dispatch) => {
@@ -44,3 +46,12 @@ export function updateProfileImage(value) {
     value
   }));
 }
+
+const profileFolderActions = namespaceActionCreators(folderActions, 'PROFILE_FOLDERS');
+
+export const {
+  fetchAllPages,
+  viewFolder,
+  viewPage,
+  clearSelectedFolders
+} = profileFolderActions;

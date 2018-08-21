@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { viewFolder } from '../../../../action/page.js';
+import { viewFolder } from '../../../../action/profile.js';
 
 class Folders extends Component {
   viewFolder = (e, id, folderDepth) => {
@@ -45,7 +45,6 @@ Folders.propTypes = {
   folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   viewFolder: PropTypes.func.isRequired
 };
-
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   viewFolder

@@ -1,7 +1,10 @@
-import axios from '../utils/axios';
 import shortid from 'shortid';
 import { convertToRaw } from 'draft-js';
+
 import * as ActionTypes from '../constants/reduxConstants.js';
+import axios from '../utils/axios';
+import { namespaceActionCreators } from '../utils/namespace-redux';
+import * as folderActions from './folders';
 
 export function setUnsavedChanges(value) {
   return (dispatch) => {
@@ -43,17 +46,6 @@ export function loadPage(id, title, layout) {
   };
 }
 
-export function deletePage(pageId) {
-  return (dispatch) => {
-    axios.delete(`/pages/${pageId}`).then(() => {
-      dispatch({
-        type: ActionTypes.DELETE_PAGE,
-        pageId
-      });
-    });
-  };
-}
-
 function convertEditorsToRaw(editors) {
   const rawEditors = {};
   Object.keys(editors).forEach((id) => {
@@ -89,22 +81,6 @@ export function submitPage(parentId, title, editors, editorIndex, layout) {
   };
 }
 
-export function createPage(title, folder) {
-  return (dispatch) => {
-    const id = shortid.generate();
-    const data = { id, title };
-    if (folder) {
-      data.folder = folder;
-    }
-    return axios.post('/pages/save', data).then((response) => {
-      dispatch({
-        type: ActionTypes.CREATE_PAGE,
-        page: response.data.page
-      });
-    });
-  };
-}
-
 export function updatePage(id, title, editors, editorIndex, layout) {
   axios.post('/pages/update', {
     id,
@@ -117,25 +93,12 @@ export function updatePage(id, title, editors, editorIndex, layout) {
 
   return (dispatch) => {
     dispatch(setUnsavedChanges(false));
+    // this action currently doesn't do anything because there is no corresponding handler in a reducer
     dispatch({
       type: ActionTypes.UPDATE_PAGE,
       id
     });
   };
-}
-
-export function fetchAllPages(profileName) {
-  let url = '/sketches';
-  if (profileName) {
-    url = `${url}/${profileName}`;
-  }
-  return dispatch => axios.get(url).then(({ data }) => {
-    dispatch({
-      type: ActionTypes.SET_ALL_PAGES,
-      pages: data.pages,
-      folders: data.folders
-    });
-  });
 }
 
 export function togglePreviewMode() {
@@ -175,127 +138,20 @@ export function updateTextHeight(id, height) {
   };
 }
 
-export function createFolder(title, parent) {
-  return (dispatch) => {
-    const data = { title };
-    if (parent) {
-      data.parent = parent;
-    }
-    return axios.post('/folders', data).then((response) => {
-      dispatch({
-        type: ActionTypes.CREATE_FOLDER,
-        folder: response.data.folder
-      });
-    });
-  };
-}
+const currentUserFolderActions = namespaceActionCreators(folderActions, 'CURRENT_USER_FOLDERS');
 
-export function deleteFolder(folderId) {
-  return (dispatch) => {
-    axios.delete(`/folders/${folderId}`).then(() => {
-      dispatch({
-        type: ActionTypes.DELETE_FOLDER,
-        folderId
-      });
-    });
-  };
-}
-
-export function renameFolder(folderId, folderName) {
-  return (dispatch) => {
-    axios.post(`/folders/${folderId}/rename/${folderName}`).then((response) => {
-      dispatch({
-        type: ActionTypes.RENAME_FOLDER,
-        folderId,
-        folderName
-      });
-    });
-  };
-}
-
-export function movePageToTopLevel(pageId) {
-  return (dispatch, getState) => {
-    const { page } = getState();
-    const pageToMove = page.pages.byId[pageId];
-    if (!pageToMove.folder) {
-      return Promise.resolve();
-    }
-    return axios.post(`/pages/${pageId}/move`, {}).then((response) => {
-      dispatch({
-        type: ActionTypes.MOVE_PAGE_TO_TOP_LEVEL,
-        pageId
-      });
-    });
-  };
-}
-
-export function movePageToFolder(pageId, folderId) {
-  if (!folderId) {
-    return movePageToTopLevel(pageId);
-  }
-  return dispatch => axios.post(`/pages/${pageId}/move`, { folderId }).then((response) => {
-    dispatch({
-      type: ActionTypes.MOVE_PAGE_TO_FOLDER,
-      pageId,
-      folderId
-    });
-  });
-}
-
-export function moveFolderToTopLevel(folderId) {
-  return (dispatch, getState) => {
-    const { page } = getState();
-    const folder = page.folders.byId[folderId];
-    if (!folder.parent) {
-      return Promise.resolve();
-    }
-    return axios.post(`/folders/${folderId}/move`, {}).then((response) => {
-      dispatch({
-        type: ActionTypes.MOVE_FOLDER_TO_TOP_LEVEL,
-        folderId
-      });
-    });
-  };
-}
-
-export function moveFolderToFolder(childFolderId, parentFolderId) {
-  if (!parentFolderId) {
-    return moveFolderToTopLevel(childFolderId);
-  }
-  return (dispatch, getState) => {
-    const { page } = getState();
-    const childFolder = page.folders.byId[childFolderId];
-    if (childFolder.parent === parentFolderId) {
-      return Promise.resolve();
-    }
-    return axios.post(`/folders/${childFolderId}/move`, { folderId: parentFolderId }).then((response) => {
-      dispatch({
-        type: ActionTypes.MOVE_FOLDER_TO_FOLDER,
-        childFolderId,
-        parentFolderId
-      });
-    });
-  };
-}
-
-export function viewFolder(folderId, depth) {
-  return dispatch => dispatch({
-    type: ActionTypes.VIEW_FOLDER,
-    folderId,
-    depth
-  });
-}
-
-export function viewPage(pageId) {
-  return dispatch => dispatch({
-    type: ActionTypes.VIEW_PAGE,
-    pageId
-  });
-}
-
-export function clearSelectedFolders(depth) {
-  return dispatch => dispatch({
-    type: ActionTypes.CLEAR_SELECTED_FOLDERS,
-    depth
-  });
-}
+export const {
+  deletePage,
+  createPage,
+  fetchAllPages,
+  createFolder,
+  deleteFolder,
+  renameFolder,
+  movePageToTopLevel,
+  movePageToFolder,
+  moveFolderToTopLevel,
+  moveFolderToFolder,
+  viewFolder,
+  viewPage,
+  clearSelectedFolders
+} = currentUserFolderActions;

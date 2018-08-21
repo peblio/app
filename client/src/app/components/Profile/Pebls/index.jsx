@@ -7,7 +7,7 @@ import ProfileLevel from './ProfileLevel';
 import {
   fetchAllPages,
   viewFolder,
-} from '../../../action/page';
+} from '../../../action/profile';
 
 import './pebls.scss';
 
@@ -43,7 +43,7 @@ Pebls.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  selectedFolderIds: state.page.selectedFolderIds
+  selectedFolderIds: state.profile.selectedFolderIds
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

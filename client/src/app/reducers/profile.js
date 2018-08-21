@@ -1,13 +1,16 @@
+import reduceReducers from 'reduce-reducers';
+
 import * as ActionTypes from '../constants/reduxConstants.js';
+import { namespaceReducer } from '../utils/namespace-redux';
+import foldersReducer, { initialState as foldersInitialState } from './folders';
 
 const initialState = {
+  ...foldersInitialState,
   isOwner: false,
   name: '',
   blurb: 'Hi! I <3 CS',
   image: 'https://placekitten.com/300/300',
-  type: '',
-  pebls: [],
-  folders: []
+  type: ''
 };
 
 const profile = (state = initialState, action) => {
@@ -56,4 +59,7 @@ const profile = (state = initialState, action) => {
   }
 };
 
-export default profile;
+export default reduceReducers(
+  profile,
+  namespaceReducer(foldersReducer, 'PROFILE_FOLDERS')
+);

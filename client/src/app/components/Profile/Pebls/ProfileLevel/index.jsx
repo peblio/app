@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Folders from '../Folders/Folders';
-import Pages from '../Pages/Pages';
-import { viewFolder, clearSelectedFolders } from '../../../../action/page';
+import Folders from '../Folders';
+import Pages from '../Pages';
+import { viewFolder, clearSelectedFolders } from '../../../../action/profile';
 import compareTimestamps from '../../../../utils/compare-timestamps';
 
 class ProfileLevel extends Component {
@@ -59,18 +59,18 @@ ProfileLevel.propTypes = {
   clearSelectedFolders: PropTypes.func.isRequired,
   folderDepth: PropTypes.number,
   folderId: PropTypes.string,
-  folder: PropTypes.shape({ parent: PropTypes.string }).isRequired,
+  folder: PropTypes.shape({ parent: PropTypes.string }),
   viewFolder: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  childFolders: Object.values(state.page.folders.byId)
+  childFolders: Object.values(state.profile.folders.byId)
     .filter(folder => folder.parent === ownProps.folderId)
     .sort(compareTimestamps),
-  childPages: Object.values(state.page.pages.byId)
+  childPages: Object.values(state.profile.pages.byId)
     .filter(page => page.folder === ownProps.folderId)
     .sort(compareTimestamps),
-  folder: state.page.folders.byId[ownProps.folderId]
+  folder: state.profile.folders.byId[ownProps.folderId]
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
