@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 
 import rootReducer from './reducers/rootReducer.js';
 import App from './components/App/App.jsx';
-import Profile from './components/Profile/Profile.jsx';
+import Profile from './components/Profile';
 import withTracker from './withTracker.jsx';
 import history from './utils/history';
 
@@ -33,7 +33,8 @@ class Main extends React.Component {
             <Route path="/pebl" component={withTracker(App)} />
             <Route path="/reset" component={withTracker(App)} />
             <Route path="/confirmation" component={withTracker(App)} />
-            <Route path="/user" component={withTracker(Profile)} />
+            <Route path="/user/:userName" component={withTracker(Profile)} />
+            <Route path="/user/:userName/folder/:folderShortId" component={withTracker(Profile)} />
           </div>
         </BrowserRouter>
       </Provider>

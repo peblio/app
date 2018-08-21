@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import ProfileLevel from './ProfileLevel/ProfileLevel.jsx';
+import ProfileLevel from './ProfileLevel';
 import {
   fetchAllPages,
   viewFolder,
 } from '../../../action/page';
 
-require('./pebls.scss');
+import './pebls.scss';
 
 class Pebls extends React.Component {
   componentDidMount() {
@@ -26,24 +26,23 @@ class Pebls extends React.Component {
     const { selectedFolderIds } = this.props;
     return (
       <div className="profile-pebls__container" ref={(el) => { this.containerEl = el; }}>
-
         <ProfileLevel />
         {selectedFolderIds.map((selectedFolderId, index) => (
           <ProfileLevel key={selectedFolderId} folderId={selectedFolderId} folderDepth={index + 1} />
         ))}
-
       </div>
     );
   }
 }
 
 Pebls.propTypes = {
-  fetchAllPages: PropTypes.func.isRequired,
+  folderShortId: PropTypes.string,
   profileName: PropTypes.string.isRequired,
+  fetchAllPages: PropTypes.func.isRequired,
   selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   selectedFolderIds: state.page.selectedFolderIds
 });
 
