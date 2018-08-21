@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import ProfileLevel from './ProfileLevel';
+import ProfileLevel from './ProfileLevel/ProfileLevel';
 import {
   fetchAllPages,
   jumpToFolderByShortId

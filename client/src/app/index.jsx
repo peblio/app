@@ -8,7 +8,7 @@ import thunk from 'redux-thunk';
 
 import rootReducer from './reducers/rootReducer.js';
 import App from './components/App/App.jsx';
-import Profile from './components/Profile';
+import Profile from './components/Profile/Profile';
 import withTracker from './withTracker.jsx';
 import history from './utils/history';
 

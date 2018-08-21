@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Details from './Details';
-import Pebls from './Pebls';
+import Details from './Details/Details';
+import Pebls from './Pebls/Pebls';
 
 import * as profileActions from '../../action/profile';
 import * as userActions from '../../action/user';

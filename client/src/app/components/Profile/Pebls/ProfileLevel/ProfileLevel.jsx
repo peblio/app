@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Folders from '../Folders';
-import Pages from '../Pages';
+import Folders from '../Folders/Folders';
+import Pages from '../Pages/Pages';
 import { clearSelectedFolders } from '../../../../action/profile';
 import compareTimestamps from '../../../../utils/compare-timestamps';
 import history from '../../../../utils/history';
