@@ -6,14 +6,23 @@ import { bindActionCreators } from 'redux';
 import ProfileLevel from './ProfileLevel';
 import {
   fetchAllPages,
-  viewFolder,
+  jumpToFolderByShortId
 } from '../../../action/profile';
 
 import './pebls.scss';
 
 class Pebls extends React.Component {
-  componentDidMount() {
-    this.props.fetchAllPages(this.props.profileName);
+  static defaultProps = {
+    folderShortId: null
+  }
+
+  componentWillMount() {
+    this.props.fetchAllPages(this.props.profileName)
+      .then(() => {
+        if (this.props.folderShortId) {
+          this.props.jumpToFolderByShortId(this.props.folderShortId);
+        }
+      });
   }
 
   componentDidUpdate() {
@@ -23,13 +32,24 @@ class Pebls extends React.Component {
   }
 
   render() {
-    const { selectedFolderIds } = this.props;
+    const { profileName, selectedFolderIds } = this.props;
+    let folderContainer;
+    if (selectedFolderIds.length === 0) {
+      folderContainer = <ProfileLevel profileName={profileName} />;
+    } else {
+      const selectedFolderId = selectedFolderIds[selectedFolderIds.length - 1];
+      const folderDepth = selectedFolderIds.length;
+      folderContainer = (
+        <ProfileLevel
+          folderId={selectedFolderId}
+          folderDepth={folderDepth}
+          profileName={profileName}
+        />
+      );
+    }
     return (
       <div className="profile-pebls__container" ref={(el) => { this.containerEl = el; }}>
-        <ProfileLevel />
-        {selectedFolderIds.map((selectedFolderId, index) => (
-          <ProfileLevel key={selectedFolderId} folderId={selectedFolderId} folderDepth={index + 1} />
-        ))}
+        {folderContainer}
       </div>
     );
   }
@@ -38,16 +58,17 @@ class Pebls extends React.Component {
 Pebls.propTypes = {
   folderShortId: PropTypes.string,
   profileName: PropTypes.string.isRequired,
+  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchAllPages: PropTypes.func.isRequired,
-  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired
+  jumpToFolderByShortId: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   selectedFolderIds: state.profile.selectedFolderIds
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  viewFolder,
+  jumpToFolderByShortId,
   fetchAllPages
 }, dispatch);
 

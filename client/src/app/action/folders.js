@@ -31,6 +31,9 @@ export function createPage(title, folder) {
 }
 
 export function fetchAllPages(profileName) {
+  // TODO:
+  //  - refactor this route to be something like /api/users/:userName/sketches
+  //  - don't use two different routes for fetching pages for the current user vs. other users
   let url = '/sketches';
   if (profileName) {
     url = `${url}/${profileName}`;
@@ -159,6 +162,13 @@ export function viewPage(pageId) {
   return dispatch => dispatch({
     type: ActionTypes.VIEW_PAGE,
     pageId
+  });
+}
+
+export function jumpToFolderByShortId(folderShortId) {
+  return dispatch => dispatch({
+    type: ActionTypes.JUMP_TO_FOLDER,
+    folderShortId
   });
 }
 

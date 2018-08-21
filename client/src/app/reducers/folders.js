@@ -269,7 +269,9 @@ const foldersReducer = (state = { ...initialState }, action) => {
     case ActionTypes.VIEW_FOLDER: {
       const { folderId, depth } = action;
       const { selectedFolderIds } = state;
+      console.log(selectedFolderIds);
       selectedFolderIds.splice(depth, selectedFolderIds.length - depth, folderId);
+      console.log(selectedFolderIds);
       return {
         ...state,
         selectedFolderIds: [...selectedFolderIds]
@@ -280,6 +282,25 @@ const foldersReducer = (state = { ...initialState }, action) => {
       return {
         ...state,
         selectedPageId: action.pageId
+      };
+    }
+
+    case ActionTypes.JUMP_TO_FOLDER: {
+      const { folderShortId } = action;
+      const { folders } = state;
+      const folder = Object.values(folders.byId).find(f => f.shortId === folderShortId);
+      if (!folder) {
+        return state;
+      }
+      const selectedFolderIds = [folder._id];
+      let currentFolder = folder;
+      while (currentFolder && currentFolder.parent && currentFolder._id !== currentFolder.parent) {
+        selectedFolderIds.unshift(currentFolder.parent);
+        currentFolder = folders.byId[currentFolder.parent];
+      }
+      return {
+        ...state,
+        selectedFolderIds: [...selectedFolderIds]
       };
     }
 
@@ -301,9 +322,6 @@ const foldersReducer = (state = { ...initialState }, action) => {
         selectedPageId: null
       };
     }
-
-    case ActionTypes.LOGOUT_USER:
-      return initialState;
 
     default:
       return state;

@@ -3,16 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { viewFolder } from '../../../../action/profile.js';
+import { jumpToFolderByShortId } from '../../../../action/profile';
+import history from '../../../../utils/history';
 
 class Folders extends Component {
-  viewFolder = (e, id, folderDepth) => {
+  redirectToFolder = (e, shortId) => {
     e.stopPropagation();
-    this.props.viewFolder(id, folderDepth);
+    this.props.jumpToFolderByShortId(shortId);
+    history.push(`/user/${this.props.profileName}/folder/${shortId}`);
   }
 
   render() {
-    const { folderDepth } = this.props;
     return (
       <section className="profile-folders__container">
         <ul className="profile-folders__list">
@@ -20,7 +21,7 @@ class Folders extends Component {
             <li // eslint-disable-line
               key={folder._id}
               className="profile-folders__list-item"
-              onClick={e => this.viewFolder(e, folder._id, folderDepth)}
+              onClick={e => this.redirectToFolder(e, folder.shortId)}
             >
               <h3
                 className="profile-folders__title"
@@ -41,13 +42,13 @@ class Folders extends Component {
 }
 
 Folders.propTypes = {
-  folderDepth: PropTypes.number.isRequired,
   folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  viewFolder: PropTypes.func.isRequired
+  profileName: PropTypes.string.isRequired,
+  jumpToFolderByShortId: PropTypes.string.isRequired
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  viewFolder
+  jumpToFolderByShortId
 }, dispatch);
 
 export default connect(null, mapDispatchToProps)(Folders);

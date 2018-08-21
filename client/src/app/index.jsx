@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Switch, Router } from 'react-router';
+import { Route } from 'react-router-dom';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -27,16 +28,18 @@ class Main extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <BrowserRouter history={history}>
+        <Router history={history}>
           <div>
             <Route exact path="/" component={withTracker(App)} />
-            <Route path="/pebl" component={withTracker(App)} />
-            <Route path="/reset" component={withTracker(App)} />
-            <Route path="/confirmation" component={withTracker(App)} />
-            <Route path="/user/:userName" component={withTracker(Profile)} />
-            <Route path="/user/:userName/folder/:folderShortId" component={withTracker(Profile)} />
+            <Switch>
+              <Route path="/pebl" component={withTracker(App)} />
+              <Route path="/reset" component={withTracker(App)} />
+              <Route path="/confirmation" component={withTracker(App)} />
+              <Route path="/user/:userName/folder/:folderShortId" component={withTracker(Profile)} />
+              <Route path="/user/:userName" component={withTracker(Profile)} />
+            </Switch>
           </div>
-        </BrowserRouter>
+        </Router>
       </Provider>
     );
   }
