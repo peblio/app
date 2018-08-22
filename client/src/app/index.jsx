@@ -1,9 +1,5 @@
 import React from 'react';
-<<<<<<< HEAD
-import { Router } from 'react-router';
-=======
 import { Switch, Router } from 'react-router';
->>>>>>> e0a61e644bd27bdb67cc01d2dab6e7ced17dbffe
 import { Route } from 'react-router-dom';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
