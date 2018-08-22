@@ -5,7 +5,6 @@ const sgTransport = require('nodemailer-sendgrid-transport');
 const shortid = require('shortid');
 const { OAuth2Client } = require('google-auth-library');
 
-const Router = express.Router();
 const User = require('../models/user.js');
 const Token = require('../models/token.js');
 const UserConst = require('../userConstants.js');
@@ -21,6 +20,7 @@ userRoutes.route('/resendconfirmation').post(resendConfirmUser);
 userRoutes.route('/login/google').post(loginWithGoogle);
 userRoutes.route('/preferences').post(updatePreferences);
 userRoutes.route('/preferences').get(getUserPreferences);
+userRoutes.route('/:userName/profile').get(getUserProfile);
 
 function createUser(req, res) {
   const email = req.body.mail;
@@ -310,6 +310,7 @@ function updatePreferences(req, res) {
     res.sendStatus(403);
   }
 }
+
 function getUserPreferences(req, res) {
   const name = req.user ? req.user.name : null;
   if (name) {
@@ -323,6 +324,22 @@ function getUserPreferences(req, res) {
   } else {
     res.sendStatus(403);
   }
+}
+
+function getUserProfile(req, res) {
+  User.findOne({ name: req.params.userName }, (err, user) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send({
+        name: user.name,
+        type: user.type,
+        image: user.image,
+        blurb: user.blurb,
+        isOwner: !!(req.user && req.user.name && req.user.name === user.name)
+      });
+    }
+  });
 }
 
 // EMAIL HELPERS

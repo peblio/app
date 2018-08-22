@@ -1,5 +1,9 @@
 import React from 'react';
+<<<<<<< HEAD
 import { Router } from 'react-router';
+=======
+import { Switch, Router } from 'react-router';
+>>>>>>> e0a61e644bd27bdb67cc01d2dab6e7ced17dbffe
 import { Route } from 'react-router-dom';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
@@ -8,7 +12,7 @@ import thunk from 'redux-thunk';
 
 import rootReducer from './reducers/rootReducer.js';
 import App from './components/App/App.jsx';
-import Profile from './components/Profile/Profile.jsx';
+import Profile from './components/Profile/Profile';
 import withTracker from './withTracker.jsx';
 import history from './utils/history';
 
@@ -31,10 +35,13 @@ class Main extends React.Component {
         <Router history={history}>
           <div>
             <Route exact path="/" component={withTracker(App)} />
-            <Route path="/pebl" component={withTracker(App)} />
-            <Route path="/reset" component={withTracker(App)} />
-            <Route path="/confirmation" component={withTracker(App)} />
-            <Route path="/user" component={withTracker(Profile)} />
+            <Switch>
+              <Route path="/pebl" component={withTracker(App)} />
+              <Route path="/reset" component={withTracker(App)} />
+              <Route path="/confirmation" component={withTracker(App)} />
+              <Route path="/user/:userName/folder/:folderShortId" component={withTracker(Profile)} />
+              <Route path="/user/:userName" component={withTracker(Profile)} />
+            </Switch>
           </div>
         </Router>
       </Provider>
