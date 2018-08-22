@@ -48,7 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const router = express.Router();
-router.use('/currentUser', currentUserRoutes);
+router.use('/current_user', currentUserRoutes);
 router.use('/users', userRoutes);
 router.use('/pages', pageRoutes);
 router.use('/folders', folderRoutes);

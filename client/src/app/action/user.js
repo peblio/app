@@ -75,7 +75,7 @@ export function logoutUser() {
 }
 
 export function fetchCurrentUser() {
-  return dispatch => axios.get('/currentUser')
+  return dispatch => axios.get('/current_user')
     .then(({ data }) => dispatch({
       type: ActionTypes.SET_USER,
       data
