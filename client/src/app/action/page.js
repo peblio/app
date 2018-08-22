@@ -54,6 +54,12 @@ export function deletePage(pageId) {
   };
 }
 
+export function duplicatePage(pageId) {
+  return (dispatch) => {
+    alert('TODO: add duplicate Page API call for pageId: ' + pageId);
+  }
+}
+
 function convertEditorsToRaw(editors) {
   const rawEditors = {};
   Object.keys(editors).forEach((id) => {

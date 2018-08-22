@@ -7,8 +7,9 @@ import classNames from 'classnames';
 
 import ItemTypes from '../itemTypes';
 import formatDate from '../../../../../utils/format-date';
-import { deletePage, viewPage } from '../../../../../action/page';
+import { deletePage, duplicatePage, viewPage } from '../../../../../action/page';
 import DeleteIcon from '../../../../../images/trash.svg';
+import DuplicateIcon from '../../../../../images/duplicate.svg';
 
 const pageSource = {
   beginDrag(props) {
@@ -27,6 +28,11 @@ class PageRow extends Component {
   deletePage = (e) => {
     e.stopPropagation();
     this.props.deletePage(this.props.page._id);
+  }
+
+  duplicatePage = (e) => {
+    e.stopPropagation();
+    this.props.duplicatePage(this.props.page._id);
   }
 
   handleClick = (e) => {
@@ -70,6 +76,9 @@ class PageRow extends Component {
           <button className="pages__icon" onClick={this.deletePage}>
             <DeleteIcon alt="delete page" />
           </button>
+          <button className="pages__icon" onClick={this.duplicatePage}>
+            <DuplicateIcon alt="duplicate page" />
+          </button>
         </td>
       </tr>
       /* eslint-enable jsx-a11y/no-static-element-interactions */
@@ -93,6 +102,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   deletePage,
+  duplicatePage,
   viewPage
 }, dispatch);
 
