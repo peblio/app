@@ -54,9 +54,9 @@ export function deletePage(pageId) {
   };
 }
 
-export function duplicatePage(pageId) {
+export function duplicatePage(title, folder) {
   return (dispatch) => {
-    alert('TODO: add duplicate Page API call for pageId: ' + pageId);
+    dispatch(createPage(`${title}-Copy`, folder));
   }
 }
 
