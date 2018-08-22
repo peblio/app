@@ -1,5 +1,6 @@
 import React from 'react';
-import { Router, Route } from 'react-router-dom';
+import { Router } from 'react-router';
+import { Route } from 'react-router-dom';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
