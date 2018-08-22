@@ -59,7 +59,7 @@ class Image extends React.Component {
 
   render() {
     return (
-      <div className={`image__container ${this.props.preview ? '' : 'image__container--edit'}`}>
+      <div className={`image__container ${this.props.preview ? '' : 'image__container-edit'}`}>
 
         {!this.props.preview && !this.props.name && (
           <div className="image__login">
@@ -76,46 +76,75 @@ class Image extends React.Component {
             </div>
           </div>
         )}
-        {!this.props.preview && this.props.name && (
-          <div className="image__login">
-            {this.props.imageURL && <img className="element__image" src={this.props.imageURL} alt="" />}
-            <div
-              className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
+        {!this.props.preview && this.props.name && !this.props.imageURL && (
+          <div className="image__options">
+            <Dropzone
+              onDrop={this.onDrop}
+              className="element-image"
             >
-              <Dropzone
-                onDrop={this.onDrop}
-                className="element-image"
-              >
-                <div className="image__title">
-                Upload a file
-                </div>
-                <div className="image__drop">
-                  <div className="image__svg">
-                    <UploadSVG alt="upload image" />
-                  </div>
-                  <div className="image__svg">Drop a file or click to upload</div>
-                </div>
-              </Dropzone>
               <div className="image__title">
-              or add a URL
+              Upload a file
               </div>
-              <div className="image__url">
-
-                <form className="element-image__add-url" onSubmit={this.urlSubmitted.bind(this)}>
-                  <label htmlFor="element-image-name" className="element-image__label">
-                    <input
-                      id="element-image-name"
-                      className="element-image__input"
-                      type="text"
-                      ref={(element) => { this.url = element; }}
-                      defaultValue={this.props.imageURL}
-                      readOnly={this.props.preview}
-                    />
-                  </label>
-                  <input className="element__button" type="submit" value="Submit" />
-                </form>
+              <div className="image__drop">
+                <div className="image__svg">
+                  <UploadSVG alt="upload image" />
+                </div>
+                <div className="image__svg">Drop a file or click to upload</div>
               </div>
+            </Dropzone>
+            <div className="image__title">
+            or add a URL
             </div>
+            <div className="image__url">
+              <form className="element-image__add-url" onSubmit={this.urlSubmitted.bind(this)}>
+                <label htmlFor="element-image-name" className="element-image__label">
+                  <input
+                    id="element-image-name"
+                    className="element-image__input"
+                    type="text"
+                    ref={(element) => { this.url = element; }}
+                    defaultValue={this.props.imageURL}
+                    readOnly={this.props.preview}
+                  />
+                </label>
+                <input className="element__button" type="submit" value="Submit" />
+              </form>
+            </div>
+          </div>
+        )}
+        {!this.props.preview && this.props.name && this.props.imageURL && (
+          <div className="image__options">
+            <div className="image__holder">
+              <img className="element__image" src={this.props.imageURL} alt="" />
+            </div>
+            <Dropzone
+              onDrop={this.onDrop}
+              className="element-image"
+            >
+              <div className="image__title">
+              Upload a file
+              </div>
+              <div className="image__drop">
+                <div className="image__svg">
+                  <UploadSVG alt="upload image" />
+                </div>
+                <div className="image__svg">Drop a file or click to upload</div>
+              </div>
+            </Dropzone>
+
+            <form className="element-image__add-url" onSubmit={this.urlSubmitted.bind(this)}>
+              <label htmlFor="element-image-name" className="element-image__label">
+                <input
+                  id="element-image-name"
+                  className="element-image__input"
+                  type="text"
+                  ref={(element) => { this.url = element; }}
+                  defaultValue={this.props.imageURL}
+                  readOnly={this.props.preview}
+                />
+              </label>
+              <input className="element__button" type="submit" value="Upload New" />
+            </form>
           </div>
         )}
         {this.props.preview && this.props.imageURL &&

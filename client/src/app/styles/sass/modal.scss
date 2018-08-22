@@ -64,6 +64,13 @@
   padding: 10px;
 }
 
+%modal__canvas-button {
+  font-size: $small-font-size;
+  background-color: $green;
+  color: $white;
+  width: auto;
+}
+
 %modal__link {
   width: 100%;
   font-size: $medium-font-size;
