@@ -11,11 +11,11 @@ const app = express();
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
+const currentUserRoutes = require('./controllers/currentUserController');
 const userRoutes = require('./controllers/userController.js');
 const pageRoutes = require('./controllers/pageController.js');
 const folderRoutes = require('./controllers/folderController');
 const apiRoutes = require('./controllers/apiController.js');
-const profileRoutes = require('./controllers/profileController.js');
 
 require('./config/passport');
 
@@ -48,10 +48,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const router = express.Router();
+router.use('/current_user', currentUserRoutes);
 router.use('/users', userRoutes);
 router.use('/pages', pageRoutes);
 router.use('/folders', folderRoutes);
-router.use('/profile', profileRoutes);
 router.use('/', apiRoutes);
 app.use('/api', router);
 

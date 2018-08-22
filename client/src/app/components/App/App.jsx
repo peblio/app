@@ -103,15 +103,9 @@ class App extends React.Component {
             });
         });
     }
-    axios.get('/user')
-      .then((res) => {
-        if (res.data.name) {
-          this.props.setUserName(res.data.name);
-          this.props.setUserType(res.data.type);
-          this.props.fetchUserPreferences();
-          this.props.fetchAllPages();
-        }
-      });
+    this.props.fetchCurrentUser();
+    this.props.fetchUserPreferences();
+    this.props.fetchAllPages();
   }
 
   authLoadedPage = () => {
@@ -374,6 +368,7 @@ App.propTypes = {
   userType: PropTypes.string.isRequired,
   setUserName: PropTypes.func.isRequired,
   setUserType: PropTypes.func.isRequired,
+  fetchCurrentUser: PropTypes.func.isRequired,
 
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,

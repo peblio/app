@@ -17,7 +17,6 @@ fi
 
 pushd "$DEVOPS_DIR/ansible" > /dev/null
 
-export AWS_PROFILE=peblio
-ansible-playbook -i "inventories/$ENVIRONMENT" "$PLAYBOOK_FILE"
+AWS_PROFILE=peblio ansible-playbook -i "inventories/$ENVIRONMENT" "$PLAYBOOK_FILE"
 
 popd > /dev/null
