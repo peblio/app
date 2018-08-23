@@ -80,9 +80,9 @@ const page = (state = initialState, action) => {
       const layout = state.layout;
       const currentEditorIndex = layout.findIndex(x => x.i === action.currentId);
       const currentEditor = layout[currentEditorIndex];
-      const newEditor = { ...currentEditor };
+      const newEditor = currentEditor ? { ...currentEditor } : {};
       newEditor.i = action.newEditorId;
-      newEditor.y = currentEditor.y + currentEditor.h + -1;
+      newEditor.y = currentEditor ? currentEditor.y + currentEditor.h + -1 : 0;
       newEditor.w = 0;
       newEditor.h = 0;
       layout.splice(currentEditorIndex, 0, newEditor);
