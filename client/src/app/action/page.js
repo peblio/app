@@ -3,6 +3,7 @@ import { convertToRaw } from 'draft-js';
 
 import * as ActionTypes from '../constants/reduxConstants.js';
 import axios from '../utils/axios';
+import history from '../utils/history';
 import { namespaceActionCreators } from '../utils/namespace-redux';
 import * as folderActions from './folders';
 
@@ -69,7 +70,9 @@ export function submitPage(parentId, title, editors, editorIndex, layout) {
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout
-  }).then(() => window.location.replace(`${window.location.origin}/pebl/${id}`))
+  }).then(() => {
+    history.push(`/pebl/${id}`);
+  })
     .catch(error => console.error(error));
 
   return (dispatch) => {
