@@ -34,17 +34,23 @@ export function fetchAllPages(profileName) {
   // TODO:
   //  - refactor this route to be something like /api/users/:userName/sketches
   //  - don't use two different routes for fetching pages for the current user vs. other users
-  let url = '/sketches';
-  if (profileName) {
-    url = `${url}/${profileName}`;
-  }
-  return dispatch => axios.get(url).then(({ data }) => {
-    dispatch({
-      type: ActionTypes.SET_ALL_PAGES,
-      pages: data.pages,
-      folders: data.folders
-    });
-  });
+  return (dispatch, getState) => {
+    let url = '/sketches';
+    if (profileName) {
+      url = `${url}/${profileName}`;
+    } else {
+      const { user } = getState();
+      if (!user.name) {
+        return false;
+      }
+    }
+    return axios.get(url)
+      .then(({ data }) => dispatch({
+        type: ActionTypes.SET_ALL_PAGES,
+        pages: data.pages,
+        folders: data.folders
+      }));
+  };
 }
 
 export function createFolder(title, parent) {

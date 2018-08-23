@@ -103,9 +103,11 @@ class App extends React.Component {
             });
         });
     }
-    this.props.fetchCurrentUser();
-    this.props.fetchUserPreferences();
-    this.props.fetchAllPages();
+    this.props.fetchCurrentUser()
+      .then(() => {
+        this.props.fetchUserPreferences();
+        this.props.fetchAllPages();
+      });
   }
 
   authLoadedPage = () => {
