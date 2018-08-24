@@ -17,7 +17,6 @@ const initialState = {
 
 const mainToolbar = (state = initialState, action) => {
   switch (action.type) {
-
     case ActionTypes.TOGGLE_FILE_DROPDOWN:
       return Object.assign({}, state, {
         isFileDropdownOpen: !state.isFileDropdownOpen
@@ -94,7 +93,6 @@ const mainToolbar = (state = initialState, action) => {
       });
 
     case ActionTypes.CLOSE_RESET_MODAL:
-      window.location.replace(`${window.location.origin}`);
       return Object.assign({}, state, {
         isResetModalOpen: false
       });
@@ -105,7 +103,6 @@ const mainToolbar = (state = initialState, action) => {
       });
 
     case ActionTypes.CLOSE_CONFIRM_USER_MODAL:
-      window.location.replace(`${window.location.origin}`);
       return Object.assign({}, state, {
         isConfirmUserModalOpen: false
       });

@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 const autopopulate = require('mongoose-autopopulate');
+const shortid = require('shortid');
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const folderSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   parent: { type: Schema.Types.ObjectId, ref: 'Folder' },
   title: { type: String, default: '' },
+  shortId: { type: String, default: shortid.generate, required: true, unique: true }
 }, {
   timestamps: true,
   toJSON: { virtuals: true },

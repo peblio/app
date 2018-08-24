@@ -13,15 +13,17 @@ const initialState = {
 
 const user = (state = initialState, action) => {
   switch (action.type) {
+    case ActionTypes.SET_USER: {
+      return {
+        ...state,
+        name: action.data.name,
+        type: action.data.type
+      };
+    }
 
     case ActionTypes.UPDATE_USER_NAME:
       return Object.assign({}, state, {
         loginName: action.event.target.value
-      });
-
-    case ActionTypes.SET_USER_BLURB:
-      return Object.assign({}, state, {
-        blurb: action.value
       });
 
     case ActionTypes.UPDATE_USER_PASSWORD:
@@ -42,11 +44,6 @@ const user = (state = initialState, action) => {
     case ActionTypes.SET_USER_TYPE:
       return Object.assign({}, state, {
         type: action.value
-      });
-
-    case ActionTypes.SET_USER_IMAGE:
-      return Object.assign({}, state, {
-        image: action.value
       });
 
     case ActionTypes.LOGOUT_USER:

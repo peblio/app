@@ -9,7 +9,7 @@ import ToolbarLogo from '../../../images/logo.svg';
 
 import axios from '../../../utils/axios';
 
-require('./details.scss');
+import './details.scss';
 
 class Details extends React.Component {
   constructor(props) {
@@ -39,26 +39,19 @@ class Details extends React.Component {
       .then((result) => {
         const url = URL.parse(result.request.responseURL);
         const imageURL = `https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`;
-        this.props.setUserImage(imageURL);
-        axios.post('/profile/save', {
-          name: this.props.name,
-          field: 'image',
-          value: imageURL
-        }).then(() => { console.log('saved'); })
-          .catch(error => console.error(error));
+        this.props.updateProfileImage(imageURL);
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  saveUserBlurb = (blurb) => {
-    axios.post('/profile/save', {
-      name: this.props.name,
-      field: 'blurb',
-      value: blurb
-    }).then(() => { console.log('saved'); })
-      .catch(error => console.error(error));
+  handleBlurbChange = (e) => {
+    this.props.setProfileBlurb(e.target.value);
+  }
+
+  handleBlurbBlur = (e) => {
+    this.props.updateProfileBlurb(e.target.value);
   }
 
   render() {
@@ -70,11 +63,7 @@ class Details extends React.Component {
         <div className="details__container">
           {this.props.isOwner && (
             <p className="details__welcome">
-            Welcome
-              {' '}
-              {this.props.name}
-              {' '}
-! Feel free to change your profile image and description
+              {`Welcome ${this.props.name}! Feel free to change your profile image and description.`}
             </p>
           )}
           {this.props.isOwner && (
@@ -82,7 +71,6 @@ class Details extends React.Component {
               onDrop={this.onDrop}
               className="details__image-container"
             >
-
               <img className="details__image" src={this.props.image} alt="profile" />
               <div className="details__image-upload">
                 <ImageUploadSVG alt="upload profile image" />
@@ -107,12 +95,8 @@ class Details extends React.Component {
             type="text"
             value={this.props.blurb}
             rows={15}
-            onChange={(e) => {
-              this.props.setUserBlurb(e.target.value);
-            }}
-            onBlur={(e) => {
-              this.saveUserBlurb(e.target.value);
-            }}
+            onChange={this.handleBlurbChange}
+            onBlur={this.handleBlurbBlur}
             readOnly={!this.props.isOwner}
           >
           </textarea>
@@ -127,8 +111,9 @@ Details.propTypes = {
   image: PropTypes.string.isRequired,
   isOwner: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
-  setUserBlurb: PropTypes.func.isRequired,
-  setUserImage: PropTypes.func.isRequired
+  updateProfileImage: PropTypes.func.isRequired,
+  updateProfileBlurb: PropTypes.func.isRequired,
+  setProfileBlurb: PropTypes.func.isRequired
 };
 
 export default Details;

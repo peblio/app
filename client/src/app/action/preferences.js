@@ -43,15 +43,18 @@ export function updateEditorFontSize(e) {
 }
 
 export function fetchUserPreferences() {
-  return dispatch => axios.get('/users/preferences')
-    .then((res) => {
-      const data = res.data;
-      dispatch({
+  return (dispatch, getState) => {
+    const { user } = getState();
+    if (!user.name) {
+      return false;
+    }
+    return axios.get('/users/preferences')
+      .then(({ data }) => dispatch({
         type: ActionTypes.SET_USER_PREFERENCES,
         data
+      }))
+      .catch((err) => {
+        console.log(err);
       });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  };
 }
