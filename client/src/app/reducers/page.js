@@ -82,6 +82,7 @@ const page = (state = initialState, action) => {
       const currentEditor = layout[currentEditorIndex];
       const newEditor = currentEditor ? { ...currentEditor } : {};
       newEditor.i = action.newEditorId;
+      newEditor.x = 0;
       newEditor.y = currentEditor ? currentEditor.y + currentEditor.h + -1 : 0;
       newEditor.w = 0;
       newEditor.h = 0;
