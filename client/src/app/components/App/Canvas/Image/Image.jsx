@@ -70,9 +70,6 @@ class Image extends React.Component {
               <div className="image__title">
                 Please Log In to Upload Images
               </div>
-              <div className="image__svg">
-                <UploadSVG alt="upload image" />
-              </div>
             </div>
           </div>
         )}
@@ -86,10 +83,7 @@ class Image extends React.Component {
               Upload a file
               </div>
               <div className="image__drop">
-                <div className="image__svg">
-                  <UploadSVG alt="upload image" />
-                </div>
-                <div className="image__svg">Drop a file or click to upload</div>
+                <div className="image__svg">Drop the file or click to upload</div>
               </div>
             </Dropzone>
             <div className="image__title">
@@ -121,14 +115,8 @@ class Image extends React.Component {
               onDrop={this.onDrop}
               className="element-image"
             >
-              <div className="image__title">
-              Upload a file
-              </div>
               <div className="image__drop">
-                <div className="image__svg">
-                  <UploadSVG alt="upload image" />
-                </div>
-                <div className="image__svg">Drop a file or click to upload</div>
+                <div className="image__svg">Drop the file or click to upload</div>
               </div>
             </Dropzone>
 

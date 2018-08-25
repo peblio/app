@@ -39,6 +39,7 @@
   padding-left: $mini-padding;
   padding-top: $micro-padding;
   background: $light-gray;
+  margin-bottom: $medium-margin;
 }
 
 .image__content{
@@ -73,13 +74,13 @@
 }
 
 .image__drop{
-  padding: $large-padding;
+  padding: $small-padding $micro-padding;
   // background-color: $lighter-gray;
   margin: 0 auto;
   box-sizing: border-box;
   border-radius: $medium-border-radius;
   border: 1px dashed $light-gray;
-  color: $gray;
+  color: $dark-gray;
   width: 90%;
 }
 
