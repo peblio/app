@@ -156,9 +156,9 @@ class App extends React.Component {
 
   render() {
     return (
-      <div // eslint-disable-line
-        tabIndex="0"
-        onKeyDown={this.onKeyPressed}
+      <div
+        aria-hidden="true"
+        onKeyDown={e => this.onKeyPressed(e)}
       >
         <nav className="main-nav">
           <MainToolbar

@@ -1,8 +1,8 @@
+/* global expect */
 import React from 'react';
 import { mount } from 'enzyme';
 import merge from 'deepmerge';
 import MainToolbar from './MainToolbar';
-import myReducer from '../../reducers/rootReducer';
 
 const noOp = () => {
 
@@ -61,7 +61,7 @@ describe('MainToolbarSave', () => {
   it('should render save button if new, not logged in', () => {
     const mt = mount(
       _MainToolbar({
-        projectID: () => { null; },
+        projectID: () => null,
         name: ''
       })
     );
@@ -71,7 +71,7 @@ describe('MainToolbarSave', () => {
   it('should render save button if new,logged in', () => {
     const mt = mount(
       _MainToolbar({
-        projectID: () => { null; },
+        projectID: () => null,
         name: 'name',
         canEdit: true
       })

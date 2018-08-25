@@ -1,7 +1,7 @@
 // This code is from https://github.com/processing/p5.js-web-editor/blob/master/client/utils/consoleUtils.js
 const EXTERNAL_LINK_REGEX = /^(http:\/\/|https:\/\/)/;
 
-var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
+const CONSOLEOUTPUT = CONSOLEOUTPUT || (() => {
   let _args = {}; // private
 
   const iframeWindow = window;
@@ -15,17 +15,17 @@ var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
   return {
     init(Args) {
       _args = Args;
-            // some other initialising
+      // some other initialising
     },
     callConsole() {
       methods.forEach((method) => {
-        iframeWindow.console[method] = function () {
-              // originalConsole[method].apply(originalConsole, arguments);
+        iframeWindow.console[method] = () => {
+          // originalConsole[method].apply(originalConsole, arguments);
 
           let args = Array.from(arguments);
-          args = args.map(i =>
-                // catch objects
-                 (typeof i === 'string') ? i : JSON.stringify(i));
+
+          // catch objects
+          args = args.map(i => typeof i === 'string' ? i : JSON.stringify(i));
 
           const consoleEvent = {
             method,
@@ -38,16 +38,18 @@ var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
     },
 
     callErrorConsole(errorLine, errorFile) {
-      iframeWindow.onerror = function (msg, url, lineNumber, columnNo, error) {
-        const string = msg.toLowerCase();
-        const substring = 'script error';
+      iframeWindow.onerror = (msg, url, lineNumber, columnNo, error) => {
+        const errorTitle = 'script error';
+        const errorDescription = msg.toLowerCase();
         const data = {};
 
+        console.log(errorTitle, errorDescription);
+
         // 31 -> number of lines in hijackConsole
-        msg = `${errorFile} : line ${lineNumber - errorLine + 31} - ${msg}`;
+        const errorMessage = `${errorFile} : line ${lineNumber - (errorLine + 31)} - ${msg}`;
         const consoleEvent = {
           method: 'error',
-          arguments: [msg],
+          arguments: [errorMessage],
           id: _args[0]
         };
         window.parent.postMessage(consoleEvent, '*');
@@ -56,4 +58,4 @@ var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
 
 
   };
-}());
+})();

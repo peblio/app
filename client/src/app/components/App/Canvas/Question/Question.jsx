@@ -7,9 +7,7 @@ require('./question.scss');
 class Questions extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isResizing: false
-    };
+    this.state = {};
     this.removeEditor = () => { this.props.removeEditor(this.props.id); };
     this.updateAnswerChange = (event) => {
       this.props.updateAnswerChange(this.props.id, event.target.value);
