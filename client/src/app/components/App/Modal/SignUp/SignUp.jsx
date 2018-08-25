@@ -96,43 +96,60 @@ class SignUp extends React.Component {
             <h2 className="signup-modal__subtitle"> I am signing up as a...</h2>
             <ul className="signup-modal__list">
               <li className="signup-modal__listitem">
-                <input
-                  type="radio"
-                  className="signup-modal__radio"
-                  name="type"
-                  value="student"
-                  onChange={(e) => {
-                    this.userTypeSelected();
-                    this.props.setUserType(e.target.value);
-                  }}
-                />
-                <label className="signup-modal__label" htmlFor="student">Student</label>
+                <label
+                  className="signup-modal__label"
+                  htmlFor="student"
+                >
+                  <input
+                    type="radio"
+                    className="signup-modal__radio"
+                    name="type"
+                    value="student"
+                    onChange={(e) => {
+                      this.userTypeSelected();
+                      this.props.setUserType(e.target.value);
+                    }}
+                  />
+                  Student
+                </label>
               </li>
+
               <li className="signup-modal__listitem">
-                <input
-                  type="radio"
-                  className="signup-modal__radio"
-                  name="type"
-                  value="teacher"
-                  onChange={(e) => {
-                    this.userTypeSelected();
-                    this.props.setUserType(e.target.value);
-                  }}
-                />
-                <label className="signup-modal__label" htmlFor="teacher">Teacher</label>
+                <label
+                  className="signup-modal__label"
+                  htmlFor="teacher"
+                >
+                  <input
+                    type="radio"
+                    className="signup-modal__radio"
+                    name="type"
+                    value="teacher"
+                    onChange={(e) => {
+                      this.userTypeSelected();
+                      this.props.setUserType(e.target.value);
+                    }}
+                  />
+                  Teacher
+                </label>
               </li>
+
               <li className="signup-modal__listitem">
-                <input
-                  type="radio"
-                  className="signup-modal__radio"
-                  name="type"
-                  value="other"
-                  onChange={(e) => {
-                    this.userTypeSelected();
-                    this.props.setUserType(e.target.value);
-                  }}
-                />
-                <label className="signup-modal__label" htmlFor="teacher">Other</label>
+                <label
+                  className="signup-modal__label"
+                  htmlFor="other"
+                >
+                  <input
+                    type="radio"
+                    className="signup-modal__radio"
+                    name="type"
+                    value="other"
+                    onChange={(e) => {
+                      this.userTypeSelected();
+                      this.props.setUserType(e.target.value);
+                    }}
+                  />
+                  Other
+                </label>
               </li>
             </ul>
           </div>
@@ -180,8 +197,12 @@ class SignUp extends React.Component {
                 />
               </div>
               <div className="signup-modal__buttonholder">
-                <button className="signup-modal__button" type="submit" value="Submit">
-              Submit
+                <button
+                  className="signup-modal__button"
+                  type="submit"
+                  value="Submit"
+                >
+                  Submit
                 </button>
               </div>
             </div>

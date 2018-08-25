@@ -1,7 +1,7 @@
 // This code is from https://github.com/processing/p5.js-web-editor/blob/master/client/utils/consoleUtils.js
 const EXTERNAL_LINK_REGEX = /^(http:\/\/|https:\/\/)/;
 
-var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
+const CONSOLEOUTPUT = CONSOLEOUTPUT || (() => {
   let _args = {}; // private
 
   const iframeWindow = window;
@@ -41,17 +41,19 @@ var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
         const substring = 'script error';
         const data = {};
 
+        console.log(errorTitle, errorDescription);
+
         // 31 -> number of lines in hijackConsole
         msg = displayLine
           ? `${errorFile} : line ${lineNumber - errorLine + 31} - ${msg}`
           : `${errorFile} : ${msg}`;
         const consoleEvent = {
           method: 'error',
-          arguments: [msg],
+          arguments: [errorMessage],
           id: _args[0]
         };
         window.parent.postMessage(consoleEvent, '*');
       };
     },
   };
-}());
+})();

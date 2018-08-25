@@ -80,7 +80,11 @@ class MainToolbar extends React.Component {
               </button>
             </div>
             <div className="file-modal__container">
-              <button className={fileDropDownButtonClassName} onClick={this.props.toggleFileDropdown} data-test="toggle-file-dropdown">
+              <button
+                className={fileDropDownButtonClassName}
+                onClick={this.props.toggleFileDropdown}
+                data-test="toggle-file-dropdown"
+              >
                 File
               </button>
               {this.props.isFileDropdownOpen && (
@@ -125,7 +129,11 @@ class MainToolbar extends React.Component {
 
               {this.props.name ? (
                 <div>
-                  <button onClick={this.props.toggleAccountDropdown} className="main-toolbar__account-button" data-test="account-button">
+                  <button
+                    onClick={this.props.toggleAccountDropdown}
+                    className="main-toolbar__account-button"
+                    data-test="account-button"
+                  >
                     <AccountSVG
                       alt="account profile"
                       className="account-man"
@@ -174,7 +182,13 @@ class MainToolbar extends React.Component {
                 </div>
               ) : (
                 <div>
-                  <button className="main-toolbar__button" onClick={this.props.viewLoginModal} data-test="show-login-modal">Log In</button>
+                  <button
+                    className="main-toolbar__button"
+                    onClick={this.props.viewLoginModal}
+                    data-test="show-login-modal"
+                  >
+                    Log In
+                  </button>
                   <button className="main-toolbar__button" onClick={this.props.viewSignUpModal}>Sign Up</button>
                 </div>
               )}

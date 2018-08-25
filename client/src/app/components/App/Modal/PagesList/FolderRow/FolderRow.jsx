@@ -56,9 +56,7 @@ function collectDropTarget(_connect, monitor) {
 class FolderRow extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      canRenameFolder: false
-    };
+    this.state = {};
   }
 
   deleteFolder = (e) => {
@@ -115,8 +113,7 @@ class FolderRow extends Component {
               this.renameFolder(e);
               this.stopRenameFolder();
             }}
-          >
-          </input>
+          />
         </td>
 
         {width > 350 && (
