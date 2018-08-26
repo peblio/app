@@ -362,7 +362,8 @@ const page = (state = initialState, action) => {
       };
     }
 
-    case ActionTypes.CREATE_PAGE: {
+    case ActionTypes.CREATE_PAGE:
+    case ActionTypes.DUPLICATE_PAGE: {
       const { pages } = state;
       const normalizedPageData = normalize(action.page, pageSchema);
       return {

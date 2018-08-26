@@ -54,9 +54,26 @@ export function deletePage(pageId) {
   };
 }
 
-export function duplicatePage(title, folder) {
+export function duplicatePage(title, folder, editors, editorIndex, layout) {
   return (dispatch) => {
-    dispatch(createPage(`${title}-Copy`, folder));
+    const id = shortid.generate();
+    const data = {
+      id,
+      title: `${title}-Copy`,
+      editors: convertEditorsToRaw(editors),
+      editorIndex,
+      layout
+    };
+    if (folder) {
+      data.folder = folder;
+    }
+
+    axios.post('/pages/save', data).then((response) => {
+      dispatch({
+        type: ActionTypes.DUPLICATE_PAGE,
+        page: response.data.page
+      });
+    });
   }
 }
 
