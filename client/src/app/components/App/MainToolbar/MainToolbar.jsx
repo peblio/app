@@ -12,6 +12,23 @@ import AccountSVG from '../../../images/account.svg';
 require('./mainToolbar.scss');
 
 class MainToolbar extends React.Component {
+  componentDidMount() {
+
+    this.autoSaveTimeout = setInterval(() => {
+      if (
+        this.props.name && this.props.canEdit && this.props.unsavedChanges &&
+        !this.props.preview
+      ) {
+        this.props.autoSaveUnsavedChanges();
+        this.props.savePage();
+      }
+    }, 10000);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.autoSaveTimeout);
+  }
+
   logout = () => {
     this.props.logoutUser().then(() => {
       history.push('/');
@@ -202,6 +219,7 @@ MainToolbar.propTypes = {
   togglePreviewMode: PropTypes.func.isRequired,
   togglePreferencesPanel: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
+  autoSaveUnsavedChanges: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired,
   viewExamplesModal: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,

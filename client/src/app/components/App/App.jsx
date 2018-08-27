@@ -184,6 +184,7 @@ class App extends React.Component {
             togglePreviewMode={this.props.togglePreviewMode}
             togglePreferencesPanel={this.props.togglePreferencesPanel}
             unsavedChanges={this.props.unsavedChanges}
+            autoSaveUnsavedChanges={this.props.autoSaveUnsavedChanges}
             userType={this.props.userType}
             viewExamplesModal={this.props.viewExamplesModal}
             viewPagesModal={this.props.viewPagesModal}
@@ -361,6 +362,7 @@ App.propTypes = {
   rgl: PropTypes.shape({}).isRequired,
   preview: PropTypes.bool.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
+  autoSaveUnsavedChanges: PropTypes.func.isRequired,
   textHeights: PropTypes.shape({}).isRequired,
 
   canEdit: PropTypes.bool.isRequired,

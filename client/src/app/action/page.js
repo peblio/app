@@ -16,6 +16,12 @@ export function setUnsavedChanges(value) {
   };
 }
 
+export function autoSaveUnsavedChanges() {
+  return (dispatch) => {
+    dispatch({ type: ActionTypes.AUTO_SAVE_UNSAVED_CHANGES, });
+  };
+}
+
 export function setPageTitle(event) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
