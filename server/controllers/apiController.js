@@ -28,7 +28,6 @@ const upload = multer({
 apiRoutes.route('/examples').get(getExamples);
 apiRoutes.route('/page/:id').get(getPage);
 apiRoutes.route('/authenticate/:id').get(authenticatePage);
-apiRoutes.route('/user').get(getUser);
 apiRoutes.route('/sketches').get(getSketches);
 apiRoutes.route('/sketches/:user').get(getSketches);
 apiRoutes.route('/upload/:user/:type').get(uploadFiles);
@@ -74,17 +73,6 @@ function getPage(req, res) {
       res.send(data);
     }
   });
-}
-
-function getUser(req, res) {
-  let name = null;
-  let type = null;
-  const pages = null;
-  if (req.user) {
-    name = req.user.name;
-    type = req.user.type;
-  }
-  res.send({ name, type });
 }
 
 function getSketches(req, res) {

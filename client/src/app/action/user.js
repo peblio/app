@@ -2,15 +2,6 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 
 import axios from '../utils/axios';
 
-export function setUserBlurb(value) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_USER_BLURB,
-      value
-    });
-  };
-}
-
 export function updateUserName(event) {
   return (dispatch) => {
     dispatch({
@@ -74,15 +65,6 @@ export function setUserType(value) {
   };
 }
 
-export function setUserImage(value) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_USER_IMAGE,
-      value
-    });
-  };
-}
-
 export function logoutUser() {
   return dispatch => axios.get('/logout')
     .then(() => {
@@ -90,4 +72,12 @@ export function logoutUser() {
         type: ActionTypes.LOGOUT_USER,
       });
     });
+}
+
+export function fetchCurrentUser() {
+  return dispatch => axios.get('/current_user')
+    .then(({ data }) => dispatch({
+      type: ActionTypes.SET_USER,
+      data
+    }));
 }
