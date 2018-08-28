@@ -1,6 +1,63 @@
 @import 'variables';
 @import 'mixins';
 
+.editor__console{
+  border-radius: 0 0  $medium-border-radius $medium-border-radius;
+  height: 100%;
+  overflow-y: scroll;
+  color:$white;
+  padding: 0 $small-padding;
+}
+
+.editor__dark{
+  .console__output-text{
+    background-color: $g1;
+  }
+  .console__nav{
+    background-color: $g2;
+    color:$white;
+  }
+  .console__toggle{
+    color: $white;
+  }
+}
+
+.editor__light{
+  .console__output-text{
+    background-color: $g7;
+  }
+  .console__nav{
+    background-color: $g5;
+    color:$g2;
+  }
+  .console__toggle{
+    color: $g2;
+  }
+}
+
+.console__output-text{
+  height: 50px;
+}
+
+.console__nav{
+  font-size: $toolbar-font-size;
+  font-family: $roboto;
+  padding: $small-padding;
+}
+.console__heading{
+  display: inline-block;
+  margin:0px;
+}
+.console__toggle{
+  float: right;
+  background: none;
+  border:none;
+  &hover{
+    background: none;
+    border:none;
+  }
+}
+
 .CodeMirror-scroll { // sass-lint:disable-line class-name-format
   z-index: $z-index-layer-0;
 }
@@ -9,6 +66,8 @@
   position: relative;
   width: 100%;
   height: calc(100% - 60px);
+  border:1px solid $g5;
+  box-sizing: border-box;
 }
 
 .editor__sub-container {
@@ -18,10 +77,12 @@
 }
 
 .editor__input {
-  height: 100%;
+  height: calc(100% - 30px);
   border-right: $small-border solid $gray;
   overflow:scroll;
-
+  &-short {
+    height: calc(100% - 60px - 30px); 
+  }
 }
 .editor__output-overlay {
   height: 100%;
@@ -70,14 +131,7 @@ canvas{
   width: auto;
 }
 
-.editor__console{
-  border-radius: 0 0  $medium-border-radius $medium-border-radius;
-  background-color: $dark-gray;
-  height: 100%;
-  overflow-y: scroll;
-  color:$white;
-  padding: 0 $small-padding;
-}
+
 
 // sass-lint:disable class-name-format
 .Resizer {
