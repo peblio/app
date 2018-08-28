@@ -42,3 +42,19 @@ test('adding a p5 editor widget', async (t) => {
     .click(Selector('[data-test=add-p5-editor]'))
     .expect(Selector('[data-test=code-editor-p5]').exists).ok();
 });
+
+test('adding a processing editor widget', async (t) => {
+  await t
+    .click(Selector('[data-test=add-code-editor]'))
+    .click(Selector('[data-test=add-processing-editor]'))
+    .expect(Selector('[data-test=code-editor-processing]').exists).ok();
+});
+
+test('default processing sketch runs', async (t) => {
+  await t
+    .click(Selector('[data-test=add-code-editor]'))
+    .click(Selector('[data-test=add-processing-editor]'))
+    .click(Selector('[data-test=play-sketch-button]'))
+    .switchToIframe(Selector('[data-test=sketch-output]'))
+    .expect(Selector('[data-test=processing-canvas]').exists).ok();
+});

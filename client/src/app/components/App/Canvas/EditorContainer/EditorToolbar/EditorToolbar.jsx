@@ -48,6 +48,7 @@ class EditorToolbar extends React.Component {
               this.props.playCode();
               if (this.props.isPlaying) { this.props.startCodeRefresh(); }
             }}
+            data-test="play-sketch-button"
           >
             <PlaySVG alt="Run Code" />
           </button>

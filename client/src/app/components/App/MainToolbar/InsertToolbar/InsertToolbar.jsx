@@ -87,8 +87,8 @@ class InsertToolbar extends React.Component {
                     onClick={() => {
                       this.toggleEditorOptions();
                       this.props.addCodeEditor('processing');
-                    }
-                    }
+                    }}
+                    data-test="add-processing-editor"
                   >
                  Processing
                   </button>

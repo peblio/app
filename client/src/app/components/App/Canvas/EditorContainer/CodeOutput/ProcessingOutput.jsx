@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import srcDoc from 'srcdoc-polyfill';
 
-class FrontEndOutput extends React.Component {
+class ProcessingOutput extends React.Component {
   constructor(props) {
     super(props);
     this.startSketch = this.startSketch.bind(this);
@@ -69,6 +69,7 @@ class FrontEndOutput extends React.Component {
     sketchDoc.body.appendChild(processingScript);
     const processingCanvas = sketchDoc.createElement('canvas');
     processingCanvas.setAttribute('id', 'pjs');
+    processingCanvas.setAttribute('data-test', 'processing-canvas');
     sketchDoc.body.appendChild(processingCanvas);
 
     const scriptOffs = [10, 'sketch.pde'];
@@ -88,13 +89,18 @@ class FrontEndOutput extends React.Component {
   render() {
     return (
       <div>
-        <iframe ref={(element) => { this.iframe = element; }} id="code-output"></iframe>
+        <iframe
+          ref={(element) => { this.iframe = element; }}
+          id="code-output"
+          data-test="sketch-output"
+        >
+        </iframe>
       </div>
     );
   }
 }
 
-FrontEndOutput.propTypes = {
+ProcessingOutput.propTypes = {
   id: PropTypes.string.isRequired,
   clearConsoleOutput: PropTypes.func.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
@@ -106,4 +112,4 @@ FrontEndOutput.propTypes = {
   updateConsoleOutput: PropTypes.func.isRequired
 };
 
-export default FrontEndOutput;
+export default ProcessingOutput;
