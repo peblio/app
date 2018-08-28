@@ -142,4 +142,17 @@ export const FILES = {
   ]
 };
 
+export const ProcessingWarning =
+  `We currently use the Processing.js library to run Processing in the browser which comes along with certain limitations. Learn more
+  <a
+  href="http://processingjs.org/articles/p5QuickStart.html#thingstoknowusingpjs"
+  target="_blank"
+  rel="noopener noreferrer"
+  style="color: #009887;
+  text-decoration: none;
+  font-style: italic;"
+  >
+  here.
+  </a>`;
+
 export { FILES as default };

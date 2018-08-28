@@ -98,14 +98,6 @@
     top: 20px;
     z-index: $z-index-layer-4;
   }
-  &__warning-link {
-    color: $light-green;
-    text-decoration: none;
-    font-style: italic;
-    &:hover {
-      color: $green;
-    }
-  }
 }
 
 // used for editor toolbar
