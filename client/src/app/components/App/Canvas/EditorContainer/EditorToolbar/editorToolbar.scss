@@ -14,7 +14,7 @@
 
 }
 .editor-toolbar__button-container {
-  height:40px;
+  height: $editor-toolbar-height;
 }
 
 .editor-toolbar__item {
@@ -48,7 +48,7 @@
     margin: 0;
     padding: 0;
     background-color: white;
-    height:20px;
+    height: $editor-toolbar-height/2;
   }
   &__file {
     text-decoration: none;
@@ -70,7 +70,41 @@
   &__title {
     color: $white;
     display: inline;
-    margin: 0 $large-margin;
+    margin-right: $large-margin;
+    margin-left: $small-margin;
+  }
+  &__svg-info {
+    display: inline-block;
+    &:hover .editor-toolbar__warning-container {
+      display: block;
+    }
+    &:focus .editor-toolbar__warning-container {
+      display: block;
+    }
+  }
+  &__warning {
+    color: $gray;
+    width: $warning-width;
+    font-size: $small-font-size;
+    margin: 0;
+  }
+  &__warning-container {
+    display: none;
+    background: $white;
+    border-radius: $small-border-radius;
+    padding: $small-padding;
+    position: fixed;
+    left: $medium-margin;
+    top: 20px;
+    z-index: $z-index-layer-5;
+  }
+  &__warning-link {
+    color: $light-green;
+    text-decoration: none;
+    font-style: italic;
+    &:hover {
+      color: $green;
+    }
   }
 }
 

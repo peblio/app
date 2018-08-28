@@ -32,6 +32,7 @@ $modal-overlay: rgba(0,0,0,0.45);
 //size
 $total-width: 1200px;
 $preferences-width: 250px;
+$warning-width: 200px;
 
 //padding
 $micro-padding: .1rem;
@@ -93,6 +94,7 @@ $main-toolbar-height:50px;
 $insert-toolbar-height:45px;
 $files-indicator-width:10px;
 $widget-nav-height: 20px;
+$editor-toolbar-height: 40px;
 
 //z-indexes
 $z-index-layer-0: 0;
@@ -100,6 +102,7 @@ $z-index-layer-1: 100;
 $z-index-layer-2: 200;
 $z-index-layer-3: 300;
 $z-index-layer-4: 400;
+$z-index-layer-5: 500;
 
 //shadow variables
 $shadow-v-offset: 2px;
