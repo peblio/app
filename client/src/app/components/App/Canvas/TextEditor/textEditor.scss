@@ -51,7 +51,7 @@
 .DraftEditor-editorContainer { // sass-lint:disable-line class-name-format
   & h1{
     font-size: $xlarge-font-size;
-    font-family: $montserrat;
+    font-family: $openSans;
     line-height: $h1-line-height;
     margin: 0;
     padding: 0;
@@ -59,7 +59,7 @@
 
   & h2{
     font-size: $large-font-size;
-    font-family: $roboto;
+    font-family: $openSans;
     line-height: $h2-line-height;
     margin: 0;
     padding: 0;

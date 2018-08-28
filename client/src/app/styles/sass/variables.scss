@@ -43,9 +43,9 @@ $xlarge-padding: 2.5rem;
 $main-toolbar-padding:15 10 15 10;
 
 //line height
-$h1-line-height:1.3;
-$h2-line-height:1.5;
-$p-line-height:1;
+$h1-line-height:32px;
+$h2-line-height:26px;
+$p-line-height:26px;
 $large-height: 1.5rem;
 
 //margin
@@ -70,12 +70,13 @@ $large-border: 5px;
 $helvetica: Arial, Helvetica, sans-serif;
 $montserrat: 'Montserrat', sans-serif;
 $roboto: 'Roboto', sans-serif;
+$openSans: 'Open Sans', sans-serif;
 
 $small-font-size: 0.8rem;
 $medium-font-size: 1rem;
 $small-font-size: 0.8rem;
-$large-font-size: 1.5rem;
-$xlarge-font-size: 2rem;
+$large-font-size: 26px;
+$xlarge-font-size: 32px;
 
 //alignments
 $left-align: LEFT;
