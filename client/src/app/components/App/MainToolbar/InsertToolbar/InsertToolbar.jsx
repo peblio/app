@@ -37,6 +37,7 @@ class InsertToolbar extends React.Component {
           <button
             className="insert-toolbar__button "
             onClick={this.toggleEditorOptions}
+            data-test="add-code-editor"
           >
             <EditorSVG alt="add code editor" />
           Editor
@@ -50,8 +51,8 @@ class InsertToolbar extends React.Component {
                     onClick={() => {
                       this.toggleEditorOptions();
                       this.props.addCodeEditor('html');
-                    }
-                    }
+                    }}
+                    data-test="add-html-editor"
                   >
                  HTML
                   </button>
@@ -62,8 +63,8 @@ class InsertToolbar extends React.Component {
                     onClick={() => {
                       this.toggleEditorOptions();
                       this.props.addCodeEditor('webdev');
-                    }
-                    }
+                    }}
+                    data-test="add-webdev-editor"
                   >
                  HTML/JS/CSS
                   </button>
@@ -74,8 +75,8 @@ class InsertToolbar extends React.Component {
                     onClick={() => {
                       this.toggleEditorOptions();
                       this.props.addCodeEditor('p5');
-                    }
-                    }
+                    }}
+                    data-test="add-p5-editor"
                   >
                  P5
                   </button>

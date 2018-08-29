@@ -44,7 +44,7 @@ class EditorContainer extends React.Component {
   render() {
     return (
       <div>
-        <div className="editor__total-container">
+        <div className="editor__total-container" data-test={`code-editor-${this.props.editorMode}`}>
           <EditorToolbar
             currentFile={this.props.currentFile}
             editorMode={this.props.editorMode}

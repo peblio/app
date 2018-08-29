@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from '../../../../utils/axios';
+import history from '../../../../utils/history';
 
 require('./passwordReset.scss');
 
@@ -66,6 +67,7 @@ class PasswordReset extends React.Component {
         <form
           onSubmit={(event) => {
             this.submitResetPassword(event, this.password.value, this.resetToken());
+            history.push('/');
           }}
         >
           <div className="reset-modal__div">

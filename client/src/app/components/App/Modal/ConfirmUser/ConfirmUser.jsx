@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from '../../../../utils/axios';
+import history from '../../../../utils/history';
 
 require('./confirmUser.scss');
 
@@ -75,7 +76,11 @@ class ConfirmUser extends React.Component {
         </p>
         {
           this.state.showReset && (
-            <form onSubmit={(event) => { this.resendConfirmUser(event, this.email.value); }}>
+            <form onSubmit={(event) => {
+              this.resendConfirmUser(event, this.email.value);
+              history.push('/');
+            }}
+            >
               <div className="confirm-modal__div">
                 <input
                   id="confirm-modal-email"
