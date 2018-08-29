@@ -54,8 +54,6 @@
 .editor__light{
   .editor-toolbar{
     &__container {
-    background-color: $light-gray;
-    background: $dark-gray; /* For browsers that do not support gradients */
     .editor-toolbar__button-container {
       background-color: $white;
       border:1px solid $g5;
@@ -110,7 +108,7 @@
   z-index: $z-index-layer-2;
 
   .editor-toolbar__button-container {
-    height:40px;
+    height:$editor-toolbar-height;
     padding: 3px;
     .editor-toolbar__title {
       display: inline;
@@ -142,11 +140,11 @@
     display: flex;
     margin: 0;
     padding: 0 !important;
-    height:30px;
+    height:$editor-toolbar-files-height;
     .editor-toolbar__file {
       text-decoration: none;
       list-style: none;
-      width: 65px;
+      width: $editor-toolbar-file-width;
       &-button {
         border-radius: 0;
         box-shadow: none;

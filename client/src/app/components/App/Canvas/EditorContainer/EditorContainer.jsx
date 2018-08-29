@@ -36,7 +36,6 @@ class EditorContainer extends React.Component {
   }
 
   toggleConsole = () => {
-    console.log('toggle');
     console.log(this.state.isConsoleOpen);
     this.setState(prevState => ({ isConsoleOpen: !prevState.isConsoleOpen }));
   }
