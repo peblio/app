@@ -64,7 +64,7 @@ export function duplicatePage(title, folder, editors, editorIndex, layout) {
     const data = {
       id,
       title: `${title}-Copy`,
-      editors: convertEditorsToRaw(editors),
+      editors,
       editorIndex,
       layout
     };
