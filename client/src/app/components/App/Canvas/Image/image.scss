@@ -74,7 +74,7 @@
 }
 
 .image__drop{
-  padding: $small-padding $micro-padding;
+  padding: $medium-padding $micro-padding;
   // background-color: $lighter-gray;
   margin: 0 auto;
   box-sizing: border-box;
@@ -97,7 +97,7 @@
 
 .element-image__add-url{
   width: 100%;
-  margin-top: $medium-margin;
+  margin-top: $small-margin;
   margin-bottom: 0;
   text-align: center;
   z-index: 1;

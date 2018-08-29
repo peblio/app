@@ -83,6 +83,9 @@ class Image extends React.Component {
               Upload a file
               </div>
               <div className="image__drop">
+                <div className="image__svg">
+                  <UploadSVG alt="upload image" />	
+                </div>
                 <div className="image__svg">Drop the file or click to upload</div>
               </div>
             </Dropzone>
