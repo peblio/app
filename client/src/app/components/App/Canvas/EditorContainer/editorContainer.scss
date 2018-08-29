@@ -20,6 +20,9 @@
   .console__toggle{
     color: $white;
   }
+  .console__output-text{
+    color: $white;
+  }
 }
 
 .editor__light{
@@ -33,26 +36,30 @@
   .console__toggle{
     color: $g2;
   }
+  .console__output-text{
+    color: $g2;
+  }
 }
 
 .console__output-text{
-  height: 50px;
+  height: 45px;
 }
 
 .console__nav{
   font-size: $toolbar-font-size;
   font-family: $roboto;
-  padding: $small-padding;
+  padding: $small-padding/2;
 }
 .console__heading{
   display: inline-block;
   margin:0px;
+  text-transform: uppercase;
 }
 .console__toggle{
   float: right;
   background: none;
   border:none;
-  &hover{
+  &:hover{
     background: none;
     border:none;
   }
@@ -81,7 +88,7 @@
   border-right: $small-border solid $gray;
   overflow:scroll;
   &-short {
-    height: calc(100% - 60px - 30px); 
+    height: calc(100% - 60px - 30px);
   }
 }
 .editor__output-overlay {

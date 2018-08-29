@@ -22,7 +22,7 @@
           background-color: $g5;
         }
       }
-      .editor-toolbar__svg:hover, &--selected #playPause {
+      .editor-toolbar__svg:hover #playPause {
         fill:$g2;
         stroke:none;
       }
@@ -70,7 +70,7 @@
           background-color: $g6;
         }
       }
-      .editor-toolbar__svg:hover, &--selected #playPause {
+      .editor-toolbar__svg:hover #playPause {
         fill:$b2;
         stroke:none;
       }
@@ -124,7 +124,7 @@
       border: none;
       border-radius: $small-border-radius;
       width: 25px;
-      height: 20px;
+      height: 23px;
       margin-left: 10px;
       padding:1px;
       &:hover {
