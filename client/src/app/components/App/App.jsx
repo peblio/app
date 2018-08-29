@@ -502,7 +502,8 @@ function mapStateToProps(state) {
     isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,
 
     editorFontSize: state.preferences.editorFontSize,
-    editorTheme: state.preferences.editorTheme
+    editorTheme: state.preferences.editorTheme,
+    editorAutoSave: state.preferences.editorAutoSave
   };
 }
 
