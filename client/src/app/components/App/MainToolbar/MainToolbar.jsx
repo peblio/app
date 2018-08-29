@@ -62,8 +62,19 @@ class MainToolbar extends React.Component {
               Examples
               </button>
             </div>
-            <div className="file-modal__container">
-              <button className={fileDropDownButtonClassName} onClick={this.props.toggleFileDropdown} data-test="toggle-file-dropdown">
+            <div
+              className="file-modal__container"
+              onBlur={() => {
+                setTimeout(() => {
+                  this.props.isFileDropdownOpen && this.props.toggleFileDropdown();
+                }, 50);
+              }}
+            >
+              <button
+                className={fileDropDownButtonClassName}
+                onClick={this.props.toggleFileDropdown}
+                data-test="toggle-file-dropdown"
+              >
                 File
               </button>
               {this.props.isFileDropdownOpen && (
@@ -108,7 +119,16 @@ class MainToolbar extends React.Component {
 
               {this.props.name ? (
                 <div>
-                  <button onClick={this.props.toggleAccountDropdown} className="main-toolbar__account-button" data-test="account-button">
+                  <button
+                    onClick={this.props.toggleAccountDropdown}
+                    onBlur={() => {
+                      setTimeout(() => {
+                        this.props.isAccountDropdownOpen && this.props.toggleAccountDropdown();
+                      }, 50);
+                    }}
+                    className="main-toolbar__account-button"
+                    data-test="account-button"
+                  >
                     <AccountSVG
                       alt="account profile"
                       className="account-man"

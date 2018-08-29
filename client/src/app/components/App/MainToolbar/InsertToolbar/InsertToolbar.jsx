@@ -37,6 +37,11 @@ class InsertToolbar extends React.Component {
           <button
             className="insert-toolbar__button "
             onClick={this.toggleEditorOptions}
+            onBlur={() => {
+              setTimeout(() => {
+                this.state.editorExpanded && this.toggleEditorOptions();
+              }, 50);
+            }}
             data-test="add-code-editor"
           >
             <EditorSVG alt="add code editor" />
