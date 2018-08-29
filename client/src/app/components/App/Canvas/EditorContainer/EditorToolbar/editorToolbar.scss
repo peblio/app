@@ -110,11 +110,13 @@
   .editor-toolbar__button-container {
     height:$editor-toolbar-height;
     padding: 3px;
+    display: flex;
+    align-items: center;
     .editor-toolbar__title {
       display: inline;
       font-size: $toolbar-font-size;
       font-family: $roboto;
-      padding: 6px;
+      padding: 2px 4px;
       margin-left: 10px;
       border-radius: $medium-border-radius;
     }

@@ -32,7 +32,9 @@ class ConsoleOutput extends React.Component {
 }
 
 ConsoleOutput.propTypes = {
-  consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired
+  consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isConsoleOpen: PropTypes.bool.isRequired,
+  toggleConsole: PropTypes.func.isRequired
 };
 
 export default ConsoleOutput;
