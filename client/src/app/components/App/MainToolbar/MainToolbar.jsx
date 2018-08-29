@@ -17,7 +17,7 @@ class MainToolbar extends React.Component {
     this.autoSaveTimeout = setInterval(() => {
       if (
         this.props.name && this.props.canEdit && this.props.unsavedChanges &&
-        !this.props.preview
+        this.props.editorAutoSave
       ) {
         this.props.autoSaveUnsavedChanges();
         this.props.savePage();

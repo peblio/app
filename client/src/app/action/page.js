@@ -18,7 +18,7 @@ export function setUnsavedChanges(value) {
 
 export function autoSaveUnsavedChanges() {
   return (dispatch) => {
-    dispatch({ type: ActionTypes.AUTO_SAVE_UNSAVED_CHANGES, });
+    dispatch({ type: ActionTypes.AUTO_SAVE_UNSAVED_CHANGES });
   };
 }
 

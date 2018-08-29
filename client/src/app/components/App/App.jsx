@@ -179,6 +179,7 @@ class App extends React.Component {
             setPageTitle={this.props.setPageTitle}
             setEditorMode={this.props.setEditorMode}
             savePage={this.savePage}
+            editorAutoSave={this.props.editorAutoSave}
             toggleFileDropdown={this.props.toggleFileDropdown}
             toggleAccountDropdown={this.props.toggleAccountDropdown}
             togglePreviewMode={this.props.togglePreviewMode}
@@ -457,6 +458,7 @@ App.propTypes = {
   fetchUserPreferences: PropTypes.func.isRequired,
   editorFontSize: PropTypes.number.isRequired,
   editorTheme: PropTypes.string.isRequired,
+  editorAutoSave: PropTypes.bool.isRequired,
 
   logoutUser: PropTypes.func.isRequired,
   updateUserName: PropTypes.func.isRequired,
