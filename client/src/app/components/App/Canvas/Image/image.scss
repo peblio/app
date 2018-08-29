@@ -103,6 +103,16 @@
   z-index: 1;
 }
 
+.image-reupload-form {
+  padding-top: 15px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $lighter-gray;
+  transition: 0.25s ease;
+}
+
 .element__button{
   @extend %modal__canvas-button;
 }
