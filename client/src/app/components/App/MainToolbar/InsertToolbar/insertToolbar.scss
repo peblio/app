@@ -16,11 +16,11 @@
     flex-direction: row;
     width: 100%;
     padding: $small-padding;
-    height: $insert-toolbar-height;
     background-color: $lighter-gray;
     z-index: $z-index-layer-1;
     box-sizing: border-box;
     justify-content: space-between;
+    align-items: center;
   }
   &__sub-menu {
     position: absolute;
