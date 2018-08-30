@@ -35,7 +35,6 @@ class CodeOutput extends React.Component {
             />
           )
         }
-
       </div>
     );
   }

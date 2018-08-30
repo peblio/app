@@ -1,7 +1,7 @@
 // This code is from https://github.com/processing/p5.js-web-editor/blob/master/client/utils/consoleUtils.js
 const EXTERNAL_LINK_REGEX = /^(http:\/\/|https:\/\/)/;
 
-const CONSOLEOUTPUT = CONSOLEOUTPUT || (() => {
+var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
   let _args = {}; // private
 
   const iframeWindow = window;
@@ -49,11 +49,11 @@ const CONSOLEOUTPUT = CONSOLEOUTPUT || (() => {
           : `${errorFile} : ${msg}`;
         const consoleEvent = {
           method: 'error',
-          arguments: [errorMessage],
+          arguments: [msg],
           id: _args[0]
         };
         window.parent.postMessage(consoleEvent, '*');
       };
     },
   };
-})();
+}());
