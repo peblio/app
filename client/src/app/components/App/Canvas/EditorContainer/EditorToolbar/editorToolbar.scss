@@ -105,15 +105,7 @@
     margin-right: $large-margin;
     margin-left: $small-margin;
   }
-  &__svg-info {
-    display: inline-block;
-    &:hover .editor-toolbar__warning-container {
-      display: block;
-    }
-    &:focus .editor-toolbar__warning-container {
-      display: block;
-    }
-  }
+
   &__warning {
     color: $gray;
     width: $warning-width;
@@ -138,60 +130,72 @@
   min-height: 60px;
   z-index: $z-index-layer-2;
 
-  .editor-toolbar__button-container {
-    height:$editor-toolbar-height;
-    padding: 3px;
-    display: flex;
-    align-items: center;
-    .editor-toolbar__title {
-      display: inline;
-      font-size: $toolbar-font-size;
-      font-family: $roboto;
-      padding: 2px 4px;
-      margin-left: 10px;
-      border-radius: $medium-border-radius;
-    }
-    .editor-toolbar__svg{
-      border: none;
-      border-radius: $small-border-radius;
-      width: 25px;
-      height: 23px;
-      margin-left: 10px;
-      padding:1px;
-      &:hover {
-        border: none;
-        cursor: pointer;
+    .editor-toolbar__button-container {
+      height:$editor-toolbar-height;
+      padding: 3px;
+      display: flex;
+      align-items: center;
+      .editor-toolbar__title {
+        display: inline;
+        font-size: $toolbar-font-size;
+        font-family: $roboto;
+        padding: 2px 4px;
+        margin-left: 10px;
+        border-radius: $medium-border-radius;
       }
-    }
-    .editor-toolbar__svg:hover #playPause {
-      -webkit-transition-duration: 0.4s; /* Safari */
-      transition-duration: 0.4s;
-    }
-  }
-
-  .editor-toolbar__files {
-    display: flex;
-    margin: 0;
-    padding: 0 !important;
-    height:$editor-toolbar-files-height;
-    .editor-toolbar__file {
-      text-decoration: none;
-      list-style: none;
-      width: $editor-toolbar-file-width;
-      &-button {
-        border-radius: 0;
-        box-shadow: none;
-        padding: 0px 3px !important;
-        width: 65px;
-        height:25px;
-        &:hover, &--selected { // sass-lint:disable-line class-name-format
+      .editor-toolbar__svg{
+        border: none;
+        border-radius: $small-border-radius;
+        width: 25px;
+        height: 23px;
+        margin-left: 10px;
+        padding:1px;
+        &:hover {
           border: none;
+          cursor: pointer;
         }
       }
+      .editor-toolbar__svg:hover #playPause {
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+      }
     }
 
+    .editor-toolbar__files {
+      display: flex;
+      margin: 0;
+      padding: 0 !important;
+      height:$editor-toolbar-files-height;
+      .editor-toolbar__file {
+        text-decoration: none;
+        list-style: none;
+        width: $editor-toolbar-file-width;
+        &-button {
+          border-radius: 0;
+          box-shadow: none;
+          padding: 0px 3px !important;
+          width: 65px;
+          height:25px;
+          &:hover, &--selected { // sass-lint:disable-line class-name-format
+            border: none;
+          }
+        }
+      }
+
+    }
   }
-}
+  &__svg-info {
+    display: inline-block;
+    height: 20px !important;
+    width: 20px !important;
+    border-radius: 10px !important;
+    &:hover .editor-toolbar__warning-container {
+      display: block;
+    }
+    &:focus .editor-toolbar__warning-container {
+      display: block;
+    }
+  }
 }
 
 
