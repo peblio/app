@@ -156,8 +156,9 @@ class App extends React.Component {
 
   render() {
     return (
+      // eslint-disable-line
       <div
-        aria-hidden="true"
+        tabIndex="0"
         onKeyDown={e => this.onKeyPressed(e)}
       >
         <nav className="main-nav">

@@ -16,16 +16,6 @@ class Questions extends React.Component {
       this.props.updateQuestionChange(this.props.id, event.target.value);
     };
     this.setQuestionInnerHeight = value => this.props.setQuestionInnerHeight(this.props.id, value);
-    this.startResize = this.startResize.bind(this);
-    this.finishResize = this.finishResize.bind(this);
-  }
-
-  startResize() {
-    this.setState({ isResizing: true });
-  }
-
-  finishResize() {
-    this.setState({ isResizing: false });
   }
 
   render() {
@@ -36,11 +26,7 @@ class Questions extends React.Component {
             split="horizontal"
             minSize={this.props.minHeight}
             defaultSize={this.props.innerHeight}
-            onDragStarted={this.startResize}
-            onDragFinished={(size) => {
-              this.finishResize();
-              this.setQuestionInnerHeight(size);
-            }}
+            onDragFinished={size => this.setQuestionInnerHeight(size)}
           >
             <textarea
               className="question__question"

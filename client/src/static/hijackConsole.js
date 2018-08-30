@@ -1,7 +1,7 @@
 // This code is from https://github.com/processing/p5.js-web-editor/blob/master/client/utils/consoleUtils.js
 const EXTERNAL_LINK_REGEX = /^(http:\/\/|https:\/\/)/;
 
-const CONSOLEOUTPUT = CONSOLEOUTPUT || (() => {
+var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
   let _args = {}; // private
 
   const iframeWindow = window;
@@ -19,7 +19,7 @@ const CONSOLEOUTPUT = CONSOLEOUTPUT || (() => {
     },
     callConsole() {
       methods.forEach((method) => {
-        iframeWindow.console[method] = () => {
+        iframeWindow.console[method] = function () {
           // originalConsole[method].apply(originalConsole, arguments);
 
           let args = Array.from(arguments);
@@ -38,18 +38,18 @@ const CONSOLEOUTPUT = CONSOLEOUTPUT || (() => {
     },
 
     callErrorConsole(errorLine, errorFile) {
-      iframeWindow.onerror = (msg, url, lineNumber, columnNo, error) => {
-        const errorTitle = 'script error';
-        const errorDescription = msg.toLowerCase();
+      iframeWindow.onerror = function (msg, url, lineNumber, columnNo, error) {
+        const string = msg.toLowerCase();
+        const substring = 'script error';
         const data = {};
 
         console.log(errorTitle, errorDescription);
 
         // 31 -> number of lines in hijackConsole
-        const errorMessage = `${errorFile} : line ${lineNumber - (errorLine + 31)} - ${msg}`;
+        const msg = `${errorFile} : line ${lineNumber - (errorLine + 31)} - ${msg}`;
         const consoleEvent = {
           method: 'error',
-          arguments: [errorMessage],
+          arguments: [msg],
           id: _args[0]
         };
         window.parent.postMessage(consoleEvent, '*');
@@ -58,4 +58,4 @@ const CONSOLEOUTPUT = CONSOLEOUTPUT || (() => {
 
 
   };
-})();
+}());
