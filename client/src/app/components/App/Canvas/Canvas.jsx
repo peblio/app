@@ -222,7 +222,7 @@ class Canvas extends React.Component {
               (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
             break;
           }
-          case 'question' : {
+          case 'question': {
             localLayout[key].minW = WidgetSize.QUESTION_MIN_WIDTH;
             localLayout[key].w =
               (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
@@ -231,7 +231,7 @@ class Canvas extends React.Component {
               (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
             break;
           }
-          case 'iframe' : {
+          case 'iframe': {
             localLayout[key].minW = WidgetSize.IFRAME_MIN_WIDTH;
             localLayout[key].w =
               (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
@@ -240,7 +240,7 @@ class Canvas extends React.Component {
               (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
             break;
           }
-          case 'image' : {
+          case 'image': {
             localLayout[key].minW = WidgetSize.IMAGE_MIN_WIDTH;
             localLayout[key].w =
               (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
@@ -280,11 +280,10 @@ class Canvas extends React.Component {
               className={`${this.props.currentWidget === id ? 'canvas-high' : ''}`
               }
             >
-
               <div
                 className="widget__container element__iframe-container"
                 id={id}
-                tabIndex="0"
+                tabIndex="0" // eslint-disable-line
                 onFocus={() => this.props.setCurrentWidget(id)}
               >
                 {this.props.preview || (

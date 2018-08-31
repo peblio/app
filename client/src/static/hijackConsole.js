@@ -15,17 +15,17 @@ var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
   return {
     init(Args) {
       _args = Args;
-            // some other initialising
+      // some other initialising
     },
     callConsole() {
       methods.forEach((method) => {
         iframeWindow.console[method] = function () {
-              // originalConsole[method].apply(originalConsole, arguments);
+          // originalConsole[method].apply(originalConsole, arguments);
 
           let args = Array.from(arguments);
-          args = args.map(i =>
-                // catch objects
-                 (typeof i === 'string') ? i : JSON.stringify(i));
+
+          // catch objects
+          args = args.map(i => typeof i === 'string' ? i : JSON.stringify(i));
 
           const consoleEvent = {
             method,
@@ -43,8 +43,10 @@ var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
         const substring = 'script error';
         const data = {};
 
+        console.log(errorTitle, errorDescription);
+
         // 31 -> number of lines in hijackConsole
-        msg = `${errorFile} : line ${lineNumber - errorLine + 31} - ${msg}`;
+        const msg = `${errorFile} : line ${lineNumber - (errorLine + 31)} - ${msg}`;
         const consoleEvent = {
           method: 'error',
           arguments: [msg],

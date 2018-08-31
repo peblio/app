@@ -22,9 +22,9 @@ class InsertToolbar extends React.Component {
   }
 
   toggleEditorOptions() {
-    this.setState({
-      editorExpanded: !this.state.editorExpanded
-    });
+    this.setState(prevState => ({
+      editorExpanded: !prevState.editorExpanded
+    }));
   }
 
   render() {

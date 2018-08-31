@@ -16,7 +16,6 @@ class Image extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: ''
     };
     this.removeEditor = () => { this.props.removeEditor(this.props.id); };
     this.onChange = (state) => { this.props.onChange(this.props.id, state); };

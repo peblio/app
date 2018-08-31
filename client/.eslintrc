@@ -1,7 +1,9 @@
+/* global define, it, describe */
 {
 	"extends": ["airbnb", "../.eslintrc"],
 	"env": {
-    "browser": true
+    "browser": true,
+    "mocha": true
   },
   "parser": "babel-eslint",
   "rules": {
@@ -15,7 +17,28 @@
     ],
     "react/jsx-no-bind": [2, {"allowBind": true, "allowArrowFunctions": true}],
     "react/destructuring-assignment": 0,
-    "react/button-has-type": 0
+    "react/button-has-type": 0,
+    "jsx-a11y/label-has-for": [ 2, {
+      "components": [ "Label" ],
+      "required": {
+        "some": [ "nesting", "id" ]
+      },
+      "allowChildren": false,
+    }],
+    "jsx-a11y/label-has-associated-control": [ 2, {
+      "controlComponents": [ "select" ]
+    }],
+    'jsx-a11y/no-static-element-interactions': ["error", {
+      handlers: [
+        'onClick',
+        'onMouseDown',
+        'onMouseUp',
+        'onKeyPress',
+        'onKeyDown',
+        'onKeyUp',
+      ]
+    }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   },
   "plugins": [
     "react",

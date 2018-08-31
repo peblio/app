@@ -9,341 +9,8 @@ const User = require('../models/user.js');
 const Token = require('../models/token.js');
 const UserConst = require('../userConstants.js');
 
-const userRoutes = express.Router();
-
-userRoutes.route('/login').post(loginUser);
-userRoutes.route('/signup').post(createUser);
-userRoutes.route('/forgot').post(forgotPassword);
-userRoutes.route('/reset').post(resetPassword);
-userRoutes.route('/confirmation').post(confirmUser);
-userRoutes.route('/resendconfirmation').post(resendConfirmUser);
-userRoutes.route('/login/google').post(loginWithGoogle);
-userRoutes.route('/preferences').post(updatePreferences);
-userRoutes.route('/preferences').get(getUserPreferences);
-userRoutes.route('/:userName/profile').get(getUserProfile);
-
-function createUser(req, res) {
-  const email = req.body.mail;
-  const name = req.body.name;
-  const type = req.body.userType;
-  const password = req.body.password;
-  let user;
-  User.findOne({ name }, (err, user) => {
-    if (user) {
-      return res.status(400).send({
-        msg: UserConst.SIGN_UP_DUPLICATE_USER
-      });
-    }
-
-    User.findOne({ email: req.body.mail }, (err, user) => {
-      if (user) {
-        return res.status(400).send({
-          msg: UserConst.SIGN_UP_DUPLICATE_EMAIL
-        });
-      }
-      user = new User({
-        email,
-        name,
-        type,
-        password,
-        loginType: 'password'
-      });
-      user.hashPassword(password);
-      user.save((err, user) => {
-        if (err) {
-          res.status(422).json({
-            msg: UserConst.SIGN_UP_FAILED
-          });
-        } else {
-          const token = new Token({
-            _userId: user._id,
-            token: shortid.generate()
-          });
-          token.save((err) => {
-            if (err) {
-              return res.status(500).send({
-                msg: UserConst.SIGN_UP_FAILED
-              });
-            }
-            sendSignUpConfirmationMail(user.email, token.token, req);
-          });
-          return res.status(200).send({
-            msg: UserConst.SIGN_UP_CHECK_MAIL, user
-          });
-        }
-      });
-    });
-  });
-}
-
-function forgotPassword(req, res) {
-  User.findOne({ email: req.body.email }, (err, user) => {
-    if (user) {
-      user.resetPasswordToken = shortid.generate();
-      user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-      user.save((err, user) => {
-        if (err) {
-          res.status(422).json({
-            msg: UserConst.PASSWORD_RESET_FAILED
-          });
-        } else {
-          sendResetMail(req.body.email, user.resetPasswordToken, req);
-          return res.send({
-            msg: UserConst.PASSWORD_RESET_SENT_MAIL,
-            user
-          });
-        }
-      });
-    } else {
-      res.status(404).send({
-        msg: UserConst.PASSWORD_RESET_NO_USER
-      });
-    }
-  });
-}
-
-function resetPassword(req, res) {
-  User.findOne({ resetPasswordToken: req.body.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
-    if (err || !user) {
-      res.status(422).json({
-        error: UserConst.PASSWORD_RESET_TOKEN_EXP
-      });
-    } else {
-      user.hashPassword(req.body.password);
-      user.resetPasswordToken = undefined;
-      user.resetPasswordExpires = undefined;
-      user.save((err) => {
-        if (err) {
-          res.status(422).json({
-            msg: UserConst.PASSWORD_RESET_FAILED
-          });
-        } else {
-          sendSuccessfulResetMail(user.email);
-          return res.send({
-            msg: UserConst.PASSWORD_RESET_SUCCESSFUL,
-            user
-          });
-        }
-      });
-    }
-  });
-}
-
-function loginUser(req, res, next) {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) {
-      return res.send({ msg: err }); // will generate a 500 error
-    }
-    // Generate a JSON response reflecting authentication status
-    if (!user) {
-      return res.status(401).send({
-        msg: UserConst.LOGIN_FAILED
-      });
-    } else if (!user.isVerified) {
-      return res.status(401).send({
-        msg: UserConst.LOGIN_USER_NOT_VERIFIED
-      });
-    }
-
-    req.login(user, (err) => {
-      if (err) {
-        return res.send({
-          msg: err
-        });
-      }
-      return res.send({
-        msg: UserConst.LOGIN_SUCCESS,
-        user: { name: user.name, type: user.type }
-      });
-    });
-  })(req, res, next);
-}
-
-function confirmUser(req, res) {
-  if (!req.body.token) {
-    return res.status(400).send({
-      msg: ''
-    });
-  }
-  Token.findOne({ token: req.body.token }, (err, token) => {
-    if (!token) {
-      return res.status(400).send({
-        msg: UserConst.CONFIRM_TOKEN_EXPIRED
-      });
-    }
-
-    // If we found a token, find a matching user
-
-    User.findOne({ _id: token._userId }, (err, user) => {
-      if (!user) {
-        return res.status(400).send({
-          msg: UserConst.CONFIRM_NO_USER
-        });
-      }
-      if (user.isVerified) {
-        return res.status(400).send({
-          msg: UserConst.CONFIRM_USER_ALREADY_VERIFIED
-        });
-      }
-
-      // Verify and save the user
-      user.isVerified = true;
-      user.save((err) => {
-        if (err) {
-          return res.status(500).send({
-            msg: UserConst.SIGN_UP_FAILED
-          });
-        }
-        res.status(200).send({
-          msg: UserConst.CONFIRM_USER_VERIFIED
-        });
-      });
-    });
-  });
-}
-
-function resendConfirmUser(req, res) {
-  User.findOne({ email: req.body.email }, (err, user) => {
-    if (!user) {
-      return res.status(400).send({
-        msg: UserConst.CONFIRM_NO_EMAIL
-      });
-    }
-    if (user.isVerified) {
-      return res.status(400).send({
-        msg: UserConst.CONFIRM_USER_ALREADY_VERIFIED
-      });
-    }
-
-    // Create a verification token, save it, and send email
-    const token = new Token({
-      _userId: user._id,
-      token: shortid.generate()
-    });
-
-    // Save the token
-    token.save((err) => {
-      if (err) {
-        return res.status(500).send({
-          msg: UserConst.SIGN_UP_FAILED
-        });
-      }
-      sendSignUpConfirmationMail(user.email, token.token, req);
-    });
-    return res.status(200).send({
-      success: true,
-      msg: UserConst.SIGN_UP_CHECK_MAIL,
-      user
-    });
-  });
-}
-
-function loginWithGoogle(req, res) {
-  if (!req.body.google_id_token) {
-    return res.status(400).send({ msg: '' });
-  }
-  const type = req.body.userType;
-  const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-  return client.verifyIdToken({
-    idToken: req.body.google_id_token,
-    audience: process.env.GOOGLE_CLIENT_ID
-  }).then((ticket) => {
-    const payload = ticket.getPayload();
-    const googleId = payload.sub;
-
-    User.findOne({ googleId }, (err, user) => {
-      if (err) { return req.send({ msg: err }); }
-
-      let userPromise = Promise.resolve(user);
-      if (!user) {
-        const newUser = new User({
-          googleId,
-          type,
-          loginType: 'google',
-          name: payload.name,
-          isVerified: true
-        });
-        userPromise = newUser.save();
-      }
-
-      return userPromise.then((user) => {
-        req.login(user, (err) => {
-          if (err) {
-            return res.send({ msg: err });
-          }
-          return res.send({
-            msg: UserConst.LOGIN_SUCCESS,
-            user: { name: user.name, type: user.type }
-          });
-        });
-      });
-    });
-  }).catch(err => res.status(401).send({ msg: UserConst.LOGIN_FAILED }));
-}
-
-function updatePreferences(req, res) {
-  const name = req.user ? req.user.name : null;
-  const key = req.body.key;
-  const value = req.body.value;
-  if (name) {
-    User.findOne({ name }, (err, user) => {
-      if (err) {
-        res.status(500).json({ error: err });
-        return;
-      }
-      if (!user) {
-        res.status(404).json({ error: 'Document not found' });
-        return;
-      }
-      const preferences = { ...user.preferences };
-      preferences[key] = value;
-      user.preferences = preferences;
-      user.save((saveErr, user) => {
-        if (saveErr) {
-          res.status(500).json({ error: saveErr });
-          return;
-        }
-        res.json(user.preferences);
-      });
-    });
-  } else {
-    res.sendStatus(403);
-  }
-}
-
-function getUserPreferences(req, res) {
-  const name = req.user ? req.user.name : null;
-  if (name) {
-    User.findOne({ name }, (err, user) => {
-      if (err) {
-        res.status(500).json({ error: err });
-      } else {
-        res.status(200).send(user.preferences);
-      }
-    });
-  } else {
-    res.sendStatus(403);
-  }
-}
-
-function getUserProfile(req, res) {
-  User.findOne({ name: req.params.userName }, (err, user) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send({
-        name: user.name,
-        type: user.type,
-        image: user.image,
-        blurb: user.blurb,
-        isOwner: !!(req.user && req.user.name && req.user.name === user.name)
-      });
-    }
-  });
-}
-
-// EMAIL HELPERS
-
+// Methods: EMAIL
+// TODO: Refactor following Email methods to separate module
 function sendMail(mailOptions) {
   const options = {
     auth: {
@@ -398,4 +65,346 @@ function sendResetMail(email, token, req) {
   sendMail(mailOptions);
 }
 
+// Methods: AUTH
+function createUser(req, res) {
+  const email = req.body.mail;
+  const name = req.body.name;
+  const type = req.body.userType;
+  const password = req.body.password;
+
+  return User.findOne({ name }, (userFindViaNameError, userByName) => {
+    if (userByName) {
+      return res.status(400).send({
+        msg: UserConst.SIGN_UP_DUPLICATE_USER
+      });
+    }
+
+    return User.findOne(
+      { email: req.body.mail },
+      (userFindViaEmailError, userByEmail) => {
+        let user = null;
+
+        if (userByEmail) {
+          return res.status(400).send({
+            msg: UserConst.SIGN_UP_DUPLICATE_EMAIL
+          });
+        }
+        user = new User({
+          email,
+          name,
+          type,
+          password,
+          loginType: 'password'
+        });
+        user.hashPassword(password);
+        return user.save((updateUserError, updatedUser) => {
+          if (updateUserError) {
+            return res.status(422).json({
+              msg: UserConst.SIGN_UP_FAILED
+            });
+          }
+
+          const token = new Token({
+            _userId: updatedUser._id,
+            token: shortid.generate()
+          });
+          token.save((updateTokenError) => {
+            if (updateTokenError) {
+              return res.status(500).send({
+                msg: UserConst.SIGN_UP_FAILED
+              });
+            }
+            return sendSignUpConfirmationMail(updatedUser.email, token.token, req);
+          });
+          return res.status(200).send({
+            msg: UserConst.SIGN_UP_CHECK_MAIL,
+            user: updatedUser
+          });
+        });
+      }
+    );
+  });
+}
+
+function forgotPassword(req, res) {
+  User.findOne({ email: req.body.email }, (userFindError, user) => {
+    if (user) {
+      user.resetPasswordToken = shortid.generate();
+      user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+      user.save((updateUserError, updatedUser) => {
+        if (updateUserError) {
+          return res.status(422).json({
+            msg: UserConst.PASSWORD_RESET_FAILED
+          });
+        }
+
+        sendResetMail(req.body.email, updatedUser.resetPasswordToken, req);
+        return res.send({
+          msg: UserConst.PASSWORD_RESET_SENT_MAIL,
+          user: updatedUser
+        });
+      });
+    }
+    return res.status(404).send({
+      msg: UserConst.PASSWORD_RESET_NO_USER
+    });
+  });
+}
+
+function resetPassword(req, res) {
+  User.findOne(
+    {
+      resetPasswordToken: req.body.token,
+      resetPasswordExpires: { $gt: Date.now() }
+    },
+    (userFindError, user) => {
+      if (userFindError || !user) {
+        return res.status(422).json({
+          error: UserConst.PASSWORD_RESET_TOKEN_EXP
+        });
+      }
+
+      user.hashPassword(req.body.password);
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpires = undefined;
+      return user.save((err) => {
+        if (err) {
+          return res.status(422).json({
+            msg: UserConst.PASSWORD_RESET_FAILED
+          });
+        }
+
+        sendSuccessfulResetMail(user.email);
+        return res.send({
+          msg: UserConst.PASSWORD_RESET_SUCCESSFUL,
+          user
+        });
+      });
+    }
+  );
+}
+
+function loginUser(req, res, next) {
+  return passport.authenticate('local', (passportAuthError, user, info) => {
+    if (passportAuthError) {
+      return res.send({ msg: passportAuthError }); // will generate a 500 error
+    }
+    // Generate a JSON response reflecting authentication status
+    if (!user) {
+      return res.status(401).send({
+        msg: UserConst.LOGIN_FAILED
+      });
+    } if (!user.isVerified) {
+      return res.status(401).send({
+        msg: UserConst.LOGIN_USER_NOT_VERIFIED
+      });
+    }
+
+    return req.login(user, (loginError) => {
+      if (loginError) {
+        return res.send({
+          msg: loginError
+        });
+      }
+      return res.send({
+        msg: UserConst.LOGIN_SUCCESS,
+        user: { name: user.name, type: user.type }
+      });
+    });
+  })(req, res, next);
+}
+
+function confirmUser(req, res) {
+  if (!req.body.token) {
+    return res.status(400).send({
+      msg: ''
+    });
+  }
+  return Token.findOne({ token: req.body.token }, (tokenFindError, token) => {
+    if (!token) {
+      return res.status(400).send({
+        msg: UserConst.CONFIRM_TOKEN_EXPIRED
+      });
+    }
+
+    // If we found a token, find a matching user
+    return User.findOne({ _id: token._userId }, (userFindError, user) => {
+      if (!user) {
+        return res.status(400).send({
+          msg: UserConst.CONFIRM_NO_USER
+        });
+      }
+      if (user.isVerified) {
+        return res.status(400).send({
+          msg: UserConst.CONFIRM_USER_ALREADY_VERIFIED
+        });
+      }
+
+      // Verify and save the user
+      user.isVerified = true;
+      return user.save((updateUserError) => {
+        if (updateUserError) {
+          return res.status(500).send({
+            msg: UserConst.SIGN_UP_FAILED
+          });
+        }
+        return res.status(200).send({
+          msg: UserConst.CONFIRM_USER_VERIFIED
+        });
+      });
+    });
+  });
+}
+
+function resendConfirmUser(req, res) {
+  User.findOne({ email: req.body.email }, (err, user) => {
+    if (!user) {
+      return res.status(400).send({
+        msg: UserConst.CONFIRM_NO_EMAIL
+      });
+    }
+    if (user.isVerified) {
+      return res.status(400).send({
+        msg: UserConst.CONFIRM_USER_ALREADY_VERIFIED
+      });
+    }
+
+    // Create a verification token, save it, and send email
+    const token = new Token({
+      _userId: user._id,
+      token: shortid.generate()
+    });
+
+    // Save the token
+    token.save((tokenSaveError) => {
+      if (tokenSaveError) {
+        return res.status(500).send({
+          msg: UserConst.SIGN_UP_FAILED
+        });
+      }
+      return sendSignUpConfirmationMail(user.email, token.token, req);
+    });
+    return res.status(200).send({
+      success: true,
+      msg: UserConst.SIGN_UP_CHECK_MAIL,
+      user
+    });
+  });
+}
+
+function loginWithGoogle(req, res) {
+  if (!req.body.google_id_token) {
+    return res.status(400).send({ msg: '' });
+  }
+  const type = req.body.userType;
+  const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+  return client.verifyIdToken({
+    idToken: req.body.google_id_token,
+    audience: process.env.GOOGLE_CLIENT_ID
+  }).then((ticket) => {
+    const payload = ticket.getPayload();
+    const googleId = payload.sub;
+
+    User.findOne({ googleId }, (err, user) => {
+      if (err) { return req.send({ msg: err }); }
+
+      let userPromise = Promise.resolve(user);
+      if (!user) {
+        const newUser = new User({
+          googleId,
+          type,
+          loginType: 'google',
+          name: payload.name,
+          isVerified: true
+        });
+        userPromise = newUser.save();
+      }
+
+      return userPromise.then((newRegisteredUser) => {
+        req.login(newRegisteredUser, (loginError) => {
+          if (loginError) {
+            return res.send({ msg: loginError });
+          }
+          return res.send({
+            msg: UserConst.LOGIN_SUCCESS,
+            user: { name: newRegisteredUser.name, type: newRegisteredUser.type }
+          });
+        });
+      });
+    });
+  }).catch(err => res.status(401).send({ msg: UserConst.LOGIN_FAILED }));
+}
+
+function updatePreferences(req, res) {
+  const name = req.user ? req.user.name : null;
+  const key = req.body.key;
+  const value = req.body.value;
+  if (name) {
+    User.findOne({ name }, (err, user) => {
+      if (err) {
+        res.status(500).json({ error: err });
+        return;
+      }
+      if (!user) {
+        res.status(404).json({ error: 'Document not found' });
+        return;
+      }
+      const preferences = { ...user.preferences };
+      preferences[key] = value;
+      user.preferences = preferences;
+      user.save((saveErr, updatedUser) => {
+        if (saveErr) {
+          res.status(500).json({ error: saveErr });
+          return;
+        }
+        res.json(updatedUser.preferences);
+      });
+    });
+  } else {
+    res.sendStatus(403);
+  }
+}
+
+function getUserPreferences(req, res) {
+  const name = req.user ? req.user.name : null;
+  if (name) {
+    User.findOne({ name }, (err, user) => {
+      if (err) {
+        res.status(500).json({ error: err });
+      } else {
+        res.status(200).send(user.preferences);
+      }
+    });
+  } else {
+    res.sendStatus(403);
+  }
+}
+
+function getUserProfile(req, res) {
+  User.findOne({ name: req.params.userName }, (err, user) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send({
+        name: user.name,
+        type: user.type,
+        image: user.image,
+        blurb: user.blurb,
+        isOwner: !!(req.user && req.user.name && req.user.name === user.name)
+      });
+    }
+  });
+}
+
+const userRoutes = express.Router();
+userRoutes.route('/login').post(loginUser);
+userRoutes.route('/signup').post(createUser);
+userRoutes.route('/forgot').post(forgotPassword);
+userRoutes.route('/reset').post(resetPassword);
+userRoutes.route('/confirmation').post(confirmUser);
+userRoutes.route('/resendconfirmation').post(resendConfirmUser);
+userRoutes.route('/login/google').post(loginWithGoogle);
+userRoutes.route('/preferences').post(updatePreferences);
+userRoutes.route('/preferences').get(getUserPreferences);
+userRoutes.route('/:userName/profile').get(getUserProfile);
 module.exports = userRoutes;
