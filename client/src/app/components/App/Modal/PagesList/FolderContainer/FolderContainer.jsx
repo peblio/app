@@ -58,7 +58,7 @@ class FolderContainer extends Component {
     const { newFolderDropdownIsOpen } = this.state;
     const title = folderId ? folder.title : 'My Files';
     return (
-      /* eslint-disable jsx-a11y/no-static-element-interactions */
+      /* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
       <div className="pages__folder-container" onClick={this.handleClick}>
         <div className="pages__folder-container-header">
           <span className="pages__folder-title">{title}</span>
@@ -87,7 +87,7 @@ class FolderContainer extends Component {
           <PagesTable pages={childPages} folderId={folderId} />
         </div>
       </div>
-      /* eslint-enable jsx-a11y/no-static-element-interactions */
+      /* eslint-enable jsx-a11y/no-static-element-interactions jsx-a11y/click-events-have-key-events */
     );
   }
 }
