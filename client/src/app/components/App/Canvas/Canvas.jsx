@@ -282,7 +282,7 @@ class Canvas extends React.Component {
             >
 
               <div
-                className="widget__container element__iframe-container"
+                className={`widget__container element__iframe-container`, this.props.editors[id].type === "text" && "no-outline"}
                 id={id}
                 tabIndex="0"
                 onFocus={() => this.props.setCurrentWidget(id)}
