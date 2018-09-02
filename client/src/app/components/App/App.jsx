@@ -179,11 +179,13 @@ class App extends React.Component {
             setPageTitle={this.props.setPageTitle}
             setEditorMode={this.props.setEditorMode}
             savePage={this.savePage}
+            editorAutoSave={this.props.editorAutoSave}
             toggleFileDropdown={this.props.toggleFileDropdown}
             toggleAccountDropdown={this.props.toggleAccountDropdown}
             togglePreviewMode={this.props.togglePreviewMode}
             togglePreferencesPanel={this.props.togglePreferencesPanel}
             unsavedChanges={this.props.unsavedChanges}
+            autoSaveUnsavedChanges={this.props.autoSaveUnsavedChanges}
             userType={this.props.userType}
             viewExamplesModal={this.props.viewExamplesModal}
             viewPagesModal={this.props.viewPagesModal}
@@ -361,6 +363,7 @@ App.propTypes = {
   rgl: PropTypes.shape({}).isRequired,
   preview: PropTypes.bool.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
+  autoSaveUnsavedChanges: PropTypes.func.isRequired,
   textHeights: PropTypes.shape({}).isRequired,
 
   canEdit: PropTypes.bool.isRequired,
@@ -455,6 +458,7 @@ App.propTypes = {
   fetchUserPreferences: PropTypes.func.isRequired,
   editorFontSize: PropTypes.number.isRequired,
   editorTheme: PropTypes.string.isRequired,
+  editorAutoSave: PropTypes.bool.isRequired,
 
   logoutUser: PropTypes.func.isRequired,
   updateUserName: PropTypes.func.isRequired,
@@ -498,7 +502,8 @@ function mapStateToProps(state) {
     isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,
 
     editorFontSize: state.preferences.editorFontSize,
-    editorTheme: state.preferences.editorTheme
+    editorTheme: state.preferences.editorTheme,
+    editorAutoSave: state.preferences.editorAutoSave
   };
 }
 
