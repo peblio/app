@@ -47,17 +47,6 @@ export function loadPage(id, title, layout) {
   };
 }
 
-export function deletePage(pageId) {
-  return (dispatch) => {
-    axios.delete(`/pages/${pageId}`).then(() => {
-      dispatch({
-        type: ActionTypes.DELETE_PAGE,
-        pageId
-      });
-    });
-  };
-}
-
 export function duplicatePage(title, folder, editors, editorIndex, layout) {
   return (dispatch) => {
     const id = shortid.generate();
