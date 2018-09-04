@@ -62,6 +62,8 @@ class CodeEditor extends React.Component {
       mode = 'application/json';
     } else if (fileName.match(/.+\.pde$/i)) {
       mode = 'java';
+    } else if (fileName.match(/.+\.py$/i)) {
+      mode = 'python';
     } else {
       mode = 'text/plain';
     }
