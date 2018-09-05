@@ -167,6 +167,7 @@ export function updateTextHeight(id, height) {
 const currentUserFolderActions = namespaceActionCreators(folderActions, 'CURRENT_USER_FOLDERS');
 
 export const {
+  deletePage,
   createPage,
   fetchAllPages,
   createFolder,
