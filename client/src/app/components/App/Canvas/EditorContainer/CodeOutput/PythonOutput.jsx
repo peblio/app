@@ -20,6 +20,11 @@ class ProcessingOutput extends React.Component {
     this.stopSketch();
   }
 
+  onIframeLoad = () => {
+    const pythonCode = this.props.files[0].content;
+    this.iframe.contentWindow.executeCode(pythonCode);
+  }
+
   outf(text) {
     const mypre = document.getElementById('python-output');
     mypre.innerHTML += text;
@@ -37,36 +42,32 @@ class ProcessingOutput extends React.Component {
 
     const mypre = pythonDoc.getElementById('python-output');
     mypre.innerHTML = '';
-    const testCode = `print 4+13`; //eslint-disable-line
-    injectScript.innerHTML =
-`
-window.onload = function() {
+    injectScript.innerHTML = `
+    function executeCode(pythonCode){
+      Sk.pre = 'python-output';
+      Sk.configure({ output: function outf(text) {
+        var mypre = document.getElementById('python-output');
+        mypre.innerHTML += text;
+      }, read: function builtinRead(x) {
+        if (Sk.builtinFiles === undefined || Sk.builtinFiles.files[x] === undefined) throw 'File not found';
+        return Sk.builtinFiles.files[x];
+      } });
+      if(!Sk.TurtleGraphics) {
+        Sk.TurtleGraphics = {};
+        Sk.TurtleGraphics.target = 'python-graphic-output';
+      }
+      var myPromise = Sk.misceval.asyncToPromise(function() {
+        return Sk.importMainWithBody('<stdin>', false, pythonCode, true);
+      });
+      myPromise.then(function(mod) {
 
-  Sk.pre = 'python-output';
-  Sk.configure({ output: function outf(text) {
-    var mypre = document.getElementById('python-output');
-    mypre.innerHTML += text;
-  }, read: function builtinRead(x) {
-    if (Sk.builtinFiles === undefined || Sk.builtinFiles.files[x] === undefined) throw 'File not found';
-    return Sk.builtinFiles.files[x];
-  } });
-  if(!Sk.TurtleGraphics) {
-    Sk.TurtleGraphics = {};
-    Sk.TurtleGraphics.target = 'python-graphic-output';
-  }
-  var myPromise = Sk.misceval.asyncToPromise(function() {
-    return Sk.importMainWithBody("<stdin>", false,
-'print 4+3'
-, true);
-  });
-  myPromise.then(function(mod) {
+      },
+      function(err) {
 
-  },
-  function(err) {
-
-  });
-}
-    `;
+      });
+    }
+    window.onload = executeCode;
+     `;
     pythonDoc.head.appendChild(injectScript);
     return pythonDoc;
   }
@@ -83,8 +84,6 @@ window.onload = function() {
       </body>
     </html>`;
     sketchDoc = this.injectLocalFiles(sketchDoc);
-
-    console.log(sketchDoc);
     sketchDoc = this.resolvePyFile(sketchDoc, this.props.files);
     sketchDoc = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
     srcDoc.set(this.iframe, sketchDoc);
@@ -138,6 +137,8 @@ window.onload = function() {
           ref={(element) => { this.iframe = element; }}
           id="code-output"
           data-test="sketch-output"
+          name="python-output"
+          onLoad={this.onIframeLoad.bind(this)}
         >
         </iframe>
       </div>
