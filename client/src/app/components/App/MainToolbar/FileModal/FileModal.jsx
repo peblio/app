@@ -19,7 +19,7 @@ class FileModal extends React.Component {
                   this.props.viewPagesModal();
                   this.props.toggleFileDropdown();
                 }}
-                onKeeyDown={() => {
+                onKeyDown={() => {
                   this.props.viewPagesModal();
                   this.props.toggleFileDropdown();
                 }}
