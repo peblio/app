@@ -10,6 +10,7 @@
   min-height: 100%;
   margin: 0;
   background: $lighter-gray;
+  box-sizing: border-box;
   &--edit { // sass-lint:disable-line class-name-format
     border: $gray dashed 1px;
     min-height: 100%;
@@ -19,6 +20,7 @@
 .image__login{
   padding:$small-padding;
   background-color: $lighter-gray;
+  box-sizing: border-box;
   height: 90%;
   margin: $small-margin;
   position:relative;
