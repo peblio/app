@@ -93,7 +93,7 @@ const editorsReducer = (state = initialState, action) => {
         isPlaying: false,
         isRefreshing: false,
         editorMode: action.mode,
-        innerWidth: 270,
+        innerWidth: 400,
         innerHeight: 160
       };
       stack.push(id);
