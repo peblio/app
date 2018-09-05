@@ -36,7 +36,8 @@ class InsertToolbar extends React.Component {
         <div className="insert-toolbar__container-left">
           <button
             className="insert-toolbar__button "
-            onClick={this.toggleEditorOptions}
+            onMouseDown={this.toggleEditorOptions}
+            onKeyDown={this.toggleEditorOptions}
             onBlur={() => {
               setTimeout(() => {
                 this.state.editorExpanded && this.toggleEditorOptions();
@@ -45,7 +46,7 @@ class InsertToolbar extends React.Component {
             data-test="add-code-editor"
           >
             <EditorSVG alt="add code editor" />
-          Editor
+            Editor
           </button>
           {this.state.editorExpanded && (
             <div className="insert-toolbar__sub-menu">
@@ -95,14 +96,14 @@ class InsertToolbar extends React.Component {
             className="insert-toolbar__button"
           >
             <TextSVG alt="add text" />
-          Textbox
+            Textbox
           </button>
           <button
             onClick={this.props.addIframe}
             className="insert-toolbar__button"
           >
             <EmbedSVG alt="add embed" />
-          Embed
+            Embed
           </button>
           <button
             onClick={this.props.addQuestionEditor}
@@ -110,7 +111,7 @@ class InsertToolbar extends React.Component {
             className="insert-toolbar__button"
           >
             <QuestionSVG alt="add question" />
-          Question
+            Question
           </button>
           <button
             onClick={this.props.addImage}
@@ -118,7 +119,7 @@ class InsertToolbar extends React.Component {
             className="insert-toolbar__button"
           >
             <ImageSVG alt="add image" />
-          Image
+            Image
           </button>
         </div>
         <div className="insert-toolbar__container-right">

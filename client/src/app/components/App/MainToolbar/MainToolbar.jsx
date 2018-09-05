@@ -73,6 +73,7 @@ class MainToolbar extends React.Component {
               <button
                 className={fileDropDownButtonClassName}
                 onMouseDown={this.props.toggleFileDropdown}
+                onKeyDown={this.props.toggleFileDropdown}
                 data-test="toggle-file-dropdown"
               >
                 File
@@ -121,6 +122,7 @@ class MainToolbar extends React.Component {
                 <div>
                   <button
                     onMouseDown={this.props.toggleAccountDropdown}
+                    onKeyDown={this.props.toggleAccountDropdown}
                     onBlur={() => {
                       setTimeout(() => {
                         this.props.isAccountDropdownOpen && this.props.toggleAccountDropdown();
@@ -142,6 +144,7 @@ class MainToolbar extends React.Component {
                             {`Hi ${this.props.name}!`}
                             <button
                               onMouseDown={this.props.toggleAccountDropdown}
+                              onKeyDown={this.props.toggleAccountDropdown}
                               className="main-toolbar__account-button-clicked"
                             >
                               <AccountSVG
@@ -167,6 +170,7 @@ class MainToolbar extends React.Component {
                           <button
                             className="file-modal__link"
                             onMouseDown={this.logout}
+                            onKeyDown={this.logout}
                           >
                             Logout
                           </button>

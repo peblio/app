@@ -15,7 +15,11 @@ class FileModal extends React.Component {
             <li className="file-modal__item">
               <a // eslint-disable-line
                 className="file-modal__link"
-                onClick={() => {
+                onMouseDown={() => {
+                  this.props.viewPagesModal();
+                  this.props.toggleFileDropdown();
+                }}
+                onKeeyDown={() => {
                   this.props.viewPagesModal();
                   this.props.toggleFileDropdown();
                 }}
@@ -27,7 +31,11 @@ class FileModal extends React.Component {
             <li className="file-modal__item">
               <a  // eslint-disable-line
                 className="file-modal__link"
-                onClick={() => {
+                onMouseDown={() => {
+                  this.props.savePage();
+                  this.props.toggleFileDropdown();
+                }}
+                onKeyDown={() => {
                   this.props.savePage();
                   this.props.toggleFileDropdown();
                 }}
