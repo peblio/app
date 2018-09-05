@@ -25,53 +25,6 @@ class ProcessingOutput extends React.Component {
     this.iframe.contentWindow.executeCode(pythonCode);
   }
 
-  outf(text) {
-    const mypre = document.getElementById('python-output');
-    mypre.innerHTML += text;
-  }
-
-  builtinRead(x) {
-    if (Sk.builtinFiles === undefined || Sk.builtinFiles.files[x] === undefined) throw `File not found: '${x}'`;
-    return Sk.builtinFiles.files[x];
-  }
-
-  resolvePyFile=(pythonDoc, files) => {
-    const injectScript = pythonDoc.createElement('script');
-
-    const pythonCode = files[0].content;
-
-    const mypre = pythonDoc.getElementById('python-output');
-    mypre.innerHTML = '';
-    injectScript.innerHTML = `
-    function executeCode(pythonCode){
-      Sk.pre = 'python-output';
-      Sk.configure({ output: function outf(text) {
-        var mypre = document.getElementById('python-output');
-        mypre.innerHTML += text;
-      }, read: function builtinRead(x) {
-        if (Sk.builtinFiles === undefined || Sk.builtinFiles.files[x] === undefined) throw 'File not found';
-        return Sk.builtinFiles.files[x];
-      } });
-      if(!Sk.TurtleGraphics) {
-        Sk.TurtleGraphics = {};
-        Sk.TurtleGraphics.target = 'python-graphic-output';
-      }
-      var myPromise = Sk.misceval.asyncToPromise(function() {
-        return Sk.importMainWithBody('<stdin>', false, pythonCode, true);
-      });
-      myPromise.then(function(mod) {
-
-      },
-      function(err) {
-
-      });
-    }
-    window.onload = executeCode;
-     `;
-    pythonDoc.head.appendChild(injectScript);
-    return pythonDoc;
-  }
-
   startSketch=() => {
     window.addEventListener('message', this.props.updateConsoleOutput, false);
     let sketchDoc =
@@ -84,7 +37,6 @@ class ProcessingOutput extends React.Component {
       </body>
     </html>`;
     sketchDoc = this.injectLocalFiles(sketchDoc);
-    sketchDoc = this.resolvePyFile(sketchDoc, this.props.files);
     sketchDoc = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
     srcDoc.set(this.iframe, sketchDoc);
   }
@@ -98,7 +50,8 @@ class ProcessingOutput extends React.Component {
     const scriptsToInject = [
       '/hijackConsole.js',
       'http://www.skulpt.org/static/skulpt.min.js',
-      'http://www.skulpt.org/static/skulpt-stdlib.js'
+      'http://www.skulpt.org/static/skulpt-stdlib.js',
+      '/pythonUtils.js'
     ];
     const parser = new DOMParser();
     sketchDoc = parser.parseFromString(sketchDoc, 'text/html');
@@ -114,7 +67,9 @@ class ProcessingOutput extends React.Component {
     const pythonGraphicOutput = sketchDoc.createElement('div');
     pythonGraphicOutput.setAttribute('id', 'python-graphic-output');
     sketchDoc.body.appendChild(pythonGraphicOutput);
-
+    const pythonInput = sketchDoc.createElement('textarea');
+    pythonInput.setAttribute('id', 'python-input');
+    sketchDoc.body.appendChild(pythonInput);
 
     // const scriptOffs = [10, 'sketch.pde'];
     // const injectScript = sketchDoc.createElement('script');
