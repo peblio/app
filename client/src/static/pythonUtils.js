@@ -9,18 +9,18 @@ function builtinRead(x) {
 }
 
 function inputf(prompt) {
-  // debugger;
   return window.prompt(prompt);
 }
 
 function executeCode(pythonCode) {
   Sk.pre = 'python-output';
   Sk.configure({
+    inputfun(prompt) {
+      return window.prompt(prompt);
+    },
+    inputfunTakesPrompt: true,
     output: outf,
-    read: builtinRead,
-    // inputfun: inputf,
-    // inputfunTakesPrompt: true
-  });
+    read: builtinRead });
   if (!Sk.TurtleGraphics) {
     Sk.TurtleGraphics = {};
     Sk.TurtleGraphics.target = 'python-graphic-output';

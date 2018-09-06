@@ -49,8 +49,8 @@ class ProcessingOutput extends React.Component {
   injectLocalFiles(sketchDoc) {
     const scriptsToInject = [
       '/hijackConsole.js',
-      'http://www.skulpt.org/static/skulpt.min.js',
-      'http://www.skulpt.org/static/skulpt-stdlib.js',
+      '/skulpt.min.js',
+      '/skulpt-stdlib.js',
       '/pythonUtils.js'
     ];
     const parser = new DOMParser();
@@ -67,21 +67,6 @@ class ProcessingOutput extends React.Component {
     const pythonGraphicOutput = sketchDoc.createElement('div');
     pythonGraphicOutput.setAttribute('id', 'python-graphic-output');
     sketchDoc.body.appendChild(pythonGraphicOutput);
-    const pythonInput = sketchDoc.createElement('textarea');
-    pythonInput.setAttribute('id', 'python-input');
-    sketchDoc.body.appendChild(pythonInput);
-
-    // const scriptOffs = [10, 'sketch.pde'];
-    // const injectScript = sketchDoc.createElement('script');
-    // console.log(scriptOffs);
-    // if (scriptOffs) {
-    //   injectScript.innerHTML =
-    // `CONSOLEOUTPUT.init(["${this.props.id}"]);
-    // CONSOLEOUTPUT.callConsole();
-    // CONSOLEOUTPUT.callErrorConsole(${scriptOffs[0]}, "${scriptOffs[1]}", false);
-    // `;
-    //   sketchDoc.head.appendChild(injectScript);
-    // }
     return sketchDoc;
   }
 
