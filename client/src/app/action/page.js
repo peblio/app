@@ -67,7 +67,7 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, editors, editorIndex, layout) {
+export function submitPage(parentId, title, editors, editorIndex, layout, type) {
   const id = shortid.generate();
   axios.post('/pages/save', {
     parentId,
@@ -78,6 +78,9 @@ export function submitPage(parentId, title, editors, editorIndex, layout) {
     layout
   }).then(() => {
     history.push(`/pebl/${id}`);
+    if (type === 'fork') {
+      window.location.reload(true);
+    }
   })
     .catch(error => console.error(error));
 
