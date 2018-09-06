@@ -78,6 +78,7 @@ export function submitPage(parentId, title, editors, editorIndex, layout) {
     layout
   }).then(() => {
     history.push(`/pebl/${id}`);
+    window.location.reload(true);
   })
     .catch(error => console.error(error));
 
