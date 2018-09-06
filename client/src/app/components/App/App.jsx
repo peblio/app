@@ -129,7 +129,8 @@ class App extends React.Component {
           this.props.pageTitle,
           this.props.editors,
           this.props.editorIndex,
-          this.props.layout
+          this.props.layout,
+          'save'
         );
       } else if (this.props.canEdit) {
         this.props.updatePage(
@@ -146,7 +147,8 @@ class App extends React.Component {
           `${this.props.pageTitle}-copy`,
           this.props.editors,
           this.props.editorIndex,
-          this.props.layout
+          this.props.layout,
+          'fork'
         );
       }
     } else {
@@ -158,7 +160,7 @@ class App extends React.Component {
     return (
       <div // eslint-disable-line
         tabIndex="0"
-        onKeyDown={(e) => this.onKeyPressed(e)}
+        onKeyDown={e => this.onKeyPressed(e)}
       >
         <nav className="main-nav">
           <MainToolbar
