@@ -25,3 +25,17 @@ button {
     cursor: pointer;
   }
 }
+
+
+
+%beta-tag {
+  padding: 3px 5px;
+  background: rgb(0, 152, 135);
+  top: -4px;
+  font-family: $montserrat;
+  font-size: 8px;
+  color: rgb(255, 255, 255);
+  border-radius: $small-border-radius;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}

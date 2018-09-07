@@ -1,7 +1,10 @@
 @import 'variables';
 @import 'mixins';
+@import 'base';
 
-
+.beta-tag {
+  @extend %beta-tag;
+}
 
 .editor__dark{
   .editor-toolbar{

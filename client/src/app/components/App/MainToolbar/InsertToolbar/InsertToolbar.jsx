@@ -103,6 +103,11 @@ class InsertToolbar extends React.Component {
                     data-test="add-python-editor"
                   >
                  Python
+                    <span
+                      className="beta-tag"
+                    >
+                   beta
+                    </span>
                   </button>
                 </li>
               </ul>
