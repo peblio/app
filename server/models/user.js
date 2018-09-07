@@ -60,6 +60,7 @@ const userSchema = new Schema({
     editorAutoSave: { type: Boolean, default: true },
   }
 }, {
+  timestamps: true,
   toJSON: { virtuals: true },
   toObject: { virtuals: true }
 });
