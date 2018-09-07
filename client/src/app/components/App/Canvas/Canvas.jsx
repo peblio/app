@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import VisibilitySensor from 'react-visibility-sensor';
 
 import EditorContainer from './EditorContainer/EditorContainer.jsx';
 import Questions from './Question/Question.jsx';
@@ -95,30 +96,34 @@ class Canvas extends React.Component {
 
   renderCodeEditor(editor) {
     return (
-      <EditorContainer
-        id={editor.id}
-        currentFile={editor.currentFile}
-        clearConsoleOutput={this.props.clearConsoleOutput}
-        code={editor.code}
-        consoleOutputText={editor.consoleOutputText}
-        editorFontSize={this.props.editorFontSize}
-        editorMode={editor.editorMode}
-        editorTheme={this.props.editorTheme}
-        files={editor.files}
-        innerHeight={editor.innerHeight}
-        innerWidth={editor.innerWidth}
-        isPlaying={editor.isPlaying}
-        isRefreshing={editor.isRefreshing}
-        playCode={this.props.playCode}
-        startCodeRefresh={this.props.startCodeRefresh}
-        setCurrentFile={this.props.setCurrentFile}
-        setInnerWidth={this.props.setInnerWidth}
-        setInnerHeight={this.props.setInnerHeight}
-        stopCode={this.props.stopCode}
-        stopCodeRefresh={this.props.stopCodeRefresh}
-        updateConsoleOutput={this.props.updateConsoleOutput}
-        updateFile={this.props.updateFile}
-      />
+      <VisibilitySensor>
+        {({isVisible}) =>
+          <EditorContainer
+            id={editor.id}
+            currentFile={editor.currentFile}
+            clearConsoleOutput={this.props.clearConsoleOutput}
+            code={editor.code}
+            consoleOutputText={editor.consoleOutputText}
+            editorFontSize={this.props.editorFontSize}
+            editorMode={editor.editorMode}
+            editorTheme={this.props.editorTheme}
+            files={editor.files}
+            innerHeight={editor.innerHeight}
+            innerWidth={editor.innerWidth}
+            isPlaying={editor.isPlaying && isVisible}
+            isRefreshing={editor.isRefreshing}
+            playCode={this.props.playCode}
+            startCodeRefresh={this.props.startCodeRefresh}
+            setCurrentFile={this.props.setCurrentFile}
+            setInnerWidth={this.props.setInnerWidth}
+            setInnerHeight={this.props.setInnerHeight}
+            stopCode={this.props.stopCode}
+            stopCodeRefresh={this.props.stopCodeRefresh}
+            updateConsoleOutput={this.props.updateConsoleOutput}
+            updateFile={this.props.updateFile}
+          />
+        }
+      </VisibilitySensor>
     );
   }
 
