@@ -1,8 +1,11 @@
 import React from 'react';
+import ReactHtmlParser from 'react-html-parser';
 import PropTypes from 'prop-types';
 
-import PlaySVG from '../../../../../images/play.svg';
+import InfoSVG from '../../../../../images/info.svg';
 import PauseSVG from '../../../../../images/pause.svg';
+import PlaySVG from '../../../../../images/play.svg';
+import { ProcessingWarning } from '../../../../../constants/codeConstants.js';
 
 require('./editorToolbar.scss');
 
@@ -11,10 +14,26 @@ class EditorToolbar extends React.Component {
     return (
       <div className="editor-toolbar__container">
         <div className="editor-toolbar__button-container">
+          {(this.props.editorMode === 'processing') && (
+            <div
+              tabIndex="0"
+              className="editor-toolbar__svg editor-toolbar__svg-info"
+            >
+              <InfoSVG alt="More information" />
+
+              <div
+                tabIndex="0"
+                className="editor-toolbar__warning-container"
+              >
+                <p className="editor-toolbar__warning">
+                  {ReactHtmlParser(ProcessingWarning)}
+                </p>
+              </div>
+            </div>
+          )}
+
           <p className="editor-toolbar__title">
             {this.props.editorMode}
-            {' '}
-            Editor
           </p>
           <button
             className="editor-toolbar__svg"
@@ -22,6 +41,7 @@ class EditorToolbar extends React.Component {
               this.props.playCode();
               if (this.props.isPlaying) { this.props.startCodeRefresh(); }
             }}
+            data-test="play-sketch-button"
           >
             <PlaySVG alt="Run Code" />
           </button>

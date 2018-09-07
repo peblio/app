@@ -53,6 +53,11 @@ const page = (state = initialState, action) => {
         unsavedChanges: action.value
       });
 
+    case ActionTypes.AUTO_SAVE_UNSAVED_CHANGES:
+      return Object.assign({}, state, {
+        unsavedChanges: false
+      });
+
     case ActionTypes.TOGGLE_PREVIEW_MODE:
       return Object.assign({}, state, {
         preview: !state.preview

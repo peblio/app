@@ -69,10 +69,34 @@ const defaultHTML =
 
 `;
 
+const defaultProcessingPDE =
+`void setup() {
+  size(480, 120);
+}
+
+void draw() {
+
+}`;
+
+
+export const defaultProcessingHTML =
+
+`
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Page Title</title>
+  </head>
+  <body>
+    <canvas id="pjs"> </canvas>
+  </body>
+</html>
+`;
 export const STARTFILE = {
   p5: 1,
   html: 0,
-  webdev: 0
+  webdev: 0,
+  processing: 0
 };
 
 export const FILES = {
@@ -110,6 +134,25 @@ export const FILES = {
       content: defaultWebDevCSS
     }
   ],
+  processing: [
+    {
+      name: 'sketch.pde',
+      content: defaultProcessingPDE
+    }
+  ]
 };
+
+export const ProcessingWarning =
+  `We currently use the Processing.js library to run Processing in the browser which comes along with certain limitations. Learn more
+  <a
+  href="http://processingjs.org/articles/p5QuickStart.html#thingstoknowusingpjs"
+  target="_blank"
+  rel="noopener noreferrer"
+  style="color: #009887;
+  text-decoration: none;
+  font-style: italic;"
+  >
+  here.
+  </a>`;
 
 export { FILES as default };

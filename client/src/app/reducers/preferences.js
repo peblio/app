@@ -2,7 +2,8 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 
 const initialState = {
   editorFontSize: 14,
-  editorTheme: 'light'
+  editorTheme: 'light',
+  editorAutoSave: true
 };
 const preferences = (state = initialState, action) => {
   switch (action.type) {
@@ -17,7 +18,8 @@ const preferences = (state = initialState, action) => {
     case ActionTypes.SET_USER_PREFERENCES:
       return Object.assign({}, state, {
         editorTheme: action.data.editorTheme,
-        editorFontSize: action.data.editorFontSize
+        editorFontSize: action.data.editorFontSize,
+        editorAutoSave: action.data.editorAutoSave
       });
     default:
       return state;

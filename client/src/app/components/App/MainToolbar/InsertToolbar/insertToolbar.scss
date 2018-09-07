@@ -16,16 +16,20 @@
     flex-direction: row;
     width: 100%;
     padding: $small-padding;
-    height: $insert-toolbar-height;
     background-color: $lighter-gray;
     z-index: $z-index-layer-1;
     box-sizing: border-box;
     justify-content: space-between;
+    align-items: center;
   }
   &__sub-menu {
     position: absolute;
     top: calc(#{$insert-toolbar-height*2} + #{$small-padding});
     left: $large-padding;
+  }
+  &__list-item{
+    background-color: $g1;
+    color:$white;
   }
   &__button{
     position: relative;
@@ -73,7 +77,7 @@
     &:hover {
       background: none;
       border: none;
-      color: $dark-gray;
+      color: $b1;
     }
   }
 }

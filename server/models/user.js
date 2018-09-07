@@ -57,6 +57,7 @@ const userSchema = new Schema({
   preferences: {
     editorFontSize: { type: Number, default: 14 },
     editorTheme: { type: String, enum: ['light', 'dark'], default: 'light' },
+    editorAutoSave: { type: Boolean, default: true },
   }
 }, {
   toJSON: { virtuals: true },

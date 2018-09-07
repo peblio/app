@@ -16,6 +16,12 @@ export function setUnsavedChanges(value) {
   };
 }
 
+export function autoSaveUnsavedChanges() {
+  return (dispatch) => {
+    dispatch({ type: ActionTypes.AUTO_SAVE_UNSAVED_CHANGES });
+  };
+}
+
 export function setPageTitle(event) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
@@ -61,7 +67,7 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, editors, editorIndex, layout) {
+export function submitPage(parentId, title, editors, editorIndex, layout, type) {
   const id = shortid.generate();
   axios.post('/pages/save', {
     parentId,
@@ -72,6 +78,9 @@ export function submitPage(parentId, title, editors, editorIndex, layout) {
     layout
   }).then(() => {
     history.push(`/pebl/${id}`);
+    if (type === 'fork') {
+      window.location.reload(true);
+    }
   })
     .catch(error => console.error(error));
 

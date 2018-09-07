@@ -1,78 +1,208 @@
 @import 'variables';
 @import 'mixins';
 
-.editor-toolbar__container {
+
+
+.editor__dark{
+  .editor-toolbar{
+    &__container {
+    background-color: $light-gray;
+    background: $dark-gray; /* For browsers that do not support gradients */
+    .editor-toolbar__button-container {
+      background-color: $g1;
+      border:1px solid $g1;
+      box-sizing: border-box;
+      .editor-toolbar__title {
+        color: $white;
+        background-color: $g4;
+      }
+      .editor-toolbar__svg{
+        background-color: $g2;
+        &:hover {
+          background-color: $g5;
+        }
+      }
+      .editor-toolbar__svg:hover #playPause {
+        fill:$g2;
+        stroke:none;
+      }
+      #playPause{
+        fill:$g5;
+      }
+    }
+
+    .editor-toolbar__files {
+      background-color: $g2;
+      .editor-toolbar__file {
+        &-button {
+          background-color: $g4;
+          color: $white;
+          border:1px solid $g2;
+          box-sizing: border-box;
+          &:hover, &--selected { // sass-lint:disable-line class-name-format
+            background-color: $g2;
+            color: $white;
+          }
+        }
+      }
+
+    }
+  }
+  }
+}
+
+.editor__light{
+  .editor-toolbar{
+    &__container {
+    .editor-toolbar__button-container {
+      background-color: $white;
+      border:1px solid $g5;
+      box-sizing: border-box;
+      .editor-toolbar__title {
+        color: $g1;
+        background-color: $g6;
+      }
+      .editor-toolbar__svg{
+        background-color: $b2;
+        &:hover {
+          background-color: $g6;
+        }
+      }
+      .editor-toolbar__svg:hover #playPause {
+        fill:$b2;
+        stroke:none;
+      }
+      #playPause{
+        fill:$g6;
+      }
+    }
+
+    .editor-toolbar__files {
+      background-color: $g5;
+      .editor-toolbar__file {
+        &-button {
+          background-color: $g8;
+          color: $g3;
+          border:1px solid $g5;
+          box-sizing: border-box;
+          &:hover, &--selected { // sass-lint:disable-line class-name-format
+            background-color: $g4;
+            color: $g8;
+          }
+        }
+      }
+
+    }
+  }
+  }
+}
+
+
+.editor-toolbar{
+  &__title {
+    color: $white;
+    display: inline;
+    margin-right: $large-margin;
+    margin-left: $small-margin;
+  }
+
+  &__warning {
+    color: $gray;
+    width: $warning-width;
+    font-size: $small-font-size;
+    margin: 0;
+  }
+  &__warning-container {
+    display: none;
+    background: $white;
+    border-radius: $small-border-radius;
+    padding: $small-padding;
+    position: fixed;
+    left: $medium-margin;
+    top: 20px;
+    z-index: $z-index-layer-4;
+  }
+  &__container {
   display: flex;
   flex-direction: column;
-  background-color: $light-gray;
-  background: $dark-gray; /* For browsers that do not support gradients */
   width: 100%;
   height:10%;
   min-height: 60px;
-  padding: 0 0 ;
   z-index: $z-index-layer-2;
 
+    .editor-toolbar__button-container {
+      height:$editor-toolbar-height;
+      padding: 3px;
+      display: flex;
+      align-items: center;
+      .editor-toolbar__title {
+        display: inline;
+        font-size: $toolbar-font-size;
+        font-family: $roboto;
+        padding: 2px 4px;
+        margin-left: 10px;
+        border-radius: $medium-border-radius;
+      }
+      .editor-toolbar__svg{
+        border: none;
+        border-radius: $small-border-radius;
+        width: 25px;
+        height: 23px;
+        margin-left: 10px;
+        padding:1px;
+        &:hover {
+          border: none;
+          cursor: pointer;
+        }
+      }
+      .editor-toolbar__svg:hover #playPause {
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+      }
+    }
+
+    .editor-toolbar__files {
+      display: flex;
+      margin: 0;
+      padding: 0 !important;
+      height:$editor-toolbar-files-height;
+      .editor-toolbar__file {
+        text-decoration: none;
+        list-style: none;
+        width: $editor-toolbar-file-width;
+        &-button {
+          border-radius: 0;
+          box-shadow: none;
+          padding: 0px 3px !important;
+          width: 65px;
+          height:25px;
+          &:hover, &--selected { // sass-lint:disable-line class-name-format
+            border: none;
+          }
+        }
+      }
+
+    }
+  }
+  &__svg-info {
+    display: inline-block;
+    height: 20px !important;
+    width: 20px !important;
+    border-radius: 10px !important;
+    &:hover .editor-toolbar__warning-container {
+      display: block;
+    }
+    &:focus .editor-toolbar__warning-container {
+      display: block;
+    }
+  }
 }
-.editor-toolbar__button-container {
-  height:40px;
-}
+
 
 .editor-toolbar__item {
   @extend %small-button;
 }
 
-.editor-toolbar__svg{
-  border: none;
-  border-radius: $small-border-radius;
-  width: 1.5rem;
-  background-color: $dark-gray;
-  height: 1.5rem;
-  margin: $small-padding $small-padding 0 ;
-  &:hover {
-    background-color: $dark-gray;
-    border: none;
-    cursor: pointer;
-  }
-}
-
-.editor-toolbar__svg:hover #playPause {
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-  fill:$light-gray;
-  stroke:$light-gray;
-}
-
-.editor-toolbar {
-  &__files {
-    display: flex;
-    margin: 0;
-    padding: 0;
-    background-color: white;
-    height:20px;
-  }
-  &__file {
-    text-decoration: none;
-    list-style: none;
-    height:20px;
-    &-button {
-      border-radius: 0;
-      box-shadow: none;
-      background-color: white;
-      color: gray;
-      height:20px;
-      &:hover, &--selected { // sass-lint:disable-line class-name-format
-        border: none;
-        background-color: $lighter-gray;
-        color: $black;
-      }
-    }
-  }
-  &__title {
-    color: $white;
-    display: inline;
-    margin: 0 $large-margin;
-  }
-}
 
 // used for editor toolbar
 %small-button{
