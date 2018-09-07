@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import history from '../../../../utils/history';
 
 require('./fileModal.scss');
 
@@ -8,12 +9,19 @@ class FileModal extends React.Component {
     return (
       <ul className="file-modal__list">
         <li className="file-modal__item">
-          <a className="file-modal__link" href="/">New</a>
+          <a
+            className="file-modal__link"
+            href="/"
+            onMouseDown={(e) => { e.preventDefault(); }}
+            onKeyDown={(e) => { e.preventDefault(); }}
+          >
+          New
+          </a>
         </li>
         {this.props.name && (
           <div>
             <li className="file-modal__item">
-              <a // eslint-disable-line
+              <button
                 className="file-modal__link"
                 onMouseDown={() => {
                   this.props.viewPagesModal();
@@ -26,10 +34,10 @@ class FileModal extends React.Component {
                 data-test="show-pages-modal"
               >
                 Open
-              </a>
+              </button>
             </li>
             <li className="file-modal__item">
-              <a  // eslint-disable-line
+              <button
                 className="file-modal__link"
                 onMouseDown={() => {
                   this.props.savePage();
@@ -41,7 +49,7 @@ class FileModal extends React.Component {
                 }}
               >
                 Save
-              </a>
+              </button>
             </li>
           </div>
         )}

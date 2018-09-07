@@ -177,6 +177,8 @@ class MainToolbar extends React.Component {
                               target="_blank"
                               rel="noopener noreferrer"
                               href={`/user/${this.props.name}`}
+                              onMouseDown={(e) => { e.preventDefault(); }}
+                              onKeyDown={(e) => { e.preventDefault(); }}
                             >
                               Profile
                             </a>
