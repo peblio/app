@@ -224,8 +224,8 @@ class Canvas extends React.Component {
           }
           case 'question' : {
             localLayout[key].minW = WidgetSize.QUESTION_MIN_WIDTH;
-            localLayout[key].w =
-              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            localLayout[key].w = !localLayout[key].w ? WidgetSize.QUESTION_DEFAULT_WIDTH : localLayout[key].w;
+
             localLayout[key].minH = WidgetSize.QUESTION_MIN_HEIGHT;
             localLayout[key].h =
               (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
@@ -233,8 +233,8 @@ class Canvas extends React.Component {
           }
           case 'iframe' : {
             localLayout[key].minW = WidgetSize.IFRAME_MIN_WIDTH;
-            localLayout[key].w =
-              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            localLayout[key].w = !localLayout[key].w ? WidgetSize.IFRAME_DEFAULT_WIDTH : localLayout[key].w;
+
             localLayout[key].minH = WidgetSize.IFRAME_MIN_HEIGHT;
             localLayout[key].h =
               (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;

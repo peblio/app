@@ -5,6 +5,7 @@ export const TEXT_DEFAULT_WIDTH = 30;
 export const TEXT_MIN_WIDTH = 2;
 export const TEXT_MIN_HEIGHT = 2;
 
+export const IFRAME_DEFAULT_WIDTH = 30;
 export const IFRAME_MIN_WIDTH = 10;
 export const IFRAME_MIN_HEIGHT = 12;
 
@@ -12,6 +13,7 @@ export const CODE_DEFAULT_WIDTH = 30;
 export const CODE_MIN_WIDTH = 13;
 export const CODE_MIN_HEIGHT = 11;
 
+export const QUESTION_DEFAULT_WIDTH = 30;
 export const QUESTION_MIN_WIDTH = 6;
 export const QUESTION_MIN_HEIGHT = 5;
 
