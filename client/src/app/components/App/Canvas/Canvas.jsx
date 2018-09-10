@@ -96,7 +96,9 @@ class Canvas extends React.Component {
 
   renderCodeEditor(editor) {
     return (
-      <VisibilitySensor>
+      <VisibilitySensor
+        partialVisibility={true}
+      >
         {({isVisible}) =>
           <EditorContainer
             id={editor.id}
