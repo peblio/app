@@ -73,6 +73,8 @@
     padding: $small-padding;
   }
   &__list-button {
+    width: 100%;
+    text-align: left;
     background: none;
     border: none;
     color: $light-gray;
