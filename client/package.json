@@ -8,7 +8,7 @@
     "build": "NODE_ENV=development ENVIRONMENT=local webpack -p --config ./webpack.config.js --progress",
     "build:staging": "NODE_ENV=production ENVIRONMENT=staging webpack -p --config ./webpack.config.js --progress",
     "build:production": "NODE_ENV=production ENVIRONMENT=production webpack -p --config ./webpack.config.js --progress",
-    "lint": "./node_modules/.bin/eslint src --ext .js,.jsx"
+    "lint": "./node_modules/.bin/eslint src --ext .js,.jsx --ignore-pattern src/static"
   },
   "author": "",
   "license": "ISC",

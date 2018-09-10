@@ -16,13 +16,13 @@ class EditorToolbar extends React.Component {
         <div className="editor-toolbar__button-container">
           {(this.props.editorMode === 'processing') && (
             <div
-              tabIndex="0"
+              tabIndex="0" // eslint-disable-line
               className="editor-toolbar__svg editor-toolbar__svg-info"
             >
               <InfoSVG alt="More information" />
 
               <div
-                tabIndex="0"
+                tabIndex="0" // eslint-disable-line
                 className="editor-toolbar__warning-container"
               >
                 <p className="editor-toolbar__warning">

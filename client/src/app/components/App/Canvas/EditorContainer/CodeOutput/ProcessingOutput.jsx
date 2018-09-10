@@ -47,13 +47,13 @@ class ProcessingOutput extends React.Component {
     this.props.clearConsoleOutput();
   }
 
-  injectLocalFiles(sketchDoc) {
+  injectLocalFiles(sketchDocument) {
     const scriptsToInject = [
       '/hijackConsole.js',
       '/processing.min.js'
     ];
     const parser = new DOMParser();
-    sketchDoc = parser.parseFromString(sketchDoc, 'text/html');
+    const sketchDoc = parser.parseFromString(sketchDocument, 'text/html');
     scriptsToInject.forEach((scriptToInject) => {
       const script = sketchDoc.createElement('script');
       script.src = scriptToInject;
@@ -92,6 +92,7 @@ class ProcessingOutput extends React.Component {
         <iframe
           ref={(element) => { this.iframe = element; }}
           id="code-output"
+          title="sketch output"
           data-test="sketch-output"
         >
         </iframe>

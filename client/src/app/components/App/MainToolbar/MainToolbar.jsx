@@ -13,7 +13,6 @@ require('./mainToolbar.scss');
 
 class MainToolbar extends React.Component {
   componentDidMount() {
-
     this.autoSaveTimeout = setInterval(() => {
       if (
         this.props.name && this.props.canEdit && this.props.unsavedChanges &&
@@ -240,6 +239,7 @@ MainToolbar.propTypes = {
   viewPagesModal: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
   viewSignUpModal: PropTypes.func.isRequired,
+  editorAutoSave: PropTypes.bool.isRequired
 };
 
 export default MainToolbar;

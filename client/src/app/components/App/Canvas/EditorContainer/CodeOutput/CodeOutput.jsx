@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import srcDoc from 'srcdoc-polyfill';
+import srcDoc from 'srcdoc-polyfill'; // eslint-disable-line
 import FrontEndOutput from './FrontEndOutput.jsx';
 import ProcessingOutput from './ProcessingOutput.jsx';
 
-const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
+const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/; // eslint-disable-line
 
 class CodeOutput extends React.Component {
   render() {
@@ -49,6 +49,7 @@ CodeOutput.propTypes = {
     content: PropTypes.string.isRequired
   })).isRequired,
   isRefreshing: PropTypes.bool.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired
 };
