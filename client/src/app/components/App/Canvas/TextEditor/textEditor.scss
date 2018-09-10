@@ -8,6 +8,7 @@
   background: none;
   padding: 0 $small-border/2;
   min-height: 100%;
+  box-sizing: border-box;
 
   &_edit:hover { // sass-lint:disable-line class-name-format
     border: $gray dashed $small-border;
