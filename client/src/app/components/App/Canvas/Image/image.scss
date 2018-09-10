@@ -13,10 +13,10 @@
   min-height: 100%;
   height: fit-content;
   margin: 0;
-
-  &-edit {
-    background: $lighter-gray;
-    border-radius: $small-border-radius;
+  background: $lighter-gray;
+  box-sizing: border-box;
+  &--edit { // sass-lint:disable-line class-name-format
+    border: $gray dashed 1px;
     min-height: 100%;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -30,6 +30,7 @@
   position:relative;
   padding:$small-padding;
   background-color: $lighter-gray;
+  box-sizing: border-box;
   height: 90%;
   margin: $small-margin;
   position:relative;
