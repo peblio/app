@@ -54,11 +54,6 @@ function collectDropTarget(_connect, monitor) {
 }
 
 class FolderRow extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   deleteFolder = (e) => {
     e.stopPropagation();
     this.props.deleteFolder(this.props.folder._id);

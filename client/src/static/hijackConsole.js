@@ -43,8 +43,6 @@ var CONSOLEOUTPUT = CONSOLEOUTPUT || (function () {
         const substring = 'script error';
         const data = {};
 
-        console.log(errorTitle, errorDescription);
-
         // 31 -> number of lines in hijackConsole
         msg = displayLine
           ? `${errorFile} : line ${lineNumber - errorLine + 31} - ${msg}`
