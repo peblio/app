@@ -15,7 +15,7 @@ const initialState = {
     margin: [50, 25],
     padding: [0, 0],
     rowHeight: 1,
-    width: 1200,
+    width: 816,
   },
   layout: [],
   textHeights: {},
