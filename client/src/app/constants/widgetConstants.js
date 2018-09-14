@@ -17,10 +17,8 @@ export const QUESTION_DEFAULT_WIDTH = 30;
 export const QUESTION_MIN_WIDTH = 6;
 export const QUESTION_MIN_HEIGHT = 5;
 
-export const IMAGE_DEFAULT_HEIGHT = 4;
-export const IMAGE_DEFAULT_WIDTH = 4;
-export const IMAGE_MIN_WIDTH = 8;
-export const IMAGE_MIN_HEIGHT = 12;
+export const IMAGE_MIN_WIDTH = 5;
+export const IMAGE_MIN_HEIGHT = 5;
 
 export const EDITOR_THEME = {
   light: 'base16-light',

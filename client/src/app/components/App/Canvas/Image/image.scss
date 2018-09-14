@@ -4,19 +4,22 @@
 .element__image {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 .image__container {
   width: 100%;
   min-height: 100%;
   margin: 0;
   background: $lighter-gray;
+
   &--edit { // sass-lint:disable-line class-name-format
     border: $gray dashed 1px;
     min-height: 100%;
   }
 }
 
-.image__login{
+.image__login {
+  position: relative;
   padding:$small-padding;
   background-color: $lighter-gray;
   height: 90%;
@@ -24,7 +27,27 @@
   position:relative;
 }
 
-.image__content{
+.image__popup {
+  border: 1px solid #dedede;
+  position: absolute;
+  bottom: -100px;
+  right: -100px;
+  height: 200px;
+  width: 180px;
+  opacity: 0;
+  transition: all 0.25s ease;
+  visibility: hidden;
+  z-index: 1;
+
+  &.visible {
+    // box-shadow: 1px 1px 1px 0px #ccc;
+    box-shadow: 1px 2px 4px -1px rgba(0, 0, 0, 0.3);
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.image__content {
   flex-direction: column;
   justify-content: center;
   height: 100%;
@@ -36,15 +59,24 @@
   transform: translate(-50%, -50%);
   width: 100%;
 }
-.image__replace-content{
+.image__replace-content {
   position: absolute;
   opacity: 0;
   &:hover {
     opacity: 0.8;
   }
 }
+.image__content {
+  .upload__close {
+    color: #333;
+    position: absolute;
+    top: 3.5px;
+    right: 3.5px;
+    font-size: 20px;
+  }
+}
 
-.image__title{
+.image__title {
   width:90%;
   text-align: center;
   font-family: $roboto;
@@ -53,42 +85,59 @@
   color:$black;
 }
 
-.image__svg{
-  width:90%;
+.image__svg {
+  width: 100%;
   text-align: center;
-  fill:$gray;
-  color: $gray;
+  fill: $white;
+  color: $white;
 
 }
 
-.image__drop{
+.image__drop_default {
   padding: $large-padding;
   // background-color: $lighter-gray;
-  margin: $small-margin $large-margin*2;
+  margin: $small-margin $small-margin*2;
+  border-radius: $medium-border-radius;
+  color: $gray;
+
+  .image__svg {
+    color: white;
+  }
+}
+
+.image__drop {
+  padding: $medium-padding;
+  // background-color: $lighter-gray;
+  margin: 0 auto 0.75rem;
+  max-width: 110px;
   border-radius: $medium-border-radius;
   border: 1px dashed $light-gray;
   color: $gray;
-
 }
 
-.image__url{
-  width:70%;
-  margin:auto;
+.image__url {
+  width: 100%;
+  margin: 0 auto;
 }
 
-.element-image__input{
-  width:74%;
-  border-radius: .5em;
-  margin:auto;
+.element-image__input {
+  width: 80%;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 1px #dedede;
+  margin: auto;
+  padding: 5px;
 }
 
-.element-image__add-url{
+.element-image__add-url {
   width: 100%;
   margin: auto;
   text-align: center;
 }
 
-.element__button{
-  background-color: $light-gray;
-  width:60px;
+.element__button {
+  background-color: $light-green;
+  color: $white;
+  font-size: 14px;
+  width: 80%;
 }
