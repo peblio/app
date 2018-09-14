@@ -21,6 +21,11 @@
         &:hover {
           background-color: $g5;
         }
+
+        &.editor_is-playing,
+        &.editor_is-paused {
+          background-color: $blue;
+        }
       }
       .editor-toolbar__svg:hover #playPause {
         fill:$g2;
