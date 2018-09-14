@@ -180,6 +180,11 @@
 
   &--selected-page { // sass-lint:disable-line class-name-format
     background: $light-gray;
+    color: $white;
+
+    svg g rect {
+      fill: $white;
+    }
   }
 
   &--drop-target { // sass-lint:disable-line class-name-format
