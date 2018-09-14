@@ -11,10 +11,23 @@
   min-height: 100%;
   margin: 0;
   background: $lighter-gray;
+  overflow: hidden;
 
   &--edit { // sass-lint:disable-line class-name-format
     border: $gray dashed 1px;
     min-height: 100%;
+  }
+
+  &--small .image__login {
+    .image__title, .image__url {
+      display: none;
+    }
+    .image__drop {
+      border: none;
+    }
+    .image__svg--text {
+      display: none;
+    }
   }
 }
 
@@ -88,9 +101,9 @@
 .image__svg {
   width: 100%;
   text-align: center;
-  fill: $white;
-  color: $white;
-
+}
+.image__svg--text {
+  text-align: center;
 }
 
 .image__drop_default {
@@ -99,20 +112,19 @@
   margin: $small-margin $small-margin*2;
   border-radius: $medium-border-radius;
   color: $gray;
-
-  .image__svg {
-    color: white;
-  }
 }
 
 .image__drop {
   padding: $medium-padding;
   // background-color: $lighter-gray;
   margin: 0 auto 0.75rem;
-  max-width: 110px;
   border-radius: $medium-border-radius;
   border: 1px dashed $light-gray;
   color: $gray;
+
+  &.popup {
+    max-width: 110px;
+  }
 }
 
 .image__url {

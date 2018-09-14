@@ -163,6 +163,7 @@ class Canvas extends React.Component {
           preview={this.props.preview}
           removeEditor={this.props.removeEditor}
           setImageURL={this.props.setImageURL}
+          layout={this.props.layout}
         />
       </div>
     );
@@ -242,10 +243,10 @@ class Canvas extends React.Component {
           }
           case 'image' : {
             localLayout[key].minW = WidgetSize.IMAGE_MIN_WIDTH;
-            localLayout[key].w = !localLayout[key].w ? WidgetSize.IMAGE_MIN_WIDTH : localLayout[key].w;
+            localLayout[key].w = !localLayout[key].w ? WidgetSize.IMAGE_DEFAULT_WIDTH : localLayout[key].w;
 
             localLayout[key].minH = WidgetSize.IMAGE_MIN_HEIGHT;
-            localLayout[key].h = !localLayout[key].h ? localLayout[key].minH : localLayout[key].h;
+            localLayout[key].h = !localLayout[key].h ? WidgetSize.IMAGE_DEFAULT_HEIGHT : localLayout[key].h;
             break;
           }
           default: {

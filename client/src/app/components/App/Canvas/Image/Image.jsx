@@ -85,7 +85,7 @@ class Image extends React.Component {
             onDrop={this.onDrop}
             className="element-image"
           >
-            <div className="image__drop">
+            <div className="image__drop popup">
               <div className="image__svg">
                 <UploadSVG alt="upload image" />
               </div>
@@ -114,11 +114,19 @@ class Image extends React.Component {
 
   render() {
     return (
-      <div className={`image__container ${this.props.preview ? '' : 'image__container--edit'}`}>
+      <div
+        ref={ref => { this.imageWidgetRef = ref; }}
+        className={`
+          image__container
+          ${this.props.preview ? '' : 'image__container--edit'}
+          ${this.imageWidgetRef && (this.imageWidgetRef.clientWidth < 280 || this.imageWidgetRef.clientHeight < 260) ? 'image__container--small' : ''}
+        `}
+        onClick={() => console.log(this.imageWidgetRef.clientWidth, this.imageWidgetRef.clientHeight)}
+      >
 
         {!this.props.preview && !this.props.name && (
           <div className="image__login">
-            {/*this.props.imageURL && <img className="element__image" src={this.props.imageURL} alt="" />*/}
+            {this.props.imageURL && <img className="element__image" src={this.props.imageURL} alt="" />}
             <div
               className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
             >
@@ -142,10 +150,32 @@ class Image extends React.Component {
           <div
             className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
           >
-            <div className="image__drop_default">
+            <div className="image__title">Upload a file</div>
+
+            <div className="image__drop">
               <div className="image__svg">
                 <UploadSVG alt="upload image" />
               </div>
+              <div className="image__svg--text">Drop a file or click to upload</div>
+            </div>
+
+            <div className="image__title">
+              or add a URL
+            </div>
+            <div className="image__url">
+              <form className="element-image__add-url" onSubmit={this.urlSubmitted.bind(this)}>
+                <label htmlFor="element-image-name" className="element-image__label">
+                  <input
+                    id="element-image-name"
+                    className="element-image__input"
+                    type="text"
+                    ref={(element) => { this.url = element; }}
+                    defaultValue={this.props.imageURL}
+                    readOnly={this.props.preview}
+                  />
+                </label>
+                <input className="element__button" type="submit" value="Submit" />
+              </form>
             </div>
           </div>
         </div>
@@ -155,7 +185,7 @@ class Image extends React.Component {
           <img className="element__image" src={this.props.imageURL} alt="" />
         }
 
-        {this.renderUpload()}
+        {this.state.showUpload && this.renderUpload()}
       </div>
     );
   }

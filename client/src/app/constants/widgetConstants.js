@@ -17,6 +17,8 @@ export const QUESTION_DEFAULT_WIDTH = 30;
 export const QUESTION_MIN_WIDTH = 6;
 export const QUESTION_MIN_HEIGHT = 5;
 
+export const IMAGE_DEFAULT_HEIGHT = 11;
+export const IMAGE_DEFAULT_WIDTH = 8;
 export const IMAGE_MIN_WIDTH = 5;
 export const IMAGE_MIN_HEIGHT = 5;
 
