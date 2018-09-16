@@ -22,8 +22,8 @@
           background-color: $g5;
         }
 
-        &.editor_is-playing,
-        &.editor_is-paused {
+        &.editor-toolbar--isPlaying,
+        &.editor-toolbar--isPaused {
           background-color: $blue;
         }
       }
