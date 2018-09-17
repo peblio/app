@@ -50,6 +50,13 @@ test('adding a processing editor widget', async (t) => {
     .expect(Selector('[data-test=code-editor-processing]').exists).ok();
 });
 
+test('adding a python editor widget', async (t) => {
+  await t
+    .click(Selector('[data-test=add-code-editor]'))
+    .click(Selector('[data-test=add-python-editor]'))
+    .expect(Selector('[data-test=code-editor-python]').exists).ok();
+});
+
 test('default processing sketch runs', async (t) => {
   await t
     .click(Selector('[data-test=add-code-editor]'))

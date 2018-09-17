@@ -92,11 +92,18 @@ export const defaultProcessingHTML =
   </body>
 </html>
 `;
+
+export const defaultPythonPy =
+`
+print "Hello World"
+`;
+
 export const STARTFILE = {
   p5: 1,
   html: 0,
   webdev: 0,
-  processing: 0
+  processing: 0,
+  python: 0
 };
 
 export const FILES = {
@@ -138,6 +145,12 @@ export const FILES = {
     {
       name: 'sketch.pde',
       content: defaultProcessingPDE
+    }
+  ],
+  python: [
+    {
+      name: 'main.py',
+      content: defaultPythonPy
     }
   ]
 };

@@ -115,6 +115,27 @@ class InsertToolbar extends React.Component {
                  Processing
                   </button>
                 </li>
+                <li className="insert-toolbar__list-item">
+                  <button
+                    className="insert-toolbar__list-button"
+                    onMouseDown={() => {
+                      this.toggleEditorOptions();
+                      this.props.addCodeEditor('python');
+                    }}
+                    onKeyDown={() => {
+                      this.toggleEditorOptions();
+                      this.props.addCodeEditor('python');
+                    }}
+                    data-test="add-python-editor"
+                  >
+                 Python
+                    <span
+                      className="beta-tag"
+                    >
+                   beta
+                    </span>
+                  </button>
+                </li>
               </ul>
             </div>
           )}
