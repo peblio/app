@@ -32,6 +32,14 @@ class EditorToolbar extends React.Component {
             </div>
           )}
 
+          {(this.props.editorMode === 'python') && (
+            <span
+              className="beta-tag"
+            >
+           beta
+            </span>
+          )}
+
           <p className="editor-toolbar__title">
             {this.props.editorMode}
           </p>
