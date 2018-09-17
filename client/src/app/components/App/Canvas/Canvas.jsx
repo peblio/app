@@ -170,6 +170,7 @@ class Canvas extends React.Component {
           preview={this.props.preview}
           removeEditor={this.props.removeEditor}
           setImageURL={this.props.setImageURL}
+          layout={this.props.layout}
         />
       </div>
     );
@@ -211,8 +212,8 @@ class Canvas extends React.Component {
         switch (this.props.editors[key].type) {
           case 'text': {
             localLayout[key].minW = WidgetSize.TEXT_MIN_WIDTH;
-            localLayout[key].w =
-              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            localLayout[key].w = !localLayout[key].w ? WidgetSize.TEXT_DEFAULT_WIDTH : localLayout[key].w;
+
             const minH = this.props.textHeights[key] || WidgetSize.TEXT_MIN_HEIGHT;
             localLayout[key].minH = minH;
             localLayout[key].h =
@@ -222,8 +223,8 @@ class Canvas extends React.Component {
           }
           case 'code': {
             localLayout[key].minW = WidgetSize.CODE_MIN_WIDTH;
-            localLayout[key].w =
-              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            localLayout[key].w = !localLayout[key].w ? WidgetSize.CODE_DEFAULT_WIDTH : localLayout[key].w;
+
             localLayout[key].minH = WidgetSize.CODE_MIN_HEIGHT;
             localLayout[key].h =
               (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
@@ -231,8 +232,8 @@ class Canvas extends React.Component {
           }
           case 'question' : {
             localLayout[key].minW = WidgetSize.QUESTION_MIN_WIDTH;
-            localLayout[key].w =
-              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            localLayout[key].w = !localLayout[key].w ? WidgetSize.QUESTION_DEFAULT_WIDTH : localLayout[key].w;
+
             localLayout[key].minH = WidgetSize.QUESTION_MIN_HEIGHT;
             localLayout[key].h =
               (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
@@ -240,8 +241,8 @@ class Canvas extends React.Component {
           }
           case 'iframe' : {
             localLayout[key].minW = WidgetSize.IFRAME_MIN_WIDTH;
-            localLayout[key].w =
-              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            localLayout[key].w = !localLayout[key].w ? WidgetSize.IFRAME_DEFAULT_WIDTH : localLayout[key].w;
+
             localLayout[key].minH = WidgetSize.IFRAME_MIN_HEIGHT;
             localLayout[key].h =
               (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
@@ -249,11 +250,10 @@ class Canvas extends React.Component {
           }
           case 'image' : {
             localLayout[key].minW = WidgetSize.IMAGE_MIN_WIDTH;
-            localLayout[key].w =
-              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            localLayout[key].w = !localLayout[key].w ? WidgetSize.IMAGE_DEFAULT_WIDTH : localLayout[key].w;
+
             localLayout[key].minH = WidgetSize.IMAGE_MIN_HEIGHT;
-            localLayout[key].h =
-              (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
+            localLayout[key].h = !localLayout[key].h ? WidgetSize.IMAGE_DEFAULT_HEIGHT : localLayout[key].h;
             break;
           }
           default: {
