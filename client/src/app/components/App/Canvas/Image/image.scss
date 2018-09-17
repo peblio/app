@@ -19,7 +19,7 @@
 
   &--edit { // sass-lint:disable-line class-name-format
     border: $gray dashed 1px;
-    min-height: 100%;
+    height: 100%;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;

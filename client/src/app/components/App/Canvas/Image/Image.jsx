@@ -123,7 +123,7 @@ class Image extends React.Component {
         className={`
           image__container
           ${this.props.preview ? '' : 'image__container--edit'}
-          ${this.imageWidgetRef && (this.imageWidgetRef.clientWidth < 280 || this.imageWidgetRef.clientHeight < 260) ? 'image__container--small' : ''}
+          ${this.props.name && this.imageWidgetRef && (this.imageWidgetRef.clientWidth < 280 || this.imageWidgetRef.clientHeight < 260) ? 'image__container--small' : ''}
         `}
       >
         {!this.props.preview && !this.props.name && (
@@ -133,13 +133,13 @@ class Image extends React.Component {
               className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
             >
               <div className="image__title">
-                Please Log In to Upload Images
+                Log In to Upload Images
               </div>
             </div>
           </div>
         )}
 
-        {!this.props.preview &&
+        {!this.props.preview && this.props.name &&
         <div
           className="image__login"
           onClick={() => this.handleOnClick()}
