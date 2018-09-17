@@ -18,7 +18,7 @@ class Image extends React.Component {
     super(props);
     this.state = {
       url: '',
-      showUpload: false
+      showUploadPopup: false
     };
     this.removeEditor = () => { this.props.removeEditor(this.props.id); };
     this.onChange = (state) => { this.props.onChange(this.props.id, state); };
@@ -59,23 +59,27 @@ class Image extends React.Component {
       });
   }
 
-  onClick() {
+  handleOnClick() {
     let newState = { ...this.state };
 
-    this.setUploadPopupVisibility(!newState.showUpload);
+    return (
+      this.imageWidgetRef &&
+      (this.imageWidgetRef.clientWidth < 280 || this.imageWidgetRef.clientHeight < 260)
+    ) &&
+    this.setUploadPopupVisibility(!newState.showUploadPopup);
   }
 
   setUploadPopupVisibility(value) {
     let newState = { ...this.state };
 
-    newState.showUpload = value;
+    newState.showUploadPopup = value;
     this.setState(newState);
   }
 
-  renderUpload() {
+  renderUploadPopup() {
     return !this.props.preview && this.props.name && (
       <div
-        className={`image__popup ${this.state.showUpload ? 'visible' : ''}`}
+        className={`image__popup ${this.state.showUploadPopup ? 'visible' : ''}`}
         onMouseEnter={() => this.setUploadPopupVisibility(true)}
       >
         <div className="image__content">
@@ -121,7 +125,6 @@ class Image extends React.Component {
           ${this.props.preview ? '' : 'image__container--edit'}
           ${this.imageWidgetRef && (this.imageWidgetRef.clientWidth < 280 || this.imageWidgetRef.clientHeight < 260) ? 'image__container--small' : ''}
         `}
-        onClick={() => console.log(this.imageWidgetRef.clientWidth, this.imageWidgetRef.clientHeight)}
       >
 
         {!this.props.preview && !this.props.name && (
@@ -143,22 +146,39 @@ class Image extends React.Component {
         {!this.props.preview &&
         <div
           className="image__login"
-          onClick={() => this.onClick()}
+          onClick={() => this.handleOnClick()}
           onBlur={() => this.setUploadPopupVisibility(false)}
         >
           {this.props.imageURL && <img className="element__image" src={this.props.imageURL} alt="" />}
           <div
             className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
           >
-            <div className="image__title">Upload a file</div>
+            {
+              this.imageWidgetRef && !(this.imageWidgetRef.clientWidth < 280 || this.imageWidgetRef.clientHeight < 260) ?
+              <Dropzone
+                onDrop={this.onDrop}
+                className="element-image"
+              >
+                <div className="image__title">Upload a file</div>
 
-            <div className="image__drop">
-              <div className="image__svg">
-                <UploadSVG alt="upload image" />
+                <div className="image__drop">
+                  <div className="image__svg">
+                    <UploadSVG alt="upload image" />
+                  </div>
+                  <div className="image__svg--text">Drop a file or click to upload</div>
+                </div>
+              </Dropzone> :
+              <div>
+                <div className="image__title">Upload a file</div>
+
+                <div className="image__drop">
+                  <div className="image__svg">
+                    <UploadSVG alt="upload image" />
+                  </div>
+                  <div className="image__svg--text">Drop a file or click to upload</div>
+                </div>
               </div>
-              <div className="image__svg--text">Drop a file or click to upload</div>
-            </div>
-
+            }
             <div className="image__title">
               or add a URL
             </div>
@@ -185,7 +205,7 @@ class Image extends React.Component {
           <img className="element__image" src={this.props.imageURL} alt="" />
         }
 
-        {this.state.showUpload && this.renderUpload()}
+        {this.state.showUploadPopup && this.renderUploadPopup()}
       </div>
     );
   }
