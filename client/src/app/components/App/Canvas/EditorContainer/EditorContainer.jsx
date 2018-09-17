@@ -105,6 +105,7 @@ class EditorContainer extends React.Component {
                     <CodeOutput
                       id={this.props.id}
                       clearConsoleOutput={this.clearConsoleOutput}
+                      editorMode={this.props.editorMode}
                       files={this.props.files}
                       isPlaying={this.props.isPlaying}
                       isRefreshing={this.props.isRefreshing}

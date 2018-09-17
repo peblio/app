@@ -37,10 +37,12 @@ export const SET_IMAGE_URL = 'SET_IMAGE_URL';
 export const SET_PAGE_TITLE = 'SET_PAGE_TITLE';
 export const SUBMIT_PAGE = 'SUBMIT_PAGE';
 export const CREATE_PAGE = 'CREATE_PAGE';
+export const DUPLICATE_PAGE = 'DUPLICATE_PAGE';
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const SET_ALL_PAGES = 'SET_ALL_PAGES';
 export const DELETE_PAGE = 'DELETE_PAGE';
 export const SET_UNSAVED_CHANGES = 'SET_UNSAVED_CHANGES';
+export const AUTO_SAVE_UNSAVED_CHANGES = 'AUTO_SAVE_UNSAVED_CHANGES';
 
 export const SET_DB_PAGE = 'SET_DB_PAGE';
 export const SET_PAGE_ID = 'SET_PAGE_ID';

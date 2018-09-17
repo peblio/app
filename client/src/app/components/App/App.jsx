@@ -129,7 +129,8 @@ class App extends React.Component {
           this.props.pageTitle,
           this.props.editors,
           this.props.editorIndex,
-          this.props.layout
+          this.props.layout,
+          'save'
         );
       } else if (this.props.canEdit) {
         this.props.updatePage(
@@ -146,7 +147,8 @@ class App extends React.Component {
           `${this.props.pageTitle}-copy`,
           this.props.editors,
           this.props.editorIndex,
-          this.props.layout
+          this.props.layout,
+          'fork'
         );
       }
     } else {
@@ -158,7 +160,7 @@ class App extends React.Component {
     return (
       <div // eslint-disable-line
         tabIndex="0"
-        onKeyDown={this.onKeyPressed}
+        onKeyDown={e => this.onKeyPressed(e)}
       >
         <nav className="main-nav">
           <MainToolbar
@@ -179,11 +181,13 @@ class App extends React.Component {
             setPageTitle={this.props.setPageTitle}
             setEditorMode={this.props.setEditorMode}
             savePage={this.savePage}
+            editorAutoSave={this.props.editorAutoSave}
             toggleFileDropdown={this.props.toggleFileDropdown}
             toggleAccountDropdown={this.props.toggleAccountDropdown}
             togglePreviewMode={this.props.togglePreviewMode}
             togglePreferencesPanel={this.props.togglePreferencesPanel}
             unsavedChanges={this.props.unsavedChanges}
+            autoSaveUnsavedChanges={this.props.autoSaveUnsavedChanges}
             userType={this.props.userType}
             viewExamplesModal={this.props.viewExamplesModal}
             viewPagesModal={this.props.viewPagesModal}
@@ -361,6 +365,7 @@ App.propTypes = {
   rgl: PropTypes.shape({}).isRequired,
   preview: PropTypes.bool.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
+  autoSaveUnsavedChanges: PropTypes.func.isRequired,
   textHeights: PropTypes.shape({}).isRequired,
 
   canEdit: PropTypes.bool.isRequired,
@@ -455,6 +460,7 @@ App.propTypes = {
   fetchUserPreferences: PropTypes.func.isRequired,
   editorFontSize: PropTypes.number.isRequired,
   editorTheme: PropTypes.string.isRequired,
+  editorAutoSave: PropTypes.bool.isRequired,
 
   logoutUser: PropTypes.func.isRequired,
   updateUserName: PropTypes.func.isRequired,
@@ -498,7 +504,8 @@ function mapStateToProps(state) {
     isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,
 
     editorFontSize: state.preferences.editorFontSize,
-    editorTheme: state.preferences.editorTheme
+    editorTheme: state.preferences.editorTheme,
+    editorAutoSave: state.preferences.editorAutoSave
   };
 }
 

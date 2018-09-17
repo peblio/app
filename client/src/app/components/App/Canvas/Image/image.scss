@@ -1,21 +1,30 @@
 @import 'variables';
 @import 'mixins';
+@import 'modal';
 
 .element__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 .image__container {
   width: 100%;
   min-height: 100%;
+  height: fit-content;
   margin: 0;
   background: $lighter-gray;
   overflow: hidden;
+  box-sizing: border-box;
 
   &--edit { // sass-lint:disable-line class-name-format
     border: $gray dashed 1px;
     min-height: 100%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+    -moz-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+    -webkit-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
   }
 
   &--small .image__login {
@@ -35,6 +44,7 @@
   position: relative;
   padding:$small-padding;
   background-color: $lighter-gray;
+  box-sizing: border-box;
   height: 90%;
   margin: $small-margin;
   position:relative;
@@ -60,18 +70,26 @@
   }
 }
 
+.image__holder {
+  padding-right: $mini-padding;
+  padding-left: $mini-padding;
+  padding-top: $micro-padding;
+  background: $light-gray;
+}
+
 .image__content {
   flex-direction: column;
   justify-content: center;
   height: 100%;
   display: flex;
   background: $lighter-gray;
-  position: absolute;
+  position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
 }
+
 .image__replace-content {
   position: absolute;
   opacity: 0;
@@ -143,13 +161,22 @@
 
 .element-image__add-url {
   width: 100%;
-  margin: auto;
+  margin-top: $small-margin;
+  margin-bottom: 0;
   text-align: center;
+  z-index: 1;
 }
 
-.element__button {
-  background-color: $light-green;
-  color: $white;
-  font-size: 14px;
-  width: 80%;
+.image-reupload-form {
+  padding-top: 15px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $lighter-gray;
+  transition: 0.25s ease;
+}
+
+.element__button{
+  @extend %modal__canvas-button;
 }

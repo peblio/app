@@ -23,5 +23,5 @@ export function namespaceActionCreators(actionCreators, namespace) {
         return thunk(namespacedDispatch, getState, extraArgument);
       };
     }
-  }));
+  }), {});
 }

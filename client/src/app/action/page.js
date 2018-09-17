@@ -16,6 +16,12 @@ export function setUnsavedChanges(value) {
   };
 }
 
+export function autoSaveUnsavedChanges() {
+  return (dispatch) => {
+    dispatch({ type: ActionTypes.AUTO_SAVE_UNSAVED_CHANGES });
+  };
+}
+
 export function setPageTitle(event) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
@@ -47,6 +53,29 @@ export function loadPage(id, title, layout) {
   };
 }
 
+export function duplicatePage(title, folder, editors, editorIndex, layout) {
+  return (dispatch) => {
+    const id = shortid.generate();
+    const data = {
+      id,
+      title: `${title}-Copy`,
+      editors,
+      editorIndex,
+      layout
+    };
+    if (folder) {
+      data.folder = folder;
+    }
+
+    axios.post('/pages/save', data).then((response) => {
+      dispatch({
+        type: ActionTypes.DUPLICATE_PAGE,
+        page: response.data.page
+      });
+    });
+  }
+}
+
 function convertEditorsToRaw(editors) {
   const rawEditors = {};
   Object.keys(editors).forEach((id) => {
@@ -61,7 +90,7 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, editors, editorIndex, layout) {
+export function submitPage(parentId, title, editors, editorIndex, layout, type) {
   const id = shortid.generate();
   axios.post('/pages/save', {
     parentId,
@@ -72,6 +101,9 @@ export function submitPage(parentId, title, editors, editorIndex, layout) {
     layout
   }).then(() => {
     history.push(`/pebl/${id}`);
+    if (type === 'fork') {
+      window.location.reload(true);
+    }
   })
     .catch(error => console.error(error));
 

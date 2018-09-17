@@ -126,7 +126,6 @@ class Image extends React.Component {
           ${this.imageWidgetRef && (this.imageWidgetRef.clientWidth < 280 || this.imageWidgetRef.clientHeight < 260) ? 'image__container--small' : ''}
         `}
       >
-
         {!this.props.preview && !this.props.name && (
           <div className="image__login">
             {this.props.imageURL && <img className="element__image" src={this.props.imageURL} alt="" />}
@@ -135,9 +134,6 @@ class Image extends React.Component {
             >
               <div className="image__title">
                 Please Log In to Upload Images
-              </div>
-              <div className="image__svg">
-                <UploadSVG alt="upload image" />
               </div>
             </div>
           </div>
@@ -194,7 +190,7 @@ class Image extends React.Component {
                     readOnly={this.props.preview}
                   />
                 </label>
-                <input className="element__button" type="submit" value="Submit" />
+                <input className="element__button" type="submit" value="Upload New" />
               </form>
             </div>
           </div>
