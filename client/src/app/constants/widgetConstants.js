@@ -19,7 +19,7 @@ export const QUESTION_MIN_HEIGHT = 5;
 
 export const IMAGE_DEFAULT_HEIGHT = 12;
 export const IMAGE_DEFAULT_WIDTH = 12;
-export const IMAGE_MIN_WIDTH = 5;
+export const IMAGE_MIN_WIDTH = 6;
 export const IMAGE_MIN_HEIGHT = 5;
 
 export const EDITOR_THEME = {
