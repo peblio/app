@@ -72,6 +72,15 @@
         &:hover {
           background-color: $g6;
         }
+
+        &.editor-toolbar--isPlaying,
+        &.editor-toolbar--isPaused {
+          background-color: $g6;
+
+          #playPause {
+            fill: $b2;
+          }
+        }
       }
       .editor-toolbar__svg:hover #playPause {
         fill:$b2;
