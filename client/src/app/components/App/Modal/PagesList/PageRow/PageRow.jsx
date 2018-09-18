@@ -59,7 +59,7 @@ class PageRow extends Component {
 
   redirectToPage = () => {
     // page.id is a shortid that is NOT the same thing as page._id
-    window.location.replace(`/pebl/${this.props.page.id}`);
+    window.open(`/pebl/${this.props.page.id}`, '_blank');
   }
 
   render() {
