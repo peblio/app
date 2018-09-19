@@ -36,11 +36,17 @@ class InsertToolbar extends React.Component {
         <div className="insert-toolbar__container-left">
           <button
             className="insert-toolbar__button "
-            onClick={this.toggleEditorOptions}
+            onMouseDown={this.toggleEditorOptions}
+            onKeyDown={this.toggleEditorOptions}
+            onBlur={() => {
+              setTimeout(() => {
+                this.state.editorExpanded && this.toggleEditorOptions();
+              }, 50);
+            }}
             data-test="add-code-editor"
           >
             <EditorSVG alt="add code editor" />
-          Editor
+            Editor
           </button>
           {this.state.editorExpanded && (
             <div className="insert-toolbar__sub-menu">
@@ -48,7 +54,11 @@ class InsertToolbar extends React.Component {
                 <li className="insert-toolbar__list-item">
                   <button
                     className="insert-toolbar__list-button"
-                    onClick={() => {
+                    onMouseDown={() => {
+                      this.toggleEditorOptions();
+                      this.props.addCodeEditor('html');
+                    }}
+                    onKeyDown={() => {
                       this.toggleEditorOptions();
                       this.props.addCodeEditor('html');
                     }}
@@ -60,7 +70,11 @@ class InsertToolbar extends React.Component {
                 <li className="insert-toolbar__list-item">
                   <button
                     className="insert-toolbar__list-button"
-                    onClick={() => {
+                    onMouseDown={() => {
+                      this.toggleEditorOptions();
+                      this.props.addCodeEditor('webdev');
+                    }}
+                    onKeyDown={() => {
                       this.toggleEditorOptions();
                       this.props.addCodeEditor('webdev');
                     }}
@@ -72,7 +86,11 @@ class InsertToolbar extends React.Component {
                 <li className="insert-toolbar__list-item">
                   <button
                     className="insert-toolbar__list-button"
-                    onClick={() => {
+                    onMouseDown={() => {
+                      this.toggleEditorOptions();
+                      this.props.addCodeEditor('p5');
+                    }}
+                    onKeyDown={() => {
                       this.toggleEditorOptions();
                       this.props.addCodeEditor('p5');
                     }}
@@ -84,7 +102,11 @@ class InsertToolbar extends React.Component {
                 <li className="insert-toolbar__list-item">
                   <button
                     className="insert-toolbar__list-button"
-                    onClick={() => {
+                    onMouseDown={() => {
+                      this.toggleEditorOptions();
+                      this.props.addCodeEditor('processing');
+                    }}
+                    onKeyDown={() => {
                       this.toggleEditorOptions();
                       this.props.addCodeEditor('processing');
                     }}
@@ -93,45 +115,70 @@ class InsertToolbar extends React.Component {
                  Processing
                   </button>
                 </li>
+                <li className="insert-toolbar__list-item">
+                  <button
+                    className="insert-toolbar__list-button"
+                    onMouseDown={() => {
+                      this.toggleEditorOptions();
+                      this.props.addCodeEditor('python');
+                    }}
+                    onKeyDown={() => {
+                      this.toggleEditorOptions();
+                      this.props.addCodeEditor('python');
+                    }}
+                    data-test="add-python-editor"
+                  >
+                 Python
+                    <span
+                      className="beta-tag"
+                    >
+                   beta
+                    </span>
+                  </button>
+                </li>
               </ul>
             </div>
           )}
           <button
-            onClick={this.props.addTextEditor}
+            onMouseDown={this.props.addTextEditor}
+            onKeyDown={this.props.addTextEditor}
             id="elementButton"
             className="insert-toolbar__button"
           >
             <TextSVG alt="add text" />
-          Textbox
+            Textbox
           </button>
           <button
-            onClick={this.props.addIframe}
+            onMouseDown={this.props.addIframe}
+            onKeyDown={this.props.addIframe}
             className="insert-toolbar__button"
           >
             <EmbedSVG alt="add embed" />
-          Embed
+            Embed
           </button>
           <button
-            onClick={this.props.addQuestionEditor}
+            onMouseDown={this.props.addQuestionEditor}
+            onKeyDown={this.props.addQuestionEditor}
             id="elementButton"
             className="insert-toolbar__button"
           >
             <QuestionSVG alt="add question" />
-          Question
+            Question
           </button>
           <button
-            onClick={this.props.addImage}
+            onMouseDown={this.props.addImage}
+            onKeyDown={this.props.addImage}
             id="elementButton"
             className="insert-toolbar__button"
           >
             <ImageSVG alt="add image" />
-          Image
+            Image
           </button>
         </div>
         <div className="insert-toolbar__container-right">
           <button
             className="insert-toolbar__button "
-            onClick={this.props.togglePreferencesPanel}
+            onMouseDown={this.props.togglePreferencesPanel}
           >
             <PreferencesSVG
               className={classNames(prefButtonClassName)}

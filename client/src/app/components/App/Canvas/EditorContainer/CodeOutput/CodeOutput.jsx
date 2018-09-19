@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import srcDoc from 'srcdoc-polyfill';
 import FrontEndOutput from './FrontEndOutput.jsx';
 import ProcessingOutput from './ProcessingOutput.jsx';
+import PythonOutput from './PythonOutput.jsx';
 
 const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
 
@@ -25,6 +26,19 @@ class CodeOutput extends React.Component {
         {
           ['processing'].includes(this.props.editorMode) && (
             <ProcessingOutput
+              id={this.props.id}
+              clearConsoleOutput={this.props.clearConsoleOutput}
+              files={this.props.files}
+              isPlaying={this.props.isPlaying}
+              isRefreshing={this.props.isRefreshing}
+              stopCodeRefresh={this.props.stopCodeRefresh}
+              updateConsoleOutput={this.props.updateConsoleOutput}
+            />
+          )
+        }
+        {
+          ['python'].includes(this.props.editorMode) && (
+            <PythonOutput
               id={this.props.id}
               clearConsoleOutput={this.props.clearConsoleOutput}
               files={this.props.files}

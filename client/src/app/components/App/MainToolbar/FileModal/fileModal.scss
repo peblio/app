@@ -41,22 +41,24 @@
 }
 
 .file-modal__item {
+  width: 100%;
+  text-align: left;
   list-style: none;
   padding: $medium-padding/1.5 $xlarge-padding $medium-padding/1.5 $micro-padding;
 }
 
 .file-modal__link {
   text-decoration: none;
-  margin: $small-margin;
+  padding-left: $small-margin;
   font-size: 14px;
   font-weight: 400;
   color: $dark-gray;
-  background-color: $white;
+  display: inline-block;
+  background-color: $transparent;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
   width: 100%;
   text-align: left;
-  padding: 0;
   border: none;
   &:hover {
     color: $black;
