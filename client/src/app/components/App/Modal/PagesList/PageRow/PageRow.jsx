@@ -27,7 +27,7 @@ function collect(_connect, monitor) {
 class PageRow extends Component {
   deletePage = (e) => {
     e.stopPropagation();
-    if (confirm('Are you sure you want to delete this file?')) {
+    if (confirm('Are you sure you want to delete this file?')) { // eslint-disable-line no-restricted-globals
       this.props.deletePage(this.props.page._id);
     }
   }

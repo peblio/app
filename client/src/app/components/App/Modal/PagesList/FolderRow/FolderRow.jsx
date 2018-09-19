@@ -63,7 +63,7 @@ class FolderRow extends Component {
 
   deleteFolder = (e) => {
     e.stopPropagation();
-    if (confirm('Are you sure you want to delete this folder?')) {
+    if (confirm('Are you sure you want to delete this folder?')) { // eslint-disable-line no-restricted-globals
       this.props.deleteFolder(this.props.folder._id);
     }
   }
