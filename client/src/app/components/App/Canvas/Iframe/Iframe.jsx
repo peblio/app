@@ -8,7 +8,7 @@ class Iframe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      embedType: "url",
+      embedType: "embed",
       iframeHistoryIndex: 0,
     };
 
@@ -22,7 +22,11 @@ class Iframe extends React.Component {
             src = child.props ? child.props.src : src;
           });
         }
+        this.setState({ embedType: "embed" });
+      } else {
+        this.setState({ embedType: "url" });
       }
+
       this.props.setIframeURL(this.props.id, src);
       event.preventDefault();
     };
@@ -37,8 +41,6 @@ class Iframe extends React.Component {
   }
 
   renderNavigationOverlay() {
-    const { state } = this;
-
     return (
       <div className="embed-overlay__navigation">
         <div className="embed-overlay__navigation--buttons">
