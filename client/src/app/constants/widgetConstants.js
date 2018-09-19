@@ -21,6 +21,8 @@ export const IMAGE_DEFAULT_HEIGHT = 12;
 export const IMAGE_DEFAULT_WIDTH = 12;
 export const IMAGE_MIN_WIDTH = 6;
 export const IMAGE_MIN_HEIGHT = 5;
+export const IMAGE_RESPONSIVE_TRIGGER_HEIGHT = 260;
+export const IMAGE_RESPONSIVE_TRIGGER_WIDTH = 280;
 
 export const EDITOR_THEME = {
   light: 'base16-light',
