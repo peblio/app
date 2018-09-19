@@ -29,13 +29,13 @@
 }
 
 .embed-overlay__navigation {
-  background: #222;
+  background: $dark-gray;
   box-shadow: 0 -5px rgba(0, 0, 0, 0.15);
   position: relative;
   bottom: 0;
   left: 0;
   right: 0;
-  color: white;
+  color: $white;
   letter-spacing: 0.1rem;
   text-transform: uppercase;
   padding: 5px;
@@ -45,13 +45,13 @@
 
   .embed-overlay__navigation--buttons {
     flex: 1 auto;
-    padding: 10px;
+    padding: $medium-padding;
   }
 
   .icon__element {
     color: $white;
-    font-size: 30px;
-    padding: 10px 15px;
+    font-size: $xlarge-font-size;
+    padding: $medium-padding;
     opacity: 1;
 
     &.in-active {
@@ -96,7 +96,7 @@
   width: 80px;
   height: 1.5rem;
   margin: $small-padding;
-  border: 1px $black;
+  border: $small-border $black;
   border-radius: $small-border-radius;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;

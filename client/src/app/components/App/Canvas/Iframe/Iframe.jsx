@@ -8,7 +8,7 @@ class Iframe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      embedType: "embed",
+      contentType: props.contentType,
       iframeHistoryIndex: 0,
     };
 
@@ -22,9 +22,9 @@ class Iframe extends React.Component {
             src = child.props ? child.props.src : src;
           });
         }
-        this.setState({ embedType: "embed" });
+        this.setState({ contentType: "embed" });
       } else {
-        this.setState({ embedType: "url" });
+        this.setState({ contentType: "url" });
       }
 
       this.props.setIframeURL(this.props.id, src);
@@ -74,7 +74,7 @@ class Iframe extends React.Component {
             src={this.props.iframeURL}
           />
 
-          {(this.props.preview && this.state.embedType === "url") &&
+          {(this.props.preview && this.state.contentType === "url") &&
             this.renderNavigationOverlay()}
         </div>
 
@@ -101,9 +101,13 @@ class Iframe extends React.Component {
 
 Iframe.propTypes = {
   id: PropTypes.string.isRequired,
-  iframeURL: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
+  contentType: PropTypes.oneOf(["url", "embed"]).isRequired,
+  iframeURL: PropTypes.string.isRequired,
   setIframeURL: PropTypes.func.isRequired
+};
+Iframe.defaultProps = {
+  contentType: "url"
 };
 
 export default Iframe;
