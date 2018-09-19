@@ -64,7 +64,7 @@
     }
 
     .image__content.image__replace-content {
-      border-top: 1px solid #ccc;
+      border-top: $small-border solid #ccc;
       height: 100%;
       max-height: 160px;
       opacity: 0;
@@ -162,7 +162,7 @@
 .image__drop {
   padding: $medium-padding;
   // background-color: $lighter-gray;
-  margin: 0.75rem 20px 0.5rem;
+  margin: $medium-margin 20px $small-margin;
   border-radius: $medium-border-radius;
   border: 1px dashed $light-gray;
   color: $gray;
@@ -180,7 +180,7 @@
 .element-image__input {
   width: 100%;
   border: none;
-  border-radius: 3px;
+  border-radius: $small-border-radius;
   box-shadow: 0 1px #dedede;
   margin: auto;
   padding: 5px;
@@ -193,7 +193,7 @@
   align-items: center;
   justify-content: center;
   margin: 0;
-  padding: 0 10px;
+  padding: 0 $medium-padding;
   text-align: center;
   width: 100%;
   z-index: 1;
