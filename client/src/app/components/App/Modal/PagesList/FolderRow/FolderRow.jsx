@@ -63,7 +63,9 @@ class FolderRow extends Component {
 
   deleteFolder = (e) => {
     e.stopPropagation();
-    this.props.deleteFolder(this.props.folder._id);
+    if (confirm('Are you sure you want to delete this folder?')) {
+      this.props.deleteFolder(this.props.folder._id);
+    }
   }
 
   renameFolder = (e) => {
