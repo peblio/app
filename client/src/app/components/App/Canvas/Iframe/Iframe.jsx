@@ -7,6 +7,11 @@ require('./iframe.scss');
 class Iframe extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      embedType: "url",
+      iframeHistoryIndex: 0,
+    };
+
     this.urlSubmitted = (event) => {
       const tempString = this.url.value;
       let src = ReactHtmlParser(tempString)[0].props ? ReactHtmlParser(tempString)[0].props.src : tempString;
@@ -23,15 +28,59 @@ class Iframe extends React.Component {
     };
   }
 
+  handleForward = () => {
+    window.history.forward();
+  }
+
+  handleBack = () => {
+    window.history.back();
+  }
+
+  renderNavigationOverlay() {
+    const { state } = this;
+
+    return (
+      <div className="embed-overlay__navigation">
+        <div className="embed-overlay__navigation--buttons">
+          <span className="icon__element" onClick={() => this.handleBack()}>
+            <i className="ion-md-arrow-dropleft"></i>
+          </span>
+          <span className="icon__element" onClick={() => this.handleForward()}>
+            <i className="ion-md-arrow-dropright"></i>
+          </span>
+        </div>
+
+        <a
+          href={this.props.iframeURL}
+          target="_blank"
+          className="icon__element"
+        >
+          <i className="ion-md-open"></i>
+        </a>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div>
         <div className="element__iframe">
-          <iframe className="iframe__main" src={this.props.iframeURL} />
+          <iframe
+            ref={ref => { this.iframeRef = ref; }}
+            className="iframe__main"
+            id="iframe-main"
+            src={this.props.iframeURL}
+          />
+
+          {(this.props.preview && this.state.embedType === "url") &&
+            this.renderNavigationOverlay()}
         </div>
+
+
+
         <form className="element__add-url" onSubmit={this.urlSubmitted.bind(this)}>
           <label htmlFor="element-name" className="element__label">
-            URL
+            Link
             <input
               id="element-name"
               className="element__input"

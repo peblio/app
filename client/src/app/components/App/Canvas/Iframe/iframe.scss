@@ -1,14 +1,14 @@
 @import 'variables';
 @import 'mixins';
 
-.iframe__main{
-  width:100%;
+.iframe__main {
+  width: 100%;
   height: 100%;
   background-color: $lighter-gray;
   border: 0;
 }
 
-.element__iframe{
+.element__iframe {
   height: 100%;
   min-height:auto;
   min-width: 300px;
@@ -17,18 +17,50 @@
   overflow-y: visible;
 }
 
-.element__iframe-container{
+.element__iframe-container {
   position: relative;
 }
 
-.resize-container:hover .element__add-url{
+.resize-container:hover .element__add-url {
   min-height:40px;
   display: flex;
   flex-direction: row;
   z-index: $z-index-layer-2;
 }
 
-.element__add-url{
+.embed-overlay__navigation {
+  background: #222;
+  box-shadow: 0 -5px rgba(0, 0, 0, 0.15);
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: white;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .embed-overlay__navigation--buttons {
+    flex: 1 auto;
+    padding: 10px;
+  }
+
+  .icon__element {
+    color: $white;
+    font-size: 30px;
+    padding: 10px 15px;
+    opacity: 1;
+
+    &.in-active {
+      opacity: 0.5;
+    }
+  }
+}
+
+.element__add-url {
   position: absolute;
   min-height:40px;
   background-color: $black;
@@ -40,34 +72,35 @@
   flex-direction: row;
 }
 
-.canvas-preview-mode .element__add-url{
+.canvas-preview-mode .element__add-url {
   display:none !important;
 }
 
-.element__label{
+.element__label {
   margin-right: $small-margin;
   font-style: bold;
   padding: $small-padding;
   width: calc(100% - 90px);
 }
 
-.element__input{
+.element__input {
   margin-left: $small-padding;
-  width:calc(100% - 50px);
-  height:1.5rem;
+  width: calc(100% - 50px);
+  height: 1.5rem;
   border: 1px $black;
   border-radius: $small-border-radius;
   padding: $small-padding;
 }
 
-.element__button{
-  width:80px;
-  height:1.5rem;
+.element__button {
+  width: 80px;
+  height: 1.5rem;
   margin: $small-padding;
   border: 1px $black;
   border-radius: $small-border-radius;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
+
   &:hover {
     background-color: $dark-gray;
     color: $white;
