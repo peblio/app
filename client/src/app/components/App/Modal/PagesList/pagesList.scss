@@ -182,6 +182,7 @@
     background: $light-gray;
     color: $white;
 
+    svg path,
     svg g rect {
       fill: $white;
     }
@@ -238,6 +239,10 @@
     float: right;
     box-shadow: none;
     fill: $dark-gray;
+  }
+
+  path {
+    fill: $medium-gray;
   }
 }
 

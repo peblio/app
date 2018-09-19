@@ -9,6 +9,7 @@ import ItemTypes from '../itemTypes';
 import formatDate from '../../../../../utils/format-date';
 import { deletePage, duplicatePage, viewPage } from '../../../../../action/page';
 import DeleteIcon from '../../../../../images/trash.svg';
+import TrashIcon from '../../../../../images/trash-alt-solid.svg';
 import DuplicateIcon from '../../../../../images/duplicate.svg';
 
 const pageSource = {
@@ -82,7 +83,7 @@ class PageRow extends Component {
         )}
         <td className={colClassName}>
           <button className="pages__icon" onClick={this.deletePage}>
-            <DeleteIcon alt="delete page" />
+            <TrashIcon alt="delete page" />
           </button>
           <button className="pages__icon" onClick={this.duplicatePage}>
             <DuplicateIcon alt="duplicate page" />
