@@ -11,7 +11,7 @@
 .question__question {
   background: $black;
   color: $white;
-  font-family: $helvetica;
+  font-family: $sourceSansPro;
   font-size: $medium-font-size;
   min-width: 100%;
   max-width: 100%;
@@ -22,7 +22,7 @@
   position: absolute;
   height: 100%;
   resize: none;
-  font-family: $helvetica;
+  font-family: $sourceSansPro;
   font-size: $small-font-size;
   border: 1px solid $light-gray;
   width: 100%;

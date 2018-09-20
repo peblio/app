@@ -73,7 +73,7 @@ class TextEditor extends React.Component {
               editorRef={ref => ref && ref.editorContainer && measureRef(ref.editorContainer)}
               toolbarOnFocus
               toolbar={{
-                options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'emoji','history'], //eslint-disable-line
+                options: ['inline', 'blockType', 'list', 'textAlign', 'colorPicker', 'link', 'emoji','history'], //eslint-disable-line
                 inline: {
                   options: ['bold', 'italic', 'underline', 'monospace']
                 },
