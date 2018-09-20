@@ -35,6 +35,7 @@ export const ADD_IMAGE = 'ADD_IMAGE';
 export const SET_IMAGE_URL = 'SET_IMAGE_URL';
 
 export const SET_PAGE_TITLE = 'SET_PAGE_TITLE';
+export const SET_PAGE_HEADING = 'SET_PAGE_HEADING';
 export const SUBMIT_PAGE = 'SUBMIT_PAGE';
 export const CREATE_PAGE = 'CREATE_PAGE';
 export const DUPLICATE_PAGE = 'DUPLICATE_PAGE';

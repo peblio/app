@@ -21,12 +21,11 @@ const myBucket = process.env.S3_BUCKET;
 // memory storage keeps file data in a buffer
 const upload = multer({
   storage: multer.memoryStorage(),
-    // file size limitation in bytes
+  // file size limitation in bytes
   limits: { fileSize: 52428800 },
 });
 
 apiRoutes.route('/examples').get(getExamples);
-apiRoutes.route('/page/:id').get(getPage);
 apiRoutes.route('/authenticate/:id').get(authenticatePage);
 apiRoutes.route('/sketches').get(getSketches);
 apiRoutes.route('/sketches/:user').get(getSketches);
@@ -65,16 +64,6 @@ function uploadFiles(req, res) {
   });
 }
 
-function getPage(req, res) {
-  Page.find({ id: req.params.id }, (err, data) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(data);
-    }
-  });
-}
-
 function getSketches(req, res) {
   // TODO: make the request async
   if (!req.params.user) {
@@ -106,10 +95,10 @@ function getSketches(req, res) {
       Page.find({ user: user._id }).exec(),
       Folder.find({ user: user._id }).exec()
     ])
-    .then(([pages, folders]) => {
-      res.send({ pages, folders });
-    })
-    .catch(err => res.send(err));
+      .then(([pages, folders]) => {
+        res.send({ pages, folders });
+      })
+      .catch(err => res.send(err));
   }
 }
 

@@ -20,6 +20,7 @@ const initialState = {
   layout: [],
   textHeights: {},
   pageTitle: 'Untitled',
+  pageHeading: '',
   parentId: '',
   preview: false,
   unsavedChanges: false
@@ -30,6 +31,11 @@ const page = (state = initialState, action) => {
     case ActionTypes.SET_PAGE_TITLE:
       return Object.assign({}, state, {
         pageTitle: action.event.target.value
+      });
+
+    case ActionTypes.SET_PAGE_HEADING:
+      return Object.assign({}, state, {
+        pageHeading: action.event.target.value
       });
 
     case ActionTypes.SET_PAGE_LAYOUT:
@@ -46,7 +52,7 @@ const page = (state = initialState, action) => {
       return Object.assign({}, state, {
         id: action.id,
         pageTitle: action.title,
-        preview: action.preview,
+        pageHeading: action.pageHeading,
         layout: action.layout
       });
 

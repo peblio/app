@@ -32,6 +32,16 @@ export function setPageTitle(event) {
   };
 }
 
+export function setPageHeading(event) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.SET_PAGE_HEADING,
+      event
+    });
+  };
+}
+
 export function setPageLayout(value) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
@@ -42,12 +52,13 @@ export function setPageLayout(value) {
   };
 }
 
-export function loadPage(id, title, layout) {
+export function loadPage(id, title, heading, layout) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
       id,
       title,
+      heading,
       layout
     });
   };
@@ -73,7 +84,7 @@ export function duplicatePage(title, folder, editors, editorIndex, layout) {
         page: response.data.page
       });
     });
-  }
+  };
 }
 
 function convertEditorsToRaw(editors) {
@@ -90,12 +101,13 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, editors, editorIndex, layout, type) {
+export function submitPage(parentId, title, heading, editors, editorIndex, layout, type) {
   const id = shortid.generate();
   axios.post('/pages/save', {
     parentId,
     id,
     title,
+    heading,
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout
@@ -116,10 +128,11 @@ export function submitPage(parentId, title, editors, editorIndex, layout, type) 
   };
 }
 
-export function updatePage(id, title, editors, editorIndex, layout) {
+export function updatePage(id, title, heading, editors, editorIndex, layout) {
   axios.post('/pages/update', {
     id,
     title,
+    heading,
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout
