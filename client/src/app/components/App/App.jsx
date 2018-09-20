@@ -158,9 +158,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <div // eslint-disable-line
-        tabIndex="0"
-        onKeyDown={e => this.onKeyPressed(e)}
+      <div
+        role="presentation"
+        tabIndex="0" // eslint-disable-line
+        onKeyDown={e => this.onKeyPressed(e)} // eslint-disable-line
       >
         <nav className="main-nav">
           <MainToolbar

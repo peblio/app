@@ -199,7 +199,13 @@ class MainToolbar extends React.Component {
                 </div>
               ) : (
                 <div>
-                  <button className="main-toolbar__button" onClick={this.props.viewLoginModal} data-test="show-login-modal">Log In</button>
+                  <button
+                    className="main-toolbar__button"
+                    onClick={this.props.viewLoginModal}
+                    data-test="show-login-modal"
+                  >
+                    Log In
+                  </button>
                   <button className="main-toolbar__button" onClick={this.props.viewSignUpModal}>Sign Up</button>
                 </div>
               )}
@@ -251,6 +257,7 @@ MainToolbar.propTypes = {
   viewPagesModal: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
   viewSignUpModal: PropTypes.func.isRequired,
+  editorAutoSave: PropTypes.bool.isRequired
 };
 
 export default MainToolbar;

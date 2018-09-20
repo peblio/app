@@ -44,16 +44,17 @@
   &__item {
     display: flex;
     flex-direction: row;
-    padding: $small-padding;
+    align-items: center;
+    padding: $small-padding $medium-padding;
   }
   &__label {
     color: $white;
-    justify-content: space-around;
+    justify-content: flex-end;
     display: flex;
     width: 100%;
   }
   &__input {
-    width: 30%;
+    width: 100%;
     height: $large-height;
     border-radius: $small-border-radius/2;
     border: none;
@@ -61,12 +62,15 @@
   }
   &__dropdown {
     height: $large-height;
+    width: 100%;
     border-radius: $small-border-radius/2;
     border: none;
   }
   &__sub-heading {
-    margin: 0;
+    color: $white;
     font-size: $medium-font-size;
     font-weight: $medium-font-weight;
+    margin: 0;
+    width: 100%;
   }
 }

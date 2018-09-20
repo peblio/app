@@ -3,7 +3,6 @@ const express = require('express');
 const multer = require('multer');
 const shortid = require('shortid');
 
-const apiRoutes = express.Router();
 
 const Folder = require('../models/folder.js');
 const Page = require('../models/page.js');
@@ -21,16 +20,10 @@ const myBucket = process.env.S3_BUCKET;
 // memory storage keeps file data in a buffer
 const upload = multer({
   storage: multer.memoryStorage(),
-    // file size limitation in bytes
+  // file size limitation in bytes
   limits: { fileSize: 52428800 },
 });
 
-apiRoutes.route('/examples').get(getExamples);
-apiRoutes.route('/page/:id').get(getPage);
-apiRoutes.route('/authenticate/:id').get(authenticatePage);
-apiRoutes.route('/sketches').get(getSketches);
-apiRoutes.route('/sketches/:user').get(getSketches);
-apiRoutes.route('/upload/:user/:type').get(uploadFiles);
 
 function authenticatePage(req, res) {
   if (!req.user) {
@@ -85,8 +78,9 @@ function getSketches(req, res) {
   }
   let user = req.user;
   if (req.params.user) {
-    User.findOne({ name: req.params.user }, (err, data) => {
-      if (err) {
+    User.findOne({ name: req.params.user }, (userFindError, data) => {
+      if (userFindError) {
+        res.status(404).send({ error: userFindError });
       } else if (data.type === 'student') {
         res.status(403).send({ error: 'This users data cannot be accessed' });
       } else {
@@ -106,27 +100,34 @@ function getSketches(req, res) {
       Page.find({ user: user._id }).exec(),
       Folder.find({ user: user._id }).exec()
     ])
-    .then(([pages, folders]) => {
-      res.send({ pages, folders });
-    })
-    .catch(err => res.send(err));
+      .then(([pages, folders]) => {
+        res.send({ pages, folders });
+      })
+      .catch(err => res.send(err));
   }
 }
 
 function getExamples(req, res) {
-  User.find({ name: 'peblioexamples' }, (err, data) => {
-    if (err) {
-      res.send(err);
+  User.find({ name: 'peblioexamples' }, (userFindError, user) => {
+    if (userFindError) {
+      res.send(userFindError);
     } else {
-      Page.find({ user: data[0]._id }, (err, data) => {
-        if (err) {
-          res.send(err);
+      Page.find({ user: user[0]._id }, (pageFindError, page) => {
+        if (pageFindError) {
+          res.send(pageFindError);
         } else {
-          res.send(data);
+          res.send(page);
         }
       });
     }
   });
 }
 
+const apiRoutes = express.Router();
+apiRoutes.route('/examples').get(getExamples);
+apiRoutes.route('/page/:id').get(getPage);
+apiRoutes.route('/authenticate/:id').get(authenticatePage);
+apiRoutes.route('/sketches').get(getSketches);
+apiRoutes.route('/sketches/:user').get(getSketches);
+apiRoutes.route('/upload/:user/:type').get(uploadFiles);
 module.exports = apiRoutes;

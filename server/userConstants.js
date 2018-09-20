@@ -1,3 +1,4 @@
+/* eslint-disable */
 module.exports = Object.freeze({
 
   SIGN_UP_DUPLICATE_EMAIL: 'The email address you have entered is already associated with another account.',
@@ -24,3 +25,4 @@ module.exports = Object.freeze({
 
 
 });
+/* eslint-enable */

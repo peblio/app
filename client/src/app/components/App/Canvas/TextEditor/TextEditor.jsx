@@ -46,9 +46,7 @@ class TextEditor extends React.Component {
   }
 
   toggleCollapse = () => {
-    this.setState({
-      expanded: !this.state.expanded
-    });
+    this.setState(prevState => ({ expanded: !prevState.expanded }));
   }
 
   updateTextBackColor = (color) => {

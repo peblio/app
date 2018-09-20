@@ -152,7 +152,7 @@ class FrontEndOutput extends React.Component {
   render() {
     return (
       <div>
-        <iframe ref={(element) => { this.iframe = element; }} id="code-output"></iframe>
+        <iframe ref={(element) => { this.iframe = element; }} id="code-output" title="code output"></iframe>
       </div>
     );
   }

@@ -28,13 +28,13 @@ class Preferences extends React.Component {
           </h2>
           <ul className="editor-preferences__list">
             <li className="editor-preferences__item">
+              <h3 className="editor-preferences__sub-heading">
+                Font Size
+              </h3>
               <label
                 className="editor-preferences__label"
                 htmlFor="editor-font-size"
               >
-                <h3 className="editor-preferences__sub-heading">
-                  Font Size
-                </h3>
                 <input
                   className="editor-preferences__input"
                   id="editor-font-size"
@@ -47,13 +47,13 @@ class Preferences extends React.Component {
             </li>
 
             <li className="editor-preferences__item">
+              <h3 className="editor-preferences__sub-heading">
+                Theme
+              </h3>
               <label
                 className="editor-preferences__label"
                 htmlFor="editor-theme"
               >
-                <h3 className="editor-preferences__sub-heading">
-                  Theme
-                </h3>
                 <select
                   className="editor-preferences__dropdown"
                   id="editor-theme"

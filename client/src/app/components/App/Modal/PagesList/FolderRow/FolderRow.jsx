@@ -54,13 +54,6 @@ function collectDropTarget(_connect, monitor) {
 }
 
 class FolderRow extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      canRenameFolder: false
-    };
-  }
-
   deleteFolder = (e) => {
     e.stopPropagation();
     if (confirm('Are you sure you want to delete this folder?')) { // eslint-disable-line no-restricted-globals
@@ -81,12 +74,7 @@ class FolderRow extends Component {
   }
 
   startRenameFolder = () => {
-    this.setState({ canRenameFolder: true });
     this.folderTitle.focus();
-  }
-
-  stopRenameFolder = () => {
-    this.setState({ canRenameFolder: false });
   }
 
   render() {
@@ -113,12 +101,8 @@ class FolderRow extends Component {
             ref={(input) => { this.folderTitle = input; }}
             type="text"
             defaultValue={folder.title}
-            onBlur={(e) => {
-              this.renameFolder(e);
-              this.stopRenameFolder();
-            }}
-          >
-          </input>
+            onBlur={e => this.renameFolder(e)}
+          />
         </td>
 
         {width > 350 && (
