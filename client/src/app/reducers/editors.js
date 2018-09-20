@@ -230,7 +230,8 @@ const editorsReducer = (state = initialState, action) => {
         type: 'iframe',
         id,
         index: stack.length,
-        url: 'https://peblio.github.io/instructions/embed.html'
+        url: 'https://peblio.github.io/instructions/embed.html',
+        contentType: 'url'
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
