@@ -44,7 +44,7 @@ class EditorToolbar extends React.Component {
             {this.props.editorMode}
           </p>
           <button
-            className="editor-toolbar__svg"
+            className={`editor-toolbar__svg ${this.props.isPlaying ? "editor-toolbar--isPlaying" : ""}`}
             onClick={() => {
               this.props.playCode();
               if (this.props.isPlaying) { this.props.startCodeRefresh(); }
@@ -54,7 +54,7 @@ class EditorToolbar extends React.Component {
             <PlaySVG alt="Run Code" />
           </button>
           <button
-            className="editor-toolbar__svg"
+            className={`editor-toolbar__svg ${!this.props.isPlaying ? "editor-toolbar--isPaused" : ""}`}
             onClick={this.props.stopCode}
           >
             <PauseSVG alt="Pause Code" />
