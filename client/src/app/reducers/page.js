@@ -1,6 +1,8 @@
+import { normalize } from 'normalizr';
 import reduceReducers from 'reduce-reducers';
 
 import * as ActionTypes from '../constants/reduxConstants';
+import { pageSchema } from '../schema.js';
 import convertPixelHeightToGridHeight from '../utils/pixel-to-grid';
 import { namespaceReducer } from '../utils/namespace-redux';
 import foldersReducer, { initialState as foldersInitialState } from './folders';
@@ -13,7 +15,7 @@ const initialState = {
     margin: [50, 25],
     padding: [0, 0],
     rowHeight: 1,
-    width: 1200,
+    width: 816,
   },
   layout: [],
   textHeights: {},
@@ -47,6 +49,21 @@ const page = (state = initialState, action) => {
         preview: action.preview,
         layout: action.layout
       });
+
+    case ActionTypes.DUPLICATE_PAGE: {
+      const { pages } = state;
+      const normalizedPageData = normalize(action.page, pageSchema);
+      return {
+        ...state,
+        pages: {
+          byId: {
+            ...pages.byId,
+            ...(normalizedPageData.entities.pages || {}),
+          },
+          allIds: pages.allIds.concat(normalizedPageData.result || [])
+        }
+      };
+    }
 
     case ActionTypes.SET_UNSAVED_CHANGES:
       return Object.assign({}, state, {

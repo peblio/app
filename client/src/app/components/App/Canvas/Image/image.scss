@@ -13,26 +13,91 @@
   min-height: 100%;
   height: fit-content;
   margin: 0;
+  background: $lighter-gray;
+  overflow: hidden;
+  box-sizing: border-box;
 
-  &-edit {
-    background: $lighter-gray;
-    border-radius: $small-border-radius;
-    min-height: 100%;
+  &--edit { // sass-lint:disable-line class-name-format
+    border: $gray dashed 1px;
+    height: 100%;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
     -moz-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
     -webkit-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
   }
+
+  &--small .image__login {
+    .image__title, .image__url {
+      display: none;
+    }
+    .image__drop {
+      border: none;
+    }
+    .image__svg--text {
+      display: none;
+    }
+  }
+
+  &--small {
+    .image__content.image__replace-content {
+      height: 100%;
+      left: 0;
+      right: 0;
+    }
+    .image__drop {
+      margin: 0 auto;
+    }
+  }
+
+  &--exists {
+    &:hover {
+      .image__content.image__replace-content {
+        opacity: 1;
+      }
+    }
+
+    &.image__container--small {
+      .image__content.image__replace-content {
+        min-height: 100%;
+      }
+    }
+
+    .image__content.image__replace-content {
+      border-top: $small-border solid #ccc;
+      height: 100%;
+      max-height: 160px;
+      opacity: 0;
+    }
+  }
 }
 
-.image__login{
-  position:relative;
-  padding:$small-padding;
+.image__login {
   background-color: $lighter-gray;
-  height: 90%;
-  margin: $small-margin;
-  position:relative;
+  box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+  position: relative;
+}
+
+.image__popup {
+  border: 1px solid #dedede;
+  position: absolute;
+  bottom: -100px;
+  right: -100px;
+  height: 200px;
+  width: 180px;
+  opacity: 0;
+  transition: all 0.25s ease;
+  visibility: hidden;
+  z-index: 1;
+
+  &.visible {
+    // box-shadow: 1px 1px 1px 0px #ccc;
+    box-shadow: 1px 2px 4px -1px rgba(0, 0, 0, 0.3);
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 .image__holder {
@@ -42,20 +107,34 @@
   background: $light-gray;
 }
 
-.image__content{
+.image__content {
   flex-direction: column;
   justify-content: center;
   height: 100%;
   display: flex;
   background: $lighter-gray;
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
+  transition: all 0.25s ease;
 }
 
-.image__title{
+.image__replace-content {
+  position: absolute;
+}
+.image__content {
+  .upload__close {
+    color: #333;
+    position: absolute;
+    top: 3.5px;
+    right: 3.5px;
+    font-size: 20px;
+  }
+}
+
+.image__title {
   width:90%;
   text-align: center;
   font-family: $roboto;
@@ -64,43 +143,66 @@
   color:$black;
 }
 
-.image__svg{
-  width:100%;
-  margin: 0 auto;
+.image__svg {
+  width: 100%;
   text-align: center;
-  fill:$gray;
-  color: $gray;
-
+}
+.image__svg--text {
+  text-align: center;
 }
 
-.image__drop{
-  padding: $medium-padding $micro-padding;
+.image__drop_default {
+  padding: $large-padding;
   // background-color: $lighter-gray;
-  margin: 0 auto;
-  box-sizing: border-box;
+  margin: $small-margin $small-margin*2;
+  border-radius: $medium-border-radius;
+  color: $gray;
+}
+
+.image__drop {
+  padding: $medium-padding;
+  // background-color: $lighter-gray;
+  margin: $medium-margin 20px $small-margin;
   border-radius: $medium-border-radius;
   border: 1px dashed $light-gray;
-  color: $dark-gray;
-  width: 90%;
+  color: $gray;
+
+  &.popup {
+    max-width: 110px;
+  }
 }
 
-.image__url{
-  width:70%;
-  margin:auto;
-}
-
-.element-image__input{
-  width:74%;
-  border-radius: .5em;
-  margin:$micro-margin;
-}
-
-.element-image__add-url{
+.image__url {
   width: 100%;
-  margin-top: $small-margin;
-  margin-bottom: 0;
+  margin: 0 auto;
+}
+
+.element-image__input {
+  width: 100%;
+  border: none;
+  border-radius: $small-border-radius;
+  box-shadow: 0 1px #dedede;
+  margin: auto;
+  padding: 5px;
+}
+
+.element-image__add-url {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0 $medium-padding;
   text-align: center;
+  width: 100%;
   z-index: 1;
+
+  .element-image__label {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+  }
 }
 
 .image-reupload-form {
@@ -113,6 +215,6 @@
   transition: 0.25s ease;
 }
 
-.element__button{
+.element__button {
   @extend %modal__canvas-button;
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import VisibilitySensor from 'react-visibility-sensor';
 
 import EditorContainer from './EditorContainer/EditorContainer.jsx';
 import Questions from './Question/Question.jsx';
@@ -95,30 +96,36 @@ class Canvas extends React.Component {
 
   renderCodeEditor(editor) {
     return (
-      <EditorContainer
-        id={editor.id}
-        currentFile={editor.currentFile}
-        clearConsoleOutput={this.props.clearConsoleOutput}
-        code={editor.code}
-        consoleOutputText={editor.consoleOutputText}
-        editorFontSize={this.props.editorFontSize}
-        editorMode={editor.editorMode}
-        editorTheme={this.props.editorTheme}
-        files={editor.files}
-        innerHeight={editor.innerHeight}
-        innerWidth={editor.innerWidth}
-        isPlaying={editor.isPlaying}
-        isRefreshing={editor.isRefreshing}
-        playCode={this.props.playCode}
-        startCodeRefresh={this.props.startCodeRefresh}
-        setCurrentFile={this.props.setCurrentFile}
-        setInnerWidth={this.props.setInnerWidth}
-        setInnerHeight={this.props.setInnerHeight}
-        stopCode={this.props.stopCode}
-        stopCodeRefresh={this.props.stopCodeRefresh}
-        updateConsoleOutput={this.props.updateConsoleOutput}
-        updateFile={this.props.updateFile}
-      />
+      <VisibilitySensor
+        partialVisibility={true}
+      >
+        {({isVisible}) =>
+          <EditorContainer
+            id={editor.id}
+            currentFile={editor.currentFile}
+            clearConsoleOutput={this.props.clearConsoleOutput}
+            code={editor.code}
+            consoleOutputText={editor.consoleOutputText}
+            editorFontSize={this.props.editorFontSize}
+            editorMode={editor.editorMode}
+            editorTheme={this.props.editorTheme}
+            files={editor.files}
+            innerHeight={editor.innerHeight}
+            innerWidth={editor.innerWidth}
+            isPlaying={editor.isPlaying && isVisible}
+            isRefreshing={editor.isRefreshing}
+            playCode={this.props.playCode}
+            startCodeRefresh={this.props.startCodeRefresh}
+            setCurrentFile={this.props.setCurrentFile}
+            setInnerWidth={this.props.setInnerWidth}
+            setInnerHeight={this.props.setInnerHeight}
+            stopCode={this.props.stopCode}
+            stopCodeRefresh={this.props.stopCodeRefresh}
+            updateConsoleOutput={this.props.updateConsoleOutput}
+            updateFile={this.props.updateFile}
+          />
+        }
+      </VisibilitySensor>
     );
   }
 
@@ -163,6 +170,7 @@ class Canvas extends React.Component {
           preview={this.props.preview}
           removeEditor={this.props.removeEditor}
           setImageURL={this.props.setImageURL}
+          layout={this.props.layout}
         />
       </div>
     );
@@ -204,8 +212,8 @@ class Canvas extends React.Component {
         switch (this.props.editors[key].type) {
           case 'text': {
             localLayout[key].minW = WidgetSize.TEXT_MIN_WIDTH;
-            localLayout[key].w =
-              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            localLayout[key].w = !localLayout[key].w ? WidgetSize.TEXT_DEFAULT_WIDTH : localLayout[key].w;
+
             const minH = this.props.textHeights[key] || WidgetSize.TEXT_MIN_HEIGHT;
             localLayout[key].minH = minH;
             localLayout[key].h =
@@ -215,8 +223,8 @@ class Canvas extends React.Component {
           }
           case 'code': {
             localLayout[key].minW = WidgetSize.CODE_MIN_WIDTH;
-            localLayout[key].w =
-              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            localLayout[key].w = !localLayout[key].w ? WidgetSize.CODE_DEFAULT_WIDTH : localLayout[key].w;
+
             localLayout[key].minH = WidgetSize.CODE_MIN_HEIGHT;
             localLayout[key].h =
               (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
@@ -224,8 +232,8 @@ class Canvas extends React.Component {
           }
           case 'question': {
             localLayout[key].minW = WidgetSize.QUESTION_MIN_WIDTH;
-            localLayout[key].w =
-              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            localLayout[key].w = !localLayout[key].w ? WidgetSize.QUESTION_DEFAULT_WIDTH : localLayout[key].w;
+
             localLayout[key].minH = WidgetSize.QUESTION_MIN_HEIGHT;
             localLayout[key].h =
               (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
@@ -233,8 +241,8 @@ class Canvas extends React.Component {
           }
           case 'iframe': {
             localLayout[key].minW = WidgetSize.IFRAME_MIN_WIDTH;
-            localLayout[key].w =
-              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            localLayout[key].w = !localLayout[key].w ? WidgetSize.IFRAME_DEFAULT_WIDTH : localLayout[key].w;
+
             localLayout[key].minH = WidgetSize.IFRAME_MIN_HEIGHT;
             localLayout[key].h =
               (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
@@ -242,11 +250,10 @@ class Canvas extends React.Component {
           }
           case 'image': {
             localLayout[key].minW = WidgetSize.IMAGE_MIN_WIDTH;
-            localLayout[key].w =
-              (localLayout[key].w < localLayout[key].minW) ? localLayout[key].minW : localLayout[key].w;
+            localLayout[key].w = !localLayout[key].w ? WidgetSize.IMAGE_DEFAULT_WIDTH : localLayout[key].w;
+
             localLayout[key].minH = WidgetSize.IMAGE_MIN_HEIGHT;
-            localLayout[key].h =
-              (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
+            localLayout[key].h = !localLayout[key].h ? WidgetSize.IMAGE_DEFAULT_HEIGHT : localLayout[key].h;
             break;
           }
           default: {
@@ -281,7 +288,7 @@ class Canvas extends React.Component {
               }
             >
               <div
-                className="widget__container element__iframe-container"
+                className={this.props.editors[id].type === "text" ? "widget__container no-outline" : "widget__container element__iframe-container"}
                 id={id}
                 tabIndex="0" // eslint-disable-line
                 onFocus={() => this.props.setCurrentWidget(id)}

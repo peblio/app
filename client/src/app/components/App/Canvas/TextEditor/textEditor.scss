@@ -8,6 +8,7 @@
   background: none;
   padding: 0 $small-border/2;
   min-height: 100%;
+  box-sizing: border-box;
 
   &_edit:hover { // sass-lint:disable-line class-name-format
     border: $gray dashed $small-border;
@@ -35,36 +36,30 @@
   color:black;
 }
 
-//
-// .resize-container .widget__close{
-//   display: none;
-// }
-//
-// .resize-container:hover .widget__close {
-//   display: inline-block;
-// }
-//
-// .resize-container:focus .widget__close {
-//   display: inline-block;
-// }
-
 .DraftEditor-editorContainer { // sass-lint:disable-line class-name-format
+  font-size: $p-size;
+  font-family: $sourceSansPro;
+  line-height: $p-line-height;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  color: $p-color;
+
   & h1{
     font-size: $h1-size;
-    font-family: $openSans;
     line-height: $h1-line-height;
-    font-weight: normal;
+    font-weight: 700;
+    color: $h1-color;
     margin: 0;
-    padding: 0;
+    border-bottom: $g5 solid $small-border;
   }
 
   & h2{
     font-size: $h2-size;
-    font-family: $openSans;
     line-height: $h2-line-height;
+    font-weight: 600;
+    color: $h2-color;
     margin: 0;
-    padding: 0;
-    font-weight: bold;
   }
 }
 

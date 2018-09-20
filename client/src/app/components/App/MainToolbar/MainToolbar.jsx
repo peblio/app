@@ -78,10 +78,18 @@ class MainToolbar extends React.Component {
               Examples
               </button>
             </div>
-            <div className="file-modal__container">
+            <div
+              className="file-modal__container"
+              onBlur={() => {
+                setTimeout(() => {
+                  this.props.isFileDropdownOpen && this.props.toggleFileDropdown();
+                }, 50);
+              }}
+            >
               <button
                 className={fileDropDownButtonClassName}
-                onClick={this.props.toggleFileDropdown}
+                onMouseDown={this.props.toggleFileDropdown}
+                onKeyDown={this.props.toggleFileDropdown}
                 data-test="toggle-file-dropdown"
               >
                 File
@@ -129,7 +137,13 @@ class MainToolbar extends React.Component {
               {this.props.name ? (
                 <div>
                   <button
-                    onClick={this.props.toggleAccountDropdown}
+                    onMouseDown={this.props.toggleAccountDropdown}
+                    onKeyDown={this.props.toggleAccountDropdown}
+                    onBlur={() => {
+                      setTimeout(() => {
+                        this.props.isAccountDropdownOpen && this.props.toggleAccountDropdown();
+                      }, 50);
+                    }}
                     className="main-toolbar__account-button"
                     data-test="account-button"
                   >
@@ -145,7 +159,8 @@ class MainToolbar extends React.Component {
                           <p className="main-toolbar__welcome">
                             {`Hi ${this.props.name}!`}
                             <button
-                              onClick={this.props.toggleAccountDropdown}
+                              onMouseDown={this.props.toggleAccountDropdown}
+                              onKeyDown={this.props.toggleAccountDropdown}
                               className="main-toolbar__account-button-clicked"
                             >
                               <AccountSVG
@@ -162,6 +177,8 @@ class MainToolbar extends React.Component {
                               target="_blank"
                               rel="noopener noreferrer"
                               href={`/user/${this.props.name}`}
+                              onMouseDown={(e) => { e.preventDefault(); }}
+                              onKeyDown={(e) => { e.preventDefault(); }}
                             >
                               Profile
                             </a>
@@ -170,7 +187,8 @@ class MainToolbar extends React.Component {
                         <li className="main-toolbar__list-item">
                           <button
                             className="file-modal__link"
-                            onClick={this.logout}
+                            onMouseDown={this.logout}
+                            onKeyDown={this.logout}
                           >
                             Logout
                           </button>

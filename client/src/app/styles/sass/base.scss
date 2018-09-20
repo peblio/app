@@ -1,3 +1,7 @@
+*, *::before, *::after {
+  // box-sizing: border-box;
+}
+
 body, html{
   margin: 0;
   padding: 0;
@@ -24,4 +28,18 @@ button {
     background: $white;
     cursor: pointer;
   }
+}
+
+
+
+%beta-tag {
+  padding: 3px 5px;
+  background: rgb(0, 152, 135);
+  top: -4px;
+  font-family: $sourceSansPro;
+  font-size: 8px;
+  color: rgb(255, 255, 255);
+  border-radius: $small-border-radius;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }

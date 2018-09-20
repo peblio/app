@@ -53,6 +53,29 @@ export function loadPage(id, title, layout) {
   };
 }
 
+export function duplicatePage(title, folder, editors, editorIndex, layout) {
+  return (dispatch) => {
+    const id = shortid.generate();
+    const data = {
+      id,
+      title: `${title}-Copy`,
+      editors,
+      editorIndex,
+      layout
+    };
+    if (folder) {
+      data.folder = folder;
+    }
+
+    axios.post('/pages/save', data).then((response) => {
+      dispatch({
+        type: ActionTypes.DUPLICATE_PAGE,
+        page: response.data.page
+      });
+    });
+  }
+}
+
 function convertEditorsToRaw(editors) {
   const rawEditors = {};
   Object.keys(editors).forEach((id) => {

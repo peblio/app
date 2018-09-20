@@ -7,8 +7,9 @@ import classNames from 'classnames';
 
 import ItemTypes from '../itemTypes';
 import formatDate from '../../../../../utils/format-date';
-import { deletePage, viewPage } from '../../../../../action/page';
+import { deletePage, duplicatePage, viewPage } from '../../../../../action/page';
 import DeleteIcon from '../../../../../images/trash.svg';
+import DuplicateIcon from '../../../../../images/duplicate.svg';
 
 const pageSource = {
   beginDrag(props) {
@@ -26,7 +27,22 @@ function collect(_connect, monitor) {
 class PageRow extends Component {
   deletePage = (e) => {
     e.stopPropagation();
-    this.props.deletePage(this.props.page._id);
+    if (confirm('Are you sure you want to delete this file?')) { // eslint-disable-line no-restricted-globals
+      this.props.deletePage(this.props.page._id);
+    }
+  }
+
+  duplicatePage = (e) => {
+    e.stopPropagation();
+    const {
+      title,
+      folder,
+      editors,
+      editorIndex,
+      layout
+    } = this.props.page;
+
+    this.props.duplicatePage(title, folder, editors, editorIndex, layout);
   }
 
   handleClick = (e) => {
@@ -45,7 +61,7 @@ class PageRow extends Component {
 
   redirectToPage = () => {
     // page.id is a shortid that is NOT the same thing as page._id
-    window.location.replace(`/pebl/${this.props.page.id}`);
+    window.open(`/pebl/${this.props.page.id}`, '_blank');
   }
 
   render() {
@@ -70,6 +86,9 @@ class PageRow extends Component {
           <button className="pages__icon" onClick={this.deletePage}>
             <DeleteIcon alt="delete page" />
           </button>
+          <button className="pages__icon" onClick={this.duplicatePage}>
+            <DuplicateIcon alt="duplicate page" />
+          </button>
         </td>
       </tr>
       /* eslint-enable jsx-a11y/no-static-element-interactions */
@@ -93,6 +112,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   deletePage,
+  duplicatePage,
   viewPage
 }, dispatch);
 

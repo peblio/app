@@ -4,9 +4,10 @@ import CodeMirror from 'codemirror';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/keymap/sublime';
-import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/python/python';
 import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/mode/css/css';
+import 'codemirror/mode/javascript/javascript';
 
 import * as constants from '../../../../../constants/widgetConstants.js';
 
@@ -19,13 +20,17 @@ class CodeEditor extends React.Component {
     const file = this.props.files[this.props.currentFile];
     this.cm = CodeMirror(this.codemirrorContainer, {
       theme: constants.EDITOR_THEME[this.props.editorTheme],
-      value: CodeMirror.Doc(file.content, this.getFileMode(file.name)),
+      value: CodeMirror.Doc(file.content),
+      mode: this.getFileMode(file.name),
       lineNumbers: true,
       autoCloseBrackets: true,
       inputStyle: 'contenteditable',
       styleActiveLine: true,
       keyMap: 'sublime',
-      lineWrapping: true
+      lineWrapping: true,
+      indentUnit: 2,
+      tabSize: 2,
+      indentWithTabs: true
     });
     this.cm.on('keyup', () => {
       this.props.updateFile(this.props.currentFile, this.cm.getValue());
@@ -62,6 +67,8 @@ class CodeEditor extends React.Component {
       mode = 'application/json';
     } else if (fileName.match(/.+\.pde$/i)) {
       mode = 'java';
+    } else if (fileName.match(/.+\.py$/i)) {
+      mode = 'python';
     } else {
       mode = 'text/plain';
     }
