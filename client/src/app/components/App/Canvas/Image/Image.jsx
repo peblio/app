@@ -9,7 +9,7 @@ import UploadSVG from '../../../../images/upload.svg';
 import CloseSVG from '../../../../images/close.svg';
 
 import axios from '../../../../utils/axios';
-
+import * as WidgetSize from '../../../../constants/widgetConstants.js';
 
 require('./image.scss');
 
@@ -63,8 +63,10 @@ class Image extends React.Component {
     let newState = { ...this.state };
 
     return (
-      this.imageWidgetRef &&
-      (this.imageWidgetRef.clientWidth < 280 || this.imageWidgetRef.clientHeight < 260)
+      this.imageWidgetRef && (
+        this.imageWidgetRef.clientWidth < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_WIDTH ||
+        this.imageWidgetRef.clientHeight < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_HEIGHT
+      )
     ) &&
     this.setUploadPopupVisibility(!newState.showUploadPopup);
   }
@@ -123,7 +125,11 @@ class Image extends React.Component {
         className={`
           image__container
           ${this.props.preview ? '' : 'image__container--edit'}
-          ${this.props.name && this.imageWidgetRef && (this.imageWidgetRef.clientWidth < 280 || this.imageWidgetRef.clientHeight < 260) ? 'image__container--small' : ''}
+          ${this.props.name && this.imageWidgetRef && (
+            this.imageWidgetRef.clientWidth < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_WIDTH ||
+            this.imageWidgetRef.clientHeight < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_HEIGHT
+          ) ? 'image__container--small' : ''}
+          ${this.props.imageURL && 'image__container--exists'}
         `}
       >
         {!this.props.preview && !this.props.name && (
@@ -149,14 +155,17 @@ class Image extends React.Component {
           <div
             className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
           >
+            {!this.props.imageURL && <div className="image__title">Upload a file</div>}
+
             {
-              this.imageWidgetRef && !(this.imageWidgetRef.clientWidth < 280 || this.imageWidgetRef.clientHeight < 260) ?
+              this.imageWidgetRef && !(
+                this.imageWidgetRef.clientWidth < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_WIDTH ||
+                this.imageWidgetRef.clientHeight < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_HEIGHT
+              ) ?
               <Dropzone
                 onDrop={this.onDrop}
                 className="element-image"
               >
-                <div className="image__title">Upload a file</div>
-
                 <div className="image__drop">
                   <div className="image__svg">
                     <UploadSVG alt="upload image" />
@@ -175,9 +184,9 @@ class Image extends React.Component {
                 </div>
               </div>
             }
-            <div className="image__title">
-              or add a URL
-            </div>
+
+            {!this.props.imageURL && <div className="image__title">or add a URL</div>}
+
             <div className="image__url">
               <form className="element-image__add-url" onSubmit={this.urlSubmitted.bind(this)}>
                 <label htmlFor="element-image-name" className="element-image__label">
