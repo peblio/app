@@ -5,7 +5,7 @@ const User = require('../models/user.js');
 const Folder = require('../models/folder.js');
 
 async function getPage(req, res) {
-  Page.find({ id: req.params.id }, (err, data) => {
+  Page.find({ id: req.params.pageId }, (err, data) => {
     if (err) {
       res.send(err);
     } else {

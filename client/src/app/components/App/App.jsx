@@ -92,10 +92,9 @@ class App extends React.Component {
     } else if (this.projectID()) {
       this.props.setEditAccess(false);
       const projectID = this.projectID();
-      axios.get(`/page/${projectID}`)
+      axios.get(`/pages/${projectID}`)
         .then((res) => {
           this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].heading, res.data[0].layout);
-          console.log(res.data[0]);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
           this.props.setPreviewMode(true);
           axios.get(`/authenticate/${projectID}`)
@@ -125,9 +124,13 @@ class App extends React.Component {
   savePage = () => {
     if (this.props.name) {
       if (this.props.id.length === 0) {
+        const title =
+        (this.props.pageTitle === 'Untitled')
+          ? this.props.pageHeading : this.props.pageTitle;
+
         this.props.submitPage(
           '',
-          this.props.pageTitle,
+          title,
           this.props.pageHeading,
           this.props.editors,
           this.props.editorIndex,

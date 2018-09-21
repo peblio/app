@@ -52,7 +52,7 @@ const page = (state = initialState, action) => {
       return Object.assign({}, state, {
         id: action.id,
         pageTitle: action.title,
-        pageHeading: action.pageHeading,
+        pageHeading: action.heading,
         layout: action.layout
       });
 

@@ -115,7 +115,6 @@ function getExamples(req, res) {
 
 const apiRoutes = express.Router();
 apiRoutes.route('/examples').get(getExamples);
-apiRoutes.route('/page/:id').get(getPage);
 apiRoutes.route('/authenticate/:id').get(authenticatePage);
 apiRoutes.route('/sketches').get(getSketches);
 apiRoutes.route('/sketches/:user').get(getSketches);
