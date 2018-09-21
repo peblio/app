@@ -265,13 +265,15 @@ class Canvas extends React.Component {
 
     return (
       <section className={`canvas ${this.props.preview ? 'canvas-preview-mode' : 'canvas-edit-mode'}`}>
-        <input
-          type="text"
-          className='canvas__title'
-          placeholder="Enter title.."
-          value={this.props.pageHeading}
-          onChange={this.props.setPageHeading}
-        />
+        {(this.props.pageHeading === '' && this.props.preview) || (
+          <input
+            type="text"
+            className='canvas__title'
+            placeholder="Enter title.."
+            value={this.props.pageHeading}
+            onChange={this.props.setPageHeading}
+          />
+        )}
         <ReactGridLayout
           cols={this.props.rgl.cols}
           width={this.props.rgl.width}
