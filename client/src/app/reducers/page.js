@@ -2,6 +2,7 @@ import { normalize } from 'normalizr';
 import reduceReducers from 'reduce-reducers';
 
 import * as ActionTypes from '../constants/reduxConstants';
+import * as pageDefaults from '../constants/pageConstants';
 import { pageSchema } from '../schema.js';
 import convertPixelHeightToGridHeight from '../utils/pixel-to-grid';
 import { namespaceReducer } from '../utils/namespace-redux';
@@ -19,7 +20,7 @@ const initialState = {
   },
   layout: [],
   textHeights: {},
-  pageTitle: 'Untitled',
+  pageTitle: pageDefaults.DEFAULT_PAGE_TITLE,
   pageHeading: '',
   parentId: '',
   preview: false,

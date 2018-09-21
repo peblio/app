@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import * as pageDefaults from '../../constants/pageConstants';
+
 import ConfirmUser from './Modal/ConfirmUser/ConfirmUser.jsx';
 import ExamplesModal from './Modal/ExamplesModal/ExamplesModal.jsx';
 import Login from './Modal/Login/Login.jsx';
@@ -95,6 +97,7 @@ class App extends React.Component {
       axios.get(`/pages/${projectID}`)
         .then((res) => {
           this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].heading, res.data[0].layout);
+          console.log(res.data[0].title);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
           this.props.setPreviewMode(true);
           axios.get(`/authenticate/${projectID}`)
@@ -123,11 +126,13 @@ class App extends React.Component {
 
   savePage = () => {
     if (this.props.name) {
-      if (this.props.id.length === 0) {
-        const title =
-        (this.props.pageTitle === 'Untitled')
+      let title = this.props.pageTitle;
+      if (this.props.pageHeading !== '') {
+        title =
+        (this.props.pageTitle === pageDefaults.DEFAULT_PAGE_TITLE)
           ? this.props.pageHeading : this.props.pageTitle;
-
+      }
+      if (this.props.id.length === 0) {
         this.props.submitPage(
           '',
           title,
@@ -140,7 +145,7 @@ class App extends React.Component {
       } else if (this.props.canEdit) {
         this.props.updatePage(
           this.props.id,
-          this.props.pageTitle,
+          title,
           this.props.pageHeading,
           this.props.editors,
           this.props.editorIndex,
