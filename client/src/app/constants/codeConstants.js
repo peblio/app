@@ -155,6 +155,7 @@ export const FILES = {
   ]
 };
 
+/* eslint-disable */
 export const ProcessingWarning =
   `We currently use the Processing.js library to run Processing in the browser which comes along with certain limitations. Learn more
   <a
@@ -167,5 +168,6 @@ export const ProcessingWarning =
   >
   here.
   </a>`;
+/* eslint-enable */
 
 export { FILES as default };

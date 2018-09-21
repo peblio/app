@@ -1,7 +1,7 @@
 @import 'variables';
 
 .console__output-text{
-  font-family: 'Inconsolata', monospace !important;
+  font-family: $inconsolata;
   margin: 0;
   padding: $small-padding;
 }

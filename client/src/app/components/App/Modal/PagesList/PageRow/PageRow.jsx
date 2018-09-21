@@ -27,7 +27,9 @@ function collect(_connect, monitor) {
 class PageRow extends Component {
   deletePage = (e) => {
     e.stopPropagation();
-    this.props.deletePage(this.props.page._id);
+    if (confirm('Are you sure you want to delete this file?')) { // eslint-disable-line no-restricted-globals
+      this.props.deletePage(this.props.page._id);
+    }
   }
 
   duplicatePage = (e) => {
@@ -59,7 +61,7 @@ class PageRow extends Component {
 
   redirectToPage = () => {
     // page.id is a shortid that is NOT the same thing as page._id
-    window.location.replace(`/pebl/${this.props.page.id}`);
+    window.open(`/pebl/${this.props.page.id}`, '_blank');
   }
 
   render() {

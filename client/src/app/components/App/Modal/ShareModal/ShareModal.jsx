@@ -45,8 +45,7 @@ class Share extends React.Component {
             ref={(element) => { this.input = element; }}
             value={window.location.href}
             readOnly
-          >
-          </input>
+          />
           <button
             className="share__link"
             onClick={this.copyShareLink}

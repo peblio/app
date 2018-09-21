@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // This code is from https://github.com/processing/p5.js-web-editor/blob/master/client/utils/consoleUtils.js
 const EXTERNAL_LINK_REGEX = /^(http:\/\/|https:\/\/)/;
 

@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "AWS_PROFILE=peblio ./run_with_credstash.sh nodemon"
+    "start": "AWS_PROFILE=peblio ./run_with_credstash.sh nodemon",
+    "lint": "./node_modules/.bin/eslint ."
   },
   "author": "",
   "license": "ISC",

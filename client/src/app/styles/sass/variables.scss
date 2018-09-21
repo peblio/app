@@ -13,7 +13,7 @@ $profile-gray: #01151E;
 $yellow: #FED034;
 $light-green: #5EC1B8;
 
-$gray: #888;
+$gray: #888888;
 $black: #00151E;
 $dark-gray:#242424;
 $pref-gray:rgba(255, 255, 255, 0.09);
@@ -41,6 +41,9 @@ $b2:#33AD9F;
 $b3:#99D6CF;
 $b4:#CCEAE7;
 
+$h1-color: #33444B;
+$h2-color: #33444B;
+$p-color: #00151E;
 
 $modal-overlay: rgba(0,0,0,0.45);
 
@@ -57,13 +60,13 @@ $medium-padding: 1rem;
 $large-padding: 1.5rem;
 $xlarge-padding: 2.5rem;
 $main-toolbar-padding:15 10 15 10;
-$canvas-padding:100px;
+$canvas-padding: 100px;
 
 //line height
 $title-line-height:50px;
-$h1-line-height:32px;
+$h1-line-height:36px;
 $h2-line-height:26px;
-$p-line-height:26px;
+$p-line-height:24px;
 $large-height: 1.5rem;
 
 //margin
@@ -85,10 +88,9 @@ $medium-border: 2px;
 $large-border: 5px;
 
 //fonts
-$helvetica: Arial, Helvetica, sans-serif;
-$montserrat: 'Montserrat', sans-serif;
+$inconsolata: 'Inconsolata', monospace !important;
 $roboto: 'Roboto', sans-serif;
-$openSans: 'Open Sans', sans-serif;
+$sourceSansPro: 'Source Sans Pro', sans-serif;
 
 $small-font-size: 0.8rem;
 $medium-font-size: 1rem;
@@ -96,9 +98,11 @@ $small-font-size: 0.8rem;
 $large-font-size: 26px;
 $xlarge-font-size: 32px;
 $toolbar-font-size: 11px;
-$title-size: 24px;
-$h1-size: 24px;
-$h2-size:18px;
+
+$title-size: 36px;
+$h1-size: 28px;
+$h2-size:20px;
+$p-size:16px;
 $normal-size:16px;
 
 

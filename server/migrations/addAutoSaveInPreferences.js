@@ -5,7 +5,8 @@ const { User } = require('../models');
 mongoose.Promise = Promise;
 
 console.log('Updating db...');
-mongoose.connect(process.env.MONGO_DB_PEBLIO, { useMongoClient: true })
+mongoose
+  .connect(process.env.MONGO_DB_PEBLIO, { useMongoClient: true })
   .then(() => User.update(
     {},
     { $set: { 'preferences.editorAutoSave': true } },
@@ -13,9 +14,10 @@ mongoose.connect(process.env.MONGO_DB_PEBLIO, { useMongoClient: true })
     (err, result) => {
       if (err) {
         console.error(err);
-        process.exit(1);
-      } else {
-        console.log('Done!');
-        process.exit(0);
+        return process.exit(1);
       }
-    }).exec());
+
+      console.log('Done!');
+      return process.exit(0);
+    }).exec()
+  );

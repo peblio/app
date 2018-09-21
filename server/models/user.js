@@ -76,10 +76,12 @@ userSchema.virtual('files', {
   foreignField: 'user'
 });
 
-userSchema.methods.hashPassword = function hashPassword(password) {
+userSchema.methods.hashPassword = function hashPassword(password, next) {
   bcrypt.hash(password, null, null, (innerErr, hash) => {
     if (innerErr) { return next(innerErr); }
     this.password = hash;
+
+    return this.password;
   });
 };
 

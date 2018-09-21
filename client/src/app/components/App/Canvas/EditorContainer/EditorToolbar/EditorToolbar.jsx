@@ -16,13 +16,13 @@ class EditorToolbar extends React.Component {
         <div className="editor-toolbar__button-container">
           {(this.props.editorMode === 'processing') && (
             <div
-              tabIndex="0"
+              tabIndex="0" // eslint-disable-line
               className="editor-toolbar__svg editor-toolbar__svg-info"
             >
               <InfoSVG alt="More information" />
 
               <div
-                tabIndex="0"
+                tabIndex="0" // eslint-disable-line
                 className="editor-toolbar__warning-container"
               >
                 <p className="editor-toolbar__warning">
@@ -44,7 +44,7 @@ class EditorToolbar extends React.Component {
             {this.props.editorMode}
           </p>
           <button
-            className="editor-toolbar__svg"
+            className={`editor-toolbar__svg ${this.props.isPlaying ? "editor-toolbar--isPlaying" : ""}`}
             onClick={() => {
               this.props.playCode();
               if (this.props.isPlaying) { this.props.startCodeRefresh(); }
@@ -54,7 +54,7 @@ class EditorToolbar extends React.Component {
             <PlaySVG alt="Run Code" />
           </button>
           <button
-            className="editor-toolbar__svg"
+            className={`editor-toolbar__svg ${!this.props.isPlaying ? "editor-toolbar--isPaused" : ""}`}
             onClick={this.props.stopCode}
           >
             <PauseSVG alt="Pause Code" />

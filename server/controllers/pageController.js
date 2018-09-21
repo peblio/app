@@ -4,14 +4,6 @@ const Page = require('../models/page.js');
 const User = require('../models/user.js');
 const Folder = require('../models/folder.js');
 
-const pageRoutes = express.Router();
-
-pageRoutes.route('/:pageId/move').post(movePage);
-pageRoutes.route('/:pageId').get(getPage);
-pageRoutes.route('/save').post(savePage);
-pageRoutes.route('/update').post(updatePage);
-pageRoutes.route('/:pageId').delete(deletePage);
-
 async function getPage(req, res) {
   Page.find({ id: req.params.id }, (err, data) => {
     if (err) {
@@ -104,4 +96,10 @@ async function movePage(req, res) {
   }
 }
 
+const pageRoutes = express.Router();
+pageRoutes.route('/:pageId/move').post(movePage);
+pageRoutes.route('/:pageId').get(getPage);
+pageRoutes.route('/save').post(savePage);
+pageRoutes.route('/update').post(updatePage);
+pageRoutes.route('/:pageId').delete(deletePage);
 module.exports = pageRoutes;

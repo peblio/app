@@ -294,11 +294,10 @@ class Canvas extends React.Component {
               className={`${this.props.currentWidget === id ? 'canvas-high' : ''}`
               }
             >
-
               <div
                 className={this.props.editors[id].type === 'text' ? 'widget__container no-outline' : 'widget__container element__iframe-container'}
                 id={id}
-                tabIndex="0"
+                tabIndex="0" // eslint-disable-line
                 onFocus={() => this.props.setCurrentWidget(id)}
               >
                 {this.props.preview || (

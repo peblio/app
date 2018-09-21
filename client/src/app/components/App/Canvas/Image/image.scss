@@ -38,16 +38,46 @@
       display: none;
     }
   }
+
+  &--small {
+    .image__content.image__replace-content {
+      height: 100%;
+      left: 0;
+      right: 0;
+    }
+    .image__drop {
+      margin: 0 auto;
+    }
+  }
+
+  &--exists {
+    &:hover {
+      .image__content.image__replace-content {
+        opacity: 1;
+      }
+    }
+
+    &.image__container--small {
+      .image__content.image__replace-content {
+        min-height: 100%;
+      }
+    }
+
+    .image__content.image__replace-content {
+      border-top: $small-border solid #ccc;
+      height: 100%;
+      max-height: 160px;
+      opacity: 0;
+    }
+  }
 }
 
 .image__login {
-  position: relative;
-  padding:$small-padding;
   background-color: $lighter-gray;
   box-sizing: border-box;
-  height: 90%;
-  margin: $small-margin;
-  position:relative;
+  height: 100%;
+  margin: 0;
+  position: relative;
 }
 
 .image__popup {
@@ -83,19 +113,16 @@
   height: 100%;
   display: flex;
   background: $lighter-gray;
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
+  transition: all 0.25s ease;
 }
 
 .image__replace-content {
   position: absolute;
-  opacity: 0;
-  &:hover {
-    opacity: 0.8;
-  }
 }
 .image__content {
   .upload__close {
@@ -135,7 +162,7 @@
 .image__drop {
   padding: $medium-padding;
   // background-color: $lighter-gray;
-  margin: 0 auto 0.75rem;
+  margin: $medium-margin 20px $small-margin;
   border-radius: $medium-border-radius;
   border: 1px dashed $light-gray;
   color: $gray;
@@ -151,20 +178,31 @@
 }
 
 .element-image__input {
-  width: 80%;
+  width: 100%;
   border: none;
-  border-radius: 3px;
+  border-radius: $small-border-radius;
   box-shadow: 0 1px #dedede;
   margin: auto;
   padding: 5px;
 }
 
 .element-image__add-url {
-  width: 100%;
-  margin-top: $small-margin;
-  margin-bottom: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0 $medium-padding;
   text-align: center;
+  width: 100%;
   z-index: 1;
+
+  .element-image__label {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+  }
 }
 
 .image-reupload-form {
@@ -177,6 +215,6 @@
   transition: 0.25s ease;
 }
 
-.element__button{
+.element__button {
   @extend %modal__canvas-button;
 }
