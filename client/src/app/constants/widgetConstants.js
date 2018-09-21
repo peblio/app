@@ -5,7 +5,7 @@ export const TEXT_DEFAULT_WIDTH = 30;
 export const TEXT_MIN_WIDTH = 2;
 export const TEXT_MIN_HEIGHT = 2;
 
-export const IFRAME_DEFAULT_WIDTH = 30;
+export const IFRAME_DEFAULT_WIDTH = 15;
 export const IFRAME_MIN_WIDTH = 10;
 export const IFRAME_MIN_HEIGHT = 12;
 
@@ -13,7 +13,7 @@ export const CODE_DEFAULT_WIDTH = 30;
 export const CODE_MIN_WIDTH = 13;
 export const CODE_MIN_HEIGHT = 11;
 
-export const QUESTION_DEFAULT_WIDTH = 30;
+export const QUESTION_DEFAULT_WIDTH = 15;
 export const QUESTION_MIN_WIDTH = 6;
 export const QUESTION_MIN_HEIGHT = 5;
 
@@ -21,8 +21,8 @@ export const IMAGE_DEFAULT_HEIGHT = 12;
 export const IMAGE_DEFAULT_WIDTH = 12;
 export const IMAGE_MIN_WIDTH = 6;
 export const IMAGE_MIN_HEIGHT = 5;
-export const IMAGE_RESPONSIVE_TRIGGER_HEIGHT = 260;
-export const IMAGE_RESPONSIVE_TRIGGER_WIDTH = 280;
+export const IMAGE_RESPONSIVE_TRIGGER_HEIGHT = 200;
+export const IMAGE_RESPONSIVE_TRIGGER_WIDTH = 160;
 
 export const EDITOR_THEME = {
   light: 'base16-light',
