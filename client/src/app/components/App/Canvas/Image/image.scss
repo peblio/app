@@ -160,9 +160,8 @@
 }
 
 .image__drop {
-  padding: $medium-padding;
-  // background-color: $lighter-gray;
-  margin: $medium-margin 20px $small-margin;
+  padding: $small-padding;
+  margin: 0 $medium-margin;
   border-radius: $medium-border-radius;
   border: 1px dashed $light-gray;
   color: $gray;
@@ -203,6 +202,10 @@
     flex-direction: row;
     flex: 1;
   }
+}
+
+.element-image input {
+  width: 100%;
 }
 
 .image-reupload-form {
