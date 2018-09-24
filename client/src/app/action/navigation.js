@@ -9,9 +9,12 @@ export function createNavContent(layout) {
     const baseElement = document.getElementById(element.i);
     const headings = baseElement.querySelectorAll('h1, h2');
     headings.forEach((heading) => {
+      // debugger;
       navContent.push({
         type: heading.localName,
-        content: heading.textContent
+        content: heading.textContent,
+        id: element.i,
+        y: window.pageYOffset + heading.getBoundingClientRect().y
       });
     });
   });

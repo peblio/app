@@ -5,8 +5,6 @@ import { bindActionCreators } from 'redux';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import dynamicSort from '../../../utils/sort-function';
-// import FolderContainer from './FolderContainer/FolderContainer.jsx';
-// import { fetchAllPages } from '../../../../action/page';
 
 require('./navigation.scss');
 
@@ -15,21 +13,32 @@ class Navigation extends React.Component {
     super(props);
   }
 
+  scrollTo=(y) => {
+    const yPos = y - 150;
+    window.scrollTo(0, yPos);
+  }
+
   render() {
-    console.log(this.props.navigationContent);
     return (
-      <section className="navigation__container">
+      <section
+        className={`navigation__container ${this.props.preview ? 'navigation__container--expanded' : ''}`}
+      >
         <li className="navigation__items">
           {
-            this.props.pageTitle !== '' && (
+            this.props.pageHeading !== '' && (
               <ul className="navigation__item-title">
-                {this.props.pageTitle}
+                {this.props.pageHeading}
               </ul>
             )}
           {
             this.props.navigationContent.map(navItem => (
-              <ul className={`navigation__item-${navItem.type}`}>
-                {navItem.content}
+              <ul className="navigation__item">
+                <button
+                  className={`navigation__button navigation__button-${navItem.type}`}
+                  onClick={() => { this.scrollTo(navItem.y); }}
+                >
+                  {navItem.content}
+                </button>
               </ul>
             ))
           }
@@ -41,12 +50,14 @@ class Navigation extends React.Component {
 
 Navigation.propTypes = {
   navigationContent: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  pageTitle: PropTypes.string.isRequired
+  pageHeading: PropTypes.string.isRequired,
+  preview: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   navigationContent: state.navigation.navigationContent,
-  pageTitle: state.page.pageTitle
+  pageHeading: state.page.pageHeading,
+  preview: state.page.preview,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
