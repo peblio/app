@@ -1,0 +1,11 @@
+@import 'variables';
+@import 'mixins';
+
+.navigation{
+  &__container{
+    display: flex;
+    position: absolute;
+    top: $main-toolbar-height*2;
+    left: 0;
+  }
+}
