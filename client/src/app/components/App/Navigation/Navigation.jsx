@@ -15,27 +15,38 @@ class Navigation extends React.Component {
     super(props);
   }
 
-  componentDidUpdate() {
-
-  }
-
   render() {
-    // const localLayout = this.props.layout;
     console.log(this.props.navigationContent);
     return (
       <section className="navigation__container">
-        Much navigation
+        <li className="navigation__items">
+          {
+            this.props.pageTitle !== '' && (
+              <ul className="navigation__item-title">
+                {this.props.pageTitle}
+              </ul>
+            )}
+          {
+            this.props.navigationContent.map(navItem => (
+              <ul className={`navigation__item-${navItem.type}`}>
+                {navItem.content}
+              </ul>
+            ))
+          }
+        </li>
       </section>
     );
   }
 }
 
 Navigation.propTypes = {
-  layout: PropTypes.arrayOf(PropTypes.shape).isRequired
+  navigationContent: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  pageTitle: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
-  navigationContent: state.navigation.navigationContent
+  navigationContent: state.navigation.navigationContent,
+  pageTitle: state.page.pageTitle
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
