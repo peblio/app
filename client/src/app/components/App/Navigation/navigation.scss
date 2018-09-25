@@ -20,7 +20,7 @@
     }
   }
   &__open-button {
-    position: absolute;
+    position: fixed;
     top: $main-toolbar-height*3;
     background: $g4;
     color: $black;
