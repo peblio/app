@@ -22,24 +22,14 @@ class Navigation extends React.Component {
       const yNavigationLength = this.props.navigationContent.length;
       for (let i = yNavigationLength - 1; i >= 0; i--) {
         if (window.pageYOffset > yNavigationContent[i].y) {
-          console.log(`${i} -- ${yNavigationContent[i].y} -- ${window.pageYOffset}`);
           this.props.setYNavigation(i);
           return;
         }
       }
-      // this.props.navigationContent.reverse.forEach((navigationItem, i) => {
-      //   if (window.pageYOffset > navigationItem.y) {
-      //     console.log(`${i} -- ${navigationItem.y} -- ${window.pageYOffset}`);
-      //     this.props.setYNavigation(i - 1);
-      //     return i - 1;
-      //   }
-      // });
     });
   }
 
   componentDidUpdate(prevProps) {
-    // console.log(prevProps.yNavigation);
-    // console.log(this.props.yNavigation);
     if (prevProps.yNavigation !== this.props.yNavigation) {
       this.forceUpdate();
     }
@@ -51,42 +41,62 @@ class Navigation extends React.Component {
 
   render() {
     return (
-      <section
-        className={`navigation__container ${this.props.preview ? 'navigation__container--expanded' : ''}`}
-      >
+      <div>
         <button
-          className="navigation__close-button"
-          onClick={this.props.closeNavigationContent}
+          className="navigation__open-button"
+          onClick={this.props.openNavigationContent}
         >
-        ╳
+          <i className="fas fa-bars"></i>
         </button>
-        <li className="navigation__items">
-          {
-            this.props.pageHeading !== '' && (
-              <ul className="navigation__item-title">
-                {this.props.pageHeading}
-              </ul>
-            )}
-          {
-            this.props.navigationContent.map((navItem, i) => (
-              <ul className="navigation__item">
-                <button
+        {this.props.isNavigationOpen && (
+          <section
+            className={`navigation__container ${this.props.preview ? 'navigation__container--expanded' : ''}`}
+          >
+            <nav className="navigation__options">
+              <button
+                className="navigation__option-button"
+                onClick={this.props.closeNavigationContent}
+              >
+                <i className="fas fa-times"></i>
+              </button>
+              <button
+                className="navigation__option-button"
+                onClick={() => { this.props.createNavigationContent(this.props.layout); }}
+              >
+                <i className="fas fa-redo"></i>
+              </button>
+            </nav>
+            <li className="navigation__items">
+              {
+                this.props.pageHeading !== '' && (
+                  <ul className="navigation__item-title">
+                    {this.props.pageHeading}
+                  </ul>
+                )}
+              {
+                this.props.navigationContent.map((navItem, i) => (
+                  <ul className="navigation__item">
+                    <button
                   className={`navigation__button navigation__button-${navItem.type} ${(i === this.props.yNavigation) ? 'navigation__button--selected' : ''}`} // eslint-disable-line
-                  onClick={() => { this.scrollTo(navItem.y); }}
-                >
-                  {navItem.content}
-                </button>
-              </ul>
-            ))
-          }
-        </li>
-      </section>
+                      onClick={() => { this.scrollTo(navItem.y); }}
+                    >
+                      {navItem.content}
+                    </button>
+                  </ul>
+                ))
+              }
+            </li>
+          </section>
+        )}
+      </div>
     );
   }
 }
 
 Navigation.propTypes = {
+  createNavigationContent: PropTypes.func.isRequired,
   isNavigationOpen: PropTypes.bool.isRequired,
+  layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   navigationContent: PropTypes.arrayOf(PropTypes.shape).isRequired,
   pageHeading: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
@@ -95,6 +105,7 @@ Navigation.propTypes = {
 
 const mapStateToProps = state => ({
   isNavigationOpen: state.navigation.isNavigationOpen,
+  layout: state.page.layout,
   navigationContent: state.navigation.navigationContent,
   pageHeading: state.page.pageHeading,
   preview: state.page.preview,

@@ -27,7 +27,7 @@ export function createNavigationContent(layout) {
   };
 }
 
-export function openNavigationContent(layout) {
+export function openNavigationContent() {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.OPEN_NAVIGATION
@@ -35,7 +35,7 @@ export function openNavigationContent(layout) {
   };
 }
 
-export function closeNavigationContent(layout) {
+export function closeNavigationContent() {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.CLOSE_NAVIGATION

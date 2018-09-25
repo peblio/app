@@ -172,7 +172,6 @@ class App extends React.Component {
   }
 
   loadNavigation = () => {
-    console.log(this.props.layout);
     this.props.createNavigationContent(this.props.layout);
   }
 
@@ -268,6 +267,7 @@ class App extends React.Component {
           updateTextHeight={this.props.updateTextHeight}
 
           isNavigationOpen={this.props.isNavigationOpen}
+          openNavigationContent={this.props.openNavigationContent}
         />
 
         <Modal
@@ -373,7 +373,6 @@ class App extends React.Component {
         </Modal>
 
         <Preferences />
-
         <Navigation />
       </div>
     );

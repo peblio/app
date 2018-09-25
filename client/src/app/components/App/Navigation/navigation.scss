@@ -2,6 +2,37 @@
 @import 'mixins';
 
 .navigation{
+  &__options {
+    display: flex;
+    position: absolute;
+    flex-direction: row-reverse;
+    width: 100%;
+    padding: $medium-padding;
+    box-sizing: border-box;
+  }
+  &__option-button {
+    font-size: $medium-font-size;
+    border: 0;
+    &:hover {
+      border: 0;
+      background: transparent;
+      color: $green;
+    }
+  }
+  &__open-button {
+    position: absolute;
+    top: $main-toolbar-height*3;
+    background: $g4;
+    color: $black;
+    border: 0;
+    font-size: $large-font-size;
+    border-radius: 0;
+    &:hover {
+      border: 0;
+      background: $g4;
+      color: $green;
+    }
+  }
   &__container{
     background-color: $black;
     display: flex;
@@ -21,6 +52,8 @@
   &__items {
     list-style: none;
     width: 100%;
+    padding-top: $xlarge-padding;
+
   }
   &__item {
     width: 100%;
@@ -55,6 +88,10 @@
     color: $g4;
     font-weight: 400;
     padding-left: $xlarge-padding+$medium-padding;
+    &::before {
+      content: "\007C";
+      margin-right: 0.5rem;
+    }
   }
   &__item-title {
     font-size: $large-font-size;
@@ -62,14 +99,5 @@
     font-weight: 400;
     padding-left: $small-padding;
   }
-  &__close-button {
-    position: absolute;
-    right: $medium-margin;
-    border: 0;
-    &:hover {
-      border: 0;
-      background: transparent;
-      color: $green;
-    }
-  }
+
 }
