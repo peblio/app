@@ -1,8 +1,9 @@
 import axios from '../utils/axios';
 import dynamicSort from '../utils/sort-function';
 import * as ActionTypes from '../constants/reduxConstants.js';
+import * as PageDefaults from '../constants/pageConstants.js';
 
-export function createNavContent(layout) {
+export function createNavigationContent(layout) {
   const navContent = [];
   const sortedLayout = layout.sort(dynamicSort('y'));
   sortedLayout.forEach((element) => {
@@ -14,14 +15,39 @@ export function createNavContent(layout) {
         type: heading.localName,
         content: heading.textContent,
         id: element.i,
-        y: window.pageYOffset + heading.getBoundingClientRect().y
+        y: window.pageYOffset + heading.getBoundingClientRect().y - PageDefaults.Y_NAVIGATION_OFFSET
       });
     });
   });
   return (dispatch) => {
     dispatch({
-      type: ActionTypes.CREATE_NAV_CONTENT,
+      type: ActionTypes.CREATE_NAVIGATION_CONTENT,
       navContent
+    });
+  };
+}
+
+export function openNavigationContent(layout) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.OPEN_NAVIGATION
+    });
+  };
+}
+
+export function closeNavigationContent(layout) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_NAVIGATION
+    });
+  };
+}
+
+export function setYNavigation(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_Y_NAVIGATION,
+      value
     });
   };
 }

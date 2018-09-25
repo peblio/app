@@ -265,9 +265,8 @@ class Canvas extends React.Component {
         }
       }
     });
-
     return (
-      <section className={`canvas ${this.props.preview ? 'canvas-preview-mode' : 'canvas-edit-mode'}`}>
+      <section className={`canvas ${this.props.preview ? 'canvas-preview-mode' : 'canvas-edit-mode'} ${this.props.isNavigationOpen ? 'canvas-right' : ''}`}>
         {(this.props.pageHeading === '' && this.props.preview) || (
           <input
             type="text"
@@ -343,6 +342,7 @@ Canvas.propTypes = {
   editorFontSize: PropTypes.number.isRequired,
   editors: PropTypes.shape({}).isRequired,
   editorTheme: PropTypes.string.isRequired,
+  isNavigationOpen: PropTypes.bool.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   name: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,

@@ -43,6 +43,10 @@
   right: 0;
 }
 
+.canvas-right {
+  margin-left: $navigation-width !important;
+}
+
 .canvas__title {
   text-transform: uppercase;
   font-size: $title-size;

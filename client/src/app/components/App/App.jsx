@@ -173,7 +173,7 @@ class App extends React.Component {
 
   loadNavigation = () => {
     console.log(this.props.layout);
-    this.props.createNavContent(this.props.layout);
+    this.props.createNavigationContent(this.props.layout);
   }
 
   render() {
@@ -266,6 +266,8 @@ class App extends React.Component {
           setImageURL={this.props.setImageURL}
           resizeTextEditor={this.props.resizeTextEditor}
           updateTextHeight={this.props.updateTextHeight}
+
+          isNavigationOpen={this.props.isNavigationOpen}
         />
 
         <Modal
@@ -371,6 +373,7 @@ class App extends React.Component {
         </Modal>
 
         <Preferences />
+
         <Navigation />
       </div>
     );
@@ -496,7 +499,8 @@ App.propTypes = {
   fetchAllPages: PropTypes.func.isRequired,
 
   // navigation
-  createNavContent: PropTypes.func.isRequired
+  createNavigationContent: PropTypes.func.isRequired,
+  isNavigationOpen: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
@@ -538,7 +542,8 @@ function mapStateToProps(state) {
     editorTheme: state.preferences.editorTheme,
     editorAutoSave: state.preferences.editorAutoSave,
 
-    navigationContent: state.navigation.navigationContent
+    navigationContent: state.navigation.navigationContent,
+    isNavigationOpen: state.navigation.isNavigationOpen
   };
 }
 
