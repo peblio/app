@@ -190,9 +190,11 @@ class App extends React.Component {
             addIframe={this.props.addIframe}
             addImage={this.props.addImage}
             canEdit={this.props.canEdit}
+            createNavigationContent={this.props.createNavigationContent}
             isFileDropdownOpen={this.props.isFileDropdownOpen}
             isAccountDropdownOpen={this.props.isAccountDropdownOpen}
             isPreferencesPanelOpen={this.props.isPreferencesPanelOpen}
+            layout={this.props.layout}
             logoutUser={this.props.logoutUser}
             name={this.props.name}
             pageHeading={this.props.pageHeading}
