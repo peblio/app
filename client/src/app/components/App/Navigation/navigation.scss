@@ -59,9 +59,10 @@
   &__item {
     width: 100%;
     padding: 0;
+    margin: 0;
   }
   &__button {
-    width: 100%;
+    width: calc(100% - #{$xlarge-padding} - #{$medium-padding});
     text-align: left;
     text-overflow: ellipsis;
     /* Required for text-overflow to do anything */
@@ -82,20 +83,25 @@
     font-size: $medium-font-size;
     font-weight: 600;
     color: $g8;
+    padding: $small-padding 0;
     padding-left: $xlarge-padding;
   }
   &__button-h2 {
     font-size: $medium-font-size;
     color: $g4;
+    padding: $small-padding;
     font-weight: 400;
-    padding-left: $xlarge-padding+$medium-padding;
-    &::before {
-      content: "\007C";
-      margin-right: 0.5rem;
+    margin-left: $xlarge-padding+$medium-padding;
+    border-left: $small-border solid $g4;
+    border-radius: 0;
+    &:hover {
+      border-left: $small-border solid $g4;
+      border-radius: 0;
     }
   }
   &__item-title {
     font-size: $large-font-size;
+    line-height: $h1-line-height;
     color: $g8;
     font-weight: 400;
     padding-left: $small-padding;
