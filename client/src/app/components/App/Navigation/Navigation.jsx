@@ -77,7 +77,7 @@ class Navigation extends React.Component {
                 this.props.navigationContent.map((navItem, i) => (
                   <ul className="navigation__item">
                     <button
-                  className={`navigation__button navigation__button-${navItem.type} ${(i === this.props.yNavigation) ? 'navigation__button--selected' : ''}`} // eslint-disable-line
+                  className={`navigation__button navigation__button-${navItem.type} ${(i === this.props.yNavigation) ? `navigation__button-${navItem.type}--selected` : ''}`} // eslint-disable-line
                       onClick={() => { this.scrollTo(navItem.y); }}
                     >
                       {navItem.content}

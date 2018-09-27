@@ -70,21 +70,23 @@
     overflow: hidden;
     padding: 0;
     border: 0;
-    &:hover {
-      background: none;
-      color: $green;
-      border: 0;
-    }
-    &--selected {
-      color: $green !important;
-    }
   }
   &__button-h1 {
     font-size: $medium-font-size;
     font-weight: 600;
     color: $g8;
-    padding: $small-padding 0;
-    padding-left: $xlarge-padding;
+    padding: $small-padding $xlarge-padding;
+    width: calc(100% + #{$xlarge-padding});
+    &:hover {
+      background: $translucent-white;
+      color: $g8;
+      border: 0;
+      border-radius: 0;
+    }
+    &--selected {
+      background: $translucent-white;
+      border-radius: 0;
+    }
   }
   &__button-h2 {
     font-size: $medium-font-size;
@@ -95,8 +97,15 @@
     border-left: $small-border solid $g4;
     border-radius: 0;
     &:hover {
+      background: none;
+      color: $green;
+      border: 0;
       border-left: $small-border solid $g4;
-      border-radius: 0;
+    }
+    &--selected {
+      border: 0;
+      color: $green !important;
+      border-left: $small-border solid $g4;
     }
   }
   &__item-title {
