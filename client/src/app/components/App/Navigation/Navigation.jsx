@@ -53,17 +53,19 @@ class Navigation extends React.Component {
             className={`navigation__container ${this.props.preview ? 'navigation__container--expanded' : ''}`}
           >
             <nav className="navigation__options">
+              {this.props.preview || (
+                <button
+                  className="navigation__option-button"
+                  onClick={() => { this.props.createNavigationContent(this.props.layout); }}
+                >
+                  <i className="fas fa-redo"></i>
+                </button>
+              )}
               <button
                 className="navigation__option-button"
                 onClick={this.props.closeNavigationContent}
               >
                 <i className="fas fa-times"></i>
-              </button>
-              <button
-                className="navigation__option-button"
-                onClick={() => { this.props.createNavigationContent(this.props.layout); }}
-              >
-                <i className="fas fa-redo"></i>
               </button>
             </nav>
             <li className="navigation__items">
