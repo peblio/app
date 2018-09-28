@@ -236,6 +236,7 @@ MainToolbar.propTypes = {
   addIframe: PropTypes.func.isRequired,
   addImage: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
+  createNavigationContent: PropTypes.func.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,
   isPreferencesPanelOpen: PropTypes.bool.isRequired,

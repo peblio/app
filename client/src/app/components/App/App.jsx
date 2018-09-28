@@ -500,7 +500,9 @@ App.propTypes = {
   fetchAllPages: PropTypes.func.isRequired,
 
   // navigation
+  pageHeading: PropTypes.string.isRequired,
   createNavigationContent: PropTypes.func.isRequired,
+  openNavigationContent: PropTypes.func.isRequired,
   isNavigationOpen: PropTypes.bool.isRequired
 };
 

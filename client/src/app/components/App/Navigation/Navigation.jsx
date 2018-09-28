@@ -2,25 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
-import dynamicSort from '../../../utils/sort-function';
 
 import * as navigationAction from '../../../action/navigation.js';
 
 require('./navigation.scss');
 
 class Navigation extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     window.addEventListener('scroll', () => {
       const yNavigationContent = this.props.navigationContent;
       // debugger;
       const yNavigationLength = this.props.navigationContent.length;
-      for (let i = yNavigationLength - 1; i >= 0; i--) {
+      for (let i = yNavigationLength - 1; i >= 0; i -= 1) {
         if (window.pageYOffset > yNavigationContent[i].y) {
           this.props.setYNavigation(i);
           return;
@@ -96,12 +89,15 @@ class Navigation extends React.Component {
 }
 
 Navigation.propTypes = {
+  closeNavigationContent: PropTypes.func.isRequired,
   createNavigationContent: PropTypes.func.isRequired,
   isNavigationOpen: PropTypes.bool.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   navigationContent: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  openNavigationContent: PropTypes.func.isRequired,
   pageHeading: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
+  setYNavigation: PropTypes.bool.isRequired,
   yNavigation: PropTypes.number.isRequired
 };
 
