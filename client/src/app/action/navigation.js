@@ -10,7 +10,6 @@ export function createNavigationContent(layout) {
     const baseElement = document.getElementById(element.i);
     const headings = baseElement.querySelectorAll('h1, h2');
     headings.forEach((heading) => {
-      // debugger;
       navContent.push({
         type: heading.localName,
         content: heading.textContent,

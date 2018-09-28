@@ -11,7 +11,6 @@ class Navigation extends React.Component {
   componentDidMount() {
     window.addEventListener('scroll', () => {
       const yNavigationContent = this.props.navigationContent;
-      // debugger;
       const yNavigationLength = this.props.navigationContent.length;
       for (let i = yNavigationLength - 1; i >= 0; i -= 1) {
         if (window.pageYOffset > yNavigationContent[i].y) {
