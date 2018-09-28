@@ -266,7 +266,7 @@ class Canvas extends React.Component {
       }
     });
     return (
-      <section className={`canvas ${this.props.preview ? 'canvas-preview-mode' : 'canvas-edit-mode'} ${this.props.isNavigationOpen ? 'canvas-right' : ''}`}>
+      <section className={`canvas ${this.props.preview ? 'canvas-preview-mode' : 'canvas-edit-mode'}`}>
         {(this.props.pageHeading === '' && this.props.preview) || (
           <input
             type="text"
