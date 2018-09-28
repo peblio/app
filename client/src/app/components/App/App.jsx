@@ -18,10 +18,12 @@ import Welcome from './Modal/Welcome/Welcome.jsx';
 
 import Canvas from './Canvas/Canvas.jsx';
 import MainToolbar from './MainToolbar/MainToolbar.jsx';
+import Navigation from './Navigation/Navigation.jsx';
 import Preferences from './Preferences/Preferences.jsx';
 
 import * as editorActions from '../../action/editors.js';
 import * as mainToolbarActions from '../../action/mainToolbar.js';
+import * as navigationActions from '../../action/navigation.js';
 import * as pageActions from '../../action/page.js';
 import * as preferencesActions from '../../action/preferences.js';
 import * as userActions from '../../action/user.js';
@@ -99,6 +101,7 @@ class App extends React.Component {
           this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].heading, res.data[0].layout);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
           this.props.setPreviewMode(true);
+          this.loadNavigation();
           axios.get(`/authenticate/${projectID}`)
             .then((res1) => {
               this.props.setEditAccess(res1.data);
@@ -167,6 +170,10 @@ class App extends React.Component {
     }
   }
 
+  loadNavigation = () => {
+    this.props.createNavigationContent(this.props.layout);
+  }
+
   render() {
     return (
       <div
@@ -182,9 +189,11 @@ class App extends React.Component {
             addIframe={this.props.addIframe}
             addImage={this.props.addImage}
             canEdit={this.props.canEdit}
+            createNavigationContent={this.props.createNavigationContent}
             isFileDropdownOpen={this.props.isFileDropdownOpen}
             isAccountDropdownOpen={this.props.isAccountDropdownOpen}
             isPreferencesPanelOpen={this.props.isPreferencesPanelOpen}
+            layout={this.props.layout}
             logoutUser={this.props.logoutUser}
             name={this.props.name}
             pageHeading={this.props.pageHeading}
@@ -257,6 +266,9 @@ class App extends React.Component {
           setImageURL={this.props.setImageURL}
           resizeTextEditor={this.props.resizeTextEditor}
           updateTextHeight={this.props.updateTextHeight}
+
+          isNavigationOpen={this.props.isNavigationOpen}
+          openNavigationContent={this.props.openNavigationContent}
         />
 
         <Modal
@@ -362,6 +374,7 @@ class App extends React.Component {
         </Modal>
 
         <Preferences />
+        <Navigation />
       </div>
     );
   }
@@ -483,7 +496,13 @@ App.propTypes = {
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
   signUserUp: PropTypes.func.isRequired,
-  fetchAllPages: PropTypes.func.isRequired
+  fetchAllPages: PropTypes.func.isRequired,
+
+  // navigation
+  pageHeading: PropTypes.string.isRequired,
+  createNavigationContent: PropTypes.func.isRequired,
+  openNavigationContent: PropTypes.func.isRequired,
+  isNavigationOpen: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
@@ -523,7 +542,10 @@ function mapStateToProps(state) {
 
     editorFontSize: state.preferences.editorFontSize,
     editorTheme: state.preferences.editorTheme,
-    editorAutoSave: state.preferences.editorAutoSave
+    editorAutoSave: state.preferences.editorAutoSave,
+
+    navigationContent: state.navigation.navigationContent,
+    isNavigationOpen: state.navigation.isNavigationOpen
   };
 }
 
@@ -531,6 +553,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     ...editorActions,
     ...mainToolbarActions,
+    ...navigationActions,
     ...pageActions,
     ...preferencesActions,
     ...userActions

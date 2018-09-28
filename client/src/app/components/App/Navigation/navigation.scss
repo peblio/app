@@ -1,0 +1,120 @@
+@import 'variables';
+@import 'mixins';
+
+.navigation{
+  &__options {
+    display: flex;
+    position: absolute;
+    flex-direction: row;
+    width: 100%;
+    padding: $medium-padding;
+    box-sizing: border-box;
+    justify-content: flex-end;
+  }
+  &__option-button {
+    font-size: $medium-font-size;
+    border: 0;
+    &:hover {
+      border: 0;
+      background: transparent;
+      color: $green;
+    }
+  }
+  &__open-button {
+    position: fixed;
+    top: $main-toolbar-height*3;
+    background: $g4;
+    color: $black;
+    border: 0;
+    font-size: $large-font-size;
+    border-radius: 0;
+    &:hover {
+      border: 0;
+      background: $g4;
+      color: $green;
+    }
+  }
+  &__container{
+    background-color: $black;
+    display: flex;
+    position: fixed;
+    top: $main-toolbar-height*2;
+    left: 0;
+    font-family: $sourceSansPro;
+    width: $navigation-width;
+    padding-right: $xlarge-padding;
+    height: calc(100% - #{$main-toolbar-height*2});
+    z-index: $z-index-layer-2;
+    &--expanded {
+      top: $main-toolbar-height;
+      height: calc(100% - #{$main-toolbar-height});
+    }
+  }
+  &__items {
+    text-transform: uppercase;
+    list-style: none;
+    width: 100%;
+    padding-top: $xlarge-padding;
+
+  }
+  &__item {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  &__button {
+    width: calc(100% - #{$xlarge-padding} - #{$medium-padding});
+    text-align: left;
+    text-overflow: ellipsis;
+    /* Required for text-overflow to do anything */
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+  }
+  &__button-h1 {
+    font-size: $medium-font-size;
+    font-weight: 600;
+    color: $g8;
+    padding: $small-padding $xlarge-padding;
+    width: calc(100% + #{$xlarge-padding});
+    &:hover {
+      background: $translucent-white;
+      color: $g8;
+      border: 0;
+      border-radius: 0;
+    }
+    &--selected {
+      background: $translucent-white;
+      border-radius: 0;
+    }
+  }
+  &__button-h2 {
+    font-size: $medium-font-size;
+    color: $g4;
+    padding: $small-padding;
+    font-weight: 400;
+    margin-left: $xlarge-padding+$medium-padding;
+    border-left: $small-border solid $g4;
+    border-radius: 0;
+    &:hover {
+      background: none;
+      color: $green;
+      border: 0;
+      border-left: $small-border solid $g4;
+    }
+    &--selected {
+      border: 0;
+      color: $green !important;
+      border-left: $small-border solid $g4;
+    }
+  }
+  &__item-title {
+    font-size: $large-font-size;
+    line-height: $h1-line-height;
+    color: $g8;
+    font-weight: 400;
+    padding-left: $medium-padding;
+  }
+
+}

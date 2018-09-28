@@ -19,6 +19,7 @@ class MainToolbar extends React.Component {
         this.props.editorAutoSave && this.props.projectID()
       ) {
         this.props.autoSaveUnsavedChanges();
+        this.props.createNavigationContent(this.props.layout);
         this.props.savePage();
       }
     }, 10000);
@@ -235,6 +236,7 @@ MainToolbar.propTypes = {
   addIframe: PropTypes.func.isRequired,
   addImage: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
+  createNavigationContent: PropTypes.func.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,
   isPreferencesPanelOpen: PropTypes.bool.isRequired,

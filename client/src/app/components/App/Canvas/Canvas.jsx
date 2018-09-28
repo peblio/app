@@ -203,7 +203,6 @@ class Canvas extends React.Component {
     const localLayout = {};
     storageLayout.forEach((x) => {
       const key = x.i;
-      /* TODO: change the code to simplify the layout logic , ideally the min and default width and height should be contained in the editor object itself */
       localLayout[key] = x;
       localLayout[key].maxW = 30;
       localLayout[key].maxH = 100;
@@ -262,9 +261,8 @@ class Canvas extends React.Component {
         }
       }
     });
-
     return (
-      <section className={`canvas ${this.props.preview ? 'canvas-preview-mode' : 'canvas-edit-mode'}`}>
+      <section className={`canvas ${this.props.preview ? 'canvas-preview-mode' : 'canvas-edit-mode'}  ${this.props.isNavigationOpen ? 'canvas-right' : ''}`}>
         {(this.props.pageHeading === '' && this.props.preview) || (
           <input
             type="text"
@@ -342,6 +340,7 @@ Canvas.propTypes = {
   editorTheme: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   name: PropTypes.string.isRequired,
+  pageHeading: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
@@ -359,6 +358,7 @@ Canvas.propTypes = {
   setImageURL: PropTypes.func.isRequired,
   setInnerHeight: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
+  setPageHeading: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
   setQuestionInnerHeight: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
