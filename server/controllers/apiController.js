@@ -58,16 +58,6 @@ function uploadFiles(req, res) {
   });
 }
 
-function getPage(req, res) {
-  Page.find({ id: req.params.id }, (err, data) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(data);
-    }
-  });
-}
-
 function getSketches(req, res) {
   // TODO: make the request async
   if (!req.params.user) {
@@ -125,7 +115,6 @@ function getExamples(req, res) {
 
 const apiRoutes = express.Router();
 apiRoutes.route('/examples').get(getExamples);
-apiRoutes.route('/page/:id').get(getPage);
 apiRoutes.route('/authenticate/:id').get(authenticatePage);
 apiRoutes.route('/sketches').get(getSketches);
 apiRoutes.route('/sketches/:user').get(getSketches);

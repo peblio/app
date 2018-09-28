@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import * as pageDefaults from '../../constants/pageConstants';
+
 import ConfirmUser from './Modal/ConfirmUser/ConfirmUser.jsx';
 import ExamplesModal from './Modal/ExamplesModal/ExamplesModal.jsx';
 import Login from './Modal/Login/Login.jsx';
@@ -92,9 +94,9 @@ class App extends React.Component {
     } else if (this.projectID()) {
       this.props.setEditAccess(false);
       const projectID = this.projectID();
-      axios.get(`/page/${projectID}`)
+      axios.get(`/pages/${projectID}`)
         .then((res) => {
-          this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].layout);
+          this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].heading, res.data[0].layout);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
           this.props.setPreviewMode(true);
           axios.get(`/authenticate/${projectID}`)
@@ -123,10 +125,17 @@ class App extends React.Component {
 
   savePage = () => {
     if (this.props.name) {
+      let title = this.props.pageTitle;
+      if (this.props.pageHeading !== '') {
+        title =
+        (this.props.pageTitle === pageDefaults.DEFAULT_PAGE_TITLE)
+          ? this.props.pageHeading : this.props.pageTitle;
+      }
       if (this.props.id.length === 0) {
         this.props.submitPage(
           '',
-          this.props.pageTitle,
+          title,
+          this.props.pageHeading,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout,
@@ -135,7 +144,8 @@ class App extends React.Component {
       } else if (this.props.canEdit) {
         this.props.updatePage(
           this.props.id,
-          this.props.pageTitle,
+          title,
+          this.props.pageHeading,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout
@@ -145,6 +155,7 @@ class App extends React.Component {
         this.props.submitPage(
           this.props.id,
           `${this.props.pageTitle}-copy`,
+          this.props.pageHeading,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout,
@@ -176,6 +187,7 @@ class App extends React.Component {
             isPreferencesPanelOpen={this.props.isPreferencesPanelOpen}
             logoutUser={this.props.logoutUser}
             name={this.props.name}
+            pageHeading={this.props.pageHeading}
             pageTitle={this.props.pageTitle}
             preview={this.props.preview}
             projectID={this.projectID}
@@ -200,6 +212,9 @@ class App extends React.Component {
         <Canvas
           editorFontSize={this.props.editorFontSize}
           editorTheme={this.props.editorTheme}
+
+          pageHeading={this.props.pageHeading}
+          setPageHeading={this.props.setPageHeading}
 
           layout={this.props.layout}
           name={this.props.name}
@@ -425,6 +440,7 @@ App.propTypes = {
 
   setPreviewMode: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
+  setPageHeading: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
@@ -478,6 +494,7 @@ function mapStateToProps(state) {
 
     layout: state.page.layout,
     rgl: state.page.rgl,
+    pageHeading: state.page.pageHeading,
     pageTitle: state.page.pageTitle,
     id: state.page.id,
     preview: state.page.preview,

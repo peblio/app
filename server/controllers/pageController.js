@@ -4,6 +4,16 @@ const Page = require('../models/page.js');
 const User = require('../models/user.js');
 const Folder = require('../models/folder.js');
 
+async function getPage(req, res) {
+  Page.find({ id: req.params.pageId }, (err, data) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(data);
+    }
+  });
+}
+
 async function savePage(req, res) {
   const user = req.user;
   if (!user) {
@@ -33,6 +43,7 @@ async function deletePage(req, res) {
 
 function updatePage(req, res) {
   Page.update({ id: req.body.id }, {
+    heading: req.body.heading,
     title: req.body.title,
     editors: req.body.editors,
     editorIndex: req.body.editorIndex,
@@ -87,6 +98,7 @@ async function movePage(req, res) {
 
 const pageRoutes = express.Router();
 pageRoutes.route('/:pageId/move').post(movePage);
+pageRoutes.route('/:pageId').get(getPage);
 pageRoutes.route('/save').post(savePage);
 pageRoutes.route('/update').post(updatePage);
 pageRoutes.route('/:pageId').delete(deletePage);

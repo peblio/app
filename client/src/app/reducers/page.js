@@ -2,6 +2,7 @@ import { normalize } from 'normalizr';
 import reduceReducers from 'reduce-reducers';
 
 import * as ActionTypes from '../constants/reduxConstants';
+import * as pageDefaults from '../constants/pageConstants';
 import { pageSchema } from '../schema.js';
 import convertPixelHeightToGridHeight from '../utils/pixel-to-grid';
 import { namespaceReducer } from '../utils/namespace-redux';
@@ -19,7 +20,8 @@ const initialState = {
   },
   layout: [],
   textHeights: {},
-  pageTitle: 'Untitled',
+  pageTitle: pageDefaults.DEFAULT_PAGE_TITLE,
+  pageHeading: '',
   parentId: '',
   preview: false,
   unsavedChanges: false
@@ -30,6 +32,11 @@ const page = (state = initialState, action) => {
     case ActionTypes.SET_PAGE_TITLE:
       return Object.assign({}, state, {
         pageTitle: action.event.target.value
+      });
+
+    case ActionTypes.SET_PAGE_HEADING:
+      return Object.assign({}, state, {
+        pageHeading: action.event.target.value
       });
 
     case ActionTypes.SET_PAGE_LAYOUT:
@@ -46,7 +53,7 @@ const page = (state = initialState, action) => {
       return Object.assign({}, state, {
         id: action.id,
         pageTitle: action.title,
-        preview: action.preview,
+        pageHeading: action.heading,
         layout: action.layout
       });
 

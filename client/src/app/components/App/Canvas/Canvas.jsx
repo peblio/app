@@ -97,9 +97,9 @@ class Canvas extends React.Component {
   renderCodeEditor(editor) {
     return (
       <VisibilitySensor
-        partialVisibility={true}
+        partialVisibility
       >
-        {({isVisible}) =>
+        {({ isVisible }) => (
           <EditorContainer
             id={editor.id}
             currentFile={editor.currentFile}
@@ -124,7 +124,7 @@ class Canvas extends React.Component {
             updateConsoleOutput={this.props.updateConsoleOutput}
             updateFile={this.props.updateFile}
           />
-        }
+        )}
       </VisibilitySensor>
     );
   }
@@ -265,6 +265,15 @@ class Canvas extends React.Component {
 
     return (
       <section className={`canvas ${this.props.preview ? 'canvas-preview-mode' : 'canvas-edit-mode'}`}>
+        {(this.props.pageHeading === '' && this.props.preview) || (
+          <input
+            type="text"
+            className='canvas__title'
+            placeholder="Enter title.."
+            value={this.props.pageHeading}
+            onChange={this.props.setPageHeading}
+          />
+        )}
         <ReactGridLayout
           cols={this.props.rgl.cols}
           width={this.props.rgl.width}
@@ -288,7 +297,7 @@ class Canvas extends React.Component {
               }
             >
               <div
-                className={this.props.editors[id].type === "text" ? "widget__container no-outline" : "widget__container element__iframe-container"}
+                className={this.props.editors[id].type === 'text' ? 'widget__container no-outline' : 'widget__container element__iframe-container'}
                 id={id}
                 tabIndex="0" // eslint-disable-line
                 onFocus={() => this.props.setCurrentWidget(id)}

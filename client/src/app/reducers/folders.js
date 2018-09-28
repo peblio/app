@@ -269,9 +269,7 @@ const foldersReducer = (state = { ...initialState }, action) => {
     case ActionTypes.VIEW_FOLDER: {
       const { folderId, depth } = action;
       const { selectedFolderIds } = state;
-      console.log(selectedFolderIds);
       selectedFolderIds.splice(depth, selectedFolderIds.length - depth, folderId);
-      console.log(selectedFolderIds);
       return {
         ...state,
         selectedFolderIds: [...selectedFolderIds]
