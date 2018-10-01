@@ -9,7 +9,8 @@ const initialState = {
   canEdit: true,
   image: 'https://placekitten.com/300/300',
   type: '',
-  requiresGuardianConsent: false
+  requiresGuardianConsent: false,
+  guardianConsentedAt: ''
 };
 
 const user = (state = initialState, action) => {

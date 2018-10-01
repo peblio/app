@@ -46,6 +46,7 @@ const userSchema = new Schema({
     sparse: true,
     required() { return this.requiresGuardianConsent === true; }
   },
+  guardianConsentedAt: { type: Date },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   pages: { type: Array },
