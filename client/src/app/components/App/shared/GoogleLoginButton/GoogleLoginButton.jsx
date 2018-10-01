@@ -21,7 +21,12 @@ class GoogleLoginButton extends React.Component {
     this.auth2.signIn()
       .then((googleUser) => {
         const idToken = googleUser.getAuthResponse().id_token;
-        return axios.post('/users/login/google', { userType: this.props.userType, google_id_token: idToken });
+        return axios.post('/users/login/google', {
+          userType: this.props.userType,
+          requiresGuardianConsent: this.props.requiresGuardianConsent,
+          guardianEmail: this.props.guardianEmail,
+          google_id_token: idToken
+        });
       })
       .then(this.props.onLoginSuccess)
       .catch(this.props.onLoginFailure);

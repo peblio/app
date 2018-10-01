@@ -9,10 +9,14 @@ require('./signup.scss');
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       showNotice: false,
       notice: '',
-      isUserTypeSelected: false
+      isUserTypeSelected: false,
+      isUserAgeSelected: false,
+      areLoginDetailsEntered: false,
+      guardianEmail: ''
     };
     this.userTypeSelected = this.userTypeSelected.bind(this);
     this.passwordMatch = this.passwordMatch.bind(this);
@@ -33,6 +37,12 @@ class SignUp extends React.Component {
     this.setState({
       showNotice: true,
       notice: 'Passwords did not match.'
+    });
+  }
+
+  userAgeSelected() {
+    this.setState({
+      isUserAgeSelected: true
     });
   }
 
@@ -61,13 +71,15 @@ class SignUp extends React.Component {
     this.props.closeSignUpModal();
   }
 
-  submitSignUpUser(event, mail, name, userType, password) {
+  submitSignUpUser(event, mail, name, userType, password, requiresGuardianConsent, guardianEmail) {
     if (this.passwordMatch(this.password.value, this.passwordConfirm.value)) {
       axios.post('/users/signup', {
         mail,
         name,
         userType,
-        password
+        password,
+        requiresGuardianConsent,
+        guardianEmail
       })
         .then(res => this.signUpSuccessful(res.data.msg))
         .catch(this.signUpFailed);
@@ -81,98 +93,176 @@ class SignUp extends React.Component {
     return (
       <div className="signup-modal__content">
         <h1 className="signup-modal__title">Sign Up</h1>
-        <form
-          onSubmit={(event) => {
-            this.submitSignUpUser(
-              event,
-              this.userMail.value,
-              this.userName.value,
-              this.props.userType,
-              this.password.value
-            );
-          }}
-        >
-          <div className="signup-modal__radio-holder">
-            <h2 className="signup-modal__subtitle"> I am signing up as a...</h2>
-            <ul className="signup-modal__list">
-              <li className="signup-modal__listitem">
-                <label
-                  className="signup-modal__label"
-                  htmlFor="student"
-                >
-                  <input
-                    type="radio"
-                    className="signup-modal__radio"
-                    name="type"
-                    value="student"
-                    onChange={(e) => {
-                      this.userTypeSelected();
-                      this.props.setUserType(e.target.value);
-                    }}
-                  />
+        {
+          this.state.isUserTypeSelected || (
+            <form
+              onSubmit={(event) => {
+                this.userTypeSelected();
+                event.preventDefault();
+              }}
+            >
+              <div className="signup-modal__radio-holder">
+                <h2 className="signup-modal__subtitle"> I am signing up as a...</h2>
+                <ul className="signup-modal__list">
+                  <li className="signup-modal__listitem">
+                    <label
+                      className="signup-modal__label"
+                      htmlFor="student"
+                    >
+                      <input
+                        requried
+                        type="radio"
+                        className="signup-modal__radio"
+                        name="type"
+                        value="student"
+                        onChange={(e) => {
+                          this.props.setUserType(e.target.value);
+                        }}
+                      />
                   Student
-                </label>
-              </li>
+                    </label>
+                  </li>
 
-              <li className="signup-modal__listitem">
-                <label
-                  className="signup-modal__label"
-                  htmlFor="teacher"
-                >
-                  <input
-                    type="radio"
-                    className="signup-modal__radio"
-                    name="type"
-                    value="teacher"
-                    onChange={(e) => {
-                      this.userTypeSelected();
-                      this.props.setUserType(e.target.value);
-                    }}
-                  />
+                  <li className="signup-modal__listitem">
+                    <label
+                      className="signup-modal__label"
+                      htmlFor="teacher"
+                    >
+                      <input
+                        type="radio"
+                        className="signup-modal__radio"
+                        name="type"
+                        value="teacher"
+                        onChange={(e) => {
+                          this.props.setUserType(e.target.value);
+                        }}
+                      />
                   Teacher
-                </label>
-              </li>
+                    </label>
+                  </li>
 
-              <li className="signup-modal__listitem">
-                <label
-                  className="signup-modal__label"
-                  htmlFor="other"
-                >
-                  <input
-                    type="radio"
-                    className="signup-modal__radio"
-                    name="type"
-                    value="other"
-                    onChange={(e) => {
-                      this.userTypeSelected();
-                      this.props.setUserType(e.target.value);
-                    }}
-                  />
+                  <li className="signup-modal__listitem">
+                    <label
+                      className="signup-modal__label"
+                      htmlFor="other"
+                    >
+                      <input
+                        type="radio"
+                        className="signup-modal__radio"
+                        name="type"
+                        value="other"
+                        onChange={(e) => {
+                          this.props.setUserType(e.target.value);
+                        }}
+                      />
                   Other
-                </label>
-              </li>
-            </ul>
-          </div>
+                    </label>
+                  </li>
+                </ul>
+              </div>
 
-          {this.state.isUserTypeSelected && (
+              {this.props.userType === 'student' && (
+                <div>
+                  <label
+                    className="signup-modal__label"
+                    htmlFor="above13"
+                  >
+                    <input
+                      required
+                      type="radio"
+                      className="signup-modal__checkbox"
+                      name="studentAge"
+                      value="above13"
+                      onClick={(e) => {
+                        if (e.target.checked) {
+                          this.props.setGuardianConsent(false);
+                        }
+                      }}
+                    />
+                I'm over 13
+                  </label>
+                  <label
+                    className="signup-modal__label"
+                    htmlFor="above13"
+                  >
+                    <input
+                      type="radio"
+                      className="signup-modal__checkbox"
+                      name="studentAge"
+                      value="above13"
+                      onClick={(e) => {
+                        if (e.target.checked) {
+                          this.props.setGuardianConsent(true);
+                        }
+                      }}
+                    />
+                I'm under 13
+                  </label>
+                  {this.props.requiresGuardianConsent && (
+                    <div className="signup-modal__div">
+                      <input
+                        required
+                        className="signup-modal__input"
+                        id="signup-modal-guardian-mail"
+                        placeholder="guardian email"
+                        ref={(guardianEmail) => { this.guardianEmail = guardianEmail; }}
+                        type="email"
+                        onChange={(e) => {
+                          this.setState({
+                            guardianEmail: e.target.value
+                          });
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+
+              )}
+              <button
+                className="signup-modal__button"
+                type="submit"
+                value="Submit"
+              >
+            Submit
+              </button>
+            </form>
+          )}
+        {this.state.isUserTypeSelected && (
+          <form
+            onSubmit={(event) => {
+              this.submitSignUpUser(
+                event,
+                this.userMail.value,
+                this.userName.value,
+                this.props.userType,
+                this.password.value,
+                this.props.requiresGuardianConsent,
+                this.state.guardianEmail
+              );
+            }}
+          >
             <div>
               <GoogleLoginButton
                 onLoginSuccess={this.googleLoginSuccessful}
                 onLoginFailure={this.signUpFailed}
                 userType={this.props.userType}
+                requiresGuardianConsent={this.props.requiresGuardianConsent}
+                guardianEmail={this.state.guardianEmail}
               />
               <p className="signup-modal__text-secondary">or</p>
               <div className="signup-modal__div">
                 <input
+                  required
                   className="signup-modal__input"
                   id="signup-modal-mail"
                   placeholder="email"
                   ref={(userMail) => { this.userMail = userMail; }}
-                  type="text"
+                  type="email"
                 />
               </div>
               <div className="signup-modal__div">
                 <input
+                  required
                   className="signup-modal__input"
                   id="signup-modal-name"
                   placeholder="username"
@@ -182,6 +272,7 @@ class SignUp extends React.Component {
               </div>
               <div className="signup-modal__div">
                 <input
+                  required
                   className="signup-modal__input"
                   id="signup-modal-password"
                   placeholder="password"
@@ -189,6 +280,7 @@ class SignUp extends React.Component {
                   type="password"
                 />
                 <input
+                  required
                   id="signup-modal-confirm"
                   className="signup-modal__input"
                   placeholder="retype password"
@@ -206,8 +298,8 @@ class SignUp extends React.Component {
                 </button>
               </div>
             </div>
-          )}
-        </form>
+          </form>
+        )}
 
 
         {this.state.showNotice && (
@@ -223,6 +315,8 @@ class SignUp extends React.Component {
 SignUp.propTypes = {
   authLoadedPage: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
+  requiresGuardianConsent: PropTypes.bool.isRequired,
+  setGuardianConsent: PropTypes.func.isRequired,
   setUserName: PropTypes.func.isRequired,
   setUserType: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired

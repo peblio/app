@@ -339,7 +339,9 @@ class App extends React.Component {
             loginPassword={this.props.loginPassword}
             updateUserName={this.props.updateUserName}
             updateUserPassword={this.props.updateUserPassword}
+            requiresGuardianConsent={this.props.requiresGuardianConsent}
             signUserUp={this.props.signUserUp}
+            setGuardianConsent={this.props.setGuardianConsent}
             setUserName={this.props.setUserName}
             setUserType={this.props.setUserType}
             userType={this.props.userType}
@@ -400,11 +402,15 @@ App.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   loginName: PropTypes.string.isRequired,
   loginPassword: PropTypes.string.isRequired,
+
+  // user
   name: PropTypes.string.isRequired,
   userType: PropTypes.string.isRequired,
   setUserName: PropTypes.func.isRequired,
   setUserType: PropTypes.func.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
+  requiresGuardianConsent: PropTypes.bool.isRequired,
+  setGuardianConsent: PropTypes.func.isRequired,
 
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,
@@ -525,6 +531,7 @@ function mapStateToProps(state) {
     loginPassword: state.user.loginPassword,
     name: state.user.name,
     userType: state.user.type,
+    requiresGuardianConsent: state.user.requiresGuardianConsent,
 
     isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
     isExamplesModalOpen: state.mainToolbar.isExamplesModalOpen,

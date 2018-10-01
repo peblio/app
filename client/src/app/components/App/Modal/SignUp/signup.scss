@@ -3,6 +3,9 @@
 @import 'modal';
 
 .signup-modal {
+  &__checkbox {
+    display: inline-block !important;
+  }
   &__content{
     @extend %modal__content;
   }
