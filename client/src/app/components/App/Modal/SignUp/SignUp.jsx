@@ -14,8 +14,6 @@ class SignUp extends React.Component {
       showNotice: false,
       notice: '',
       isUserTypeSelected: false,
-      isUserAgeSelected: false,
-      areLoginDetailsEntered: false,
       guardianEmail: ''
     };
     this.userTypeSelected = this.userTypeSelected.bind(this);
@@ -37,12 +35,6 @@ class SignUp extends React.Component {
     this.setState({
       showNotice: true,
       notice: 'Passwords did not match.'
-    });
-  }
-
-  userAgeSelected() {
-    this.setState({
-      isUserAgeSelected: true
     });
   }
 
