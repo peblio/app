@@ -61,7 +61,8 @@ const userSchema = new Schema({
   }
 }, {
   toJSON: { virtuals: true },
-  toObject: { virtuals: true }
+  toObject: { virtuals: true },
+  timestamps: true
 });
 
 userSchema.virtual('folders', {
