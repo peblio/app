@@ -163,41 +163,47 @@ class SignUp extends React.Component {
 
               {this.props.userType === 'student' && (
                 <div>
-                  <label
-                    className="signup-modal__label"
-                    htmlFor="above13"
-                  >
-                    <input
-                      required
-                      type="radio"
-                      className="signup-modal__checkbox"
-                      name="studentAge"
-                      value="above13"
-                      onClick={(e) => {
-                        if (e.target.checked) {
-                          this.props.setGuardianConsent(false);
-                        }
-                      }}
-                    />
+                  <ul className="signup-modal__list">
+                    <li className="signup-modal__listitem">
+                      <label
+                        className="signup-modal__label"
+                        htmlFor="above13"
+                      >
+                        <input
+                          required
+                          type="radio"
+                          className="signup-modal__checkbox"
+                          name="studentAge"
+                          value="above13"
+                          onClick={(e) => {
+                            if (e.target.checked) {
+                              this.props.setGuardianConsent(false);
+                            }
+                          }}
+                        />
                 I'm over 13
-                  </label>
-                  <label
-                    className="signup-modal__label"
-                    htmlFor="above13"
-                  >
-                    <input
-                      type="radio"
-                      className="signup-modal__checkbox"
-                      name="studentAge"
-                      value="above13"
-                      onClick={(e) => {
-                        if (e.target.checked) {
-                          this.props.setGuardianConsent(true);
-                        }
-                      }}
-                    />
+                      </label>
+                    </li>
+                    <li className="signup-modal__listitem">
+                      <label
+                        className="signup-modal__label"
+                        htmlFor="above13"
+                      >
+                        <input
+                          type="radio"
+                          className="signup-modal__checkbox"
+                          name="studentAge"
+                          value="above13"
+                          onClick={(e) => {
+                            if (e.target.checked) {
+                              this.props.setGuardianConsent(true);
+                            }
+                          }}
+                        />
                 I'm under 13
-                  </label>
+                      </label>
+                    </li>
+                  </ul>
                   {this.props.requiresGuardianConsent && (
                     <div className="signup-modal__div">
                       <input
@@ -218,13 +224,15 @@ class SignUp extends React.Component {
                 </div>
 
               )}
-              <button
-                className="signup-modal__button"
-                type="submit"
-                value="Submit"
-              >
-            Submit
-              </button>
+              <div className="signup-modal__buttonholder">
+                <button
+                  className="signup-modal__button"
+                  type="submit"
+                  value="Submit"
+                >
+                Next
+                </button>
+              </div>
             </form>
           )}
         {this.state.isUserTypeSelected && (
