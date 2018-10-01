@@ -40,6 +40,13 @@ const userSchema = new Schema({
     required() { return this.loginType === 'password'; },
   },
   isVerified: { type: Boolean, default: false },
+  requiresGuardianConsent: { type: Boolean, default: true },
+  guardianEmail: {
+    type: String,
+    sparse: true,
+    required() { return this.requiresGuardianConsent === true; }
+  },
+  guardianConsentedAt: { type: Date },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   pages: { type: Array },

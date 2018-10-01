@@ -4,7 +4,10 @@ export const studentUser = {
   type: 'student',
   loginType: 'password',
   isVerified: true,
-  password: 'abc123'
+  password: 'abc123',
+  requiresGuardianConsent: true,
+  guardianEmail: 'test.parent@gmail.com',
+  guardianConsentedAt: Date('2018-10-01 23:40:08.952')
 };
 
 export const teacherUser = {
@@ -13,5 +16,8 @@ export const teacherUser = {
   type: 'teacher',
   loginType: 'password',
   isVerified: true,
-  password: 'def456'
+  password: 'def456',
+  requiresGuardianConsent: false,
+  guardianEmail: '',
+  guardianConsentedAt: null
 };

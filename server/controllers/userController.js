@@ -74,6 +74,9 @@ function createUser(req, res) {
   const name = req.body.name;
   const type = req.body.userType;
   const password = req.body.password;
+  const requiresGuardianConsent = req.body.requiresGuardianConsent;
+  const guardianEmail = req.body.guardianEmail;
+  const guardianConsentedAt = (requiresGuardianConsent === true) ? new Date() : '';
 
   return User.findOne({ name }, (userFindViaNameError, userByName) => {
     if (userByName) {
@@ -97,7 +100,10 @@ function createUser(req, res) {
           name,
           type,
           password,
-          loginType: 'password'
+          loginType: 'password',
+          requiresGuardianConsent,
+          guardianEmail,
+          guardianConsentedAt
         });
         user.hashPassword(password);
         return user.save((updateUserError, updatedUser) => {
@@ -299,6 +305,9 @@ function loginWithGoogle(req, res) {
     return res.status(400).send({ msg: '' });
   }
   const type = req.body.userType;
+  const requiresGuardianConsent = req.body.requiresGuardianConsent;
+  const guardianEmail = req.body.guardianEmail;
+  const guardianConsentedAt = (requiresGuardianConsent === true) ? new Date() : '';
   const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
   return client.verifyIdToken({
     idToken: req.body.google_id_token,
@@ -317,7 +326,10 @@ function loginWithGoogle(req, res) {
           type,
           loginType: 'google',
           name: payload.name,
-          isVerified: true
+          isVerified: true,
+          requiresGuardianConsent,
+          guardianEmail,
+          guardianConsentedAt
         });
         userPromise = newUser.save();
       }

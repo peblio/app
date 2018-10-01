@@ -81,3 +81,12 @@ export function fetchCurrentUser() {
       data
     }));
 }
+
+export function setGuardianConsent(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_GUARDIAN_CONSENT,
+      value
+    });
+  };
+}

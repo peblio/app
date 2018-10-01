@@ -8,7 +8,9 @@ const initialState = {
   canView: true,
   canEdit: true,
   image: 'https://placekitten.com/300/300',
-  type: ''
+  type: '',
+  requiresGuardianConsent: false,
+  guardianConsentedAt: ''
 };
 
 const user = (state = initialState, action) => {
@@ -44,6 +46,11 @@ const user = (state = initialState, action) => {
     case ActionTypes.SET_USER_TYPE:
       return Object.assign({}, state, {
         type: action.value
+      });
+
+    case ActionTypes.SET_GUARDIAN_CONSENT:
+      return Object.assign({}, state, {
+        requiresGuardianConsent: action.value
       });
 
     case ActionTypes.LOGOUT_USER:
