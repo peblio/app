@@ -29,14 +29,21 @@ function sendMail(mailOptions) {
   });
 }
 
-function sendSignUpConfirmationMail(email, token, req) {
+function sendSignUpConfirmationMail(email, users, tokens, req) {
+  const confirmationLinks = '';
+  let resetLinks = '';
+  users.forEach((user, i) => {
+    resetLinks += `Username: ${user}\n` +
+    'Go here to change the password ' +
+    `http://${process.env.PEBLIO_DOMAIN_NAME}/confirmation/${tokens[i]}\n\n`;
+  });
   const mailOptions = {
     to: email,
     from: process.env.PEBLIO_SENDGRID_MAIL,
     subject: 'Peblio Confirmation',
-    text: `${'You are receiving this because you have signed up for peblio.\n\n' +
-    'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-    'http://'}${process.env.PEBLIO_DOMAIN_NAME}/confirmation/${token}\n\n`
+    text: `'You are receiving this because you have signed up for peblio.\n\n' +
+    'Please click on the following link, or paste this into your browser to complete the process:\n\n${
+  resetLinks}`
   };
   sendMail(mailOptions);
 }
@@ -52,16 +59,24 @@ function sendSuccessfulResetMail(email) {
   sendMail(mailOptions);
 }
 
-function sendResetMail(email, token, req) {
+function sendResetMail(email, users, tokens, req) {
   /* eslint-disable */
+  let resetLinks = '';
+  users.forEach((user,i)=> {
+    resetLinks += `Username: ${user}\n` +
+    `Go here to change the password ` +
+    `http://${process.env.PEBLIO_DOMAIN_NAME}/reset/${tokens[i]}\n\n`
+  })
   const mailOptions = {
     to: email,
     from: process.env.PEBLIO_SENDGRID_MAIL,
     subject: 'Peblio Password Reset',
-    text: `${'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+    text: 'You are receiving this because you (or someone else) have requested the reset of the password for your user account at Peblio.\n' +
+    'If you did not request this, please ignore this email and your password will  remain unchanged.\n' +
+    'Here are the username(s) associated with this email address:\n' +
     'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-    'http://'}${process.env.PEBLIO_DOMAIN_NAME}/reset/${token}\n\n` +
-    'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+    resetLinks
+
   };
   /* eslint-enable */
 
@@ -77,7 +92,7 @@ function createUser(req, res) {
   const requiresGuardianConsent = req.body.requiresGuardianConsent;
   const guardianEmail = req.body.guardianEmail;
   const guardianConsentedAt = (requiresGuardianConsent === true) ? new Date() : '';
-
+  const isVerified = (type === 'student');
   return User.findOne({ name }, (userFindViaNameError, userByName) => {
     if (userByName) {
       return res.status(400).send({
@@ -85,72 +100,73 @@ function createUser(req, res) {
       });
     }
 
-    return User.findOne(
-      { email: req.body.mail },
-      (userFindViaEmailError, userByEmail) => {
-        let user = null;
-
-        if (userByEmail) {
-          return res.status(400).send({
-            msg: UserConst.SIGN_UP_DUPLICATE_EMAIL
-          });
-        }
-        user = new User({
-          email,
-          name,
-          type,
-          password,
-          loginType: 'password',
-          requiresGuardianConsent,
-          guardianEmail,
-          guardianConsentedAt
-        });
-        user.hashPassword(password);
-        return user.save((updateUserError, updatedUser) => {
-          if (updateUserError) {
-            res.status(422).json({
-              msg: UserConst.SIGN_UP_FAILED
-            });
-          }
-
-          const token = new Token({
-            _userId: updatedUser._id,
-            token: shortid.generate()
-          });
-          token.save((updateTokenError) => {
-            if (updateTokenError) {
-              return res.status(500).send({
-                msg: UserConst.SIGN_UP_FAILED
-              });
-            }
-            return sendSignUpConfirmationMail(updatedUser.email, token.token, req);
-          });
-          return res.status(200).send({
-            msg: UserConst.SIGN_UP_CHECK_MAIL, user
-          });
+    let user = null;
+    user = new User({
+      email,
+      name,
+      type,
+      password,
+      loginType: 'password',
+      requiresGuardianConsent,
+      guardianEmail,
+      guardianConsentedAt,
+      isVerified
+    });
+    user.hashPassword(password);
+    return user.save((updateUserError, updatedUser) => {
+      if (updateUserError) {
+        res.status(422).json({
+          msg: UserConst.SIGN_UP_FAILED
         });
       }
-    );
+
+      if (isVerified) {
+        return res.status(200).send({
+          msg: UserConst.PROCEED_TO_LOG_IN, user
+        });
+      }
+
+      const token = new Token({
+        _userId: updatedUser._id,
+        token: shortid.generate()
+      });
+      token.save((updateTokenError) => {
+        if (updateTokenError) {
+          return res.status(500).send({
+            msg: UserConst.SIGN_UP_FAILED
+          });
+        }
+        return sendSignUpConfirmationMail(updatedUser.email, [name], [token.token], req);
+      });
+
+      return res.status(200).send({
+        msg: UserConst.SIGN_UP_CHECK_MAIL, user
+      });
+    });
   });
 }
 
 function forgotPassword(req, res) {
-  User.findOne({ email: req.body.email }, (userFindError, user) => {
-    if (user) {
-      user.resetPasswordToken = shortid.generate();
-      user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-      user.save((updateUserError, updatedUser) => {
-        if (updateUserError) {
-          return res.status(422).json({
-            msg: UserConst.PASSWORD_RESET_FAILED
-          });
-        }
-
-        sendResetMail(req.body.email, updatedUser.resetPasswordToken, req);
-        return res.send({
-          msg: UserConst.PASSWORD_RESET_SENT_MAIL,
-          user: updatedUser
+  User.find({ email: req.body.email }, (userFindError, users) => {
+    const userNames = [];
+    const tokens = [];
+    if (users) {
+      users.forEach((user) => {
+        userNames.push(user.name);
+        user.resetPasswordToken = shortid.generate();
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+        tokens.push(user.resetPasswordToken);
+        user.save((updateUserError, updatedUser) => {
+          if (updateUserError) {
+            return res.status(422).json({
+              msg: UserConst.PASSWORD_RESET_FAILED
+            });
+          }
         });
+      });
+      sendResetMail(req.body.email, userNames, tokens, req);
+      return res.send({
+        msg: UserConst.PASSWORD_RESET_SENT_MAIL
       });
     }
 
@@ -265,37 +281,39 @@ function confirmUser(req, res) {
 }
 
 function resendConfirmUser(req, res) {
-  User.findOne({ email: req.body.email }, (err, user) => {
-    if (!user) {
+  User.find({ email: req.body.email }, (userFindError, users) => {
+    if (users.length === 0) {
       return res.status(400).send({
         msg: UserConst.CONFIRM_NO_EMAIL
       });
     }
-    if (user.isVerified) {
-      return res.status(400).send({
-        msg: UserConst.CONFIRM_USER_ALREADY_VERIFIED
-      });
-    }
 
-    // Create a verification token, save it, and send email
-    const token = new Token({
-      _userId: user._id,
-      token: shortid.generate()
-    });
+    const userNames = [];
+    const tokens = [];
+    users.forEach((user) => {
+      if (!user.isVerified) {
+        userNames.push(user.name);
+        // Create a verification token, save it, and send email
+        const newToken = shortid.generate();
+        tokens.push(newToken);
+        const token = new Token({
+          _userId: user._id,
+          token: newToken
+        });
 
-    // Save the token
-    token.save((tokenSaveError) => {
-      if (tokenSaveError) {
-        return res.status(500).send({
-          msg: UserConst.SIGN_UP_FAILED
+        // Save the token
+        token.save((tokenSaveError) => {
+          if (tokenSaveError) {
+            return res.status(500).send({
+              msg: UserConst.SIGN_UP_FAILED
+            });
+          }
         });
       }
-      return sendSignUpConfirmationMail(user.email, token.token, req);
     });
-    return res.status(200).send({
-      success: true,
-      msg: UserConst.SIGN_UP_CHECK_MAIL,
-      user
+    sendSignUpConfirmationMail(req.body.email, userNames, tokens, req);
+    return res.send({
+      msg: UserConst.SIGN_UP_CHECK_MAIL
     });
   });
 }

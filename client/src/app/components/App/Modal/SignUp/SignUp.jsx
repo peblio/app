@@ -14,7 +14,7 @@ class SignUp extends React.Component {
       showNotice: false,
       notice: '',
       isUserTypeSelected: false,
-      guardianEmail: ''
+      guardianEmail: null
     };
     this.userTypeSelected = this.userTypeSelected.bind(this);
     this.passwordMatch = this.passwordMatch.bind(this);
@@ -198,11 +198,14 @@ class SignUp extends React.Component {
                   </ul>
                   {this.props.requiresGuardianConsent && (
                     <div className="signup-modal__div">
+                      <p className="signup__notice">
+                        Enter your parent's or guardian's email address and we will send them an email to confirm this account
+                      </p>
                       <input
                         required
                         className="signup-modal__input"
                         id="signup-modal-guardian-mail"
-                        placeholder="guardian email"
+                        placeholder="Parent/Guardian email"
                         ref={(guardianEmail) => { this.guardianEmail = guardianEmail; }}
                         type="email"
                         onChange={(e) => {
@@ -230,9 +233,10 @@ class SignUp extends React.Component {
         {this.state.isUserTypeSelected && (
           <form
             onSubmit={(event) => {
+              const userMail = (this.userMail) ? this.userMail.value : this.state.guardianEmail;
               this.submitSignUpUser(
                 event,
-                this.userMail.value,
+                userMail,
                 this.userName.value,
                 this.props.userType,
                 this.password.value,
@@ -250,16 +254,18 @@ class SignUp extends React.Component {
                 guardianEmail={this.state.guardianEmail}
               />
               <p className="signup-modal__text-secondary">or</p>
-              <div className="signup-modal__div">
-                <input
-                  required
-                  className="signup-modal__input"
-                  id="signup-modal-mail"
-                  placeholder="email"
-                  ref={(userMail) => { this.userMail = userMail; }}
-                  type="email"
-                />
-              </div>
+              {this.state.guardianEmail === null && (
+                <div className="signup-modal__div">
+                  <input
+                    required
+                    className="signup-modal__input"
+                    id="signup-modal-mail"
+                    placeholder="email"
+                    ref={(userMail) => { this.userMail = userMail; }}
+                    type="email"
+                  />
+                </div>
+              )}
               <div className="signup-modal__div">
                 <input
                   required
