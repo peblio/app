@@ -34,7 +34,7 @@ function sendSignUpConfirmationMail(email, users, tokens, req) {
   let resetLinks = '';
   users.forEach((user, i) => {
     resetLinks += `Username: ${user}\n` +
-    'Go here to change the password ' +
+    'Please click on the following link, or paste this into your browser to complete the process:\n' +
     `http://${process.env.PEBLIO_DOMAIN_NAME}/confirmation/${tokens[i]}\n\n`;
   });
   const mailOptions = {
@@ -209,6 +209,13 @@ function resetPassword(req, res) {
 }
 
 function loginUser(req, res, next) {
+  User.find({ email: req.body.name }, (userFindError, users) => {
+    if (users.length > 1) {
+      return res.status(400).send({
+        msg: UserConst.USE_NAME_TO_LOGIN
+      });
+    }
+  });
   return passport.authenticate('local', (passportAuthError, user, info) => {
     if (passportAuthError) {
       return res.send({ msg: passportAuthError }); // will generate a 500 error

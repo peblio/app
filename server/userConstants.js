@@ -16,6 +16,7 @@ module.exports = Object.freeze({
   LOGIN_FAILED: 'Login failed',
   LOGIN_SUCCESS: 'Login Successful',
   LOGIN_USER_NOT_VERIFIED: 'Your account has not been verified. \n <a href="/confirmation"> Resend email verification</a>',
+  USE_NAME_TO_LOGIN: 'This email is associated with multiple accounts, please use username to login',
 
   PASSWORD_RESET_FAILED: 'Password reset failed',
   PASSWORD_RESET_SENT_MAIL: 'Please check your email to reset your password',
