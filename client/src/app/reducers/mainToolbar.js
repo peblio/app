@@ -5,7 +5,7 @@ const initialState = {
   isConfirmUserModalOpen: false,
   isExamplesModalOpen: false,
   isFileDropdownOpen: false,
-  isForgotModalOpen: true,
+  isForgotModalOpen: false,
   isLoginModalOpen: false,
   isPagesModalOpen: false,
   isResetModalOpen: false,
