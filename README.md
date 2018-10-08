@@ -22,14 +22,14 @@
 
 
 ## Examples
-Peblio can be used to create computer science lessons and instructions in various formats - tutorials, worksheets or full fledged instructions.
+Peblio can be used to create computer science lessons and instructions in various formats - lesson plans, worksheets, project documentation or tutorials.
 Below are some examples on how Peblio can be used.
 * [Examples of how p5 is used to recreate famous paintings](https://demo.peblio.co/pebl/7b9CH9fYT)
 * [Curriculum on introduction to web developement](https://demo.peblio.co/user/CT-CSTA/folder/Hkc7ke1Cgw7)
 
 ## Contributing
 
-Peblio is a project created by many individuals, and you are invited to help. All types of involvement are welcome.
+All contributions are welcome.
 We are especially always happy to have more tutorials and worksheets for our teachers and students to use! To create your own content, please [check out Peblio](https://demo.peblio.co/).
 
 Here are the basic steps to install Peblio in you local machine. For more detailed instructions, check out the [developer docs](/developer_docs/README.md).
