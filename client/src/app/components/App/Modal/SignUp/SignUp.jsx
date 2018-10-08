@@ -102,7 +102,7 @@ class SignUp extends React.Component {
                       htmlFor="student"
                     >
                       <input
-                        requried
+                        required
                         type="radio"
                         className="signup-modal__radio"
                         name="type"
@@ -219,6 +219,38 @@ class SignUp extends React.Component {
                 </div>
 
               )}
+              <input
+                required
+                type="checkbox"
+                className="signup-modal__checkbox"
+                name="checkbox"
+                value="check"
+                id="agree"
+              />
+              <label
+                className="signup-modal__terms-label"
+              >
+                {' '}
+                I have read and agree to the
+                {' '}
+                <a
+                  href="https://www.peblio.co/terms-of-use"
+                  target="_blank"
+                  className="signup-modal__link"
+                >
+                  Terms of Use
+                </a>
+                {' '}
+                and
+                {' '}
+                <a
+                  href="https://www.peblio.co/privacy-policy"
+                  target="_blank"
+                  className="signup-modal__link"
+                >
+                Privacy Policy
+                </a>
+              </label>
               <div className="signup-modal__buttonholder">
                 <button
                   className="signup-modal__button"
