@@ -21,7 +21,13 @@
   &__subtitle {
     @extend %modal__subtitle;
   }
-
+  &__link{
+     text-decoration: none;
+     color: $green;
+   }
+   &__terms-label {
+     font-size: $small-font-size;
+   }
   &__label{
     @extend %modal__label;
     display: inline;
