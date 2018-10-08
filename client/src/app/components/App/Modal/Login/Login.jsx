@@ -60,7 +60,7 @@ class Login extends React.Component {
               id="login-modal-name"
               className="login-modal__input"
               type="text"
-              placeholder="Username"
+              placeholder="Username/Email"
               ref={(userName) => { this.userName = userName; }}
             />
           </div>
