@@ -5,7 +5,7 @@ module.exports = Object.freeze({
   SIGN_UP_DUPLICATE_USER: 'Username not available! Please try another name',
   SIGN_UP_FAILED: 'Sign up failed',
   SIGN_UP_CHECK_MAIL: 'Please check mail to finish the sign up',
-  PROCEED_TO_LOG_IN: 'Success signed up! Please log in',
+  PROCEED_TO_LOG_IN: 'Successfully signed up! Please log in',
 
   CONFIRM_TOKEN_EXPIRED: 'We were unable to find a valid token. Your token my have expired.',
   CONFIRM_NO_USER: 'We were unable to find a user for this token.',
