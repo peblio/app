@@ -12,7 +12,7 @@ const initialState = {
   isShareModalOpen: false,
   isSignUpModalOpen: false,
   isWelcomeModalOpen: false,
-  isPreferencesPanelOpen: false
+  isPreferencesPanelOpen: true
 };
 
 const mainToolbar = (state = initialState, action) => {

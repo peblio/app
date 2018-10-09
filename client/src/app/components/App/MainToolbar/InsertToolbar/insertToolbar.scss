@@ -6,14 +6,6 @@
   @extend %beta-tag;
 }
 .insert-toolbar {
-  &__pref{
-    transform: rotate(15deg);
-    transition-duration: .5s;
-    &--open{ // sass-lint:disable-line class-name-format
-      transform: rotate(-15deg);
-      transition-duration: .5s;
-    }
-  }
   &__container {
     display: flex;
     @include flex;

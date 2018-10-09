@@ -15,6 +15,14 @@
 .main-toolbar{
   background-color: $black;
   height: $main-toolbar-height;
+  &__pref{
+    transform: rotate(15deg);
+    transition-duration: .5s;
+    &--open{ // sass-lint:disable-line class-name-format
+      transform: rotate(-15deg);
+      transition-duration: .5s;
+    }
+  }
 }
 
 .logo_toolbar{
@@ -176,6 +184,7 @@ input:checked + .main-toolbar__slider:before {
 
 .main-toolbar__button{
   @extend %mainToolbar__button;
+  padding: 0 !important;
 }
 
 .main-toolbar__new{

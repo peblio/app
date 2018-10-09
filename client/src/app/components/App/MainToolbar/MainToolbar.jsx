@@ -8,6 +8,7 @@ import InsertToolbar from './InsertToolbar/InsertToolbar.jsx';
 import ToolbarLogo from '../../../images/logo.svg';
 import CheckSVG from '../../../images/check.svg';
 import AccountSVG from '../../../images/account.svg';
+import PreferencesSVG from '../../../images/preferences.svg';
 
 require('./mainToolbar.scss');
 
@@ -36,6 +37,9 @@ class MainToolbar extends React.Component {
   }
 
   render() {
+    const prefButtonClassName = classNames('main-toolbar__pref', {
+      'main-toolbar__pref--open': this.props.isPreferencesPanelOpen
+    });
     let saveButtonText = 'Fork';
     if (this.props.name) { // user is logged in
       if (this.props.canEdit) { // it is users sketch
@@ -134,6 +138,16 @@ class MainToolbar extends React.Component {
               Share
               </button>
               <div className="main-toolbar__spacer"></div>
+              <button
+                className="main-toolbar__button "
+                onMouseDown={this.props.togglePreferencesPanel}
+              >
+                <PreferencesSVG
+                  className={classNames(prefButtonClassName)}
+                  alt="open preferences"
+                />
+              </button>
+              <div className="main-toolbar__spacer"></div>
 
               {this.props.name ? (
                 <div>
@@ -220,8 +234,6 @@ class MainToolbar extends React.Component {
             addTextEditor={this.props.addTextEditor}
             addIframe={this.props.addIframe}
             addImage={this.props.addImage}
-            isPreferencesPanelOpen={this.props.isPreferencesPanelOpen}
-            togglePreferencesPanel={this.props.togglePreferencesPanel}
           />
         )}
       </div>

@@ -48,11 +48,6 @@ $p-color: #00151E;
 
 $modal-overlay: rgba(0,0,0,0.45);
 
-//size
-$total-width: 816px;
-$preferences-width: 250px;
-$warning-width: 200px;
-
 //padding
 $micro-padding: .1rem;
 $mini-padding: .2rem;
@@ -117,17 +112,20 @@ $medium-font-weight: 400;
 $heavy-font-weight: 500;
 
 //sizes
-$nav-width:35px;
-$toolbar-width: 500px;
-$main-toolbar-height:50px;
-$insert-toolbar-height:45px;
-$files-indicator-width:10px;
-$widget-nav-height: 20px;
+$arrow-size: 25px;
 $editor-toolbar-height:40px;
 $editor-toolbar-files-height:40px;
 $editor-toolbar-file-width:65px;
+$files-indicator-width:10px;
+$insert-toolbar-height:45px;
+$main-toolbar-height:50px;
+$nav-width:35px;
 $navigation-width: 250px;
-
+$preferences-width: 250px;
+$toolbar-width: 500px;
+$total-width: 816px;
+$warning-width: 200px;
+$widget-nav-height: 20px;
 
 //z-indexes
 $z-index-layer-0: 0;

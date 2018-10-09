@@ -4,17 +4,26 @@
 .preferences {
   &__container {
     position: fixed;
-    display: flex;
+    display: none;
     background-color: $black;
-    height: calc(100% - #{$main-toolbar-height} - #{$insert-toolbar-height});
-    bottom: 0;
-    right: -1*$preferences-width;
+    top: $main-toolbar-height + $arrow-size;
     width: $preferences-width;
-    z-index: $z-index-layer-2;
+    z-index: $z-index-layer-3;
     transition: 0.5s;
+    padding-bottom: $large-padding;
+    &::after {
+      content: '';
+      position: absolute;
+      width: $arrow-size;
+      height: $arrow-size;
+      background: #00151e;
+      top: 0;
+      right: calc(50% - #{$arrow-size/2} - 4px);
+      transform: translate(0, -50%) rotate(45deg);
+    }
     &--open { // sass-lint:disable-line class-name-format
+      display: flex;
       right: 0;
-      transition: 0.5s;
     }
   }
 

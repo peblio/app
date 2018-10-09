@@ -18,7 +18,7 @@ class Preferences extends React.Component {
   render() {
     const { preview, isPreferencesPanelOpen } = this.props;
     const prefClassName = classNames('preferences__container', {
-      'preferences__container--open': !preview && isPreferencesPanelOpen
+      'preferences__container--open': isPreferencesPanelOpen
     });
     return (
       <section className={classNames(prefClassName)}>
@@ -77,7 +77,6 @@ Preferences.propTypes = {
   editorFontSize: PropTypes.number.isRequired,
   editorTheme: PropTypes.string.isRequired,
   isPreferencesPanelOpen: PropTypes.bool.isRequired,
-  preview: PropTypes.bool.isRequired,
   updateEditorFontSize: PropTypes.func.isRequired,
   updateEditorTheme: PropTypes.func.isRequired
 };
@@ -85,8 +84,7 @@ Preferences.propTypes = {
 const mapStateToProps = state => ({
   editorFontSize: state.preferences.editorFontSize,
   editorTheme: state.preferences.editorTheme,
-  isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,
-  preview: state.page.preview
+  isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
