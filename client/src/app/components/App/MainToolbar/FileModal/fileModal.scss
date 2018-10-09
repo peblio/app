@@ -7,19 +7,26 @@
 
 .file-modal__list {
   position: absolute;
-  background: $white;
-  box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
-  -moz-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
-  -webkit-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
-  top: 25px;
-  left: 12px;
-  margin: $medium-padding/2;
-  padding: 0;
-  color: $black;
+  background: fixed;
+  top: $main-toolbar-height;
+  background: $black;
+  padding: $small-padding;
+  color: $white;
   border-radius: $small-border-radius;
-  border-top-left-radius: 0;
-  border: 2px solid $white;
+  border: $small-border solid $white;
   z-index: $z-index-layer-4;
+  &::after {
+    content: '';
+    position: absolute;
+    width: $arrow-size;
+    height: $arrow-size;
+    background: $black;
+    top: 0;
+    right: calc(50% - #{$arrow-size/2});
+    transform: translate(0, -50%) rotate(45deg);
+    border-left: $small-border solid $white;
+    border-top: $small-border solid $white;
+  }
 }
 
 .file-modal__list ol{
@@ -44,7 +51,7 @@
   width: 100%;
   text-align: left;
   list-style: none;
-  padding: $medium-padding/1.5 $xlarge-padding $medium-padding/1.5 $micro-padding;
+  padding: $small-padding $large-padding $small-padding/1.5 $micro-padding;
 }
 
 .file-modal__link {
@@ -52,7 +59,7 @@
   padding-left: $small-margin;
   font-size: 14px;
   font-weight: 400;
-  color: $dark-gray;
+  color: $white;
   display: inline-block;
   background-color: $transparent;
   -webkit-transition-duration: 0.4s; /* Safari */
@@ -61,8 +68,9 @@
   text-align: left;
   border: none;
   &:hover {
-    color: $black;
+    color: $light-gray;
     cursor: pointer;
     border: none;
+    background-color: $transparent;
   }
 }

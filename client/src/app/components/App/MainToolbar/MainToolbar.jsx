@@ -67,7 +67,7 @@ class MainToolbar extends React.Component {
 
     const fileDropDownButtonClassName = classNames({
       'upper-toolbar__dropdown': !this.props.isFileDropdownOpen,
-      'upper-toolbar__dropdown-open': this.props.isFileDropdownOpen
+      'upper-toolbar__dropdown upper-toolbar__dropdown-open': this.props.isFileDropdownOpen
     });
 
     return (
@@ -77,11 +77,6 @@ class MainToolbar extends React.Component {
           <div className="main-toolbar__div-left">
             <div className="logo_toolbar">
               <ToolbarLogo alt="logo in toolbar" />
-            </div>
-            <div>
-              <button className="upper-toolbar__dropdown" onClick={this.props.viewExamplesModal}>
-              Examples
-              </button>
             </div>
             <div
               className="file-modal__container"
@@ -105,6 +100,7 @@ class MainToolbar extends React.Component {
                   savePage={this.props.savePage}
                   toggleFileDropdown={this.props.toggleFileDropdown}
                   viewPagesModal={this.props.viewPagesModal}
+                  viewExamplesModal={this.props.viewExamplesModal}
                 />
               )}
             </div>

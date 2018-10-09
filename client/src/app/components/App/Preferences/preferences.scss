@@ -6,20 +6,24 @@
     position: fixed;
     display: none;
     background-color: $black;
-    top: $main-toolbar-height + $arrow-size;
+    top: $main-toolbar-height + $arrow-size/2;
     width: $preferences-width;
     z-index: $z-index-layer-3;
     transition: 0.5s;
     padding-bottom: $large-padding;
+    border-radius: $small-border-radius;
+    border: $small-border solid $white;
     &::after {
       content: '';
       position: absolute;
       width: $arrow-size;
       height: $arrow-size;
-      background: #00151e;
+      background: $black;
       top: 0;
-      right: calc(50% - #{$arrow-size/2} - 4px);
+      right: calc(50% - #{$arrow-size/2} - 8px);
       transform: translate(0, -50%) rotate(45deg);
+      border-left: $small-border solid $white;
+      border-top: $small-border solid $white;
     }
     &--open { // sass-lint:disable-line class-name-format
       display: flex;
@@ -32,6 +36,7 @@
     text-align: center;
     color: $white;
     font-weight: $medium-font-weight;
+    padding-top: $medium-padding;
   }
 }
 

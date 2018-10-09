@@ -15,6 +15,8 @@ class FileModal extends React.Component {
             onMouseDown={(e) => { e.preventDefault(); }}
             onKeyDown={(e) => { e.preventDefault(); }}
           >
+            <i className="fas fa-plus"></i>
+            {' '}
           New
           </a>
         </li>
@@ -33,6 +35,8 @@ class FileModal extends React.Component {
                 }}
                 data-test="show-pages-modal"
               >
+                <i className="fas fa-bars"></i>
+                {' '}
                 Open
               </button>
             </li>
@@ -48,7 +52,26 @@ class FileModal extends React.Component {
                   this.props.toggleFileDropdown();
                 }}
               >
+                <i className="fas fa-check"></i>
+                {' '}
                 Save
+              </button>
+            </li>
+            <li className="file-modal__item">
+              <button
+                className="file-modal__link"
+                onMouseDown={() => {
+                  this.props.viewExamplesModal();
+                  this.props.toggleFileDropdown();
+                }}
+                onKeyDown={() => {
+                  this.props.viewExamplesModal();
+                  this.props.toggleFileDropdown();
+                }}
+              >
+                <i className="fas fa-folder"></i>
+                {' '}
+                Examples
               </button>
             </li>
           </div>

@@ -202,11 +202,10 @@ input:checked + .main-toolbar__slider:before {
 
 .upper-toolbar__dropdown{
   border: none;
-  text-align: $left-align;
+  text-align: center;
   border-radius: 0;
   width: 80;
   margin: $medium-margin $small-margin 0 $xlarge-margin/2;
-  padding-left: $small-padding*3/2;
   color: $white;
   font-style: normal;
   font-size: 14;
@@ -219,23 +218,7 @@ input:checked + .main-toolbar__slider:before {
 }
 
 .upper-toolbar__dropdown-open{
-  border: none;
-  text-align: $left-align;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  margin: $medium-margin $small-margin 0 $xlarge-margin/2;
-  padding-left: $small-padding*3/2;
-  width: 80;
-  background: $white;
-  color: $dark-gray;
-  font-style: normal;
-  font-size: 14;
-  &:hover {
-    cursor: pointer;
-    color: $gray;
-    background: $white;
-    border: none;
-  }
+  color: $green;
 }
 
 

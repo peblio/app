@@ -4,7 +4,7 @@ const initialState = {
   isAccountDropdownOpen: false,
   isConfirmUserModalOpen: false,
   isExamplesModalOpen: false,
-  isFileDropdownOpen: false,
+  isFileDropdownOpen: true,
   isForgotModalOpen: false,
   isLoginModalOpen: false,
   isPagesModalOpen: false,
