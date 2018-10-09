@@ -8,6 +8,7 @@ import 'codemirror/mode/python/python';
 import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/mode/css/css';
 import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/clike/clike';
 
 import * as constants from '../../../../../constants/widgetConstants.js';
 
@@ -66,7 +67,7 @@ class CodeEditor extends React.Component {
     } else if (fileName.match(/.+\.json$/i)) {
       mode = 'application/json';
     } else if (fileName.match(/.+\.pde$/i)) {
-      mode = 'java';
+      mode = 'clike';
     } else if (fileName.match(/.+\.py$/i)) {
       mode = 'python';
     } else {
