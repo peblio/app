@@ -3,6 +3,8 @@
 
 .file-modal__container {
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .file-modal__list {

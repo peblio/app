@@ -23,6 +23,24 @@
       transition-duration: .5s;
     }
   }
+  &__pref-container {
+    display: flex;
+    position: relative;
+    justify-content: center;
+  }
+  &__account-link {
+    color: $black;
+    background-color: $transparent;
+    border: 0;
+    text-decoration: none;
+    font-size: $medium-font-size;
+    padding-left: $small-padding;
+    &:hover {
+      color: $gray;
+      background-color: $transparent;
+      border: 0;
+    }
+  }
 }
 
 .logo_toolbar{
@@ -205,7 +223,6 @@ input:checked + .main-toolbar__slider:before {
   text-align: center;
   border-radius: 0;
   width: 80;
-  margin: $medium-margin $small-margin 0 $xlarge-margin/2;
   color: $white;
   font-style: normal;
   font-size: 14;

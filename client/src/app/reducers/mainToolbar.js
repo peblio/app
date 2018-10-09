@@ -6,6 +6,7 @@ const initialState = {
   isExamplesModalOpen: false,
   isFileDropdownOpen: true,
   isForgotModalOpen: false,
+  isHelpDropdownOpen: true,
   isLoginModalOpen: false,
   isPagesModalOpen: false,
   isResetModalOpen: false,
@@ -20,6 +21,11 @@ const mainToolbar = (state = initialState, action) => {
     case ActionTypes.TOGGLE_FILE_DROPDOWN:
       return Object.assign({}, state, {
         isFileDropdownOpen: !state.isFileDropdownOpen
+      });
+
+    case ActionTypes.TOGGLE_HELP_DROPDOWN:
+      return Object.assign({}, state, {
+        isHelpDropdownOpen: !state.isHelpDropdownOpen
       });
 
     case ActionTypes.TOGGLE_ACCOUNT_DROPDOWN:

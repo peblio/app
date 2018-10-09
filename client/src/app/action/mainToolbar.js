@@ -8,6 +8,14 @@ export function toggleFileDropdown() {
   };
 }
 
+export function toggleHelpDropdown() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.TOGGLE_HELP_DROPDOWN
+    });
+  };
+}
+
 export function toggleAccountDropdown() {
   return (dispatch) => {
     dispatch({

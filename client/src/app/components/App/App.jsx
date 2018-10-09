@@ -19,7 +19,6 @@ import Welcome from './Modal/Welcome/Welcome.jsx';
 import Canvas from './Canvas/Canvas.jsx';
 import MainToolbar from './MainToolbar/MainToolbar.jsx';
 import Navigation from './Navigation/Navigation.jsx';
-import Preferences from './Preferences/Preferences.jsx';
 
 import * as editorActions from '../../action/editors.js';
 import * as mainToolbarActions from '../../action/mainToolbar.js';
@@ -191,6 +190,7 @@ class App extends React.Component {
             canEdit={this.props.canEdit}
             createNavigationContent={this.props.createNavigationContent}
             isFileDropdownOpen={this.props.isFileDropdownOpen}
+            isHelpDropdownOpen={this.props.isHelpDropdownOpen}
             isAccountDropdownOpen={this.props.isAccountDropdownOpen}
             isPreferencesPanelOpen={this.props.isPreferencesPanelOpen}
             layout={this.props.layout}
@@ -205,6 +205,7 @@ class App extends React.Component {
             savePage={this.savePage}
             editorAutoSave={this.props.editorAutoSave}
             toggleFileDropdown={this.props.toggleFileDropdown}
+            toggleHelpDropdown={this.props.toggleHelpDropdown}
             toggleAccountDropdown={this.props.toggleAccountDropdown}
             togglePreviewMode={this.props.togglePreviewMode}
             togglePreferencesPanel={this.props.togglePreferencesPanel}
@@ -374,8 +375,6 @@ class App extends React.Component {
         >
           <Welcome />
         </Modal>
-
-        <Preferences />
         <Navigation />
       </div>
     );
@@ -413,6 +412,7 @@ App.propTypes = {
   setGuardianConsent: PropTypes.func.isRequired,
 
   isFileDropdownOpen: PropTypes.bool.isRequired,
+  isHelpDropdownOpen: PropTypes.bool.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,
   isPagesModalOpen: PropTypes.bool.isRequired,
   isLoginModalOpen: PropTypes.bool.isRequired,
@@ -475,6 +475,7 @@ App.propTypes = {
   viewSignUpModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
+  toggleHelpDropdown: PropTypes.func.isRequired,
   toggleAccountDropdown: PropTypes.func.isRequired,
   isShareModalOpen: PropTypes.bool.isRequired,
   closeShareModal: PropTypes.func.isRequired,
@@ -536,6 +537,7 @@ function mapStateToProps(state) {
     isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
     isExamplesModalOpen: state.mainToolbar.isExamplesModalOpen,
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
+    isHelpDropdownOpen: state.mainToolbar.isHelpDropdownOpen,
     isPagesModalOpen: state.mainToolbar.isPagesModalOpen,
     isShareModalOpen: state.mainToolbar.isShareModalOpen,
     isWelcomeModalOpen: state.mainToolbar.isWelcomeModalOpen,
