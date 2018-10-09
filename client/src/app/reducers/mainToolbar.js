@@ -4,16 +4,16 @@ const initialState = {
   isAccountDropdownOpen: false,
   isConfirmUserModalOpen: false,
   isExamplesModalOpen: false,
-  isFileDropdownOpen: true,
+  isFileDropdownOpen: false,
   isForgotModalOpen: false,
-  isHelpDropdownOpen: true,
+  isHelpDropdownOpen: false,
   isLoginModalOpen: false,
   isPagesModalOpen: false,
   isResetModalOpen: false,
   isShareModalOpen: false,
   isSignUpModalOpen: false,
   isWelcomeModalOpen: false,
-  isPreferencesPanelOpen: true
+  isPreferencesPanelOpen: false
 };
 
 const mainToolbar = (state = initialState, action) => {
