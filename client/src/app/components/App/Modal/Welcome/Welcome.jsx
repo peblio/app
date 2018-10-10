@@ -76,7 +76,7 @@ class Welcome extends Component {
               The easiest way to write about code
             </h2>
             <p className="welcome__text">
-              Take a quick tour of our \n features
+              Take a quick tour of our features
             </p>
             <button
               className="welcome__button welcome__blue-button"
