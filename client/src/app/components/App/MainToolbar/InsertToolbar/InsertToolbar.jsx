@@ -7,7 +7,6 @@ import EmbedSVG from '../../../../images/embed.svg';
 import ImageSVG from '../../../../images/image.svg';
 import QuestionSVG from '../../../../images/question.svg';
 import TextSVG from '../../../../images/text.svg';
-import PreferencesSVG from '../../../../images/preferences.svg';
 
 require('./insertToolbar.scss');
 
@@ -28,9 +27,6 @@ class InsertToolbar extends React.Component {
   }
 
   render() {
-    const prefButtonClassName = classNames('insert-toolbar__pref', {
-      'insert-toolbar__pref--open': this.props.isPreferencesPanelOpen
-    });
     return (
       <div className="insert-toolbar__container insert-toolbar__expand">
         <div className="insert-toolbar__container-left">
@@ -176,15 +172,7 @@ class InsertToolbar extends React.Component {
           </button>
         </div>
         <div className="insert-toolbar__container-right">
-          <button
-            className="insert-toolbar__button "
-            onMouseDown={this.props.togglePreferencesPanel}
-          >
-            <PreferencesSVG
-              className={classNames(prefButtonClassName)}
-              alt="open preferences"
-            />
-          </button>
+
         </div>
 
       </div>

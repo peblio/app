@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import history from '../../../../utils/history';
 
-require('./fileModal.scss');
+require('./fileMenu.scss');
 
-class FileModal extends React.Component {
+class FileMenu extends React.Component {
   render() {
     return (
       <ul className="file-modal__list">
@@ -14,7 +14,10 @@ class FileModal extends React.Component {
             href="/"
             onMouseDown={(e) => { e.preventDefault(); }}
             onKeyDown={(e) => { e.preventDefault(); }}
+            target="_blank"
           >
+            <i className="fas fa-plus"></i>
+            {' '}
           New
           </a>
         </li>
@@ -33,6 +36,8 @@ class FileModal extends React.Component {
                 }}
                 data-test="show-pages-modal"
               >
+                <i className="fas fa-bars"></i>
+                {' '}
                 Open
               </button>
             </li>
@@ -48,21 +53,40 @@ class FileModal extends React.Component {
                   this.props.toggleFileDropdown();
                 }}
               >
+                <i className="fas fa-check"></i>
+                {' '}
                 Save
               </button>
             </li>
           </div>
         )}
+        <li className="file-modal__item">
+          <button
+            className="file-modal__link"
+            onMouseDown={() => {
+              this.props.viewExamplesModal();
+              this.props.toggleFileDropdown();
+            }}
+            onKeyDown={() => {
+              this.props.viewExamplesModal();
+              this.props.toggleFileDropdown();
+            }}
+          >
+            <i className="fas fa-folder"></i>
+            {' '}
+            Examples
+          </button>
+        </li>
       </ul>
     );
   }
 }
 
-FileModal.propTypes = {
+FileMenu.propTypes = {
   name: PropTypes.string.isRequired,
   savePage: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired
 };
 
-export default FileModal;
+export default FileMenu;

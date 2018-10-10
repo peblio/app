@@ -80,13 +80,13 @@
     padding: $small-padding $xlarge-padding;
     width: calc(100% + #{$xlarge-padding});
     &:hover {
-      background: $translucent-white;
+      background: $light-black;
       color: $g8;
       border: 0;
       border-radius: 0;
     }
     &--selected {
-      background: $translucent-white;
+      background: $light-black;
       border-radius: 0;
     }
   }

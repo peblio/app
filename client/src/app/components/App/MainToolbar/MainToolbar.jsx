@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import history from '../../../utils/history';
-import FileModal from './FileModal/FileModal.jsx';
+import FileMenu from './FileMenu/FileMenu.jsx';
+import HelpMenu from './HelpMenu/HelpMenu.jsx';
+import Preferences from '../Preferences/Preferences.jsx';
 import InsertToolbar from './InsertToolbar/InsertToolbar.jsx';
 import ToolbarLogo from '../../../images/logo.svg';
 import CheckSVG from '../../../images/check.svg';
 import AccountSVG from '../../../images/account.svg';
+import PreferencesSVG from '../../../images/preferences.svg';
 
 require('./mainToolbar.scss');
 
@@ -36,6 +39,9 @@ class MainToolbar extends React.Component {
   }
 
   render() {
+    const prefButtonClassName = classNames('main-toolbar__pref', {
+      'main-toolbar__pref--open': this.props.isPreferencesPanelOpen
+    });
     let saveButtonText = 'Fork';
     if (this.props.name) { // user is logged in
       if (this.props.canEdit) { // it is users sketch
@@ -63,7 +69,11 @@ class MainToolbar extends React.Component {
 
     const fileDropDownButtonClassName = classNames({
       'upper-toolbar__dropdown': !this.props.isFileDropdownOpen,
-      'upper-toolbar__dropdown-open': this.props.isFileDropdownOpen
+      'upper-toolbar__dropdown upper-toolbar__dropdown-open': this.props.isFileDropdownOpen
+    });
+    const helpDropDownButtonClassName = classNames({
+      'upper-toolbar__dropdown': !this.props.isHelpDropdownOpen,
+      'upper-toolbar__dropdown upper-toolbar__dropdown-open': this.props.isHelpDropdownOpen
     });
 
     return (
@@ -73,11 +83,6 @@ class MainToolbar extends React.Component {
           <div className="main-toolbar__div-left">
             <div className="logo_toolbar">
               <ToolbarLogo alt="logo in toolbar" />
-            </div>
-            <div>
-              <button className="upper-toolbar__dropdown" onClick={this.props.viewExamplesModal}>
-              Examples
-              </button>
             </div>
             <div
               className="file-modal__container"
@@ -96,12 +101,34 @@ class MainToolbar extends React.Component {
                 File
               </button>
               {this.props.isFileDropdownOpen && (
-                <FileModal
+                <FileMenu
                   name={this.props.name}
                   savePage={this.props.savePage}
                   toggleFileDropdown={this.props.toggleFileDropdown}
                   viewPagesModal={this.props.viewPagesModal}
+                  viewExamplesModal={this.props.viewExamplesModal}
                 />
+              )}
+            </div>
+
+            <div
+              className="file-modal__container"
+              onBlur={() => {
+                setTimeout(() => {
+                  this.props.isHelpDropdownOpen && this.props.toggleHelpDropdown();
+                }, 50);
+              }}
+            >
+              <button
+                className={helpDropDownButtonClassName}
+                onMouseDown={this.props.toggleHelpDropdown}
+                onKeyDown={this.props.toggleHelpDropdown}
+                data-test="toggle-file-dropdown"
+              >
+                Help
+              </button>
+              {this.props.isHelpDropdownOpen && (
+                <HelpMenu />
               )}
             </div>
 
@@ -112,7 +139,11 @@ class MainToolbar extends React.Component {
             type="text"
             value={this.props.pageTitle}
             onChange={this.props.setPageTitle}
+            readOnly={this.props.preview}
           />
+          {this.props.preview ||
+            <span className="fa fa-pencil-alt main-toolbar__search-icon"></span>
+          }
           <div className="main-toolbar__div-right">
             <div className="main-toolbar__div-right-inside">
               <span className="main-toolbar__preview-title">Edit Mode</span>
@@ -133,6 +164,19 @@ class MainToolbar extends React.Component {
               <button className="main-toolbar__button" onClick={this.props.viewShareModal}>
               Share
               </button>
+              <div className="main-toolbar__spacer"></div>
+              <div className="main-toolbar__pref-container">
+                <button
+                  className="main-toolbar__button "
+                  onMouseDown={this.props.togglePreferencesPanel}
+                >
+                  <PreferencesSVG
+                    className={classNames(prefButtonClassName)}
+                    alt="open preferences"
+                  />
+                </button>
+                {this.props.isPreferencesPanelOpen && <Preferences />}
+              </div>
               <div className="main-toolbar__spacer"></div>
 
               {this.props.name ? (
@@ -174,7 +218,7 @@ class MainToolbar extends React.Component {
                         {(this.props.userType === 'student') || (
                           <li className="main-toolbar__list-item">
                             <a
-                              className="file-modal__link"
+                              className="main-toolbar__account-link"
                               target="_blank"
                               rel="noopener noreferrer"
                               href={`/user/${this.props.name}`}
@@ -187,7 +231,7 @@ class MainToolbar extends React.Component {
                         )}
                         <li className="main-toolbar__list-item">
                           <button
-                            className="file-modal__link"
+                            className="main-toolbar__account-link"
                             onMouseDown={this.logout}
                             onKeyDown={this.logout}
                           >
@@ -199,7 +243,7 @@ class MainToolbar extends React.Component {
                   )}
                 </div>
               ) : (
-                <div>
+                <div className="main-toolbar__div-right-inside">
                   <button
                     className="main-toolbar__button"
                     onClick={this.props.viewLoginModal}
@@ -207,7 +251,13 @@ class MainToolbar extends React.Component {
                   >
                     Log In
                   </button>
-                  <button className="main-toolbar__button" onClick={this.props.viewSignUpModal}>Sign Up</button>
+                  <div className="main-toolbar__spacer"></div>
+                  <button
+                    className="main-toolbar__button"
+                    onClick={this.props.viewSignUpModal}
+                  >
+                    Sign Up
+                  </button>
                 </div>
               )}
             </div>
@@ -220,8 +270,6 @@ class MainToolbar extends React.Component {
             addTextEditor={this.props.addTextEditor}
             addIframe={this.props.addIframe}
             addImage={this.props.addImage}
-            isPreferencesPanelOpen={this.props.isPreferencesPanelOpen}
-            togglePreferencesPanel={this.props.togglePreferencesPanel}
           />
         )}
       </div>
@@ -247,6 +295,7 @@ MainToolbar.propTypes = {
   projectID: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   savePage: PropTypes.func.isRequired,
+  toggleHelpDropdown: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
   toggleAccountDropdown: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
