@@ -139,7 +139,11 @@ class MainToolbar extends React.Component {
             type="text"
             value={this.props.pageTitle}
             onChange={this.props.setPageTitle}
+            readOnly={this.props.preview}
           />
+          {this.props.preview ||
+            <span className="fa fa-pencil-alt main-toolbar__search-icon"></span>
+          }
           <div className="main-toolbar__div-right">
             <div className="main-toolbar__div-right-inside">
               <span className="main-toolbar__preview-title">Edit Mode</span>

@@ -22,6 +22,7 @@
     position: absolute;
     top: calc(#{$insert-toolbar-height*2} + #{$small-padding});
     left: $large-padding;
+    border: $small-border solid $white;
   }
   &__list-item{
     background-color: $g1;

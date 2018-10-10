@@ -15,6 +15,18 @@
 .main-toolbar{
   background-color: $black;
   height: $main-toolbar-height;
+  &__search-icon {
+    font-size: 20px;
+    line-height: $title-width;
+    color: $white;
+    height: $title-width;
+    margin: $small-margin 0;
+    padding: 0 $small-padding;
+    background: $light-black;
+    border-radius: $small-border-radius;
+    position: relative;
+    left: -$small-border-radius;
+  }
   &__pref{
     transform: rotate(15deg);
     transition-duration: .5s;
@@ -49,13 +61,13 @@
 }
 
 .main-toolbar__title{
-  height: 35px;
+  height: $title-width;
   margin: 8 0 8 0;
   padding: 4 15;
-  background-color: $translucent-white;
+  background-color: $light-black;
   border: none;
-  border-radius: 5px;
-  color: #F1F1F1;
+  border-radius: $small-border-radius;
+  color: $white;
   font-size: 14px;
   width: 20%;
   float: left;
