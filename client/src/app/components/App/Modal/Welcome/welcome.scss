@@ -23,10 +23,15 @@
     font-size: $medium-font-size;
     font-weight: 400;
   }
+  &__text {
+    color: $white;
+    font-size: $medium-font-size;
+    font-weight: 100;
+  }
   &__container {
     display: flex;
     border-radius: 7px;
-    height: 500px;
+    height: $welcome-container-height;
   }
   &__sub-container {
     width: 100%;
@@ -56,6 +61,7 @@
     background-color: white;
     line-height: $h2-line-height;
     width: 150px;
+    margin: $medium-margin 0;
   }
   &__button-large {
     width: 60%;

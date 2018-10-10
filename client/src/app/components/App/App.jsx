@@ -62,8 +62,7 @@ class App extends React.Component {
   onUserVisit =() => {
     const isUserFirstVisit = localStorage.getItem(process.env.LOCALSTORAGE_VARIABLE);
     // check if it is the first visit
-    // if (isUserFirstVisit === null || isUserFirstVisit === '') {
-    if (true) {
+    if (isUserFirstVisit === null || isUserFirstVisit === '') {
     // set variable to 1
       localStorage.setItem(process.env.LOCALSTORAGE_VARIABLE, 1);
       this.props.viewWelcomeModal();

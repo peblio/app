@@ -18,11 +18,13 @@ class Welcome extends Component {
     this.state = {
       screenNumber: 0,
       title: [
+        '',
         WelcomeText.WELCOME_TOUR_TITLE_1,
         WelcomeText.WELCOME_TOUR_TITLE_2,
         WelcomeText.WELCOME_TOUR_TITLE_3,
       ],
       content: [
+        '',
         WelcomeText.WELCOME_TOUR_CONTENT_1,
         WelcomeText.WELCOME_TOUR_CONTENT_2,
         WelcomeText.WELCOME_TOUR_CONTENT_3,
@@ -48,23 +50,52 @@ class Welcome extends Component {
 
   startTour = () => {
     window.open('https://hlp.sh/t/Z2x60Q0/a6t2cUWMqJx');
+    this.props.closeWelcomeModal();
   }
 
   render() {
     console.log(this.state.screenNumber);
     const containerClass = classNames('welcome__container', {
-      'welcome__green-back': (this.state.screenNumber === 0 || this.state.screenNumber == 3),
-      'welcome__blue-back': (this.state.screenNumber === 1),
-      'welcome__red-back': (this.state.screenNumber === 2),
+      'welcome__green-back': (this.state.screenNumber === 1 || this.state.screenNumber == 4),
+      'welcome__blue-back': (this.state.screenNumber === 0 || this.state.screenNumber === 2),
+      'welcome__red-back': (this.state.screenNumber === 3),
     });
     const buttonClass = classNames('welcome__button', {
-      'welcome__green-button': (this.state.screenNumber === 0 || this.state.screenNumber == 3),
-      'welcome__blue-button': (this.state.screenNumber === 1),
-      'welcome__red-button': (this.state.screenNumber === 2),
+      'welcome__green-button': (this.state.screenNumber === 1 || this.state.screenNumber === 4),
+      'welcome__blue-button': (this.state.screenNumber === 0 || this.state.screenNumber === 2),
+      'welcome__red-button': (this.state.screenNumber === 3),
     });
     return (
       <section className={classNames(containerClass)}>
-        {(this.state.screenNumber >= 0 && this.state.screenNumber < 3) && (
+        {(this.state.screenNumber === 0) && (
+          <div className="welcome__sub-container-horiz">
+            <h1 className="welcome__title">
+            Welcome To Peblio!
+            </h1>
+            <h2 className="welcome__subtitle">
+              The easiest way to write about code
+            </h2>
+            <p className="welcome__text">
+              Take a quick tour of our \n features
+            </p>
+            <button
+              className="welcome__button welcome__blue-button"
+              onClick={this.increaseScreenNumber}
+            >
+          Let's Go!
+            </button>
+            <button
+              className="welcome__button welcome__blue-button"
+              onClick={this.props.closeWelcomeModal}
+            >
+          Skip
+            </button>
+            <p className="welcome__text">
+              You can always open this your with Help > Tour in the toolbar
+            </p>
+          </div>
+        )}
+        {(this.state.screenNumber >= 1 && this.state.screenNumber < 4) && (
           <div className="welcome__sub-container">
             <div className="welcome__left">
               <h1 className="welcome__title">
@@ -85,7 +116,7 @@ class Welcome extends Component {
             </div>
           </div>
         )}
-        {(this.state.screenNumber === 3) && (
+        {(this.state.screenNumber === 4) && (
           <div className="welcome__sub-container-horiz">
             <h1 className="welcome__title">
             Get Started
