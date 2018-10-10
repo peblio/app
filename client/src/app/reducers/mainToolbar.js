@@ -12,7 +12,7 @@ const initialState = {
   isResetModalOpen: false,
   isShareModalOpen: false,
   isSignUpModalOpen: false,
-  isWelcomeModalOpen: false,
+  isWelcomeModalOpen: true,
   isPreferencesPanelOpen: false
 };
 
