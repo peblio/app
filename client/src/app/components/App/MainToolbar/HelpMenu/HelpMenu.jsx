@@ -13,7 +13,7 @@ class HelpMenu extends React.Component {
         <li className="file-modal__item">
           <a
             className="file-modal__link"
-            href="https://demo.peblio.co/pebl/D99URzhXH"
+            href="https://demo.peblio.co/pebl/XeJAt6pVQ"
             onMouseDown={(e) => { e.preventDefault(); }}
             onKeyDown={(e) => { e.preventDefault(); }}
             target="_blank"
