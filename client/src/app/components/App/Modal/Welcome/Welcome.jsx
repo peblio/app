@@ -28,6 +28,12 @@ class Welcome extends Component {
         WelcomeText.WELCOME_TOUR_CONTENT_1,
         WelcomeText.WELCOME_TOUR_CONTENT_2,
         WelcomeText.WELCOME_TOUR_CONTENT_3,
+      ],
+      images: [
+        '',
+        WelcomeText.WELCOME_IMAGE_LINK_1,
+        WelcomeText.WELCOME_IMAGE_LINK_2,
+        WelcomeText.WELCOME_IMAGE_LINK_3,
       ]
     };
   }
@@ -112,7 +118,7 @@ class Welcome extends Component {
               </button>
             </div>
             <div className="welcome__right">
-              <img className="welcome__image" src={Intro1GIF} />
+              <img className="welcome__image" src={this.state.images[this.state.screenNumber]} />
             </div>
           </div>
         )}

@@ -48,13 +48,16 @@
     width: 100%;
   }
   &__green-back{
-    background-color: $green;
+    // background-color: $green;
+    background-color: #35a488;
   }
   &__blue-back{
-    background-color: $tab-blue;
+    // background-color: $tab-blue;
+    background-color: #247195;
   }
   &__red-back{
-    background-color: $red;
+    // background-color: $red;
+    background-color: #c23532;
   }
   &__button {
     font-size: $medium-font-size;
