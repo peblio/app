@@ -1,15 +1,98 @@
 @import 'modal';
 .welcome {
-  &__iframe {
+  &__left {
+    width: 30%;
     display: flex;
-    max-width: 80%;
-    margin: 0 auto;
-    padding: $medium-padding 0;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 $large-padding;
+  }
+  &__right {
+    width: 70%;
+    display: flex;
+    align-items: center;
   }
   &__title {
-    @extend %modal__title;
+    color: $white;
+    text-transform: uppercase;
+    font-size: $large-font-size;
+    margin-top: 0;
   }
   &__subtitle {
-    @extend %modal__subtitle;
+    color: $white;
+    font-size: $medium-font-size;
+    font-weight: 400;
+  }
+  &__text {
+    color: $white;
+    font-size: $medium-font-size;
+    font-weight: 100;
+  }
+  &__container {
+    display: flex;
+    border-radius: 7px;
+    height: $welcome-container-height;
+  }
+  &__sub-container {
+    width: 100%;
+    display: flex;
+  }
+  &__sub-container-horiz {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  &__image{
+    width: 100%;
+  }
+  &__green-back{
+    // background-color: $green;
+    background-color: #35a488;
+  }
+  &__blue-back{
+    // background-color: $tab-blue;
+    background-color: #247195;
+  }
+  &__red-back{
+    // background-color: $red;
+    background-color: #c23532;
+  }
+  &__button {
+    font-size: $medium-font-size;
+    background-color: white;
+    line-height: $h2-line-height;
+    width: 150px;
+    margin: $medium-margin 0;
+  }
+  &__button-large {
+    width: 60%;
+    margin: $medium-margin 0;
+    text-transform: uppercase;
+  }
+  &__green-button {
+    color: $green;
+    &:hover {
+      background-color: $green;
+      color: $white;
+      border: $small-border solid $white;
+    }
+  }
+  &__blue-button {
+    color: $tab-blue;
+    &:hover {
+      background-color: $tab-blue;
+      color: $white;
+      border: $small-border solid $white;
+    }
+  }
+  &__red-button {
+    color: $red;
+    &:hover {
+      background-color: $red;
+      color: $white;
+      border: $small-border solid $white;
+    }
   }
 }

@@ -27,9 +27,11 @@ class HelpMenu extends React.Component {
           <button
             className="file-modal__link"
             onMouseDown={() => {
+              this.props.viewWelcomeModal();
               this.props.toggleHelpDropdown();
             }}
             onKeyDown={() => {
+              this.props.viewWelcomeModal();
               this.props.toggleHelpDropdown();
             }}
           >

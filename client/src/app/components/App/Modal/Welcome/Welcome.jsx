@@ -1,32 +1,168 @@
+import classNames from 'classnames';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import initHelpHero from 'helphero';
+import history from '../../../../utils/history';
+
+import * as mainToolbarActions from '../../../../action/mainToolbar.js';
+import * as WelcomeText from '../../../../constants/welcomeConstants.js';
+import Intro1GIF from '../../../../images/adapt-test.png';
 
 require('./welcome.scss');
 
 class Welcome extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      screenNumber: 0,
+      title: [
+        '',
+        WelcomeText.WELCOME_TOUR_TITLE_1,
+        WelcomeText.WELCOME_TOUR_TITLE_2,
+        WelcomeText.WELCOME_TOUR_TITLE_3,
+      ],
+      content: [
+        '',
+        WelcomeText.WELCOME_TOUR_CONTENT_1,
+        WelcomeText.WELCOME_TOUR_CONTENT_2,
+        WelcomeText.WELCOME_TOUR_CONTENT_3,
+      ],
+      images: [
+        '',
+        WelcomeText.WELCOME_IMAGE_LINK_1,
+        WelcomeText.WELCOME_IMAGE_LINK_2,
+        WelcomeText.WELCOME_IMAGE_LINK_3,
+      ]
+    };
+  }
+
+  componentDidMount() {
+    const hlp = initHelpHero('3eGzXi89xMm');
+    hlp.anonymous();
+  }
+
+  increaseScreenNumber =() => {
+    this.setState({
+      screenNumber: this.state.screenNumber + 1 });
+  }
+
+  resetScreenNumber =() => {
+    this.setState({
+      screenNumber: 0
+    });
+  }
+
+  startTour = () => {
+    window.open('https://hlp.sh/t/Z2x60Q0/a6t2cUWMqJx');
+    this.props.closeWelcomeModal();
+  }
+
   render() {
+    console.log(this.state.screenNumber);
+    const containerClass = classNames('welcome__container', {
+      'welcome__green-back': (this.state.screenNumber === 1 || this.state.screenNumber == 4),
+      'welcome__blue-back': (this.state.screenNumber === 0 || this.state.screenNumber === 2),
+      'welcome__red-back': (this.state.screenNumber === 3),
+    });
+    const buttonClass = classNames('welcome__button', {
+      'welcome__green-button': (this.state.screenNumber === 1 || this.state.screenNumber === 4),
+      'welcome__blue-button': (this.state.screenNumber === 0 || this.state.screenNumber === 2),
+      'welcome__red-button': (this.state.screenNumber === 3),
+    });
     return (
-      <section className="welcome__container">
-        <h1 className="welcome__title">Welcome to Peblio</h1>
-        <h2 className="welcome__subtitle">
-          Peblio is a tool for creating interactive computer science worksheets.
-          See how it works in the demo below.
-        </h2>
-        <div className="welcome__iframe-container">
-          <iframe
-            title="welcome to peblio"
-            className="welcome__iframe"
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/wq3CL8LFN-Y"
-            frameBorder="0"
-            allowFullScreen
-          >
-          </iframe>
-        </div>
+      <section className={classNames(containerClass)}>
+        {(this.state.screenNumber === 0) && (
+          <div className="welcome__sub-container-horiz">
+            <h1 className="welcome__title">
+            Welcome To Peblio!
+            </h1>
+            <h2 className="welcome__subtitle">
+              The easiest way to write about code
+            </h2>
+            <p className="welcome__text">
+              Take a quick tour of our features
+            </p>
+            <button
+              className="welcome__button welcome__blue-button"
+              onClick={this.increaseScreenNumber}
+            >
+          Let's Go!
+            </button>
+            <button
+              className="welcome__button welcome__blue-button"
+              onClick={this.props.closeWelcomeModal}
+            >
+          Skip
+            </button>
+            <p className="welcome__text">
+              You can always open this your with Help > Tour in the toolbar
+            </p>
+          </div>
+        )}
+        {(this.state.screenNumber >= 1 && this.state.screenNumber < 4) && (
+          <div className="welcome__sub-container">
+            <div className="welcome__left">
+              <h1 className="welcome__title">
+                {this.state.title[this.state.screenNumber]}
+              </h1>
+              <h2 className="welcome__subtitle">
+                {this.state.content[this.state.screenNumber]}
+              </h2>
+              <button
+                className={classNames(buttonClass)}
+                onClick={this.increaseScreenNumber}
+              >
+              Next
+              </button>
+            </div>
+            <div className="welcome__right">
+              <img className="welcome__image" src={this.state.images[this.state.screenNumber]} />
+            </div>
+          </div>
+        )}
+        {(this.state.screenNumber === 4) && (
+          <div className="welcome__sub-container-horiz">
+            <h1 className="welcome__title">
+            Get Started
+            </h1>
+            <button
+              className="welcome__button welcome__green-button welcome__button-large"
+              onClick={this.props.closeWelcomeModal}
+            >
+          Close
+            </button>
+            <button
+              className="welcome__button welcome__green-button welcome__button-large"
+              onClick={this.resetScreenNumber}
+            >
+          Replay
+            </button>
+            <button
+              className="welcome__button welcome__green-button welcome__button-large"
+              onClick={this.startTour}
+            >
+          Start Creating with our guided tour
+            </button>
+          </div>
+        )}
       </section>
     );
   }
 }
 
+Welcome.propTypes = {
+  toggleHelpDropdown: PropTypes.func.isRequired,
+  isWelcomeModalOpen: PropTypes.bool.isRequired
+};
 
-export default Welcome;
+const mapStateToProps = state => ({
+  isWelcomeModalOpen: state.mainToolbar.isWelcomeModalOpen
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  ...mainToolbarActions,
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Welcome);

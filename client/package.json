@@ -21,6 +21,7 @@
     "classnames": "^2.2.6",
     "codemirror": "^5.27.4",
     "draft-js": "^0.10.1",
+    "helphero": "^0.4.2",
     "history": "^4.7.2",
     "moment": "^2.22.2",
     "node-sass": "^4.5.3",
