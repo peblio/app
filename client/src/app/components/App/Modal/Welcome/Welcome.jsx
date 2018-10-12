@@ -55,7 +55,7 @@ class Welcome extends Component {
   }
 
   startTour = () => {
-    window.open('https://hlp.sh/t/Z2x60Q0/a6t2cUWMqJx');
+    window.open('https://hlp.sh/t/Z1zN8Bp/nQYCLe66CTj');
     this.props.closeWelcomeModal();
   }
 
