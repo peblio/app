@@ -39,7 +39,7 @@ class Welcome extends Component {
   }
 
   componentDidMount() {
-    const hlp = initHelpHero('3eGzXi89xMm');
+    const hlp = initHelpHero('1Dyo05WliMY');
     hlp.anonymous();
   }
 
@@ -60,7 +60,6 @@ class Welcome extends Component {
   }
 
   render() {
-    console.log(this.state.screenNumber);
     const containerClass = classNames('welcome__container', {
       'welcome__green-back': (this.state.screenNumber === 1 || this.state.screenNumber == 4),
       'welcome__blue-back': (this.state.screenNumber === 0 || this.state.screenNumber === 2),
@@ -97,7 +96,7 @@ class Welcome extends Component {
           Skip
             </button>
             <p className="welcome__text">
-              You can always open this your with Help > Tour in the toolbar
+              You can always open this your with Help > Tutorial in the toolbar
             </p>
           </div>
         )}
