@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import SplitPane from 'react-split-pane';
 
-import CodeEditor from './CodeEditor/CodeEditor.jsx';
-import CodeOutput from './CodeOutput/CodeOutput.jsx';
-import EditorToolbar from './EditorToolbar/EditorToolbar.jsx';
-import ConsoleOutput from './ConsoleOutput/ConsoleOutput.jsx';
+import CodeEditor from '../../Shared/EditorComponents/CodeEditor/CodeEditor.jsx';
+import CodeOutput from '../../Shared/EditorComponents/CodeOutput/CodeOutput.jsx';
+import EditorToolbar from '../../Shared/EditorComponents/EditorToolbar/EditorToolbar.jsx';
+import ConsoleOutput from '../../Shared/EditorComponents/ConsoleOutput/ConsoleOutput.jsx';
 
 require('./editorContainer.scss');
 

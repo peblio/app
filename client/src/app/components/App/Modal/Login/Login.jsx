@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 
 import axios from '../../../../utils/axios';
-import GoogleLoginButton from '../../shared/GoogleLoginButton/GoogleLoginButton.jsx';
+import GoogleLoginButton from '../../Shared/GoogleLoginButton/GoogleLoginButton.jsx';
 
 require('./login.scss');
 

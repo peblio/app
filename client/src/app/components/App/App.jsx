@@ -20,6 +20,7 @@ import Welcome from './Modal/Welcome/Welcome.jsx';
 import Canvas from './Canvas/Canvas.jsx';
 import MainToolbar from './MainToolbar/MainToolbar.jsx';
 import Navigation from './Navigation/Navigation.jsx';
+import Workspace from './Workspace/Workspace.jsx';
 
 import * as editorActions from '../../action/editors.js';
 import * as mainToolbarActions from '../../action/mainToolbar.js';
@@ -27,6 +28,7 @@ import * as navigationActions from '../../action/navigation.js';
 import * as pageActions from '../../action/page.js';
 import * as preferencesActions from '../../action/preferences.js';
 import * as userActions from '../../action/user.js';
+import { loadWorkspace } from '../../action/workspace.js';
 
 import axios from '../../utils/axios';
 
@@ -102,6 +104,8 @@ class App extends React.Component {
         .then((res) => {
           this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].heading, res.data[0].layout);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
+          this.props.loadWorkspace(res.data[0].workspace);
+          console.log(res.data[0].workspace.files[1].content);
           this.props.setPreviewMode(true);
           this.loadNavigation();
           axios.get(`/authenticate/${projectID}`)
@@ -129,6 +133,7 @@ class App extends React.Component {
   }
 
   savePage = () => {
+    console.log(this.props.workspace.files[1].content);
     if (this.props.name) {
       let title = this.props.pageTitle;
       if (this.props.pageHeading !== '') {
@@ -144,7 +149,8 @@ class App extends React.Component {
           this.props.editors,
           this.props.editorIndex,
           this.props.layout,
-          'save'
+          'save',
+          this.props.workspace
         );
       } else if (this.props.canEdit) {
         this.props.updatePage(
@@ -153,7 +159,8 @@ class App extends React.Component {
           this.props.pageHeading,
           this.props.editors,
           this.props.editorIndex,
-          this.props.layout
+          this.props.layout,
+          this.props.workspace
         );
       } else {
         // this is for fork and save
@@ -164,7 +171,8 @@ class App extends React.Component {
           this.props.editors,
           this.props.editorIndex,
           this.props.layout,
-          'fork'
+          'fork',
+          this.props.workspace
         );
       }
     } else {
@@ -177,6 +185,7 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.props.workspace.files[1].content);
     return (
       <div
         role="presentation"
@@ -379,6 +388,9 @@ class App extends React.Component {
           <Welcome />
         </Modal>
         <Navigation />
+        <Workspace
+          workspace={this.props.workspace}
+        />
       </div>
     );
   }
@@ -391,6 +403,8 @@ App.propTypes = {
   editors: PropTypes.shape({}).isRequired,
   editorIndex: PropTypes.number.isRequired,
   currentWidget: PropTypes.string.isRequired,
+
+  workspace: PropTypes.shape({}).isRequired,
 
   pageTitle: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
@@ -431,6 +445,7 @@ App.propTypes = {
   removeEditor: PropTypes.func.isRequired,
   duplicateEditor: PropTypes.func.isRequired,
   loadEditors: PropTypes.func.isRequired,
+  loadWorkspace: PropTypes.func.isRequired,
   setEditorPosition: PropTypes.func.isRequired,
   setEditorSize: PropTypes.func.isRequired,
   addCodeEditor: PropTypes.func.isRequired,
@@ -521,6 +536,8 @@ function mapStateToProps(state) {
     editorIndex: state.editorsReducer.editorIndex,
     currentWidget: state.editorsReducer.currentWidget,
 
+    workspace: state.workspace.workspace,
+
     layout: state.page.layout,
     rgl: state.page.rgl,
     pageHeading: state.page.pageHeading,
@@ -568,7 +585,8 @@ function mapDispatchToProps(dispatch) {
     ...navigationActions,
     ...pageActions,
     ...preferencesActions,
-    ...userActions
+    ...userActions,
+    loadWorkspace
   }, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);

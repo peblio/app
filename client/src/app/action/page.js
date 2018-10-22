@@ -101,7 +101,7 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, heading, editors, editorIndex, layout, type) {
+export function submitPage(parentId, title, heading, editors, editorIndex, layout, type, workspace) {
   const id = shortid.generate();
   axios.post('/pages/save', {
     parentId,
@@ -110,7 +110,8 @@ export function submitPage(parentId, title, heading, editors, editorIndex, layou
     heading,
     editors: convertEditorsToRaw(editors),
     editorIndex,
-    layout
+    layout,
+    workspace
   }).then(() => {
     history.push(`/pebl/${id}`);
     if (type === 'fork') {
@@ -128,14 +129,15 @@ export function submitPage(parentId, title, heading, editors, editorIndex, layou
   };
 }
 
-export function updatePage(id, title, heading, editors, editorIndex, layout) {
+export function updatePage(id, title, heading, editors, editorIndex, layout, workspace) {
   axios.post('/pages/update', {
     id,
     title,
     heading,
     editors: convertEditorsToRaw(editors),
     editorIndex,
-    layout
+    layout,
+    workspace
   }).then(response => console.log('Page update'))
     .catch(error => console.error('Page update error', error));
 
