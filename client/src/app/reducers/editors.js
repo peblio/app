@@ -119,9 +119,6 @@ const editorsReducer = (state = initialState, action) => {
       editors[action.id].isRefreshing = false;
       return { ...state, editors };
 
-    case ActionTypes.SET_EDITOR_MODE:
-      editors[action.id].editorMode = action.value;
-      return { ...state, editors };
 
     case ActionTypes.UPDATE_CONSOLE_OUTPUT: {
       const tempOutput = editors[action.id].consoleOutputText.slice();

@@ -52,6 +52,14 @@ class CodeEditor extends React.Component {
     if (this.props.editorTheme !== nextProps.editorTheme) {
       this.cm.setOption('theme', constants.EDITOR_THEME[nextProps.editorTheme]);
     }
+    // if (this.props.files[this.props.currentFile].content !== nextProps.files[this.props.currentFile].content) {
+    //   console.log('not same');
+    //   console.log(nextProps.files[this.props.currentFile].content);
+    //   this.props.updateFile(this.props.currentFile, nextProps.files[this.props.currentFile].content);
+    //   // this.forceUpdate();
+    //   // console.log(this.props.files);
+    //   this.setState({});
+    // }
   }
 
   componentDidUpdate(prevProps) {
@@ -78,7 +86,6 @@ class CodeEditor extends React.Component {
   }
 
   render() {
-    console.log(this.props.files);
     return (
       <div>
         <div ref={(element) => { this.codemirrorContainer = element; }}>

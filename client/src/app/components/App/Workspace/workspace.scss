@@ -1,0 +1,18 @@
+@import 'variables';
+@import 'mixins';
+
+.workspace{
+  &__total-container {
+    position: absolute;
+    height: 70%;
+    bottom: 0;
+    width: 100%;
+    z-index: $z-index-layer-3;
+  }
+  &__header-container{
+    width: 100%;
+    background: $gray;
+    display: flex;
+    justify-content: center;
+  }
+}

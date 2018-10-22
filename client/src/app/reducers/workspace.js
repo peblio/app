@@ -2,9 +2,9 @@ import { EditorState, convertFromRaw } from 'draft-js';
 import * as ActionTypes from '../constants/reduxConstants.js';
 import * as Code from '../constants/codeConstants.js';
 
-const DEFAULT_WORKSPACE_MODE = 'p5';
+const DEFAULT_WORKSPACE_MODE = 'python';
 const initialState = {
-  isWorkspaceOpen: false,
+  isWorkspaceOpen: true,
   workspace: {
     consoleOutputText: [],
     currentFile: Code.STARTFILE[DEFAULT_WORKSPACE_MODE],
@@ -40,6 +40,8 @@ const workspaceReducer = (state = initialState, action) => {
 
     case ActionTypes.WP_SET_EDITOR_MODE:
       workspace.editorMode = action.value;
+      workspace.currentFile = Code.STARTFILE[action.value];
+      workspace.files = Code.FILES[action.value];
       return { ...state, workspace };
 
     case ActionTypes.WP_UPDATE_CONSOLE_OUTPUT: {
@@ -61,6 +63,7 @@ const workspaceReducer = (state = initialState, action) => {
       const tempFiles = state.workspace.files;
       tempFiles[action.index].content = action.content;
       workspace.files = tempFiles;
+      console.log(workspace);
       return Object.assign({}, state, {
         workspace
       });
@@ -76,15 +79,15 @@ const workspaceReducer = (state = initialState, action) => {
       return { ...state, workspace };
     }
 
-    case ActionTypes.WP_SET_INNER_HEIGHT: {
-      workspace.innerHeight = action.value;
-      return { ...state, workspace };
-    }
-
     case ActionTypes.LOAD_WORKSPACE:
       console.log(action.workspace);
       return Object.assign({}, state, {
         workspace: action.workspace
+      });
+
+    case ActionTypes.TOGGLE_WORKSPACE:
+      return Object.assign({}, state, {
+        isWorkspaceOpen: !state.isWorkspaceOpen
       });
 
     default:

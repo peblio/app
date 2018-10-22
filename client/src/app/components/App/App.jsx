@@ -105,7 +105,6 @@ class App extends React.Component {
           this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].heading, res.data[0].layout);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
           this.props.loadWorkspace(res.data[0].workspace);
-          console.log(res.data[0].workspace.files[1].content);
           this.props.setPreviewMode(true);
           this.loadNavigation();
           axios.get(`/authenticate/${projectID}`)
@@ -133,7 +132,6 @@ class App extends React.Component {
   }
 
   savePage = () => {
-    console.log(this.props.workspace.files[1].content);
     if (this.props.name) {
       let title = this.props.pageTitle;
       if (this.props.pageHeading !== '') {
@@ -185,7 +183,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.props.workspace.files[1].content);
     return (
       <div
         role="presentation"
@@ -213,7 +210,6 @@ class App extends React.Component {
             preview={this.props.preview}
             projectID={this.projectID}
             setPageTitle={this.props.setPageTitle}
-            setEditorMode={this.props.setEditorMode}
             savePage={this.savePage}
             editorAutoSave={this.props.editorAutoSave}
             toggleFileDropdown={this.props.toggleFileDropdown}
@@ -388,9 +384,7 @@ class App extends React.Component {
           <Welcome />
         </Modal>
         <Navigation />
-        <Workspace
-          workspace={this.props.workspace}
-        />
+        <Workspace />
       </div>
     );
   }
@@ -453,7 +447,6 @@ App.propTypes = {
   stopCode: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
-  setEditorMode: PropTypes.func.isRequired,
   clearConsoleOutput: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
