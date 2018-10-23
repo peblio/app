@@ -1,20 +1,11 @@
 import { EditorState, convertFromRaw } from 'draft-js';
 import * as ActionTypes from '../constants/reduxConstants.js';
 import * as Code from '../constants/codeConstants.js';
+import * as Page from '../constants/pageConstants.js';
 
-const DEFAULT_WORKSPACE_MODE = 'p5';
 const initialState = {
   isWorkspaceOpen: true,
-  workspace: {
-    consoleOutputText: [],
-    currentFile: Code.STARTFILE[DEFAULT_WORKSPACE_MODE],
-    files: Code.FILES[DEFAULT_WORKSPACE_MODE],
-    isPlaying: false,
-    isRefreshing: false,
-    editorMode: DEFAULT_WORKSPACE_MODE,
-    innerWidth: 100,
-    innerHeight: 160
-  }
+  workspace: Page.DEFAULT_WORKSPACE_MODE
 };
 
 const workspaceReducer = (state = initialState, action) => {
@@ -87,6 +78,16 @@ const workspaceReducer = (state = initialState, action) => {
     case ActionTypes.TOGGLE_WORKSPACE:
       return Object.assign({}, state, {
         isWorkspaceOpen: !state.isWorkspaceOpen
+      });
+
+    case ActionTypes.OPEN_SHARE_WORKSPACE:
+      return Object.assign({}, state, {
+        isShareWorkspaceOpen: true
+      });
+
+    case ActionTypes.CLOSE_SHARE_WORKSPACE:
+      return Object.assign({}, state, {
+        isShareWorkspaceOpen: false
       });
 
     default:

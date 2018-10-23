@@ -6,10 +6,13 @@ import classNames from 'classnames';
 import SplitPane from 'react-split-pane';
 
 import * as workspaceAction from '../../../action/workspace.js';
+import { submitPage } from '../../../action/page.js';
 import CodeEditor from '../Shared/EditorComponents/CodeEditor/CodeEditor.jsx';
 import CodeOutput from '../Shared/EditorComponents/CodeOutput/CodeOutput.jsx';
 import EditorToolbar from '../Shared/EditorComponents/EditorToolbar/EditorToolbar.jsx';
 import ConsoleOutput from '../Shared/EditorComponents/ConsoleOutput/ConsoleOutput.jsx';
+import ShareWorkspace from '../Modal/ShareWorkspace/ShareWorkspace.jsx';
+import Modal from '../Modal/Modal.jsx';
 
 require('./workspace.scss');
 
@@ -78,6 +81,7 @@ class Workspace extends React.Component {
                   stopCode={this.props.stopCode}
                   container='workspace'
                   setEditorMode={this.props.setEditorMode}
+                  openShareWorkspace={this.props.openShareWorkspace}
                 />
                 <div className='workspace__container'>
 
@@ -132,55 +136,70 @@ class Workspace extends React.Component {
           </div>
 
         </div>
+        <Modal
+          size="auto"
+          isOpen={this.props.isShareWorkspaceOpen}
+          closeModal={this.props.closeShareWorkspace}
+        >
+          <ShareWorkspace
+            closeModal={this.props.closeShareWorkspace}
+            workspace={this.props.workspace}
+            submitPage={this.props.submitPage}
+          />
+        </Modal>
       </section>
     );
   }
 }
 
 Workspace.propTypes = {
-  editorTheme: PropTypes.string.isRequired,
-  editorFontSize: PropTypes.number.isRequired,
-  isWorkspaceOpen: PropTypes.bool.isRequired,
+  clearConsoleOutput: PropTypes.func.isRequired,
   consoleOutputText: PropTypes.string.isRequired,
   currentFile: PropTypes.number.isRequired,
+  editorFontSize: PropTypes.number.isRequired,
+  editorMode: PropTypes.string.isRequired,
+  editorTheme: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isRefreshing: PropTypes.bool.isRequired,
-  editorMode: PropTypes.string.isRequired,
   innerWidth: PropTypes.number.isRequired,
   innerHeight: PropTypes.number.isRequired,
+  isWorkspaceOpen: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
-  stopCode: PropTypes.func.isRequired,
-  startCodeRefresh: PropTypes.func.isRequired,
-  stopCodeRefresh: PropTypes.func.isRequired,
-  updateConsoleOutput: PropTypes.func.isRequired,
-  clearConsoleOutput: PropTypes.func.isRequired,
-  updateFile: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
-  setInnerWidth: PropTypes.func.isRequired,
   setInnerHeight: PropTypes.func.isRequired,
-  toggleWorkspace: PropTypes.func.isRequired
+  setInnerWidth: PropTypes.func.isRequired,
+  startCodeRefresh: PropTypes.func.isRequired,
+  stopCode: PropTypes.func.isRequired,
+  stopCodeRefresh: PropTypes.func.isRequired,
+  submitPage: PropTypes.func.isRequired,
+  toggleWorkspace: PropTypes.func.isRequired,
+  updateConsoleOutput: PropTypes.func.isRequired,
+  updateFile: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  editorTheme: state.preferences.editorTheme,
-  editorFontSize: state.preferences.editorFontSize,
-  isWorkspaceOpen: state.workspace.isWorkspaceOpen,
   consoleOutputText: state.workspace.workspace.consoleOutputText,
   currentFile: state.workspace.workspace.currentFile,
-  files: state.workspace.workspace.files,
-  isPlaying: state.workspace.workspace.isPlaying,
-  isRefreshing: state.workspace.workspace.isRefreshing,
+  editorFontSize: state.preferences.editorFontSize,
   editorMode: state.workspace.workspace.editorMode,
+  editorTheme: state.preferences.editorTheme,
+  files: state.workspace.workspace.files,
   innerWidth: state.workspace.workspace.innerWidth,
   innerHeight: state.workspace.workspace.innerHeight,
+  isPlaying: state.workspace.workspace.isPlaying,
+  isRefreshing: state.workspace.workspace.isRefreshing,
+  isShareWorkspaceOpen: state.workspace.isShareWorkspaceOpen,
+  isWorkspaceOpen: state.workspace.isWorkspaceOpen,
+  workspace: state.workspace.workspace
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  ...workspaceAction
+  ...workspaceAction,
+  submitPage
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Workspace);

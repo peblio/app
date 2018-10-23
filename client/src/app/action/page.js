@@ -117,6 +117,9 @@ export function submitPage(parentId, title, heading, editors, editorIndex, layou
     if (type === 'fork') {
       window.location.reload(true);
     }
+    if (type === 'fromWP') {
+      window.open(`/pebl/${id}`, '_blank');
+    }
   })
     .catch(error => console.error(error));
 

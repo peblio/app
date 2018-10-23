@@ -91,7 +91,6 @@ export function setInnerHeight(value) {
   };
 }
 
-
 export function loadWorkspace(workspace) {
   return (dispatch) => {
     dispatch({
@@ -100,6 +99,7 @@ export function loadWorkspace(workspace) {
     });
   };
 }
+
 export function toggleWorkspace() {
   return (dispatch) => {
     dispatch({
@@ -113,6 +113,21 @@ export function setEditorMode(event) {
     dispatch({
       type: ActionTypes.WP_SET_EDITOR_MODE,
       value: event.target.value
+    });
+  };
+}
+
+export function openShareWorkspace() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.OPEN_SHARE_WORKSPACE
+    });
+  };
+}
+export function closeShareWorkspace() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_SHARE_WORKSPACE
     });
   };
 }

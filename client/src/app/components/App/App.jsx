@@ -104,7 +104,9 @@ class App extends React.Component {
         .then((res) => {
           this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].heading, res.data[0].layout);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
-          this.props.loadWorkspace(res.data[0].workspace);
+          if (res.data[0].workspace) {
+            this.props.loadWorkspace(res.data[0].workspace);
+          }
           this.props.setPreviewMode(true);
           this.loadNavigation();
           axios.get(`/authenticate/${projectID}`)

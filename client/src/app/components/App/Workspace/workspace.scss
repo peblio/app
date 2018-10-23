@@ -3,13 +3,13 @@
 
 .workspace{
   &__total-container {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     z-index: $z-index-layer-3;
     background: $white;
     &--open {
-      height: 70%;
+      height: 70vh;
     }
   }
   &__header-container{

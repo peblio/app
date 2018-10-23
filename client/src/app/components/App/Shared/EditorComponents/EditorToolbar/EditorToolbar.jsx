@@ -74,6 +74,13 @@ class EditorToolbar extends React.Component {
           >
             <PauseSVG alt='Pause Code' />
           </button>
+          {this.props.container === 'workspace' && (
+            <button
+              onClick={this.props.openShareWorkspace}
+            >
+                Save and Share
+            </button>
+          )}
         </div>
         <ul className='editor-toolbar__files'>
           {
