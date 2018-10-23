@@ -12,33 +12,20 @@ require('./editorToolbar.scss');
 class EditorToolbar extends React.Component {
   render() {
     return (
-      <div className="editor-toolbar__container">
-        {this.props.container === 'workspace' && (
-          <select
-            className="editor-toolbar__dropdown"
-            onChange={this.props.setEditorMode}
-            value={this.props.editorMode}
-          >
-            <option value="html">HTML</option>
-            <option value="webdev">HTML/JS/CSS</option>
-            <option value="p5">p5</option>
-            <option value="processing">Processing</option>
-            <option value="python">Python</option>
-          </select>
-        )}
-        <div className="editor-toolbar__button-container">
+      <div className='editor-toolbar__container'>
+        <div className='editor-toolbar__button-container'>
           {(this.props.editorMode === 'processing') && (
             <div
-              tabIndex="0" // eslint-disable-line
-              className="editor-toolbar__svg editor-toolbar__svg-info"
+              tabIndex='0' // eslint-disable-line
+              className='editor-toolbar__svg editor-toolbar__svg-info'
             >
-              <InfoSVG alt="More information" />
+              <InfoSVG alt='More information' />
 
               <div
-                tabIndex="0" // eslint-disable-line
-                className="editor-toolbar__warning-container"
+                tabIndex='0' // eslint-disable-line
+                className='editor-toolbar__warning-container'
               >
-                <p className="editor-toolbar__warning">
+                <p className='editor-toolbar__warning'>
                   {ReactHtmlParser(ProcessingWarning)}
                 </p>
               </div>
@@ -47,36 +34,51 @@ class EditorToolbar extends React.Component {
 
           {(this.props.editorMode === 'python') && (
             <span
-              className="beta-tag"
+              className='beta-tag'
             >
            beta
             </span>
           )}
 
-          <p className="editor-toolbar__title">
-            {this.props.editorMode}
-          </p>
+          {this.props.container === 'workspace' && (
+            <select
+              className='editor-toolbar__dropdown'
+              onChange={this.props.setEditorMode}
+              value={this.props.editorMode}
+            >
+              <option value='html'>HTML</option>
+              <option value='webdev'>HTML/JS/CSS</option>
+              <option value='p5'>p5</option>
+              <option value='processing'>Processing</option>
+              <option value='python'>Python</option>
+            </select>
+          )}
+          {this.props.container === 'canvas' && (
+            <p className='editor-toolbar__title'>
+              {this.props.editorMode}
+            </p>
+          )}
           <button
             className={`editor-toolbar__svg ${this.props.isPlaying ? 'editor-toolbar--isPlaying' : ''}`}
             onClick={() => {
               this.props.playCode();
               if (this.props.isPlaying) { this.props.startCodeRefresh(); }
             }}
-            data-test="play-sketch-button"
+            data-test='play-sketch-button'
           >
-            <PlaySVG alt="Run Code" />
+            <PlaySVG alt='Run Code' />
           </button>
           <button
             className={`editor-toolbar__svg ${!this.props.isPlaying ? 'editor-toolbar--isPaused' : ''}`}
             onClick={this.props.stopCode}
           >
-            <PauseSVG alt="Pause Code" />
+            <PauseSVG alt='Pause Code' />
           </button>
         </div>
-        <ul className="editor-toolbar__files">
+        <ul className='editor-toolbar__files'>
           {
             this.props.files.map((file, index) => (
-              <li key={file.id} className="editor-toolbar__file">
+              <li key={file.id} className='editor-toolbar__file'>
                 <button
                   onClick={() => this.props.setCurrentFile(index)}
                   className={

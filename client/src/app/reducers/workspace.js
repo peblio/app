@@ -2,7 +2,7 @@ import { EditorState, convertFromRaw } from 'draft-js';
 import * as ActionTypes from '../constants/reduxConstants.js';
 import * as Code from '../constants/codeConstants.js';
 
-const DEFAULT_WORKSPACE_MODE = 'python';
+const DEFAULT_WORKSPACE_MODE = 'p5';
 const initialState = {
   isWorkspaceOpen: true,
   workspace: {
@@ -63,7 +63,6 @@ const workspaceReducer = (state = initialState, action) => {
       const tempFiles = state.workspace.files;
       tempFiles[action.index].content = action.content;
       workspace.files = tempFiles;
-      console.log(workspace);
       return Object.assign({}, state, {
         workspace
       });

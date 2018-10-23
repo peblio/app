@@ -53,8 +53,6 @@ export function clearConsoleOutput() {
 
 export function updateFile(index, content) {
   return (dispatch) => {
-    console.log(index);
-    console.log(content);
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.WP_UPDATE_FILE,

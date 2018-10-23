@@ -19,7 +19,6 @@ require('../../../../../styles/base16-light.css');
 class CodeEditor extends React.Component {
   componentDidMount() {
     const file = this.props.files[this.props.currentFile];
-    console.log(file.content);
     this.cm = CodeMirror(this.codemirrorContainer, {
       theme: constants.EDITOR_THEME[this.props.editorTheme],
       value: CodeMirror.Doc(file.content),
@@ -43,7 +42,7 @@ class CodeEditor extends React.Component {
   componentWillUpdate(nextProps) {
     // check if files have changed
     if (this.props.currentFile !== nextProps.currentFile) {
-      const file = this.props.files[nextProps.currentFile];
+      const file = nextProps.files[nextProps.currentFile];
       this.cm.swapDoc(CodeMirror.Doc(file.content, this.getFileMode(file.name)));
     }
     if (this.props.editorFontSize !== nextProps.editorFontSize) {
@@ -52,17 +51,12 @@ class CodeEditor extends React.Component {
     if (this.props.editorTheme !== nextProps.editorTheme) {
       this.cm.setOption('theme', constants.EDITOR_THEME[nextProps.editorTheme]);
     }
-    // if (this.props.files[this.props.currentFile].content !== nextProps.files[this.props.currentFile].content) {
-    //   console.log('not same');
-    //   console.log(nextProps.files[this.props.currentFile].content);
-    //   this.props.updateFile(this.props.currentFile, nextProps.files[this.props.currentFile].content);
-    //   // this.forceUpdate();
-    //   // console.log(this.props.files);
-    //   this.setState({});
-    // }
-  }
-
-  componentDidUpdate(prevProps) {
+    // TODO : Find an alternate to the below solution
+    // this is specifically for the workspace since the component mounts before the value is pulled in from the DB
+    if (this.props.container === 'workspace' && this.props.files[this.props.currentFile].content !== nextProps.files[nextProps.currentFile].content) {
+      console.log('not the same');
+      this.cm.setValue(nextProps.files[nextProps.currentFile].content);
+    }
   }
 
   getFileMode(fileName) {

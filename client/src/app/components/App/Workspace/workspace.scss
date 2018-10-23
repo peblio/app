@@ -4,15 +4,39 @@
 .workspace{
   &__total-container {
     position: absolute;
-    height: 70%;
     bottom: 0;
     width: 100%;
     z-index: $z-index-layer-3;
+    background: $white;
+    &--open {
+      height: 70%;
+    }
   }
   &__header-container{
     width: 100%;
-    background: $gray;
+    background:#f0f0f0;
     display: flex;
     justify-content: center;
+    box-shadow: 0 -5px 20px -10px $black;
+  }
+  &__header {
+    font-family: $sourceSansPro;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: $h2-size;
+    line-height: $h2-line-height;
+    margin: $small-margin/2;
+    color: $g4;
+  }
+  &__toggle {
+    color: $g4;
+    font-size: $h2-size;
+    background-color: transparent;
+    border: transparent;
+    &:hover {
+      color: $g3;
+      background-color: transparent;
+      border: transparent;
+    }
   }
 }

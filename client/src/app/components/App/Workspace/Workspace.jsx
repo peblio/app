@@ -40,19 +40,29 @@ class Workspace extends React.Component {
   }
 
   render() {
+    const themeClass = classNames('workspace__total-container', {
+      'editor__dark': (this.props.editorTheme === 'dark'),
+      'editor__light': (this.props.editorTheme === 'light'),
+      'workspace__total-container--open': (this.props.isWorkspaceOpen === true)
+    });
     return (
       <section>
         <div>
-          <div className='workspace__total-container'>
+          <div className={classNames(themeClass)}>
             <div className='workspace__header-container'>
               <h1 className='workspace__header'>
                 My Workspace
               </h1>
               <button
-                className="console__toggle"
+                className="workspace__toggle"
                 onClick={this.props.toggleWorkspace}
               >
-                X
+                {this.props.isWorkspaceOpen &&
+                <i className="fas fa-caret-down"></i>
+                }
+                {this.props.isWorkspaceOpen ||
+                <i className="fas fa-caret-up"></i>
+                }
               </button>
             </div>
             {this.props.isWorkspaceOpen && (
@@ -75,6 +85,8 @@ class Workspace extends React.Component {
                     <SplitPane
                       split='vertical'
                       defaultSize={this.props.innerWidth}
+                      onDragStarted={this.startResize}
+                      onDragFinished={(size) => { this.finishResize(); this.props.setInnerWidth(size); }}
                     >
                       <div className='workspace__input'>
 
@@ -83,7 +95,8 @@ class Workspace extends React.Component {
                           files={this.props.files}
                           updateFile={this.props.updateFile}
                           editorFontSize={this.props.editorFontSize}
-                          editorTheme='light'
+                          editorTheme={this.props.editorTheme}
+                          container='workspace'
                         />
                         <ConsoleOutput
                           consoleOutputText={this.props.consoleOutputText}
@@ -125,6 +138,8 @@ class Workspace extends React.Component {
 }
 
 Workspace.propTypes = {
+  editorTheme: PropTypes.string.isRequired,
+  editorFontSize: PropTypes.number.isRequired,
   isWorkspaceOpen: PropTypes.bool.isRequired,
   consoleOutputText: PropTypes.string.isRequired,
   currentFile: PropTypes.number.isRequired,
@@ -151,6 +166,8 @@ Workspace.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  editorTheme: state.preferences.editorTheme,
+  editorFontSize: state.preferences.editorFontSize,
   isWorkspaceOpen: state.workspace.isWorkspaceOpen,
   consoleOutputText: state.workspace.workspace.consoleOutputText,
   currentFile: state.workspace.workspace.currentFile,

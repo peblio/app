@@ -65,6 +65,7 @@ class EditorContainer extends React.Component {
             setCurrentFile={this.setCurrentFile}
             startCodeRefresh={this.startCodeRefresh}
             stopCode={this.stopCode}
+            container="cannvas"
           />
           <div className="editor__container">
 
