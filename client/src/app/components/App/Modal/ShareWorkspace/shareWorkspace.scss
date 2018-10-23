@@ -1,0 +1,69 @@
+@import 'variables';
+@import 'base';
+@import 'mixins';
+@import 'modal';
+
+.share-workspace {
+  &__title {
+    width: 50%;
+    margin: 0 auto;
+    width: 50%;
+    height: $p-size*2;
+    font-size: $p-size;
+    margin: 0 auto;
+  }
+
+  &__label {
+    width: 50%;
+    margin: 0 auto;
+    margin-top: $medium-margin;
+    color: $green;
+    text-transform: capitalize;
+    font-weight: 500;
+  }
+
+  &__button {
+    @extend %modal__button;
+    float: right;
+    margin-top: 0px;
+    width: 45%;
+  }
+
+  &__button-container {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    margin: $medium-margin auto;
+  }
+
+  &__container {
+    margin-top: $medium-margin;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: $large-padding;
+  }
+
+  &__input {
+    @extend %modal__input;
+    text-align: center;
+  }
+
+  &__option {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__text-primary {
+    @extend %modal__title;
+    margin-bottom: $medium-margin;
+  }
+
+  &__text-secondary {
+    @extend %modal__text;
+  }
+
+}

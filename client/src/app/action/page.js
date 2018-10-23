@@ -113,12 +113,13 @@ export function submitPage(parentId, title, heading, editors, editorIndex, layou
     layout,
     workspace
   }).then(() => {
-    history.push(`/pebl/${id}`);
-    if (type === 'fork') {
-      window.location.reload(true);
-    }
     if (type === 'fromWP') {
       window.open(`/pebl/${id}`, '_blank');
+    } else {
+      history.push(`/pebl/${id}`);
+    }
+    if (type === 'fork') {
+      window.location.reload(true);
     }
   })
     .catch(error => console.error(error));

@@ -9,9 +9,8 @@ export const DEFAULT_WORKSPACE_MODE = {
   isPlaying: false,
   isRefreshing: false,
   editorMode: 'p5',
-  innerWidth: 100,
+  innerWidth: 500,
   innerHeight: 160,
-  isShareWorkspaceOpen: false
 };
 export const STARTER_WORKSPACE_LAYOUT = [{
   h: 20,

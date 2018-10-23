@@ -4,7 +4,8 @@ import * as Code from '../constants/codeConstants.js';
 import * as Page from '../constants/pageConstants.js';
 
 const initialState = {
-  isWorkspaceOpen: true,
+  isWorkspaceOpen: false,
+  isShareWorkspaceOpen: false,
   workspace: Page.DEFAULT_WORKSPACE_MODE
 };
 

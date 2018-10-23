@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { submitPage } from '../../../../action/page.js';
 import * as PageDefaults from '../../../../constants/pageConstants.js';
 
-// require('./shareModal.scss');
+require('./shareWorkspace.scss');
 
 class ShareWorkspace extends React.Component {
   constructor(props) {
@@ -18,6 +18,7 @@ class ShareWorkspace extends React.Component {
     tempEditor.id = 'editor-0';
     tempEditor.index = 0;
     tempEditor.type = 'code';
+    tempEditor.innerWidth = 200;
     this.props.submitPage(
       '',
       this.title.value,
@@ -33,32 +34,42 @@ class ShareWorkspace extends React.Component {
 
   render() {
     return (
-      <section className="share-workspace__container">
-        <div className="share-workspace__option">
-          <h1 className="share-workspace__text-primary">
+      <section className='share-workspace__container'>
+        <div className='share-workspace__option'>
+          <h1 className='share-workspace__text-primary'>
             Save and share your project!
           </h1>
+          <p className='share-workspace__text-secondary'>
+            You will have a chance to edit your project page.
+          </p>
+          <label
+            htmlFor='share-workspace__title'
+            className='share-workspace__label'
+          >
+            title
+          </label>
           <input
-            className="share-workspace__title"
+            id='share-workspace__title'
+            className='share-workspace__title'
             ref={(element) => { this.title = element; }}
           />
 
-          <div className="share-workspace__button-container">
+          <div className='share-workspace__button-container'>
             <button
-              className="share-workspace__link"
+              className='share-workspace__button'
               onClick={this.props.closeModal}
             >
             Cancel
             </button>
             <button
-              className="share-workspace__link"
+              className='share-workspace__button'
               onClick={this.saveAndShareWorkspace}
             >
             Continue
             </button>
           </div>
         </div>
-        <p className="share-workspace__text-secondary">or</p>
+
       </section>
     );
   }

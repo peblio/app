@@ -2,7 +2,7 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 
 const initialState = {
   navigationContent: [],
-  isNavigationOpen: false,
+  isNavigationOpen: true,
   yNavigation: 0
 };
 const navigation = (state = initialState, action) => {
