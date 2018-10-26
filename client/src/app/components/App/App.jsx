@@ -150,7 +150,8 @@ class App extends React.Component {
           this.props.editorIndex,
           this.props.layout,
           'save',
-          this.props.workspace
+          this.props.workspace,
+          true
         );
       } else if (this.props.canEdit) {
         this.props.updatePage(
@@ -172,7 +173,8 @@ class App extends React.Component {
           this.props.editorIndex,
           this.props.layout,
           'fork',
-          this.props.workspace
+          this.props.workspace,
+          true
         );
       }
     } else {

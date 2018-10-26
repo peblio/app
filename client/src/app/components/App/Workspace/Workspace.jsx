@@ -42,6 +42,11 @@ class Workspace extends React.Component {
     this.setState({ isResizing: false });
   }
 
+  toggleWorkspace =(e) => {
+    e.stopPropagation();
+    this.props.toggleWorkspace();
+  }
+
   render() {
     const themeClass = classNames('workspace__total-container', {
       'editor__dark': (this.props.editorTheme === 'dark'),
@@ -52,13 +57,17 @@ class Workspace extends React.Component {
       <section>
         <div>
           <div className={classNames(themeClass)}>
-            <div className='workspace__header-container'>
+            <div
+              className='workspace__header-container'
+              tabIndex='0' //eslint-disable-line
+              onClick={e => this.toggleWorkspace(e)}
+            >
               <h1 className='workspace__header'>
                 My Workspace
               </h1>
               <button
                 className="workspace__toggle"
-                onClick={this.props.toggleWorkspace}
+                onClick={e => this.toggleWorkspace(e)}
               >
                 {this.props.isWorkspaceOpen &&
                 <i className="fas fa-caret-down"></i>

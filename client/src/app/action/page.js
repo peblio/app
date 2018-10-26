@@ -101,9 +101,10 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, heading, editors, editorIndex, layout, type, workspace) {
+export function submitPage(parentId, title, heading, editors, editorIndex, layout, type, workspace, isLoggedIn) {
   const id = shortid.generate();
-  axios.post('/pages/save', {
+  const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
+  axios.post(axiosURL, {
     parentId,
     id,
     title,

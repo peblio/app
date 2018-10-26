@@ -18,6 +18,7 @@
     display: flex;
     justify-content: center;
     box-shadow: 0 -5px 20px -10px $black;
+    cursor: pointer;
   }
   &__header {
     font-family: $sourceSansPro;
