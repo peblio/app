@@ -1,3 +1,4 @@
+import { EditorState, ContentState } from 'draft-js';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -24,17 +25,29 @@ class ShareWorkspace extends React.Component {
   isLoggedIn=() => !(this.props.name === '' || this.props.name === null)
 
   saveAndShareWorkspace=() => {
+    const tempDesc = {
+      type: 'text',
+      id: 'editor-0',
+      index: 0,
+      editorState: EditorState.createWithContent(
+        ContentState.createFromText(this.desc.value)
+      ),
+      backColor: 'transparent'
+    };
     const tempEditor = this.props.workspace;
-    tempEditor.id = 'editor-0';
-    tempEditor.index = 0;
+    tempEditor.id = 'editor-1';
+    tempEditor.index = 1;
     tempEditor.type = 'code';
     tempEditor.innerWidth = 200;
     this.props.submitPage(
       '',
       this.title.value,
       this.title.value,
-      { 'editor-0': tempEditor },
-      1,
+      {
+        'editor-0': tempDesc,
+        'editor-1': tempEditor,
+      },
+      2,
       PageDefaults.STARTER_WORKSPACE_LAYOUT,
       'fromWP',
       PageDefaults.DEFAULT_WORKSPACE_MODE,
@@ -64,6 +77,17 @@ class ShareWorkspace extends React.Component {
               id='share-workspace__title'
               className='share-workspace__title'
               ref={(element) => { this.title = element; }}
+            />
+            <label
+              htmlFor='share-workspace__desc'
+              className='share-workspace__label'
+            >
+              Description
+            </label>
+            <textarea
+              id='share-workspace__desc'
+              className='share-workspace__desc'
+              ref={(element) => { this.desc = element; }}
             />
 
             <div className='share-workspace__button-container'>

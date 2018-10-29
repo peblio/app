@@ -12,16 +12,30 @@ export const DEFAULT_WORKSPACE_MODE = {
   innerWidth: 500,
   innerHeight: 160,
 };
-export const STARTER_WORKSPACE_LAYOUT = [{
-  h: 20,
-  i: 'editor-0',
-  maxH: 100,
-  maxW: 30,
-  minH: 11,
-  minW: 13,
-  moved: false,
-  static: false,
-  w: 30,
-  x: 0,
-  y: 0
-}];
+export const STARTER_WORKSPACE_LAYOUT = [
+  {
+    h: 3,
+    i: 'editor-0',
+    maxH: 100,
+    maxW: 30,
+    minH: 11,
+    minW: 13,
+    moved: false,
+    static: false,
+    w: 30,
+    x: 0,
+    y: 30
+  },
+  {
+    h: 20,
+    i: 'editor-1',
+    maxH: 100,
+    maxW: 30,
+    minH: 11,
+    minW: 13,
+    moved: false,
+    static: false,
+    w: 30,
+    x: 0,
+    y: 0
+  }];

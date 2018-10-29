@@ -9,63 +9,6 @@
   padding: 0 $small-padding;
 }
 
-.editor__dark{
-  .console__output-text{
-    background-color: $g1;
-  }
-  .console__nav{
-    background-color: $g2;
-    color:$white;
-  }
-  .console__toggle{
-    color: $white;
-  }
-  .console__output-text{
-    color: $white;
-  }
-}
-
-.editor__light{
-  .console__output-text{
-    background-color: $g7;
-  }
-  .console__nav{
-    background-color: $g5;
-    color:$g2;
-  }
-  .console__toggle{
-    color: $g2;
-  }
-  .console__output-text{
-    color: $g2;
-  }
-}
-
-.console__output-text{
-  height: 45px;
-  overflow-x: scroll;
-}
-
-.console__nav{
-  font-size: $toolbar-font-size;
-  font-family: $roboto;
-  padding: $small-padding/2;
-}
-.console__heading{
-  display: inline-block;
-  margin:0px;
-  text-transform: uppercase;
-}
-.console__toggle{
-  float: right;
-  background: none;
-  border:none;
-  &:hover{
-    background: none;
-    border:none;
-  }
-}
-
 .CodeMirror-scroll { // sass-lint:disable-line class-name-format
   z-index: $z-index-layer-0;
 }
@@ -85,7 +28,7 @@
 }
 
 .editor__input {
-  height: calc(100% - 30px);100%
+  height: 100%;
   border-right: $small-border solid $gray;
   overflow:scroll;
 }
@@ -107,6 +50,9 @@
   padding: 0;
   margin: 0;
   z-index: $z-index-layer-1;
+  &--short {
+    height: calc(100% - #{$console-output-height} - #{$console-heading-height});
+  }
 }
 
 .editor__output-text {
@@ -135,8 +81,6 @@ canvas{
   margin: 0;
   width: auto;
 }
-
-
 
 // sass-lint:disable class-name-format
 .Resizer {

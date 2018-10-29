@@ -52,4 +52,19 @@
       border: transparent;
     }
   }
+  &__output-overlay {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: none;
+    &--show { // sass-lint:disable-line class-name-format
+      display: block;
+    }
+  }
+  &__output {
+    height: 100%;
+    &--short {
+      height: calc(100% - #{$console-output-height} - #{$console-heading-height});
+    }
+  }
 }

@@ -113,9 +113,11 @@ class Workspace extends React.Component {
                           container='workspace'
                         />
                       </div>
-                      <div className='workspace__output'>
+                      <div className={`workspace__output ${this.state.isConsoleOpen ? 'workspace__output--short' : ''}`}>
                         <div
-                          className='workspace__output-overlay'
+                          className={`workspace__output-overlay
+                          ${this.state.isResizing
+                ? 'workspace__output-overlay--show' : ''}`}
                         >
                         </div>
                         { this.props.isPlaying && (

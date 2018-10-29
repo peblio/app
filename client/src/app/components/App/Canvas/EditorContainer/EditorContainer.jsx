@@ -88,7 +88,7 @@ class EditorContainer extends React.Component {
                   />
 
                 </div>
-                <div className="editor__output">
+                <div className={`editor__output ${this.state.isConsoleOpen ? 'editor__output--short' : ''}`}>
                   <div
                     className={`editor__output-overlay
                       ${this.state.isResizing

@@ -11,6 +11,17 @@
     height: $p-size*2;
     font-size: $p-size;
     margin: 0 auto;
+    border: $small-border solid $g6;
+  }
+  &__desc {
+    width: 50%;
+    margin: 0 auto;
+    width: 50%;
+    height: $p-size*5;
+    font-size: $p-size;
+    margin: 0 auto;
+    resize: none;
+    border: $small-border solid $g6;
   }
 
   &__label {
