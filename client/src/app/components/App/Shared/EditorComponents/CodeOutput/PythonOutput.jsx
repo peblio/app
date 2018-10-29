@@ -4,7 +4,6 @@ import srcDoc from 'srcdoc-polyfill';
 
 class ProcessingOutput extends React.Component {
   componentDidMount() {
-    console.log(this.props);
     this.startSketch();
   }
 

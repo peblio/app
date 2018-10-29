@@ -10,7 +10,6 @@ const initialState = {
 };
 
 const workspaceReducer = (state = initialState, action) => {
-  // deep copy
   let workspace = {};
   workspace = JSON.parse(JSON.stringify(state.workspace)); // Quicker than spread.
   switch (action.type) {
@@ -71,7 +70,6 @@ const workspaceReducer = (state = initialState, action) => {
     }
 
     case ActionTypes.LOAD_WORKSPACE:
-      console.log(action.workspace);
       return Object.assign({}, state, {
         workspace: action.workspace
       });

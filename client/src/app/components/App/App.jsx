@@ -104,7 +104,7 @@ class App extends React.Component {
         .then((res) => {
           this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].heading, res.data[0].layout);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
-          if (res.data[0].workspace) {
+          if (Object.keys(res.data[0].workspace).length > 0) {
             this.props.loadWorkspace(res.data[0].workspace);
           }
           this.props.setPreviewMode(true);

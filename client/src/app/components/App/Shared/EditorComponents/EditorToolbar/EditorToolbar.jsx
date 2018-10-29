@@ -12,7 +12,6 @@ require('./editorToolbar.scss');
 class EditorToolbar extends React.Component {
   confirmLanguageChange = (e) => {
     const validationResults = window.confirm('Changing the language will delete all of your current code in the workspace. Are you sure you want to continue');
-    console.log(validationResults);
 
     if (validationResults == false) {
       e.selectedIndex = (e.selectedIndex == 1) ? 0 : 1;
