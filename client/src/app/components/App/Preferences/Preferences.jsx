@@ -60,6 +60,7 @@ class Preferences extends React.Component {
                   name="editor-theme"
                   onChange={this.props.updateEditorTheme}
                   ref={(editorTheme) => { this.editorTheme = editorTheme; }}
+                  value={this.props.editorTheme}
                 >
                   <option value="light">Light</option>
                   <option value="dark">Dark</option>
