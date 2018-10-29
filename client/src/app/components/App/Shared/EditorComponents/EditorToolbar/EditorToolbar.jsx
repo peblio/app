@@ -77,6 +77,7 @@ class EditorToolbar extends React.Component {
           {this.props.container === 'workspace' && (
             <button
               onClick={this.props.openShareWorkspace}
+              className="editor-toolbar__button"
             >
                 Share Project
             </button>
