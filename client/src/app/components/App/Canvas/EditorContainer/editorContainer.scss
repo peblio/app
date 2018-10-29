@@ -85,12 +85,9 @@
 }
 
 .editor__input {
-  height: calc(100% - 30px);
+  height: calc(100% - 30px);100%
   border-right: $small-border solid $gray;
   overflow:scroll;
-  &-short {
-    height: calc(100% - 60px - 30px);
-  }
 }
 .editor__output-overlay {
   height: 100%;

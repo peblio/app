@@ -2,12 +2,24 @@
 @import 'mixins';
 
 .workspace{
+  &__container {
+    height: calc(70vh - #{$editor-toolbar-height} - #{$editor-toolbar-files-height} - #{$h2-line-height});
+    position: relative;
+  }
+  &__sub-container {
+    height: 100%;
+    display: flex;
+  }
   &__total-container {
     position: fixed;
     bottom: 0;
     width: 100%;
     z-index: $z-index-layer-3;
     background: $white;
+    height: $h2-line-height;
+    // transition-timing-function: ease;
+    // -webkit-transition: height 0.5s;
+    // transition: height 0.5s;
     &--open {
       height: 70vh;
     }

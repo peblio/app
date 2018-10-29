@@ -10,6 +10,17 @@ import { ProcessingWarning } from '../../../../../constants/codeConstants.js';
 require('./editorToolbar.scss');
 
 class EditorToolbar extends React.Component {
+  confirmLanguageChange = (e) => {
+    const validationResults = window.confirm('Changing the language will delete all of your current code in the workspace. Are you sure you want to continue');
+    console.log(validationResults);
+
+    if (validationResults == false) {
+      e.selectedIndex = (e.selectedIndex == 1) ? 0 : 1;
+    } else {
+      this.props.setEditorMode(e);
+    }
+  }
+
   render() {
     return (
       <div className='editor-toolbar__container'>
@@ -43,7 +54,7 @@ class EditorToolbar extends React.Component {
           {this.props.container === 'workspace' && (
             <select
               className='editor-toolbar__dropdown'
-              onChange={this.props.setEditorMode}
+              onChange={this.confirmLanguageChange}
               value={this.props.editorMode}
             >
               <option value='html'>HTML</option>

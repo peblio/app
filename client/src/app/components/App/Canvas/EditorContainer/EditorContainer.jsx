@@ -30,7 +30,8 @@ class EditorContainer extends React.Component {
     this.setCurrentFile = index => this.props.setCurrentFile(this.props.id, index);
     this.clearConsoleOutput = () => this.props.clearConsoleOutput(this.props.id);
     this.updateConsoleOutput = (e) => {
-      // There's a memory leak in the Javascript editor. Watch the console after clicking Play.
+      // UPDATE: 29-Oct-18 : Not using Javascript editor now, but keep in mind if added
+      // Dec-17 : There's a memory leak in the Javascript editor. Watch the console after clicking Play.
       this.props.updateConsoleOutput(this.props.id, e);
     };
   }
@@ -76,10 +77,7 @@ class EditorContainer extends React.Component {
                 onDragStarted={this.startResize}
                 onDragFinished={(size) => { this.finishResize(); this.setInnerWidth(size); }}
               >
-                <div className={`editor__input
-                    ${this.state.isConsoleOpen
-        ? 'editor__input-short' : ''}`}
-                >
+                <div className="editor__input">
 
                   <CodeEditor
                     currentFile={this.props.currentFile}
@@ -88,11 +86,7 @@ class EditorContainer extends React.Component {
                     editorFontSize={this.props.editorFontSize}
                     editorTheme={this.props.editorTheme}
                   />
-                  <ConsoleOutput
-                    consoleOutputText={this.props.consoleOutputText}
-                    isConsoleOpen={this.state.isConsoleOpen}
-                    toggleConsole={this.toggleConsole}
-                  />
+
                 </div>
                 <div className="editor__output">
                   <div
@@ -113,6 +107,11 @@ class EditorContainer extends React.Component {
                       updateConsoleOutput={this.updateConsoleOutput}
                     />
                   )}
+                  <ConsoleOutput
+                    consoleOutputText={this.props.consoleOutputText}
+                    isConsoleOpen={this.state.isConsoleOpen}
+                    toggleConsole={this.toggleConsole}
+                  />
                 </div>
               </SplitPane>
             </div>

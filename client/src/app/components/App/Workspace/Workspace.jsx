@@ -26,7 +26,8 @@ class Workspace extends React.Component {
   }
 
   updateConsoleOutput = (e) => {
-    // There's a memory leak in the Javascript editor. Watch the console after clicking Play.
+    // UPDATE: 29-Oct-18 : Not using Javascript editor now, but keep in mind if added
+    // Dec-17 : There's a memory leak in the Javascript editor. Watch the console after clicking Play.
     this.props.updateConsoleOutput('workspace', e);
   };
 
@@ -111,11 +112,6 @@ class Workspace extends React.Component {
                           editorTheme={this.props.editorTheme}
                           container='workspace'
                         />
-                        <ConsoleOutput
-                          consoleOutputText={this.props.consoleOutputText}
-                          isConsoleOpen
-                          toggleConsole={this.toggleConsole}
-                        />
                       </div>
                       <div className='workspace__output'>
                         <div
@@ -134,6 +130,11 @@ class Workspace extends React.Component {
                             updateConsoleOutput={this.updateConsoleOutput}
                           />
                         )}
+                        <ConsoleOutput
+                          consoleOutputText={this.props.consoleOutputText}
+                          isConsoleOpen={this.state.isConsoleOpen}
+                          toggleConsole={this.toggleConsole}
+                        />
                       </div>
                     </SplitPane>
                   </div>
