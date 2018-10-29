@@ -53,26 +53,27 @@ class ProcessingOutput extends React.Component {
       '/pythonUtils.js'
     ];
     const parser = new DOMParser();
-    sketchDoc = parser.parseFromString(sketchDoc, 'text/html');
+    const tempSketchDoc = parser.parseFromString(sketchDoc, 'text/html');
     scriptsToInject.forEach((scriptToInject) => {
-      const script = sketchDoc.createElement('script');
+      const script = tempSketchDoc.createElement('script');
       script.src = scriptToInject;
-      sketchDoc.head.appendChild(script);
+      tempSketchDoc.head.appendChild(script);
     });
 
-    const pythonOutput = sketchDoc.createElement('pre');
+    const pythonOutput = tempSketchDoc.createElement('pre');
     pythonOutput.setAttribute('id', 'python-output');
-    sketchDoc.body.appendChild(pythonOutput);
-    const pythonGraphicOutput = sketchDoc.createElement('div');
+    tempSketchDoc.body.appendChild(pythonOutput);
+    const pythonGraphicOutput = tempSketchDoc.createElement('div');
     pythonGraphicOutput.setAttribute('id', 'python-graphic-output');
-    sketchDoc.body.appendChild(pythonGraphicOutput);
-    return sketchDoc;
+    tempSketchDoc.body.appendChild(pythonGraphicOutput);
+    return tempSketchDoc;
   }
 
   render() {
     return (
       <div>
         <iframe
+          title="python output"
           ref={(element) => { this.iframe = element; }}
           id="code-output"
           data-test="sketch-output"
@@ -86,7 +87,6 @@ class ProcessingOutput extends React.Component {
 }
 
 ProcessingOutput.propTypes = {
-  id: PropTypes.string.isRequired,
   clearConsoleOutput: PropTypes.func.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,

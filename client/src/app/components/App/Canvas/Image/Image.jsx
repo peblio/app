@@ -59,6 +59,13 @@ class Image extends React.Component {
       });
   }
 
+  setUploadPopupVisibility(value) {
+    const newState = { ...this.state };
+
+    newState.showUploadPopup = value;
+    this.setState(newState);
+  }
+
   handleOnClick() {
     const newState = { ...this.state };
 
@@ -69,13 +76,6 @@ class Image extends React.Component {
       )
     ) &&
     this.setUploadPopupVisibility(!newState.showUploadPopup);
-  }
-
-  setUploadPopupVisibility(value) {
-    const newState = { ...this.state };
-
-    newState.showUploadPopup = value;
-    this.setState(newState);
   }
 
   renderUploadPopup() {
@@ -147,8 +147,11 @@ class Image extends React.Component {
 
         {!this.props.preview && this.props.name && (
           <div
+            tabIndex="0"
+            role="button"
             className="image__login"
             onClick={() => this.handleOnClick()}
+            onKeyUp={() => this.handleOnClick()}
             onBlur={() => this.setUploadPopupVisibility(false)}
           >
             {this.props.imageURL && <img className="element__image" src={this.props.imageURL} alt="" />}

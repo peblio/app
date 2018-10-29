@@ -23,7 +23,6 @@ class EditorContainer extends React.Component {
     this.playCode = () => this.props.playCode(this.props.id);
     this.stopCode = () => this.props.stopCode(this.props.id);
     this.setInnerWidth = value => this.props.setInnerWidth(this.props.id, value);
-    this.setInnerHeight = value => this.props.setInnerHeight(this.props.id, value);
     this.startCodeRefresh = () => this.props.startCodeRefresh(this.props.id);
     this.stopCodeRefresh = () => this.props.stopCodeRefresh(this.props.id);
     this.updateFile = (index, file) => this.props.updateFile(this.props.id, index, file);
@@ -137,14 +136,12 @@ EditorContainer.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
-  innerHeight: PropTypes.number.isRequired,
   innerWidth: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isRefreshing: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
-  setInnerHeight: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,

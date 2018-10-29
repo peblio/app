@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
 import EditorSVG from '../../../../images/editor.svg';
 import EmbedSVG from '../../../../images/embed.svg';
@@ -36,7 +35,9 @@ class InsertToolbar extends React.Component {
             onKeyDown={this.toggleEditorOptions}
             onBlur={() => {
               setTimeout(() => {
-                this.state.editorExpanded && this.toggleEditorOptions();
+                if (this.state.editorExpanded) {
+                  this.toggleEditorOptions();
+                }
               }, 50);
             }}
             data-test="add-code-editor"
@@ -186,8 +187,6 @@ InsertToolbar.propTypes = {
   addImage: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
   addQuestionEditor: PropTypes.func.isRequired,
-  isPreferencesPanelOpen: PropTypes.bool.isRequired,
-  togglePreferencesPanel: PropTypes.func.isRequired
 };
 
 export default InsertToolbar;

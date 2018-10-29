@@ -264,7 +264,6 @@ class App extends React.Component {
           updateConsoleOutput={this.props.updateConsoleOutput}
 
           setInnerWidth={this.props.setInnerWidth}
-          setInnerHeight={this.props.setInnerHeight}
 
           updateTextChange={this.props.updateTextChange}
           updateImageChange={this.props.updateImageChange}
@@ -462,7 +461,6 @@ App.propTypes = {
   updateFile: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
-  setInnerHeight: PropTypes.func.isRequired,
   setQuestionInnerHeight: PropTypes.func.isRequired,
   updateQuestionChange: PropTypes.func.isRequired,
   updateAnswerChange: PropTypes.func.isRequired,

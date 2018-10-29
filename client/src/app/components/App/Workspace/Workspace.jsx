@@ -58,7 +58,7 @@ class Workspace extends React.Component {
       <section>
         <div>
           <div className={classNames(themeClass)}>
-            <div
+            <div //eslint-disable-line
               className='workspace__header-container'
               tabIndex='0' //eslint-disable-line
               onClick={e => this.toggleWorkspace(e)}
@@ -113,7 +113,9 @@ class Workspace extends React.Component {
                           container='workspace'
                         />
                       </div>
-                      <div className={`workspace__output ${this.state.isConsoleOpen ? 'workspace__output--short' : ''}`}>
+                      <div
+                        className={`workspace__output ${this.state.isConsoleOpen ? 'workspace__output--short' : ''}`}
+                      >
                         <div
                           className={`workspace__output-overlay
                           ${this.state.isResizing
@@ -166,6 +168,7 @@ class Workspace extends React.Component {
 
 Workspace.propTypes = {
   clearConsoleOutput: PropTypes.func.isRequired,
+  closeShareWorkspace: PropTypes.func.isRequired,
   consoleOutputText: PropTypes.string.isRequired,
   currentFile: PropTypes.number.isRequired,
   editorFontSize: PropTypes.number.isRequired,
@@ -178,11 +181,12 @@ Workspace.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   isRefreshing: PropTypes.bool.isRequired,
   innerWidth: PropTypes.number.isRequired,
-  innerHeight: PropTypes.number.isRequired,
+  isShareWorkspaceOpen: PropTypes.bool.isRequired,
   isWorkspaceOpen: PropTypes.bool.isRequired,
+  openShareWorkspace: PropTypes.func.isRequired,
   playCode: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
-  setInnerHeight: PropTypes.func.isRequired,
+  setEditorMode: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
@@ -191,6 +195,7 @@ Workspace.propTypes = {
   toggleWorkspace: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
+  workspace: PropTypes.shape({}).isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -201,7 +206,6 @@ const mapStateToProps = state => ({
   editorTheme: state.preferences.editorTheme,
   files: state.workspace.workspace.files,
   innerWidth: state.workspace.workspace.innerWidth,
-  innerHeight: state.workspace.workspace.innerHeight,
   isPlaying: state.workspace.workspace.isPlaying,
   isRefreshing: state.workspace.workspace.isRefreshing,
   isShareWorkspaceOpen: state.workspace.isShareWorkspaceOpen,

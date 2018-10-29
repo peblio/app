@@ -107,6 +107,7 @@ class SignUp extends React.Component {
                         className="signup-modal__radio"
                         name="type"
                         value="student"
+                        id="student"
                         onChange={(e) => {
                           this.props.setUserType(e.target.value);
                         }}
@@ -173,7 +174,7 @@ class SignUp extends React.Component {
                             }
                           }}
                         />
-                I'm over 13
+                        {'I\'m over 13'}
                       </label>
                     </li>
                     <li className="signup-modal__listitem">
@@ -192,15 +193,17 @@ class SignUp extends React.Component {
                             }
                           }}
                         />
-                I'm under 13
+                        {'I\'m under 13'}
                       </label>
                     </li>
                   </ul>
                   {this.props.requiresGuardianConsent && (
                     <div className="signup-modal__div">
+                      {/* eslint-disable */}
                       <p className="signup__notice">
-                        Enter your parent's or guardian's email address and we will send them an email to confirm this account
+                        {'Enter your parent\'s or guardian\'s email address and we will send them an email to confirm this account'}
                       </p>
+                      {/* eslint-enable */}
                       <input
                         required
                         className="signup-modal__input"
@@ -229,6 +232,7 @@ class SignUp extends React.Component {
               />
               <label
                 className="signup-modal__terms-label"
+                htmlFor="agree"
               >
                 {' '}
                 I have read and agree to the
@@ -236,6 +240,7 @@ class SignUp extends React.Component {
                 <a
                   href="https://www.peblio.co/terms-of-use"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="signup-modal__link"
                 >
                   Terms of Use
@@ -246,6 +251,7 @@ class SignUp extends React.Component {
                 <a
                   href="https://www.peblio.co/privacy-policy"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="signup-modal__link"
                 >
                 Privacy Policy

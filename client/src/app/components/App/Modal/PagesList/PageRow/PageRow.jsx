@@ -99,9 +99,18 @@ class PageRow extends Component {
 PageRow.propTypes = {
   connectDragSource: PropTypes.func.isRequired,
   deletePage: PropTypes.func.isRequired,
+  duplicatePage: PropTypes.func.isRequired,
   isDragging: PropTypes.bool.isRequired,
   isSelected: PropTypes.bool.isRequired,
-  page: PropTypes.shape({ _id: PropTypes.string, id: PropTypes.string }).isRequired,
+  page: PropTypes.shape({
+    _id: PropTypes.string,
+    id: PropTypes.string,
+    editorIndex: PropTypes.number,
+    editors: PropTypes.shape({}),
+    folder: PropTypes.shape({}),
+    layout: PropTypes.arrayOf(PropTypes.shape({})),
+    title: PropTypes.string,
+  }).isRequired,
   viewPage: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired
 };

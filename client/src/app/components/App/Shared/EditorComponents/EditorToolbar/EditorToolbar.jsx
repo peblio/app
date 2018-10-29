@@ -5,16 +5,16 @@ import PropTypes from 'prop-types';
 import InfoSVG from '../../../../../images/info.svg';
 import PauseSVG from '../../../../../images/pause.svg';
 import PlaySVG from '../../../../../images/play.svg';
-import { ProcessingWarning } from '../../../../../constants/codeConstants.js';
+import { ProcessingWarning, WorkspaceLanguageConfirmation } from '../../../../../constants/codeConstants.js';
 
 require('./editorToolbar.scss');
 
 class EditorToolbar extends React.Component {
   confirmLanguageChange = (e) => {
-    const validationResults = window.confirm('Changing the language will delete all of your current code in the workspace. Are you sure you want to continue');
+    const validationResults = window.confirm(WorkspaceLanguageConfirmation);
 
-    if (validationResults == false) {
-      e.selectedIndex = (e.selectedIndex == 1) ? 0 : 1;
+    if (validationResults === false) {
+      e.selectedIndex = (e.selectedIndex === 1) ? 0 : 1;
     } else {
       this.props.setEditorMode(e);
     }
@@ -116,6 +116,7 @@ class EditorToolbar extends React.Component {
 }
 
 EditorToolbar.propTypes = {
+  container: PropTypes.string.isRequired,
   currentFile: PropTypes.number.isRequired,
   editorMode: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
@@ -123,9 +124,11 @@ EditorToolbar.propTypes = {
     content: PropTypes.string.isRequired
   })).isRequired,
   isPlaying: PropTypes.bool.isRequired,
+  openShareWorkspace: PropTypes.func.isRequired,
   playCode: PropTypes.func.isRequired,
-  startCodeRefresh: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
+  setEditorMode: PropTypes.func.isRequired,
+  startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired
 };
 

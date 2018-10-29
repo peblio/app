@@ -81,16 +81,6 @@ export function setInnerWidth(value) {
   };
 }
 
-export function setInnerHeight(value) {
-  return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
-    dispatch({
-      type: ActionTypes.WP_SET_INNER_HEIGHT,
-      value
-    });
-  };
-}
-
 export function loadWorkspace(workspace) {
   return (dispatch) => {
     dispatch({

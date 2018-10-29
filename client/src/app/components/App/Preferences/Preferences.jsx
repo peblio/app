@@ -16,7 +16,7 @@ class Preferences extends React.Component {
   }
 
   render() {
-    const { preview, isPreferencesPanelOpen } = this.props;
+    const { isPreferencesPanelOpen } = this.props;
     const prefClassName = classNames('preferences__container', {
       'preferences__container--open': isPreferencesPanelOpen
     });

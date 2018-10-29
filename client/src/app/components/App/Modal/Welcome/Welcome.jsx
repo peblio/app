@@ -4,11 +4,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import initHelpHero from 'helphero';
-import history from '../../../../utils/history';
 
 import * as mainToolbarActions from '../../../../action/mainToolbar.js';
 import * as WelcomeText from '../../../../constants/welcomeConstants.js';
-import Intro1GIF from '../../../../images/adapt-test.png';
 
 require('./welcome.scss');
 
@@ -44,8 +42,9 @@ class Welcome extends Component {
   }
 
   increaseScreenNumber =() => {
-    this.setState({
-      screenNumber: this.state.screenNumber + 1 });
+    this.setState(prevState => ({
+      screenNumber: prevState.screenNumber + 1
+    }));
   }
 
   resetScreenNumber =() => {
@@ -61,7 +60,7 @@ class Welcome extends Component {
 
   render() {
     const containerClass = classNames('welcome__container', {
-      'welcome__green-back': (this.state.screenNumber === 1 || this.state.screenNumber == 4),
+      'welcome__green-back': (this.state.screenNumber === 1 || this.state.screenNumber === 4),
       'welcome__blue-back': (this.state.screenNumber === 0 || this.state.screenNumber === 2),
       'welcome__red-back': (this.state.screenNumber === 3),
     });
@@ -87,7 +86,7 @@ class Welcome extends Component {
               className="welcome__button welcome__blue-button"
               onClick={this.increaseScreenNumber}
             >
-          Let's Go!
+              {'Let\'s Go!'}
             </button>
             <button
               className="welcome__button welcome__blue-button"
@@ -96,7 +95,7 @@ class Welcome extends Component {
           Skip
             </button>
             <p className="welcome__text">
-              You can always open this your with Help > Tutorial in the toolbar
+              {'You can always open this your with Help > Tutorial in the toolbar'}
             </p>
           </div>
         )}
@@ -117,7 +116,11 @@ class Welcome extends Component {
               </button>
             </div>
             <div className="welcome__right">
-              <img className="welcome__image" src={this.state.images[this.state.screenNumber]} />
+              <img
+                alt="tutorial on using peblios"
+                className="welcome__image"
+                src={this.state.images[this.state.screenNumber]}
+              />
             </div>
           </div>
         )}
@@ -152,16 +155,11 @@ class Welcome extends Component {
 }
 
 Welcome.propTypes = {
-  toggleHelpDropdown: PropTypes.func.isRequired,
-  isWelcomeModalOpen: PropTypes.bool.isRequired
+  closeWelcomeModal: PropTypes.func.isRequired,
 };
-
-const mapStateToProps = state => ({
-  isWelcomeModalOpen: state.mainToolbar.isWelcomeModalOpen
-});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   ...mainToolbarActions,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
+export default connect(null, mapDispatchToProps)(Welcome);

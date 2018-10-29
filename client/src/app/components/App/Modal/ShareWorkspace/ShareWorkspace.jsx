@@ -140,8 +140,11 @@ class ShareWorkspace extends React.Component {
 
 
 ShareWorkspace.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
   submitPage: PropTypes.func.isRequired,
-  viewLoginModal: PropTypes.func.isRequired
+  viewLoginModal: PropTypes.func.isRequired,
+  workspace: PropTypes.shape({}).isRequired,
 };
 
 
