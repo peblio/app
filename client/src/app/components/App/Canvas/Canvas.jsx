@@ -8,7 +8,7 @@ import Iframe from './Iframe/Iframe.jsx';
 import Image from './Image/Image.jsx';
 import TextEditor from './TextEditor/TextEditor.jsx';
 import WidgetNav from './WidgetNav/WidgetNav.jsx';
-import convertPixelHeightToGridHeight from '../../../utils/pixel-to-grid.js';
+import { convertPixelHeightToGridHeight } from '../../../utils/pixel-to-grid.js';
 
 import * as WidgetSize from '../../../constants/widgetConstants.js';
 

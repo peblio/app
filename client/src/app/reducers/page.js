@@ -4,7 +4,7 @@ import reduceReducers from 'reduce-reducers';
 import * as ActionTypes from '../constants/reduxConstants';
 import * as pageDefaults from '../constants/pageConstants';
 import { pageSchema } from '../schema.js';
-import convertPixelHeightToGridHeight from '../utils/pixel-to-grid';
+import { convertPixelHeightToGridHeight } from '../utils/pixel-to-grid';
 import { namespaceReducer } from '../utils/namespace-redux';
 import foldersReducer, { initialState as foldersInitialState } from './folders';
 
@@ -13,7 +13,7 @@ const initialState = {
   id: '',
   rgl: {
     cols: 30,
-    margin: [50, 25],
+    margin: [25, 25],
     padding: [0, 0],
     rowHeight: 1,
     width: 816,

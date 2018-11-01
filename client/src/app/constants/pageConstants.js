@@ -23,10 +23,10 @@ export const STARTER_WORKSPACE_LAYOUT = [
     static: false,
     w: 30,
     x: 0,
-    y: 30
+    y: 0,
   },
   {
-    h: 20,
+    h: 30,
     i: 'editor-1',
     maxH: 100,
     maxW: 30,
@@ -36,5 +36,5 @@ export const STARTER_WORKSPACE_LAYOUT = [
     static: false,
     w: 30,
     x: 0,
-    y: 0
+    y: 10
   }];

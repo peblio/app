@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { submitPage } from '../../../../action/page.js';
 import { viewLoginModal } from '../../../../action/mainToolbar.js';
 import * as PageDefaults from '../../../../constants/pageConstants.js';
+import { convertWorkspaceDescHeight } from '../../../../utils/pixel-to-grid.js';
 
 require('./shareWorkspace.scss');
 
@@ -24,13 +25,27 @@ class ShareWorkspace extends React.Component {
 
   isLoggedIn=() => !(this.props.name === '' || this.props.name === null)
 
+  onEnterPress = (e) => {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+    }
+  }
+
   saveAndShareWorkspace=() => {
+    const layout = PageDefaults.STARTER_WORKSPACE_LAYOUT;
+    const textAreaLineHeight = parseFloat(getComputedStyle(this.desc).fontSize) * 1.2;
+    const yValue = convertWorkspaceDescHeight(this.desc.value.length, textAreaLineHeight, this.props.rgl.margin, this.props.rgl.rowHeight, layout[0].maxH);
+    console.log(yValue);
+    layout[0].h = yValue;
+    layout[1].y = yValue + 1;
+    const descText = this.desc.value.replace(/[\r\n]+/g, ' ');
+
     const tempDesc = {
       type: 'text',
       id: 'editor-0',
       index: 0,
       editorState: EditorState.createWithContent(
-        ContentState.createFromText(this.desc.value)
+        ContentState.createFromText(descText)
       ),
       backColor: 'transparent'
     };
@@ -48,7 +63,7 @@ class ShareWorkspace extends React.Component {
         'editor-1': tempEditor,
       },
       2,
-      PageDefaults.STARTER_WORKSPACE_LAYOUT,
+      layout,
       'fromWP',
       PageDefaults.DEFAULT_WORKSPACE_MODE,
       this.isLoggedIn()
@@ -88,6 +103,7 @@ class ShareWorkspace extends React.Component {
               id='share-workspace__desc'
               className='share-workspace__desc'
               ref={(element) => { this.desc = element; }}
+              onKeyDown={this.onEnterPress}
             />
 
             <div className='share-workspace__button-container'>
@@ -150,7 +166,8 @@ ShareWorkspace.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    name: state.user.name
+    name: state.user.name,
+    rgl: state.page.rgl
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
