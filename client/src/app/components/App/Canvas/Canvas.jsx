@@ -242,7 +242,7 @@ class Canvas extends React.Component {
 
             localLayout[key].minH = WidgetSize.IFRAME_MIN_HEIGHT;
             localLayout[key].h =
-              (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
+              (localLayout[key].h < localLayout[key].minH) ? WidgetSize.IFRAME_DEFAULT_HEIGHT : localLayout[key].h;
             break;
           }
           case 'image': {

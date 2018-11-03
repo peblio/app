@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import initHelpHero from 'helphero';
 
 import * as pageDefaults from '../../constants/pageConstants';
 
@@ -39,8 +38,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.authAndLoadPage();
-    const hlp = initHelpHero('1Dyo05WliMY');
-    hlp.anonymous();
   }
 
   onKeyPressed(e) {
