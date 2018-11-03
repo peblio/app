@@ -26,7 +26,7 @@ class ShareWorkspace extends React.Component {
   isLoggedIn=() => !(this.props.name === '' || this.props.name === null)
 
   onEnterPress = (e) => {
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
       e.preventDefault();
     }
   }
@@ -34,7 +34,13 @@ class ShareWorkspace extends React.Component {
   saveAndShareWorkspace=() => {
     const layout = PageDefaults.STARTER_WORKSPACE_LAYOUT;
     const textAreaLineHeight = parseFloat(getComputedStyle(this.desc).fontSize) * 1.2;
-    const yValue = convertWorkspaceDescHeight(this.desc.value.length, textAreaLineHeight, this.props.rgl.margin, this.props.rgl.rowHeight, layout[0].maxH);
+    const yValue = convertWorkspaceDescHeight(
+      this.desc.value.length,
+      textAreaLineHeight,
+      this.props.rgl.margin,
+      this.props.rgl.rowHeight,
+      layout[0].maxH
+    );
     console.log(yValue);
     layout[0].h = yValue;
     layout[1].y = yValue + 1;
@@ -158,6 +164,10 @@ class ShareWorkspace extends React.Component {
 ShareWorkspace.propTypes = {
   closeModal: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
+  rgl: PropTypes.shape({
+    margin: PropTypes.arrayOf(PropTypes.number),
+    rowHeight: PropTypes.number,
+  }).isRequired,
   submitPage: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   workspace: PropTypes.shape({}).isRequired,
