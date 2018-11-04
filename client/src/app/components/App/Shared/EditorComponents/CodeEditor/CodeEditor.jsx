@@ -42,7 +42,7 @@ class CodeEditor extends React.Component {
   componentWillUpdate(nextProps) {
     // check if files have changed
     if (this.props.currentFile !== nextProps.currentFile) {
-      const file = this.props.files[nextProps.currentFile];
+      const file = nextProps.files[nextProps.currentFile];
       this.cm.swapDoc(CodeMirror.Doc(file.content, this.getFileMode(file.name)));
     }
     if (this.props.editorFontSize !== nextProps.editorFontSize) {
@@ -51,9 +51,14 @@ class CodeEditor extends React.Component {
     if (this.props.editorTheme !== nextProps.editorTheme) {
       this.cm.setOption('theme', constants.EDITOR_THEME[nextProps.editorTheme]);
     }
-  }
-
-  componentDidUpdate(prevProps) {
+    // TODO : Find an alternate to the below solution
+    // this is specifically for the workspace since the component mounts before the value is pulled in from the DB
+    if (
+      this.props.container === 'workspace' &&
+      this.props.files[this.props.currentFile].content !== nextProps.files[nextProps.currentFile].content
+    ) {
+      this.cm.setValue(nextProps.files[nextProps.currentFile].content);
+    }
   }
 
   getFileMode(fileName) {
@@ -87,6 +92,7 @@ class CodeEditor extends React.Component {
 }
 
 CodeEditor.propTypes = {
+  container: PropTypes.string.isRequired,
   currentFile: PropTypes.number.isRequired,
   editorFontSize: PropTypes.number.isRequired,
   editorTheme: PropTypes.string.isRequired,

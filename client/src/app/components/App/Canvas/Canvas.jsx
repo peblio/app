@@ -8,7 +8,7 @@ import Iframe from './Iframe/Iframe.jsx';
 import Image from './Image/Image.jsx';
 import TextEditor from './TextEditor/TextEditor.jsx';
 import WidgetNav from './WidgetNav/WidgetNav.jsx';
-import convertPixelHeightToGridHeight from '../../../utils/pixel-to-grid.js';
+import { convertPixelHeightToGridHeight } from '../../../utils/pixel-to-grid.js';
 
 import * as WidgetSize from '../../../constants/widgetConstants.js';
 
@@ -110,7 +110,6 @@ class Canvas extends React.Component {
             editorMode={editor.editorMode}
             editorTheme={this.props.editorTheme}
             files={editor.files}
-            innerHeight={editor.innerHeight}
             innerWidth={editor.innerWidth}
             isPlaying={editor.isPlaying && isVisible}
             isRefreshing={editor.isRefreshing}
@@ -118,7 +117,6 @@ class Canvas extends React.Component {
             startCodeRefresh={this.props.startCodeRefresh}
             setCurrentFile={this.props.setCurrentFile}
             setInnerWidth={this.props.setInnerWidth}
-            setInnerHeight={this.props.setInnerHeight}
             stopCode={this.props.stopCode}
             stopCodeRefresh={this.props.stopCodeRefresh}
             updateConsoleOutput={this.props.updateConsoleOutput}
@@ -244,7 +242,7 @@ class Canvas extends React.Component {
 
             localLayout[key].minH = WidgetSize.IFRAME_MIN_HEIGHT;
             localLayout[key].h =
-              (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
+              (localLayout[key].h < localLayout[key].minH) ? WidgetSize.IFRAME_DEFAULT_HEIGHT : localLayout[key].h;
             break;
           }
           case 'image': {
@@ -262,7 +260,13 @@ class Canvas extends React.Component {
       }
     });
     return (
-      <section className={`canvas ${this.props.preview ? 'canvas-preview-mode' : 'canvas-edit-mode'}  ${this.props.isNavigationOpen ? 'canvas-right' : ''}`}>
+      <section
+        className={
+          `canvas
+          ${this.props.preview ? 'canvas-preview-mode' : 'canvas-edit-mode'}
+          ${this.props.isNavigationOpen ? 'canvas-right' : ''}`
+        }
+      >
         {(this.props.pageHeading === '' && this.props.preview) || (
           <input
             type="text"
@@ -295,7 +299,11 @@ class Canvas extends React.Component {
               }
             >
               <div
-                className={this.props.editors[id].type === 'text' ? 'widget__container no-outline' : 'widget__container element__iframe-container'}
+                className={
+                  this.props.editors[id].type === 'text'
+                    ? 'widget__container no-outline'
+                    : 'widget__container element__iframe-container'
+                }
                 id={id}
                 tabIndex="0" // eslint-disable-line
                 onFocus={() => this.props.setCurrentWidget(id)}
@@ -339,6 +347,7 @@ Canvas.propTypes = {
   editors: PropTypes.shape({}).isRequired,
   editorTheme: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  isNavigationOpen: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   pageHeading: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
@@ -356,7 +365,6 @@ Canvas.propTypes = {
   setCurrentFile: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired,
   setImageURL: PropTypes.func.isRequired,
-  setInnerHeight: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
   setPageHeading: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,

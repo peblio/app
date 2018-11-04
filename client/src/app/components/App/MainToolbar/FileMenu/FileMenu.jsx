@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import history from '../../../../utils/history';
 
 require('./fileMenu.scss');
 
@@ -86,6 +85,7 @@ FileMenu.propTypes = {
   name: PropTypes.string.isRequired,
   savePage: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
+  viewExamplesModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired
 };
 

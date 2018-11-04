@@ -88,7 +88,9 @@ class MainToolbar extends React.Component {
               className="file-modal__container"
               onBlur={() => {
                 setTimeout(() => {
-                  this.props.isFileDropdownOpen && this.props.toggleFileDropdown();
+                  if (this.props.isFileDropdownOpen) {
+                    this.props.toggleFileDropdown();
+                  }
                 }, 50);
               }}
             >
@@ -115,7 +117,9 @@ class MainToolbar extends React.Component {
               className="file-modal__container"
               onBlur={() => {
                 setTimeout(() => {
-                  this.props.isHelpDropdownOpen && this.props.toggleHelpDropdown();
+                  if (this.props.isHelpDropdownOpen) {
+                    this.props.toggleHelpDropdown();
+                  }
                 }, 50);
               }}
             >
@@ -186,7 +190,9 @@ class MainToolbar extends React.Component {
                     onKeyDown={this.props.toggleAccountDropdown}
                     onBlur={() => {
                       setTimeout(() => {
-                        this.props.isAccountDropdownOpen && this.props.toggleAccountDropdown();
+                        if (this.props.isAccountDropdownOpen) {
+                          this.props.toggleAccountDropdown();
+                        }
                       }, 50);
                     }}
                     className="main-toolbar__account-button"
@@ -287,7 +293,9 @@ MainToolbar.propTypes = {
   createNavigationContent: PropTypes.func.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,
+  isHelpDropdownOpen: PropTypes.func.isRequired,
   isPreferencesPanelOpen: PropTypes.bool.isRequired,
+  layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   logoutUser: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,

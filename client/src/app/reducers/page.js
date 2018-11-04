@@ -4,7 +4,7 @@ import reduceReducers from 'reduce-reducers';
 import * as ActionTypes from '../constants/reduxConstants';
 import * as pageDefaults from '../constants/pageConstants';
 import { pageSchema } from '../schema.js';
-import convertPixelHeightToGridHeight from '../utils/pixel-to-grid';
+import { convertPixelHeightToGridHeight } from '../utils/pixel-to-grid';
 import { namespaceReducer } from '../utils/namespace-redux';
 import foldersReducer, { initialState as foldersInitialState } from './folders';
 

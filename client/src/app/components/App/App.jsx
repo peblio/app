@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import initHelpHero from 'helphero';
 
 import * as pageDefaults from '../../constants/pageConstants';
 
@@ -20,6 +19,7 @@ import Welcome from './Modal/Welcome/Welcome.jsx';
 import Canvas from './Canvas/Canvas.jsx';
 import MainToolbar from './MainToolbar/MainToolbar.jsx';
 import Navigation from './Navigation/Navigation.jsx';
+import Workspace from './Workspace/Workspace.jsx';
 
 import * as editorActions from '../../action/editors.js';
 import * as mainToolbarActions from '../../action/mainToolbar.js';
@@ -27,6 +27,7 @@ import * as navigationActions from '../../action/navigation.js';
 import * as pageActions from '../../action/page.js';
 import * as preferencesActions from '../../action/preferences.js';
 import * as userActions from '../../action/user.js';
+import { loadWorkspace } from '../../action/workspace.js';
 
 import axios from '../../utils/axios';
 
@@ -37,8 +38,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.authAndLoadPage();
-    const hlp = initHelpHero('1Dyo05WliMY');
-    hlp.anonymous();
   }
 
   onKeyPressed(e) {
@@ -102,6 +101,9 @@ class App extends React.Component {
         .then((res) => {
           this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].heading, res.data[0].layout);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
+          if (Object.keys(res.data[0].workspace).length > 0) {
+            this.props.loadWorkspace(res.data[0].workspace);
+          }
           this.props.setPreviewMode(true);
           this.loadNavigation();
           axios.get(`/authenticate/${projectID}`)
@@ -144,7 +146,9 @@ class App extends React.Component {
           this.props.editors,
           this.props.editorIndex,
           this.props.layout,
-          'save'
+          'save',
+          this.props.workspace,
+          true
         );
       } else if (this.props.canEdit) {
         this.props.updatePage(
@@ -153,7 +157,8 @@ class App extends React.Component {
           this.props.pageHeading,
           this.props.editors,
           this.props.editorIndex,
-          this.props.layout
+          this.props.layout,
+          this.props.workspace
         );
       } else {
         // this is for fork and save
@@ -164,7 +169,9 @@ class App extends React.Component {
           this.props.editors,
           this.props.editorIndex,
           this.props.layout,
-          'fork'
+          'fork',
+          this.props.workspace,
+          true
         );
       }
     } else {
@@ -204,7 +211,6 @@ class App extends React.Component {
             preview={this.props.preview}
             projectID={this.projectID}
             setPageTitle={this.props.setPageTitle}
-            setEditorMode={this.props.setEditorMode}
             savePage={this.savePage}
             editorAutoSave={this.props.editorAutoSave}
             toggleFileDropdown={this.props.toggleFileDropdown}
@@ -255,7 +261,6 @@ class App extends React.Component {
           updateConsoleOutput={this.props.updateConsoleOutput}
 
           setInnerWidth={this.props.setInnerWidth}
-          setInnerHeight={this.props.setInnerHeight}
 
           updateTextChange={this.props.updateTextChange}
           updateImageChange={this.props.updateImageChange}
@@ -379,6 +384,7 @@ class App extends React.Component {
           <Welcome />
         </Modal>
         <Navigation />
+        <Workspace />
       </div>
     );
   }
@@ -391,6 +397,8 @@ App.propTypes = {
   editors: PropTypes.shape({}).isRequired,
   editorIndex: PropTypes.number.isRequired,
   currentWidget: PropTypes.string.isRequired,
+
+  workspace: PropTypes.shape({}).isRequired,
 
   pageTitle: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
@@ -431,6 +439,7 @@ App.propTypes = {
   removeEditor: PropTypes.func.isRequired,
   duplicateEditor: PropTypes.func.isRequired,
   loadEditors: PropTypes.func.isRequired,
+  loadWorkspace: PropTypes.func.isRequired,
   setEditorPosition: PropTypes.func.isRequired,
   setEditorSize: PropTypes.func.isRequired,
   addCodeEditor: PropTypes.func.isRequired,
@@ -438,7 +447,6 @@ App.propTypes = {
   stopCode: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
-  setEditorMode: PropTypes.func.isRequired,
   clearConsoleOutput: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
@@ -450,7 +458,6 @@ App.propTypes = {
   updateFile: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
-  setInnerHeight: PropTypes.func.isRequired,
   setQuestionInnerHeight: PropTypes.func.isRequired,
   updateQuestionChange: PropTypes.func.isRequired,
   updateAnswerChange: PropTypes.func.isRequired,
@@ -521,6 +528,8 @@ function mapStateToProps(state) {
     editorIndex: state.editorsReducer.editorIndex,
     currentWidget: state.editorsReducer.currentWidget,
 
+    workspace: state.workspace.workspace,
+
     layout: state.page.layout,
     rgl: state.page.rgl,
     pageHeading: state.page.pageHeading,
@@ -568,7 +577,8 @@ function mapDispatchToProps(dispatch) {
     ...navigationActions,
     ...pageActions,
     ...preferencesActions,
-    ...userActions
+    ...userActions,
+    loadWorkspace
   }, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);

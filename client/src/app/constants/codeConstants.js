@@ -170,4 +170,10 @@ export const ProcessingWarning =
   </a>`;
 /* eslint-enable */
 
+export const WorkspaceLanguageConfirmation =
+`
+Changing the language will delete all of your current code in the workspace.
+Are you sure you want to continue?
+`;
+
 export { FILES as default };

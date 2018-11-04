@@ -11,7 +11,8 @@ const pageSchema = new Schema({
   editors: { type: Object, default: {} },
   editorIndex: { type: Number, default: 0 },
   layout: { type: Array, default: [] },
-  folder: { type: Schema.Types.ObjectId, ref: 'Folder' }
+  folder: { type: Schema.Types.ObjectId, ref: 'Folder' },
+  workspace: { type: Object, default: {} }
 }, {
   minimize: false,
   timestamps: true

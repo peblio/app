@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import SplitPane from 'react-split-pane';
 
-import CodeEditor from './CodeEditor/CodeEditor.jsx';
-import CodeOutput from './CodeOutput/CodeOutput.jsx';
-import EditorToolbar from './EditorToolbar/EditorToolbar.jsx';
-import ConsoleOutput from './ConsoleOutput/ConsoleOutput.jsx';
+import CodeEditor from '../../Shared/EditorComponents/CodeEditor/CodeEditor.jsx';
+import CodeOutput from '../../Shared/EditorComponents/CodeOutput/CodeOutput.jsx';
+import EditorToolbar from '../../Shared/EditorComponents/EditorToolbar/EditorToolbar.jsx';
+import ConsoleOutput from '../../Shared/EditorComponents/ConsoleOutput/ConsoleOutput.jsx';
 
 require('./editorContainer.scss');
 
@@ -23,14 +23,14 @@ class EditorContainer extends React.Component {
     this.playCode = () => this.props.playCode(this.props.id);
     this.stopCode = () => this.props.stopCode(this.props.id);
     this.setInnerWidth = value => this.props.setInnerWidth(this.props.id, value);
-    this.setInnerHeight = value => this.props.setInnerHeight(this.props.id, value);
     this.startCodeRefresh = () => this.props.startCodeRefresh(this.props.id);
     this.stopCodeRefresh = () => this.props.stopCodeRefresh(this.props.id);
     this.updateFile = (index, file) => this.props.updateFile(this.props.id, index, file);
     this.setCurrentFile = index => this.props.setCurrentFile(this.props.id, index);
     this.clearConsoleOutput = () => this.props.clearConsoleOutput(this.props.id);
     this.updateConsoleOutput = (e) => {
-      // There's a memory leak in the Javascript editor. Watch the console after clicking Play.
+      // UPDATE: 29-Oct-18 : Not using Javascript editor now, but keep in mind if added
+      // Dec-17 : There's a memory leak in the Javascript editor. Watch the console after clicking Play.
       this.props.updateConsoleOutput(this.props.id, e);
     };
   }
@@ -65,6 +65,7 @@ class EditorContainer extends React.Component {
             setCurrentFile={this.setCurrentFile}
             startCodeRefresh={this.startCodeRefresh}
             stopCode={this.stopCode}
+            container="cannvas"
           />
           <div className="editor__container">
 
@@ -75,10 +76,7 @@ class EditorContainer extends React.Component {
                 onDragStarted={this.startResize}
                 onDragFinished={(size) => { this.finishResize(); this.setInnerWidth(size); }}
               >
-                <div className={`editor__input
-                    ${this.state.isConsoleOpen
-        ? 'editor__input-short' : ''}`}
-                >
+                <div className="editor__input">
 
                   <CodeEditor
                     currentFile={this.props.currentFile}
@@ -87,13 +85,9 @@ class EditorContainer extends React.Component {
                     editorFontSize={this.props.editorFontSize}
                     editorTheme={this.props.editorTheme}
                   />
-                  <ConsoleOutput
-                    consoleOutputText={this.props.consoleOutputText}
-                    isConsoleOpen={this.state.isConsoleOpen}
-                    toggleConsole={this.toggleConsole}
-                  />
+
                 </div>
-                <div className="editor__output">
+                <div className={`editor__output ${this.state.isConsoleOpen ? 'editor__output--short' : ''}`}>
                   <div
                     className={`editor__output-overlay
                       ${this.state.isResizing
@@ -112,6 +106,11 @@ class EditorContainer extends React.Component {
                       updateConsoleOutput={this.updateConsoleOutput}
                     />
                   )}
+                  <ConsoleOutput
+                    consoleOutputText={this.props.consoleOutputText}
+                    isConsoleOpen={this.state.isConsoleOpen}
+                    toggleConsole={this.toggleConsole}
+                  />
                 </div>
               </SplitPane>
             </div>
@@ -137,14 +136,12 @@ EditorContainer.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
-  innerHeight: PropTypes.number.isRequired,
   innerWidth: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isRefreshing: PropTypes.bool.isRequired,
   playCode: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
-  setInnerHeight: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,

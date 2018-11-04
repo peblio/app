@@ -16,7 +16,7 @@ class Preferences extends React.Component {
   }
 
   render() {
-    const { preview, isPreferencesPanelOpen } = this.props;
+    const { isPreferencesPanelOpen } = this.props;
     const prefClassName = classNames('preferences__container', {
       'preferences__container--open': isPreferencesPanelOpen
     });
@@ -60,6 +60,7 @@ class Preferences extends React.Component {
                   name="editor-theme"
                   onChange={this.props.updateEditorTheme}
                   ref={(editorTheme) => { this.editorTheme = editorTheme; }}
+                  value={this.props.editorTheme}
                 >
                   <option value="light">Light</option>
                   <option value="dark">Dark</option>

@@ -1,0 +1,70 @@
+@import 'variables';
+@import 'mixins';
+
+.workspace{
+  &__container {
+    height: calc(70vh - #{$editor-toolbar-height} - #{$editor-toolbar-files-height} - #{$h2-line-height});
+    position: relative;
+  }
+  &__sub-container {
+    height: 100%;
+    display: flex;
+  }
+  &__total-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: $z-index-layer-3;
+    background: $white;
+    height: $h2-line-height*1.2;
+    // transition-timing-function: ease;
+    // -webkit-transition: height 0.5s;
+    // transition: height 0.5s;
+    &--open {
+      height: 70vh;
+    }
+  }
+  &__header-container{
+    width: 100%;
+    background:#f0f0f0;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 -5px 20px -10px $black;
+    cursor: pointer;
+  }
+  &__header {
+    font-family: $sourceSansPro;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: $h2-size;
+    line-height: $h2-line-height;
+    margin: $small-margin/2;
+    color: $g4;
+  }
+  &__toggle {
+    color: $g4;
+    font-size: $h2-size;
+    background-color: transparent;
+    border: transparent;
+    &:hover {
+      color: $g3;
+      background-color: transparent;
+      border: transparent;
+    }
+  }
+  &__output-overlay {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: none;
+    &--show { // sass-lint:disable-line class-name-format
+      display: block;
+    }
+  }
+  &__output {
+    height: 100%;
+    &--short {
+      height: calc(100% - #{$console-output-height} - #{$console-heading-height});
+    }
+  }
+}

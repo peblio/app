@@ -7,6 +7,7 @@ import page from './page.js';
 import preferences from './preferences.js';
 import profile from './profile.js';
 import user from './user.js';
+import workspace from './workspace.js';
 
 const rootReducer = combineReducers({
   editorsReducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   page,
   preferences,
   profile,
-  user
+  user,
+  workspace
 });
 
 export default rootReducer;

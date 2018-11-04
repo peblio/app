@@ -94,7 +94,6 @@ const editorsReducer = (state = initialState, action) => {
         isRefreshing: false,
         editorMode: action.mode,
         innerWidth: 400,
-        innerHeight: 160
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -119,9 +118,6 @@ const editorsReducer = (state = initialState, action) => {
       editors[action.id].isRefreshing = false;
       return { ...state, editors };
 
-    case ActionTypes.SET_EDITOR_MODE:
-      editors[action.id].editorMode = action.value;
-      return { ...state, editors };
 
     case ActionTypes.UPDATE_CONSOLE_OUTPUT: {
       const tempOutput = editors[action.id].consoleOutputText.slice();
@@ -153,13 +149,6 @@ const editorsReducer = (state = initialState, action) => {
 
     case ActionTypes.SET_INNER_WIDTH: {
       editors[action.id].innerWidth = action.value;
-      return Object.assign({}, state, {
-        editors
-      });
-    }
-
-    case ActionTypes.SET_INNER_HEIGHT: {
-      editors[action.id].innerHeight = action.value;
       return Object.assign({}, state, {
         editors
       });

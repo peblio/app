@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import history from '../../../../utils/history';
 import * as mainToolbarActions from '../../../../action/mainToolbar.js';
 
 class HelpMenu extends React.Component {
@@ -17,6 +16,7 @@ class HelpMenu extends React.Component {
             onMouseDown={(e) => { e.preventDefault(); }}
             onKeyDown={(e) => { e.preventDefault(); }}
             target="_blank"
+            rel="noopener noreferrer"
           >
             <i className="fas fa-book"></i>
             {' '}
@@ -47,6 +47,7 @@ class HelpMenu extends React.Component {
             onMouseDown={(e) => { e.preventDefault(); }}
             onKeyDown={(e) => { e.preventDefault(); }}
             target="_blank"
+            rel="noopener noreferrer"
           >
             <i className="fas fa-comment-alt"></i>
             {' '}
@@ -60,6 +61,7 @@ class HelpMenu extends React.Component {
 
 HelpMenu.propTypes = {
   toggleHelpDropdown: PropTypes.func.isRequired,
+  viewWelcomeModal: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -101,18 +101,24 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, heading, editors, editorIndex, layout, type) {
+export function submitPage(parentId, title, heading, editors, editorIndex, layout, type, workspace, isLoggedIn) {
   const id = shortid.generate();
-  axios.post('/pages/save', {
+  const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
+  axios.post(axiosURL, {
     parentId,
     id,
     title,
     heading,
     editors: convertEditorsToRaw(editors),
     editorIndex,
-    layout
+    layout,
+    workspace
   }).then(() => {
-    history.push(`/pebl/${id}`);
+    if (type === 'fromWP') {
+      window.open(`/pebl/${id}`, '_blank');
+    } else {
+      history.push(`/pebl/${id}`);
+    }
     if (type === 'fork') {
       window.location.reload(true);
     }
@@ -128,14 +134,15 @@ export function submitPage(parentId, title, heading, editors, editorIndex, layou
   };
 }
 
-export function updatePage(id, title, heading, editors, editorIndex, layout) {
+export function updatePage(id, title, heading, editors, editorIndex, layout, workspace) {
   axios.post('/pages/update', {
     id,
     title,
     heading,
     editors: convertEditorsToRaw(editors),
     editorIndex,
-    layout
+    layout,
+    workspace
   }).then(response => console.log('Page update'))
     .catch(error => console.error('Page update error', error));
 

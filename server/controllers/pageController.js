@@ -14,6 +14,18 @@ async function getPage(req, res) {
   });
 }
 
+async function savePageAsGuest(req, res) {
+  try {
+    const hydratedUser = await User.findOne({ name: 'peblioguest' }).exec();
+
+    const page = new Page({ ...req.body, user: hydratedUser._id });
+    const savedPage = await page.save();
+    return res.send({ page: savedPage });
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
 async function savePage(req, res) {
   const user = req.user;
   if (!user) {
@@ -47,7 +59,8 @@ function updatePage(req, res) {
     title: req.body.title,
     editors: req.body.editors,
     editorIndex: req.body.editorIndex,
-    layout: req.body.layout
+    layout: req.body.layout,
+    workspace: req.body.workspace
   },
   (err, data) => {
     if (err) {
@@ -100,6 +113,7 @@ const pageRoutes = express.Router();
 pageRoutes.route('/:pageId/move').post(movePage);
 pageRoutes.route('/:pageId').get(getPage);
 pageRoutes.route('/save').post(savePage);
+pageRoutes.route('/saveAsGuest').post(savePageAsGuest);
 pageRoutes.route('/update').post(updatePage);
 pageRoutes.route('/:pageId').delete(deletePage);
 module.exports = pageRoutes;

@@ -176,17 +176,6 @@ export function setInnerWidth(id, value) {
   };
 }
 
-export function setInnerHeight(id, value) {
-  return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
-    dispatch({
-      type: ActionTypes.SET_INNER_HEIGHT,
-      id,
-      value
-    });
-  };
-}
-
 /** TEXT EDITOR */
 export function addTextEditor() {
   return (dispatch, getState) => {
