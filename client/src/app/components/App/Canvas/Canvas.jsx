@@ -102,6 +102,7 @@ class Canvas extends React.Component {
         {({ isVisible }) => (
           <EditorContainer
             id={editor.id}
+            addMediaFile={this.props.addMediaFile}
             currentFile={editor.currentFile}
             clearConsoleOutput={this.props.clearConsoleOutput}
             code={editor.code}

@@ -16,7 +16,11 @@
   background: $lighter-gray;
   overflow: hidden;
   box-sizing: border-box;
-
+  &--popup {
+    position: absolute;
+    width: 200px;
+    left: 50%;
+  }
   &--edit { // sass-lint:disable-line class-name-format
     border: $gray dashed 1px;
     height: 100%;
@@ -40,7 +44,12 @@
   }
 
   &--small {
-    .image__content{
+    .image__content.image__replace-content {
+      height: 100%;
+      left: 0;
+      right: 0;
+    }
+    .image__drop {
       margin: 0 auto;
     }
   }

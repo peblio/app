@@ -23,7 +23,7 @@ const initialState = {
   pageTitle: pageDefaults.DEFAULT_PAGE_TITLE,
   pageHeading: '',
   parentId: '',
-  preview: false,
+  preview: true,
   unsavedChanges: false
 };
 

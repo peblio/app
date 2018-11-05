@@ -154,6 +154,16 @@ const editorsReducer = (state = initialState, action) => {
       });
     }
 
+    case ActionTypes.ADD_MEDIA_FILE: {
+      editors[action.id].files.push({
+        name: action.name,
+        externalLink: action.resolveLinksInString
+      });
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
     /** TEXT EDITOR */
     case ActionTypes.ADD_TEXT_EDITOR: {
       const id = `editor-${state.editorIndex}`;

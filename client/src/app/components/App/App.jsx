@@ -252,6 +252,7 @@ class App extends React.Component {
           setEditorSize={this.props.setEditorSize}
           setEditorPosition={this.props.setEditorPosition}
           setCurrentFile={this.props.setCurrentFile}
+          addMediaFile={this.props.addMediaFile}
 
           playCode={this.props.playCode}
           stopCode={this.props.stopCode}
@@ -449,6 +450,7 @@ App.propTypes = {
   stopCodeRefresh: PropTypes.func.isRequired,
   clearConsoleOutput: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
+  addMediaFile: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
   addQuestionEditor: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired,

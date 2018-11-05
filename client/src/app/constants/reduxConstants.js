@@ -24,6 +24,7 @@ export const SET_EDITOR_SIZE = 'SET_EDITOR_SIZE';
 export const UPDATE_FILE = 'UPDATE_FILE';
 
 export const ADD_CODE_EDITOR = 'ADD_CODE_EDITOR';
+export const ADD_MEDIA_FILE = 'ADD_MEDIA_FILE';
 export const PLAY_CODE = 'PLAY_CODE';
 export const STOP_CODE = 'STOP_CODE';
 export const SET_INNER_WIDTH = 'SET_INNER_WIDTH';

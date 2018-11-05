@@ -10,6 +10,7 @@ import CloseSVG from '../../../../images/close.svg';
 
 import axios from '../../../../utils/axios';
 import * as WidgetSize from '../../../../constants/widgetConstants.js';
+import FileUpload from '../../Shared/FileUpload/FileUpload.jsx';
 
 require('./image.scss');
 
@@ -24,8 +25,8 @@ class Image extends React.Component {
     this.onChange = (state) => { this.props.onChange(this.props.id, state); };
     this.setImageURL = url => this.props.setImageURL(this.props.id, url);
     this.onDrop = this.onDrop.bind(this);
-    this.urlSubmitted = (event) => {
-      this.props.setImageURL(this.props.id, this.url.value);
+    this.urlSubmitted = (event, value) => {
+      this.props.setImageURL(this.props.id, value);
       event.preventDefault();
     };
   }
@@ -67,6 +68,7 @@ class Image extends React.Component {
   }
 
   handleOnClick() {
+    console.log('poop');
     const newState = { ...this.state };
 
     return (
@@ -80,44 +82,24 @@ class Image extends React.Component {
 
   renderUploadPopup() {
     return (
-      <div className>
-        <div className="image__title">Upload a file</div>
-        <Dropzone
-          onDrop={this.onDrop}
-          className="element-image"
-        >
-          <div className="image__drop">
-            <div className="image__svg">
-              <UploadSVG alt="upload image" />
-            </div>
-            <div className="image__svg--text">Drop a file or click to upload</div>
-          </div>
-        </Dropzone>
-        <div className="image__title">or add a URL</div>
-        <div className="image__url">
-          <form className="element-image__add-url" onSubmit={this.urlSubmitted.bind(this)}>
-            <label htmlFor="element-image-name" className="element-image__label">
-              <input
-                id="element-image-name"
-                className="element-image__input"
-                type="text"
-                ref={(element) => { this.url = element; }}
-                defaultValue={this.props.imageURL}
-                readOnly={this.props.preview}
-              />
-            </label>
-            <input className="element__button" type="submit" value="Upload New" />
-          </form>
-        </div>
-      </div>
+      <FileUpload
+        onDrop={this.onDrop}
+        urlSubmitted={this.urlSubmitted}
+        imageURL={this.props.imageURL}
+        readOnly={this.props.preview}
+      />
     );
   }
 
+  //
   render() {
     return (
-      <div
-        ref={(ref) => { this.imageWidgetRef = ref; }}
-        className={`
+      <div>
+        //
+        {' '}
+        <div
+          ref={(ref) => { this.imageWidgetRef = ref; }}
+          className={`
           image__container
           ${this.props.preview ? '' : 'image__container--edit'}
           ${this.props.name && this.imageWidgetRef && (
@@ -126,35 +108,45 @@ class Image extends React.Component {
       ) ? 'image__container--small' : ''}
           ${this.props.imageURL && 'image__container--exists'}
         `}
-      >
-        {!this.props.preview && !this.props.name && (
-          <div className="image__login">
-            {this.props.imageURL && <img className="element__image" src={this.props.imageURL} alt="" />}
-            <div
-              className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
-            >
-              <div className="image__title">
+        >
+          {!this.props.preview && !this.props.name && (
+            <div className="image__login">
+              {this.props.imageURL && <img className="element__image" src={this.props.imageURL} alt="" />}
+              <div
+                className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
+              >
+                <div className="image__title">
                 Log In to Upload Images
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {!this.props.preview && this.props.name && (
-          <div
-            tabIndex="0"
-            role="button"
-            className={`image__login ${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
-          >
-            {this.renderUploadPopup()}
-          </div>
-        )}
+          {!this.props.preview && this.props.name && (
+            <div
+              tabIndex="1"
+              role="button"
+              className={`image__login ${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
+              onClick={() => { console.log('dfgdgf'); this.handleOnClick(); }}
+              onKeyUp={() => this.handleOnClick()}
+            >
+              {this.renderUploadPopup()}
+            </div>
+          )}
 
-        {this.props.preview && this.props.imageURL &&
+          {this.props.imageURL &&
           <img className="element__image" src={this.props.imageURL} alt="" />
-        }
+          }
 
-        {this.state.showUploadPopup && this.renderUploadPopup()}
+          {this.state.showUploadPopup && (
+            <div
+              className='image__container image__container--popup'
+              onBlur={() => this.setUploadPopupVisibility(false)}
+            >
+              {this.renderUploadPopup()}
+            </div>
+          )}
+        </div>
       </div>
     );
   }

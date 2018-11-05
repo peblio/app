@@ -143,6 +143,14 @@
 
 
 .editor-toolbar {
+  &__image-upload {
+    position: absolute;
+    background: grey;
+    z-index: $z-index-layer-4;
+    left: calc(50% - 150px);
+    top: 30%;
+    width: 300px;
+  }
   &__title {
     color: $white;
     display: inline;
