@@ -40,12 +40,7 @@
   }
 
   &--small {
-    .image__content.image__replace-content {
-      height: 100%;
-      left: 0;
-      right: 0;
-    }
-    .image__drop {
+    .image__content{
       margin: 0 auto;
     }
   }
@@ -54,6 +49,9 @@
     &:hover {
       .image__content.image__replace-content {
         opacity: 1;
+      }
+      .image__title {
+        display: none;
       }
     }
 

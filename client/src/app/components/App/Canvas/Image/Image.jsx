@@ -79,40 +79,35 @@ class Image extends React.Component {
   }
 
   renderUploadPopup() {
-    return !this.props.preview && this.props.name && (
-      <div
-        className={`image__popup ${this.state.showUploadPopup ? 'visible' : ''}`}
-        onMouseEnter={() => this.setUploadPopupVisibility(true)}
-      >
-        <div className="image__content">
-          <CloseSVG className="upload__close" onClick={() => this.setUploadPopupVisibility(false)} />
-
-          <Dropzone
-            onDrop={this.onDrop}
-            className="element-image"
-          >
-            <div className="image__drop popup">
-              <div className="image__svg">
-                <UploadSVG alt="upload image" />
-              </div>
+    return (
+      <div className>
+        <div className="image__title">Upload a file</div>
+        <Dropzone
+          onDrop={this.onDrop}
+          className="element-image"
+        >
+          <div className="image__drop">
+            <div className="image__svg">
+              <UploadSVG alt="upload image" />
             </div>
-          </Dropzone>
-          <div className="image__url">
-
-            <form className="element-image__add-url" onSubmit={this.urlSubmitted.bind(this)}>
-              <label htmlFor="element-image-name" className="element-image__label">
-                <input
-                  id="element-image-name"
-                  className="element-image__input"
-                  type="text"
-                  ref={(element) => { this.url = element; }}
-                  defaultValue={this.props.imageURL}
-                  readOnly={this.props.preview}
-                />
-              </label>
-              <input className="element__button" type="submit" value="Upload" />
-            </form>
+            <div className="image__svg--text">Drop a file or click to upload</div>
           </div>
+        </Dropzone>
+        <div className="image__title">or add a URL</div>
+        <div className="image__url">
+          <form className="element-image__add-url" onSubmit={this.urlSubmitted.bind(this)}>
+            <label htmlFor="element-image-name" className="element-image__label">
+              <input
+                id="element-image-name"
+                className="element-image__input"
+                type="text"
+                ref={(element) => { this.url = element; }}
+                defaultValue={this.props.imageURL}
+                readOnly={this.props.preview}
+              />
+            </label>
+            <input className="element__button" type="submit" value="Upload New" />
+          </form>
         </div>
       </div>
     );
@@ -149,67 +144,9 @@ class Image extends React.Component {
           <div
             tabIndex="0"
             role="button"
-            className="image__login"
-            onClick={() => this.handleOnClick()}
-            onKeyUp={() => this.handleOnClick()}
-            onBlur={() => this.setUploadPopupVisibility(false)}
+            className={`image__login ${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
           >
-            {this.props.imageURL && <img className="element__image" src={this.props.imageURL} alt="" />}
-            <div
-              className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
-            >
-              {!this.props.imageURL && <div className="image__title">Upload a file</div>}
-
-              {
-                this.imageWidgetRef && !(
-                  this.imageWidgetRef.clientWidth < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_WIDTH ||
-                this.imageWidgetRef.clientHeight < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_HEIGHT
-                )
-                  ? (
-                    <Dropzone
-                      onDrop={this.onDrop}
-                      className="element-image"
-                    >
-                      <div className="image__drop">
-                        <div className="image__svg">
-                          <UploadSVG alt="upload image" />
-                        </div>
-                        <div className="image__svg--text">Drop a file or click to upload</div>
-                      </div>
-                    </Dropzone>
-                  )
-                  : (
-                    <div>
-                      <div className="image__title">Upload a file</div>
-
-                      <div className="image__drop">
-                        <div className="image__svg">
-                          <UploadSVG alt="upload image" />
-                        </div>
-                        <div className="image__svg--text">Drop a file or click to upload</div>
-                      </div>
-                    </div>
-                  )
-              }
-
-              {!this.props.imageURL && <div className="image__title">or add a URL</div>}
-
-              <div className="image__url">
-                <form className="element-image__add-url" onSubmit={this.urlSubmitted.bind(this)}>
-                  <label htmlFor="element-image-name" className="element-image__label">
-                    <input
-                      id="element-image-name"
-                      className="element-image__input"
-                      type="text"
-                      ref={(element) => { this.url = element; }}
-                      defaultValue={this.props.imageURL}
-                      readOnly={this.props.preview}
-                    />
-                  </label>
-                  <input className="element__button" type="submit" value="Upload New" />
-                </form>
-              </div>
-            </div>
+            {this.renderUploadPopup()}
           </div>
         )}
 
