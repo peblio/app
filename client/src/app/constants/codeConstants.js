@@ -119,10 +119,6 @@ export const FILES = {
     {
       name: 'style.css',
       content: defaultP5CSS
-    },
-    {
-      name: 'dog.png',
-      externalLink: 'https://images.pexels.com/photos/50988/ape-berber-monkeys-mammal-affchen-50988.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350'
     }
   ],
   html: [
