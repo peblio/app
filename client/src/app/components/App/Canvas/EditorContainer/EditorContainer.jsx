@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import SplitPane from 'react-split-pane';
+import URL from 'url';
 
 import CodeEditor from '../../Shared/EditorComponents/CodeEditor/CodeEditor.jsx';
 import CodeOutput from '../../Shared/EditorComponents/CodeOutput/CodeOutput.jsx';
@@ -19,6 +20,7 @@ class EditorContainer extends React.Component {
     };
     this.startResize = this.startResize.bind(this);
     this.finishResize = this.finishResize.bind(this);
+    this.addMediaFile = (name, link) => this.props.addMediaFile(this.props.id, name, link);
     this.removeEditor = () => this.props.removeEditor(this.props.id);
     this.playCode = () => this.props.playCode(this.props.id);
     this.stopCode = () => this.props.stopCode(this.props.id);
@@ -57,15 +59,17 @@ class EditorContainer extends React.Component {
       <div>
         <div className={classNames(themeClass)} data-test={`code-editor-${this.props.editorMode}`}>
           <EditorToolbar
+            addMediaFile={this.addMediaFile}
             currentFile={this.props.currentFile}
             editorMode={this.props.editorMode}
             files={this.props.files}
             isPlaying={this.props.isPlaying}
+            name={this.props.name}
             playCode={this.playCode}
             setCurrentFile={this.setCurrentFile}
             startCodeRefresh={this.startCodeRefresh}
             stopCode={this.stopCode}
-            container="cannvas"
+            container="canvas"
           />
           <div className="editor__container">
 
@@ -139,6 +143,7 @@ EditorContainer.propTypes = {
   innerWidth: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isRefreshing: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
   playCode: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,

@@ -2,6 +2,8 @@ import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import PropTypes from 'prop-types';
 import axiosOrg from 'axios';
+import URL from 'url';
+import ReactLoading from 'react-loading';
 
 import InfoSVG from '../../../../../images/info.svg';
 import PauseSVG from '../../../../../images/pause.svg';
@@ -17,8 +19,25 @@ class EditorToolbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isFileUploadOpen: false
+      isFileUploadOpen: false,
+      isFileUploading: false
     };
+  }
+
+  openFileUpload = () => {
+    this.setState({ isFileUploadOpen: true });
+  }
+
+  closeFileUpload = () => {
+    this.setState({ isFileUploadOpen: false });
+  }
+
+  startFileUpload = () => {
+    this.setState({ isFileUploading: true });
+  }
+
+  stopFileUpload = () => {
+    this.setState({ isFileUploading: false });
   }
 
   confirmLanguageChange = (e) => {
@@ -32,9 +51,8 @@ class EditorToolbar extends React.Component {
   }
 
   onDrop=(files) => {
-    console.log(files);
     const file = files[0];
-
+    this.startFileUpload();
     axios.get(`/upload/${this.props.name}/images`, {
       params: {
         filename: file.name,
@@ -43,9 +61,6 @@ class EditorToolbar extends React.Component {
     })
       .then((result) => {
         const signedUrl = result.data;
-        console.log(result.data);
-        console.log(file.name);
-
         const options = {
           headers: {
             'Content-Type': file.type
@@ -56,8 +71,8 @@ class EditorToolbar extends React.Component {
       })
       .then((result) => {
         const url = URL.parse(result.request.responseURL);
-        this.setUploadPopupVisibility(false);
-        this.setImageURL(`https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
+        this.props.addMediaFile(file.name, `https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
+        this.stopFileUpload();
       })
       .catch((err) => {
         console.log(err);
@@ -139,41 +154,77 @@ class EditorToolbar extends React.Component {
         </div>
         <ul className='editor-toolbar__files'>
           {
-            this.props.files.map((file, index) => (
-              <li key={file.id} className='editor-toolbar__file'>
-                <button
-                  onClick={() => this.props.setCurrentFile(index)}
-                  className={
-                    `editor-toolbar__file-button
-                    ${(this.props.currentFile === index) ? 'editor-toolbar__file-button--selected' : ''}`
-                  }
-                >
-                  {file.name}
-                </button>
-              </li>
-            ))
+            this.props.files.map((file, index) => {
+              const isImage = 'externalLink' in file;
+              return (
+                <li key={file.id} className='editor-toolbar__file'>
+                  <button
+                    onClick={() => {
+                      this.props.setCurrentFile(index);
+                    }}
+                    disabled={isImage}
+                    className={
+                      `editor-toolbar__file-button
+                    ${(this.props.currentFile === index) ? 'editor-toolbar__file-button--selected' : ''}
+                    ${(isImage) ? 'editor-toolbar__file-button-static' : ''}`
+                    }
+                  >
+                    {file.name}
+                  </button>
+                </li>
+              );
+            })
           }
-          <li key='add-media' className='editor-toolbar__file'>
+          {
+            (this.props.editorMode === 'p5' || this.props.editorMode === 'webdev') &&
+
+          (<li key='add-media' className='editor-toolbar__file'>
             <button
               className="editor-toolbar__file-button"
-              onClick={() => { this.setState({ isFileUploadOpen: true }); }}
+              onClick={this.openFileUpload}
             >
               <i className="fas fa-plus"></i>
             </button>
           </li>
+          )
+          }
         </ul>
         {this.state.isFileUploadOpen && (
           <div
             tabIndex="0"
             className="editor-toolbar__image-upload"
           >
-            <FileUpload
-              onDrop={this.onDrop}
-              urlSubmitted={this.urlSubmitted}
-              imageURL={this.props.imageURL}
-              readOnly={false}
-            />
+            <button
+              className="editor-toolbar__image-close"
+              onClick={this.closeFileUpload}
+            >
+              <i className="fas fa-times"></i>
+            </button>
+            {this.props.name ? (
+              <FileUpload
+                onDrop={this.onDrop}
+                urlSubmitted={this.props.addMediaFile}
+                imageURL={this.props.imageURL}
+                readOnly={false}
+                container="editor"
+                isSmall={false}
+              />
+            ) : (
+              <p className="editor-toolbar__image-notice">
+            Please Log In to Upload Images
+              </p>
+            )
+            }
+            {this.state.isFileUploading && (
+              <ReactLoading
+                className="editor-toolbar__image-upload-gif"
+                height="20%"
+                width="20%"
+                color="#B1B1B1"
+              />
+            )}
           </div>
+
         )}
       </div>
     );

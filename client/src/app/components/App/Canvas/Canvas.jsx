@@ -114,6 +114,7 @@ class Canvas extends React.Component {
             innerWidth={editor.innerWidth}
             isPlaying={editor.isPlaying && isVisible}
             isRefreshing={editor.isRefreshing}
+            name={this.props.name}
             playCode={this.props.playCode}
             startCodeRefresh={this.props.startCodeRefresh}
             setCurrentFile={this.props.setCurrentFile}

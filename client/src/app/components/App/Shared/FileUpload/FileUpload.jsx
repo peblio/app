@@ -21,8 +21,9 @@ class FileUpload extends React.Component {
       <div>
         <div className="image__title">Upload a file</div>
         <Dropzone
-          onDrop={(files) => { console.log('test'); this.props.onDrop(files); }}
+          onDrop={(files) => { this.props.onDrop(files); }}
           className="element-image"
+          disabled={this.props.isSmall}
         >
           <div className="image__drop">
             <div className="image__svg">
@@ -31,25 +32,29 @@ class FileUpload extends React.Component {
             <div className="image__svg--text">Drop a file or click to upload</div>
           </div>
         </Dropzone>
-        <div className="image__title">or add a URL</div>
-        <div className="image__url">
-          <form
-            className="element-image__add-url"
-            onSubmit={e => this.props.urlSubmitted(e, this.url.value)}
-          >
-            <label htmlFor="element-image-name" className="element-image__label">
-              <input
-                id="element-image-name"
-                className="element-image__input"
-                type="text"
-                ref={(element) => { this.url = element; }}
-                defaultValue={this.props.imageURL}
-                readOnly={this.props.preview}
-              />
-            </label>
-            <input className="element__button" type="submit" value="Upload New" />
-          </form>
-        </div>
+        {this.props.container === 'image' && (
+          <div>
+            <div className="image__title">or add a URL</div>
+            <div className="image__url">
+              <form
+                className="element-image__add-url"
+                onSubmit={e => this.props.urlSubmitted(e, this.url.value)}
+              >
+                <label htmlFor="element-image-name" className="element-image__label">
+                  <input
+                    id="element-image-name"
+                    className="element-image__input"
+                    type="text"
+                    ref={(element) => { this.url = element; }}
+                    defaultValue={this.props.imageURL}
+                    readOnly={this.props.preview}
+                  />
+                </label>
+                <input className="element__button" type="submit" value="Upload New" />
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     );
   }

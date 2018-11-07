@@ -4,7 +4,7 @@ import * as Code from '../constants/codeConstants.js';
 import * as Page from '../constants/pageConstants.js';
 
 const initialState = {
-  isWorkspaceOpen: true,
+  isWorkspaceOpen: false,
   isShareWorkspaceOpen: false,
   workspace: Page.DEFAULT_WORKSPACE_MODE
 };
@@ -54,6 +54,16 @@ const workspaceReducer = (state = initialState, action) => {
       const tempFiles = state.workspace.files;
       tempFiles[action.index].content = action.content;
       workspace.files = tempFiles;
+      return Object.assign({}, state, {
+        workspace
+      });
+    }
+
+    case ActionTypes.WP_ADD_MEDIA_FILE: {
+      workspace.files.push({
+        name: action.name,
+        externalLink: action.link
+      });
       return Object.assign({}, state, {
         workspace
       });

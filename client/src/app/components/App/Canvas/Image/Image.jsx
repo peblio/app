@@ -68,7 +68,6 @@ class Image extends React.Component {
   }
 
   handleOnClick() {
-    console.log('poop');
     const newState = { ...this.state };
 
     return (
@@ -87,16 +86,16 @@ class Image extends React.Component {
         urlSubmitted={this.urlSubmitted}
         imageURL={this.props.imageURL}
         readOnly={this.props.preview}
+        container="image"
+        isSmall={this.imageWidgetRef.clientWidth < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_WIDTH ||
+            this.imageWidgetRef.clientHeight < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_HEIGHT}
       />
     );
   }
 
-  //
   render() {
     return (
       <div>
-        //
-        {' '}
         <div
           ref={(ref) => { this.imageWidgetRef = ref; }}
           className={`
@@ -127,7 +126,7 @@ class Image extends React.Component {
               tabIndex="1"
               role="button"
               className={`image__login ${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
-              onClick={() => { console.log('dfgdgf'); this.handleOnClick(); }}
+              onClick={() => { this.handleOnClick(); }}
               onKeyUp={() => this.handleOnClick()}
             >
               {this.renderUploadPopup()}
@@ -141,7 +140,7 @@ class Image extends React.Component {
           {this.state.showUploadPopup && (
             <div
               className='image__container image__container--popup'
-              onBlur={() => this.setUploadPopupVisibility(false)}
+              onBlur={() => { this.setUploadPopupVisibility(false); }}
             >
               {this.renderUploadPopup()}
             </div>
