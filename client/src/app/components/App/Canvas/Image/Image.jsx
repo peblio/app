@@ -20,14 +20,14 @@ class Image extends React.Component {
     this.state = {
       url: '',
       showUploadPopup: false,
-      isImageSmall: false
+      isImageSmall: false,
+      isFileUploading: false
     };
     this.removeEditor = () => { this.props.removeEditor(this.props.id); };
     this.onChange = (state) => { this.props.onChange(this.props.id, state); };
     this.setImageURL = url => this.props.setImageURL(this.props.id, url);
     this.onDrop = this.onDrop.bind(this);
     this.urlSubmitted = (event, value) => {
-      debugger;
       event.preventDefault();
       this.props.setImageURL(this.props.id, value);
     };
@@ -41,6 +41,14 @@ class Image extends React.Component {
     }
   }
 
+  startFileUpload = () => {
+    this.setState({ isFileUploading: true });
+  }
+
+  stopFileUpload = () => {
+    this.setState({ isFileUploading: false });
+  }
+
   componentDidMount() {
     this.imageSizeChanged();
   }
@@ -50,6 +58,7 @@ class Image extends React.Component {
   }
 
   onDrop(files) {
+    this.startFileUpload();
     const file = files[0];
 
     axios.get(`/upload/${this.props.name}/images`, {
@@ -72,6 +81,7 @@ class Image extends React.Component {
         const url = URL.parse(result.request.responseURL);
         this.setUploadPopupVisibility(false);
         this.setImageURL(`https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
+        this.stopFileUpload();
       })
       .catch((err) => {
         console.log(err);
@@ -104,6 +114,7 @@ class Image extends React.Component {
         readOnly={this.props.preview}
         container="image"
         isSmall={sizeOverride && this.state.isImageSmall}
+        isFileUploading={this.state.isFileUploading}
       />
     );
   }

@@ -3,7 +3,6 @@ import ReactHtmlParser from 'react-html-parser';
 import PropTypes from 'prop-types';
 import axiosOrg from 'axios';
 import URL from 'url';
-import ReactLoading from 'react-loading';
 
 import InfoSVG from '../../../../../images/info.svg';
 import PauseSVG from '../../../../../images/pause.svg';
@@ -209,6 +208,7 @@ class EditorToolbar extends React.Component {
                 readOnly={false}
                 container="editor"
                 isSmall={false}
+                isFileUploading={this.state.isFileUploading}
               />
             ) : (
               <p className="editor-toolbar__image-notice">
@@ -216,14 +216,6 @@ class EditorToolbar extends React.Component {
               </p>
             )
             }
-            {this.state.isFileUploading && (
-              <ReactLoading
-                className="editor-toolbar__image-upload-gif"
-                height="20%"
-                width="20%"
-                color="#B1B1B1"
-              />
-            )}
           </div>
 
         )}

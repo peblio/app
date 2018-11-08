@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import ReactLoading from 'react-loading';
 
 import Dropzone from 'react-dropzone';
 import { submitPage } from '../../../../action/page.js';
@@ -32,6 +33,14 @@ class FileUpload extends React.Component {
             <div className="image__svg--text">Drop a file or click to upload</div>
           </div>
         </Dropzone>
+        {this.props.isFileUploading && (
+          <ReactLoading
+            className="editor-toolbar__image-upload-gif"
+            height="20%"
+            width="20%"
+            color="#B1B1B1"
+          />
+        )}
         {this.props.container === 'image' && (
           <div>
             <div className="image__title">or add a URL</div>
@@ -62,7 +71,7 @@ class FileUpload extends React.Component {
 
 
 FileUpload.propTypes = {
-
+  isFileUploading: PropTypes.bool.isRequired
 };
 
 
