@@ -55,7 +55,7 @@
       background-color: $g2;
       .editor-toolbar__file {
         &-button {
-          white-space: nowrap;
+          white-space: pre-wrap;
           background-color: $g4;
           color: $white;
           border: $small-border solid $g2;
