@@ -178,21 +178,24 @@ class EditorToolbar extends React.Component {
           {
             (this.props.editorMode === 'p5' || this.props.editorMode === 'webdev') &&
 
-          (<li key='add-media' className='editor-toolbar__file'>
-            <button
-              className="editor-toolbar__file-button"
-              onClick={this.openFileUpload}
-            >
-              <i className="fas fa-plus"></i>
-            </button>
-          </li>
+          (
+            <li key='add-media' className='editor-toolbar__file'>
+              <button
+                className="editor-toolbar__file-button"
+                onClick={this.openFileUpload}
+                data-test='add-editor-image-button'
+              >
+                <i className="fas fa-plus"></i>
+              </button>
+            </li>
           )
           }
         </ul>
         {this.state.isFileUploadOpen && (
           <div
-            tabIndex="0"
+            tabIndex="0" //eslint-disable-line
             className="editor-toolbar__image-upload"
+            data-test="file-upload-container"
           >
             <button
               className="editor-toolbar__image-close"
@@ -225,6 +228,7 @@ class EditorToolbar extends React.Component {
 }
 
 EditorToolbar.propTypes = {
+  addMediaFile: PropTypes.func.isRequired,
   container: PropTypes.string.isRequired,
   currentFile: PropTypes.number.isRequired,
   editorMode: PropTypes.string.isRequired,
@@ -232,7 +236,9 @@ EditorToolbar.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
+  imageURL: PropTypes.string.isRequired,
   isPlaying: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
   openShareWorkspace: PropTypes.func.isRequired,
   playCode: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,

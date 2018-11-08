@@ -341,6 +341,7 @@ class Canvas extends React.Component {
 }
 
 Canvas.propTypes = {
+  addMediaFile: PropTypes.func.isRequired,
   clearConsoleOutput: PropTypes.func.isRequired,
   currentWidget: PropTypes.string.isRequired,
   duplicateEditor: PropTypes.func.isRequired,

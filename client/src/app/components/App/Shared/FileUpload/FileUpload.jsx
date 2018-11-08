@@ -1,22 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import ReactLoading from 'react-loading';
 
 import Dropzone from 'react-dropzone';
-import { submitPage } from '../../../../action/page.js';
-import { viewLoginModal } from '../../../../action/mainToolbar.js';
-import * as PageDefaults from '../../../../constants/pageConstants.js';
-import { convertWorkspaceDescHeight } from '../../../../utils/pixel-to-grid.js';
 
 import UploadSVG from '../../../../images/upload.svg';
 
 class FileUpload extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div>
@@ -71,7 +61,13 @@ class FileUpload extends React.Component {
 
 
 FileUpload.propTypes = {
-  isFileUploading: PropTypes.bool.isRequired
+  container: PropTypes.string.isRequired,
+  imageURL: PropTypes.string.isRequired,
+  isFileUploading: PropTypes.bool.isRequired,
+  isSmall: PropTypes.bool.isRequired,
+  onDrop: PropTypes.func.isRequired,
+  preview: PropTypes.bool.isRequired,
+  urlSubmitted: PropTypes.func.isRequired,
 };
 
 

@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import SplitPane from 'react-split-pane';
-import URL from 'url';
 
 import CodeEditor from '../../Shared/EditorComponents/CodeEditor/CodeEditor.jsx';
 import CodeOutput from '../../Shared/EditorComponents/CodeOutput/CodeOutput.jsx';
@@ -130,6 +129,7 @@ class EditorContainer extends React.Component {
 
 EditorContainer.propTypes = {
   id: PropTypes.string.isRequired,
+  addMediaFile: PropTypes.func.isRequired,
   clearConsoleOutput: PropTypes.func.isRequired,
   consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired,
   currentFile: PropTypes.number.isRequired,

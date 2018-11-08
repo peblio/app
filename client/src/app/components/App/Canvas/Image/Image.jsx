@@ -1,12 +1,8 @@
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
 import React from 'react';
 import axiosOrg from 'axios';
 import URL from 'url';
-
-import UploadSVG from '../../../../images/upload.svg';
-import CloseSVG from '../../../../images/close.svg';
 
 import axios from '../../../../utils/axios';
 import * as WidgetSize from '../../../../constants/widgetConstants.js';
@@ -31,22 +27,6 @@ class Image extends React.Component {
       event.preventDefault();
       this.props.setImageURL(this.props.id, value);
     };
-  }
-
-  imageSizeChanged = () => {
-    const isImageSmall = (this.imageWidgetRef.clientWidth < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_WIDTH ||
-    this.imageWidgetRef.clientHeight < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_HEIGHT);
-    if (this.state.isImageSmall !== isImageSmall) {
-      this.setState({ isImageSmall });
-    }
-  }
-
-  startFileUpload = () => {
-    this.setState({ isFileUploading: true });
-  }
-
-  stopFileUpload = () => {
-    this.setState({ isFileUploading: false });
   }
 
   componentDidMount() {
@@ -90,15 +70,29 @@ class Image extends React.Component {
 
   setUploadPopupVisibility(value) {
     const newState = { ...this.state };
-
     newState.showUploadPopup = value;
     this.setState(newState);
   }
 
+  startFileUpload = () => {
+    this.setState({ isFileUploading: true });
+  }
+
+  stopFileUpload = () => {
+    this.setState({ isFileUploading: false });
+  }
+
+
+  imageSizeChanged = () => {
+    const isImageSmall = (this.imageWidgetRef.clientWidth < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_WIDTH ||
+    this.imageWidgetRef.clientHeight < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_HEIGHT);
+    if (this.state.isImageSmall !== isImageSmall) {
+      this.setState({ isImageSmall });
+    }
+  }
+
   handleOnClick() {
     const newState = { ...this.state };
-
-
     return (
       this.imageWidgetRef && (this.state.isImageSmall)
     ) &&
@@ -149,9 +143,11 @@ class Image extends React.Component {
 
           {!this.props.preview && this.props.name && (
             <div
-              tabIndex="1"
+              tabIndex="0" //eslint-disable-line
               role="button"
-              className={`image__login ${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
+              className={
+                `image__login ${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`
+              }
               onClick={() => { this.handleOnClick(); }}
               onKeyUp={() => this.handleOnClick()}
             >
@@ -160,7 +156,7 @@ class Image extends React.Component {
           )}
 
           {this.props.imageURL &&
-          <img className="element__image" src={this.props.imageURL} alt="" />
+            <img className="element__image" src={this.props.imageURL} alt="" />
           }
 
           {this.state.showUploadPopup && (
