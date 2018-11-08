@@ -19,16 +19,34 @@ class Image extends React.Component {
     super(props);
     this.state = {
       url: '',
-      showUploadPopup: false
+      showUploadPopup: false,
+      isImageSmall: false
     };
     this.removeEditor = () => { this.props.removeEditor(this.props.id); };
     this.onChange = (state) => { this.props.onChange(this.props.id, state); };
     this.setImageURL = url => this.props.setImageURL(this.props.id, url);
     this.onDrop = this.onDrop.bind(this);
     this.urlSubmitted = (event, value) => {
-      this.props.setImageURL(this.props.id, value);
+      debugger;
       event.preventDefault();
+      this.props.setImageURL(this.props.id, value);
     };
+  }
+
+  imageSizeChanged = () => {
+    const isImageSmall = (this.imageWidgetRef.clientWidth < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_WIDTH ||
+    this.imageWidgetRef.clientHeight < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_HEIGHT);
+    if (this.state.isImageSmall !== isImageSmall) {
+      this.setState({ isImageSmall });
+    }
+  }
+
+  componentDidMount() {
+    this.imageSizeChanged();
+  }
+
+  componentDidUpdate() {
+    this.imageSizeChanged();
   }
 
   onDrop(files) {
@@ -70,16 +88,14 @@ class Image extends React.Component {
   handleOnClick() {
     const newState = { ...this.state };
 
+
     return (
-      this.imageWidgetRef && (
-        this.imageWidgetRef.clientWidth < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_WIDTH ||
-        this.imageWidgetRef.clientHeight < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_HEIGHT
-      )
+      this.imageWidgetRef && (this.state.isImageSmall)
     ) &&
     this.setUploadPopupVisibility(!newState.showUploadPopup);
   }
 
-  renderUploadPopup() {
+  renderUploadPopup(sizeOverride) {
     return (
       <FileUpload
         onDrop={this.onDrop}
@@ -87,8 +103,7 @@ class Image extends React.Component {
         imageURL={this.props.imageURL}
         readOnly={this.props.preview}
         container="image"
-        isSmall={this.imageWidgetRef.clientWidth < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_WIDTH ||
-            this.imageWidgetRef.clientHeight < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_HEIGHT}
+        isSmall={sizeOverride && this.state.isImageSmall}
       />
     );
   }
@@ -129,7 +144,7 @@ class Image extends React.Component {
               onClick={() => { this.handleOnClick(); }}
               onKeyUp={() => this.handleOnClick()}
             >
-              {this.renderUploadPopup()}
+              {this.renderUploadPopup(true)}
             </div>
           )}
 
@@ -140,9 +155,8 @@ class Image extends React.Component {
           {this.state.showUploadPopup && (
             <div
               className='image__container image__container--popup'
-              onBlur={() => { this.setUploadPopupVisibility(false); }}
             >
-              {this.renderUploadPopup()}
+              {this.renderUploadPopup(false)}
             </div>
           )}
         </div>

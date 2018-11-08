@@ -73,6 +73,7 @@ class EditorToolbar extends React.Component {
         const url = URL.parse(result.request.responseURL);
         this.props.addMediaFile(file.name, `https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
         this.stopFileUpload();
+        this.closeFileUpload();
       })
       .catch((err) => {
         console.log(err);

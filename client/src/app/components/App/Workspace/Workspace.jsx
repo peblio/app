@@ -145,7 +145,6 @@ class Workspace extends React.Component {
                     </SplitPane>
                   </div>
 
-
                 </div>
               </div>
             )}

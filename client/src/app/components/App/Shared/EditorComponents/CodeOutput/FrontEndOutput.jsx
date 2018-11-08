@@ -118,13 +118,14 @@ class FrontEndOutput extends React.Component {
       if (newFileString.startsWith('.')) {
         newFileString = newFileString.substr(1);
       }
-      console.log(newFileString);
       while (newFileString.startsWith('/')) {
         newFileString = newFileString.substr(1);
       }
       if (newFileString.match(fileStringRegex) && newFileString.match(MEDIA_FILE_REGEX)) {
         const replacement = this.resolvePathToFile(newFileString, files);
-        newContent = newContent.replace(fileStringToBeReplaced, replacement.externalLink);
+        if (replacement) {
+          newContent = newContent.replace(fileStringToBeReplaced, replacement.externalLink);
+        }
       }
     });
     return newContent;
@@ -165,7 +166,6 @@ class FrontEndOutput extends React.Component {
     const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
 
     let scriptOffs = this.getAllScriptOffsets(sketchDocString);
-    console.log(scriptOffs);
     scriptOffs = scriptOffs[0];
 
     const injectScript = sketchDoc.createElement('script');
