@@ -26,6 +26,7 @@ class Image extends React.Component {
     this.urlSubmitted = (event, value) => {
       event.preventDefault();
       this.props.setImageURL(this.props.id, value);
+      this.renderUploadPopup(false);
     };
   }
 
@@ -62,6 +63,7 @@ class Image extends React.Component {
         this.setUploadPopupVisibility(false);
         this.setImageURL(`https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
         this.stopFileUpload();
+        this.renderUploadPopup(false);
       })
       .catch((err) => {
         console.log(err);
@@ -121,10 +123,7 @@ class Image extends React.Component {
           className={`
           image__container
           ${this.props.preview ? '' : 'image__container--edit'}
-          ${this.props.name && this.imageWidgetRef && (
-        this.imageWidgetRef.clientWidth < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_WIDTH ||
-            this.imageWidgetRef.clientHeight < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_HEIGHT
-      ) ? 'image__container--small' : ''}
+          ${this.props.name && this.imageWidgetRef && (this.state.isImageSmall) ? 'image__container--small' : ''}
           ${this.props.imageURL && 'image__container--exists'}
         `}
         >
