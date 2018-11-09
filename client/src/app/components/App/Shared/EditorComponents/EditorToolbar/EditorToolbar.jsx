@@ -158,6 +158,9 @@ class EditorToolbar extends React.Component {
               const isImage = 'externalLink' in file;
               return (
                 <li key={file.id} className='editor-toolbar__file'>
+                  <p className='editor-toolbar__file-name'>
+                    {file.name}
+                  </p>
                   <button
                     onClick={() => {
                       this.props.setCurrentFile(index);

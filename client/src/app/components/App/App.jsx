@@ -39,8 +39,10 @@ class App extends React.Component {
 
   componentDidMount() {
     this.authAndLoadPage();
-    const hlp = initHelpHero('1Dyo05WliMY');
-    hlp.anonymous();
+    if (this.projectID() === 'QJSEsqTOS') {
+      const hlp = initHelpHero('1Dyo05WliMY');
+      hlp.anonymous();
+    }
   }
 
   onKeyPressed(e) {
