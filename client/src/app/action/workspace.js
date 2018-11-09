@@ -121,3 +121,13 @@ export function closeShareWorkspace() {
     });
   };
 }
+
+export function addMediaFile(name, link) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.WP_ADD_MEDIA_FILE,
+      name,
+      link
+    });
+  };
+}

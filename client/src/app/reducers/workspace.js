@@ -59,6 +59,16 @@ const workspaceReducer = (state = initialState, action) => {
       });
     }
 
+    case ActionTypes.WP_ADD_MEDIA_FILE: {
+      workspace.files.push({
+        name: action.name,
+        externalLink: action.link
+      });
+      return Object.assign({}, state, {
+        workspace
+      });
+    }
+
     case ActionTypes.WP_SET_CURRENT_FILE: {
       workspace.currentFile = action.index;
       return { ...state, workspace };

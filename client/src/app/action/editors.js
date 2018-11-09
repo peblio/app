@@ -176,6 +176,16 @@ export function setInnerWidth(id, value) {
   };
 }
 
+export function addMediaFile(id, name, link) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.ADD_MEDIA_FILE,
+      id,
+      name,
+      link
+    });
+  };
+}
 /** TEXT EDITOR */
 export function addTextEditor() {
   return (dispatch, getState) => {

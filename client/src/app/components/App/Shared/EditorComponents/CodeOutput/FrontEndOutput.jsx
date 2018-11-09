@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import srcDoc from 'srcdoc-polyfill';
 
 const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
+const STRING_REGEX = /(['"])((\\\1|.)*?)\1/gm;
+const MEDIA_FILE_REGEX = /.+\.(gif|jpg|jpeg|png|bmp)$/i;
 
 class FrontEndOutput extends React.Component {
   constructor(props) {
@@ -95,11 +97,42 @@ class FrontEndOutput extends React.Component {
           if (file.name === this.getFileName(script.src)) {
             script.setAttribute('data-tag', `@fs-${file.name}`);
             script.removeAttribute('src');
-            script.innerHTML = file.content; // eslint-disable-line
+            const newFileContent = this.resolveLinksInString(file.content, files);
+            script.innerHTML = newFileContent;
           }
         });
       }
     });
+  }
+
+  resolveLinksInString(content, files) {
+    let newContent = content;
+    let fileStrings = content.match(STRING_REGEX);
+    const fileStringRegex = /^(?!(http:\/\/|https:\/\/)).*$/i;
+    fileStrings = fileStrings || [];
+    fileStrings.forEach((fileString) => {
+      // if string does not begin with http or https
+      let newFileString = fileString;
+      const fileStringToBeReplaced = newFileString.slice(1, -1); // remove the quotes
+      newFileString = newFileString.slice(1, -1); // remove the quotes
+      if (newFileString.startsWith('.')) {
+        newFileString = newFileString.substr(1);
+      }
+      while (newFileString.startsWith('/')) {
+        newFileString = newFileString.substr(1);
+      }
+      if (newFileString.match(fileStringRegex) && newFileString.match(MEDIA_FILE_REGEX)) {
+        const replacement = this.resolvePathToFile(newFileString, files);
+        if (replacement) {
+          newContent = newContent.replace(fileStringToBeReplaced, replacement.externalLink);
+        }
+      }
+    });
+    return newContent;
+  }
+
+  resolvePathToFile(filePath, files) {
+    return files.find(file => file.name === filePath);
   }
 
   resolveCSSFile(sketchDoc, files) {
@@ -133,7 +166,6 @@ class FrontEndOutput extends React.Component {
     const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
 
     let scriptOffs = this.getAllScriptOffsets(sketchDocString);
-    console.log(scriptOffs);
     scriptOffs = scriptOffs[0];
 
     const injectScript = sketchDoc.createElement('script');

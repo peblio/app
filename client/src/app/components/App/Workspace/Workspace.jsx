@@ -81,10 +81,12 @@ class Workspace extends React.Component {
             {this.props.isWorkspaceOpen && (
               <div>
                 <EditorToolbar
+                  addMediaFile={this.props.addMediaFile}
                   currentFile={this.props.currentFile}
                   editorMode={this.props.editorMode}
                   files={this.props.files}
                   isPlaying={this.props.isPlaying}
+                  name={this.props.name}
                   playCode={this.props.playCode}
                   setCurrentFile={this.props.setCurrentFile}
                   startCodeRefresh={this.props.startCodeRefresh}
@@ -143,7 +145,6 @@ class Workspace extends React.Component {
                     </SplitPane>
                   </div>
 
-
                 </div>
               </div>
             )}
@@ -167,6 +168,7 @@ class Workspace extends React.Component {
 }
 
 Workspace.propTypes = {
+  addMediaFile: PropTypes.func.isRequired,
   clearConsoleOutput: PropTypes.func.isRequired,
   closeShareWorkspace: PropTypes.func.isRequired,
   consoleOutputText: PropTypes.string.isRequired,
@@ -184,6 +186,7 @@ Workspace.propTypes = {
   isShareWorkspaceOpen: PropTypes.bool.isRequired,
   isWorkspaceOpen: PropTypes.bool.isRequired,
   openShareWorkspace: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
   playCode: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
@@ -210,6 +213,7 @@ const mapStateToProps = state => ({
   isRefreshing: state.workspace.workspace.isRefreshing,
   isShareWorkspaceOpen: state.workspace.isShareWorkspaceOpen,
   isWorkspaceOpen: state.workspace.isWorkspaceOpen,
+  name: state.user.name,
   workspace: state.workspace.workspace
 });
 

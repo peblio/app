@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import initHelpHero from 'helphero';
 
 import * as mainToolbarActions from '../../../../action/mainToolbar.js';
 import * as WelcomeText from '../../../../constants/welcomeConstants.js';
@@ -34,11 +33,6 @@ class Welcome extends Component {
         WelcomeText.WELCOME_IMAGE_LINK_3,
       ]
     };
-  }
-
-  componentDidMount() {
-    const hlp = initHelpHero('1Dyo05WliMY');
-    hlp.anonymous();
   }
 
   increaseScreenNumber =() => {

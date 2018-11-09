@@ -102,6 +102,7 @@ class Canvas extends React.Component {
         {({ isVisible }) => (
           <EditorContainer
             id={editor.id}
+            addMediaFile={this.props.addMediaFile}
             currentFile={editor.currentFile}
             clearConsoleOutput={this.props.clearConsoleOutput}
             code={editor.code}
@@ -113,6 +114,7 @@ class Canvas extends React.Component {
             innerWidth={editor.innerWidth}
             isPlaying={editor.isPlaying && isVisible}
             isRefreshing={editor.isRefreshing}
+            name={this.props.name}
             playCode={this.props.playCode}
             startCodeRefresh={this.props.startCodeRefresh}
             setCurrentFile={this.props.setCurrentFile}
@@ -339,6 +341,7 @@ class Canvas extends React.Component {
 }
 
 Canvas.propTypes = {
+  addMediaFile: PropTypes.func.isRequired,
   clearConsoleOutput: PropTypes.func.isRequired,
   currentWidget: PropTypes.string.isRequired,
   duplicateEditor: PropTypes.func.isRequired,
