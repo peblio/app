@@ -14,7 +14,7 @@ class ConsoleOutput extends React.Component {
       <div className="console__outputDiv">
         <ReactTooltip
           delayShow={descriptions.SHOW_DESC_DELAY}
-className="tooltip"
+          className="tooltip"
         />
         <nav className="console__nav">
           <p className="console__heading"> Console </p>

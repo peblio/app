@@ -30,14 +30,14 @@ class MainToolbar extends React.Component {
     }, 10000);
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.autoSaveTimeout);
-  }
-
   componentDidUpdate(prevProps) {
     if (prevProps.name !== this.props.name || prevProps.preview !== this.props.preview) {
       ReactTooltip.rebuild();
     }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.autoSaveTimeout);
   }
 
   logout = () => {
@@ -88,7 +88,7 @@ class MainToolbar extends React.Component {
       <div className="main-toolbar__container">
         <ReactTooltip
           delayShow={descriptions.SHOW_DESC_DELAY}
-className="tooltip"
+          className="tooltip"
         />
 
         <div className="main-toolbar">

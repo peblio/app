@@ -41,7 +41,7 @@ class Navigation extends React.Component {
       <div>
         <ReactTooltip
           delayShow={descriptions.SHOW_DESC_DELAY}
-className="tooltip"
+          className="tooltip"
         />
         <button
           className="navigation__open-button"
