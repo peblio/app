@@ -88,6 +88,7 @@ class MainToolbar extends React.Component {
       <div className="main-toolbar__container">
         <ReactTooltip
           delayShow={descriptions.SHOW_DESC_DELAY}
+className="tooltip"
         />
 
         <div className="main-toolbar">

@@ -91,6 +91,7 @@ class EditorToolbar extends React.Component {
       <div className='editor-toolbar__container'>
         <ReactTooltip
           delayShow={descriptions.SHOW_DESC_DELAY}
+className="tooltip"
         />
         <div className='editor-toolbar__button-container'>
           {(this.props.editorMode === 'processing') && (

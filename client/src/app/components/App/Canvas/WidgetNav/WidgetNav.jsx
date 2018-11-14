@@ -22,6 +22,7 @@ class WidgetNav extends React.Component {
       <nav className="widget__nav">
         <ReactTooltip
           delayShow={descriptions.SHOW_DESC_DELAY}
+className="tooltip"
         />
         <button
           className="widget__close"

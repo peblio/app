@@ -6,7 +6,7 @@ export const EDITOR_TOGGLE_CONSOLE_DESC = 'Toggle Console';
 export const EDITOR_ADD_IMAGE_DESC = 'Add Image';
 
 export const WIDGET_DELETE_DESC = 'Delete';
-export const WIDGET_DRAG_DESC = 'Drag';
+export const WIDGET_DRAG_DESC = 'Drag and Drop';
 export const WIDGET_DUPLICATE_DESC = 'Duplicate';
 
 export const WIDGET_NAV_DESC = 'Table of Contents';
