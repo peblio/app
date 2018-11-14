@@ -1,9 +1,11 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as navigationAction from '../../../action/navigation.js';
+import * as descriptions from '../../../constants/imageDescConstants.js';
 
 require('./navigation.scss');
 
@@ -25,6 +27,9 @@ class Navigation extends React.Component {
     if (prevProps.yNavigation !== this.props.yNavigation) {
       this.forceUpdate();
     }
+    if (prevProps.isNavigationOpen !== this.props.isNavigationOpen) {
+      ReactTooltip.rebuild();
+    }
   }
 
   scrollTo=(y) => {
@@ -34,9 +39,13 @@ class Navigation extends React.Component {
   render() {
     return (
       <div>
+        <ReactTooltip
+          delayShow={descriptions.SHOW_DESC_DELAY}
+        />
         <button
           className="navigation__open-button"
           onClick={this.props.openNavigationContent}
+          data-tip={descriptions.WIDGET_NAV_DESC}
         >
           <i className="fas fa-bars"></i>
         </button>
@@ -49,13 +58,18 @@ class Navigation extends React.Component {
                 <button
                   className="navigation__option-button"
                   onClick={() => { this.props.createNavigationContent(this.props.layout); }}
+                  data-tip={descriptions.WIDGET_NAV_REFRESH_DESC}
                 >
                   <i className="fas fa-redo"></i>
                 </button>
               )}
               <button
                 className="navigation__option-button"
-                onClick={this.props.closeNavigationContent}
+                onClick={() => {
+                  this.props.closeNavigationContent();
+                  ReactTooltip.hide();
+                }}
+                data-tip={descriptions.WIDGET_NAV_CLOSE_DESC}
               >
                 <i className="fas fa-times"></i>
               </button>
