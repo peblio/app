@@ -9,12 +9,14 @@ class Iframe extends React.Component {
     super(props);
     this.urlSubmitted = (event) => {
       const tempString = this.url.value;
-      let src = ReactHtmlParser(tempString)[0].props ? ReactHtmlParser(tempString)[0].props.src : tempString;
+      let src = '';
+      const parsedString = ReactHtmlParser(tempString);
+      src = (parsedString[0].props && parsedString[0].type === 'iframe') ? parsedString[0].props.src : tempString;
       // Adding for edge cases like microbits, where they wrap the iframe around a div
       if (ReactHtmlParser(tempString)[0].props) {
         if (ReactHtmlParser(tempString)[0].props.children) {
           ReactHtmlParser(tempString)[0].props.children.forEach((child) => {
-            src = child.props ? child.props.src : src;
+            src = (child.props && child.type === 'iframe') ? child.props.src : src;
           });
         }
       }
