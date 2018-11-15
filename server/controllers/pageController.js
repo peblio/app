@@ -7,6 +7,7 @@ const Folder = require('../models/folder.js');
 async function getPage(req, res) {
   Page.find({ id: req.params.pageId }, (err, data) => {
     if (err) {
+      res.set('Cache-Control', 'no-store, no-cache, must-revalidate');
       res.send(err);
     } else {
       res.send(data);
