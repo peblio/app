@@ -20,6 +20,9 @@ class Iframe extends React.Component {
           });
         }
       }
+      src = src
+        .replace(/[\u2018\u2019]/g, '')
+        .replace(/[\u201C\u201D]/g, '');
       this.props.setIframeURL(this.props.id, src);
       event.preventDefault();
     };
