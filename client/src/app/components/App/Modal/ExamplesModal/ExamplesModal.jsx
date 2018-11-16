@@ -1,6 +1,7 @@
 import React from 'react';
-
 import axios from '../../../../utils/axios';
+
+require('./examplesModal.scss');
 
 class ExamplesModal extends React.Component {
   constructor(props) {
@@ -30,11 +31,14 @@ class ExamplesModal extends React.Component {
     this.state.examples.forEach((page, index) => {
       const link = `/pebl/${page.id}`;
       pages.push(
-        <li key={page.id}>
-          <a href={link}>
-            {' '}
+        <li className="examples__list-item" key={page.id}>
+          <a
+            className="examples__link"
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {page.title}
-            {' '}
           </a>
         </li>
       );
@@ -45,11 +49,14 @@ class ExamplesModal extends React.Component {
   render() {
     const Pages = this.renderPages();
     return (
-      <div className="pages_list">
-        <p className="pages_title">Title</p>
-        <ol>
+      <div className="examples__container">
+        <h1 className="examples__heading">
+          Examples
+        </h1>
+        <p className="examples__title">Title</p>
+        <ul className="examples__list-items">
           {Pages}
-        </ol>
+        </ul>
       </div>
     );
   }

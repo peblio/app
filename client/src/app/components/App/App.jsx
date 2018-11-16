@@ -295,7 +295,7 @@ class App extends React.Component {
         </Modal>
 
         <Modal
-          size="large"
+          size="xlarge"
           isOpen={this.props.isExamplesModalOpen}
           closeModal={this.props.closeExamplesModal}
         >

@@ -1,0 +1,63 @@
+@import 'variables';
+@import 'mixins';
+@import 'modal';
+
+.examples {
+  &__container {
+    background: $white;
+    border-radius: $small-border-radius;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-width: 25%;
+    background: $lighter-gray;
+  }
+  &__heading {
+    background: $green;
+    color: $white;
+    margin: 0px;
+    border-top-left-radius: $small-border-radius;
+    border-top-right-radius: $small-border-radius;
+    padding: $medium-padding;
+    font-size: $medium-font-size;
+    font-family: $roboto;
+    font-weight: 400;
+  }
+  &__title {
+    font-size: $medium-font-size;
+    background: transparent;
+    color: $gray;
+    font-size: $medium-font-size;
+    font-weight: 400;
+    padding: $medium-padding;
+    text-align: LEFT;
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+  &__list-items {
+    list-style: none;
+    padding: 0 $medium-margin;
+    margin: 0;
+  }
+  &__list-item {
+    background: white;
+    border-left: $files-indicator-width solid $tab-yellow;
+    font-size: $small-font-size;
+    line-height: $small-font-size*3;
+    margin: $medium-margin 0;
+    border-radius: $small-border-radius;
+  }
+  &__link {
+    padding: 0 $small-padding;
+    text-decoration: none;
+    width: 100%;
+    display: flex;
+    color: $black;
+    box-sizing: border-box;
+    &:hover {
+      background-color: $tab-yellow;
+      border-top-right-radius: $small-border-radius;
+      border-bottom-right-radius: $small-border-radius;
+    }
+  }
+}
