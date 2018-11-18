@@ -81,9 +81,14 @@ class MainToolbar extends React.Component {
 
         <div className="main-toolbar">
           <div className="main-toolbar__div-left">
-            <div className="logo_toolbar">
+            <a
+              className="logo_toolbar"
+              href="https://www.peblio.co/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <ToolbarLogo alt="logo in toolbar" />
-            </div>
+            </a>
             <div
               className="file-modal__container"
               onBlur={() => {
