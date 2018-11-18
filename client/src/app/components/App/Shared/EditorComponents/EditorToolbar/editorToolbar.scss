@@ -146,6 +146,7 @@
             color: $g8;
           }
           &-static {
+            overflow: hidden;
             background-color: $g6;
             color: $g3;
             border: $small-border solid $g7;
@@ -166,16 +167,6 @@
 
 
 .editor-toolbar {
-  &__file-name {
-    display: none;
-    position: absolute;
-    top: $editor-toolbar-height;
-    background: $g6;
-    border: $light-black $small-border solid;
-    width: fit-content;
-    padding: 0 $small-padding;
-    font-size: $small-font-size;
-  }
   &__image-upload-gif {
     margin: 0 auto;
   }
@@ -307,9 +298,6 @@
           &:hover, &--selected { // sass-lint:disable-line class-name-format
             border: none;
           }
-        }
-        &:hover .editor-toolbar__file-name {
-          display: block;
         }
       }
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -11,6 +12,7 @@ import ToolbarLogo from '../../../images/logo.svg';
 import CheckSVG from '../../../images/check.svg';
 import AccountSVG from '../../../images/account.svg';
 import PreferencesSVG from '../../../images/preferences.svg';
+import * as descriptions from '../../../constants/imageDescConstants.js';
 
 require('./mainToolbar.scss');
 
@@ -26,6 +28,12 @@ class MainToolbar extends React.Component {
         this.props.savePage();
       }
     }, 10000);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.name !== this.props.name || prevProps.preview !== this.props.preview) {
+      ReactTooltip.rebuild();
+    }
   }
 
   componentWillUnmount() {
@@ -78,6 +86,10 @@ class MainToolbar extends React.Component {
 
     return (
       <div className="main-toolbar__container">
+        <ReactTooltip
+          delayShow={descriptions.SHOW_DESC_DELAY}
+          className="tooltip"
+        />
 
         <div className="main-toolbar">
           <div className="main-toolbar__div-left">
@@ -150,9 +162,13 @@ class MainToolbar extends React.Component {
             onChange={this.props.setPageTitle}
             readOnly={this.props.preview}
           />
-          {this.props.preview ||
-            <span className="fa fa-pencil-alt main-toolbar__search-icon"></span>
-          }
+          {this.props.preview || (
+            <span
+              className="fa fa-pencil-alt main-toolbar__search-icon"
+              data-tip={descriptions.MAIN_TOOLBAR_TITLE_DESC}
+            >
+            </span>
+          )}
           <div className="main-toolbar__div-right">
             <div className="main-toolbar__div-right-inside">
               <span className="main-toolbar__preview-title">Edit Mode</span>
@@ -178,6 +194,7 @@ class MainToolbar extends React.Component {
                 <button
                   className="main-toolbar__button "
                   onMouseDown={this.props.togglePreferencesPanel}
+                  data-tip={descriptions.MAIN_TOOLBAR_SETTINGS_DESC}
                 >
                   <PreferencesSVG
                     className={classNames(prefButtonClassName)}
@@ -201,6 +218,7 @@ class MainToolbar extends React.Component {
                       }, 50);
                     }}
                     className="main-toolbar__account-button"
+                    data-tip={descriptions.MAIN_TOOLBAR_ACCOUNT_DESC}
                     data-test="account-button"
                   >
                     <AccountSVG

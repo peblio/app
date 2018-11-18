@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 import ReactHtmlParser from 'react-html-parser';
 import PropTypes from 'prop-types';
 import axiosOrg from 'axios';
@@ -9,7 +10,7 @@ import PauseSVG from '../../../../../images/pause.svg';
 import PlaySVG from '../../../../../images/play.svg';
 import axios from '../../../../../utils/axios';
 import { ProcessingWarning, WorkspaceLanguageConfirmation } from '../../../../../constants/codeConstants.js';
-
+import * as descriptions from '../../../../../constants/imageDescConstants.js';
 import FileUpload from '../../FileUpload/FileUpload.jsx';
 
 require('./editorToolbar.scss');
@@ -21,6 +22,12 @@ class EditorToolbar extends React.Component {
       isFileUploadOpen: false,
       isFileUploading: false
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.files !== this.props.files) {
+      ReactTooltip.rebuild();
+    }
   }
 
   openFileUpload = () => {
@@ -82,6 +89,10 @@ class EditorToolbar extends React.Component {
   render() {
     return (
       <div className='editor-toolbar__container'>
+        <ReactTooltip
+          delayShow={descriptions.SHOW_DESC_DELAY}
+          className="tooltip"
+        />
         <div className='editor-toolbar__button-container'>
           {(this.props.editorMode === 'processing') && (
             <div
@@ -134,12 +145,14 @@ class EditorToolbar extends React.Component {
               if (this.props.isPlaying) { this.props.startCodeRefresh(); }
             }}
             data-test='play-sketch-button'
+            data-tip={descriptions.EDITOR_PLAY_DESC}
           >
             <PlaySVG alt='Run Code' />
           </button>
           <button
             className={`editor-toolbar__svg ${!this.props.isPlaying ? 'editor-toolbar--isPaused' : ''}`}
             onClick={this.props.stopCode}
+            data-tip={descriptions.EDITOR_STOP_DESC}
           >
             <PauseSVG alt='Pause Code' />
           </button>
@@ -157,10 +170,11 @@ class EditorToolbar extends React.Component {
             this.props.files.map((file, index) => {
               const isImage = 'externalLink' in file;
               return (
-                <li key={file.id} className='editor-toolbar__file'>
-                  <p className='editor-toolbar__file-name'>
-                    {file.name}
-                  </p>
+                <li
+                  key={file.id}
+                  className='editor-toolbar__file'
+                  data-tip={file.name}
+                >
                   <button
                     onClick={() => {
                       this.props.setCurrentFile(index);
@@ -187,6 +201,7 @@ class EditorToolbar extends React.Component {
                 className="editor-toolbar__file-button"
                 onClick={this.openFileUpload}
                 data-test='add-editor-image-button'
+                data-tip={descriptions.EDITOR_ADD_IMAGE_DESC}
               >
                 <i className="fas fa-plus"></i>
               </button>
