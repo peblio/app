@@ -35,6 +35,9 @@ import axios from '../../utils/axios';
 class App extends React.Component {
   componentWillMount() {
     this.onUserVisit();
+    if (performance.navigation.type === 2) {
+      location.reload(true);
+    }
   }
 
   componentDidMount() {
