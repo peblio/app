@@ -44,7 +44,7 @@
 }
 
 .pages__folder-container {
-  background: white;
+  background: $white;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -146,7 +146,7 @@
 
 .pages__col {
   background: $white;
-  border: 1px solid transparent;
+  border: $small-border solid transparent;
   padding-top: $small-padding;
   padding-bottom: $small-padding;
   text-align: $left-align;
