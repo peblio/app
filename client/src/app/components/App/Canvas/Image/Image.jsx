@@ -8,6 +8,9 @@ import axios from '../../../../utils/axios';
 import * as WidgetSize from '../../../../constants/widgetConstants.js';
 import FileUpload from '../../Shared/FileUpload/FileUpload.jsx';
 
+const MEDIA_FILE_REGEX = /.+\.(gif|jpg|jpeg|png|bmp)$/i;
+const VIDEO_FILE_REGEX = /.+\.(mp4|avi|mov|mpg|wmv)$/i;
+
 require('./image.scss');
 
 class Image extends React.Component {
@@ -17,7 +20,8 @@ class Image extends React.Component {
       url: '',
       showUploadPopup: false,
       isImageSmall: false,
-      isFileUploading: false
+      isFileUploading: false,
+      isVideo: false,
     };
     this.removeEditor = () => { this.props.removeEditor(this.props.id); };
     this.onChange = (state) => { this.props.onChange(this.props.id, state); };
@@ -32,42 +36,51 @@ class Image extends React.Component {
 
   componentDidMount() {
     this.imageSizeChanged();
+    if (this.props.imageURL && this.props.imageURL.match(VIDEO_FILE_REGEX)) {
+      this.setState({ isVideo: true });
+    }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     this.imageSizeChanged();
+    if (prevProps.imageURL !== this.props.imageURL) {
+      if (this.props.imageURL && this.props.imageURL.match(VIDEO_FILE_REGEX)) {
+        this.setState({ isVideo: true }); //eslint-disable-line
+      }
+    }
   }
 
   onDrop(files) {
-    this.startFileUpload();
     const file = files[0];
-
-    axios.get(`/upload/${this.props.name}/images`, {
-      params: {
-        filename: file.name,
-        filetype: file.type
-      }
-    })
-      .then((result) => {
-        const signedUrl = result.data;
-        const options = {
-          headers: {
-            'Content-Type': file.type
-          }
-        };
-
-        return axiosOrg.put(signedUrl, file, options);
+    if (file.name.match(MEDIA_FILE_REGEX)) {
+      this.startFileUpload();
+      axios.get(`/upload/${this.props.name}/images`, {
+        params: {
+          filename: file.name,
+          filetype: file.type
+        }
       })
-      .then((result) => {
-        const url = URL.parse(result.request.responseURL);
-        this.setUploadPopupVisibility(false);
-        this.setImageURL(`https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
-        this.stopFileUpload();
-        this.renderUploadPopup(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((result) => {
+          const signedUrl = result.data;
+          const options = {
+            headers: {
+              'Content-Type': file.type
+            }
+          };
+
+          return axiosOrg.put(signedUrl, file, options);
+        })
+        .then((result) => {
+          const url = URL.parse(result.request.responseURL);
+          this.setUploadPopupVisibility(false);
+          this.setImageURL(`https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
+          this.stopFileUpload();
+          this.renderUploadPopup(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   setUploadPopupVisibility(value) {
@@ -127,9 +140,19 @@ class Image extends React.Component {
           ${this.props.imageURL && 'image__container--exists'}
         `}
         >
+          {(this.props.imageURL && !this.state.isVideo) &&
+            <img className="element__image" src={this.props.imageURL} alt="" />
+          }
+          {(this.props.imageURL && this.state.isVideo) && (
+            // eslint-disable-next-line
+            <video width="400" controls>
+              <source src={this.props.imageURL} />
+              Your browser does not support HTML5 video.
+            </video>
+          )}
           {!this.props.preview && !this.props.name && (
             <div className="image__login">
-              {this.props.imageURL && <img className="element__image" src={this.props.imageURL} alt="" />}
+
               <div
                 className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
               >
@@ -153,10 +176,6 @@ class Image extends React.Component {
               {this.renderUploadPopup(true)}
             </div>
           )}
-
-          {this.props.imageURL &&
-            <img className="element__image" src={this.props.imageURL} alt="" />
-          }
 
           {this.state.showUploadPopup && (
             <div
