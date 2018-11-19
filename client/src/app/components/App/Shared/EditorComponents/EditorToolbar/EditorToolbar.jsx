@@ -60,8 +60,6 @@ class EditorToolbar extends React.Component {
 
   onDrop=(files) => {
     const file = files[0];
-    console.log(file.name);
-    console.log(file.name.match(MEDIA_FILE_REGEX));
     if (file.name.match(MEDIA_FILE_REGEX)) {
       this.startFileUpload();
       axios.get(`/upload/${this.props.name}/images`, {
