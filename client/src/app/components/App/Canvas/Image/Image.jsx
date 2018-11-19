@@ -145,7 +145,7 @@ class Image extends React.Component {
           }
           {(this.props.imageURL && this.state.isVideo) && (
             // eslint-disable-next-line
-            <video width="400" controls>
+            <video width="100%" controls>
               <source src={this.props.imageURL} />
               Your browser does not support HTML5 video.
             </video>
