@@ -13,6 +13,8 @@ import { ProcessingWarning, WorkspaceLanguageConfirmation } from '../../../../..
 import * as descriptions from '../../../../../constants/imageDescConstants.js';
 import FileUpload from '../../FileUpload/FileUpload.jsx';
 
+const MEDIA_FILE_REGEX = /.+\.(gif|jpg|jpeg|png|bmp)$/i;
+
 require('./editorToolbar.scss');
 
 class EditorToolbar extends React.Component {
@@ -58,32 +60,36 @@ class EditorToolbar extends React.Component {
 
   onDrop=(files) => {
     const file = files[0];
-    this.startFileUpload();
-    axios.get(`/upload/${this.props.name}/images`, {
-      params: {
-        filename: file.name,
-        filetype: file.type
-      }
-    })
-      .then((result) => {
-        const signedUrl = result.data;
-        const options = {
-          headers: {
-            'Content-Type': file.type
-          }
-        };
+    console.log(file.name);
+    console.log(file.name.match(MEDIA_FILE_REGEX));
+    if (file.name.match(MEDIA_FILE_REGEX)) {
+      this.startFileUpload();
+      axios.get(`/upload/${this.props.name}/images`, {
+        params: {
+          filename: file.name,
+          filetype: file.type
+        }
+      })
+        .then((result) => {
+          const signedUrl = result.data;
+          const options = {
+            headers: {
+              'Content-Type': file.type
+            }
+          };
 
-        return axiosOrg.put(signedUrl, file, options);
-      })
-      .then((result) => {
-        const url = URL.parse(result.request.responseURL);
-        this.props.addMediaFile(file.name, `https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
-        this.stopFileUpload();
-        this.closeFileUpload();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+          return axiosOrg.put(signedUrl, file, options);
+        })
+        .then((result) => {
+          const url = URL.parse(result.request.responseURL);
+          this.props.addMediaFile(file.name, `https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
+          this.stopFileUpload();
+          this.closeFileUpload();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   render() {
