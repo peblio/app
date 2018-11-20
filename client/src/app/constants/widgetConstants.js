@@ -13,6 +13,7 @@ export const IFRAME_MIN_HEIGHT = 6;
 export const CODE_DEFAULT_WIDTH = 30;
 export const CODE_MIN_WIDTH = 13;
 export const CODE_MIN_HEIGHT = 11;
+export const CODE_DEFAULT_INSIDE_WIDTH = 400;
 
 export const QUESTION_DEFAULT_WIDTH = 15;
 export const QUESTION_MIN_WIDTH = 6;
