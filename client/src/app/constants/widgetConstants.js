@@ -18,6 +18,8 @@ export const CODE_DEFAULT_INSIDE_WIDTH = 400;
 export const QUESTION_DEFAULT_WIDTH = 15;
 export const QUESTION_MIN_WIDTH = 6;
 export const QUESTION_MIN_HEIGHT = 5;
+export const QUESION_DEFAULT_INNER_HEIGHT = 30;
+export const QUESION_MIN_INNER_HEIGHT = 30;
 
 export const IMAGE_DEFAULT_HEIGHT = 12;
 export const IMAGE_DEFAULT_WIDTH = 12;

@@ -1,7 +1,11 @@
 import { EditorState, convertFromRaw } from 'draft-js';
 import * as ActionTypes from '../constants/reduxConstants.js';
 import * as Code from '../constants/codeConstants.js';
-import { CODE_DEFAULT_INSIDE_WIDTH } from '../constants/widgetConstants.js';
+import {
+  CODE_DEFAULT_INSIDE_WIDTH,
+  QUESION_DEFAULT_INNER_HEIGHT,
+  QUESION_MIN_INNER_HEIGHT
+} from '../constants/widgetConstants.js';
 
 const initialState = {
   editors: {},
@@ -199,8 +203,8 @@ const editorsReducer = (state = initialState, action) => {
         index: stack.length,
         question: 'Enter question here ',
         answer: 'Enter answer here..',
-        minHeight: 30,
-        innerHeight: 30
+        minHeight: QUESION_MIN_INNER_HEIGHT,
+        innerHeight: QUESION_DEFAULT_INNER_HEIGHT
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
