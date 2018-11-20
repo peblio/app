@@ -1,7 +1,6 @@
 /* eslint-disable */
 module.exports = Object.freeze({
 
-  SIGN_UP_DUPLICATE_EMAIL: 'Email already in use.',
   SIGN_UP_DUPLICATE_USER: 'Username not available! Please try again',
   SIGN_UP_FAILED: 'Sign up failed',
   SIGN_UP_CHECK_MAIL: 'Please check your email to finish signing up',
