@@ -61,7 +61,7 @@ class ShareWorkspace extends React.Component {
     tempEditor.type = 'code';
     tempEditor.innerWidth = 200;
     this.props.submitPage(
-      '',
+      `src-${this.props.id}`,
       this.title.value,
       this.title.value,
       {
@@ -163,6 +163,7 @@ class ShareWorkspace extends React.Component {
 
 ShareWorkspace.propTypes = {
   closeModal: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   rgl: PropTypes.shape({
     margin: PropTypes.arrayOf(PropTypes.number),
@@ -177,7 +178,8 @@ ShareWorkspace.propTypes = {
 function mapStateToProps(state) {
   return {
     name: state.user.name,
-    rgl: state.page.rgl
+    rgl: state.page.rgl,
+    id: state.page.id
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
