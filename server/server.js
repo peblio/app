@@ -25,7 +25,7 @@ app.use(cors({ credentials: true, origin: true }));
 app.use(session({
   resave: true,
   saveUninitialized: false,
-  secret: 'ASQ12345678gfd4jh234oiuy',
+  secret: process.env.PEBLIO_SESSION_SECRET,
   proxy: true,
   name: process.env.PEBLIO_COOKIE_NAME,
   unset: 'destroy',
