@@ -29,5 +29,6 @@ export S3_BUCKET=`get_secret s3.bucket`
 export PEBLIO_DOMAIN_NAME=`get_secret domain.name`
 export PEBLIO_COOKIE_DOMAIN=`get_secret cookie.domain`
 export PEBLIO_COOKIE_NAME=`get_secret cookie.name`
+export PEBLIO_SESSION_SECRET=`get_secret session.secret`
 
 "$@"
