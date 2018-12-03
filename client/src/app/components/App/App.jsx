@@ -32,6 +32,8 @@ import { loadWorkspace } from '../../action/workspace.js';
 
 import axios from '../../utils/axios';
 
+require('./app.scss');
+
 class App extends React.Component {
   componentWillMount() {
     this.onUserVisit();
@@ -197,6 +199,7 @@ class App extends React.Component {
         role="presentation"
         tabIndex="0" // eslint-disable-line
         onKeyDown={e => this.onKeyPressed(e)} // eslint-disable-line
+        className="app__container"
       >
         <nav className="main-nav">
           <MainToolbar

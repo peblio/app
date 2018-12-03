@@ -2,7 +2,7 @@
 @import 'mixins';
 
 .main-nav {
-  position: fixed;
+  position: sticky;
   top: 0;
   width: 100%;
   z-index: $z-index-layer-3;
@@ -291,25 +291,6 @@ input[type="checkbox"] ~ .main-toolbar__preview-off {
   font-size: 14px;
   font-weight: normal;
 
-}
-
-
-@media screen and (max-width: 1025px) {
-
-  .main-toolbar__div-right{
-    width:100%;
-    margin: none;
-    background-color: $black;
-  }
-
-  .main-toolbar__preview-title{
-    display: none;
-  }
-
-  .main-toolbar__div-right-inside{
-    @include flex;
-    margin-left: 1rem;
-  }
 }
 
 .main-toolbar__spacer{
