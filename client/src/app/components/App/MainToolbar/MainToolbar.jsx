@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import history from '../../../utils/history';
 import FileMenu from './FileMenu/FileMenu.jsx';
@@ -11,6 +13,11 @@ import ToolbarLogo from '../../../images/logo.svg';
 import CheckSVG from '../../../images/check.svg';
 import AccountSVG from '../../../images/account.svg';
 import PreferencesSVG from '../../../images/preferences.svg';
+
+import { createNavigationContent } from '../../../action/navigation.js';
+import { logoutUser } from '../../../action/user.js';
+import { setPageTitle, togglePreviewMode, autoSaveUnsavedChanges } from '../../../action/page.js';
+import * as mainToolbarActions from '../../../action/mainToolbar.js';
 
 require('./mainToolbar.scss');
 
@@ -296,31 +303,57 @@ class MainToolbar extends React.Component {
 
 MainToolbar.propTypes = {
   canEdit: PropTypes.bool.isRequired,
-  createNavigationContent: PropTypes.func.isRequired,
+  createNavigationContent: PropTypes.func.isRequired, // nav
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,
-  isHelpDropdownOpen: PropTypes.func.isRequired,
+  isHelpDropdownOpen: PropTypes.bool.isRequired,
   isPreferencesPanelOpen: PropTypes.bool.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  logoutUser: PropTypes.func.isRequired,
+  logoutUser: PropTypes.func.isRequired, // user
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
-  projectID: PropTypes.func.isRequired,
-  setPageTitle: PropTypes.func.isRequired,
-  savePage: PropTypes.func.isRequired,
-  toggleHelpDropdown: PropTypes.func.isRequired,
-  toggleFileDropdown: PropTypes.func.isRequired,
-  toggleAccountDropdown: PropTypes.func.isRequired,
-  togglePreviewMode: PropTypes.func.isRequired,
-  togglePreferencesPanel: PropTypes.func.isRequired,
+  projectID: PropTypes.func.isRequired, // prop
+  setPageTitle: PropTypes.func.isRequired, // page
+  savePage: PropTypes.func.isRequired, // prop
+  toggleHelpDropdown: PropTypes.func.isRequired, // main
+  toggleFileDropdown: PropTypes.func.isRequired, // main
+  toggleAccountDropdown: PropTypes.func.isRequired, // main
+  togglePreviewMode: PropTypes.func.isRequired, // page
+  togglePreferencesPanel: PropTypes.func.isRequired, // main
   unsavedChanges: PropTypes.bool.isRequired,
-  autoSaveUnsavedChanges: PropTypes.func.isRequired,
+  autoSaveUnsavedChanges: PropTypes.func.isRequired, // page
   userType: PropTypes.string.isRequired,
-  viewLoginModal: PropTypes.func.isRequired,
-  viewShareModal: PropTypes.func.isRequired,
-  viewSignUpModal: PropTypes.func.isRequired,
+  viewLoginModal: PropTypes.func.isRequired, // main
+  viewShareModal: PropTypes.func.isRequired, // main
+  viewSignUpModal: PropTypes.func.isRequired, // main
   editorAutoSave: PropTypes.bool.isRequired
 };
 
-export default MainToolbar;
+
+function mapStateToProps(state) {
+  return {
+    canEdit: state.user.canEdit,
+    isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
+    isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
+    isHelpDropdownOpen: state.mainToolbar.isHelpDropdownOpen,
+    isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,
+    layout: state.page.layout,
+    name: state.user.name,
+    pageTitle: state.page.pageTitle,
+    preview: state.page.preview,
+    unsavedChanges: state.page.unsavedChanges,
+    userType: state.user.type,
+    editorAutoSave: state.preferences.editorAutoSave
+  };
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  createNavigationContent,
+  logoutUser,
+  setPageTitle,
+  togglePreviewMode,
+  autoSaveUnsavedChanges,
+  ...mainToolbarActions
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainToolbar);
