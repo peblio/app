@@ -65,6 +65,7 @@ class TextEditor extends React.Component {
           <div
             ref={(element) => { this.textEditor = element; }}
             className={classNames(textContainerClassName)}
+            data-test="text-editor__container"
           >
             <Editor
               id={this.props.id}

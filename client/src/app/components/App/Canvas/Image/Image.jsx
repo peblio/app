@@ -138,7 +138,8 @@ class Image extends React.Component {
           ${this.props.preview ? '' : 'image__container--edit'}
           ${this.props.name && this.imageWidgetRef && (this.state.isImageSmall) ? 'image__container--small' : ''}
           ${this.props.imageURL && 'image__container--exists'}
-        `}
+          `}
+          data-test="image__container"
         >
           {(this.props.imageURL && !this.state.isVideo) &&
             <img className="element__image" src={this.props.imageURL} alt="" />

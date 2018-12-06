@@ -30,9 +30,14 @@ class Iframe extends React.Component {
 
   render() {
     return (
-      <div>
+      <div data-test="iframe__container">
         <div className="element__iframe">
-          <iframe className="iframe__main" title="embedded webpage" src={this.props.iframeURL} />
+          <iframe
+            className="iframe__main"
+            title="embedded webpage"
+            src={this.props.iframeURL}
+            data-test="iframe__main"
+          />
         </div>
         <form className="element__add-url" onSubmit={this.urlSubmitted.bind(this)}>
           <label htmlFor="element-name" className="element__label">
@@ -40,13 +45,19 @@ class Iframe extends React.Component {
             <input
               id="element-name"
               className="element__input"
+              data-test="iframe__input"
               type="text"
               ref={(element) => { this.url = element; }}
               defaultValue={this.props.iframeURL}
               readOnly={this.props.preview}
             />
           </label>
-          <input className="element__button" type="submit" value="Submit" />
+          <input
+            className="element__button"
+            type="submit"
+            data-test="iframe__submit"
+            value="Submit"
+          />
         </form>
       </div>
     );

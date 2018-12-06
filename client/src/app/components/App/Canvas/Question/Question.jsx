@@ -20,7 +20,10 @@ class Questions extends React.Component {
   render() {
     return (
       <div>
-        <section className="question__container">
+        <section
+          className="question__container"
+          data-test="question__container"
+        >
           <SplitPane
             split="horizontal"
             minSize={this.props.minHeight}

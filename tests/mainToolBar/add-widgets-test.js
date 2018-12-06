@@ -57,11 +57,26 @@ test('adding a python editor widget', async (t) => {
     .expect(Selector('[data-test=code-editor-python]').exists).ok();
 });
 
-test('default processing sketch runs', async (t) => {
+test('adding an image widget', async (t) => {
   await t
-    .click(Selector('[data-test=add-code-editor]'))
-    .click(Selector('[data-test=add-processing-editor]'))
-    .click(Selector('[data-test=play-sketch-button]'))
-    .switchToIframe(Selector('[data-test=sketch-output]'))
-    .expect(Selector('[data-test=processing-canvas]').exists).ok();
+    .click(Selector('[data-test=insert-toolbar__add-image]'))
+    .expect(Selector('[data-test=image__container]').exists).ok();
+});
+
+test('adding a question widget', async (t) => {
+  await t
+    .click(Selector('[data-test=insert-toolbar__add-question]'))
+    .expect(Selector('[data-test=question__container]').exists).ok();
+});
+
+test('adding an iframe widget', async (t) => {
+  await t
+    .click(Selector('[data-test=insert-toolbar__add-iframe]'))
+    .expect(Selector('[data-test=iframe__container]').exists).ok();
+});
+
+test('adding a text widget', async (t) => {
+  await t
+    .click(Selector('[data-test=insert-toolbar__add-text-editor]'))
+    .expect(Selector('[data-test=text-editor__container]').exists).ok();
 });
