@@ -21,3 +21,15 @@ export const teacherUser = {
   guardianEmail: '',
   guardianConsentedAt: null
 };
+
+export const exampleUser = {
+  email: 'test.examples@gmail.com',
+  name: 'peblioexamples',
+  type: 'teacher',
+  loginType: 'password',
+  isVerified: true,
+  password: 'xyz789',
+  requiresGuardianConsent: false,
+  guardianEmail: '',
+  guardianConsentedAt: null
+};

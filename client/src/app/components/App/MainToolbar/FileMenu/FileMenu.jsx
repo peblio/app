@@ -21,6 +21,7 @@ class FileMenu extends React.Component {
             onMouseDown={(e) => { e.preventDefault(); }}
             onKeyDown={(e) => { e.preventDefault(); }}
             target="_blank"
+            data-test="file-menu__new-link"
           >
             <i className="fas fa-plus"></i>
             {' '}
@@ -40,7 +41,7 @@ class FileMenu extends React.Component {
                   this.props.viewPagesModal();
                   this.props.toggleFileDropdown();
                 }}
-                data-test="show-pages-modal"
+                data-test="file-menu__pages-button"
               >
                 <i className="fas fa-bars"></i>
                 {' '}
@@ -58,6 +59,7 @@ class FileMenu extends React.Component {
                   this.props.savePage();
                   this.props.toggleFileDropdown();
                 }}
+                data-test="file-menu__save-button"
               >
                 <i className="fas fa-check"></i>
                 {' '}
@@ -77,6 +79,7 @@ class FileMenu extends React.Component {
               this.props.viewExamplesModal();
               this.props.toggleFileDropdown();
             }}
+            data-test="file-menu__examples-button"
           >
             <i className="fas fa-folder"></i>
             {' '}
