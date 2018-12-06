@@ -37,7 +37,10 @@ class InsertToolbar extends React.Component {
   render() {
     return (
       <div className="insert-toolbar__container insert-toolbar__expand">
-        <div className="insert-toolbar__container-left">
+        <div
+          className="insert-toolbar__container-left"
+          data-test="insert-toolbar__container"
+        >
           <button
             className="insert-toolbar__button "
             onMouseDown={this.toggleEditorOptions}

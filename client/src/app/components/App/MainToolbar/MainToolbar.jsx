@@ -127,7 +127,7 @@ class MainToolbar extends React.Component {
                 className={helpDropDownButtonClassName}
                 onMouseDown={this.props.toggleHelpDropdown}
                 onKeyDown={this.props.toggleHelpDropdown}
-                data-test="toggle-file-dropdown"
+                data-test="toggle-help-dropdown"
               >
                 Help
               </button>
@@ -144,6 +144,7 @@ class MainToolbar extends React.Component {
             value={this.props.pageTitle}
             onChange={this.props.setPageTitle}
             readOnly={this.props.preview}
+            data-test="main-toolbar__title"
           />
           {this.props.preview || (
             <span
@@ -161,14 +162,23 @@ class MainToolbar extends React.Component {
                   onChange={this.props.togglePreviewMode}
                   type="checkbox"
                   checked={this.props.preview}
+                  data-test="main-toolbar__edit-mode-toggle"
                 />
                 <div className="main-toolbar__slider"></div>
               </label>
-              <button className="main-toolbar__save" onClick={this.props.savePage}>
+              <button
+                className="main-toolbar__save"
+                onClick={this.props.savePage}
+                data-test="main-toolbar__save-button"
+              >
                 {saveButtonText}
               </button>
               <div className="main-toolbar__spacer"></div>
-              <button className="main-toolbar__button" onClick={this.props.viewShareModal}>
+              <button
+                className="main-toolbar__button"
+                onClick={this.props.viewShareModal}
+                data-test="main-toolbar__share-button"
+              >
               Share
               </button>
               <div className="main-toolbar__spacer"></div>
@@ -176,6 +186,7 @@ class MainToolbar extends React.Component {
                 <button
                   className="main-toolbar__button "
                   onMouseDown={this.props.togglePreferencesPanel}
+                  data-test="main-toolbar__preferences-button"
                 >
                   <PreferencesSVG
                     className={classNames(prefButtonClassName)}
@@ -233,6 +244,7 @@ class MainToolbar extends React.Component {
                               href={`/user/${this.props.name}`}
                               onMouseDown={(e) => { e.preventDefault(); }}
                               onKeyDown={(e) => { e.preventDefault(); }}
+                              data-test="main-toolbar__profile-link"
                             >
                               Profile
                             </a>
@@ -243,6 +255,7 @@ class MainToolbar extends React.Component {
                             className="main-toolbar__account-link"
                             onMouseDown={this.logout}
                             onKeyDown={this.logout}
+                            data-test="main-toolbar__logout-button"
                           >
                             Logout
                           </button>
@@ -256,7 +269,7 @@ class MainToolbar extends React.Component {
                   <button
                     className="main-toolbar__button"
                     onClick={this.props.viewLoginModal}
-                    data-test="show-login-modal"
+                    data-test="main-toolbar__login-button"
                   >
                     Log In
                   </button>
@@ -264,6 +277,7 @@ class MainToolbar extends React.Component {
                   <button
                     className="main-toolbar__button"
                     onClick={this.props.viewSignUpModal}
+                    data-test="main-toolbar__signup-button"
                   >
                     Sign Up
                   </button>

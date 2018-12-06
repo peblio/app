@@ -1,4 +1,4 @@
-import { Selector } from 'testcafe';
+import { ClientFunction, Selector } from 'testcafe';
 
 import config from '../config';
 import { exampleUser, studentUser } from '../fixtures/user';
@@ -70,8 +70,6 @@ fixture('File Menu when not logged in')
   });
 
 test('checking contents of file menu', async (t) => {
-  const pageTitles = Selector('[data-test=page-title]');
-
   await t
     .click(Selector('[data-test=toggle-file-dropdown]'))
     .expect(Selector('[data-test=file-menu__examples-button]').exists).ok()
@@ -126,4 +124,12 @@ test('opening examples modal', async (t) => {
     .expect(examplesTitles.count).eql(2)
     .expect(examplesTitles.nth(0).textContent).eql('Example Page One')
     .expect(examplesTitles.nth(1).textContent).eql('Example Page Two');
+});
+
+test('open new pebl', async (t) => {
+  const getLocation = ClientFunction(() => document.location.href);
+  await t
+    .click(Selector('[data-test=toggle-file-dropdown]'))
+    .click(Selector('[data-test=file-menu__new-link]'))
+    .expect(getLocation()).contains(`${config.baseUrl}`);
 });
