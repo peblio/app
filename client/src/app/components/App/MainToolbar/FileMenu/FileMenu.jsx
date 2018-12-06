@@ -1,5 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import {
+  toggleFileDropdown,
+  viewExamplesModal,
+  viewPagesModal } from '../../../../action/mainToolbar.js';
 
 require('./fileMenu.scss');
 
@@ -89,4 +96,15 @@ FileMenu.propTypes = {
   viewPagesModal: PropTypes.func.isRequired
 };
 
-export default FileMenu;
+function mapStateToProps(state) {
+  return {
+    name: state.user.name,
+  };
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  toggleFileDropdown,
+  viewExamplesModal,
+  viewPagesModal
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(FileMenu);

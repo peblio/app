@@ -108,11 +108,7 @@ class MainToolbar extends React.Component {
               </button>
               {this.props.isFileDropdownOpen && (
                 <FileMenu
-                  name={this.props.name}
                   savePage={this.props.savePage}
-                  toggleFileDropdown={this.props.toggleFileDropdown}
-                  viewPagesModal={this.props.viewPagesModal}
-                  viewExamplesModal={this.props.viewExamplesModal}
                 />
               )}
             </div>
@@ -277,13 +273,7 @@ class MainToolbar extends React.Component {
           </div>
         </div>
         {this.props.preview || (
-          <InsertToolbar
-            addCodeEditor={this.props.addCodeEditor}
-            addQuestionEditor={this.props.addQuestionEditor}
-            addTextEditor={this.props.addTextEditor}
-            addIframe={this.props.addIframe}
-            addImage={this.props.addImage}
-          />
+          <InsertToolbar />
         )}
       </div>
     );
@@ -291,11 +281,6 @@ class MainToolbar extends React.Component {
 }
 
 MainToolbar.propTypes = {
-  addCodeEditor: PropTypes.func.isRequired,
-  addQuestionEditor: PropTypes.func.isRequired,
-  addTextEditor: PropTypes.func.isRequired,
-  addIframe: PropTypes.func.isRequired,
-  addImage: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
   createNavigationContent: PropTypes.func.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
@@ -318,9 +303,7 @@ MainToolbar.propTypes = {
   unsavedChanges: PropTypes.bool.isRequired,
   autoSaveUnsavedChanges: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired,
-  viewExamplesModal: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
-  viewPagesModal: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
   viewSignUpModal: PropTypes.func.isRequired,
   editorAutoSave: PropTypes.bool.isRequired

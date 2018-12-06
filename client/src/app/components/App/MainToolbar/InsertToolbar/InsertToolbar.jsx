@@ -1,11 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import EditorSVG from '../../../../images/editor.svg';
 import EmbedSVG from '../../../../images/embed.svg';
 import ImageSVG from '../../../../images/image.svg';
 import QuestionSVG from '../../../../images/question.svg';
 import TextSVG from '../../../../images/text.svg';
+import {
+  addCodeEditor,
+  addIframe,
+  addImage,
+  addTextEditor,
+  addQuestionEditor
+} from '../../../../action/editors.js';
 
 require('./insertToolbar.scss');
 
@@ -189,4 +198,12 @@ InsertToolbar.propTypes = {
   addQuestionEditor: PropTypes.func.isRequired,
 };
 
-export default InsertToolbar;
+const mapDispatchToProps = dispatch => bindActionCreators({
+  addCodeEditor,
+  addIframe,
+  addImage,
+  addTextEditor,
+  addQuestionEditor
+}, dispatch);
+
+export default connect(null, mapDispatchToProps)(InsertToolbar);
