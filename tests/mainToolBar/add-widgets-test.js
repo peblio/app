@@ -4,7 +4,7 @@ import config from '../config';
 import { studentUser } from '../fixtures/user';
 import { seedDB, clearDB, hashUserPassword, login } from '../helpers';
 
-fixture('Adding widgets to a Pebl')
+fixture.skip('Adding widgets to a Pebl')
   .page(config.baseUrl)
   .beforeEach(async (t) => {
     await clearDB();

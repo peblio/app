@@ -141,9 +141,14 @@ class Image extends React.Component {
           `}
           data-test="image__container"
         >
-          {(this.props.imageURL && !this.state.isVideo) &&
-            <img className="element__image" src={this.props.imageURL} alt="" />
-          }
+          {(this.props.imageURL && !this.state.isVideo) && (
+            <img
+              className="element__image"
+              src={this.props.imageURL}
+              alt=""
+              data-test="image__main"
+            />
+          )}
           {(this.props.imageURL && this.state.isVideo) && (
             // eslint-disable-next-line
             <video width="100%" controls>
@@ -171,6 +176,7 @@ class Image extends React.Component {
               className={
                 `image__login ${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`
               }
+              data-test="image__upload-container"
               onClick={() => { this.handleOnClick(); }}
               onKeyUp={() => this.handleOnClick()}
             >
@@ -181,6 +187,7 @@ class Image extends React.Component {
           {this.state.showUploadPopup && (
             <div
               className='image__container image__container--popup'
+              data-test="image__upload-container"
             >
               {this.renderUploadPopup(false)}
             </div>

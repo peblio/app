@@ -32,6 +32,7 @@ class Questions extends React.Component {
           >
             <textarea
               className="question__question"
+              data-test="question__question"
               onChange={this.updateQuestionChange}
               readOnly={this.props.preview}
               value={this.props.question}
@@ -39,6 +40,7 @@ class Questions extends React.Component {
             </textarea>
             <textarea
               className="question__answer"
+              data-test="question__answer"
               onChange={this.updateAnswerChange}
               value={this.props.answer}
             >

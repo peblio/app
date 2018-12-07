@@ -16,7 +16,10 @@ class FileUpload extends React.Component {
           className="element-image"
           disabled={this.props.isSmall}
         >
-          <div className="image__drop">
+          <div
+            className="image__drop"
+            data-test="image__drop"
+          >
             <div className="image__svg">
               <UploadSVG alt="upload image" />
             </div>
@@ -34,7 +37,10 @@ class FileUpload extends React.Component {
         {this.props.container === 'image' && (
           <div>
             <div className="image__title">or add a URL</div>
-            <div className="image__url">
+            <div
+              className="image__url"
+              data-test="image__url"
+            >
               <form
                 className="element-image__add-url"
                 onSubmit={e => this.props.urlSubmitted(e, this.url.value)}
@@ -43,13 +49,19 @@ class FileUpload extends React.Component {
                   <input
                     id="element-image-name"
                     className="element-image__input"
+                    data-test="image__url-input"
                     type="text"
                     ref={(element) => { this.url = element; }}
                     defaultValue={this.props.imageURL}
                     readOnly={this.props.preview}
                   />
                 </label>
-                <input className="element__button" type="submit" value="Upload New" />
+                <input
+                  className="element__button"
+                  type="submit"
+                  value="Upload New"
+                  data-test="image__upload"
+                />
               </form>
             </div>
           </div>

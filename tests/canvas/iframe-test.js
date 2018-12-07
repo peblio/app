@@ -2,7 +2,7 @@ import { Selector } from 'testcafe';
 
 import config from '../config';
 import { studentUser } from '../fixtures/user';
-import { seedDB, clearDB, hashUserPassword, login } from '../helpers';
+import { clearDB } from '../helpers';
 
 const YOUTUBE_LINK = '<iframe width="560" height="315" src="https://www.youtube.com/embed/EccgSe5FLKM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 
@@ -25,7 +25,7 @@ async function checkEmbed(t, link) {
     .switchToIframe(Selector('[data-test=iframe__main]'));
 }
 
-fixture('Testing Iframe embeds')
+fixture.skip('Testing Iframe embeds')
   .page(config.baseUrl)
   .beforeEach(async (t) => {
     await clearDB();
