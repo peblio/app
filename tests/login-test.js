@@ -4,7 +4,7 @@ import config from './config';
 import { studentUser } from './fixtures/user';
 import { seedDB, clearDB, hashUserPassword, login } from './helpers';
 
-fixture.skip('Logging in')
+fixture('Logging in')
   .page(config.baseUrl)
   .beforeEach(async (t) => {
     await clearDB();

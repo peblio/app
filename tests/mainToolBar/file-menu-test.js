@@ -4,7 +4,7 @@ import config from '../config';
 import { exampleUser, studentUser } from '../fixtures/user';
 import { seedDB, clearDB, hashUserPassword, login } from '../helpers';
 
-fixture.skip('File Menu when logged in')
+fixture('File Menu when logged in')
   .page(config.baseUrl)
   .beforeEach(async (t) => {
     await clearDB();
@@ -61,7 +61,7 @@ test('checking contents of file menu', async (t) => {
     .expect(Selector('[data-test=file-menu__save-button]').exists).ok();
 });
 
-fixture.skip('File Menu when not logged in')
+fixture('File Menu when not logged in')
   .page(config.baseUrl)
   .beforeEach(async (t) => {
     await clearDB();
@@ -79,7 +79,7 @@ test('checking contents of file menu', async (t) => {
 });
 
 
-fixture.skip('File Menu with examples populated')
+fixture('File Menu with examples populated')
   .page(config.baseUrl)
   .beforeEach(async (t) => {
     await clearDB();

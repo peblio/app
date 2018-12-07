@@ -4,7 +4,7 @@ import config from '../config';
 import { teacherUser, studentUser } from '../fixtures/user';
 import { seedDB, clearDB, hashUserPassword, login } from '../helpers';
 
-fixture.skip('Main Menu not logged in')
+fixture('Main Menu not logged in')
   .page(config.baseUrl);
 
 test('are menu items displayed', async (t) => {
@@ -22,7 +22,7 @@ test('are menu items displayed', async (t) => {
 });
 
 
-fixture.skip('Main Menu when student logged in')
+fixture('Main Menu when student logged in')
   .page(config.baseUrl)
   .beforeEach(async (t) => {
     await clearDB();
@@ -60,7 +60,7 @@ test('logging out', async(t) => {
     .expect(Selector('[data-test=account-button]').exists).notOk();
 });
 
-fixture.skip('Main Menu when teacher logged in')
+fixture('Main Menu when teacher logged in')
   .page(config.baseUrl)
   .beforeEach(async (t) => {
     await clearDB();
