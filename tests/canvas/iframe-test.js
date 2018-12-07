@@ -25,7 +25,7 @@ async function checkEmbed(t, link) {
     .switchToIframe(Selector('[data-test=iframe__main]'));
 }
 
-fixture.skip('Testing Iframe embeds')
+fixture('Testing Iframe embeds')
   .page(config.baseUrl)
   .beforeEach(async (t) => {
     await clearDB();

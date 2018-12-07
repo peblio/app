@@ -7,7 +7,7 @@ import { clearDB } from '../helpers';
 const QUESTION = 'What is you name?';
 const ANSWER = 'My name is cat.';
 
-fixture.skip('Testing Question Widgets')
+fixture('Testing Question Widgets')
   .page(config.baseUrl)
   .beforeEach(async (t) => {
     await clearDB();

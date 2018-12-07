@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import axiosOrg from 'axios';
 import URL from 'url';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+import { setImageURL } from '../../../../action/editors.js';
 import axios from '../../../../utils/axios';
 import * as WidgetSize from '../../../../constants/widgetConstants.js';
 import FileUpload from '../../Shared/FileUpload/FileUpload.jsx';
@@ -23,8 +26,6 @@ class Image extends React.Component {
       isFileUploading: false,
       isVideo: false,
     };
-    this.removeEditor = () => { this.props.removeEditor(this.props.id); };
-    this.onChange = (state) => { this.props.onChange(this.props.id, state); };
     this.setImageURL = url => this.props.setImageURL(this.props.id, url);
     this.onDrop = this.onDrop.bind(this);
     this.urlSubmitted = (event, value) => {
@@ -120,7 +121,6 @@ class Image extends React.Component {
         onDrop={this.onDrop}
         urlSubmitted={this.urlSubmitted}
         imageURL={this.props.imageURL}
-        readOnly={this.props.preview}
         container="image"
         isSmall={sizeOverride && this.state.isImageSmall}
         isFileUploading={this.state.isFileUploading}
@@ -201,11 +201,19 @@ class Image extends React.Component {
 Image.propTypes = {
   id: PropTypes.string.isRequired,
   imageURL: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired, // state.user.name
   preview: PropTypes.bool.isRequired,
-  removeEditor: PropTypes.func.isRequired,
-  setImageURL: PropTypes.func.isRequired,
+  setImageURL: PropTypes.func.isRequired, // editors
 };
 
-export default Image;
+function mapStateToProps(state) {
+  return {
+    name: state.user.name,
+    preview: state.page.preview
+  };
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setImageURL
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Image);

@@ -1,13 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SplitPane from 'react-split-pane';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { setQuestionInnerHeight,
+  updateAnswerChange,
+  updateQuestionChange } from '../../../../action/editors.js';
 
 require('./question.scss');
 
 class Questions extends React.Component {
   constructor(props) {
     super(props);
-    this.removeEditor = () => { this.props.removeEditor(this.props.id); };
     this.updateAnswerChange = (event) => {
       this.props.updateAnswerChange(this.props.id, event.target.value);
     };
@@ -59,10 +64,20 @@ Questions.propTypes = {
   minHeight: PropTypes.number.isRequired,
   preview: PropTypes.bool.isRequired,
   question: PropTypes.string.isRequired,
-  removeEditor: PropTypes.func.isRequired,
   setQuestionInnerHeight: PropTypes.func.isRequired,
   updateAnswerChange: PropTypes.func.isRequired,
   updateQuestionChange: PropTypes.func.isRequired
 };
 
-export default Questions;
+function mapStateToProps(state) {
+  return {
+    preview: state.page.preview
+  };
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setQuestionInnerHeight,
+  updateAnswerChange,
+  updateQuestionChange
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);

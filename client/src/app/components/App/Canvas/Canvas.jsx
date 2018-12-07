@@ -136,12 +136,8 @@ class Canvas extends React.Component {
         ref={(textEditor) => { if (textEditor) { this.textEditors[editor.id] = textEditor; } }}
         backColor={editor.backColor}
         editorState={editor.editorState}
-        onChange={this.props.updateTextChange}
         onResize={this.resizeTextEditor}
-        preview={this.props.preview}
-        updateTextBackColor={this.props.updateTextBackColor}
         isResizing={this.state.isResizingGridItems[editor.id] || false}
-        currentWidget={this.props.currentWidget}
       />
     );
   }
@@ -152,8 +148,6 @@ class Canvas extends React.Component {
         <Iframe
           id={editor.id}
           iframeURL={editor.url}
-          preview={this.props.preview}
-          setIframeURL={this.props.setIframeURL}
         />
       </div>
     );
@@ -165,11 +159,6 @@ class Canvas extends React.Component {
         <Image
           id={editor.id}
           imageURL={editor.url}
-          name={this.props.name}
-          onChange={this.props.updateImageChange}
-          preview={this.props.preview}
-          removeEditor={this.props.removeEditor}
-          setImageURL={this.props.setImageURL}
           layout={this.props.layout}
         />
       </div>
@@ -184,11 +173,7 @@ class Canvas extends React.Component {
           answer={editor.answer}
           innerHeight={editor.innerHeight}
           minHeight={editor.minHeight}
-          preview={this.props.preview}
           question={editor.question}
-          setQuestionInnerHeight={this.props.setQuestionInnerHeight}
-          updateAnswerChange={this.props.updateAnswerChange}
-          updateQuestionChange={this.props.updateQuestionChange}
         />
       </div>
     );
@@ -366,20 +351,14 @@ Canvas.propTypes = {
   }).isRequired,
   setCurrentWidget: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
-  setIframeURL: PropTypes.func.isRequired,
-  setImageURL: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
   setPageHeading: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
-  setQuestionInnerHeight: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
-  updateAnswerChange: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
-  updateImageChange: PropTypes.func.isRequired,
-  updateQuestionChange: PropTypes.func.isRequired,
   updateTextBackColor: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired,
   updateTextHeight: PropTypes.func.isRequired,

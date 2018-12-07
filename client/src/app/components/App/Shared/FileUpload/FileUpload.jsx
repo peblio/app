@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactLoading from 'react-loading';
+import { connect } from 'react-redux';
 
 import Dropzone from 'react-dropzone';
 
@@ -83,4 +84,10 @@ FileUpload.propTypes = {
 };
 
 
-export default FileUpload;
+function mapStateToProps(state) {
+  return {
+    preview: state.page.preview
+  };
+}
+
+export default connect(mapStateToProps, null)(FileUpload);

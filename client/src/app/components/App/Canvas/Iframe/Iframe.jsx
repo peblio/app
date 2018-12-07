@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { setIframeURL } from '../../../../action/editors.js';
 
 require('./iframe.scss');
 
@@ -71,4 +75,13 @@ Iframe.propTypes = {
   setIframeURL: PropTypes.func.isRequired
 };
 
-export default Iframe;
+function mapStateToProps(state) {
+  return {
+    preview: state.page.preview
+  };
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setIframeURL
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Iframe);

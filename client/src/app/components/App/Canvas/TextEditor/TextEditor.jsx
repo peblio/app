@@ -4,6 +4,10 @@ import { Editor } from 'react-draft-wysiwyg';
 import Measure from 'react-measure';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { updateTextChange, updateTextBackColor } from '../../../../action/editors.js';
 
 import BackColor from './BackColor/BackColor.jsx';
 
@@ -24,7 +28,7 @@ class TextEditor extends React.Component {
   }
 
   onChange = (state) => {
-    this.props.onChange(this.props.id, state);
+    this.props.updateTextChange(this.props.id, state);
   }
 
   onResize = (contentRect) => {
@@ -39,10 +43,6 @@ class TextEditor extends React.Component {
     const colorStyle = `background: ${color}`;
     this.textEditor.getElementsByClassName('DraftEditor-editorContainer')[0].setAttribute('style', colorStyle);
     this.updateTextBackColor(color);
-  }
-
-  removeEditor = () => {
-    this.props.removeEditor(this.props.id);
   }
 
   toggleCollapse = () => {
@@ -126,14 +126,25 @@ class TextEditor extends React.Component {
 TextEditor.propTypes = {
   id: PropTypes.string.isRequired,
   backColor: PropTypes.string.isRequired,
-  currentWidget: PropTypes.string.isRequired,
+  currentWidget: PropTypes.string.isRequired, //*
   editorState: PropTypes.shape({}).isRequired,
   onChange: PropTypes.func.isRequired,
   onResize: PropTypes.func.isRequired,
-  preview: PropTypes.bool.isRequired,
-  removeEditor: PropTypes.func.isRequired,
-  updateTextBackColor: PropTypes.func.isRequired,
+  preview: PropTypes.bool.isRequired, //*
+  updateTextChange: PropTypes.func.isRequired, //*
+  updateTextBackColor: PropTypes.func.isRequired, //*
   isResizing: PropTypes.bool.isRequired
 };
 
-export default TextEditor;
+function mapStateToProps(state) {
+  return {
+    currentWidget: state.editorsReducer.currentWidget,
+    preview: state.page.preview
+  };
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  updateTextChange,
+  updateTextBackColor
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(TextEditor);

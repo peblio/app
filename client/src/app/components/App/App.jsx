@@ -243,7 +243,6 @@ class App extends React.Component {
           setInnerWidth={this.props.setInnerWidth}
 
           updateTextChange={this.props.updateTextChange}
-          updateImageChange={this.props.updateImageChange}
           updateTextBackColor={this.props.updateTextBackColor}
 
           setIframeURL={this.props.setIframeURL}
@@ -433,7 +432,6 @@ App.propTypes = {
   updateQuestionChange: PropTypes.func.isRequired,
   updateAnswerChange: PropTypes.func.isRequired,
   setImageURL: PropTypes.func.isRequired,
-  updateImageChange: PropTypes.func.isRequired,
   resizeTextEditor: PropTypes.func.isRequired,
   updateTextHeight: PropTypes.func.isRequired,
 
