@@ -2,11 +2,14 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import SplitPane from 'react-split-pane';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import CodeEditor from '../../Shared/EditorComponents/CodeEditor/CodeEditor.jsx';
 import CodeOutput from '../../Shared/EditorComponents/CodeOutput/CodeOutput.jsx';
 import EditorToolbar from '../../Shared/EditorComponents/EditorToolbar/EditorToolbar.jsx';
 import ConsoleOutput from '../../Shared/EditorComponents/ConsoleOutput/ConsoleOutput.jsx';
+import * as editorActions from '../../../../action/editors.js';
 
 require('./editorContainer.scss');
 
@@ -149,4 +152,14 @@ EditorContainer.propTypes = {
   updateFile: PropTypes.func.isRequired
 };
 
-export default EditorContainer;
+function mapStateToProps(state) {
+  return {
+    name: state.user.name,
+    editorTheme: state.preferences.editorTheme
+  };
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  ...editorActions
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditorContainer);

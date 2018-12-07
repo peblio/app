@@ -126,13 +126,13 @@ class TextEditor extends React.Component {
 TextEditor.propTypes = {
   id: PropTypes.string.isRequired,
   backColor: PropTypes.string.isRequired,
-  currentWidget: PropTypes.string.isRequired, //*
+  currentWidget: PropTypes.string.isRequired,
   editorState: PropTypes.shape({}).isRequired,
-  onChange: PropTypes.func.isRequired,
+  // onTextChange: PropTypes.func.isRequired,
   onResize: PropTypes.func.isRequired,
-  preview: PropTypes.bool.isRequired, //*
-  updateTextChange: PropTypes.func.isRequired, //*
-  updateTextBackColor: PropTypes.func.isRequired, //*
+  preview: PropTypes.bool.isRequired,
+  updateTextChange: PropTypes.func.isRequired,
+  updateTextBackColor: PropTypes.func.isRequired,
   isResizing: PropTypes.bool.isRequired
 };
 

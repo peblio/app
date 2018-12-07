@@ -102,27 +102,14 @@ class Canvas extends React.Component {
         {({ isVisible }) => (
           <EditorContainer
             id={editor.id}
-            addMediaFile={this.props.addMediaFile}
             currentFile={editor.currentFile}
-            clearConsoleOutput={this.props.clearConsoleOutput}
             code={editor.code}
             consoleOutputText={editor.consoleOutputText}
-            editorFontSize={this.props.editorFontSize}
             editorMode={editor.editorMode}
-            editorTheme={this.props.editorTheme}
             files={editor.files}
             innerWidth={editor.innerWidth}
             isPlaying={editor.isPlaying && isVisible}
             isRefreshing={editor.isRefreshing}
-            name={this.props.name}
-            playCode={this.props.playCode}
-            startCodeRefresh={this.props.startCodeRefresh}
-            setCurrentFile={this.props.setCurrentFile}
-            setInnerWidth={this.props.setInnerWidth}
-            stopCode={this.props.stopCode}
-            stopCodeRefresh={this.props.stopCodeRefresh}
-            updateConsoleOutput={this.props.updateConsoleOutput}
-            updateFile={this.props.updateFile}
           />
         )}
       </VisibilitySensor>
@@ -159,7 +146,6 @@ class Canvas extends React.Component {
         <Image
           id={editor.id}
           imageURL={editor.url}
-          layout={this.props.layout}
         />
       </div>
     );
@@ -326,20 +312,14 @@ class Canvas extends React.Component {
 }
 
 Canvas.propTypes = {
-  addMediaFile: PropTypes.func.isRequired,
-  clearConsoleOutput: PropTypes.func.isRequired,
   currentWidget: PropTypes.string.isRequired,
   duplicateEditor: PropTypes.func.isRequired,
   editorIndex: PropTypes.number.isRequired,
-  editorFontSize: PropTypes.number.isRequired,
   editors: PropTypes.shape({}).isRequired,
-  editorTheme: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   isNavigationOpen: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
   pageHeading: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
-  playCode: PropTypes.func.isRequired,
   removeEditor: PropTypes.func.isRequired,
   resizeTextEditor: PropTypes.func.isRequired,
   rgl: PropTypes.shape({
@@ -350,17 +330,8 @@ Canvas.propTypes = {
     width: PropTypes.number
   }).isRequired,
   setCurrentWidget: PropTypes.func.isRequired,
-  setCurrentFile: PropTypes.func.isRequired,
-  setInnerWidth: PropTypes.func.isRequired,
   setPageHeading: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
-  startCodeRefresh: PropTypes.func.isRequired,
-  stopCode: PropTypes.func.isRequired,
-  stopCodeRefresh: PropTypes.func.isRequired,
-  updateConsoleOutput: PropTypes.func.isRequired,
-  updateFile: PropTypes.func.isRequired,
-  updateTextBackColor: PropTypes.func.isRequired,
-  updateTextChange: PropTypes.func.isRequired,
   updateTextHeight: PropTypes.func.isRequired,
   textHeights: PropTypes.shape({}).isRequired
 };
