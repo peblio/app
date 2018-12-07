@@ -21,6 +21,7 @@ class WidgetNav extends React.Component {
         <button
           className="widget__close"
           onClick={this.duplicateEditor.bind(this)}
+          data-test="widget__duplicate"
         >
           <CopySVG alt="duplicate widget" />
         </button>
@@ -32,6 +33,7 @@ class WidgetNav extends React.Component {
         <button
           className="widget__close"
           onClick={this.removeEditor.bind(this)}
+          data-test="widget__close"
         >
           <CloseSVG alt="close element" />
         </button>
