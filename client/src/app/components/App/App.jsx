@@ -208,55 +208,27 @@ class App extends React.Component {
           />
         </nav>
         <Canvas
-          editorFontSize={this.props.editorFontSize}
-          editorTheme={this.props.editorTheme}
-
           pageHeading={this.props.pageHeading}
           setPageHeading={this.props.setPageHeading}
 
           layout={this.props.layout}
-          name={this.props.name}
           preview={this.props.preview}
           rgl={this.props.rgl}
+
           setPageLayout={this.props.setPageLayout}
           editorIndex={this.props.editorIndex}
           textHeights={this.props.textHeights}
           currentWidget={this.props.currentWidget}
 
-          updateFile={this.props.updateFile}
           editors={this.props.editors}
           setCurrentWidget={this.props.setCurrentWidget}
           removeEditor={this.props.removeEditor}
           duplicateEditor={this.props.duplicateEditor}
-          setEditorSize={this.props.setEditorSize}
-          setEditorPosition={this.props.setEditorPosition}
-          setCurrentFile={this.props.setCurrentFile}
-          addMediaFile={this.props.addMediaFile}
 
-          playCode={this.props.playCode}
-          stopCode={this.props.stopCode}
-          startCodeRefresh={this.props.startCodeRefresh}
-          stopCodeRefresh={this.props.stopCodeRefresh}
-          clearConsoleOutput={this.props.clearConsoleOutput}
-          updateConsoleOutput={this.props.updateConsoleOutput}
-
-          setInnerWidth={this.props.setInnerWidth}
-
-          updateTextChange={this.props.updateTextChange}
-          updateTextBackColor={this.props.updateTextBackColor}
-
-          setIframeURL={this.props.setIframeURL}
-
-          setQuestionInnerHeight={this.props.setQuestionInnerHeight}
-          updateQuestionChange={this.props.updateQuestionChange}
-          updateAnswerChange={this.props.updateAnswerChange}
-
-          setImageURL={this.props.setImageURL}
           resizeTextEditor={this.props.resizeTextEditor}
           updateTextHeight={this.props.updateTextHeight}
 
           isNavigationOpen={this.props.isNavigationOpen}
-          openNavigationContent={this.props.openNavigationContent}
         />
 
         <Modal
@@ -413,25 +385,7 @@ App.propTypes = {
   duplicateEditor: PropTypes.func.isRequired,
   loadEditors: PropTypes.func.isRequired,
   loadWorkspace: PropTypes.func.isRequired,
-  setEditorPosition: PropTypes.func.isRequired,
-  setEditorSize: PropTypes.func.isRequired,
-  playCode: PropTypes.func.isRequired,
-  stopCode: PropTypes.func.isRequired,
-  startCodeRefresh: PropTypes.func.isRequired,
-  stopCodeRefresh: PropTypes.func.isRequired,
-  clearConsoleOutput: PropTypes.func.isRequired,
-  updateConsoleOutput: PropTypes.func.isRequired,
-  addMediaFile: PropTypes.func.isRequired,
-  updateTextChange: PropTypes.func.isRequired,
-  updateTextBackColor: PropTypes.func.isRequired,
-  setIframeURL: PropTypes.func.isRequired,
-  updateFile: PropTypes.func.isRequired,
-  setCurrentFile: PropTypes.func.isRequired,
-  setInnerWidth: PropTypes.func.isRequired,
-  setQuestionInnerHeight: PropTypes.func.isRequired,
-  updateQuestionChange: PropTypes.func.isRequired,
-  updateAnswerChange: PropTypes.func.isRequired,
-  setImageURL: PropTypes.func.isRequired,
+
   resizeTextEditor: PropTypes.func.isRequired,
   updateTextHeight: PropTypes.func.isRequired,
 
@@ -464,8 +418,6 @@ App.propTypes = {
 
   // preferences
   fetchUserPreferences: PropTypes.func.isRequired,
-  editorFontSize: PropTypes.number.isRequired,
-  editorTheme: PropTypes.string.isRequired,
 
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
@@ -475,7 +427,6 @@ App.propTypes = {
   // navigation
   pageHeading: PropTypes.string.isRequired,
   createNavigationContent: PropTypes.func.isRequired,
-  openNavigationContent: PropTypes.func.isRequired,
   isNavigationOpen: PropTypes.bool.isRequired
 };
 
@@ -515,9 +466,6 @@ function mapStateToProps(state) {
     isForgotModalOpen: state.mainToolbar.isForgotModalOpen,
     isResetModalOpen: state.mainToolbar.isResetModalOpen,
     isConfirmUserModalOpen: state.mainToolbar.isConfirmUserModalOpen,
-
-    editorFontSize: state.preferences.editorFontSize,
-    editorTheme: state.preferences.editorTheme,
 
     navigationContent: state.navigation.navigationContent,
     isNavigationOpen: state.navigation.isNavigationOpen
