@@ -303,30 +303,30 @@ class MainToolbar extends React.Component {
 
 MainToolbar.propTypes = {
   canEdit: PropTypes.bool.isRequired,
-  createNavigationContent: PropTypes.func.isRequired, // nav
+  createNavigationContent: PropTypes.func.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,
   isHelpDropdownOpen: PropTypes.bool.isRequired,
   isPreferencesPanelOpen: PropTypes.bool.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  logoutUser: PropTypes.func.isRequired, // user
+  logoutUser: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
-  projectID: PropTypes.func.isRequired, // prop
-  setPageTitle: PropTypes.func.isRequired, // page
-  savePage: PropTypes.func.isRequired, // prop
-  toggleHelpDropdown: PropTypes.func.isRequired, // main
-  toggleFileDropdown: PropTypes.func.isRequired, // main
-  toggleAccountDropdown: PropTypes.func.isRequired, // main
-  togglePreviewMode: PropTypes.func.isRequired, // page
-  togglePreferencesPanel: PropTypes.func.isRequired, // main
+  projectID: PropTypes.func.isRequired,
+  setPageTitle: PropTypes.func.isRequired,
+  savePage: PropTypes.func.isRequired,
+  toggleHelpDropdown: PropTypes.func.isRequired,
+  toggleFileDropdown: PropTypes.func.isRequired,
+  toggleAccountDropdown: PropTypes.func.isRequired,
+  togglePreviewMode: PropTypes.func.isRequired,
+  togglePreferencesPanel: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
-  autoSaveUnsavedChanges: PropTypes.func.isRequired, // page
+  autoSaveUnsavedChanges: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired,
-  viewLoginModal: PropTypes.func.isRequired, // main
-  viewShareModal: PropTypes.func.isRequired, // main
-  viewSignUpModal: PropTypes.func.isRequired, // main
+  viewLoginModal: PropTypes.func.isRequired,
+  viewShareModal: PropTypes.func.isRequired,
+  viewSignUpModal: PropTypes.func.isRequired,
   editorAutoSave: PropTypes.bool.isRequired
 };
 
