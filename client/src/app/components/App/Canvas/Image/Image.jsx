@@ -201,9 +201,9 @@ class Image extends React.Component {
 Image.propTypes = {
   id: PropTypes.string.isRequired,
   imageURL: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired, // state.user.name
+  name: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
-  setImageURL: PropTypes.func.isRequired, // editors
+  setImageURL: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import VisibilitySensor from 'react-visibility-sensor';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import EditorContainer from './EditorContainer/EditorContainer.jsx';
 import Questions from './Question/Question.jsx';
@@ -9,6 +11,14 @@ import Image from './Image/Image.jsx';
 import TextEditor from './TextEditor/TextEditor.jsx';
 import WidgetNav from './WidgetNav/WidgetNav.jsx';
 import { convertPixelHeightToGridHeight } from '../../../utils/pixel-to-grid.js';
+import {
+  resizeTextEditor,
+  setPageHeading,
+  setPageLayout,
+  updateTextHeight
+} from '../../../action/page.js';
+
+import { setCurrentWidget } from '../../../action/editors.js';
 
 import * as WidgetSize from '../../../constants/widgetConstants.js';
 
@@ -312,7 +322,7 @@ Canvas.propTypes = {
   editorIndex: PropTypes.number.isRequired,
   editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  isNavigationOpen: PropTypes.func.isRequired,
+  isNavigationOpen: PropTypes.bool.isRequired,
   pageHeading: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
   resizeTextEditor: PropTypes.func.isRequired,
@@ -330,4 +340,25 @@ Canvas.propTypes = {
   textHeights: PropTypes.shape({}).isRequired
 };
 
-export default Canvas;
+function mapStateToProps(state) {
+  return {
+    currentWidget: state.editorsReducer.currentWidget,
+    editorIndex: state.editorsReducer.editorIndex,
+    editors: state.editorsReducer.editors,
+    layout: state.page.layout,
+    isNavigationOpen: state.navigation.isNavigationOpen,
+    pageHeading: state.page.pageHeading,
+    preview: state.page.preview,
+    rgl: state.page.rgl,
+    textHeights: state.page.textHeights
+  };
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  resizeTextEditor,
+  setPageHeading,
+  setPageLayout,
+  updateTextHeight,
+  setCurrentWidget
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Canvas);

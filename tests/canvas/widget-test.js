@@ -5,7 +5,7 @@ import { studentUser } from '../fixtures/user';
 import { testPebl } from '../fixtures/pebls';
 import { seedDB, clearDB, hashUserPassword, login } from '../helpers';
 
-fixture.only('Testing Widget Nav Bar')
+fixture('Testing Widget Nav Bar')
   .page(config.baseUrl)
   .beforeEach(async (t) => {
     await clearDB();

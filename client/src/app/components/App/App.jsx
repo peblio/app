@@ -207,29 +207,7 @@ class App extends React.Component {
             savePage={this.savePage}
           />
         </nav>
-        <Canvas
-          pageHeading={this.props.pageHeading}
-          setPageHeading={this.props.setPageHeading}
-
-          layout={this.props.layout}
-          preview={this.props.preview}
-          rgl={this.props.rgl}
-
-          setPageLayout={this.props.setPageLayout}
-          editorIndex={this.props.editorIndex}
-          textHeights={this.props.textHeights}
-          currentWidget={this.props.currentWidget}
-
-          editors={this.props.editors}
-          setCurrentWidget={this.props.setCurrentWidget}
-          removeEditor={this.props.removeEditor}
-          duplicateEditor={this.props.duplicateEditor}
-
-          resizeTextEditor={this.props.resizeTextEditor}
-          updateTextHeight={this.props.updateTextHeight}
-
-          isNavigationOpen={this.props.isNavigationOpen}
-        />
+        <Canvas />
 
         <Modal
           size="xlarge"
@@ -347,7 +325,6 @@ App.propTypes = {
   }).isRequired,
   editors: PropTypes.shape({}).isRequired,
   editorIndex: PropTypes.number.isRequired,
-  currentWidget: PropTypes.string.isRequired,
 
   workspace: PropTypes.shape({}).isRequired,
 
@@ -355,7 +332,6 @@ App.propTypes = {
   id: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   rgl: PropTypes.shape({}).isRequired,
-  preview: PropTypes.bool.isRequired,
   textHeights: PropTypes.shape({}).isRequired,
 
   canEdit: PropTypes.bool.isRequired,
@@ -380,18 +356,10 @@ App.propTypes = {
   isExamplesModalOpen: PropTypes.bool.isRequired,
   closeExamplesModal: PropTypes.func.isRequired,
 
-  setCurrentWidget: PropTypes.func.isRequired,
-  removeEditor: PropTypes.func.isRequired,
-  duplicateEditor: PropTypes.func.isRequired,
   loadEditors: PropTypes.func.isRequired,
   loadWorkspace: PropTypes.func.isRequired,
 
-  resizeTextEditor: PropTypes.func.isRequired,
-  updateTextHeight: PropTypes.func.isRequired,
-
   setPreviewMode: PropTypes.func.isRequired,
-  setPageHeading: PropTypes.func.isRequired,
-  setPageLayout: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
   loadPage: PropTypes.func.isRequired,
@@ -426,15 +394,13 @@ App.propTypes = {
 
   // navigation
   pageHeading: PropTypes.string.isRequired,
-  createNavigationContent: PropTypes.func.isRequired,
-  isNavigationOpen: PropTypes.bool.isRequired
+  createNavigationContent: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     editors: state.editorsReducer.editors,
     editorIndex: state.editorsReducer.editorIndex,
-    currentWidget: state.editorsReducer.currentWidget,
 
     workspace: state.workspace.workspace,
 
@@ -443,7 +409,6 @@ function mapStateToProps(state) {
     pageHeading: state.page.pageHeading,
     pageTitle: state.page.pageTitle,
     id: state.page.id,
-    preview: state.page.preview,
     textHeights: state.page.textHeights,
 
     canEdit: state.user.canEdit,
@@ -467,8 +432,7 @@ function mapStateToProps(state) {
     isResetModalOpen: state.mainToolbar.isResetModalOpen,
     isConfirmUserModalOpen: state.mainToolbar.isConfirmUserModalOpen,
 
-    navigationContent: state.navigation.navigationContent,
-    isNavigationOpen: state.navigation.isNavigationOpen
+    navigationContent: state.navigation.navigationContent
   };
 }
 
