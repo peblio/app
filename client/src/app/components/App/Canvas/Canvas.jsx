@@ -285,10 +285,6 @@ class Canvas extends React.Component {
                   <div className={`widget-nav__container${(this.props.currentWidget === id) ? '_highlighted' : ''}`}>
                     <WidgetNav
                       id={id}
-                      layout={storageLayout}
-                      setPageLayout={this.props.setPageLayout}
-                      removeEditor={this.props.removeEditor}
-                      duplicateEditor={this.props.duplicateEditor}
                     />
                   </div>
                 )}
@@ -313,14 +309,12 @@ class Canvas extends React.Component {
 
 Canvas.propTypes = {
   currentWidget: PropTypes.string.isRequired,
-  duplicateEditor: PropTypes.func.isRequired,
   editorIndex: PropTypes.number.isRequired,
   editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   isNavigationOpen: PropTypes.func.isRequired,
   pageHeading: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
-  removeEditor: PropTypes.func.isRequired,
   resizeTextEditor: PropTypes.func.isRequired,
   rgl: PropTypes.shape({
     cols: PropTypes.number,

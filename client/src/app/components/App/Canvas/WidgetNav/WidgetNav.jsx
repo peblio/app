@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import CloseSVG from '../../../../images/close.svg';
 import CopySVG from '../../../../images/copy.svg';
 import DragSVG from '../../../../images/drag.svg';
+
+import { duplicateEditor, removeEditor } from '../../../../action/editors.js';
 
 require('./widgetNav.scss');
 
@@ -48,4 +52,9 @@ WidgetNav.propTypes = {
   removeEditor: PropTypes.func.isRequired,
 };
 
-export default WidgetNav;
+const mapDispatchToProps = dispatch => bindActionCreators({
+  duplicateEditor,
+  removeEditor
+}, dispatch);
+
+export default connect(null, mapDispatchToProps)(WidgetNav);
