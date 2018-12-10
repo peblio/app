@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import axios from '../../../../utils/axios';
+import { setUserName,
+  setUserType } from '../../../../action/user.js';
+import { closeLoginModal,
+  viewForgotModal } from '../../../../action/mainToolbar.js';
 import GoogleLoginButton from '../../Shared/GoogleLoginButton/GoogleLoginButton.jsx';
 
 require('./login.scss');
@@ -110,4 +116,11 @@ Login.propTypes = {
   viewForgotModal: PropTypes.func.isRequired
 };
 
-export default Login;
+const mapDispatchToProps = dispatch => bindActionCreators({
+  closeLoginModal,
+  setUserName,
+  setUserType,
+  viewForgotModal
+}, dispatch);
+
+export default connect(null, mapDispatchToProps)(Login);
