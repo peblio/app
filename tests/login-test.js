@@ -21,7 +21,7 @@ fixture('Logging in')
 test('through the login form with a valid email and password', async (t) => {
   await t
     .click(Selector('[data-test=close-modal]'))
-    .click(Selector('[data-test=show-login-modal]'))
+    .click(Selector('[data-test=main-toolbar__login-button]'))
     .typeText(Selector('#login-modal-name'), studentUser.email)
     .typeText(Selector('#login-modal-password'), studentUser.password)
     .click(Selector('[data-test=submit-login]'))

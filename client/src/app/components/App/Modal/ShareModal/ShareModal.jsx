@@ -44,6 +44,7 @@ class Share extends React.Component {
             className="share__input"
             ref={(element) => { this.input = element; }}
             value={window.location.href}
+            data-test="share-modal__input"
             readOnly
           />
           <button

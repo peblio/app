@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import history from '../../../utils/history';
 import FileMenu from './FileMenu/FileMenu.jsx';
@@ -11,6 +13,11 @@ import ToolbarLogo from '../../../images/logo.svg';
 import CheckSVG from '../../../images/check.svg';
 import AccountSVG from '../../../images/account.svg';
 import PreferencesSVG from '../../../images/preferences.svg';
+
+import { createNavigationContent } from '../../../action/navigation.js';
+import { logoutUser } from '../../../action/user.js';
+import { setPageTitle, togglePreviewMode, autoSaveUnsavedChanges } from '../../../action/page.js';
+import * as mainToolbarActions from '../../../action/mainToolbar.js';
 
 require('./mainToolbar.scss');
 
@@ -108,11 +115,7 @@ class MainToolbar extends React.Component {
               </button>
               {this.props.isFileDropdownOpen && (
                 <FileMenu
-                  name={this.props.name}
                   savePage={this.props.savePage}
-                  toggleFileDropdown={this.props.toggleFileDropdown}
-                  viewPagesModal={this.props.viewPagesModal}
-                  viewExamplesModal={this.props.viewExamplesModal}
                 />
               )}
             </div>
@@ -131,7 +134,7 @@ class MainToolbar extends React.Component {
                 className={helpDropDownButtonClassName}
                 onMouseDown={this.props.toggleHelpDropdown}
                 onKeyDown={this.props.toggleHelpDropdown}
-                data-test="toggle-file-dropdown"
+                data-test="toggle-help-dropdown"
               >
                 Help
               </button>
@@ -148,6 +151,7 @@ class MainToolbar extends React.Component {
             value={this.props.pageTitle}
             onChange={this.props.setPageTitle}
             readOnly={this.props.preview}
+            data-test="main-toolbar__title"
           />
           {this.props.preview || (
             <span
@@ -165,14 +169,23 @@ class MainToolbar extends React.Component {
                   onChange={this.props.togglePreviewMode}
                   type="checkbox"
                   checked={this.props.preview}
+                  data-test="main-toolbar__edit-mode-toggle"
                 />
                 <div className="main-toolbar__slider"></div>
               </label>
-              <button className="main-toolbar__save" onClick={this.props.savePage}>
+              <button
+                className="main-toolbar__save"
+                onClick={this.props.savePage}
+                data-test="main-toolbar__save-button"
+              >
                 {saveButtonText}
               </button>
               <div className="main-toolbar__spacer"></div>
-              <button className="main-toolbar__button" onClick={this.props.viewShareModal}>
+              <button
+                className="main-toolbar__button"
+                onClick={this.props.viewShareModal}
+                data-test="main-toolbar__share-button"
+              >
               Share
               </button>
               <div className="main-toolbar__spacer"></div>
@@ -180,6 +193,7 @@ class MainToolbar extends React.Component {
                 <button
                   className="main-toolbar__button "
                   onMouseDown={this.props.togglePreferencesPanel}
+                  data-test="main-toolbar__preferences-button"
                 >
                   <PreferencesSVG
                     className={classNames(prefButtonClassName)}
@@ -237,6 +251,7 @@ class MainToolbar extends React.Component {
                               href={`/user/${this.props.name}`}
                               onMouseDown={(e) => { e.preventDefault(); }}
                               onKeyDown={(e) => { e.preventDefault(); }}
+                              data-test="main-toolbar__profile-link"
                             >
                               Profile
                             </a>
@@ -247,6 +262,7 @@ class MainToolbar extends React.Component {
                             className="main-toolbar__account-link"
                             onMouseDown={this.logout}
                             onKeyDown={this.logout}
+                            data-test="main-toolbar__logout-button"
                           >
                             Logout
                           </button>
@@ -260,7 +276,7 @@ class MainToolbar extends React.Component {
                   <button
                     className="main-toolbar__button"
                     onClick={this.props.viewLoginModal}
-                    data-test="show-login-modal"
+                    data-test="main-toolbar__login-button"
                   >
                     Log In
                   </button>
@@ -268,6 +284,7 @@ class MainToolbar extends React.Component {
                   <button
                     className="main-toolbar__button"
                     onClick={this.props.viewSignUpModal}
+                    data-test="main-toolbar__signup-button"
                   >
                     Sign Up
                   </button>
@@ -277,13 +294,7 @@ class MainToolbar extends React.Component {
           </div>
         </div>
         {this.props.preview || (
-          <InsertToolbar
-            addCodeEditor={this.props.addCodeEditor}
-            addQuestionEditor={this.props.addQuestionEditor}
-            addTextEditor={this.props.addTextEditor}
-            addIframe={this.props.addIframe}
-            addImage={this.props.addImage}
-          />
+          <InsertToolbar />
         )}
       </div>
     );
@@ -291,16 +302,11 @@ class MainToolbar extends React.Component {
 }
 
 MainToolbar.propTypes = {
-  addCodeEditor: PropTypes.func.isRequired,
-  addQuestionEditor: PropTypes.func.isRequired,
-  addTextEditor: PropTypes.func.isRequired,
-  addIframe: PropTypes.func.isRequired,
-  addImage: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
   createNavigationContent: PropTypes.func.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,
-  isHelpDropdownOpen: PropTypes.func.isRequired,
+  isHelpDropdownOpen: PropTypes.bool.isRequired,
   isPreferencesPanelOpen: PropTypes.bool.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   logoutUser: PropTypes.func.isRequired,
@@ -318,12 +324,36 @@ MainToolbar.propTypes = {
   unsavedChanges: PropTypes.bool.isRequired,
   autoSaveUnsavedChanges: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired,
-  viewExamplesModal: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
-  viewPagesModal: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
   viewSignUpModal: PropTypes.func.isRequired,
   editorAutoSave: PropTypes.bool.isRequired
 };
 
-export default MainToolbar;
+
+function mapStateToProps(state) {
+  return {
+    canEdit: state.user.canEdit,
+    isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
+    isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
+    isHelpDropdownOpen: state.mainToolbar.isHelpDropdownOpen,
+    isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,
+    layout: state.page.layout,
+    name: state.user.name,
+    pageTitle: state.page.pageTitle,
+    preview: state.page.preview,
+    unsavedChanges: state.page.unsavedChanges,
+    userType: state.user.type,
+    editorAutoSave: state.preferences.editorAutoSave
+  };
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  createNavigationContent,
+  logoutUser,
+  setPageTitle,
+  togglePreviewMode,
+  autoSaveUnsavedChanges,
+  ...mainToolbarActions
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainToolbar);

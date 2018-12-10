@@ -203,40 +203,8 @@ class App extends React.Component {
       >
         <nav className="main-nav">
           <MainToolbar
-            addCodeEditor={this.props.addCodeEditor}
-            addTextEditor={this.props.addTextEditor}
-            addQuestionEditor={this.props.addQuestionEditor}
-            addIframe={this.props.addIframe}
-            addImage={this.props.addImage}
-            canEdit={this.props.canEdit}
-            createNavigationContent={this.props.createNavigationContent}
-            isFileDropdownOpen={this.props.isFileDropdownOpen}
-            isHelpDropdownOpen={this.props.isHelpDropdownOpen}
-            isAccountDropdownOpen={this.props.isAccountDropdownOpen}
-            isPreferencesPanelOpen={this.props.isPreferencesPanelOpen}
-            layout={this.props.layout}
-            logoutUser={this.props.logoutUser}
-            name={this.props.name}
-            pageHeading={this.props.pageHeading}
-            pageTitle={this.props.pageTitle}
-            preview={this.props.preview}
             projectID={this.projectID}
-            setPageTitle={this.props.setPageTitle}
             savePage={this.savePage}
-            editorAutoSave={this.props.editorAutoSave}
-            toggleFileDropdown={this.props.toggleFileDropdown}
-            toggleHelpDropdown={this.props.toggleHelpDropdown}
-            toggleAccountDropdown={this.props.toggleAccountDropdown}
-            togglePreviewMode={this.props.togglePreviewMode}
-            togglePreferencesPanel={this.props.togglePreferencesPanel}
-            unsavedChanges={this.props.unsavedChanges}
-            autoSaveUnsavedChanges={this.props.autoSaveUnsavedChanges}
-            userType={this.props.userType}
-            viewExamplesModal={this.props.viewExamplesModal}
-            viewPagesModal={this.props.viewPagesModal}
-            viewLoginModal={this.props.viewLoginModal}
-            viewShareModal={this.props.viewShareModal}
-            viewSignUpModal={this.props.viewSignUpModal}
           />
         </nav>
         <Canvas
@@ -417,8 +385,6 @@ App.propTypes = {
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   rgl: PropTypes.shape({}).isRequired,
   preview: PropTypes.bool.isRequired,
-  unsavedChanges: PropTypes.bool.isRequired,
-  autoSaveUnsavedChanges: PropTypes.func.isRequired,
   textHeights: PropTypes.shape({}).isRequired,
 
   canEdit: PropTypes.bool.isRequired,
@@ -434,9 +400,6 @@ App.propTypes = {
   requiresGuardianConsent: PropTypes.bool.isRequired,
   setGuardianConsent: PropTypes.func.isRequired,
 
-  isFileDropdownOpen: PropTypes.bool.isRequired,
-  isHelpDropdownOpen: PropTypes.bool.isRequired,
-  isAccountDropdownOpen: PropTypes.bool.isRequired,
   isPagesModalOpen: PropTypes.bool.isRequired,
   isLoginModalOpen: PropTypes.bool.isRequired,
   isForgotModalOpen: PropTypes.bool.isRequired,
@@ -444,7 +407,6 @@ App.propTypes = {
   isResetModalOpen: PropTypes.bool.isRequired,
 
   isExamplesModalOpen: PropTypes.bool.isRequired,
-  viewExamplesModal: PropTypes.func.isRequired,
   closeExamplesModal: PropTypes.func.isRequired,
 
   setCurrentWidget: PropTypes.func.isRequired,
@@ -454,7 +416,6 @@ App.propTypes = {
   loadWorkspace: PropTypes.func.isRequired,
   setEditorPosition: PropTypes.func.isRequired,
   setEditorSize: PropTypes.func.isRequired,
-  addCodeEditor: PropTypes.func.isRequired,
   playCode: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
@@ -462,11 +423,8 @@ App.propTypes = {
   clearConsoleOutput: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   addMediaFile: PropTypes.func.isRequired,
-  addTextEditor: PropTypes.func.isRequired,
-  addQuestionEditor: PropTypes.func.isRequired,
   updateTextChange: PropTypes.func.isRequired,
   updateTextBackColor: PropTypes.func.isRequired,
-  addIframe: PropTypes.func.isRequired,
   setIframeURL: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
@@ -474,16 +432,13 @@ App.propTypes = {
   setQuestionInnerHeight: PropTypes.func.isRequired,
   updateQuestionChange: PropTypes.func.isRequired,
   updateAnswerChange: PropTypes.func.isRequired,
-  addImage: PropTypes.func.isRequired,
   setImageURL: PropTypes.func.isRequired,
   updateImageChange: PropTypes.func.isRequired,
   resizeTextEditor: PropTypes.func.isRequired,
   updateTextHeight: PropTypes.func.isRequired,
 
   setPreviewMode: PropTypes.func.isRequired,
-  togglePreviewMode: PropTypes.func.isRequired,
   setPageHeading: PropTypes.func.isRequired,
-  setPageTitle: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
@@ -495,14 +450,9 @@ App.propTypes = {
   closePagesModal: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   closeLoginModal: PropTypes.func.isRequired,
-  viewSignUpModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
-  toggleFileDropdown: PropTypes.func.isRequired,
-  toggleHelpDropdown: PropTypes.func.isRequired,
-  toggleAccountDropdown: PropTypes.func.isRequired,
   isShareModalOpen: PropTypes.bool.isRequired,
   closeShareModal: PropTypes.func.isRequired,
-  viewShareModal: PropTypes.func.isRequired,
   closeForgotModal: PropTypes.func.isRequired,
   viewForgotModal: PropTypes.func.isRequired,
   closeResetModal: PropTypes.func.isRequired,
@@ -511,18 +461,14 @@ App.propTypes = {
   viewConfirmUserModal: PropTypes.func.isRequired,
   isConfirmUserModalOpen: PropTypes.bool.isRequired,
   isWelcomeModalOpen: PropTypes.bool.isRequired,
-  isPreferencesPanelOpen: PropTypes.bool.isRequired,
   viewWelcomeModal: PropTypes.func.isRequired,
   closeWelcomeModal: PropTypes.func.isRequired,
-  togglePreferencesPanel: PropTypes.func.isRequired,
 
   // preferences
   fetchUserPreferences: PropTypes.func.isRequired,
   editorFontSize: PropTypes.number.isRequired,
   editorTheme: PropTypes.string.isRequired,
-  editorAutoSave: PropTypes.bool.isRequired,
 
-  logoutUser: PropTypes.func.isRequired,
   updateUserName: PropTypes.func.isRequired,
   updateUserPassword: PropTypes.func.isRequired,
   signUserUp: PropTypes.func.isRequired,
@@ -549,7 +495,6 @@ function mapStateToProps(state) {
     pageTitle: state.page.pageTitle,
     id: state.page.id,
     preview: state.page.preview,
-    unsavedChanges: state.page.unsavedChanges,
     textHeights: state.page.textHeights,
 
     canEdit: state.user.canEdit,
@@ -572,11 +517,9 @@ function mapStateToProps(state) {
     isForgotModalOpen: state.mainToolbar.isForgotModalOpen,
     isResetModalOpen: state.mainToolbar.isResetModalOpen,
     isConfirmUserModalOpen: state.mainToolbar.isConfirmUserModalOpen,
-    isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,
 
     editorFontSize: state.preferences.editorFontSize,
     editorTheme: state.preferences.editorTheme,
-    editorAutoSave: state.preferences.editorAutoSave,
 
     navigationContent: state.navigation.navigationContent,
     isNavigationOpen: state.navigation.isNavigationOpen

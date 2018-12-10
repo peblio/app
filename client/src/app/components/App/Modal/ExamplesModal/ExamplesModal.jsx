@@ -31,7 +31,11 @@ class ExamplesModal extends React.Component {
     this.state.examples.forEach((page, index) => {
       const link = `/pebl/${page.id}`;
       pages.push(
-        <li className="examples__list-item" key={page.id}>
+        <li
+          className="examples__list-item"
+          key={page.id}
+          data-test="examples__title"
+        >
           <a
             className="examples__link"
             href={link}

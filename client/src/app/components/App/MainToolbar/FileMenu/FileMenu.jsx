@@ -1,5 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import {
+  toggleFileDropdown,
+  viewExamplesModal,
+  viewPagesModal } from '../../../../action/mainToolbar.js';
 
 require('./fileMenu.scss');
 
@@ -14,6 +21,7 @@ class FileMenu extends React.Component {
             onMouseDown={(e) => { e.preventDefault(); }}
             onKeyDown={(e) => { e.preventDefault(); }}
             target="_blank"
+            data-test="file-menu__new-link"
           >
             <i className="fas fa-plus"></i>
             {' '}
@@ -33,7 +41,7 @@ class FileMenu extends React.Component {
                   this.props.viewPagesModal();
                   this.props.toggleFileDropdown();
                 }}
-                data-test="show-pages-modal"
+                data-test="file-menu__pages-button"
               >
                 <i className="fas fa-bars"></i>
                 {' '}
@@ -51,6 +59,7 @@ class FileMenu extends React.Component {
                   this.props.savePage();
                   this.props.toggleFileDropdown();
                 }}
+                data-test="file-menu__save-button"
               >
                 <i className="fas fa-check"></i>
                 {' '}
@@ -70,6 +79,7 @@ class FileMenu extends React.Component {
               this.props.viewExamplesModal();
               this.props.toggleFileDropdown();
             }}
+            data-test="file-menu__examples-button"
           >
             <i className="fas fa-folder"></i>
             {' '}
@@ -89,4 +99,15 @@ FileMenu.propTypes = {
   viewPagesModal: PropTypes.func.isRequired
 };
 
-export default FileMenu;
+function mapStateToProps(state) {
+  return {
+    name: state.user.name,
+  };
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  toggleFileDropdown,
+  viewExamplesModal,
+  viewPagesModal
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(FileMenu);
