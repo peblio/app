@@ -2,7 +2,6 @@ import { Selector } from 'testcafe';
 
 import config from '../config';
 import { studentUser } from '../fixtures/user';
-import { testPebl } from '../fixtures/pebls';
 import { seedDB, clearDB, hashUserPassword, login } from '../helpers';
 
 fixture('Testing Widget Nav Bar')

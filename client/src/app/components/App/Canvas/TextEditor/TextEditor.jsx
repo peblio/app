@@ -128,7 +128,6 @@ TextEditor.propTypes = {
   backColor: PropTypes.string.isRequired,
   currentWidget: PropTypes.string.isRequired,
   editorState: PropTypes.shape({}).isRequired,
-  // onTextChange: PropTypes.func.isRequired,
   onResize: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
   updateTextChange: PropTypes.func.isRequired,
