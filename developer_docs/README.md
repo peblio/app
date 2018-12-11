@@ -37,6 +37,12 @@ Thank you for wanting to contribute to Peblio. In this document, you will find i
 2. In another terminal session, `cd server && npm start`
 3. Navigate to [http://localhost:8080](http://localhost:8080) in your browser.
 
+## Local Server Debug
+
+1. Install Visual Studio Code and open project 
+2. The launch.json and tasks.json shall create a Debug Launch Confirguration "Server Debug"
+3. Install a breakpoint and start the Debug
+
 ## Tests
 
 This project uses [TestCafe](https://devexpress.github.io/testcafe/documentation/test-api/) to run end-to-end tests against the frontend and backend.
