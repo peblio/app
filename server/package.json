@@ -4,14 +4,16 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "start": "AWS_PROFILE=peblio ./scripts/run_with_credstash.sh node_modules/nodemon/bin/nodemon.js",
-    "test": "",
+    "start": "AWS_PROFILE=peblio ./scripts/run_with_credstash.sh node_modules/nodemon/bin/nodemon.js --exec babel-node src/server.js",
+    "test": "./node_modules/mocha/bin/mocha --compilers js:babel-core/register test/**/*.js",
     "lint": "./node_modules/.bin/eslint ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.224.1",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "bcrypt": "^2.0.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
@@ -38,8 +40,11 @@
     "shortid": "^2.2.8"
   },
   "devDependencies": {
+    "babel-preset-react": "^6.24.1",
+    "chai": "^4.2.0",
     "eslint": "^5.3.0",
     "eslint-config-airbnb-base": "^13.0.0",
-    "eslint-plugin-import": "^2.13.0"
+    "eslint-plugin-import": "^2.13.0",
+    "mocha": "^5.2.0"
   }
 }
