@@ -388,7 +388,7 @@ function updatePreferences(req, res) {
         res.status(404).json({ error: 'Document not found' });
         return;
       }
-      const preferences = user.preferences;
+      const preferences = { ...user.preferences };
       preferences[key] = value;
       user.preferences = preferences;
       user.save((saveErr, updatedUser) => {

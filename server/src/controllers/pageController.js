@@ -18,7 +18,7 @@ async function savePageAsGuest(req, res) {
   try {
     const hydratedUser = await User.findOne({ name: 'peblioguest' }).exec();
 
-    const page = new Page({ body:req.body, user: hydratedUser._id });
+    const page = new Page({ ...req.body, user: hydratedUser._id });
     const savedPage = await page.save();
     return res.send({ page: savedPage });
   } catch (err) {
@@ -35,7 +35,7 @@ async function savePage(req, res) {
     const hydratedUser = await User.findOne({ _id: user._id }).exec();
     await User.update({ _id: user._id }, { pages: hydratedUser.pages.concat(req.body.id) }).exec();
 
-    const page = new Page({ body:req.body, user: user._id });
+    const page = new Page({ ...req.body, user: user._id });
     const savedPage = await page.save();
     return res.send({ page: savedPage });
   } catch (err) {

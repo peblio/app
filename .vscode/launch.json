@@ -8,6 +8,19 @@
             "program": "${workspaceFolder}/server/src/server.js",
             "preLaunchTask": "decryptCredsForLocalRun",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Mocha Current File",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "--compilers",
+                "js:babel-core/register",
+                "${file}"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
         }
     ]
 }
