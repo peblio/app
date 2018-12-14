@@ -45,6 +45,10 @@ class MainToolbar extends React.Component {
     });
   }
 
+  focusOnButton(event) {
+    event.target.focus();
+  }
+
   render() {
     const prefButtonClassName = classNames('main-toolbar__pref', {
       'main-toolbar__pref--open': this.props.isPreferencesPanelOpen
@@ -97,6 +101,10 @@ class MainToolbar extends React.Component {
             </a>
             <div
               className="file-modal__container"
+              role="presentation"
+              onClick={(e) => {
+                this.focusOnButton(e);
+              }}
               onBlur={() => {
                 setTimeout(() => {
                   if (this.props.isFileDropdownOpen) {
@@ -122,6 +130,10 @@ class MainToolbar extends React.Component {
 
             <div
               className="file-modal__container"
+              role="presentation"
+              onClick={(e) => {
+                this.focusOnButton(e);
+              }}
               onBlur={() => {
                 setTimeout(() => {
                   if (this.props.isHelpDropdownOpen) {
