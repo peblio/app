@@ -16,10 +16,7 @@
     width: 100%;
     z-index: $z-index-layer-3;
     background: $white;
-    height: $h2-line-height*1.2;
-    // transition-timing-function: ease;
-    // -webkit-transition: height 0.5s;
-    // transition: height 0.5s;
+    height: $workspace-navbar-height;
     &--open {
       height: 70vh;
     }
