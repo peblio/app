@@ -5,7 +5,7 @@
             "type": "node",
             "request": "launch",
             "name": "Server Debug",
-            "program": "${workspaceFolder}/server/src/server.js",
+            "program": "${workspaceFolder}/server/.build/server.js",
             "preLaunchTask": "decryptCredsForLocalRun",
             "envFile": "${workspaceFolder}/.env"
         },
