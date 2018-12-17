@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CodeMirror from 'codemirror';
+import { connect } from 'react-redux';
+
 import 'codemirror/addon/comment/comment';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/keymap/sublime';
@@ -103,4 +105,11 @@ CodeEditor.propTypes = {
   updateFile: PropTypes.func.isRequired
 };
 
-export default CodeEditor;
+function mapStateToProps(state) {
+  return {
+    editorFontSize: state.preferences.editorFontSize,
+    editorTheme: state.preferences.editorTheme
+  };
+}
+
+export default connect(mapStateToProps, null)(CodeEditor);
