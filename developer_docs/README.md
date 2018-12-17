@@ -39,6 +39,8 @@ Thank you for wanting to contribute to Peblio. In this document, you will find i
 
 ## Local Server Debug
 
+Please note, the debug only works in Visual Studio Code. Also the debug does not work with python being used in virtualenv.
+
 1. Install Visual Studio Code and open project 
 2. The launch.json and tasks.json shall create a Debug Launch Confirguration "Server Debug"
 3. Install a breakpoint and start the Debug
