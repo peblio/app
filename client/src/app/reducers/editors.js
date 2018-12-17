@@ -75,16 +75,6 @@ const editorsReducer = (state = initialState, action) => {
       return { ...state, editors: updateIndices(editors), editorIndex };
     }
 
-    case ActionTypes.SET_EDITOR_POSITION:
-      editors[action.id].x = action.x;
-      editors[action.id].y = action.y;
-      return { ...state, editors };
-
-    case ActionTypes.SET_EDITOR_SIZE:
-      editors[action.id].width = action.width;
-      editors[action.id].height = action.height;
-      return { ...state, editors };
-
     /** CODE EDITOR */
     case ActionTypes.ADD_CODE_EDITOR: {
       const id = `editor-${state.editorIndex}`;

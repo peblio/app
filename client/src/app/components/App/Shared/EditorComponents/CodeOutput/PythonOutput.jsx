@@ -62,9 +62,11 @@ class ProcessingOutput extends React.Component {
 
     const pythonOutput = tempSketchDoc.createElement('pre');
     pythonOutput.setAttribute('id', 'python-output');
+    pythonOutput.setAttribute('data-test', 'python-output');
     tempSketchDoc.body.appendChild(pythonOutput);
     const pythonGraphicOutput = tempSketchDoc.createElement('div');
     pythonGraphicOutput.setAttribute('id', 'python-graphic-output');
+    pythonGraphicOutput.setAttribute('data-test', 'python-graphic-output');
     tempSketchDoc.body.appendChild(pythonGraphicOutput);
     return tempSketchDoc;
   }

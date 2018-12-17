@@ -45,30 +45,6 @@ export function loadEditors(editors, editorIndex) {
   };
 }
 
-export function setEditorPosition(id, x, y) {
-  return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
-    dispatch({
-      type: ActionTypes.SET_EDITOR_POSITION,
-      id,
-      x,
-      y
-    });
-  };
-}
-
-export function setEditorSize(id, width, height) {
-  return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
-    dispatch({
-      type: ActionTypes.SET_EDITOR_SIZE,
-      id,
-      width,
-      height
-    });
-  };
-}
-
 /** CODE EDITOR */
 export function addCodeEditor(mode) {
   return (dispatch, getState) => {

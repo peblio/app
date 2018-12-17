@@ -2,11 +2,14 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import SplitPane from 'react-split-pane';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import CodeEditor from '../../Shared/EditorComponents/CodeEditor/CodeEditor.jsx';
 import CodeOutput from '../../Shared/EditorComponents/CodeOutput/CodeOutput.jsx';
 import EditorToolbar from '../../Shared/EditorComponents/EditorToolbar/EditorToolbar.jsx';
 import ConsoleOutput from '../../Shared/EditorComponents/ConsoleOutput/ConsoleOutput.jsx';
+import * as editorActions from '../../../../action/editors.js';
 
 require('./editorContainer.scss');
 
@@ -20,7 +23,6 @@ class EditorContainer extends React.Component {
     this.startResize = this.startResize.bind(this);
     this.finishResize = this.finishResize.bind(this);
     this.addMediaFile = (name, link) => this.props.addMediaFile(this.props.id, name, link);
-    this.removeEditor = () => this.props.removeEditor(this.props.id);
     this.playCode = () => this.props.playCode(this.props.id);
     this.stopCode = () => this.props.stopCode(this.props.id);
     this.setInnerWidth = value => this.props.setInnerWidth(this.props.id, value);
@@ -85,8 +87,6 @@ class EditorContainer extends React.Component {
                     currentFile={this.props.currentFile}
                     files={this.props.files}
                     updateFile={this.updateFile}
-                    editorFontSize={this.props.editorFontSize}
-                    editorTheme={this.props.editorTheme}
                   />
 
                 </div>
@@ -118,7 +118,6 @@ class EditorContainer extends React.Component {
               </SplitPane>
             </div>
 
-
           </div>
         </div>
 
@@ -133,7 +132,6 @@ EditorContainer.propTypes = {
   clearConsoleOutput: PropTypes.func.isRequired,
   consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired,
   currentFile: PropTypes.number.isRequired,
-  editorFontSize: PropTypes.number.isRequired,
   editorMode: PropTypes.string.isRequired,
   editorTheme: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
@@ -145,7 +143,6 @@ EditorContainer.propTypes = {
   isRefreshing: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   playCode: PropTypes.func.isRequired,
-  removeEditor: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
@@ -155,4 +152,14 @@ EditorContainer.propTypes = {
   updateFile: PropTypes.func.isRequired
 };
 
-export default EditorContainer;
+function mapStateToProps(state) {
+  return {
+    name: state.user.name,
+    editorTheme: state.preferences.editorTheme
+  };
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  ...editorActions
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditorContainer);

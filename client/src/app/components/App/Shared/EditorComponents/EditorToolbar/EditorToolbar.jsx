@@ -143,6 +143,7 @@ class EditorToolbar extends React.Component {
           <button
             className={`editor-toolbar__svg ${!this.props.isPlaying ? 'editor-toolbar--isPaused' : ''}`}
             onClick={this.props.stopCode}
+            data-test='pause-sketch-button'
           >
             <PauseSVG alt='Pause Code' />
           </button>
@@ -177,6 +178,7 @@ class EditorToolbar extends React.Component {
                     ${(this.props.currentFile === index) ? 'editor-toolbar__file-button--selected' : ''}
                     ${(isImage) ? 'editor-toolbar__file-button-static' : ''}`
                     }
+                    data-test="editor-toolbar__file-name"
                   >
                     {file.name}
                   </button>
@@ -192,7 +194,7 @@ class EditorToolbar extends React.Component {
               <button
                 className="editor-toolbar__file-button"
                 onClick={this.openFileUpload}
-                data-test='add-editor-image-button'
+                data-test='editor-toolbar__add-file-button'
               >
                 <i className="fas fa-plus"></i>
               </button>
@@ -204,7 +206,7 @@ class EditorToolbar extends React.Component {
           <div
             tabIndex="0" //eslint-disable-line
             className="editor-toolbar__image-upload"
-            data-test="file-upload-container"
+            data-test="file-upload__container"
           >
             <button
               className="editor-toolbar__image-close"
