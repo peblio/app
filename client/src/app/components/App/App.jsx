@@ -171,7 +171,7 @@ class App extends React.Component {
           this.props.workspace
         );
       } else {
-        // this is for fork and save
+        // this is for remix and save
         this.props.submitPage(
           this.props.id,
           `${this.props.pageTitle}-copy`,
@@ -179,7 +179,7 @@ class App extends React.Component {
           this.props.editors,
           this.props.editorIndex,
           this.props.layout,
-          'fork',
+          'remix',
           this.props.workspace,
           true
         );
