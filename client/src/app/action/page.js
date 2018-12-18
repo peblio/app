@@ -16,6 +16,16 @@ export function setUnsavedChanges(value) {
   };
 }
 
+export function setUnsavedPebl(value) {
+  console.log('changing');
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_UNSAVED_PEBL,
+      value
+    });
+  };
+}
+
 export function autoSaveUnsavedChanges() {
   return (dispatch) => {
     dispatch({ type: ActionTypes.AUTO_SAVE_UNSAVED_CHANGES });
@@ -158,6 +168,7 @@ export function updatePage(id, title, heading, editors, editorIndex, layout, wor
 
 export function togglePreviewMode() {
   return (dispatch) => {
+    dispatch(setUnsavedPebl(true));
     dispatch({
       type: ActionTypes.TOGGLE_PREVIEW_MODE
     });

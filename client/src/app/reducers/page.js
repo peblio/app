@@ -24,7 +24,8 @@ const initialState = {
   pageHeading: '',
   parentId: '',
   preview: false,
-  unsavedChanges: false
+  unsavedChanges: false,
+  unsavePebl: false
 };
 
 const page = (state = initialState, action) => {
@@ -75,6 +76,11 @@ const page = (state = initialState, action) => {
     case ActionTypes.SET_UNSAVED_CHANGES:
       return Object.assign({}, state, {
         unsavedChanges: action.value
+      });
+
+    case ActionTypes.SET_UNSAVED_PEBL:
+      return Object.assign({}, state, {
+        unsavePebl: action.value
       });
 
     case ActionTypes.AUTO_SAVE_UNSAVED_CHANGES:
