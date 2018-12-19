@@ -9,7 +9,7 @@ async function studentSignUp(t, ageSelector) {
 
 }
 
-fixture.only('Signing up')
+fixture('Signing up')
   .page(config.baseUrl)
   .beforeEach(async (t) => {
     await clearDB();
