@@ -19,8 +19,7 @@ export function createUser(req, res) {
       });
     }
 
-    let user = null;
-    user = new User({
+    const user = new User({
       email,
       name,
       type,
@@ -34,7 +33,7 @@ export function createUser(req, res) {
     user.hashPassword(password);
     return user.save((updateUserError, updatedUser) => {
       if (updateUserError) {
-        res.status(422).json({
+        return res.status(422).json({
           msg: UserConst.SIGN_UP_FAILED
         });
       }
