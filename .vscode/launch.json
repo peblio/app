@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Server Debug",
+            "program": "${workspaceFolder}/server/server.js",
+            "preLaunchTask": "decryptCredsForLocalRun",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
