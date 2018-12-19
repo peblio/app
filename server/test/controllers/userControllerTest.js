@@ -1,26 +1,12 @@
 import { expect } from 'chai'
 import { createUser } from '../../src/controllers/userControllerNew';
 import { assert, spy } from 'sinon';
+import { Promise } from 'mongoose';
 const sandbox = require('sinon').sandbox.create();
 const User = require('../../src/models/user.js');
-const body = {
-    mail: "bla@gmail.com",
-    name: "Bla",
-    userType: "teacher",
-    password: "IAmNotTellingYouThis",
-    requiresGuardianConsent: false
-};
+const Token = require('../../src/models/token.js');
 const signUpFailedMessage = {
     msg: "Sign up failed"
-};
-const userToBeSaved = {
-    email: body.mail,
-    name: body.name,
-    type: body.userType,
-    password: "Something",
-    loginType: 'password',
-    requiresGuardianConsent: body.requiresGuardianConsent,
-    isVerified: false
 };
 
 describe('userControllerNew', function () {
@@ -28,8 +14,14 @@ describe('userControllerNew', function () {
         var request;
         var response;
         var findOneSpy;
+        var tokenSaveSpy;
+        var saveSpy;
+        var userToBeSaved;
+        var body;
 
         beforeEach(function () {
+            body = getBody();
+            userToBeSaved = getUserToBeSaved();
             request = { body };
             response = {
                 send: spy(),
@@ -67,7 +59,7 @@ describe('userControllerNew', function () {
 
         it('shall fail creating user when user could not be persisted', function () {
             findOneSpy = sandbox.stub(User, 'findOne').yields(null, null);
-            var saveSpy = sandbox.stub(User.prototype, 'save').yields({ error: "Could not save user" }, null);
+            saveSpy = sandbox.stub(User.prototype, 'save').yields({ error: "Could not save user" }, null);
             response.status = createResponseWithStatusCode(422);
 
             createUser(request, response);
@@ -79,7 +71,7 @@ describe('userControllerNew', function () {
 
         it('shall save automatically verified user ', function () {
             findOneSpy = sandbox.stub(User, 'findOne').yields(null, null);
-            var saveSpy = sandbox.stub(User.prototype, 'save').yields(null, userToBeSaved);
+            saveSpy = sandbox.stub(User.prototype, 'save').yields(null, userToBeSaved);
             response.status = createResponseWithStatusCode(200);
             request.body.userType = "student";
             userToBeSaved.type = "student"
@@ -94,6 +86,42 @@ describe('userControllerNew', function () {
             expect(actualResponse.msg).to.be.equal("Successfully signed up! Please log in");
             assertUserSavedWithCorrectValues(userSaved);
         });
+
+        it('shall not save non verified user when error generating token', function () {
+            findOneSpy = sandbox.stub(User, 'findOne').yields(null, null);
+            saveSpy = sandbox.stub(User.prototype, 'save').yields(null, userToBeSaved);
+            tokenSaveSpy = sandbox.stub(Token.prototype, 'save').yields({ error: "Could not save token" });
+            response.status = createResponseWithStatusCode(500);
+
+            createUser(request, response);
+
+            assertFindOneWasCalledWithUsername();
+            assert.calledOnce(saveSpy);
+            assert.calledOnce(tokenSaveSpy);
+            assertSendWasCalledWith(signUpFailedMessage);
+        });
+
+        function getUserToBeSaved() {
+            return {
+                email: body.mail,
+                name: body.name,
+                type: body.userType,
+                password: body.password,
+                loginType: 'password',
+                requiresGuardianConsent: body.requiresGuardianConsent,
+                isVerified: false
+            };
+        }
+
+        function getBody() {
+            return {
+                mail: "bla@gmail.com",
+                name: "Bla",
+                userType: "teacher",
+                password: "IAmNotTellingYouThis",
+                requiresGuardianConsent: false
+            };
+        }
 
         function createResponseWithStatusCode(statusCode) {
             return function (responseStatus) {
