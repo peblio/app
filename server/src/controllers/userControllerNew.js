@@ -13,12 +13,17 @@ export function createUser(req, res) {
   const guardianConsentedAt = (requiresGuardianConsent === true) ? new Date() : '';
   const isVerified = (type === 'student');
   return User.findOne({ name }, (userFindViaNameError, userByName) => {
+    if (userFindViaNameError) {
+      return res.status(422).send({
+        msg: UserConst.SIGN_UP_FAILED
+      });
+    }
     if (userByName) {
       return res.status(400).send({
         msg: UserConst.SIGN_UP_DUPLICATE_USER
       });
     }
-
+    
     const user = new User({
       email,
       name,
