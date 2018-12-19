@@ -82,6 +82,14 @@ class App extends React.Component {
     }
   }
 
+  getForkPromptPreference=() => {
+    const getForkPromptPreference = localStorage.getItem(process.env.LOCALSTORAGE_FORK_PROMPT);
+    if (getForkPromptPreference === null || getForkPromptPreference === '') {
+      return true;
+    }
+    return false;
+  }
+
   projectID = () => {
     const location = this.props.location.pathname;
     const projectID = location.match(/\/pebl\/([\w-].*)/);
@@ -120,7 +128,6 @@ class App extends React.Component {
           axios.get(`/authenticate/${projectID}`)
             .then((res1) => {
               this.props.setEditAccess(res1.data);
-              console.log(res1.data);
             });
         });
     }
@@ -316,10 +323,12 @@ class App extends React.Component {
         </Modal>
         <Modal
           size="auto"
-          isOpen={!this.props.canEdit && this.props.unsavedPebl}
+          isOpen={!this.props.canEdit && this.props.isForkPromptOpen && this.getForkPromptPreference()}
           closeModal={this.props.closeForkPrompt}
         >
-          <ForkPrompt />
+          <ForkPrompt
+            savePage={this.savePage}
+          />
         </Modal>
         <Navigation />
         <Workspace />
@@ -343,7 +352,6 @@ App.propTypes = {
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   rgl: PropTypes.shape({}).isRequired,
   textHeights: PropTypes.shape({}).isRequired,
-  unsavedPebl: PropTypes.bool.isRequired,
 
   canEdit: PropTypes.bool.isRequired,
   loginName: PropTypes.string.isRequired,
@@ -394,7 +402,7 @@ App.propTypes = {
   isWelcomeModalOpen: PropTypes.bool.isRequired,
   viewWelcomeModal: PropTypes.func.isRequired,
   closeWelcomeModal: PropTypes.func.isRequired,
-  viewForkPrompt: PropTypes.func.isRequired,
+  isForkPromptOpen: PropTypes.bool.isRequired,
   closeForkPrompt: PropTypes.func.isRequired,
 
   // preferences
@@ -423,7 +431,7 @@ function mapStateToProps(state) {
     pageTitle: state.page.pageTitle,
     id: state.page.id,
     textHeights: state.page.textHeights,
-    unsavedPebl: state.page.unsavedPebl,
+
 
     canEdit: state.user.canEdit,
     loginName: state.user.loginName,

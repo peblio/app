@@ -3,23 +3,27 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { closeForkPrompt } from '../../../../action/mainToolbar.js';
+
 require('./forkPrompt.scss');
 
 class ForkPrompt extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isChecked: true
+      isChecked: false
     };
-
-    this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
   }
 
-  handleCheckBoxChange(event) {
+  setForkPromptPreference=(event) => {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({ isChecked: value });
-    console.log(this.state.isChecked);
+    if (value) {
+      localStorage.setItem(process.env.LOCALSTORAGE_FORK_PROMPT, 1);
+    } else {
+      localStorage.setItem(process.env.LOCALSTORAGE_FORK_PROMPT, '');
+    }
   }
 
   render() {
@@ -38,7 +42,7 @@ class ForkPrompt extends React.Component {
             <button
               className="fork-prompt__button"
               onClick={() => {
-                this.props.closeForkModal();
+                this.props.closeForkPrompt();
               }}
             >
               Just Browsing
@@ -46,7 +50,6 @@ class ForkPrompt extends React.Component {
             <button
               className="fork-prompt__button"
               onClick={() => {
-                // this.props.setShowForkModal(!this.state.isChecked);
                 this.props.closeForkPrompt();
                 this.props.savePage();
               }}
@@ -60,7 +63,7 @@ class ForkPrompt extends React.Component {
               name="fork-prompt__dont-ask"
               type="checkbox"
               className="fork-prompt__checkbox"
-              onChange={this.handleCheckBoxChange}
+              onChange={(e) => { this.setForkPromptPreference(e); }}
               checked={this.state.isChecked}
             />
             <label htmlFor="fork-prompt__dont-ask">Don‘t ask me again</label>
@@ -73,8 +76,7 @@ class ForkPrompt extends React.Component {
 
 ForkPrompt.propTypes = {
   closeForkPrompt: PropTypes.func.isRequired,
-  savePage: PropTypes.func.isRequired,
-  setShowForkModal: PropTypes.func.isRequired
+  savePage: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -85,8 +87,7 @@ function mapStateToProps(state) {
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
-  submitPage,
-  viewLoginModal
+  closeForkPrompt
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ForkPrompt);

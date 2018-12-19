@@ -41,7 +41,6 @@ class ShareWorkspace extends React.Component {
       this.props.rgl.rowHeight,
       layout[0].maxH
     );
-    console.log(yValue);
     layout[0].h = yValue;
     layout[1].y = yValue + 1;
     const descText = this.desc.value.replace(/[\r\n]+/g, ' ');

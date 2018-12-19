@@ -1,5 +1,6 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
-import { setUnsavedChanges, setUnsavedPebl } from './page.js';
+import { setUnsavedChanges } from './page.js';
+import { viewForkPrompt } from './mainToolbar.js';
 
 /** ALL */
 export function setCurrentWidget(id) {
@@ -121,7 +122,7 @@ export function clearConsoleOutput(id) {
 
 export function updateFile(id, index, content) {
   return (dispatch) => {
-    dispatch(setUnsavedPebl(true));
+    dispatch(viewForkPrompt());
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.UPDATE_FILE,
@@ -244,7 +245,7 @@ export function updateQuestionChange(id, text) {
 
 export function updateAnswerChange(id, text) {
   return (dispatch) => {
-    dispatch(setUnsavedPebl(true));
+    dispatch(viewForkPrompt());
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.UPDATE_ANSWER_CHANGE,

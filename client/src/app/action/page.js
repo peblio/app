@@ -6,21 +6,12 @@ import axios from '../utils/axios';
 import history from '../utils/history';
 import { namespaceActionCreators } from '../utils/namespace-redux';
 import * as folderActions from './folders';
+import { viewForkPrompt } from './mainToolbar.js';
 
 export function setUnsavedChanges(value) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_UNSAVED_CHANGES,
-      value
-    });
-  };
-}
-
-export function setUnsavedPebl(value) {
-  console.log('changing');
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_UNSAVED_PEBL,
       value
     });
   };
@@ -168,7 +159,7 @@ export function updatePage(id, title, heading, editors, editorIndex, layout, wor
 
 export function togglePreviewMode() {
   return (dispatch) => {
-    dispatch(setUnsavedPebl(true));
+    dispatch(viewForkPrompt(true));
     dispatch({
       type: ActionTypes.TOGGLE_PREVIEW_MODE
     });
