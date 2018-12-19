@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-require('./fork.scss');
+require('./forkPrompt.scss');
 
 class ForkPrompt extends React.Component {
   constructor(props) {
@@ -17,47 +19,51 @@ class ForkPrompt extends React.Component {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({ isChecked: value });
+    console.log(this.state.isChecked);
   }
 
   render() {
     return (
-      <div className="fork-modal__content">
+      <div className="fork-prompt__content">
         <div>
-          <div className="fork-modal__title">
-             Would you like to fork the page?
-          </div>
-          <div className="fork-modal__subtitle">
-             Forking this page will save a copy to your account and allow you to save your changes.
-          </div>
-          <form className="fork-modal__form">
-            <input
-              className="fork-modal__browse-button"
-              value="Just Browsing"
+          <h2 className="fork-prompt__title">
+             Would you like to remix the page?
+          </h2>
+          <p className="fork-prompt__subtitle">
+             Remixing this page will save a copy to your account and allow you to save your changes.
+          </p>
+          <div
+            className="fork-prompt__button-container"
+          >
+            <button
+              className="fork-prompt__button"
               onClick={() => {
-                this.props.setShowForkModal(!this.state.isChecked);
                 this.props.closeForkModal();
               }}
-            />
-            <input
-              className="fork-modal__button"
-              value="Fork"
+            >
+              Just Browsing
+            </button>
+            <button
+              className="fork-prompt__button"
               onClick={() => {
-                this.props.setShowForkModal(!this.state.isChecked);
-                this.props.closeForkModal();
+                // this.props.setShowForkModal(!this.state.isChecked);
+                this.props.closeForkPrompt();
                 this.props.savePage();
               }}
-            />
-          </form>
-          <div className="fork-modal__checkbox-container">
+            >
+              Remix
+            </button>
+          </div>
+          <div className="fork-prompt__checkbox-container">
             <input
-              id="fork-modal__dont-ask"
-              name="fork-modal__dont-ask"
+              id="fork-prompt__dont-ask"
+              name="fork-prompt__dont-ask"
               type="checkbox"
-              className="fork-modal__checkbox"
+              className="fork-prompt__checkbox"
               onChange={this.handleCheckBoxChange}
               checked={this.state.isChecked}
             />
-            <label htmlFor="fork-modal__dont-ask">Don‘t ask me again</label>
+            <label htmlFor="fork-prompt__dont-ask">Don‘t ask me again</label>
           </div>
         </div>
       </div>
@@ -66,9 +72,21 @@ class ForkPrompt extends React.Component {
 }
 
 ForkPrompt.propTypes = {
-  closeForkModal: PropTypes.func.isRequired,
+  closeForkPrompt: PropTypes.func.isRequired,
   savePage: PropTypes.func.isRequired,
   setShowForkModal: PropTypes.func.isRequired
 };
 
-export default ForkPrompt;
+function mapStateToProps(state) {
+  return {
+    name: state.user.name,
+    rgl: state.page.rgl,
+    id: state.page.id
+  };
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  submitPage,
+  viewLoginModal
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ForkPrompt);

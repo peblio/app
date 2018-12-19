@@ -8,6 +8,7 @@ import * as pageDefaults from '../../constants/pageConstants';
 
 import ConfirmUser from './Modal/ConfirmUser/ConfirmUser.jsx';
 import ExamplesModal from './Modal/ExamplesModal/ExamplesModal.jsx';
+import ForkPrompt from './Modal/ForkPrompt/ForkPrompt.jsx';
 import Login from './Modal/Login/Login.jsx';
 import Modal from './Modal/Modal.jsx';
 import PasswordForgot from './Modal/PasswordForgot/PasswordForgot.jsx';
@@ -119,6 +120,7 @@ class App extends React.Component {
           axios.get(`/authenticate/${projectID}`)
             .then((res1) => {
               this.props.setEditAccess(res1.data);
+              console.log(res1.data);
             });
         });
     }
@@ -312,6 +314,13 @@ class App extends React.Component {
         >
           <Welcome />
         </Modal>
+        <Modal
+          size="auto"
+          isOpen={!this.props.canEdit && this.props.unsavedPebl}
+          closeModal={this.props.closeForkPrompt}
+        >
+          <ForkPrompt />
+        </Modal>
         <Navigation />
         <Workspace />
       </div>
@@ -328,11 +337,13 @@ App.propTypes = {
 
   workspace: PropTypes.shape({}).isRequired,
 
+  // pebl
   pageTitle: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   rgl: PropTypes.shape({}).isRequired,
   textHeights: PropTypes.shape({}).isRequired,
+  unsavedPebl: PropTypes.bool.isRequired,
 
   canEdit: PropTypes.bool.isRequired,
   loginName: PropTypes.string.isRequired,
@@ -383,6 +394,8 @@ App.propTypes = {
   isWelcomeModalOpen: PropTypes.bool.isRequired,
   viewWelcomeModal: PropTypes.func.isRequired,
   closeWelcomeModal: PropTypes.func.isRequired,
+  viewForkPrompt: PropTypes.func.isRequired,
+  closeForkPrompt: PropTypes.func.isRequired,
 
   // preferences
   fetchUserPreferences: PropTypes.func.isRequired,
@@ -410,6 +423,7 @@ function mapStateToProps(state) {
     pageTitle: state.page.pageTitle,
     id: state.page.id,
     textHeights: state.page.textHeights,
+    unsavedPebl: state.page.unsavedPebl,
 
     canEdit: state.user.canEdit,
     loginName: state.user.loginName,
@@ -431,6 +445,7 @@ function mapStateToProps(state) {
     isForgotModalOpen: state.mainToolbar.isForgotModalOpen,
     isResetModalOpen: state.mainToolbar.isResetModalOpen,
     isConfirmUserModalOpen: state.mainToolbar.isConfirmUserModalOpen,
+    isForkPromptOpen: state.mainToolbar.isForkPromptOpen,
 
     navigationContent: state.navigation.navigationContent
   };
