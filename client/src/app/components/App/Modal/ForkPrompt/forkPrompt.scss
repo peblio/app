@@ -47,10 +47,10 @@
     justify-content: center;
     margin-top: $medium-margin;
     &-text {
-      margin: 0 0.5rem;
+      margin: 0 $small-margin;
     }
   }
 }
 .fork-prompt__button+.fork-prompt__button {
-  margin-left: 20px;
+  margin-left: $large-margin;
 }

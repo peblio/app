@@ -159,7 +159,7 @@ export function updatePage(id, title, heading, editors, editorIndex, layout, wor
 
 export function togglePreviewMode() {
   return (dispatch) => {
-    dispatch(viewForkPrompt(true));
+    dispatch(viewForkPrompt());
     dispatch({
       type: ActionTypes.TOGGLE_PREVIEW_MODE
     });
