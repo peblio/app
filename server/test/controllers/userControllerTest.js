@@ -13,18 +13,18 @@ const body = {
 const signUpFailedMessage = {
     msg: "Sign up failed"
 };
+const userToBeSaved = {
+    email: body.mail,
+    name: body.name,
+    type: body.userType,
+    password: "Something",
+    loginType: 'password',
+    requiresGuardianConsent: body.requiresGuardianConsent,
+    isVerified: false
+};
 
 describe('userControllerNew', function () {
     describe('createUser', function () {
-        const userToBeSaved = {
-            email: body.mail,
-            name: body.name,
-            type: body.userType,
-            password: "Something",
-            loginType: 'password',
-            requiresGuardianConsent: body.requiresGuardianConsent,
-            isVerified: false
-        };
         var request;
         var response;
         var findOneSpy;
