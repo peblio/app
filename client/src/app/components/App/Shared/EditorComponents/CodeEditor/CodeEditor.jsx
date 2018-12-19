@@ -17,8 +17,6 @@ import 'codemirror/mode/css/css';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/clike/clike';
 import 'codemirror/addon/selection/active-line';
-import 'codemirror/addon/selection/active-line';
-import 'codemirror/addon/selection/active-line';
 
 import * as constants from '../../../../../constants/widgetConstants.js';
 
