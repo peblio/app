@@ -156,6 +156,7 @@ class Canvas extends React.Component {
         <Image
           id={editor.id}
           imageURL={editor.url}
+          layout={this.props.layout}
         />
       </div>
     );
