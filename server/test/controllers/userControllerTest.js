@@ -92,13 +92,7 @@ describe('userControllerNew', function () {
             const actualResponse = response.send.getCall(0).args[0];
             const userSaved = actualResponse.user;
             expect(actualResponse.msg).to.be.equal("Successfully signed up! Please log in");
-            expect(userSaved.name).to.be.equal(userToBeSaved.name);
-            expect(userSaved.email).to.be.equal(userToBeSaved.email);
-            expect(userSaved.isVerified).to.be.true;
-            expect(userSaved.isNew).to.be.true;
-            expect(userSaved.blurb).to.be.equal("I <3 CS");
-            expect(userSaved.type).to.be.equal("student");
-            expect(userSaved.password).to.be.equal("IAmNotTellingYouThis");
+            assertUserSavedWithCorrectValues(userSaved);
         });
 
         function createResponseWithStatusCode(statusCode) {
@@ -106,6 +100,16 @@ describe('userControllerNew', function () {
                 expect(responseStatus).to.be.equal(statusCode);
                 return this;
             }
+        }
+
+        function assertUserSavedWithCorrectValues(userSaved) {
+            expect(userSaved.name).to.be.equal(userToBeSaved.name);
+            expect(userSaved.email).to.be.equal(userToBeSaved.email);
+            expect(userSaved.isVerified).to.be.true;
+            expect(userSaved.isNew).to.be.true;
+            expect(userSaved.blurb).to.be.equal("I <3 CS");
+            expect(userSaved.type).to.be.equal("student");
+            expect(userSaved.password).to.be.equal("IAmNotTellingYouThis");
         }
 
         function assertFindOneWasCalledWithUsername() {
