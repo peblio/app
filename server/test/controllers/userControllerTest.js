@@ -10,6 +10,9 @@ const body = {
     password: "IAmNotTellingYouThis",
     requiresGuardianConsent: false
 };
+const signUpFailedMessage = {
+    msg: "Sign up failed"
+};
 
 describe('userControllerNew', function () {
     describe('createUser', function () {
@@ -46,10 +49,8 @@ describe('userControllerNew', function () {
 
             createUser(request, response);
 
-            assert.calledOnce(findOneSpy);
-            assert.calledWith(findOneSpy, { name: "Bla" });
-            assert.calledOnce(response.send);
-            assert.calledWith(response.send, {
+            assertFindOneWasCalledWithUsername();
+            assertSendWasCalledWith({
                 msg: "Username not available! Please try again"
             });
         });
@@ -60,12 +61,8 @@ describe('userControllerNew', function () {
 
             createUser(request, response);
 
-            assert.calledOnce(findOneSpy);
-            assert.calledWith(findOneSpy, { name: "Bla" });
-            assert.calledOnce(response.send);
-            assert.calledWith(response.send, {
-                msg: "Sign up failed"
-            });
+            assertFindOneWasCalledWithUsername();
+            assertSendWasCalledWith(signUpFailedMessage);
         });
 
         it('shall fail creating user when user could not be persisted', function () {
@@ -75,13 +72,9 @@ describe('userControllerNew', function () {
 
             createUser(request, response);
 
-            assert.calledOnce(findOneSpy);
-            assert.calledWith(findOneSpy, { name: "Bla" });
+            assertFindOneWasCalledWithUsername();
             assert.calledOnce(saveSpy);
-            assert.calledOnce(response.json);
-            assert.calledWith(response.json, {
-                msg: "Sign up failed"
-            });
+            assertJsonWasCalledWith(signUpFailedMessage);
         });
 
         it('shall save automatically verified user ', function () {
@@ -93,8 +86,7 @@ describe('userControllerNew', function () {
 
             createUser(request, response);
 
-            assert.calledOnce(findOneSpy);
-            assert.calledWith(findOneSpy, { name: "Bla" });
+            assertFindOneWasCalledWithUsername();
             assert.calledOnce(saveSpy);
             assert.calledOnce(response.send);
             const actualResponse = response.send.getCall(0).args[0];
@@ -108,13 +100,29 @@ describe('userControllerNew', function () {
             expect(userSaved.type).to.be.equal("student");
             expect(userSaved.password).to.be.equal("IAmNotTellingYouThis");
         });
-    });
 
-    function createResponseWithStatusCode(statusCode) {
-        return function (responseStatus) {
-            expect(responseStatus).to.be.equal(statusCode);
-            return this;
+        function createResponseWithStatusCode(statusCode) {
+            return function (responseStatus) {
+                expect(responseStatus).to.be.equal(statusCode);
+                return this;
+            }
         }
-    }
+
+        function assertFindOneWasCalledWithUsername() {
+            assert.calledOnce(findOneSpy);
+            assert.calledWith(findOneSpy, { name: "Bla" });
+        }
+
+        function assertSendWasCalledWith(msg) {
+            assert.calledOnce(response.send);
+            assert.calledWith(response.send, msg);
+        }
+
+        function assertJsonWasCalledWith(msg) {
+            assert.calledOnce(response.json);
+            assert.calledWith(response.json, msg);
+        }
+
+    });
 
 });
