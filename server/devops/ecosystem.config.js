@@ -1,8 +1,8 @@
 module.exports = {
   apps: [{
     name: 'server',
-    script: 'run_with_credstash.sh',
-    args: 'node server.js',
+    script: './scripts/run_with_credstash.sh',
+    args: 'node src/server.js',
     env: {
       SERVER_PORT: 8081,
       NODE_ENV: 'development',
