@@ -63,12 +63,12 @@ test('able to embed scratch link', async(t) => {
   await t.expect(Selector('#scratch').exists).ok();
 });
 
-test(('able to embed vimeo link', async(t) => {
+test('able to embed vimeo link', async(t) => {
   await checkEmbed(t, VIMEO_LINK);
   await t.expect(Selector('.vp-video').exists).ok();
 });
 
-test(('able to embed google drive link', async(t) => {
+test('able to embed google drive link', async(t) => {
   await checkEmbed(t, GOOGLE_DRIVE_LINK);
   await t.expect(Selector('#one-google-bar').exists).ok();
 });

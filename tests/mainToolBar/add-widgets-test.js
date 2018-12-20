@@ -75,7 +75,7 @@ test('adding an iframe widget', async (t) => {
     .expect(Selector('[data-test=iframe__container]').exists).ok();
 });
 
-test(('adding a video widget', async (t) => {
+test('adding a video widget', async (t) => {
   await t
     .click(Selector('[data-test=insert-toolbar__add-video]'))
     .expect(Selector('[data-test=iframe__container]').exists).ok();

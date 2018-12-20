@@ -51,6 +51,15 @@ class Canvas extends React.Component {
     }
   }
 
+  setWidgetSize(layout, defaultWidth, defaultHeight, minWidth, minHeight) {
+    layout.minW = minWidth;
+    layout.w = !layout.w ? defaultWidth : layout.w;
+
+    layout.minH = minHeight;
+    layout.h =
+      (layout.h < layout.minH) ? defaultHeight : layout.h;
+  }
+
   handleGridItemResizeStart = (gridItems) => {
     this.setState(prevState => ({
       isResizingGridItems: {
@@ -92,15 +101,6 @@ class Canvas extends React.Component {
 
     // clear this.state.didResizeGridItems after a short amount of time
     this.timeout = setTimeout(() => this.setState({ didResizeGridItems: new Set() }), 100);
-  }
-
-  setWidgetSize(layout, defaultWidth, defaultHeight, minWidth, minHeight) {
-    layout.minW = minWidth;
-    layout.w = !layout.w ? defaultWidth : layout.w;
-
-    layout.minH = minHeight;
-    layout.h =
-      (layout.h < layout.minH) ? defaultHeight : layout.h;
   }
 
   resizeTextEditor = (id, height) => {
