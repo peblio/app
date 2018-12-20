@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint .",
     "build": "./node_modules/.bin/babel src --out-dir .build --source-maps",
-    "startServer": "./node_modules/.bin/babel src --out-dir .build && node .build/server.js",
+    "prestartserver": "./node_modules/.bin/babel src --out-dir .build",
+    "startserver": "node .build/server.js",
     "prebuild": "rm -rf .build/*",
     "prestart": "npm run build",
     "start": "AWS_PROFILE=peblio ./scripts/run_with_credstash.sh nodemon .build/server.js",
