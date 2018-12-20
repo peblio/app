@@ -153,6 +153,7 @@ class InsertToolbar extends React.Component {
             onKeyDown={this.props.addTextEditor}
             id="elementButton"
             className="insert-toolbar__button"
+            data-test="insert-toolbar__add-text-editor"
           >
             <TextSVG alt="add text" />
             Textbox
@@ -161,6 +162,7 @@ class InsertToolbar extends React.Component {
             onMouseDown={this.props.addIframe}
             onKeyDown={this.props.addIframe}
             className="insert-toolbar__button"
+            data-test="insert-toolbar__add-iframe"
           >
             <EmbedSVG alt="add embed" />
             Embed
@@ -170,6 +172,7 @@ class InsertToolbar extends React.Component {
             onKeyDown={this.props.addQuestionEditor}
             id="elementButton"
             className="insert-toolbar__button"
+            data-test="insert-toolbar__add-question"
           >
             <QuestionSVG alt="add question" />
             Question
@@ -179,6 +182,7 @@ class InsertToolbar extends React.Component {
             onKeyDown={this.props.addImage}
             id="elementButton"
             className="insert-toolbar__button"
+            data-test="insert-toolbar__add-image"
           >
             <ImageSVG alt="add image" />
             Image

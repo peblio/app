@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import axiosOrg from 'axios';
 import URL from 'url';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+import { setImageURL } from '../../../../action/editors.js';
 import axios from '../../../../utils/axios';
 import * as WidgetSize from '../../../../constants/widgetConstants.js';
 import FileUpload from '../../Shared/FileUpload/FileUpload.jsx';
@@ -23,8 +26,6 @@ class Image extends React.Component {
       isFileUploading: false,
       isVideo: false,
     };
-    this.removeEditor = () => { this.props.removeEditor(this.props.id); };
-    this.onChange = (state) => { this.props.onChange(this.props.id, state); };
     this.setImageURL = url => this.props.setImageURL(this.props.id, url);
     this.onDrop = this.onDrop.bind(this);
     this.urlSubmitted = (event, value) => {
@@ -120,7 +121,6 @@ class Image extends React.Component {
         onDrop={this.onDrop}
         urlSubmitted={this.urlSubmitted}
         imageURL={this.props.imageURL}
-        readOnly={this.props.preview}
         container="image"
         isSmall={sizeOverride && this.state.isImageSmall}
         isFileUploading={this.state.isFileUploading}
@@ -138,11 +138,17 @@ class Image extends React.Component {
           ${this.props.preview ? '' : 'image__container--edit'}
           ${this.props.name && this.imageWidgetRef && (this.state.isImageSmall) ? 'image__container--small' : ''}
           ${this.props.imageURL && 'image__container--exists'}
-        `}
+          `}
+          data-test="image__container"
         >
-          {(this.props.imageURL && !this.state.isVideo) &&
-            <img className="element__image" src={this.props.imageURL} alt="" />
-          }
+          {(this.props.imageURL && !this.state.isVideo) && (
+            <img
+              className="element__image"
+              src={this.props.imageURL}
+              alt=""
+              data-test="image__main"
+            />
+          )}
           {(this.props.imageURL && this.state.isVideo) && (
             // eslint-disable-next-line
             <video width="100%" controls>
@@ -170,6 +176,7 @@ class Image extends React.Component {
               className={
                 `image__login ${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`
               }
+              data-test="image__upload-container"
               onClick={() => { this.handleOnClick(); }}
               onKeyUp={() => this.handleOnClick()}
             >
@@ -180,6 +187,7 @@ class Image extends React.Component {
           {this.state.showUploadPopup && (
             <div
               className='image__container image__container--popup'
+              data-test="image__upload-container"
             >
               {this.renderUploadPopup(false)}
             </div>
@@ -194,10 +202,18 @@ Image.propTypes = {
   id: PropTypes.string.isRequired,
   imageURL: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
-  removeEditor: PropTypes.func.isRequired,
   setImageURL: PropTypes.func.isRequired,
 };
 
-export default Image;
+function mapStateToProps(state) {
+  return {
+    name: state.user.name,
+    preview: state.page.preview
+  };
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setImageURL
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Image);

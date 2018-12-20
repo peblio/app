@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import VisibilitySensor from 'react-visibility-sensor';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import EditorContainer from './EditorContainer/EditorContainer.jsx';
 import Questions from './Question/Question.jsx';
@@ -9,6 +11,14 @@ import Image from './Image/Image.jsx';
 import TextEditor from './TextEditor/TextEditor.jsx';
 import WidgetNav from './WidgetNav/WidgetNav.jsx';
 import { convertPixelHeightToGridHeight } from '../../../utils/pixel-to-grid.js';
+import {
+  resizeTextEditor,
+  setPageHeading,
+  setPageLayout,
+  updateTextHeight
+} from '../../../action/page.js';
+
+import { setCurrentWidget } from '../../../action/editors.js';
 
 import * as WidgetSize from '../../../constants/widgetConstants.js';
 
@@ -102,27 +112,14 @@ class Canvas extends React.Component {
         {({ isVisible }) => (
           <EditorContainer
             id={editor.id}
-            addMediaFile={this.props.addMediaFile}
             currentFile={editor.currentFile}
-            clearConsoleOutput={this.props.clearConsoleOutput}
             code={editor.code}
             consoleOutputText={editor.consoleOutputText}
-            editorFontSize={this.props.editorFontSize}
             editorMode={editor.editorMode}
-            editorTheme={this.props.editorTheme}
             files={editor.files}
             innerWidth={editor.innerWidth}
             isPlaying={editor.isPlaying && isVisible}
             isRefreshing={editor.isRefreshing}
-            name={this.props.name}
-            playCode={this.props.playCode}
-            startCodeRefresh={this.props.startCodeRefresh}
-            setCurrentFile={this.props.setCurrentFile}
-            setInnerWidth={this.props.setInnerWidth}
-            stopCode={this.props.stopCode}
-            stopCodeRefresh={this.props.stopCodeRefresh}
-            updateConsoleOutput={this.props.updateConsoleOutput}
-            updateFile={this.props.updateFile}
           />
         )}
       </VisibilitySensor>
@@ -136,12 +133,8 @@ class Canvas extends React.Component {
         ref={(textEditor) => { if (textEditor) { this.textEditors[editor.id] = textEditor; } }}
         backColor={editor.backColor}
         editorState={editor.editorState}
-        onChange={this.props.updateTextChange}
         onResize={this.resizeTextEditor}
-        preview={this.props.preview}
-        updateTextBackColor={this.props.updateTextBackColor}
         isResizing={this.state.isResizingGridItems[editor.id] || false}
-        currentWidget={this.props.currentWidget}
       />
     );
   }
@@ -152,8 +145,6 @@ class Canvas extends React.Component {
         <Iframe
           id={editor.id}
           iframeURL={editor.url}
-          preview={this.props.preview}
-          setIframeURL={this.props.setIframeURL}
         />
       </div>
     );
@@ -165,11 +156,6 @@ class Canvas extends React.Component {
         <Image
           id={editor.id}
           imageURL={editor.url}
-          name={this.props.name}
-          onChange={this.props.updateImageChange}
-          preview={this.props.preview}
-          removeEditor={this.props.removeEditor}
-          setImageURL={this.props.setImageURL}
           layout={this.props.layout}
         />
       </div>
@@ -184,11 +170,7 @@ class Canvas extends React.Component {
           answer={editor.answer}
           innerHeight={editor.innerHeight}
           minHeight={editor.minHeight}
-          preview={this.props.preview}
           question={editor.question}
-          setQuestionInnerHeight={this.props.setQuestionInnerHeight}
-          updateAnswerChange={this.props.updateAnswerChange}
-          updateQuestionChange={this.props.updateQuestionChange}
         />
       </div>
     );
@@ -314,10 +296,6 @@ class Canvas extends React.Component {
                   <div className={`widget-nav__container${(this.props.currentWidget === id) ? '_highlighted' : ''}`}>
                     <WidgetNav
                       id={id}
-                      layout={storageLayout}
-                      setPageLayout={this.props.setPageLayout}
-                      removeEditor={this.props.removeEditor}
-                      duplicateEditor={this.props.duplicateEditor}
                     />
                   </div>
                 )}
@@ -341,21 +319,13 @@ class Canvas extends React.Component {
 }
 
 Canvas.propTypes = {
-  addMediaFile: PropTypes.func.isRequired,
-  clearConsoleOutput: PropTypes.func.isRequired,
   currentWidget: PropTypes.string.isRequired,
-  duplicateEditor: PropTypes.func.isRequired,
   editorIndex: PropTypes.number.isRequired,
-  editorFontSize: PropTypes.number.isRequired,
   editors: PropTypes.shape({}).isRequired,
-  editorTheme: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  isNavigationOpen: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
+  isNavigationOpen: PropTypes.bool.isRequired,
   pageHeading: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
-  playCode: PropTypes.func.isRequired,
-  removeEditor: PropTypes.func.isRequired,
   resizeTextEditor: PropTypes.func.isRequired,
   rgl: PropTypes.shape({
     cols: PropTypes.number,
@@ -365,25 +335,31 @@ Canvas.propTypes = {
     width: PropTypes.number
   }).isRequired,
   setCurrentWidget: PropTypes.func.isRequired,
-  setCurrentFile: PropTypes.func.isRequired,
-  setIframeURL: PropTypes.func.isRequired,
-  setImageURL: PropTypes.func.isRequired,
-  setInnerWidth: PropTypes.func.isRequired,
   setPageHeading: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
-  setQuestionInnerHeight: PropTypes.func.isRequired,
-  startCodeRefresh: PropTypes.func.isRequired,
-  stopCode: PropTypes.func.isRequired,
-  stopCodeRefresh: PropTypes.func.isRequired,
-  updateAnswerChange: PropTypes.func.isRequired,
-  updateConsoleOutput: PropTypes.func.isRequired,
-  updateFile: PropTypes.func.isRequired,
-  updateImageChange: PropTypes.func.isRequired,
-  updateQuestionChange: PropTypes.func.isRequired,
-  updateTextBackColor: PropTypes.func.isRequired,
-  updateTextChange: PropTypes.func.isRequired,
   updateTextHeight: PropTypes.func.isRequired,
   textHeights: PropTypes.shape({}).isRequired
 };
 
-export default Canvas;
+function mapStateToProps(state) {
+  return {
+    currentWidget: state.editorsReducer.currentWidget,
+    editorIndex: state.editorsReducer.editorIndex,
+    editors: state.editorsReducer.editors,
+    layout: state.page.layout,
+    isNavigationOpen: state.navigation.isNavigationOpen,
+    pageHeading: state.page.pageHeading,
+    preview: state.page.preview,
+    rgl: state.page.rgl,
+    textHeights: state.page.textHeights
+  };
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  resizeTextEditor,
+  setPageHeading,
+  setPageLayout,
+  updateTextHeight,
+  setCurrentWidget
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Canvas);
