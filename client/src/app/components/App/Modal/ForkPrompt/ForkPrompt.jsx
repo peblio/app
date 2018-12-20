@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { closeForkPrompt } from '../../../../action/mainToolbar.js';
+import { setUserBrowsingPebl } from '../../../../action/user.js';
 
 require('./forkPrompt.scss');
 
@@ -43,6 +44,7 @@ class ForkPrompt extends React.Component {
               className="fork-prompt__button"
               onClick={() => {
                 this.props.closeForkPrompt();
+                this.props.setUserBrowsingPebl();
               }}
             >
               Just Browsing
@@ -76,7 +78,8 @@ class ForkPrompt extends React.Component {
 
 ForkPrompt.propTypes = {
   closeForkPrompt: PropTypes.func.isRequired,
-  savePage: PropTypes.func.isRequired
+  savePage: PropTypes.func.isRequired,
+  setUserBrowsingPebl: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -87,7 +90,8 @@ function mapStateToProps(state) {
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
-  closeForkPrompt
+  closeForkPrompt,
+  setUserBrowsingPebl
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ForkPrompt);

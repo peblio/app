@@ -10,7 +10,8 @@ const initialState = {
   image: 'https://placekitten.com/300/300',
   type: '',
   requiresGuardianConsent: false,
-  guardianConsentedAt: ''
+  guardianConsentedAt: '',
+  isBrowsingPebl: false,
 };
 
 const user = (state = initialState, action) => {
@@ -22,6 +23,11 @@ const user = (state = initialState, action) => {
         type: action.data.type
       };
     }
+
+    case ActionTypes.SET_USER_BROWSING_PEBL:
+      return Object.assign({}, state, {
+        isBrowsingPebl: true
+      });
 
     case ActionTypes.UPDATE_USER_NAME:
       return Object.assign({}, state, {

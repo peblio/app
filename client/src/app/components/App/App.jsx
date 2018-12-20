@@ -321,15 +321,17 @@ class App extends React.Component {
         >
           <Welcome />
         </Modal>
-        <Modal
-          size="auto"
-          isOpen={!this.props.canEdit && this.props.isForkPromptOpen && this.getForkPromptPreference()}
-          closeModal={this.props.closeForkPrompt}
-        >
-          <ForkPrompt
-            savePage={this.savePage}
-          />
-        </Modal>
+        {(this.getForkPromptPreference() && !this.props.isBrowsingPebl && !this.props.canEdit) && (
+          <Modal
+            size="auto"
+            isOpen={this.props.isForkPromptOpen}
+            closeModal={this.props.closeForkPrompt}
+          >
+            <ForkPrompt
+              savePage={this.savePage}
+            />
+          </Modal>
+        )}
         <Navigation />
         <Workspace />
       </div>
@@ -365,6 +367,7 @@ App.propTypes = {
   fetchCurrentUser: PropTypes.func.isRequired,
   requiresGuardianConsent: PropTypes.bool.isRequired,
   setGuardianConsent: PropTypes.func.isRequired,
+  isBrowsingPebl: PropTypes.bool.isRequired,
 
   isPagesModalOpen: PropTypes.bool.isRequired,
   isLoginModalOpen: PropTypes.bool.isRequired,
@@ -439,6 +442,7 @@ function mapStateToProps(state) {
     name: state.user.name,
     userType: state.user.type,
     requiresGuardianConsent: state.user.requiresGuardianConsent,
+    isBrowsingPebl: state.user.isBrowsingPebl,
 
     isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
     isExamplesModalOpen: state.mainToolbar.isExamplesModalOpen,
