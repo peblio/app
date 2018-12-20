@@ -8,12 +8,14 @@ import EmbedSVG from '../../../../images/embed.svg';
 import ImageSVG from '../../../../images/image.svg';
 import QuestionSVG from '../../../../images/question.svg';
 import TextSVG from '../../../../images/text.svg';
+import VideoSVG from '../../../../images/video.svg';
 import {
   addCodeEditor,
   addIframe,
   addImage,
   addTextEditor,
-  addQuestionEditor
+  addQuestionEditor,
+  addVideo
 } from '../../../../action/editors.js';
 
 require('./insertToolbar.scss');
@@ -168,6 +170,15 @@ class InsertToolbar extends React.Component {
             Embed
           </button>
           <button
+            onMouseDown={this.props.addVideo}
+            onKeyDown={this.props.addVideo}
+            className="insert-toolbar__button"
+            data-test="insert-toolbar__add-video"
+          >
+            <VideoSVG alt="add video" />
+            Video
+          </button>
+          <button
             onMouseDown={this.props.addQuestionEditor}
             onKeyDown={this.props.addQuestionEditor}
             id="elementButton"
@@ -203,6 +214,7 @@ InsertToolbar.propTypes = {
   addImage: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
   addQuestionEditor: PropTypes.func.isRequired,
+  addVideo: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -210,7 +222,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   addIframe,
   addImage,
   addTextEditor,
-  addQuestionEditor
+  addQuestionEditor,
+  addVideo
 }, dispatch);
 
 export default connect(null, mapDispatchToProps)(InsertToolbar);

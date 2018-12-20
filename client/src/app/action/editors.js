@@ -281,6 +281,35 @@ export function setIframeURL(id, url) {
   };
 }
 
+/** VIDEO */
+export function addVideo() {
+  return (dispatch, getState) => {
+    const { editorsReducer } = getState();
+    const currentId = editorsReducer.currentWidget;
+    const newEditorId = `editor-${editorsReducer.editorIndex}`;
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.ADD_VIDEO
+    });
+    dispatch({
+      type: ActionTypes.ADD_EDITOR,
+      currentId,
+      newEditorId
+    });
+  };
+}
+
+export function setVideoURL(id, url) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.SET_VIDEO_URL,
+      id,
+      url
+    });
+  };
+}
+
 /** IMAGE */
 export function addImage() {
   return (dispatch, getState) => {

@@ -94,6 +94,15 @@ class Canvas extends React.Component {
     this.timeout = setTimeout(() => this.setState({ didResizeGridItems: new Set() }), 100);
   }
 
+  setWidgetSize(layout, defaultWidth, defaultHeight, minWidth, minHeight) {
+    layout.minW = minWidth;
+    layout.w = !layout.w ? defaultWidth : layout.w;
+
+    layout.minH = minHeight;
+    layout.h =
+      (layout.h < layout.minH) ? defaultHeight : layout.h;
+  }
+
   resizeTextEditor = (id, height) => {
     const gridItem = this.props.layout.find(x => x.i === id);
     const { margin, rowHeight } = this.props.rgl;
@@ -140,6 +149,17 @@ class Canvas extends React.Component {
   }
 
   renderIframe(editor) {
+    return (
+      <div key={editor.id}>
+        <Iframe
+          id={editor.id}
+          iframeURL={editor.url}
+        />
+      </div>
+    );
+  }
+
+  renderVideo(editor) {
     return (
       <div key={editor.id}>
         <Iframe
@@ -203,38 +223,53 @@ class Canvas extends React.Component {
             break;
           }
           case 'code': {
-            localLayout[key].minW = WidgetSize.CODE_MIN_WIDTH;
-            localLayout[key].w = !localLayout[key].w ? WidgetSize.CODE_DEFAULT_WIDTH : localLayout[key].w;
-
-            localLayout[key].minH = WidgetSize.CODE_MIN_HEIGHT;
-            localLayout[key].h =
-              (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
+            this.setWidgetSize(
+              localLayout[key],
+              WidgetSize.CODE_DEFAULT_WIDTH,
+              WidgetSize.CODE_DEFAULT_HEIGHT,
+              WidgetSize.CODE_MIN_WIDTH,
+              WidgetSize.CODE_MIN_HEIGHT
+            );
             break;
           }
           case 'question': {
-            localLayout[key].minW = WidgetSize.QUESTION_MIN_WIDTH;
-            localLayout[key].w = !localLayout[key].w ? WidgetSize.QUESTION_DEFAULT_WIDTH : localLayout[key].w;
-
-            localLayout[key].minH = WidgetSize.QUESTION_MIN_HEIGHT;
-            localLayout[key].h =
-              (localLayout[key].h < localLayout[key].minH) ? localLayout[key].minH : localLayout[key].h;
+            this.setWidgetSize(
+              localLayout[key],
+              WidgetSize.QUESTION_DEFAULT_WIDTH,
+              WidgetSize.QUESTION_DEFAULT_HEIGHT,
+              WidgetSize.QUESTION_MIN_WIDTH,
+              WidgetSize.QUESTION_MIN_HEIGHT
+            );
             break;
           }
           case 'iframe': {
-            localLayout[key].minW = WidgetSize.IFRAME_MIN_WIDTH;
-            localLayout[key].w = !localLayout[key].w ? WidgetSize.IFRAME_DEFAULT_WIDTH : localLayout[key].w;
-
-            localLayout[key].minH = WidgetSize.IFRAME_MIN_HEIGHT;
-            localLayout[key].h =
-              (localLayout[key].h < localLayout[key].minH) ? WidgetSize.IFRAME_DEFAULT_HEIGHT : localLayout[key].h;
+            this.setWidgetSize(
+              localLayout[key],
+              WidgetSize.IFRAME_DEFAULT_WIDTH,
+              WidgetSize.IFRAME_DEFAULT_HEIGHT,
+              WidgetSize.IFRAME_MIN_WIDTH,
+              WidgetSize.IFRAME_MIN_HEIGHT
+            );
             break;
           }
           case 'image': {
-            localLayout[key].minW = WidgetSize.IMAGE_MIN_WIDTH;
-            localLayout[key].w = !localLayout[key].w ? WidgetSize.IMAGE_DEFAULT_WIDTH : localLayout[key].w;
-
-            localLayout[key].minH = WidgetSize.IMAGE_MIN_HEIGHT;
-            localLayout[key].h = !localLayout[key].h ? WidgetSize.IMAGE_DEFAULT_HEIGHT : localLayout[key].h;
+            this.setWidgetSize(
+              localLayout[key],
+              WidgetSize.IMAGE_DEFAULT_WIDTH,
+              WidgetSize.IMAGE_DEFAULT_HEIGHT,
+              WidgetSize.IMAGE_MIN_WIDTH,
+              WidgetSize.IMAGE_MIN_HEIGHT
+            );
+            break;
+          }
+          case 'video': {
+            this.setWidgetSize(
+              localLayout[key],
+              WidgetSize.VIDEO_DEFAULT_WIDTH,
+              WidgetSize.VIDEO_DEFAULT_HEIGHT,
+              WidgetSize.VIDEO_MIN_WIDTH,
+              WidgetSize.VIDEO_MIN_HEIGHT
+            );
             break;
           }
           default: {
@@ -304,6 +339,7 @@ class Canvas extends React.Component {
                     case 'code': return this.renderCodeEditor(this.props.editors[id]);
                     case 'question': return this.renderQuestion(this.props.editors[id]);
                     case 'iframe': return this.renderIframe(this.props.editors[id]);
+                    case 'video': return this.renderVideo(this.props.editors[id]);
                     case 'image': return this.renderImage(this.props.editors[id]);
                     case 'text': return this.renderTextEditor(this.props.editors[id]);
                     default: return null;
