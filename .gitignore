@@ -1,6 +1,5 @@
 node_modules/
 client/build/
-.build
 **/.DS_Store
 client/src/.sass-cache/
 **/*.css.map
