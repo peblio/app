@@ -15,6 +15,11 @@ const DIRECT_LINK = 'https://www.peblio.co/';
 
 const SCRATCH_LINK = '<iframe allowtransparency=“true” width=“485" height=“402” src=“//scratch.mit.edu/projects/embed/259808211/?autostart=false” frameborder=“0” allowfullscreen></iframe>';
 
+const VIMEO_LINK = `<iframe src="https://player.vimeo.com/video/97605620" width="640" height="480" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<p><a href="https://vimeo.com/97605620">Generative Portraits</a> from <a href="https://vimeo.com/fdiba">fdiba</a> on <a href="https://vimeo.com">Vimeo</a>.</p>`;
+
+const GOOGLE_DRIVE_LINK = '<iframe src="https://drive.google.com/file/d/1QRi1NtyQYq5hAMfP93NRVNH9KgT1T1sY/preview" width="640" height="480"></iframe>';
+
 async function checkEmbed(t, link) {
   await t
     .click(Selector('[data-test=insert-toolbar__add-iframe]'))
@@ -56,4 +61,14 @@ test('able to embed direct link', async(t) => {
 test('able to embed scratch link', async(t) => {
   await checkEmbed(t, SCRATCH_LINK);
   await t.expect(Selector('#scratch').exists).ok();
+});
+
+test(('able to embed vimeo link', async(t) => {
+  await checkEmbed(t, VIMEO_LINK);
+  await t.expect(Selector('.vp-video').exists).ok();
+});
+
+test(('able to embed google drive link', async(t) => {
+  await checkEmbed(t, GOOGLE_DRIVE_LINK);
+  await t.expect(Selector('#one-google-bar').exists).ok();
 });
