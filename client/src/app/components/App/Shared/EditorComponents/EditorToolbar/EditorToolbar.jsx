@@ -286,8 +286,7 @@ EditorToolbar.propTypes = {
   setEditorMode: PropTypes.func.isRequired,
   setEditorView: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
-  stopCode: PropTypes.func.isRequired,
-  toggleEditorView: PropTypes.func.isRequired
+  stopCode: PropTypes.func.isRequired
 };
 
 export default EditorToolbar;
