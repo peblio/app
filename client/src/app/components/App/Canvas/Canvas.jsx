@@ -120,6 +120,7 @@ class Canvas extends React.Component {
             innerWidth={editor.innerWidth}
             isPlaying={editor.isPlaying && isVisible}
             isRefreshing={editor.isRefreshing}
+            editorView={editor.editorView}
           />
         )}
       </VisibilitySensor>

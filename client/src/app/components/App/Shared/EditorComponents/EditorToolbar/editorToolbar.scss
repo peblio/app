@@ -243,10 +243,16 @@
   z-index: $z-index-layer-2;
 
     .editor-toolbar__button-container {
+      display: flex;
+      justify-content: space-between;
       height: $editor-toolbar-height;
       padding: 3px;
       display: flex;
       align-items: center;
+      &-right {
+        display: flex;
+        position: relative;
+      }
       .editor-toolbar__title {
         display: inline;
         font-size: $toolbar-font-size;
@@ -264,7 +270,7 @@
       .editor-toolbar__button {
         border: none;
         border-radius: $small-border-radius;
-        position: absolute;
+        // position: absolute;
         right: $small-margin;
         height: $editor-toolbar-content-height;
         font-size: $small-font-size;
@@ -328,6 +334,15 @@
     }
     &:focus .editor-toolbar__warning-container {
       display: block;
+    }
+  }
+  &__pref-svg {
+    height: $editor-toolbar-content-height;
+  }
+  &__button {
+    background: none;
+    &:hover {
+      background: none;
     }
   }
 }

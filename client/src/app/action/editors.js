@@ -202,6 +202,18 @@ export function updateTextBackColor(id, color) {
   };
 }
 
+export function setEditorView(id, value) {
+  console.log(value);
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.SET_EDITOR_VIEW,
+      id,
+      value
+    });
+  };
+}
+
 /** QUESTION EDITOR */
 export function addQuestionEditor() {
   return (dispatch, getState) => {
