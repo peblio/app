@@ -82,12 +82,9 @@ class App extends React.Component {
     }
   }
 
-  getForkPromptPreference=() => {
+  showForkPromptPreference=() => {
     const getForkPromptPreference = localStorage.getItem(process.env.LOCALSTORAGE_FORK_PROMPT);
-    if (getForkPromptPreference === null || getForkPromptPreference === '') {
-      return true;
-    }
-    return false;
+    return !(getForkPromptPreference === 'suppress');
   }
 
   projectID = () => {
@@ -321,7 +318,7 @@ class App extends React.Component {
         >
           <Welcome />
         </Modal>
-        {(this.getForkPromptPreference() && !this.props.isBrowsingPebl && !this.props.canEdit) && (
+        {(this.showForkPromptPreference() && !this.props.isBrowsingPebl && !this.props.canEdit) && (
           <Modal
             size="auto"
             isOpen={this.props.isForkPromptOpen}
@@ -434,7 +431,6 @@ function mapStateToProps(state) {
     pageTitle: state.page.pageTitle,
     id: state.page.id,
     textHeights: state.page.textHeights,
-
 
     canEdit: state.user.canEdit,
     loginName: state.user.loginName,

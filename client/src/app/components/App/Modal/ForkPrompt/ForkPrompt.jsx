@@ -21,9 +21,9 @@ class ForkPrompt extends React.Component {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({ isChecked: value });
     if (value) {
-      localStorage.setItem(process.env.LOCALSTORAGE_FORK_PROMPT, 1);
+      localStorage.setItem(process.env.LOCALSTORAGE_FORK_PROMPT, 'suppress');
     } else {
-      localStorage.setItem(process.env.LOCALSTORAGE_FORK_PROMPT, '');
+      localStorage.setItem(process.env.LOCALSTORAGE_FORK_PROMPT, 'show');
     }
   }
 
