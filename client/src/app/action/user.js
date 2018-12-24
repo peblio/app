@@ -10,6 +10,13 @@ export function updateUserName(event) {
     });
   };
 }
+export function setUserBrowsingPebl() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_USER_BROWSING_PEBL
+    });
+  };
+}
 
 export function updateUserPassword(event) {
   return (dispatch) => {

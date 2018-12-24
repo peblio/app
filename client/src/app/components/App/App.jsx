@@ -8,6 +8,7 @@ import * as pageDefaults from '../../constants/pageConstants';
 
 import ConfirmUser from './Modal/ConfirmUser/ConfirmUser.jsx';
 import ExamplesModal from './Modal/ExamplesModal/ExamplesModal.jsx';
+import ForkPrompt from './Modal/ForkPrompt/ForkPrompt.jsx';
 import Login from './Modal/Login/Login.jsx';
 import Modal from './Modal/Modal.jsx';
 import PasswordForgot from './Modal/PasswordForgot/PasswordForgot.jsx';
@@ -79,6 +80,11 @@ class App extends React.Component {
       localStorage.setItem(process.env.LOCALSTORAGE_VARIABLE, 1);
       this.props.viewWelcomeModal();
     }
+  }
+
+  showForkPromptPreference=() => {
+    const getForkPromptPreference = localStorage.getItem(process.env.LOCALSTORAGE_FORK_PROMPT);
+    return !(getForkPromptPreference === 'suppress');
   }
 
   projectID = () => {
@@ -312,6 +318,17 @@ class App extends React.Component {
         >
           <Welcome />
         </Modal>
+        {(this.showForkPromptPreference() && !this.props.isBrowsingPebl && !this.props.canEdit) && (
+          <Modal
+            size="auto"
+            isOpen={this.props.isForkPromptOpen}
+            closeModal={this.props.closeForkPrompt}
+          >
+            <ForkPrompt
+              savePage={this.savePage}
+            />
+          </Modal>
+        )}
         <Navigation />
         <Workspace />
       </div>
@@ -328,6 +345,7 @@ App.propTypes = {
 
   workspace: PropTypes.shape({}).isRequired,
 
+  // pebl
   pageTitle: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
@@ -346,6 +364,7 @@ App.propTypes = {
   fetchCurrentUser: PropTypes.func.isRequired,
   requiresGuardianConsent: PropTypes.bool.isRequired,
   setGuardianConsent: PropTypes.func.isRequired,
+  isBrowsingPebl: PropTypes.bool.isRequired,
 
   isPagesModalOpen: PropTypes.bool.isRequired,
   isLoginModalOpen: PropTypes.bool.isRequired,
@@ -383,6 +402,8 @@ App.propTypes = {
   isWelcomeModalOpen: PropTypes.bool.isRequired,
   viewWelcomeModal: PropTypes.func.isRequired,
   closeWelcomeModal: PropTypes.func.isRequired,
+  isForkPromptOpen: PropTypes.bool.isRequired,
+  closeForkPrompt: PropTypes.func.isRequired,
 
   // preferences
   fetchUserPreferences: PropTypes.func.isRequired,
@@ -417,6 +438,7 @@ function mapStateToProps(state) {
     name: state.user.name,
     userType: state.user.type,
     requiresGuardianConsent: state.user.requiresGuardianConsent,
+    isBrowsingPebl: state.user.isBrowsingPebl,
 
     isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
     isExamplesModalOpen: state.mainToolbar.isExamplesModalOpen,
@@ -431,6 +453,7 @@ function mapStateToProps(state) {
     isForgotModalOpen: state.mainToolbar.isForgotModalOpen,
     isResetModalOpen: state.mainToolbar.isResetModalOpen,
     isConfirmUserModalOpen: state.mainToolbar.isConfirmUserModalOpen,
+    isForkPromptOpen: state.mainToolbar.isForkPromptOpen,
 
     navigationContent: state.navigation.navigationContent
   };
