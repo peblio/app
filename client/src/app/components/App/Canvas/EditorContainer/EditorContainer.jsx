@@ -21,8 +21,7 @@ class EditorContainer extends React.Component {
     super(props);
     this.state = {
       isResizing: false,
-      isConsoleOpen: true,
-      isPreviewOpen: true
+      isConsoleOpen: true
     };
     this.startResize = this.startResize.bind(this);
     this.finishResize = this.finishResize.bind(this);
@@ -35,12 +34,14 @@ class EditorContainer extends React.Component {
     this.stopCodeRefresh = () => this.props.stopCodeRefresh(this.props.id);
     this.updateFile = (index, file) => this.props.updateFile(this.props.id, index, file);
     this.setCurrentFile = index => this.props.setCurrentFile(this.props.id, index);
+    this.toggleEditorLock = () => this.props.toggleEditorLock(this.props.id);
     this.clearConsoleOutput = () => this.props.clearConsoleOutput(this.props.id);
     this.updateConsoleOutput = (e) => {
       // UPDATE: 29-Oct-18 : Not using Javascript editor now, but keep in mind if added
       // Dec-17 : There's a memory leak in the Javascript editor. Watch the console after clicking Play.
       this.props.updateConsoleOutput(this.props.id, e);
     };
+    this.viewEditorPreview = () => this.props.viewEditorPreview(this.props.id);
   }
 
   toggleConsole = () => {
@@ -67,6 +68,7 @@ class EditorContainer extends React.Component {
         <div className={classNames(themeClass)} data-test={`code-editor-${this.props.editorMode}`}>
           <EditorToolbar
             addMediaFile={this.addMediaFile}
+            container="canvas"
             currentFile={this.props.currentFile}
             editorMode={this.props.editorMode}
             editorView={this.props.editorView}
@@ -78,7 +80,8 @@ class EditorContainer extends React.Component {
             setEditorView={this.setEditorView}
             startCodeRefresh={this.startCodeRefresh}
             stopCode={this.stopCode}
-            container="canvas"
+            toggleEditorLock={this.toggleEditorLock}
+            viewEditorPreview={this.viewEditorPreview}
           />
           {this.props.editorView === 'split' && (
             <SplitEditorContainer
@@ -121,7 +124,6 @@ class EditorContainer extends React.Component {
               files={this.props.files}
               isPlaying={this.props.isPlaying}
               isRefreshing={this.props.isRefreshing}
-              isPreviewOpen={this.state.isPreviewOpen}
               stopCodeRefresh={this.stopCodeRefresh}
               updateConsoleOutput={this.updateConsoleOutput}
               consoleOutputText={this.props.consoleOutputText}

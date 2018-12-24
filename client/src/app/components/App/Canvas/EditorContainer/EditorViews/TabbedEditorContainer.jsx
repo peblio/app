@@ -10,12 +10,13 @@ import * as editorActions from '../../../../../action/editors.js';
 
 class TabbedContainer extends React.Component {
   render() {
+    console.log(this.props.currentFile);
     return (
       <div className="editor__container">
 
         <div className="editor__sub-container">
-          {this.props.isPreviewOpen || (
-            <div className="editor__input">
+          {this.props.currentFile === -1 || (
+            <div className="editor__input editor__input-tabbed">
               <CodeEditor
                 currentFile={this.props.currentFile}
                 files={this.props.files}
@@ -23,7 +24,7 @@ class TabbedContainer extends React.Component {
               />
             </div>
           )}
-          {this.props.isPreviewOpen && (
+          {this.props.currentFile === -1 && (
             <div className={`editor__output ${this.props.isConsoleOpen ? 'editor__output--short' : ''}`}>
               <div
                 className={`editor__output-overlay

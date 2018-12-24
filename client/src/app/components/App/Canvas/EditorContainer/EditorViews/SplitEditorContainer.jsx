@@ -18,7 +18,7 @@ class SplitEditorContainer extends React.Component {
             onDragStarted={this.props.startResize}
             onDragFinished={(size) => { this.props.finishResize(); this.props.setInnerWidth(size); }}
           >
-            <div className="editor__input">
+            <div className="editor__input editor__input-split">
 
               <CodeEditor
                 currentFile={this.props.currentFile}

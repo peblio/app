@@ -179,7 +179,9 @@ class EditorToolbar extends React.Component {
             {this.state.isEditorViewOpen &&
               (
                 <EditorOptions
+                  setCurrentFile={this.props.setCurrentFile}
                   setEditorView={this.props.setEditorView}
+                  toggleEditorLock={this.props.toggleEditorLock}
                 />
               )
             }
@@ -194,9 +196,12 @@ class EditorToolbar extends React.Component {
             >
               <button
                 onClick={() => {
-                  this.props.setCurrentFile(index);
+                  this.props.viewEditorPreview();
                 }}
-                className="editor-toolbar__file-button"
+                className={
+                  `editor-toolbar__file-button
+                  ${(this.props.currentFile === -1) ? 'editor-toolbar__file-button--selected' : ''}`
+                }
                 data-test="editor-toolbar__file-name"
               >
               Preview
@@ -302,7 +307,8 @@ EditorToolbar.propTypes = {
   setEditorMode: PropTypes.func.isRequired,
   setEditorView: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
-  stopCode: PropTypes.func.isRequired
+  stopCode: PropTypes.func.isRequired,
+  viewEditorPreview: PropTypes.func.isRequired
 };
 
 export default EditorToolbar;

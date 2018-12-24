@@ -45,6 +45,15 @@ export function loadEditors(editors, editorIndex) {
   };
 }
 
+export function viewEditorPreview(id) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_EDITOR_PREVIEW,
+      id
+    });
+  };
+}
+
 /** CODE EDITOR */
 export function addCodeEditor(mode) {
   return (dispatch, getState) => {
@@ -203,13 +212,22 @@ export function updateTextBackColor(id, color) {
 }
 
 export function setEditorView(id, value) {
-  console.log(value);
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_EDITOR_VIEW,
       id,
       value
+    });
+  };
+}
+
+export function toggleEditorLock(id) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.TOGGLE_EDITOR_LOCK,
+      id
     });
   };
 }

@@ -16,7 +16,7 @@
 .editor__container {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 2*#{$editor-toolbar-height});
   border:1px solid $g5;
   box-sizing: border-box;
 }
@@ -31,6 +31,9 @@
   height: 100%;
   border-right: $small-border solid $gray;
   overflow:scroll;
+  &-tabbed {
+    width: 100%;
+  }
 }
 .editor__output-overlay {
   height: 100%;

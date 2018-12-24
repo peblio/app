@@ -12,20 +12,29 @@ class EditorOptions extends React.Component {
   render() {
     return (
       <section className="editor-options__container">
-        <button className="editor-options__button">
+        <button
+          className="editor-options__button"
+          onClick={this.props.toggleEditorLock}
+        >
           Locked
         </button>
         <ul className="editor-options__view-list">
           <li className="editor-options__view">
             <button
-              onClick={() => { this.props.setEditorView('split'); }}
+              onClick={() => {
+                this.props.setEditorView('split');
+                this.props.setCurrentFile(0);
+              }}
             >
               <EditorSplitSVG alt="split editor" />
             </button>
           </li>
           <li className="editor-options__view">
             <button
-              onClick={() => { this.props.setEditorView('tabbed'); }}
+              onClick={() => {
+                this.props.setEditorView('tabbed');
+                this.props.setCurrentFile(-1);
+              }}
             >
               <EditorTabbedSVG alt="tabbed editor" />
             </button>
@@ -37,7 +46,8 @@ class EditorOptions extends React.Component {
 }
 
 EditorOptions.propTypes = {
-  setEditorView: PropTypes.func.isRequired
+  setCurrentFile: PropTypes.func.isRequired,
+  setEditorView: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

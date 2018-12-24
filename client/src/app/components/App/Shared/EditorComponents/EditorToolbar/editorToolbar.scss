@@ -171,7 +171,7 @@
   &__file-name {
     display: none;
     position: absolute;
-    top: $editor-toolbar-height;
+    top: -2px;
     background: $g6;
     border: $light-black $small-border solid;
     width: fit-content;
@@ -238,8 +238,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 10%;
-  min-height: 60px;
   z-index: $z-index-layer-2;
 
     .editor-toolbar__button-container {
