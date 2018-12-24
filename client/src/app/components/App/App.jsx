@@ -238,16 +238,6 @@ class App extends React.Component {
         >
           <Login
             authLoadedPage={this.authLoadedPage}
-            loginName={this.props.loginName}
-            loginPassword={this.props.loginPassword}
-            updateUserName={this.props.updateUserName}
-            updateUserPassword={this.props.updateUserPassword}
-            setUserName={this.props.setUserName}
-            setUserType={this.props.setUserType}
-            closeLoginModal={this.props.closeLoginModal}
-            viewForgotModal={this.props.viewForgotModal}
-            isForgotModalOpen={this.props.isForgotModalOpen}
-            userType={this.props.userType}
           />
         </Modal>
 
@@ -279,17 +269,6 @@ class App extends React.Component {
         >
           <SignUp
             authLoadedPage={this.authLoadedPage}
-            loginName={this.props.loginName}
-            loginPassword={this.props.loginPassword}
-            updateUserName={this.props.updateUserName}
-            updateUserPassword={this.props.updateUserPassword}
-            requiresGuardianConsent={this.props.requiresGuardianConsent}
-            signUserUp={this.props.signUserUp}
-            setGuardianConsent={this.props.setGuardianConsent}
-            setUserName={this.props.setUserName}
-            setUserType={this.props.setUserType}
-            userType={this.props.userType}
-            closeSignUpModal={this.props.closeSignUpModal}
           />
         </Modal>
         <Modal
@@ -353,17 +332,10 @@ App.propTypes = {
   textHeights: PropTypes.shape({}).isRequired,
 
   canEdit: PropTypes.bool.isRequired,
-  loginName: PropTypes.string.isRequired,
-  loginPassword: PropTypes.string.isRequired,
 
   // user
   name: PropTypes.string.isRequired,
-  userType: PropTypes.string.isRequired,
-  setUserName: PropTypes.func.isRequired,
-  setUserType: PropTypes.func.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
-  requiresGuardianConsent: PropTypes.bool.isRequired,
-  setGuardianConsent: PropTypes.func.isRequired,
   isBrowsingPebl: PropTypes.bool.isRequired,
 
   isPagesModalOpen: PropTypes.bool.isRequired,
@@ -393,7 +365,6 @@ App.propTypes = {
   isShareModalOpen: PropTypes.bool.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeForgotModal: PropTypes.func.isRequired,
-  viewForgotModal: PropTypes.func.isRequired,
   closeResetModal: PropTypes.func.isRequired,
   viewResetModal: PropTypes.func.isRequired,
   closeConfirmUserModal: PropTypes.func.isRequired,
@@ -408,9 +379,6 @@ App.propTypes = {
   // preferences
   fetchUserPreferences: PropTypes.func.isRequired,
 
-  updateUserName: PropTypes.func.isRequired,
-  updateUserPassword: PropTypes.func.isRequired,
-  signUserUp: PropTypes.func.isRequired,
   fetchAllPages: PropTypes.func.isRequired,
 
   // navigation
@@ -433,11 +401,7 @@ function mapStateToProps(state) {
     textHeights: state.page.textHeights,
 
     canEdit: state.user.canEdit,
-    loginName: state.user.loginName,
-    loginPassword: state.user.loginPassword,
     name: state.user.name,
-    userType: state.user.type,
-    requiresGuardianConsent: state.user.requiresGuardianConsent,
     isBrowsingPebl: state.user.isBrowsingPebl,
 
     isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
