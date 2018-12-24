@@ -187,6 +187,22 @@ class EditorToolbar extends React.Component {
         </div>
 
         <ul className='editor-toolbar__files'>
+          {this.props.editorView === 'tabbed' && (
+            <li
+              key='preview'
+              className='editor-toolbar__file'
+            >
+              <button
+                onClick={() => {
+                  this.props.setCurrentFile(index);
+                }}
+                className="editor-toolbar__file-button"
+                data-test="editor-toolbar__file-name"
+              >
+              Preview
+              </button>
+            </li>
+          )}
           {
             this.props.files.map((file, index) => {
               const isImage = 'externalLink' in file;
