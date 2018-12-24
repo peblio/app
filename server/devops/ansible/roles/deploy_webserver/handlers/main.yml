@@ -1,6 +1,6 @@
 ---
 - name: restart pm2
-  command: "pm2 restart ecosystem.config.js --env {{ env }}"
+  command: "pm2 restart devops/ecosystem.config.js --env {{ env }} --update-env"
   args:
     chdir: "{{ ansible_env.HOME }}/{{ webserver_src_dir }}/server"
   environment:

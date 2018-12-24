@@ -2,9 +2,10 @@
   "name": "peblio-server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "AWS_PROFILE=peblio ./run_with_credstash.sh nodemon",
+    "start": "AWS_PROFILE=peblio ./scripts/run_with_credstash.sh node_modules/nodemon/bin/nodemon.js",
+    "test": "",
     "lint": "./node_modules/.bin/eslint ."
   },
   "author": "",

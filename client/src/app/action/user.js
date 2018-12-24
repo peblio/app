@@ -2,6 +2,14 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 
 import axios from '../utils/axios';
 
+export function setUserBrowsingPebl() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_USER_BROWSING_PEBL
+    });
+  };
+}
+
 export function setUserName(name) {
   return (dispatch) => {
     dispatch({

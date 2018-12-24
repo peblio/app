@@ -1,0 +1,56 @@
+@import 'variables';
+@import 'modal';
+.fork-prompt {
+  &__button-container {
+    display: flex;
+    justify-content: center;
+  }
+  &__button{
+    @extend %modal__button;
+    max-width: 40%;
+    color: $green;
+    background-color: $white;
+    border: $green solid $small-border;
+    &:hover {
+      color: $white;
+      background-color: $green;
+      border: $green solid $small-border;
+    }
+  }
+  &__text {
+    text-align: center;
+  }
+  &__checkbox {
+    display: block !important;
+  }
+  &__checkbox-container {
+    display: flex;
+    justify-content: center;
+    margin-top: $large-margin;
+  }
+  &__content{
+    @extend %modal__content;
+  }
+  &__title {
+    @extend %modal__title;
+    color: $black;
+    font-size: $h2-size;
+    line-height: $h2-line-height;
+    font-weight: 700;
+  }
+  &__subtitle {
+    @extend %modal__subtitle;
+  }
+  &__option {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: $medium-margin;
+    &-text {
+      margin: 0 $small-margin;
+    }
+  }
+}
+.fork-prompt__button+.fork-prompt__button {
+  margin-left: $large-margin;
+}

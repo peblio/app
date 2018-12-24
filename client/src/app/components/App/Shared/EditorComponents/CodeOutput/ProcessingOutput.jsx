@@ -37,7 +37,6 @@ class ProcessingOutput extends React.Component {
       </body>
     </html>`;
     sketchDoc = this.injectLocalFiles(sketchDoc);
-    console.log(sketchDoc);
     sketchDoc = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
     srcDoc.set(this.iframe, sketchDoc);
   }
@@ -74,7 +73,6 @@ class ProcessingOutput extends React.Component {
 
     const scriptOffs = [10, 'sketch.pde'];
     const injectScript = sketchDoc.createElement('script');
-    console.log(scriptOffs);
     if (scriptOffs) {
       injectScript.innerHTML =
     `CONSOLEOUTPUT.init(["${this.props.id}"]);
