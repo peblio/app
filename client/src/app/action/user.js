@@ -2,20 +2,10 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 
 import axios from '../utils/axios';
 
-export function updateUserName(event) {
+export function setUserBrowsingPebl() {
   return (dispatch) => {
     dispatch({
-      type: ActionTypes.UPDATE_USER_NAME,
-      event
-    });
-  };
-}
-
-export function updateUserPassword(event) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.UPDATE_USER_PASSWORD,
-      event
+      type: ActionTypes.SET_USER_BROWSING_PEBL
     });
   };
 }

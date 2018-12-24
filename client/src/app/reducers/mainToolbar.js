@@ -13,7 +13,8 @@ const initialState = {
   isShareModalOpen: false,
   isSignUpModalOpen: false,
   isWelcomeModalOpen: false,
-  isPreferencesPanelOpen: false
+  isPreferencesPanelOpen: false,
+  isForkPromptOpen: false
 };
 
 const mainToolbar = (state = initialState, action) => {
@@ -41,6 +42,16 @@ const mainToolbar = (state = initialState, action) => {
     case ActionTypes.CLOSE_EXAMPLES_MODAL:
       return Object.assign({}, state, {
         isExamplesModalOpen: false
+      });
+
+    case ActionTypes.VIEW_FORK_PROMPT:
+      return Object.assign({}, state, {
+        isForkPromptOpen: true
+      });
+
+    case ActionTypes.CLOSE_FORK_PROMPT:
+      return Object.assign({}, state, {
+        isForkPromptOpen: false
       });
 
     case ActionTypes.VIEW_PAGES_MODAL:

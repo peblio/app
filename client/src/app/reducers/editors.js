@@ -236,6 +236,25 @@ const editorsReducer = (state = initialState, action) => {
       editors[action.id].url = action.url;
       return { ...state, editors };
 
+    /** VIDEO */
+    case ActionTypes.ADD_VIDEO: {
+      const id = `editor-${state.editorIndex}`;
+      editors[id] = {
+        type: 'video',
+        id,
+        index: stack.length,
+        url: 'https://peblio.github.io/instructions/video.html'
+      };
+      stack.push(id);
+      const editorIndex = state.editorIndex + 1;
+      const currentWidget = id;
+      return { editors, editorIndex, currentWidget };
+    }
+
+    case ActionTypes.SET_VIDEO_URL:
+      editors[action.id].url = action.url;
+      return { ...state, editors };
+
     /** IMAGE */
     case ActionTypes.ADD_IMAGE: {
       const id = `editor-${state.editorIndex}`;

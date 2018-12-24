@@ -1,8 +1,8 @@
 import { Selector } from 'testcafe';
 
-import config from './config';
-import { studentUser } from './fixtures/user';
-import { seedDB, clearDB, hashUserPassword, login } from './helpers';
+import config from '../config';
+import { studentUser } from '../fixtures/user';
+import { seedDB, clearDB, hashUserPassword, login } from '../helpers';
 
 fixture('Logging in')
   .page(config.baseUrl)

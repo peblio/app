@@ -6,6 +6,7 @@ import axios from '../utils/axios';
 import history from '../utils/history';
 import { namespaceActionCreators } from '../utils/namespace-redux';
 import * as folderActions from './folders';
+import { viewForkPrompt } from './mainToolbar.js';
 
 export function setUnsavedChanges(value) {
   return (dispatch) => {
@@ -119,7 +120,7 @@ export function submitPage(parentId, title, heading, editors, editorIndex, layou
     } else {
       history.push(`/pebl/${id}`);
     }
-    if (type === 'fork') {
+    if (type === 'remix') {
       window.location.reload(true);
     }
   })
@@ -158,6 +159,7 @@ export function updatePage(id, title, heading, editors, editorIndex, layout, wor
 
 export function togglePreviewMode() {
   return (dispatch) => {
+    dispatch(viewForkPrompt());
     dispatch({
       type: ActionTypes.TOGGLE_PREVIEW_MODE
     });

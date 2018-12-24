@@ -75,6 +75,22 @@ export function closeExamplesModal() {
   };
 }
 
+export function viewForkPrompt() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_FORK_PROMPT
+    });
+  };
+}
+
+export function closeForkPrompt() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_FORK_PROMPT
+    });
+  };
+}
+
 export function viewLoginModal() {
   return (dispatch) => {
     dispatch({

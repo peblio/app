@@ -4,13 +4,19 @@ import CodeMirror from 'codemirror';
 import { connect } from 'react-redux';
 
 import 'codemirror/addon/comment/comment';
-import 'codemirror/addon/selection/active-line';
+import 'codemirror/addon/edit/closeBrackets';
+import 'codemirror/addon/hint/css-hint';
+import 'codemirror/addon/hint/html-hint';
+import 'codemirror/addon/hint/javascript-hint';
+import 'codemirror/addon/hint/show-hint';
+import 'codemirror/addon/hint/xml-hint';
 import 'codemirror/keymap/sublime';
 import 'codemirror/mode/python/python';
 import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/mode/css/css';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/clike/clike';
+import 'codemirror/addon/selection/active-line';
 
 import * as constants from '../../../../../constants/widgetConstants.js';
 
@@ -25,6 +31,7 @@ class CodeEditor extends React.Component {
       theme: constants.EDITOR_THEME[this.props.editorTheme],
       value: CodeMirror.Doc(file.content),
       mode: this.getFileMode(file.name),
+      extraKeys: { 'Ctrl-Space': 'autocomplete' },
       lineNumbers: true,
       autoCloseBrackets: true,
       inputStyle: 'contenteditable',
