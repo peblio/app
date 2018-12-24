@@ -119,7 +119,7 @@ export function submitPage(parentId, title, heading, editors, editorIndex, layou
     } else {
       history.push(`/pebl/${id}`);
     }
-    if (type === 'fork') {
+    if (type === 'remix') {
       window.location.reload(true);
     }
   })
