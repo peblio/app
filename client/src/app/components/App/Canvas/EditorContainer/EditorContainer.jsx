@@ -1,14 +1,10 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import SplitPane from 'react-split-pane';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import CodeEditor from '../../Shared/EditorComponents/CodeEditor/CodeEditor.jsx';
-import CodeOutput from '../../Shared/EditorComponents/CodeOutput/CodeOutput.jsx';
 import EditorToolbar from '../../Shared/EditorComponents/EditorToolbar/EditorToolbar.jsx';
-import ConsoleOutput from '../../Shared/EditorComponents/ConsoleOutput/ConsoleOutput.jsx';
 import * as editorActions from '../../../../action/editors.js';
 import SplitEditorContainer from './EditorViews/SplitEditorContainer.jsx';
 import TabbedEditorContainer from './EditorViews/TabbedEditorContainer.jsx';
@@ -99,13 +95,11 @@ class EditorContainer extends React.Component {
               id={this.props.id}
               clearConsoleOutput={this.clearConsoleOutput}
               editorMode={this.props.editorMode}
-              files={this.props.files}
               isPlaying={this.props.isPlaying}
               isRefreshing={this.props.isRefreshing}
               stopCodeRefresh={this.stopCodeRefresh}
               updateConsoleOutput={this.updateConsoleOutput}
               consoleOutputText={this.props.consoleOutputText}
-              isConsoleOpen={this.state.isConsoleOpen}
               toggleConsole={this.toggleConsole}
             />
           )}
@@ -123,13 +117,11 @@ class EditorContainer extends React.Component {
               id={this.props.id}
               clearConsoleOutput={this.clearConsoleOutput}
               editorMode={this.props.editorMode}
-              files={this.props.files}
               isPlaying={this.props.isPlaying}
               isRefreshing={this.props.isRefreshing}
               stopCodeRefresh={this.stopCodeRefresh}
               updateConsoleOutput={this.updateConsoleOutput}
               consoleOutputText={this.props.consoleOutputText}
-              isConsoleOpen={this.state.isConsoleOpen}
               toggleConsole={this.toggleConsole}
             />
           )}
@@ -159,14 +151,17 @@ EditorContainer.propTypes = {
   isRefreshing: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   playCode: PropTypes.func.isRequired,
+  removeEditorLock: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
+  setEditorLock: PropTypes.func.isRequired,
   setEditorView: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
-  updateFile: PropTypes.func.isRequired
+  updateFile: PropTypes.func.isRequired,
+  viewEditorPreview: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

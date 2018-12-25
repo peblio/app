@@ -3,10 +3,7 @@ import React from 'react';
 
 import CodeEditor from '../../../Shared/EditorComponents/CodeEditor/CodeEditor.jsx';
 import CodeOutput from '../../../Shared/EditorComponents/CodeOutput/CodeOutput.jsx';
-import EditorToolbar from '../../../Shared/EditorComponents/EditorToolbar/EditorToolbar.jsx';
 import ConsoleOutput from '../../../Shared/EditorComponents/ConsoleOutput/ConsoleOutput.jsx';
-import * as editorActions from '../../../../../action/editors.js';
-
 
 class TabbedContainer extends React.Component {
   render() {
@@ -67,9 +64,12 @@ TabbedContainer.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
+  isConsoleOpen: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isRefreshing: PropTypes.bool.isRequired,
+  isResizing: PropTypes.bool.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
+  toggleConsole: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired
 };

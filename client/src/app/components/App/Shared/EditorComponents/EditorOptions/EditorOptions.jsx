@@ -1,8 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import EditorSplitSVG from '../../../../../images/editor-split.svg';
 import EditorTabbedSVG from '../../../../../images/editor-tabbed.svg';
@@ -11,7 +9,6 @@ require('./EditorOptions.scss');
 
 class EditorOptions extends React.Component {
   render() {
-    console.log(this.props.editorView);
     const editorViewClass = classNames('editor-options__view-button', {
       'editor-options__view-button--disabled': (this.props.isLocked),
     });
@@ -21,7 +18,12 @@ class EditorOptions extends React.Component {
     const editorSplitViewClass = classNames({
       'editor-options__view-button--active': (this.props.editorView === 'split'),
     });
-
+    let editorLockButtonText;
+    if (this.props.isLocked) {
+      editorLockButtonText = 'Locked';
+    } else {
+      editorLockButtonText = 'Unlocked';
+    }
     return (
       <section className="editor-options__container">
         <button
@@ -34,7 +36,7 @@ class EditorOptions extends React.Component {
             }
           }}
         >
-          Locked
+          {editorLockButtonText}
         </button>
         <ul className="editor-options__view-list">
           <li className="editor-options__view">
@@ -68,8 +70,12 @@ class EditorOptions extends React.Component {
 }
 
 EditorOptions.propTypes = {
+  editorView: PropTypes.string.isRequired,
+  isLocked: PropTypes.bool.isRequired,
+  removeEditorLock: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
   setEditorView: PropTypes.func.isRequired,
+  setEditorLock: PropTypes.func.isRequired,
 };
 
 export default EditorOptions;

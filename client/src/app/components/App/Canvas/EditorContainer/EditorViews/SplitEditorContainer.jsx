@@ -70,11 +70,16 @@ SplitEditorContainer.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
+  finishResize: PropTypes.func.isRequired,
   innerWidth: PropTypes.number.isRequired,
+  isConsoleOpen: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isRefreshing: PropTypes.bool.isRequired,
+  isResizing: PropTypes.bool.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
+  startResize: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
+  toggleConsole: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired
 };

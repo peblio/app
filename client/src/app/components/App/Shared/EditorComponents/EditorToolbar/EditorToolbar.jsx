@@ -27,8 +27,8 @@ class EditorToolbar extends React.Component {
     };
   }
 
-  toggleEditorView = () => {
-    this.setState({ isEditorViewOpen: !this.state.isEditorViewOpen });
+  toggleEditorView = (prevState) => {
+    this.setState({ isEditorViewOpen: !prevState.isEditorViewOpen });
   }
 
   openFileUpload = () => {
@@ -303,11 +303,14 @@ EditorToolbar.propTypes = {
     content: PropTypes.string.isRequired
   })).isRequired,
   imageURL: PropTypes.string.isRequired,
+  isLocked: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   openShareWorkspace: PropTypes.func.isRequired,
   playCode: PropTypes.func.isRequired,
+  removeEditorLock: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
+  setEditorLock: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
   setEditorView: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
