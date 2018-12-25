@@ -175,8 +175,15 @@ const editorsReducer = (state = initialState, action) => {
       });
     }
 
-    case ActionTypes.TOGGLE_EDITOR_LOCK: {
-      editors[action.id].isLocked = !editors[action.id].isLocked;
+    case ActionTypes.SET_EDITOR_LOCK: {
+      editors[action.id].isLocked = true;
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
+    case ActionTypes.REMOVE_EDITOR_LOCK: {
+      editors[action.id].isLocked = false;
       return Object.assign({}, state, {
         editors
       });

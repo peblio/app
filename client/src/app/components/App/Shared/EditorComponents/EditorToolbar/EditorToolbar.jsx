@@ -179,9 +179,12 @@ class EditorToolbar extends React.Component {
             {this.state.isEditorViewOpen &&
               (
                 <EditorOptions
+                  editorView={this.props.editorView}
+                  isLocked={this.props.isLocked}
                   setCurrentFile={this.props.setCurrentFile}
                   setEditorView={this.props.setEditorView}
-                  toggleEditorLock={this.props.toggleEditorLock}
+                  setEditorLock={this.props.setEditorLock}
+                  removeEditorLock={this.props.removeEditorLock}
                 />
               )
             }
@@ -294,6 +297,7 @@ EditorToolbar.propTypes = {
   container: PropTypes.string.isRequired,
   currentFile: PropTypes.number.isRequired,
   editorMode: PropTypes.string.isRequired,
+  editorView: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired

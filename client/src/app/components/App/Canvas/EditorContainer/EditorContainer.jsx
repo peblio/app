@@ -34,7 +34,8 @@ class EditorContainer extends React.Component {
     this.stopCodeRefresh = () => this.props.stopCodeRefresh(this.props.id);
     this.updateFile = (index, file) => this.props.updateFile(this.props.id, index, file);
     this.setCurrentFile = index => this.props.setCurrentFile(this.props.id, index);
-    this.toggleEditorLock = () => this.props.toggleEditorLock(this.props.id);
+    this.setEditorLock = () => this.props.setEditorLock(this.props.id);
+    this.removeEditorLock = () => this.props.removeEditorLock(this.props.id);
     this.clearConsoleOutput = () => this.props.clearConsoleOutput(this.props.id);
     this.updateConsoleOutput = (e) => {
       // UPDATE: 29-Oct-18 : Not using Javascript editor now, but keep in mind if added
@@ -58,7 +59,6 @@ class EditorContainer extends React.Component {
 
 
   render() {
-    console.log(this.props.editorView);
     const themeClass = classNames('editor__total-container', {
       editor__dark: (this.props.editorTheme === 'dark'),
       editor__light: (this.props.editorTheme === 'light')
@@ -74,13 +74,15 @@ class EditorContainer extends React.Component {
             editorView={this.props.editorView}
             files={this.props.files}
             isPlaying={this.props.isPlaying}
+            isLocked={this.props.isLocked}
             name={this.props.name}
             playCode={this.playCode}
             setCurrentFile={this.setCurrentFile}
             setEditorView={this.setEditorView}
             startCodeRefresh={this.startCodeRefresh}
             stopCode={this.stopCode}
-            toggleEditorLock={this.toggleEditorLock}
+            setEditorLock={this.setEditorLock}
+            removeEditorLock={this.removeEditorLock}
             viewEditorPreview={this.viewEditorPreview}
           />
           {this.props.editorView === 'split' && (
@@ -152,6 +154,7 @@ EditorContainer.propTypes = {
     content: PropTypes.string.isRequired
   })).isRequired,
   innerWidth: PropTypes.number.isRequired,
+  isLocked: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isRefreshing: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,

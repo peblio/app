@@ -10,7 +10,6 @@ import * as editorActions from '../../../../../action/editors.js';
 
 class TabbedContainer extends React.Component {
   render() {
-    console.log(this.props.currentFile);
     return (
       <div className="editor__container">
 

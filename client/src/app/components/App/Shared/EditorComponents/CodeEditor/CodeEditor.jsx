@@ -21,7 +21,6 @@ require('../../../../../styles/base16-light.css');
 class CodeEditor extends React.Component {
   componentDidMount() {
     const file = this.props.files[this.props.currentFile];
-    console.log(this.props);
     this.cm = CodeMirror(this.codemirrorContainer, {
       theme: constants.EDITOR_THEME[this.props.editorTheme],
       value: CodeMirror.Doc(file.content),

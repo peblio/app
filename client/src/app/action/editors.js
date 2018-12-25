@@ -222,11 +222,25 @@ export function setEditorView(id, value) {
   };
 }
 
-export function toggleEditorLock(id) {
+export function setEditorLock(id) {
+  console.log('hello');
+  return (dispatch) => {
+    dispatch(setEditorView(id, 'tabbed'));
+    dispatch(setCurrentFile(id, -1));
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.SET_EDITOR_LOCK,
+      id
+    });
+  };
+}
+
+export function removeEditorLock(id) {
+  console.log('bye');
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
     dispatch({
-      type: ActionTypes.TOGGLE_EDITOR_LOCK,
+      type: ActionTypes.REMOVE_EDITOR_LOCK,
       id
     });
   };

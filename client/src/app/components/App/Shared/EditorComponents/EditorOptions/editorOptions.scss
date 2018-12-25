@@ -42,5 +42,44 @@
     margin: $small-margin auto;
     margin-bottom: $medium-margin;
     width: $editor-preferences-button;
+    color: $black;
+    background: $g6;
+    border: none;
+    padding: $small-padding;
+    text-transform: uppercase;
+    justify-content: center;
+    &:hover {
+      border: none;
+      background: $g6;
+    }
+  }
+  &__view-button {
+    border: none;
+    & svg {
+      stroke: $white;
+    }
+    &:hover {
+      border: none;
+      background: none;
+      & svg {
+        stroke: $green;
+      }
+    }
+    &--disabled {
+      cursor: default;
+      & svg {
+        stroke: $g3 !important;
+      }
+      &:hover {
+        & svg {
+          stroke: $g3 !important;
+        }
+      }
+    }
+    &--active {
+      & svg {
+        stroke: $green;
+      }
+    }
   }
 }
