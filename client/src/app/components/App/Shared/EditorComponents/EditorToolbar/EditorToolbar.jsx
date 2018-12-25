@@ -27,8 +27,9 @@ class EditorToolbar extends React.Component {
     };
   }
 
-  toggleEditorView = (prevState) => {
-    this.setState({ isEditorViewOpen: !prevState.isEditorViewOpen });
+  toggleEditorView = () => {
+    this.setState(prevState => (
+      { isEditorViewOpen: !prevState.isEditorViewOpen }));
   }
 
   openFileUpload = () => {

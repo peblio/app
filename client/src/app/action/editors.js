@@ -223,7 +223,6 @@ export function setEditorView(id, value) {
 }
 
 export function setEditorLock(id) {
-  console.log('hello');
   return (dispatch) => {
     dispatch(setEditorView(id, 'tabbed'));
     dispatch(setCurrentFile(id, -1));
@@ -236,7 +235,6 @@ export function setEditorLock(id) {
 }
 
 export function removeEditorLock(id) {
-  console.log('bye');
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
     dispatch({
