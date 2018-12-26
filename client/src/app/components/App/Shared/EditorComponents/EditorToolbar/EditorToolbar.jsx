@@ -167,28 +167,43 @@ class EditorToolbar extends React.Component {
               </button>
             )}
             {this.props.container === 'canvas' && (
-              <button
-                onClick={this.toggleEditorView}
-                className="editor-toolbar__button"
+              <div
+                onClick={(e) => {
+                  e.target.focus();
+                }}
+                role="presentation"
+                onBlur={() => {
+                  setTimeout(() => {
+                    if (this.state.isEditorViewOpen) {
+                      this.toggleEditorView();
+                    }
+                  }, 50);
+                }}
               >
-                <PreferencesSVG
-                  alt='view preferences'
-                  className="editor-toolbar__pref-svg"
-                />
-              </button>
+                <button
+                  onMouseDown={this.toggleEditorView}
+                  onKeyDown={this.toggleEditorView}
+                  className="editor-toolbar__button"
+                >
+                  <PreferencesSVG
+                    alt='view preferences'
+                    className="editor-toolbar__pref-svg"
+                  />
+                </button>
+                {this.state.isEditorViewOpen && (
+                  <EditorOptions
+                    editorView={this.props.editorView}
+                    isEditorViewOpen={this.state.isEditorViewOpen}
+                    isLocked={this.props.isLocked}
+                    removeEditorLock={this.props.removeEditorLock}
+                    setCurrentFile={this.props.setCurrentFile}
+                    setEditorView={this.props.setEditorView}
+                    setEditorLock={this.props.setEditorLock}
+                    toggleEditorView={this.toggleEditorView}
+                  />
+                )}
+              </div>
             )}
-            {this.state.isEditorViewOpen &&
-              (
-                <EditorOptions
-                  editorView={this.props.editorView}
-                  isLocked={this.props.isLocked}
-                  setCurrentFile={this.props.setCurrentFile}
-                  setEditorView={this.props.setEditorView}
-                  setEditorLock={this.props.setEditorLock}
-                  removeEditorLock={this.props.removeEditorLock}
-                />
-              )
-            }
           </div>
         </div>
 

@@ -26,23 +26,19 @@ class EditorOptions extends React.Component {
     }
     return (
       <section className="editor-options__container">
-        <button
-          className="editor-options__button"
-          onClick={() => {
-            if (!this.props.isLocked) {
-              this.props.setEditorLock();
-            } else {
-              this.props.removeEditorLock();
-            }
-          }}
-        >
-          {editorLockButtonText}
-        </button>
         <ul className="editor-options__view-list">
           <li className="editor-options__view">
             <button
               className={classNames(editorSplitViewClass, editorViewClass)}
-              onClick={() => {
+              onMouseDown={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                this.props.setEditorView('split');
+                this.props.setCurrentFile(0);
+              }}
+              onKeyDown={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
                 this.props.setEditorView('split');
                 this.props.setCurrentFile(0);
               }}
@@ -54,7 +50,15 @@ class EditorOptions extends React.Component {
           <li className="editor-options__view">
             <button
               className={classNames(editorTabbedViewClass, editorViewClass)}
-              onClick={() => {
+              onMouseDown={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                this.props.setEditorView('tabbed');
+                this.props.setCurrentFile(-1);
+              }}
+              onKeyDown={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
                 this.props.setEditorView('tabbed');
                 this.props.setCurrentFile(-1);
               }}
@@ -72,10 +76,8 @@ class EditorOptions extends React.Component {
 EditorOptions.propTypes = {
   editorView: PropTypes.string.isRequired,
   isLocked: PropTypes.bool.isRequired,
-  removeEditorLock: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
   setEditorView: PropTypes.func.isRequired,
-  setEditorLock: PropTypes.func.isRequired,
 };
 
 export default EditorOptions;
