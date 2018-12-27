@@ -23,6 +23,9 @@ class EditorOptions extends React.Component {
     e.preventDefault();
     this.props.setEditorView('split');
     this.props.setCurrentFile(0);
+    if (!this.props.isConsoleOpen) {
+      this.props.toggleConsole();
+    }
   }
 
   render() {
