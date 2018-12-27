@@ -69,6 +69,7 @@ class EditorContainer extends React.Component {
             editorMode={this.props.editorMode}
             editorView={this.props.editorView}
             files={this.props.files}
+            isConsoleOpen={this.state.isConsoleOpen}
             isPlaying={this.props.isPlaying}
             isLocked={this.props.isLocked}
             name={this.props.name}
@@ -78,6 +79,7 @@ class EditorContainer extends React.Component {
             startCodeRefresh={this.startCodeRefresh}
             stopCode={this.stopCode}
             setEditorLock={this.setEditorLock}
+            toggleConsole={this.toggleConsole}
             removeEditorLock={this.removeEditorLock}
             viewEditorPreview={this.viewEditorPreview}
           />
