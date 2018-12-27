@@ -17,7 +17,6 @@ class ConsoleOutput extends React.Component {
           <p className="console__heading"> Console </p>
           <button
             className="console__toggle"
-            onClick={this.props.toggleConsole}
           >
             {ReactHtmlParser(toggleButton)}
           </button>

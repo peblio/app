@@ -58,7 +58,9 @@ class ShareWorkspace extends React.Component {
     tempEditor.id = 'editor-1';
     tempEditor.index = 1;
     tempEditor.type = 'code';
+    tempEditor.editorView = 'tabbed';
     tempEditor.innerWidth = 200;
+    tempEditor.currentFile = -1;
     this.props.submitPage(
       `src-${this.props.id}`,
       this.title.value,
