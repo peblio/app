@@ -45,6 +45,8 @@ export function loadEditors(editors, editorIndex) {
   };
 }
 
+/** CODE EDITOR */
+
 export function viewEditorPreview(id) {
   return (dispatch) => {
     dispatch({
@@ -54,7 +56,6 @@ export function viewEditorPreview(id) {
   };
 }
 
-/** CODE EDITOR */
 export function addCodeEditor(mode) {
   return (dispatch, getState) => {
     const { editorsReducer } = getState();
