@@ -61,7 +61,10 @@ export function createUser(req, res) {
               msg: UserConst.SIGN_UP_FAILED
             });
           }
-          return sendSignUpConfirmationMail(updatedUser.email, [name], [token.token], req);
+          sendSignUpConfirmationMail(updatedUser.email, [name], [token.token]);
+          return res.status(200).send({
+            msg: UserConst.SIGN_UP_CHECK_MAIL, user
+          });
         });
     });
   });

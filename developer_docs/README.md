@@ -64,6 +64,14 @@ By default, these commands run the tests using a headless Firefox browser. Howev
 npm run test:all
 ```
 
+### Unit Tests For Server
+
+You can run the tests once by running
+```
+cd server 
+npm test
+```
+
 ## Git Workflow
 
 The expected git workflow for feature development is:
