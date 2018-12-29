@@ -12,7 +12,6 @@ mongoose.connect(process.env.MONGO_DB_PEBLIO, { useMongoClient: true })
     Object.values(editors).forEach((editor) => {
       if (editor.type === 'code') {
         editor.editorView = 'split';
-        editor.isLocked = false;
         pageHasEditor = true;
       }
     });

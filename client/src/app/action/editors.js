@@ -223,28 +223,6 @@ export function setEditorView(id, value) {
   };
 }
 
-export function setEditorLock(id) {
-  return (dispatch) => {
-    dispatch(setEditorView(id, 'tabbed'));
-    dispatch(setCurrentFile(id, -1));
-    dispatch(setUnsavedChanges(true));
-    dispatch({
-      type: ActionTypes.SET_EDITOR_LOCK,
-      id
-    });
-  };
-}
-
-export function removeEditorLock(id) {
-  return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
-    dispatch({
-      type: ActionTypes.REMOVE_EDITOR_LOCK,
-      id
-    });
-  };
-}
-
 /** QUESTION EDITOR */
 export function addQuestionEditor() {
   return (dispatch, getState) => {

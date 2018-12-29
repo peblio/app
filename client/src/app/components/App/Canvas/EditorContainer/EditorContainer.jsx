@@ -30,8 +30,6 @@ class EditorContainer extends React.Component {
     this.stopCodeRefresh = () => this.props.stopCodeRefresh(this.props.id);
     this.updateFile = (index, file) => this.props.updateFile(this.props.id, index, file);
     this.setCurrentFile = index => this.props.setCurrentFile(this.props.id, index);
-    this.setEditorLock = () => this.props.setEditorLock(this.props.id);
-    this.removeEditorLock = () => this.props.removeEditorLock(this.props.id);
     this.clearConsoleOutput = () => this.props.clearConsoleOutput(this.props.id);
     this.updateConsoleOutput = (e) => {
       // UPDATE: 29-Oct-18 : Not using Javascript editor now, but keep in mind if added
@@ -71,16 +69,13 @@ class EditorContainer extends React.Component {
             files={this.props.files}
             isConsoleOpen={this.state.isConsoleOpen}
             isPlaying={this.props.isPlaying}
-            isLocked={this.props.isLocked}
             name={this.props.name}
             playCode={this.playCode}
             setCurrentFile={this.setCurrentFile}
             setEditorView={this.setEditorView}
             startCodeRefresh={this.startCodeRefresh}
             stopCode={this.stopCode}
-            setEditorLock={this.setEditorLock}
             toggleConsole={this.toggleConsole}
-            removeEditorLock={this.removeEditorLock}
             viewEditorPreview={this.viewEditorPreview}
           />
           {this.props.editorView === 'split' && (
@@ -148,14 +143,11 @@ EditorContainer.propTypes = {
     content: PropTypes.string.isRequired
   })).isRequired,
   innerWidth: PropTypes.number.isRequired,
-  isLocked: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isRefreshing: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   playCode: PropTypes.func.isRequired,
-  removeEditorLock: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
-  setEditorLock: PropTypes.func.isRequired,
   setEditorView: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,

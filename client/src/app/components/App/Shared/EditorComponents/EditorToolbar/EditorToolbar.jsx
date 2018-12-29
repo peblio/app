@@ -195,11 +195,8 @@ class EditorToolbar extends React.Component {
                     editorView={this.props.editorView}
                     isConsoleOpen={this.props.isConsoleOpen}
                     isEditorViewOpen={this.state.isEditorViewOpen}
-                    isLocked={this.props.isLocked}
-                    removeEditorLock={this.props.removeEditorLock}
                     setCurrentFile={this.props.setCurrentFile}
                     setEditorView={this.props.setEditorView}
-                    setEditorLock={this.props.setEditorLock}
                     toggleConsole={this.props.toggleConsole}
                     toggleEditorView={this.toggleEditorView}
                   />
@@ -322,14 +319,11 @@ EditorToolbar.propTypes = {
   })).isRequired,
   imageURL: PropTypes.string.isRequired,
   isConsoleOpen: PropTypes.bool.isRequired,
-  isLocked: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   openShareWorkspace: PropTypes.func.isRequired,
   playCode: PropTypes.func.isRequired,
-  removeEditorLock: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
-  setEditorLock: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
   setEditorView: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,

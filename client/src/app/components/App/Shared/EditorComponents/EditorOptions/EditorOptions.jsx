@@ -29,9 +29,7 @@ class EditorOptions extends React.Component {
   }
 
   render() {
-    const editorViewClass = classNames('editor-options__view-button', {
-      'editor-options__view-button--disabled': (this.props.isLocked),
-    });
+    const editorViewClass = classNames('editor-options__view-button');
     const editorTabbedViewClass = classNames({
       'editor-options__view-button--active': (this.props.editorView === 'tabbed'),
     });
@@ -51,7 +49,6 @@ class EditorOptions extends React.Component {
               onKeyDown={(e) => {
                 this.setSplitView(e);
               }}
-              disabled={this.props.isLocked}
             >
               <EditorSplitSVG alt="split editor" />
             </button>
@@ -65,7 +62,6 @@ class EditorOptions extends React.Component {
               onKeyDown={(e) => {
                 this.setTabbedView(e);
               }}
-              disabled={this.props.isLocked}
             >
               <EditorTabbedSVG alt="tabbed editor" />
             </button>
@@ -79,7 +75,6 @@ class EditorOptions extends React.Component {
 EditorOptions.propTypes = {
   editorView: PropTypes.string.isRequired,
   isConsoleOpen: PropTypes.bool.isRequired,
-  isLocked: PropTypes.bool.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
   setEditorView: PropTypes.func.isRequired,
   toggleConsole: PropTypes.func.isRequired

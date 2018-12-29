@@ -118,7 +118,6 @@ class Canvas extends React.Component {
             editorMode={editor.editorMode}
             files={editor.files}
             innerWidth={editor.innerWidth}
-            isLocked={editor.isLocked}
             isPlaying={editor.isPlaying && isVisible}
             isRefreshing={editor.isRefreshing}
             editorView={editor.editorView}

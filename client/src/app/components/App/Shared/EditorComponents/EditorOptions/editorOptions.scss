@@ -65,17 +65,6 @@
         stroke: $green;
       }
     }
-    &--disabled {
-      cursor: default;
-      & svg {
-        stroke: $g3 !important;
-      }
-      &:hover {
-        & svg {
-          stroke: $g3 !important;
-        }
-      }
-    }
     &--active {
       & svg {
         stroke: $green;
