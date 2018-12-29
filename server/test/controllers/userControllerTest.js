@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { createUser } from '../../src/controllers/userControllerNew';
 import { assert, spy } from 'sinon';
-import { Promise } from 'mongoose';
+const stubTransport = require('nodemailer-stub-transport');
 const sandbox = require('sinon').sandbox.create();
 const User = require('../../src/models/user.js');
 const Token = require('../../src/models/token.js');
@@ -28,7 +28,6 @@ describe('userControllerNew', function () {
                 json: spy(),
                 status: createResponseWithStatusCode(200)
             };
-
         });
 
         afterEach(function () {
@@ -99,6 +98,19 @@ describe('userControllerNew', function () {
             assert.calledOnce(saveSpy);
             assert.calledOnce(tokenSaveSpy);
             assertSendWasCalledWith(signUpFailedMessage);
+        });
+
+        it('shall save non verified user and send email', function () {
+            findOneSpy = sandbox.stub(User, 'findOne').yields(null, null);
+            saveSpy = sandbox.stub(User.prototype, 'save').yields(null, userToBeSaved);
+            tokenSaveSpy = sandbox.stub(Token.prototype, 'save').yields(null);
+            response.status = createResponseWithStatusCode(200);
+
+            createUser(request, response);
+
+            assertFindOneWasCalledWithUsername();
+            assert.calledOnce(saveSpy);
+            assert.calledOnce(tokenSaveSpy);
         });
 
         function getUserToBeSaved() {
