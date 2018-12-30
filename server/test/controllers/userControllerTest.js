@@ -139,9 +139,6 @@ describe('userControllerNew', function () {
         var next;
         var findSpy;
         var passportAuthenticateStub;
-        var saveSpy;
-        var userToLogin;
-        var body;
 
         beforeEach(function () {
             body = getUserToLogin();
