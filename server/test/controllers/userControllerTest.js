@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { createUser, loginUser } from '../../src/controllers/userControllerNew';
+import { createUser, loginUser, confirmUser } from '../../src/controllers/userControllerNew';
 import { assert, spy } from 'sinon';
 const sandbox = require('sinon').sandbox.create();
 const User = require('../../src/models/user.js');
@@ -15,12 +15,12 @@ const loginFailedMessage = {
 var request;
 var response;
 var body;
+var findOneSpy;
+var saveSpy;
 
 describe('userControllerNew', function () {
     describe('createUser', function () {
-        var findOneSpy;
         var tokenSaveSpy;
-        var saveSpy;
         var userToBeSaved;
 
         beforeEach(function () {
@@ -117,7 +117,6 @@ describe('userControllerNew', function () {
             assert.calledOnce(tokenSaveSpy);
         });
 
-
         function assertUserSavedWithCorrectValues(userSaved) {
             expect(userSaved.name).to.be.equal(userToBeSaved.name);
             expect(userSaved.email).to.be.equal(userToBeSaved.email);
@@ -127,12 +126,6 @@ describe('userControllerNew', function () {
             expect(userSaved.type).to.be.equal("student");
             expect(userSaved.password).to.be.equal("IAmNotTellingYouThis");
         }
-
-        function assertFindOneWasCalledWithUsername() {
-            assert.calledOnce(findOneSpy);
-            assert.calledWith(findOneSpy, { name: "Bla" });
-        }
-
     });
 
     describe('loginUser', function () {
@@ -261,6 +254,127 @@ describe('userControllerNew', function () {
         };
 
     });
+
+    describe('confirmUser', function () {
+        var tokenRetrieveSpy;
+
+        beforeEach(function () {
+            body = getBodyToConfirmUser();
+            request = { body };
+            response = {
+                send: spy(),
+                json: spy(),
+                status: createResponseWithStatusCode(200)
+            };
+        });
+
+        afterEach(function () {
+            sandbox.restore();
+        });
+
+        it('shall return 400 when token not sent', function () {
+            request.body = {};
+            response.status = createResponseWithStatusCode(400);
+
+            confirmUser(request, response);
+
+            assertSendWasCalledWith({ msg: '' });
+        });
+
+        it('shall not confirm user if token retrieve error', function () {
+            response.status = createResponseWithStatusCode(400);
+            tokenRetrieveSpy = sandbox.stub(Token, 'findOne').yields({ error: "Could not retrieve token" });
+
+            confirmUser(request, response);
+
+            assertSendWasCalledWith({ msg: '' });
+            assertTokenFindWasCalled();
+        });
+
+        it('shall not confirm user if token not found or has expired', function () {
+            response.status = createResponseWithStatusCode(400);
+            tokenRetrieveSpy = sandbox.stub(Token, 'findOne').yields(null, null);
+
+            confirmUser(request, response);
+
+            assertSendWasCalledWith({ msg: "We were unable to find a valid token. Your token my have expired." });
+            assertTokenFindWasCalled();
+        });
+
+        it('shall not confirm user if token found but user retrieve error', function () {
+            response.status = createResponseWithStatusCode(400);
+            tokenRetrieveSpy = sandbox.stub(Token, 'findOne').yields(null, { token: "token", _userId: getBody().mail });
+            findOneSpy = sandbox.stub(User, 'findOne').yields({ err: "Error retrieving user" }, null);
+
+            confirmUser(request, response);
+
+            assertSendWasCalledWith({ msg: '' });
+            assertTokenFindWasCalled();
+            assertFindOneWasCalledWithId();
+        });
+
+        it('shall not confirm user if token found but user not found', function () {
+            response.status = createResponseWithStatusCode(400);
+            tokenRetrieveSpy = sandbox.stub(Token, 'findOne').yields(null, { token: "token", _userId: getBody().mail });
+            findOneSpy = sandbox.stub(User, 'findOne').yields(null, null);
+
+            confirmUser(request, response);
+
+            assertSendWasCalledWith({ msg: "We were unable to find a user for this token." });
+            assertTokenFindWasCalled();
+            assertFindOneWasCalledWithId();
+        });
+
+        it('shall not confirm user if token already verified', function () {
+            response.status = createResponseWithStatusCode(400);
+            tokenRetrieveSpy = sandbox.stub(Token, 'findOne').yields(null, { token: "token", _userId: getBody().mail });
+            findOneSpy = sandbox.stub(User, 'findOne').yields(null, { isVerified: true });
+
+            confirmUser(request, response);
+
+            assertSendWasCalledWith({ msg: "This account has already been verified. Please log in." });
+            assertTokenFindWasCalled();
+            assertFindOneWasCalledWithId();
+        });
+
+        it('shall not confirm if user update fails while verifying', function () {
+            response.status = createResponseWithStatusCode(500);
+            tokenRetrieveSpy = sandbox.stub(Token, 'findOne').yields(null, { token: "token", _userId: getBody().mail });
+            var retrievedUser = getUser();
+            saveSpy = sandbox.stub(User.prototype, 'save').yields({ err: "Could not update user" }, null);
+            retrievedUser.save = saveSpy;
+            findOneSpy = sandbox.stub(User, 'findOne').yields(null, retrievedUser);
+
+            confirmUser(request, response);
+
+            assertSendWasCalledWith(signUpFailedMessage);
+            assertTokenFindWasCalled();
+            assertFindOneWasCalledWithId();
+            assert.calledOnce(saveSpy);
+        });
+
+        it('shall confirm user token and persist as verified user', function () {
+            response.status = createResponseWithStatusCode(200);
+            tokenRetrieveSpy = sandbox.stub(Token, 'findOne').yields(null, { token: "token", _userId: getBody().mail });
+            var retrievedUser = getUser();
+            saveSpy = sandbox.stub(User.prototype, 'save').yields(null, null);
+            retrievedUser.save = saveSpy;
+            findOneSpy = sandbox.stub(User, 'findOne').yields(null, retrievedUser);
+
+            confirmUser(request, response);
+
+            assertSendWasCalledWith({ msg: "Sign up complete! Please log in." });
+            assertTokenFindWasCalled();
+            assertFindOneWasCalledWithId();
+            assert.calledOnce(saveSpy);
+        });
+
+        function assertTokenFindWasCalled() {
+            assert.calledOnce(tokenRetrieveSpy);
+            assert.calledWith(tokenRetrieveSpy, { token: "token" });
+        };
+
+    });
 });
 
 function getBody() {
@@ -273,11 +387,28 @@ function getBody() {
     };
 };
 
+function getUser() {
+    return {
+        email: "bla@gmail.com",
+        name: "Bla",
+        type: "teacher",
+        password: "IAmNotTellingYouThis",
+        requiresGuardianConsent: false,
+        isVerified: false
+    };
+};
+
 function getUserToLogin() {
     const body = getBody();
     return {
         name: body.mail,
         password: body.password,
+    };
+};
+
+function getBodyToConfirmUser() {
+    return {
+        token: "token"
     };
 };
 
@@ -299,8 +430,6 @@ function assertJsonWasCalledWith(msg) {
     assert.calledWith(response.json, msg);
 };
 
-
-
 function createResponseWithStatusCode(statusCode) {
     return function (responseStatus) {
         expect(responseStatus).to.be.equal(statusCode);
@@ -312,3 +441,13 @@ function assertSendWasCalledWith(msg) {
     assert.calledOnce(response.send);
     assert.calledWith(response.send, msg);
 };
+
+function assertFindOneWasCalledWithUsername() {
+    assert.calledOnce(findOneSpy);
+    assert.calledWith(findOneSpy, { name: "Bla" });
+}
+
+function assertFindOneWasCalledWithId() {
+    assert.calledOnce(findOneSpy);
+    assert.calledWith(findOneSpy, { _id: "bla@gmail.com" });
+}

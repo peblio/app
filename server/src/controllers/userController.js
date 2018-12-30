@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 const sgTransport = require('nodemailer-sendgrid-transport');
 const shortid = require('shortid');
 const { OAuth2Client } = require('google-auth-library');
-const { createUser, loginUser } = require('./userControllerNew.js');
+const { createUser, loginUser, confirmUser } = require('./userControllerNew.js');
 
 const User = require('../models/user.js');
 const Token = require('../models/token.js');
@@ -144,48 +144,6 @@ function resetPassword(req, res) {
       });
     }
   );
-}
-
-function confirmUser(req, res) {
-  if (!req.body.token) {
-    return res.status(400).send({
-      msg: ''
-    });
-  }
-  return Token.findOne({ token: req.body.token }, (tokenFindError, token) => {
-    if (!token) {
-      return res.status(400).send({
-        msg: UserConst.CONFIRM_TOKEN_EXPIRED
-      });
-    }
-
-    // If we found a token, find a matching user
-    return User.findOne({ _id: token._userId }, (userFindError, user) => {
-      if (!user) {
-        return res.status(400).send({
-          msg: UserConst.CONFIRM_NO_USER
-        });
-      }
-      if (user.isVerified) {
-        return res.status(400).send({
-          msg: UserConst.CONFIRM_USER_ALREADY_VERIFIED
-        });
-      }
-
-      // Verify and save the user
-      user.isVerified = true;
-      return user.save((updateUserError) => {
-        if (updateUserError) {
-          return res.status(500).send({
-            msg: UserConst.SIGN_UP_FAILED
-          });
-        }
-        return res.status(200).send({
-          msg: UserConst.CONFIRM_USER_VERIFIED
-        });
-      });
-    });
-  });
 }
 
 function resendConfirmUser(req, res) {

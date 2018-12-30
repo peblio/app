@@ -57,16 +57,16 @@ export function createUser(req, res) {
         token: shortid.generate()
       });
       return token.save(function (updateTokenError) {
-          if (updateTokenError) {
-            return res.status(500).send({
-              msg: UserConst.SIGN_UP_FAILED
-            });
-          }
-          sendSignUpConfirmationMail(updatedUser.email, [name], [token.token]);
-          return res.status(200).send({
-            msg: UserConst.SIGN_UP_CHECK_MAIL, user
+        if (updateTokenError) {
+          return res.status(500).send({
+            msg: UserConst.SIGN_UP_FAILED
           });
+        }
+        sendSignUpConfirmationMail(updatedUser.email, [name], [token.token]);
+        return res.status(200).send({
+          msg: UserConst.SIGN_UP_CHECK_MAIL, user
         });
+      });
     });
   });
 }
@@ -92,13 +92,13 @@ export function loginUser(req, res, next) {
         return res.status(401).send({
           msg: UserConst.LOGIN_FAILED
         });
-      } 
+      }
       if (!user.isVerified) {
         return res.status(401).send({
           msg: UserConst.LOGIN_USER_NOT_VERIFIED
         });
       }
-  
+
       return req.login(user, (loginError) => {
         if (loginError) {
           return res.status(401).send({
@@ -112,7 +112,59 @@ export function loginUser(req, res, next) {
       });
     })(req, res, next);
   });
-  
+
+}
+
+export function confirmUser(req, res) {
+  if (!req.body.token) {
+    return res.status(400).send({
+      msg: ''
+    });
+  }
+  return Token.findOne({ token: req.body.token }, (tokenFindError, token) => {
+    if (tokenFindError) {
+      return res.status(400).send({
+        msg: ''
+      });
+    }
+    if (!token) {
+      return res.status(400).send({
+        msg: UserConst.CONFIRM_TOKEN_EXPIRED
+      });
+    }
+
+    // If we found a token, find a matching user
+    return User.findOne({ _id: token._userId }, (userFindError, user) => {
+      if (userFindError) {
+        return res.status(400).send({
+          msg: ''
+        });
+      }
+      if (!user) {
+        return res.status(400).send({
+          msg: UserConst.CONFIRM_NO_USER
+        });
+      }
+      if (user.isVerified) {
+        return res.status(400).send({
+          msg: UserConst.CONFIRM_USER_ALREADY_VERIFIED
+        });
+      }
+
+      // Verify and save the user
+      user.isVerified = true;
+      return user.save((updateUserError) => {
+        if (updateUserError) {
+          return res.status(500).send({
+            msg: UserConst.SIGN_UP_FAILED
+          });
+        }
+        return res.status(200).send({
+          msg: UserConst.CONFIRM_USER_VERIFIED
+        });
+      });
+    });
+  });
 }
 
 function sendSignUpConfirmationMail(email, users, tokens) {
