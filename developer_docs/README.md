@@ -11,7 +11,7 @@ Thank you for wanting to contribute to Peblio. In this document, you will find i
 
 ## Setup
 
-1. Fork this repository.
+1. Remix this repository.
 2. Clone the forked repository and cd into it.
 3. (Optional) Create a [Python 2 virtualenv](https://docs.python-guide.org/dev/virtualenvs/#lower-level-virtualenv) and activate it.
 4. ```pip install -r requirements.txt```

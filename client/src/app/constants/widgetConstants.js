@@ -12,11 +12,13 @@ export const IFRAME_MIN_HEIGHT = 6;
 
 export const CODE_DEFAULT_WIDTH = 30;
 export const CODE_MIN_WIDTH = 13;
+export const CODE_DEFAULT_HEIGHT = 11;
 export const CODE_MIN_HEIGHT = 11;
 export const CODE_DEFAULT_INSIDE_WIDTH = 400;
 
 export const QUESTION_DEFAULT_WIDTH = 15;
 export const QUESTION_MIN_WIDTH = 6;
+export const QUESTION_DEFAULT_HEIGHT = 5;
 export const QUESTION_MIN_HEIGHT = 5;
 export const QUESION_DEFAULT_INNER_HEIGHT = 30;
 export const QUESION_MIN_INNER_HEIGHT = 30;
@@ -27,6 +29,11 @@ export const IMAGE_MIN_WIDTH = 3;
 export const IMAGE_MIN_HEIGHT = 3;
 export const IMAGE_RESPONSIVE_TRIGGER_HEIGHT = 200;
 export const IMAGE_RESPONSIVE_TRIGGER_WIDTH = 160;
+
+export const VIDEO_DEFAULT_WIDTH = 15;
+export const VIDEO_DEFAULT_HEIGHT = 12;
+export const VIDEO_MIN_WIDTH = 8;
+export const VIDEO_MIN_HEIGHT = 6;
 
 export const EDITOR_THEME = {
   light: 'base16-light',

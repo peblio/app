@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import axios from '../../../../utils/axios';
+import { closeSignUpModal } from '../../../../action/mainToolbar.js';
+import { setUserName,
+  setUserType,
+  setGuardianConsent } from '../../../../action/user.js';
 import GoogleLoginButton from '../../Shared/GoogleLoginButton/GoogleLoginButton.jsx';
 
 require('./signup.scss');
@@ -102,6 +108,7 @@ class SignUp extends React.Component {
                             required
                             type="radio"
                             className="signup-modal__radio"
+                            data-test="signup-modal__radio-student"
                             name="type"
                             value="student"
                             id="student"
@@ -121,6 +128,7 @@ class SignUp extends React.Component {
                           <input
                             type="radio"
                             className="signup-modal__radio"
+                            data-test="signup-modal__radio-teacher"
                             name="type"
                             value="teacher"
                             onChange={(e) => {
@@ -163,6 +171,7 @@ class SignUp extends React.Component {
                               required
                               type="radio"
                               className="signup-modal__checkbox"
+                              data-test="signup-modal__checkbox-above-13"
                               name="studentAge"
                               value="above13"
                               onClick={(e) => {
@@ -223,6 +232,7 @@ class SignUp extends React.Component {
                     required
                     type="checkbox"
                     className="signup-modal__checkbox"
+                    data-test="signup-modal__checkbox"
                     name="checkbox"
                     value="check"
                     id="agree"
@@ -257,6 +267,7 @@ class SignUp extends React.Component {
                   <div className="signup-modal__buttonholder">
                     <button
                       className="signup-modal__button"
+                      data-test="signup-modal__button-next"
                       type="submit"
                       value="Submit"
                     >
@@ -294,6 +305,7 @@ class SignUp extends React.Component {
                       <input
                         required
                         className="signup-modal__input"
+                        data-test="signup-modal__input-email"
                         id="signup-modal-mail"
                         placeholder="email"
                         ref={(userMail) => { this.userMail = userMail; }}
@@ -305,6 +317,7 @@ class SignUp extends React.Component {
                     <input
                       required
                       className="signup-modal__input"
+                      data-test="signup-modal__input-name"
                       id="signup-modal-name"
                       placeholder="username"
                       ref={(userName) => { this.userName = userName; }}
@@ -315,6 +328,7 @@ class SignUp extends React.Component {
                     <input
                       required
                       className="signup-modal__input"
+                      data-test="signup-modal__input-pswd"
                       id="signup-modal-password"
                       placeholder="password"
                       ref={(password) => { this.password = password; }}
@@ -324,6 +338,7 @@ class SignUp extends React.Component {
                       required
                       id="signup-modal-confirm"
                       className="signup-modal__input"
+                      data-test="signup-modal__input-pswd-confirm"
                       placeholder="retype password"
                       type="password"
                       ref={(passwordConfirm) => { this.passwordConfirm = passwordConfirm; }}
@@ -332,6 +347,7 @@ class SignUp extends React.Component {
                   <div className="signup-modal__buttonholder">
                     <button
                       className="signup-modal__button"
+                      data-test="signup-modal__button-submit"
                       type="submit"
                       value="Submit"
                     >
@@ -365,4 +381,18 @@ SignUp.propTypes = {
   userType: PropTypes.string.isRequired
 };
 
-export default SignUp;
+
+function mapStateToProps(state) {
+  return {
+    requiresGuardianConsent: state.user.requiresGuardianConsent,
+    userType: state.user.type
+  };
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  closeSignUpModal,
+  setGuardianConsent,
+  setUserName,
+  setUserType
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

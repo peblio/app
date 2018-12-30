@@ -53,7 +53,7 @@ class MainToolbar extends React.Component {
     const prefButtonClassName = classNames('main-toolbar__pref', {
       'main-toolbar__pref--open': this.props.isPreferencesPanelOpen
     });
-    let saveButtonText = 'Fork';
+    let saveButtonText = 'Remix';
     if (this.props.name) { // user is logged in
       if (this.props.canEdit) { // it is users sketch
         if (this.props.unsavedChanges) { // there are some unsaved changes
@@ -67,12 +67,12 @@ class MainToolbar extends React.Component {
           }
         }
       } else { // it is not users sketch
-        saveButtonText = 'Fork';
+        saveButtonText = 'Remix';
       }
     } else { // user is not logged in
       if (this.props.projectID()) { // eslint-disable-line
         // it is not a new sketch
-        saveButtonText = 'Fork';
+        saveButtonText = 'Remix';
       } else { // it is a new sketch
         saveButtonText = 'Save';
       }

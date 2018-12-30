@@ -3,14 +3,13 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 const initialState = {
   name: '',
   blurb: 'Hi! I <3 CS',
-  loginName: '',
-  loginPassword: '',
   canView: true,
   canEdit: true,
   image: 'https://placekitten.com/300/300',
   type: '',
   requiresGuardianConsent: false,
-  guardianConsentedAt: ''
+  guardianConsentedAt: '',
+  isBrowsingPebl: false,
 };
 
 const user = (state = initialState, action) => {
@@ -23,14 +22,9 @@ const user = (state = initialState, action) => {
       };
     }
 
-    case ActionTypes.UPDATE_USER_NAME:
+    case ActionTypes.SET_USER_BROWSING_PEBL:
       return Object.assign({}, state, {
-        loginName: action.event.target.value
-      });
-
-    case ActionTypes.UPDATE_USER_PASSWORD:
-      return Object.assign({}, state, {
-        loginPassword: action.event.target.value
+        isBrowsingPebl: true
       });
 
     case ActionTypes.SET_USER_NAME:

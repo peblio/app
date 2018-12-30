@@ -1,5 +1,6 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 import { setUnsavedChanges } from './page.js';
+import { viewForkPrompt } from './mainToolbar.js';
 
 /** ALL */
 export function setCurrentWidget(id) {
@@ -121,6 +122,7 @@ export function clearConsoleOutput(id) {
 
 export function updateFile(id, index, content) {
   return (dispatch) => {
+    dispatch(viewForkPrompt());
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.UPDATE_FILE,
@@ -243,6 +245,7 @@ export function updateQuestionChange(id, text) {
 
 export function updateAnswerChange(id, text) {
   return (dispatch) => {
+    dispatch(viewForkPrompt());
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.UPDATE_ANSWER_CHANGE,
@@ -275,6 +278,35 @@ export function setIframeURL(id, url) {
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_IFRAME_URL,
+      id,
+      url
+    });
+  };
+}
+
+/** VIDEO */
+export function addVideo() {
+  return (dispatch, getState) => {
+    const { editorsReducer } = getState();
+    const currentId = editorsReducer.currentWidget;
+    const newEditorId = `editor-${editorsReducer.editorIndex}`;
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.ADD_VIDEO
+    });
+    dispatch({
+      type: ActionTypes.ADD_EDITOR,
+      currentId,
+      newEditorId
+    });
+  };
+}
+
+export function setVideoURL(id, url) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.SET_VIDEO_URL,
       id,
       url
     });

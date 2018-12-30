@@ -8,6 +8,7 @@ import * as pageDefaults from '../../constants/pageConstants';
 
 import ConfirmUser from './Modal/ConfirmUser/ConfirmUser.jsx';
 import ExamplesModal from './Modal/ExamplesModal/ExamplesModal.jsx';
+import ForkPrompt from './Modal/ForkPrompt/ForkPrompt.jsx';
 import Login from './Modal/Login/Login.jsx';
 import Modal from './Modal/Modal.jsx';
 import PasswordForgot from './Modal/PasswordForgot/PasswordForgot.jsx';
@@ -79,6 +80,11 @@ class App extends React.Component {
       localStorage.setItem(process.env.LOCALSTORAGE_VARIABLE, 1);
       this.props.viewWelcomeModal();
     }
+  }
+
+  showForkPromptPreference=() => {
+    const getForkPromptPreference = localStorage.getItem(process.env.LOCALSTORAGE_FORK_PROMPT);
+    return !(getForkPromptPreference === 'suppress');
   }
 
   projectID = () => {
@@ -171,7 +177,7 @@ class App extends React.Component {
           this.props.workspace
         );
       } else {
-        // this is for fork and save
+        // this is for remix and save
         this.props.submitPage(
           this.props.id,
           `${this.props.pageTitle}-copy`,
@@ -179,7 +185,7 @@ class App extends React.Component {
           this.props.editors,
           this.props.editorIndex,
           this.props.layout,
-          'fork',
+          'remix',
           this.props.workspace,
           true
         );
@@ -232,16 +238,6 @@ class App extends React.Component {
         >
           <Login
             authLoadedPage={this.authLoadedPage}
-            loginName={this.props.loginName}
-            loginPassword={this.props.loginPassword}
-            updateUserName={this.props.updateUserName}
-            updateUserPassword={this.props.updateUserPassword}
-            setUserName={this.props.setUserName}
-            setUserType={this.props.setUserType}
-            closeLoginModal={this.props.closeLoginModal}
-            viewForgotModal={this.props.viewForgotModal}
-            isForgotModalOpen={this.props.isForgotModalOpen}
-            userType={this.props.userType}
           />
         </Modal>
 
@@ -273,17 +269,6 @@ class App extends React.Component {
         >
           <SignUp
             authLoadedPage={this.authLoadedPage}
-            loginName={this.props.loginName}
-            loginPassword={this.props.loginPassword}
-            updateUserName={this.props.updateUserName}
-            updateUserPassword={this.props.updateUserPassword}
-            requiresGuardianConsent={this.props.requiresGuardianConsent}
-            signUserUp={this.props.signUserUp}
-            setGuardianConsent={this.props.setGuardianConsent}
-            setUserName={this.props.setUserName}
-            setUserType={this.props.setUserType}
-            userType={this.props.userType}
-            closeSignUpModal={this.props.closeSignUpModal}
           />
         </Modal>
         <Modal
@@ -312,6 +297,17 @@ class App extends React.Component {
         >
           <Welcome />
         </Modal>
+        {(this.showForkPromptPreference() && !this.props.isBrowsingPebl && !this.props.canEdit) && (
+          <Modal
+            size="auto"
+            isOpen={this.props.isForkPromptOpen}
+            closeModal={this.props.closeForkPrompt}
+          >
+            <ForkPrompt
+              savePage={this.savePage}
+            />
+          </Modal>
+        )}
         <Navigation />
         <Workspace />
       </div>
@@ -328,6 +324,7 @@ App.propTypes = {
 
   workspace: PropTypes.shape({}).isRequired,
 
+  // pebl
   pageTitle: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
@@ -335,17 +332,11 @@ App.propTypes = {
   textHeights: PropTypes.shape({}).isRequired,
 
   canEdit: PropTypes.bool.isRequired,
-  loginName: PropTypes.string.isRequired,
-  loginPassword: PropTypes.string.isRequired,
 
   // user
   name: PropTypes.string.isRequired,
-  userType: PropTypes.string.isRequired,
-  setUserName: PropTypes.func.isRequired,
-  setUserType: PropTypes.func.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
-  requiresGuardianConsent: PropTypes.bool.isRequired,
-  setGuardianConsent: PropTypes.func.isRequired,
+  isBrowsingPebl: PropTypes.bool.isRequired,
 
   isPagesModalOpen: PropTypes.bool.isRequired,
   isLoginModalOpen: PropTypes.bool.isRequired,
@@ -374,7 +365,6 @@ App.propTypes = {
   isShareModalOpen: PropTypes.bool.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeForgotModal: PropTypes.func.isRequired,
-  viewForgotModal: PropTypes.func.isRequired,
   closeResetModal: PropTypes.func.isRequired,
   viewResetModal: PropTypes.func.isRequired,
   closeConfirmUserModal: PropTypes.func.isRequired,
@@ -383,13 +373,12 @@ App.propTypes = {
   isWelcomeModalOpen: PropTypes.bool.isRequired,
   viewWelcomeModal: PropTypes.func.isRequired,
   closeWelcomeModal: PropTypes.func.isRequired,
+  isForkPromptOpen: PropTypes.bool.isRequired,
+  closeForkPrompt: PropTypes.func.isRequired,
 
   // preferences
   fetchUserPreferences: PropTypes.func.isRequired,
 
-  updateUserName: PropTypes.func.isRequired,
-  updateUserPassword: PropTypes.func.isRequired,
-  signUserUp: PropTypes.func.isRequired,
   fetchAllPages: PropTypes.func.isRequired,
 
   // navigation
@@ -412,11 +401,8 @@ function mapStateToProps(state) {
     textHeights: state.page.textHeights,
 
     canEdit: state.user.canEdit,
-    loginName: state.user.loginName,
-    loginPassword: state.user.loginPassword,
     name: state.user.name,
-    userType: state.user.type,
-    requiresGuardianConsent: state.user.requiresGuardianConsent,
+    isBrowsingPebl: state.user.isBrowsingPebl,
 
     isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
     isExamplesModalOpen: state.mainToolbar.isExamplesModalOpen,
@@ -431,6 +417,7 @@ function mapStateToProps(state) {
     isForgotModalOpen: state.mainToolbar.isForgotModalOpen,
     isResetModalOpen: state.mainToolbar.isResetModalOpen,
     isConfirmUserModalOpen: state.mainToolbar.isConfirmUserModalOpen,
+    isForkPromptOpen: state.mainToolbar.isForkPromptOpen,
 
     navigationContent: state.navigation.navigationContent
   };
