@@ -1,6 +1,6 @@
 import { expect } from 'chai'
-import { createUser, loginUser, confirmUser, forgotPassword } from '../../src/controllers/userControllerNew';
-import { assert, spy } from 'sinon';
+import { createUser, loginUser, confirmUser, forgotPassword, resetPassword } from '../../src/controllers/userControllerNew';
+import { assert, spy, useFakeTimers } from 'sinon';
 const sandbox = require('sinon').sandbox.create();
 const User = require('../../src/models/user.js');
 const passport = require('passport');
@@ -12,12 +12,15 @@ const signUpFailedMessage = {
 const loginFailedMessage = {
     msg: "Login failed"
 };
+const now = new Date();
 var request;
 var response;
 var body;
 var findOneSpy;
 var saveSpy;
 var findSpy;
+var clock;
+
 
 describe('userControllerNew', function () {
     describe('createUser', function () {
@@ -131,7 +134,7 @@ describe('userControllerNew', function () {
 
     describe('loginUser', function () {
         var next;
-        
+
         var passportAuthenticateStub;
 
         beforeEach(function () {
@@ -244,7 +247,7 @@ describe('userControllerNew', function () {
             assertSendWasCalledWith({ msg: "Login Successful", user: { name: body.name, type: body.userType } })
         });
 
-        
+
 
         function assertPassportAuthenticateWasCalled() {
             assert.calledOnce(passportAuthenticateStub);
@@ -390,7 +393,7 @@ describe('userControllerNew', function () {
             sandbox.restore();
         });
 
-        it('shall not reset password when user retrieve error', function () {
+        it('shall not update password when user retrieve error', function () {
             response.status = createResponseWithStatusCode(422);
             findSpy = sandbox.stub(User, 'find').yields({ error: "Could not retrieve user" });
 
@@ -400,7 +403,7 @@ describe('userControllerNew', function () {
             assertFindWasCalledWithEmail();
         });
 
-        it('shall not reset password when user update error', function () {
+        it('shall not update password when user update error', function () {
             response.status = createResponseWithStatusCode(422);
             var retrievedUser = getUser();
             saveSpy = sandbox.stub(User.prototype, 'save').yields({ err: "Could not update user" }, null);
@@ -414,7 +417,7 @@ describe('userControllerNew', function () {
             assert.calledOnce(saveSpy);
         });
 
-        it('shall reset password after updating user', function () {
+        it('shall update password after updating user', function () {
             response.status = createResponseWithStatusCode(200);
             var retrievedUser = getUser();
             saveSpy = sandbox.stub(User.prototype, 'save').yields(null, null);
@@ -426,6 +429,78 @@ describe('userControllerNew', function () {
             assertSendWasCalledWith({ msg: 'Please check your email to reset your password' });
             assertFindWasCalledWithEmail();
             assert.calledOnce(saveSpy);
+        });
+
+    });
+
+    describe('resetPassword', function () {
+
+        beforeEach(function () {
+            body = getBodyToResetPassword();
+            clock = useFakeTimers(now.getTime());
+            request = { body };
+            response = {
+                send: spy(),
+                json: spy(),
+                status: createResponseWithStatusCode(200)
+            };
+        });
+
+        afterEach(function () {
+            sandbox.restore();
+            clock.restore();
+        });
+
+        it('shall not reset password when reset token not found', function () {
+            response.status = createResponseWithStatusCode(422);
+            findOneSpy = sandbox.stub(User, 'findOne').yields({ error: "Could not retrieve user" });
+
+            resetPassword(request, response);
+
+            assertJsonWasCalledWith({ error: 'Looks like your reset link expired!' });
+            assertFindOneWasCalledWithToken();
+        });
+
+        it('shall not reset password is user not found reset token not found', function () {
+            response.status = createResponseWithStatusCode(422);
+            findOneSpy = sandbox.stub(User, 'findOne').yields(null, null);
+
+            resetPassword(request, response);
+
+            assertJsonWasCalledWith({ error: 'Looks like your reset link expired!' });
+            assertFindOneWasCalledWithToken();
+        });
+
+        it('shall not reset password when updating user fails', function () {
+            response.status = createResponseWithStatusCode(422);
+            var retrievedUser = getUser();
+            saveSpy = sandbox.stub(User.prototype, 'save').yields({ err: "Could not update user" }, null);
+            retrievedUser.save = saveSpy;
+            retrievedUser.hashPassword = spy();
+            findOneSpy = sandbox.stub(User, 'findOne').yields(null, retrievedUser);
+
+            resetPassword(request, response);
+
+            assertJsonWasCalledWith({ msg: 'Password reset failed' });
+            assertFindOneWasCalledWithToken();
+            assert.calledOnce(saveSpy);
+            assert.calledOnce(retrievedUser.hashPassword);
+        });
+
+        it('shall reset password and updating user', function () {
+            response.status = createResponseWithStatusCode(200);
+            var retrievedUser = getUser();
+            saveSpy = sandbox.stub(User.prototype, 'save').yields(null, retrievedUser);
+            retrievedUser.save = saveSpy;
+            retrievedUser.hashPassword = spy();
+            findOneSpy = sandbox.stub(User, 'findOne').yields(null, retrievedUser);
+
+            resetPassword(request, response);
+
+            assertSendWasCalledWith({ msg: 'Password successfully reset! Please login to use Peblio.', user: retrievedUser });
+            assertFindOneWasCalledWithToken();
+            assert.calledOnce(saveSpy);
+            assert.calledOnce(retrievedUser.hashPassword);
         });
 
     });
@@ -466,13 +541,18 @@ function getBodyToConfirmUser() {
     };
 };
 
+function getBodyToResetPassword() {
+    return {
+        token: "token",
+        password: getBody().password
+    };
+};
+
 function getBodyForForgotPassword() {
     return {
         email: getBody().mail
     };
 };
-
-
 
 function getUserToBeSaved() {
     const body = getBody();
@@ -512,6 +592,14 @@ function assertFindOneWasCalledWithUsername() {
 function assertFindOneWasCalledWithId() {
     assert.calledOnce(findOneSpy);
     assert.calledWith(findOneSpy, { _id: "bla@gmail.com" });
+}
+
+function assertFindOneWasCalledWithToken() {
+    assert.calledOnce(findOneSpy);
+    assert.calledWith(findOneSpy, {
+        resetPasswordToken: getBodyToResetPassword().token,
+        resetPasswordExpires: { $gt: now.getTime() }
+    });
 }
 
 function assertFindWasCalledWithEmail() {

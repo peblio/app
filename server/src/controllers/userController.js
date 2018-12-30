@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 const sgTransport = require('nodemailer-sendgrid-transport');
 const shortid = require('shortid');
 const { OAuth2Client } = require('google-auth-library');
-const { createUser, loginUser, confirmUser, forgotPassword } = require('./userControllerNew.js');
+const { createUser, loginUser, confirmUser, forgotPassword, resetPassword } = require('./userControllerNew.js');
 
 const User = require('../models/user.js');
 const Token = require('../models/token.js');
@@ -61,7 +61,7 @@ function sendSuccessfulResetMail(email) {
 
 // Methods: AUTH
 
-function resetPassword(req, res) {
+function resetPassword1(req, res) {
   User.findOne(
     {
       resetPasswordToken: req.body.token,

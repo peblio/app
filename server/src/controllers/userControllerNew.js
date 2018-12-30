@@ -201,6 +201,49 @@ export function forgotPassword(req, res) {
   });
 }
 
+export function resetPassword(req, res) {
+  User.findOne(
+    {
+      resetPasswordToken: req.body.token,
+      resetPasswordExpires: { $gt: Date.now() }
+    },
+    (userFindError, user) => {
+      if (userFindError || !user) {
+        return res.status(422).json({
+          error: UserConst.PASSWORD_RESET_TOKEN_EXP
+        });
+      }
+      user.hashPassword(req.body.password);
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpires = undefined;
+      return user.save((err) => {
+        if (err) {
+          return res.status(422).json({
+            msg: UserConst.PASSWORD_RESET_FAILED
+          });
+        }
+
+        sendSuccessfulResetMail(user.email);
+        return res.send({
+          msg: UserConst.PASSWORD_RESET_SUCCESSFUL,
+          user
+        });
+      });
+    }
+  );
+}
+
+function sendSuccessfulResetMail(email) {
+  const mailOptions = {
+    to: email,
+    from: process.env.PEBLIO_SENDGRID_MAIL,
+    subject: 'Peblio Password Reset Successful',
+    text: `${'Hello,\n\n' +
+    'This is a confirmation that the password for your account '}${email} has just been changed.\n`
+  };
+  return sendMail(mailOptions);
+}
+
 function sendSignUpConfirmationMail(email, users, tokens) {
   let resetLinks = '';
   users.forEach((user, i) => {
