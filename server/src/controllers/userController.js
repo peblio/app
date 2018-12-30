@@ -1,91 +1,9 @@
 const express = require('express');
-const nodemailer = require('nodemailer');
-const sgTransport = require('nodemailer-sendgrid-transport');
-const shortid = require('shortid');
 const { OAuth2Client } = require('google-auth-library');
 const { createUser, loginUser, confirmUser, forgotPassword, resetPassword, resendConfirmUser } = require('./userControllerNew.js');
 
 const User = require('../models/user.js');
-const Token = require('../models/token.js');
 const UserConst = require('../userConstants.js');
-
-// Methods: EMAIL
-// TODO: Refactor following Email methods to separate module
-function sendMail(mailOptions) {
-  const options = {
-    auth: {
-      api_user: process.env.PEBLIO_SENDGRID_USER,
-      api_key: process.env.PEBLIO_SENDGRID_PASSWORD
-    }
-  };
-
-  const client = nodemailer.createTransport(sgTransport(options));
-  client.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(`Message sent: ${info.response}`);
-    }
-  });
-}
-
-function sendSignUpConfirmationMail(email, users, tokens, req) {
-  const confirmationLinks = '';
-  let resetLinks = '';
-  users.forEach((user, i) => {
-    resetLinks += `Username: ${user}\n` +
-    'Please click on the following link, or paste this into your browser to complete the process:\n' +
-    `http://${process.env.PEBLIO_DOMAIN_NAME}/confirmation/${tokens[i]}\n\n`;
-  });
-  const mailOptions = {
-    to: email,
-    from: process.env.PEBLIO_SENDGRID_MAIL,
-    subject: 'Peblio Confirmation',
-    text: `You are receiving this because you have signed up for peblio.\n\n
-    Please click on the following link, or paste this into your browser to complete the process:\n\n${
-  resetLinks}`
-  };
-  sendMail(mailOptions);
-}
-
-// Methods: AUTH
-function resendConfirmUser1(req, res) {
-  User.find({ email: req.body.email }, (userFindError, users) => {
-    if (users.length === 0) {
-      return res.status(400).send({
-        msg: UserConst.CONFIRM_NO_EMAIL
-      });
-    }
-
-    const userNames = [];
-    const tokens = [];
-    users.forEach((user) => {
-      if (!user.isVerified) {
-        userNames.push(user.name);
-        // Create a verification token, save it, and send email
-        const newToken = shortid.generate();
-        tokens.push(newToken);
-        const token = new Token({
-          _userId: user._id,
-          token: newToken
-        });
-
-        // Save the token
-        token.save((tokenSaveError) => {
-          if (tokenSaveError) {
-            return res.status(500).send({
-              msg: UserConst.SIGN_UP_FAILED
-            });
-          }
-        });
-      }
-    });
-    sendSignUpConfirmationMail(req.body.email, userNames, tokens, req);
-    return res.send({
-      msg: UserConst.SIGN_UP_CHECK_MAIL
-    });
-  });
-}
 
 function loginWithGoogle(req, res) {
   if (!req.body.google_id_token) {
