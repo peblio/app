@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { createUser, loginUser, confirmUser, forgotPassword, resetPassword } from '../../src/controllers/userControllerNew';
+import { createUser, loginUser, confirmUser, forgotPassword, resetPassword, resendConfirmUser } from '../../src/controllers/userControllerNew';
 import { assert, spy, useFakeTimers } from 'sinon';
 const sandbox = require('sinon').sandbox.create();
 const User = require('../../src/models/user.js');
@@ -20,11 +20,11 @@ var findOneSpy;
 var saveSpy;
 var findSpy;
 var clock;
+var tokenSaveSpy;
 
 
 describe('userControllerNew', function () {
     describe('createUser', function () {
-        var tokenSaveSpy;
         var userToBeSaved;
 
         beforeEach(function () {
@@ -504,6 +504,70 @@ describe('userControllerNew', function () {
         });
 
     });
+
+    describe('resendConfirmUser', function () {
+
+        beforeEach(function () {
+            body = getBodyFoResendConfirmUser();
+            request = { body };
+            response = {
+                send: spy(),
+                json: spy(),
+                status: createResponseWithStatusCode(200)
+            };
+        });
+
+        afterEach(function () {
+            sandbox.restore();
+        });
+
+        it('shall not resend confirmation email when reset token not found', function () {
+            response.status = createResponseWithStatusCode(400);
+            findSpy = sandbox.stub(User, 'find').yields({ error: "Could not retrieve user" });
+
+            resendConfirmUser(request, response);
+
+            assertSendWasCalledWith({ msg: 'We were unable to find a user with that email.' });
+            assertFindWasCalledWithEmail();
+        });
+
+        it('shall not resend confirmation email when user not found', function () {
+            response.status = createResponseWithStatusCode(400);
+            findSpy = sandbox.stub(User, 'find').yields(null, []);
+
+            resendConfirmUser(request, response);
+
+            assertSendWasCalledWith({ msg: 'We were unable to find a user with that email.' });
+            assertFindWasCalledWithEmail();
+        });
+
+        it('shall not resend confirmation email when user new token could not be saved', function () {
+            response.status = createResponseWithStatusCode(500);
+            var retrievedUser = getUser();
+            tokenSaveSpy = sandbox.stub(Token.prototype, 'save').yields({ error: "Could not save token" });
+            findSpy = sandbox.stub(User, 'find').yields(null, [retrievedUser]);
+
+            resendConfirmUser(request, response);
+
+            assertSendWasCalledWith({ msg: 'Sign up failed' });
+            assertFindWasCalledWithEmail();
+            assert.calledOnce(tokenSaveSpy);
+        });
+
+        it('shall resend confirmation email when user new token saved', function () {
+            response.status = createResponseWithStatusCode(200);
+            var retrievedUser = getUser();
+            tokenSaveSpy = sandbox.stub(Token.prototype, 'save').yields(null);
+            findSpy = sandbox.stub(User, 'find').yields(null, [retrievedUser]);
+
+            resendConfirmUser(request, response);
+
+            assertSendWasCalledWith({ msg: 'Please check your email to finish signing up' });
+            assertFindWasCalledWithEmail();
+            assert.calledOnce(tokenSaveSpy);
+        });
+
+    });
 });
 
 function getBody() {
@@ -538,6 +602,12 @@ function getUserToLogin() {
 function getBodyToConfirmUser() {
     return {
         token: "token"
+    };
+};
+
+function getBodyFoResendConfirmUser() {
+    return {
+        email: getBody().mail
     };
 };
 

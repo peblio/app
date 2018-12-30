@@ -194,10 +194,10 @@ export function forgotPassword(req, res) {
       return res.send({
         msg: UserConst.PASSWORD_RESET_SENT_MAIL
       });
-    } 
+    }
     return res.status(404).send({
-        msg: UserConst.PASSWORD_RESET_NO_USER
-      });
+      msg: UserConst.PASSWORD_RESET_NO_USER
+    });
   });
 }
 
@@ -233,13 +233,51 @@ export function resetPassword(req, res) {
   );
 }
 
+export function resendConfirmUser(req, res) {
+  User.find({ email: req.body.email }, (userFindError, users) => {
+    if (userFindError || users.length === 0) {
+      return res.status(400).send({
+        msg: UserConst.CONFIRM_NO_EMAIL
+      });
+    }
+
+    const userNames = [];
+    const tokens = [];
+    users.forEach((user) => {
+      if (!user.isVerified) {
+        userNames.push(user.name);
+        // Create a verification token, save it, and send email
+        const newToken = shortid.generate();
+        tokens.push(newToken);
+        const token = new Token({
+          _userId: user._id,
+          token: newToken
+        });
+
+        // Save the token
+        token.save((tokenSaveError) => {
+          if (tokenSaveError) {
+            return res.status(500).send({
+              msg: UserConst.SIGN_UP_FAILED
+            });
+          }
+          sendSignUpConfirmationMail(req.body.email, userNames, tokens, req);
+          return res.send({
+            msg: UserConst.SIGN_UP_CHECK_MAIL
+          });
+        });
+      }
+    });
+  });
+}
+
 function sendSuccessfulResetMail(email) {
   const mailOptions = {
     to: email,
     from: process.env.PEBLIO_SENDGRID_MAIL,
     subject: 'Peblio Password Reset Successful',
     text: `${'Hello,\n\n' +
-    'This is a confirmation that the password for your account '}${email} has just been changed.\n`
+      'This is a confirmation that the password for your account '}${email} has just been changed.\n`
   };
   return sendMail(mailOptions);
 }
@@ -283,20 +321,20 @@ function sendMail(mailOptions) {
 function sendResetMail(email, users, tokens) {
   /* eslint-disable */
   let resetLinks = '';
-  users.forEach((user,i)=> {
+  users.forEach((user, i) => {
     resetLinks += `Username: ${user}\n` +
-    `Go here to change the password ` +
-    `http://${process.env.PEBLIO_DOMAIN_NAME}/reset/${tokens[i]}\n\n`
+      `Go here to change the password ` +
+      `http://${process.env.PEBLIO_DOMAIN_NAME}/reset/${tokens[i]}\n\n`
   })
   const mailOptions = {
     to: email,
     from: process.env.PEBLIO_SENDGRID_MAIL,
     subject: 'Peblio Password Reset',
     text: 'You are receiving this because you (or someone else) have requested the reset of the password for your user account at Peblio.\n' +
-    'If you did not request this, please ignore this email and your password will  remain unchanged.\n' +
-    'Here are the username(s) associated with this email address:\n' +
-    'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-    resetLinks
+      'If you did not request this, please ignore this email and your password will  remain unchanged.\n' +
+      'Here are the username(s) associated with this email address:\n' +
+      'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+      resetLinks
 
   };
   /* eslint-enable */

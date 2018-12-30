@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 const sgTransport = require('nodemailer-sendgrid-transport');
 const shortid = require('shortid');
 const { OAuth2Client } = require('google-auth-library');
-const { createUser, loginUser, confirmUser, forgotPassword, resetPassword } = require('./userControllerNew.js');
+const { createUser, loginUser, confirmUser, forgotPassword, resetPassword, resendConfirmUser } = require('./userControllerNew.js');
 
 const User = require('../models/user.js');
 const Token = require('../models/token.js');
@@ -48,52 +48,8 @@ function sendSignUpConfirmationMail(email, users, tokens, req) {
   sendMail(mailOptions);
 }
 
-function sendSuccessfulResetMail(email) {
-  const mailOptions = {
-    to: email,
-    from: process.env.PEBLIO_SENDGRID_MAIL,
-    subject: 'Peblio Password Reset Successful',
-    text: `${'Hello,\n\n' +
-    'This is a confirmation that the password for your account '}${email} has just been changed.\n`
-  };
-  sendMail(mailOptions);
-}
-
 // Methods: AUTH
-
-function resetPassword1(req, res) {
-  User.findOne(
-    {
-      resetPasswordToken: req.body.token,
-      resetPasswordExpires: { $gt: Date.now() }
-    },
-    (userFindError, user) => {
-      if (userFindError || !user) {
-        return res.status(422).json({
-          error: UserConst.PASSWORD_RESET_TOKEN_EXP
-        });
-      }
-      user.hashPassword(req.body.password);
-      user.resetPasswordToken = undefined;
-      user.resetPasswordExpires = undefined;
-      return user.save((err) => {
-        if (err) {
-          return res.status(422).json({
-            msg: UserConst.PASSWORD_RESET_FAILED
-          });
-        }
-
-        sendSuccessfulResetMail(user.email);
-        return res.send({
-          msg: UserConst.PASSWORD_RESET_SUCCESSFUL,
-          user
-        });
-      });
-    }
-  );
-}
-
-function resendConfirmUser(req, res) {
+function resendConfirmUser1(req, res) {
   User.find({ email: req.body.email }, (userFindError, users) => {
     if (users.length === 0) {
       return res.status(400).send({
