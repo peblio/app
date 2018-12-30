@@ -1,20 +1,10 @@
 const express = require('express');
-
 const Page = require('../models/page.js');
+import { getPage } from './pageControllerNew';
 const User = require('../models/user.js');
 const Folder = require('../models/folder.js');
 
-async function getPage(req, res) {
-  Page.find({ id: req.params.pageId }, (err, data) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(data);
-    }
-  });
-}
-
-async function savePageAsGuest(req, res) {
+export async function savePageAsGuest(req, res) {
   try {
     const hydratedUser = await User.findOne({ name: 'peblioguest' }).exec();
 
@@ -26,7 +16,7 @@ async function savePageAsGuest(req, res) {
   }
 }
 
-async function savePage(req, res) {
+export async function savePage(req, res) {
   const user = req.user;
   if (!user) {
     return res.status(403).send({ error: 'Please log in first' });
@@ -43,7 +33,7 @@ async function savePage(req, res) {
   }
 }
 
-async function deletePage(req, res) {
+export async function deletePage(req, res) {
   const { pageId } = req.params;
   try {
     await Page.deleteOne({ _id: pageId });
@@ -53,7 +43,7 @@ async function deletePage(req, res) {
   }
 }
 
-function updatePage(req, res) {
+export async function updatePage(req, res) {
   Page.update({ id: req.body.id }, {
     heading: req.body.heading,
     title: req.body.title,
@@ -62,16 +52,16 @@ function updatePage(req, res) {
     layout: req.body.layout,
     workspace: req.body.workspace
   },
-  (err, data) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send({ data: 'Record has been Inserted..!!' });
-    }
-  });
+    (err, data) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send({ data: 'Record has been Inserted..!!' });
+      }
+    });
 }
 
-async function movePage(req, res) {
+export async function movePage(req, res) {
   const user = req.user;
   if (!user) {
     return res.status(403).send({ error: 'Please log in first' });
@@ -96,7 +86,7 @@ async function movePage(req, res) {
         return res.status(404).send({ error: `Folder with id ${folderId} not found` });
       }
       page.folder = folderId;
-    // otherwise, move the page to the top level (remove its folder ID)
+      // otherwise, move the page to the top level (remove its folder ID)
     } else {
       page.folder = undefined;
       // could not use delete page.folder -
