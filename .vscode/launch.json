@@ -18,6 +18,7 @@
             "name": "Mocha Current File",
             "program": "${workspaceFolder}/server/node_modules/mocha/bin/_mocha",
             "args": [
+                "--exit",
                 "--compilers",
                 "js:babel-core/register",
                 "${file}"
