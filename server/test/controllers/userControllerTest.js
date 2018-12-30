@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { createUser, loginUser, confirmUser } from '../../src/controllers/userControllerNew';
+import { createUser, loginUser, confirmUser, forgotPassword } from '../../src/controllers/userControllerNew';
 import { assert, spy } from 'sinon';
 const sandbox = require('sinon').sandbox.create();
 const User = require('../../src/models/user.js');
@@ -17,6 +17,7 @@ var response;
 var body;
 var findOneSpy;
 var saveSpy;
+var findSpy;
 
 describe('userControllerNew', function () {
     describe('createUser', function () {
@@ -130,7 +131,7 @@ describe('userControllerNew', function () {
 
     describe('loginUser', function () {
         var next;
-        var findSpy;
+        
         var passportAuthenticateStub;
 
         beforeEach(function () {
@@ -243,10 +244,7 @@ describe('userControllerNew', function () {
             assertSendWasCalledWith({ msg: "Login Successful", user: { name: body.name, type: body.userType } })
         });
 
-        function assertFindWasCalledWithEmail() {
-            assert.calledOnce(findSpy);
-            assert.calledWith(findSpy, { email: "bla@gmail.com" });
-        }
+        
 
         function assertPassportAuthenticateWasCalled() {
             assert.calledOnce(passportAuthenticateStub);
@@ -375,6 +373,62 @@ describe('userControllerNew', function () {
         };
 
     });
+
+    describe('forgotPassword', function () {
+
+        beforeEach(function () {
+            body = getBodyForForgotPassword();
+            request = { body };
+            response = {
+                send: spy(),
+                json: spy(),
+                status: createResponseWithStatusCode(200)
+            };
+        });
+
+        afterEach(function () {
+            sandbox.restore();
+        });
+
+        it('shall not reset password when user retrieve error', function () {
+            response.status = createResponseWithStatusCode(422);
+            findSpy = sandbox.stub(User, 'find').yields({ error: "Could not retrieve user" });
+
+            forgotPassword(request, response);
+
+            assertJsonWasCalledWith({ msg: 'Password reset failed' });
+            assertFindWasCalledWithEmail();
+        });
+
+        it('shall not reset password when user update error', function () {
+            response.status = createResponseWithStatusCode(422);
+            var retrievedUser = getUser();
+            saveSpy = sandbox.stub(User.prototype, 'save').yields({ err: "Could not update user" }, null);
+            retrievedUser.save = saveSpy;
+            findSpy = sandbox.stub(User, 'find').yields(null, [retrievedUser]);
+
+            forgotPassword(request, response);
+
+            assertJsonWasCalledWith({ msg: 'Password reset failed' });
+            assertFindWasCalledWithEmail();
+            assert.calledOnce(saveSpy);
+        });
+
+        it('shall reset password after updating user', function () {
+            response.status = createResponseWithStatusCode(200);
+            var retrievedUser = getUser();
+            saveSpy = sandbox.stub(User.prototype, 'save').yields(null, null);
+            retrievedUser.save = saveSpy;
+            findSpy = sandbox.stub(User, 'find').yields(null, [retrievedUser]);
+
+            forgotPassword(request, response);
+
+            assertSendWasCalledWith({ msg: 'Please check your email to reset your password' });
+            assertFindWasCalledWithEmail();
+            assert.calledOnce(saveSpy);
+        });
+
+    });
 });
 
 function getBody() {
@@ -411,6 +465,14 @@ function getBodyToConfirmUser() {
         token: "token"
     };
 };
+
+function getBodyForForgotPassword() {
+    return {
+        email: getBody().mail
+    };
+};
+
+
 
 function getUserToBeSaved() {
     const body = getBody();
@@ -450,4 +512,9 @@ function assertFindOneWasCalledWithUsername() {
 function assertFindOneWasCalledWithId() {
     assert.calledOnce(findOneSpy);
     assert.calledWith(findOneSpy, { _id: "bla@gmail.com" });
+}
+
+function assertFindWasCalledWithEmail() {
+    assert.calledOnce(findSpy);
+    assert.calledWith(findSpy, { email: "bla@gmail.com" });
 }

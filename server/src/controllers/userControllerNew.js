@@ -167,6 +167,40 @@ export function confirmUser(req, res) {
   });
 }
 
+export function forgotPassword(req, res) {
+  User.find({ email: req.body.email }, (userFindError, users) => {
+    if (userFindError) {
+      return res.status(422).json({
+        msg: UserConst.PASSWORD_RESET_FAILED
+      });
+    }
+    const userNames = [];
+    const tokens = [];
+    if (users) {
+      users.forEach((user) => {
+        userNames.push(user.name);
+        user.resetPasswordToken = shortid.generate();
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+        tokens.push(user.resetPasswordToken);
+        user.save((updateUserError, updatedUser) => {
+          if (updateUserError) {
+            return res.status(422).json({
+              msg: UserConst.PASSWORD_RESET_FAILED
+            });
+          }
+        });
+      });
+      sendResetMail(req.body.email, userNames, tokens, req);
+      return res.send({
+        msg: UserConst.PASSWORD_RESET_SENT_MAIL
+      });
+    } 
+    return res.status(404).send({
+        msg: UserConst.PASSWORD_RESET_NO_USER
+      });
+  });
+}
+
 function sendSignUpConfirmationMail(email, users, tokens) {
   let resetLinks = '';
   users.forEach((user, i) => {
@@ -201,4 +235,28 @@ function sendMail(mailOptions) {
       console.log(`Message sent: ${info.response}`);
     }
   });
+}
+
+function sendResetMail(email, users, tokens) {
+  /* eslint-disable */
+  let resetLinks = '';
+  users.forEach((user,i)=> {
+    resetLinks += `Username: ${user}\n` +
+    `Go here to change the password ` +
+    `http://${process.env.PEBLIO_DOMAIN_NAME}/reset/${tokens[i]}\n\n`
+  })
+  const mailOptions = {
+    to: email,
+    from: process.env.PEBLIO_SENDGRID_MAIL,
+    subject: 'Peblio Password Reset',
+    text: 'You are receiving this because you (or someone else) have requested the reset of the password for your user account at Peblio.\n' +
+    'If you did not request this, please ignore this email and your password will  remain unchanged.\n' +
+    'Here are the username(s) associated with this email address:\n' +
+    'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+    resetLinks
+
+  };
+  /* eslint-enable */
+
+  sendMail(mailOptions);
 }
