@@ -1,6 +1,6 @@
 const express = require('express');
 const { OAuth2Client } = require('google-auth-library');
-const { createUser, loginUser, confirmUser, forgotPassword, resetPassword, resendConfirmUser } = require('./userControllerNew.js');
+const { createUser, loginUser, confirmUser, forgotPassword, resetPassword, resendConfirmUser } = require('./userRegisterActionsController.js');
 
 const User = require('../models/user.js');
 const UserConst = require('../userConstants.js');
