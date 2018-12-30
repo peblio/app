@@ -4,6 +4,7 @@ const Token = require('../models/token.js');
 const UserConst = require('../userConstants.js');
 const nodemailer = require('nodemailer');
 const sgTransport = require('nodemailer-sendgrid-transport');
+const passport = require('passport');
 
 export function createUser(req, res) {
   const email = req.body.mail;
@@ -68,6 +69,50 @@ export function createUser(req, res) {
         });
     });
   });
+}
+
+export function loginUser(req, res, next) {
+  return User.find({ email: req.body.name }, (userFindError, users) => {
+    if (userFindError) {
+      return res.status(401).send({
+        msg: UserConst.LOGIN_FAILED
+      });
+    }
+    if (users.length > 1) {
+      return res.status(400).send({
+        msg: UserConst.USE_NAME_TO_LOGIN
+      });
+    }
+    return passport.authenticate('local', (passportAuthError, user) => {
+      if (passportAuthError) {
+        return res.status(500).send({ msg: passportAuthError }); // will generate a 500 error
+      }
+      // Generate a JSON response reflecting authentication status
+      if (!user) {
+        return res.status(401).send({
+          msg: UserConst.LOGIN_FAILED
+        });
+      } 
+      if (!user.isVerified) {
+        return res.status(401).send({
+          msg: UserConst.LOGIN_USER_NOT_VERIFIED
+        });
+      }
+  
+      return req.login(user, (loginError) => {
+        if (loginError) {
+          return res.status(401).send({
+            msg: loginError
+          });
+        }
+        return res.send({
+          msg: UserConst.LOGIN_SUCCESS,
+          user: { name: user.name, type: user.type }
+        });
+      });
+    })(req, res, next);
+  });
+  
 }
 
 function sendSignUpConfirmationMail(email, users, tokens) {
