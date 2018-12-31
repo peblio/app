@@ -43,6 +43,8 @@ class EditorContainer extends React.Component {
     this.setState(prevState => ({ isConsoleOpen: !prevState.isConsoleOpen }));
   }
 
+  editorView = () => this.props.editorView || 'split'
+
   startResize() {
     this.setState({ isResizing: true });
   }
@@ -78,7 +80,7 @@ class EditorContainer extends React.Component {
             toggleConsole={this.toggleConsole}
             viewEditorPreview={this.viewEditorPreview}
           />
-          {(this.props.editorView === 'split' || !this.props.editorView) && (
+          {this.editorView() === 'split' && (
             <SplitEditorContainer
               innerWidth={this.props.innerWidth}
               startResize={this.startResize}
@@ -100,7 +102,7 @@ class EditorContainer extends React.Component {
               toggleConsole={this.toggleConsole}
             />
           )}
-          {this.props.editorView === 'tabbed' && (
+          {this.editorView() === 'tabbed' && (
             <TabbedEditorContainer
               innerWidth={this.props.innerWidth}
               startResize={this.startResize}
