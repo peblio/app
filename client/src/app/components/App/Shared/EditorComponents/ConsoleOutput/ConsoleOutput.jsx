@@ -9,11 +9,14 @@ class ConsoleOutput extends React.Component {
     const toggleButton = this.props.isConsoleOpen ? '&or;' : '&and;';
     return (
       <div className="console__outputDiv">
-        <nav className="console__nav">
+        <nav //eslint-disable-line
+          className="console__nav"
+          tabIndex="0" //eslint-disable-line
+          onClick={this.props.toggleConsole}
+        >
           <p className="console__heading"> Console </p>
           <button
             className="console__toggle"
-            onClick={this.props.toggleConsole}
           >
             {ReactHtmlParser(toggleButton)}
           </button>

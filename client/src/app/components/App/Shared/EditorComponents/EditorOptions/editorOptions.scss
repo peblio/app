@@ -1,0 +1,74 @@
+@import 'variables';
+@import 'mixins';
+@import 'base';
+
+.editor-options {
+  &__container {
+    position: absolute;
+    top: $editor-toolbar-height + $arrow-size/2;
+    width: $editor-preferences-width;
+    left: calc(-#{$editor-preferences-width}/2 + 20px);
+    background-color: $black;
+    transition: 0.5s;
+    padding: $medium-padding 0;
+    border-radius: $small-border-radius;
+    border: $small-border solid $white;
+    &::after {
+      content: '';
+      position: absolute;
+      width: $arrow-size;
+      height: $arrow-size;
+      background: $black;
+      top: 0;
+      right: calc(50% - #{$arrow-size/2});
+      transform: translate(0, -50%) rotate(45deg);
+      border-left: $small-border solid $white;
+      border-top: $small-border solid $white;
+    }
+  }
+  &__view-list {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__view {
+    margin: $small-margin auto;
+  }
+  &__button {
+    display: flex;
+    margin: $small-margin auto;
+    margin-bottom: $medium-margin;
+    width: $editor-preferences-button;
+    color: $black;
+    background: $g6;
+    border: none;
+    padding: $small-padding;
+    text-transform: uppercase;
+    justify-content: center;
+    &:hover {
+      border: none;
+      background: $g6;
+    }
+  }
+  &__view-button {
+    border: none;
+    & svg {
+      stroke: $white;
+    }
+    &:hover {
+      border: none;
+      background: none;
+      & svg {
+        stroke: $green;
+      }
+    }
+    &--active {
+      & svg {
+        stroke: $green;
+      }
+    }
+  }
+}
