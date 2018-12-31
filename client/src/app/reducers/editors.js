@@ -89,6 +89,7 @@ const editorsReducer = (state = initialState, action) => {
         isRefreshing: false,
         editorMode: action.mode,
         innerWidth: CODE_DEFAULT_INSIDE_WIDTH,
+        editorView: 'split'
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -142,6 +143,13 @@ const editorsReducer = (state = initialState, action) => {
       });
     }
 
+    case ActionTypes.VIEW_EDITOR_PREVIEW: {
+      editors[action.id].currentFile = -1;
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
     case ActionTypes.SET_INNER_WIDTH: {
       editors[action.id].innerWidth = action.value;
       return Object.assign({}, state, {
@@ -154,6 +162,13 @@ const editorsReducer = (state = initialState, action) => {
         name: action.name,
         externalLink: action.link
       });
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
+    case ActionTypes.SET_EDITOR_VIEW: {
+      editors[action.id].editorView = action.value;
       return Object.assign({}, state, {
         editors
       });
