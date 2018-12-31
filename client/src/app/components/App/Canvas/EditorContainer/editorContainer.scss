@@ -16,7 +16,7 @@
 .editor__container {
   position: relative;
   width: 100%;
-  height: calc(100% - 2*#{$editor-toolbar-height});
+  height: calc(100% - 2 * #{$editor-toolbar-height});
   border:1px solid $g5;
   box-sizing: border-box;
 }
