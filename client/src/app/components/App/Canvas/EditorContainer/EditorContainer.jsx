@@ -78,7 +78,7 @@ class EditorContainer extends React.Component {
             toggleConsole={this.toggleConsole}
             viewEditorPreview={this.viewEditorPreview}
           />
-          {this.props.editorView === 'split' && (
+          {(this.props.editorView === 'split' || !this.props.editorView) && (
             <SplitEditorContainer
               innerWidth={this.props.innerWidth}
               startResize={this.startResize}

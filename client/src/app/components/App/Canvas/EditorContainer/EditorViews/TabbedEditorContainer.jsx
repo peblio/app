@@ -9,45 +9,42 @@ class TabbedContainer extends React.Component {
   render() {
     return (
       <div className="editor__container">
-
-        <div className="editor__sub-container">
-          {this.props.currentFile === -1 || (
-            <div className="editor__input editor__input-tabbed">
-              <CodeEditor
-                currentFile={this.props.currentFile}
-                files={this.props.files}
-                updateFile={this.props.updateFile}
-              />
-            </div>
-          )}
-          {this.props.currentFile === -1 && (
-            <div className={`editor__output ${this.props.isConsoleOpen ? 'editor__output--short' : ''}`}>
-              <div
-                className={`editor__output-overlay
+        {this.props.currentFile === -1 || (
+          <div className="editor__input editor__input-tabbed">
+            <CodeEditor
+              currentFile={this.props.currentFile}
+              files={this.props.files}
+              updateFile={this.props.updateFile}
+            />
+          </div>
+        )}
+        {this.props.currentFile === -1 && (
+          <div className={`editor__output ${this.props.isConsoleOpen ? 'editor__output--short' : ''}`}>
+            <div
+              className={`editor__output-overlay
                       ${this.props.isResizing
-              ? 'editor__output-overlay--show' : ''}`}
-              >
-              </div>
-              { this.props.isPlaying && (
-                <CodeOutput
-                  id={this.props.id}
-                  clearConsoleOutput={this.props.clearConsoleOutput}
-                  editorMode={this.props.editorMode}
-                  files={this.props.files}
-                  isPlaying={this.props.isPlaying}
-                  isRefreshing={this.props.isRefreshing}
-                  stopCodeRefresh={this.props.stopCodeRefresh}
-                  updateConsoleOutput={this.props.updateConsoleOutput}
-                />
-              )}
-              <ConsoleOutput
-                consoleOutputText={this.props.consoleOutputText}
-                isConsoleOpen={this.props.isConsoleOpen}
-                toggleConsole={this.props.toggleConsole}
-              />
+            ? 'editor__output-overlay--show' : ''}`}
+            >
             </div>
-          )}
-        </div>
+            { this.props.isPlaying && (
+              <CodeOutput
+                id={this.props.id}
+                clearConsoleOutput={this.props.clearConsoleOutput}
+                editorMode={this.props.editorMode}
+                files={this.props.files}
+                isPlaying={this.props.isPlaying}
+                isRefreshing={this.props.isRefreshing}
+                stopCodeRefresh={this.props.stopCodeRefresh}
+                updateConsoleOutput={this.props.updateConsoleOutput}
+              />
+            )}
+            <ConsoleOutput
+              consoleOutputText={this.props.consoleOutputText}
+              isConsoleOpen={this.props.isConsoleOpen}
+              toggleConsole={this.props.toggleConsole}
+            />
+          </div>
+        )}
 
       </div>
     );

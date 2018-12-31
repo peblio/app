@@ -10,50 +10,47 @@ class SplitEditorContainer extends React.Component {
   render() {
     return (
       <div className="editor__container">
+        <SplitPane
+          split="vertical"
+          defaultSize={this.props.innerWidth}
+          onDragStarted={this.props.startResize}
+          onDragFinished={(size) => { this.props.finishResize(); this.props.setInnerWidth(size); }}
+        >
+          <div className="editor__input editor__input-split">
 
-        <div className="editor__sub-container">
-          <SplitPane
-            split="vertical"
-            defaultSize={this.props.innerWidth}
-            onDragStarted={this.props.startResize}
-            onDragFinished={(size) => { this.props.finishResize(); this.props.setInnerWidth(size); }}
-          >
-            <div className="editor__input editor__input-split">
+            <CodeEditor
+              currentFile={this.props.currentFile}
+              files={this.props.files}
+              updateFile={this.props.updateFile}
+            />
 
-              <CodeEditor
-                currentFile={this.props.currentFile}
-                files={this.props.files}
-                updateFile={this.props.updateFile}
-              />
-
-            </div>
-            <div className={`editor__output ${this.props.isConsoleOpen ? 'editor__output--short' : ''}`}>
-              <div
-                className={`editor__output-overlay
+          </div>
+          <div className={`editor__output ${this.props.isConsoleOpen ? 'editor__output--short' : ''}`}>
+            <div
+              className={`editor__output-overlay
                       ${this.props.isResizing
         ? 'editor__output-overlay--show' : ''}`}
-              >
-              </div>
-              { this.props.isPlaying && (
-                <CodeOutput
-                  id={this.props.id}
-                  clearConsoleOutput={this.props.clearConsoleOutput}
-                  editorMode={this.props.editorMode}
-                  files={this.props.files}
-                  isPlaying={this.props.isPlaying}
-                  isRefreshing={this.props.isRefreshing}
-                  stopCodeRefresh={this.props.stopCodeRefresh}
-                  updateConsoleOutput={this.props.updateConsoleOutput}
-                />
-              )}
-              <ConsoleOutput
-                consoleOutputText={this.props.consoleOutputText}
-                isConsoleOpen={this.props.isConsoleOpen}
-                toggleConsole={this.props.toggleConsole}
-              />
+            >
             </div>
-          </SplitPane>
-        </div>
+            { this.props.isPlaying && (
+              <CodeOutput
+                id={this.props.id}
+                clearConsoleOutput={this.props.clearConsoleOutput}
+                editorMode={this.props.editorMode}
+                files={this.props.files}
+                isPlaying={this.props.isPlaying}
+                isRefreshing={this.props.isRefreshing}
+                stopCodeRefresh={this.props.stopCodeRefresh}
+                updateConsoleOutput={this.props.updateConsoleOutput}
+              />
+            )}
+            <ConsoleOutput
+              consoleOutputText={this.props.consoleOutputText}
+              isConsoleOpen={this.props.isConsoleOpen}
+              toggleConsole={this.props.toggleConsole}
+            />
+          </div>
+        </SplitPane>
 
       </div>
     );
