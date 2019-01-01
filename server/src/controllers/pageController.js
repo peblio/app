@@ -1,6 +1,6 @@
+import { getPage } from './pageControllerNew';
 const express = require('express');
 const Page = require('../models/page.js');
-import { getPage } from './pageControllerNew';
 const User = require('../models/user.js');
 const Folder = require('../models/folder.js');
 
