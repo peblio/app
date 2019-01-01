@@ -54,11 +54,14 @@ class ShareWorkspace extends React.Component {
       ),
       backColor: 'transparent'
     };
-    const tempEditor = this.props.workspace;
+    const tempEditor = JSON.parse(JSON.stringify(this.props.workspace));
     tempEditor.id = 'editor-1';
     tempEditor.index = 1;
     tempEditor.type = 'code';
+    tempEditor.editorView = 'tabbed';
+    tempEditor.isPlaying = true;
     tempEditor.innerWidth = 200;
+    tempEditor.currentFile = -1;
     this.props.submitPage(
       `src-${this.props.id}`,
       this.title.value,

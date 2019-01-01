@@ -3,7 +3,7 @@
 
 .preferences {
   &__container {
-    position: fixed;
+    position: absolute;
     display: none;
     background-color: $black;
     top: $main-toolbar-height + $arrow-size/2;
@@ -20,7 +20,7 @@
       height: $arrow-size;
       background: $black;
       top: 0;
-      right: calc(50% - #{$arrow-size/2} - 8px);
+      right: calc(50% - #{$arrow-size/2});
       transform: translate(0, -50%) rotate(45deg);
       border-left: $small-border solid $white;
       border-top: $small-border solid $white;

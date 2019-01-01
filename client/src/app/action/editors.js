@@ -47,6 +47,16 @@ export function loadEditors(editors, editorIndex) {
 }
 
 /** CODE EDITOR */
+
+export function viewEditorPreview(id) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_EDITOR_PREVIEW,
+      id
+    });
+  };
+}
+
 export function addCodeEditor(mode) {
   return (dispatch, getState) => {
     const { editorsReducer } = getState();
@@ -200,6 +210,17 @@ export function updateTextBackColor(id, color) {
       type: ActionTypes.UPDATE_TEXT_BACK_COLOR,
       id,
       color
+    });
+  };
+}
+
+export function setEditorView(id, value) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.SET_EDITOR_VIEW,
+      id,
+      value
     });
   };
 }

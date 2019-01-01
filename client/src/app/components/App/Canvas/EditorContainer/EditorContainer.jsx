@@ -1,17 +1,16 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import SplitPane from 'react-split-pane';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import CodeEditor from '../../Shared/EditorComponents/CodeEditor/CodeEditor.jsx';
-import CodeOutput from '../../Shared/EditorComponents/CodeOutput/CodeOutput.jsx';
 import EditorToolbar from '../../Shared/EditorComponents/EditorToolbar/EditorToolbar.jsx';
-import ConsoleOutput from '../../Shared/EditorComponents/ConsoleOutput/ConsoleOutput.jsx';
 import * as editorActions from '../../../../action/editors.js';
+import SplitEditorContainer from './EditorViews/SplitEditorContainer.jsx';
+import TabbedEditorContainer from './EditorViews/TabbedEditorContainer.jsx';
 
 require('./editorContainer.scss');
+require('./resizer.scss');
 
 class EditorContainer extends React.Component {
   constructor(props) {
@@ -25,6 +24,7 @@ class EditorContainer extends React.Component {
     this.addMediaFile = (name, link) => this.props.addMediaFile(this.props.id, name, link);
     this.playCode = () => this.props.playCode(this.props.id);
     this.stopCode = () => this.props.stopCode(this.props.id);
+    this.setEditorView = value => this.props.setEditorView(this.props.id, value);
     this.setInnerWidth = value => this.props.setInnerWidth(this.props.id, value);
     this.startCodeRefresh = () => this.props.startCodeRefresh(this.props.id);
     this.stopCodeRefresh = () => this.props.stopCodeRefresh(this.props.id);
@@ -36,11 +36,14 @@ class EditorContainer extends React.Component {
       // Dec-17 : There's a memory leak in the Javascript editor. Watch the console after clicking Play.
       this.props.updateConsoleOutput(this.props.id, e);
     };
+    this.viewEditorPreview = () => this.props.viewEditorPreview(this.props.id);
   }
 
   toggleConsole = () => {
     this.setState(prevState => ({ isConsoleOpen: !prevState.isConsoleOpen }));
   }
+
+  editorView = () => this.props.editorView || 'split'
 
   startResize() {
     this.setState({ isResizing: true });
@@ -61,64 +64,66 @@ class EditorContainer extends React.Component {
         <div className={classNames(themeClass)} data-test={`code-editor-${this.props.editorMode}`}>
           <EditorToolbar
             addMediaFile={this.addMediaFile}
+            container="canvas"
             currentFile={this.props.currentFile}
             editorMode={this.props.editorMode}
+            editorView={this.props.editorView}
             files={this.props.files}
+            isConsoleOpen={this.state.isConsoleOpen}
             isPlaying={this.props.isPlaying}
             name={this.props.name}
             playCode={this.playCode}
             setCurrentFile={this.setCurrentFile}
+            setEditorView={this.setEditorView}
             startCodeRefresh={this.startCodeRefresh}
             stopCode={this.stopCode}
-            container="canvas"
+            toggleConsole={this.toggleConsole}
+            viewEditorPreview={this.viewEditorPreview}
           />
-          <div className="editor__container">
-
-            <div className="editor__sub-container">
-              <SplitPane
-                split="vertical"
-                defaultSize={this.props.innerWidth}
-                onDragStarted={this.startResize}
-                onDragFinished={(size) => { this.finishResize(); this.setInnerWidth(size); }}
-              >
-                <div className="editor__input">
-
-                  <CodeEditor
-                    currentFile={this.props.currentFile}
-                    files={this.props.files}
-                    updateFile={this.updateFile}
-                  />
-
-                </div>
-                <div className={`editor__output ${this.state.isConsoleOpen ? 'editor__output--short' : ''}`}>
-                  <div
-                    className={`editor__output-overlay
-                      ${this.state.isResizing
-        ? 'editor__output-overlay--show' : ''}`}
-                  >
-                  </div>
-                  { this.props.isPlaying && (
-                    <CodeOutput
-                      id={this.props.id}
-                      clearConsoleOutput={this.clearConsoleOutput}
-                      editorMode={this.props.editorMode}
-                      files={this.props.files}
-                      isPlaying={this.props.isPlaying}
-                      isRefreshing={this.props.isRefreshing}
-                      stopCodeRefresh={this.stopCodeRefresh}
-                      updateConsoleOutput={this.updateConsoleOutput}
-                    />
-                  )}
-                  <ConsoleOutput
-                    consoleOutputText={this.props.consoleOutputText}
-                    isConsoleOpen={this.state.isConsoleOpen}
-                    toggleConsole={this.toggleConsole}
-                  />
-                </div>
-              </SplitPane>
-            </div>
-
-          </div>
+          {this.editorView() === 'split' && (
+            <SplitEditorContainer
+              innerWidth={this.props.innerWidth}
+              startResize={this.startResize}
+              finishResize={this.finishResize}
+              setInnerWidth={this.setInnerWidth}
+              currentFile={this.props.currentFile}
+              files={this.props.files}
+              updateFile={this.updateFile}
+              isConsoleOpen={this.state.isConsoleOpen}
+              isResizing={this.state.isResizing}
+              id={this.props.id}
+              clearConsoleOutput={this.clearConsoleOutput}
+              editorMode={this.props.editorMode}
+              isPlaying={this.props.isPlaying}
+              isRefreshing={this.props.isRefreshing}
+              stopCodeRefresh={this.stopCodeRefresh}
+              updateConsoleOutput={this.updateConsoleOutput}
+              consoleOutputText={this.props.consoleOutputText}
+              toggleConsole={this.toggleConsole}
+            />
+          )}
+          {this.editorView() === 'tabbed' && (
+            <TabbedEditorContainer
+              innerWidth={this.props.innerWidth}
+              startResize={this.startResize}
+              finishResize={this.finishResize}
+              setInnerWidth={this.setInnerWidth}
+              currentFile={this.props.currentFile}
+              files={this.props.files}
+              updateFile={this.updateFile}
+              isConsoleOpen={this.state.isConsoleOpen}
+              isResizing={this.state.isResizing}
+              id={this.props.id}
+              clearConsoleOutput={this.clearConsoleOutput}
+              editorMode={this.props.editorMode}
+              isPlaying={this.props.isPlaying}
+              isRefreshing={this.props.isRefreshing}
+              stopCodeRefresh={this.stopCodeRefresh}
+              updateConsoleOutput={this.updateConsoleOutput}
+              consoleOutputText={this.props.consoleOutputText}
+              toggleConsole={this.toggleConsole}
+            />
+          )}
         </div>
 
       </div>
@@ -134,6 +139,7 @@ EditorContainer.propTypes = {
   currentFile: PropTypes.number.isRequired,
   editorMode: PropTypes.string.isRequired,
   editorTheme: PropTypes.string.isRequired,
+  editorView: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
@@ -144,12 +150,14 @@ EditorContainer.propTypes = {
   name: PropTypes.string.isRequired,
   playCode: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
+  setEditorView: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
-  updateFile: PropTypes.func.isRequired
+  updateFile: PropTypes.func.isRequired,
+  viewEditorPreview: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
