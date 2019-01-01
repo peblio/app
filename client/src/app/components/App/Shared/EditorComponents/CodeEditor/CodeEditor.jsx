@@ -62,9 +62,8 @@ class CodeEditor extends React.Component {
     }
     // TODO : Find an alternate to the below solution
     // this is specifically for the workspace since the component mounts before the value is pulled in from the DB
-    if (
-      this.props.container === 'workspace' &&
-      this.props.files[this.props.currentFile].content !== nextProps.files[nextProps.currentFile].content
+    if (this.props.container === 'workspace' && this.props.files[this.props.currentFile].content !==
+    nextProps.files[nextProps.currentFile].content
     ) {
       this.cm.setValue(nextProps.files[nextProps.currentFile].content);
     }
