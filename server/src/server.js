@@ -11,6 +11,7 @@ const app = express();
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const currentUserRoutes = require('./controllers/currentUserController');
+const authRoutes = require('./controllers/authController.js');
 const userRoutes = require('./controllers/userController.js');
 const pageRoutes = require('./controllers/pageController.js');
 const folderRoutes = require('./controllers/folderController');
@@ -48,6 +49,7 @@ app.use(passport.session());
 
 const router = express.Router();
 router.use('/current_user', currentUserRoutes);
+router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
 router.use('/pages', pageRoutes);
 router.use('/folders', folderRoutes);
