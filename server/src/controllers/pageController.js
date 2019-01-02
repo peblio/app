@@ -1,4 +1,4 @@
-import { getPage } from './pageControllerNew';
+import { getPage, getExamples } from './pageControllerNew';
 const express = require('express');
 const Page = require('../models/page.js');
 const User = require('../models/user.js');
@@ -105,5 +105,6 @@ pageRoutes.route('/:pageId').get(getPage);
 pageRoutes.route('/save').post(savePage);
 pageRoutes.route('/saveAsGuest').post(savePageAsGuest);
 pageRoutes.route('/update').post(updatePage);
+pageRoutes.route('/examples').get(getExamples);
 pageRoutes.route('/:pageId').delete(deletePage);
 module.exports = pageRoutes;

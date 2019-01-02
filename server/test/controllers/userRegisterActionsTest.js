@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'chai';
 import * as userRegisterActionsService from '../../src/service/userRegisterActionsService';
 import { createUser, loginUser, forgotPassword, resetPassword, confirmUser, resendConfirmUser } from '../../src/controllers/userRegisterActionsController';
 import { assert, spy } from 'sinon';
