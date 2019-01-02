@@ -45,6 +45,18 @@ Please note, the debug only works in Visual Studio Code. Also the debug does not
 2. The launch.json and tasks.json shall create a Debug Launch Confirguration "Server Debug"
 3. Install a breakpoint and start the Debug
 
+## Babel in Server
+
+To be able to use ES6 syntax, we use babel on the server side.
+As mentioned in [babel-node docs](https://babeljs.io/docs/en/babel-node), You should not be using babel-node in production. It is unnecessarily heavy, with high memory usage due to the cache being stored in memory. You will also always experience a startup performance penalty as the entire app needs to be compiled on the fly.
+As an option, while launching the server on higher environments we use `npm run startserver`. With this, we first transpile code to backwards compatible version of JavaScript
+and then start server. This is done in the prestartserver script of node. 
+
+While launching locally, we use `npm start` which calls `prestart` script from package.json.
+
+The reason we have different server startup scripts for local and for higher environments is because `npm start` generates source-maps which helps in local debugging.
+This isnt required while starting the server on higher environment.
+
 ## Tests
 
 This project uses [TestCafe](https://devexpress.github.io/testcafe/documentation/test-api/) to run end-to-end tests against the frontend and backend.
