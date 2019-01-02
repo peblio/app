@@ -1,12 +1,14 @@
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import PropTypes from 'prop-types';
 import React from 'react';
+import ReactCrop from 'react-image-crop';
 import axiosOrg from 'axios';
 import URL from 'url';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import 'react-image-crop/lib/ReactCrop.scss';
 
-import { setImageURL } from '../../../../action/editors.js';
+import { setImageURL, setImageCrop } from '../../../../action/editors.js';
 import axios from '../../../../utils/axios';
 import * as WidgetSize from '../../../../constants/widgetConstants.js';
 import FileUpload from '../../Shared/FileUpload/FileUpload.jsx';
@@ -25,8 +27,18 @@ class Image extends React.Component {
       isImageSmall: false,
       isFileUploading: false,
       isVideo: false,
+      crop: {
+        x: 50,
+        y: 50,
+        width: 50,
+        height: 50
+      }
     };
     this.setImageURL = url => this.props.setImageURL(this.props.id, url);
+    this.setImageCrop = (crop) => {
+      console.log(crop);
+      this.props.setImageCrop(this.props.id, crop);
+    };
     this.onDrop = this.onDrop.bind(this);
     this.urlSubmitted = (event, value) => {
       event.preventDefault();
@@ -129,6 +141,7 @@ class Image extends React.Component {
   }
 
   render() {
+    console.log(this.props.crop);
     return (
       <div>
         <div
@@ -142,12 +155,22 @@ class Image extends React.Component {
           data-test="image__container"
         >
           {(this.props.imageURL && !this.state.isVideo) && (
-            <img
-              className="element__image"
-              src={this.props.imageURL}
-              alt=""
-              data-test="image__main"
-            />
+            <div>
+              <img
+                className="element__image"
+                src={this.props.imageURL}
+                alt=""
+                data-test="image__main"
+              />
+              <ReactCrop
+                src={this.props.imageURL}
+                crop={this.props.crop}
+                onChange={(crop) => {
+                  console.log(crop);
+                  this.setImageCrop(crop);
+                }}
+              />
+            </div>
           )}
           {(this.props.imageURL && this.state.isVideo) && (
             // eslint-disable-next-line
@@ -203,6 +226,7 @@ Image.propTypes = {
   imageURL: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
+  setImageCrop: PropTypes.func.isRequired,
   setImageURL: PropTypes.func.isRequired,
 };
 
@@ -213,6 +237,7 @@ function mapStateToProps(state) {
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
+  setImageCrop,
   setImageURL
 }, dispatch);
 

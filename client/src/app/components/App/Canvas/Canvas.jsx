@@ -172,11 +172,13 @@ class Canvas extends React.Component {
   }
 
   renderImage(editor) {
+    console.log(editor.crop);
     return (
       <div key={editor.id}>
         <Image
           id={editor.id}
           imageURL={editor.url}
+          crop={editor.crop}
           layout={this.props.layout}
         />
       </div>

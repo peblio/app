@@ -362,3 +362,14 @@ export function setImageURL(id, url) {
     });
   };
 }
+
+export function setImageCrop(id, crop) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.SET_IMAGE_CROP,
+      id,
+      crop
+    });
+  };
+}
