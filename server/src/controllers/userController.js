@@ -30,14 +30,19 @@ function getUserNameById(req, res) {
   });
 }
 
-function getOwnerForPage(req, res) {
-  Page.findOne({ _id: req.params.pageParentId }, (err, user) => {
+function getUserNameForPage(req, res) {
+  Page.findOne({ _id: req.params.pageParentId }, (err, page) => {
     if (err) {
       res.status(500).send(err);
     } else {
-      res.status(200).send({
-        name: user.name,
-        type: user.type
+      User.findOne({ _id: page.user }, (err, user) => {
+        if (err) {
+          res.status(500).send(err);
+        }
+        res.status(200).send({
+          name: user.name,
+          type: user.type
+        });
       });
     }
   });
