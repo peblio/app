@@ -53,5 +53,5 @@ export function getUserNameForPage(req, res) {
 //TODO: expose api to get user by object id
 _userRoutes.route('/:userName/profile').get(getUserProfile);
 _userRoutes.route('/:userObjectId').get(getUserNameById);
-_userRoutes.route('/page/:pageParentId').get(getUserNameById);
+_userRoutes.route('/page/:pageParentId').get(getUserNameForPage);
 export const userRoutes = _userRoutes;
