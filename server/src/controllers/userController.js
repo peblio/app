@@ -1,7 +1,9 @@
 const express = require('express');
+const _userRoutes = express.Router();
 const User = require('../models/user.js');
+const Page = require('../models/page.js');
 
-function getUserProfile(req, res) {
+export function getUserProfile(req, res) {
   User.findOne({ name: req.params.userName }, (err, user) => {
     if (err) {
       res.send(err);
@@ -17,7 +19,7 @@ function getUserProfile(req, res) {
   });
 }
 
-function getUserNameById(req, res) {
+export async function getUserNameById(req, res) {
   User.findOne({ _id: req.params.userObjectId }, (err, user) => {
     if (err) {
       res.status(500).send(err);
@@ -30,16 +32,16 @@ function getUserNameById(req, res) {
   });
 }
 
-function getUserNameForPage(req, res) {
+export async function getUserNameForPage(req, res) {
   Page.findOne({ _id: req.params.pageParentId }, (err, page) => {
     if (err) {
-      res.status(500).send(err);
+      return res.status(500).send(err);
     } else {
       User.findOne({ _id: page.user }, (err, user) => {
         if (err) {
-          res.status(500).send(err);
+          return res.status(500).send(err);
         }
-        res.status(200).send({
+        return res.status(200).send({
           name: user.name,
           type: user.type
         });
@@ -49,7 +51,6 @@ function getUserNameForPage(req, res) {
 }
 
 //TODO: expose api to get user by object id
-const userRoutes = express.Router();
-userRoutes.route('/:userName/profile').get(getUserProfile);
-userRoutes.route('/:userObjectId').get(getUserByObjectId);
-module.exports = userRoutes;
+_userRoutes.route('/:userName/profile').get(getUserProfile);
+_userRoutes.route('/:userObjectId').get(getUserNameById);
+export const userRoutes = _userRoutes;
