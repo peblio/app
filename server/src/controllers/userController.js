@@ -19,9 +19,9 @@ export function getUserProfile(req, res) {
   });
 }
 
-export async function getUserNameById(req, res) {
-  User.findOne({ _id: req.params.userObjectId }, (err, user) => {
-    if (err) {
+export function getUserNameById(req, res) {
+  User.findById(req.params.userObjectId, (err, user) => {
+    if (err || !user) {
       res.status(500).send(err);
     } else {
       res.status(200).send({
@@ -32,12 +32,12 @@ export async function getUserNameById(req, res) {
   });
 }
 
-export async function getUserNameForPage(req, res) {
-  Page.findOne({ _id: req.params.pageParentId }, (err, page) => {
+export function getUserNameForPage(req, res) {
+  Page.findById(req.params.pageParentId, (err, page) => {
     if (err) {
       return res.status(500).send(err);
     } else {
-      User.findOne({ _id: page.user }, (err, user) => {
+      User.findById(page.user, (err, user) => {
         if (err) {
           return res.status(500).send(err);
         }
@@ -53,4 +53,5 @@ export async function getUserNameForPage(req, res) {
 //TODO: expose api to get user by object id
 _userRoutes.route('/:userName/profile').get(getUserProfile);
 _userRoutes.route('/:userObjectId').get(getUserNameById);
+_userRoutes.route('/page/:pageParentId').get(getUserNameById);
 export const userRoutes = _userRoutes;
