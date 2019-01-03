@@ -1,7 +1,5 @@
 const express = require('express');
 const User = require('../models/user.js');
-const Folder = require('../models/folder.js');
-const Page = require('../models/page.js');
 
 function getUserProfile(req, res) {
   User.findOne({ name: req.params.userName }, (err, user) => {
@@ -19,48 +17,34 @@ function getUserProfile(req, res) {
   });
 }
 
-
-function getSketches(req, res) {
-  // TODO: make the request async
-  if (!req.params.user) {
-    if (!req.user) {
-      res.status(403).send({ error: 'Please log in first or specify a user' });
-      return;
+function getUserNameById(req, res) {
+  User.findOne({ _id: req.params.userObjectId }, (err, user) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send({
+        name: user.name,
+        type: user.type
+      });
     }
-  }
-  let user = req.user;
-  if (req.params.user) {
-    User.findOne({ name: req.params.user }, (userFindError, data) => {
-      if (userFindError) {
-        res.status(404).send({ error: userFindError });
-      } else if (data.type === 'student') {
-        res.status(403).send({ error: 'This users data cannot be accessed' });
-      } else {
-        user = data;
-        Promise.all([
-          Page.find({ user: user._id }).exec(),
-          Folder.find({ user: user._id }).exec()
-        ])
-          .then(([pages, folders]) => {
-            res.send({ pages, folders });
-          })
-          .catch(err => res.send(err));
-      }
-    });
-  } else {
-    Promise.all([
-      Page.find({ user: user._id }).exec(),
-      Folder.find({ user: user._id }).exec()
-    ])
-      .then(([pages, folders]) => {
-        res.send({ pages, folders });
-      })
-      .catch(err => res.send(err));
-  }
+  });
 }
 
-const userRoutes = express.Router();
+function getOwnerForPage(req, res) {
+  Page.findOne({ _id: req.params.pageParentId }, (err, user) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send({
+        name: user.name,
+        type: user.type
+      });
+    }
+  });
+}
 
+//TODO: expose api to get user by object id
+const userRoutes = express.Router();
 userRoutes.route('/:userName/profile').get(getUserProfile);
-userRoutes.route('/:userName/sketches').get(getSketches);
+userRoutes.route('/:userObjectId').get(getUserByObjectId);
 module.exports = userRoutes;

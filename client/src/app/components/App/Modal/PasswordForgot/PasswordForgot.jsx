@@ -21,7 +21,7 @@ class PasswordForgot extends React.Component {
   }
 
   submitForgotPassword(event, email) {
-    axios.post('/users/forgot', {
+    axios.post('/auth/forgot', {
       email
     })
       .then((response) => {
