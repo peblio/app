@@ -175,7 +175,7 @@ export function forgotPassword(req, res) {
         }
         const userNames = [];
         const tokens = [];
-        if (!users || users === null || users.length === 0) {
+        if (!users || users.length === 0) {
             return res.status(404).send({
                 msg: UserConst.PASSWORD_RESET_NO_USER
             });
