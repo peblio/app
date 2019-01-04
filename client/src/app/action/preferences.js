@@ -47,7 +47,7 @@ function updatePrefrences(keyValuePair, actionToDispatch) {
   return (dispatch) => {
     dispatch({
       type: actionToDispatch,
-      value
+      value: keyValuePair.value
     });
   };
 }

@@ -1,5 +1,5 @@
 const express = require('express');
-const _userRoutes = express.Router();
+const userRoutes = express.Router();
 const User = require('../models/user.js');
 const Page = require('../models/page.js');
 
@@ -50,8 +50,7 @@ export function getUserNameForPage(req, res) {
   });
 }
 
-//TODO: expose api to get user by object id
-_userRoutes.route('/:userName/profile').get(getUserProfile);
-_userRoutes.route('/:userObjectId').get(getUserNameById);
-_userRoutes.route('/page/:pageParentId').get(getUserNameForPage);
-export const userRoutes = _userRoutes;
+userRoutes.route('/:userName/profile').get(getUserProfile);
+userRoutes.route('/:userObjectId').get(getUserNameById);
+userRoutes.route('/page/:pageParentId').get(getUserNameForPage);
+export default userRoutes;
