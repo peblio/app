@@ -19,5 +19,39 @@ export function getUserProfile(req, res) {
   });
 }
 
+export function getUserNameById(req, res) {
+  User.findById(req.params.userObjectId, (err, user) => {
+    if (err || !user) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send({
+        name: user.name,
+        type: user.type
+      });
+    }
+  });
+}
+
+export function getUserNameForPage(req, res) {
+  Page.findById(req.params.pageParentId, (err, page) => {
+    if (err) {
+      return res.status(500).send(err);
+    } else {
+      User.findById(page.user, (err, user) => {
+        if (err) {
+          return res.status(500).send(err);
+        }
+        return res.status(200).send({
+          name: user.name,
+          type: user.type
+        });
+      });
+    }
+  });
+}
+
+//TODO: expose api to get user by object id
 _userRoutes.route('/:userName/profile').get(getUserProfile);
+_userRoutes.route('/:userObjectId').get(getUserNameById);
+_userRoutes.route('/page/:pageParentId').get(getUserNameForPage);
 export const userRoutes = _userRoutes;
