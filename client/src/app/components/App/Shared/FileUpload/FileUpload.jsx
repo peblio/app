@@ -10,12 +10,13 @@ import UploadSVG from '../../../../images/upload.svg';
 class FileUpload extends React.Component {
   render() {
     return (
-      <div>
+      <div
+        ref={(input) => { this.fileUpload = input; }}
+      >
         <div className="image__title">Upload a file</div>
         <Dropzone
           onDrop={(files) => { this.props.onDrop(files); }}
           className="element-image"
-          disabled={this.props.isSmall}
         >
           <div
             className="image__drop"
@@ -77,7 +78,6 @@ FileUpload.propTypes = {
   container: PropTypes.string.isRequired,
   imageURL: PropTypes.string.isRequired,
   isFileUploading: PropTypes.bool.isRequired,
-  isSmall: PropTypes.bool.isRequired,
   onDrop: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
   urlSubmitted: PropTypes.func.isRequired,

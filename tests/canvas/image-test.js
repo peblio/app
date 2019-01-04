@@ -8,7 +8,7 @@ const DIRECT_LINK = 'https://placekitten.com/500/500';
 const FILE_LINK = '../assets/cat.jpeg';
 const AWS_LINK = 'https://s3.amazonaws.com/peblio-files-staging/';
 
-fixture('Use Image widgets when not logged in ')
+fixture.only('Use Image widgets when not logged in ')
   .page(config.baseUrl)
   .beforeEach(async (t) => {
     await clearDB();

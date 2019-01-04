@@ -1,17 +1,17 @@
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactCrop from 'react-image-crop';
+
 import axiosOrg from 'axios';
 import URL from 'url';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import 'react-image-crop/lib/ReactCrop.scss';
-
+import ImageResizer from './ImageResizer.jsx';
 import { setImageURL, setImageCrop } from '../../../../action/editors.js';
 import axios from '../../../../utils/axios';
 import * as WidgetSize from '../../../../constants/widgetConstants.js';
 import FileUpload from '../../Shared/FileUpload/FileUpload.jsx';
+import Modal from '../../Modal/Modal.jsx';
 
 const MEDIA_FILE_REGEX = /.+\.(gif|jpg|jpeg|png|bmp)$/i;
 const VIDEO_FILE_REGEX = /.+\.(mp4|avi|mov|mpg|wmv)$/i;
@@ -23,20 +23,14 @@ class Image extends React.Component {
     super(props);
     this.state = {
       url: '',
-      showUploadPopup: false,
+      isFileUploadOpen: false,
       isImageSmall: false,
       isFileUploading: false,
       isVideo: false,
-      crop: {
-        x: 50,
-        y: 50,
-        width: 50,
-        height: 50
-      }
+      isImageResizerOpen: false
     };
     this.setImageURL = url => this.props.setImageURL(this.props.id, url);
     this.setImageCrop = (crop) => {
-      console.log(crop);
       this.props.setImageCrop(this.props.id, crop);
     };
     this.onDrop = this.onDrop.bind(this);
@@ -45,6 +39,11 @@ class Image extends React.Component {
       this.props.setImageURL(this.props.id, value);
       this.renderUploadPopup(false);
     };
+    this.openImageResizer = () => this.setState({ isImageResizerOpen: true });
+    this.closeImageResizer = () => this.setState({ isImageResizerOpen: false });
+
+    this.openFileUpload = () => this.setState({ isFileUploadOpen: true });
+    this.closeFileUpload = () => this.setState({ isFileUploadOpen: false });
   }
 
   componentDidMount() {
@@ -98,7 +97,7 @@ class Image extends React.Component {
 
   setUploadPopupVisibility(value) {
     const newState = { ...this.state };
-    newState.showUploadPopup = value;
+    newState.isFileUploadOpen = value;
     this.setState(newState);
   }
 
@@ -110,6 +109,17 @@ class Image extends React.Component {
     this.setState({ isFileUploading: false });
   }
 
+  imageExists = () => !!this.props.imageURL
+
+  displayImage = () => this.props.imageURL && !this.state.isVideo
+
+  displayVideo = () => this.props.imageURL && this.state.isVideo
+
+  displayLoginScreen = () => !this.props.preview && !this.props.name
+
+  displayImageUploadScreen = () => !this.props.preview && this.props.name
+
+  displayImageEditScreen = () => !this.props.preview && this.props.imageURL && !this.state.isVideo
 
   imageSizeChanged = () => {
     const isImageSmall = (this.imageWidgetRef.clientWidth < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_WIDTH ||
@@ -119,102 +129,155 @@ class Image extends React.Component {
     }
   }
 
-  handleOnClick() {
+  showUploadArea() {
     const newState = { ...this.state };
     return (
       this.imageWidgetRef && (this.state.isImageSmall)
     ) &&
-    this.setUploadPopupVisibility(!newState.showUploadPopup);
+    this.setUploadPopupVisibility(!newState.isFileUploadOpen);
   }
 
-  renderUploadPopup(sizeOverride) {
-    return (
+  renderUploadPopup=() => (
+    <Modal
+      size="auto"
+      isOpen={this.state.isFileUploadOpen}
+      closeModal={this.closeFileUpload}
+    >
       <FileUpload
         onDrop={this.onDrop}
         urlSubmitted={this.urlSubmitted}
         imageURL={this.props.imageURL}
         container="image"
-        isSmall={sizeOverride && this.state.isImageSmall}
         isFileUploading={this.state.isFileUploading}
+      />
+    </Modal>
+  )
+
+  renderImageEdit=() => (
+    <Modal
+      size="auto"
+      isOpen={this.state.isImageResizerOpen}
+      closeModal={this.closeImageResizer}
+    >
+    pooooop
+      <ImageResizer
+        imageURL={this.props.imageURL}
+        crop={this.props.crop}
+        setImageCrop={this.setImageCrop}
+      />
+    </Modal>
+  )
+
+  renderImage=() => {
+    console.log('test');
+    const crop = this.props.crop;
+    const cropCss =
+      `polygon(
+      ${crop.x}% ${crop.y}%,
+      ${crop.x + crop.width}% ${crop.y}%,
+      ${crop.x + crop.width}% ${crop.y + crop.height}%,
+      ${crop.x}% ${crop.y + crop.height}%)
+      `;
+
+    console.log(cropCss);
+    return (
+      <img
+        className="element__image"
+        src={this.props.imageURL}
+        alt=""
+        data-test="image__main"
+        style={{
+          clipPath: cropCss,
+          WebkitClipPath: cropCss,
+        }}
       />
     );
   }
 
+  renderVideo=() => (
+    // eslint-disable-next-line
+      <video width="100%" controls>
+      <source src={this.props.imageURL} />
+        Your browser does not support HTML5 video.
+    </video>
+  )
+
+  renderLoginScreen=() => (
+    <div className="image__login">
+      <div
+        className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
+      >
+        <div className="image__title">
+          Log In to Upload Images
+        </div>
+      </div>
+    </div>
+  )
+
+  renderImageUploadScreen=() => (
+    <div
+        tabIndex="0" //eslint-disable-line
+      role="button"
+      className={
+        `image__login ${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`
+      }
+      data-test="image__upload-container"
+      onClick={() => { this.showUploadArea(); }}
+      onKeyUp={() => this.showUploadArea()}
+    >
+      POOP
+      {this.renderUploadPopup()}
+    </div>
+  )
+
+
   render() {
-    console.log(this.props.crop);
     return (
       <div>
         <div
           ref={(ref) => { this.imageWidgetRef = ref; }}
+          data-test="image__container"
           className={`
           image__container
           ${this.props.preview ? '' : 'image__container--edit'}
           ${this.props.name && this.imageWidgetRef && (this.state.isImageSmall) ? 'image__container--small' : ''}
           ${this.props.imageURL && 'image__container--exists'}
           `}
-          data-test="image__container"
         >
-          {(this.props.imageURL && !this.state.isVideo) && (
+          {this.imageExists() && (
             <div>
-              <img
-                className="element__image"
-                src={this.props.imageURL}
-                alt=""
-                data-test="image__main"
-              />
-              <ReactCrop
-                src={this.props.imageURL}
-                crop={this.props.crop}
-                onChange={(crop) => {
-                  console.log(crop);
-                  this.setImageCrop(crop);
-                }}
-              />
-            </div>
-          )}
-          {(this.props.imageURL && this.state.isVideo) && (
-            // eslint-disable-next-line
-            <video width="100%" controls>
-              <source src={this.props.imageURL} />
-              Your browser does not support HTML5 video.
-            </video>
-          )}
-          {!this.props.preview && !this.props.name && (
-            <div className="image__login">
-
-              <div
-                className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
-              >
-                <div className="image__title">
-                Log In to Upload Images
-                </div>
+              {this.displayImage() && (
+                this.renderImage()
+              )}
+              {this.displayVideo() && (
+                this.renderVideo()
+              )}
+              <div className="image__edit-toolbar">
+                <button
+                  onClick={this.openFileUpload}
+                >
+                Upload new
+                </button>
+                <button
+                  onClick={this.openImageResizer}
+                >
+                Edit
+                </button>
               </div>
             </div>
           )}
-
-          {!this.props.preview && this.props.name && (
-            <div
-              tabIndex="0" //eslint-disable-line
-              role="button"
-              className={
-                `image__login ${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`
-              }
-              data-test="image__upload-container"
-              onClick={() => { this.handleOnClick(); }}
-              onKeyUp={() => this.handleOnClick()}
-            >
-              {this.renderUploadPopup(true)}
-            </div>
+          {this.displayLoginScreen() && (
+            this.renderLoginScreen()
           )}
 
-          {this.state.showUploadPopup && (
-            <div
-              className='image__container image__container--popup'
-              data-test="image__upload-container"
-            >
-              {this.renderUploadPopup(false)}
-            </div>
+          {this.displayImageUploadScreen() && (
+            this.renderImageUploadScreen()
           )}
+
+
+          {this.renderUploadPopup()}
+          {this.renderImageEdit()}
+
         </div>
       </div>
     );
