@@ -1,7 +1,6 @@
 const express = require('express');
-const _userRoutes = express.Router();
+const userRoutes = express.Router();
 const User = require('../models/user.js');
-const Page = require('../models/page.js');
 
 export function getUserProfile(req, res) {
   User.findOne({ name: req.params.userName }, (err, user) => {
@@ -19,5 +18,5 @@ export function getUserProfile(req, res) {
   });
 }
 
-_userRoutes.route('/:userName/profile').get(getUserProfile);
-export const userRoutes = _userRoutes;
+userRoutes.route('/:userName/profile').get(getUserProfile);
+export default userRoutes;

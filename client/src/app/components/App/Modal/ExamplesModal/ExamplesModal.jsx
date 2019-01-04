@@ -14,7 +14,7 @@ class ExamplesModal extends React.Component {
 
   componentDidMount() {
     const temp = [];
-    axios.get('/pages/examples')
+    axios.get('/examples')
       .then((res) => {
         res.data.forEach((example) => {
           temp.push({

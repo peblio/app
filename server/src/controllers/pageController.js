@@ -105,6 +105,5 @@ pageRoutes.route('/:pageId').get(getPage);
 pageRoutes.route('/save').post(savePage);
 pageRoutes.route('/saveAsGuest').post(savePageAsGuest);
 pageRoutes.route('/update').post(updatePage);
-pageRoutes.route('/examples').get(getExamples);
 pageRoutes.route('/:pageId').delete(deletePage);
 module.exports = pageRoutes;
