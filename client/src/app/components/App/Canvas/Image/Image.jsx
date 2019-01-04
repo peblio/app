@@ -117,7 +117,7 @@ class Image extends React.Component {
 
   displayLoginScreen = () => !this.props.preview && !this.props.name
 
-  displayImageUploadScreen = () => !this.props.preview && this.props.name
+  displayImageUploadScreen = () => !this.props.preview && !!this.props.name && !this.imageExists()
 
   displayImageEditScreen = () => !this.props.preview && this.props.imageURL && !this.state.isVideo
 
@@ -178,7 +178,11 @@ class Image extends React.Component {
       ${crop.x + crop.width}% ${crop.y + crop.height}%,
       ${crop.x}% ${crop.y + crop.height}%)
       `;
-
+    const translateX = (100 - crop.x) / 2;
+    const translateY = (100 - crop.y) / 2;
+    const scaleX = 100 / crop.width;
+    const scaleY = 100 / crop.height;
+    const transform = `translate(${translateX}%, ${translateY}%) scale(${scaleX}, ${scaleY})`;
     console.log(cropCss);
     return (
       <img
@@ -188,7 +192,9 @@ class Image extends React.Component {
         data-test="image__main"
         style={{
           clipPath: cropCss,
-          WebkitClipPath: cropCss,
+          WebkitlipPath: cropCss,
+          transform,
+          WebkitTransform: transform
         }}
       />
     );
@@ -225,13 +231,13 @@ class Image extends React.Component {
       onClick={() => { this.showUploadArea(); }}
       onKeyUp={() => this.showUploadArea()}
     >
-      POOP
       {this.renderUploadPopup()}
     </div>
   )
 
 
   render() {
+    console.log(this.displayImageUploadScreen());
     return (
       <div>
         <div
@@ -271,9 +277,14 @@ class Image extends React.Component {
           )}
 
           {this.displayImageUploadScreen() && (
-            this.renderImageUploadScreen()
+            <FileUpload
+              onDrop={this.onDrop}
+              urlSubmitted={this.urlSubmitted}
+              imageURL={this.props.imageURL}
+              container="image"
+              isFileUploading={this.state.isFileUploading}
+            />
           )}
-
 
           {this.renderUploadPopup()}
           {this.renderImageEdit()}
