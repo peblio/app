@@ -55,7 +55,7 @@ and then start server. This is done in the prestartserver script of node.
 While launching locally, we use `npm start` which calls `prestart` script from package.json.
 
 The reason we have different server startup scripts for local and for higher environments is because `npm start` generates source-maps which helps in local debugging.
-This isnt required while starting the server on higher environment.
+This isn't required while starting the server on higher environment.
 
 ## Tests
 
@@ -78,7 +78,7 @@ npm run test:all
 
 ### Unit Tests For Server
 
-You can run the tests once by running
+You can run the from root folder by running
 ```
 cd server 
 npm test
