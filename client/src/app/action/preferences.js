@@ -6,7 +6,7 @@ export function updateEditorTheme(e) {
   updatePrefrences({
     key: 'editorTheme',
     value
-  });
+  }, ActionTypes.UPDATE_EDITOR_THEME);
 }
 
 export function updateEditorFontSize(e) {
@@ -14,7 +14,7 @@ export function updateEditorFontSize(e) {
   updatePrefrences({
     key: 'editorFontSize',
     value
-  });
+  }, ActionTypes.UPDATE_EDITOR_FONT_SIZE);
 }
 
 
@@ -35,7 +35,7 @@ export function fetchUserPreferences() {
   };
 }
 
-function updatePrefrences(keyValuePair) {
+function updatePrefrences(keyValuePair, actionToDispatch) {
   axios.post('/current_user/preferences', keyValuePair)
     .then((res) => {
       console.log('preferences updated');
@@ -46,7 +46,7 @@ function updatePrefrences(keyValuePair) {
 
   return (dispatch) => {
     dispatch({
-      type: ActionTypes.UPDATE_EDITOR_THEME,
+      type: actionToDispatch,
       value
     });
   };
