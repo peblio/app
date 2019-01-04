@@ -45,6 +45,9 @@ Please note, the debug only works in Visual Studio Code. Also the debug does not
 2. The launch.json and tasks.json shall create a Debug Launch Confirguration "Server Debug"
 3. Install a breakpoint and start the Debug
 
+The presence of jsconfig.json file in a directory indicates that the directory is the root of a JavaScript Project.
+It also helps us point that server is ES6 syntax javascript project
+
 ## Babel in Server
 
 To be able to use ES6 syntax, we use babel on the server side.
