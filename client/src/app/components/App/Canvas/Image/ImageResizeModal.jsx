@@ -4,11 +4,12 @@ import React from 'react';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/lib/ReactCrop.scss';
 
-class ImageResizer extends React.Component {
+class ImageResizeModal extends React.Component {
   render() {
     return (
-      <div>
-      HI
+      <div
+        className="image-resizer__container"
+      >
         <ReactCrop
           src={this.props.imageURL}
           crop={this.props.crop}
@@ -22,9 +23,9 @@ class ImageResizer extends React.Component {
   }
 }
 
-ImageResizer.propTypes = {
+ImageResizeModal.propTypes = {
 
 };
 
 
-export default ImageResizer;
+export default ImageResizeModal;

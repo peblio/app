@@ -6,7 +6,8 @@ import axiosOrg from 'axios';
 import URL from 'url';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import ImageResizer from './ImageResizer.jsx';
+import ImageResizeModal from './ImageResizeModal.jsx';
+import ImageEditToolbar from './ImageEditToolbar.jsx';
 import { setImageURL, setImageCrop } from '../../../../action/editors.js';
 import axios from '../../../../utils/axios';
 import * as WidgetSize from '../../../../constants/widgetConstants.js';
@@ -117,7 +118,7 @@ class Image extends React.Component {
 
   displayLoginScreen = () => !this.props.preview && !this.props.name
 
-  displayImageUploadScreen = () => !this.props.preview && !!this.props.name && !this.imageExists()
+  displayImageUploadScreen = () => !this.props.preview && !this.imageExists()
 
   displayImageEditScreen = () => !this.props.preview && this.props.imageURL && !this.state.isVideo
 
@@ -129,17 +130,9 @@ class Image extends React.Component {
     }
   }
 
-  showUploadArea() {
-    const newState = { ...this.state };
-    return (
-      this.imageWidgetRef && (this.state.isImageSmall)
-    ) &&
-    this.setUploadPopupVisibility(!newState.isFileUploadOpen);
-  }
-
   renderUploadPopup=() => (
     <Modal
-      size="auto"
+      size="image"
       isOpen={this.state.isFileUploadOpen}
       closeModal={this.closeFileUpload}
     >
@@ -149,18 +142,18 @@ class Image extends React.Component {
         imageURL={this.props.imageURL}
         container="image"
         isFileUploading={this.state.isFileUploading}
+        isSmall={false}
       />
     </Modal>
   )
 
   renderImageEdit=() => (
     <Modal
-      size="auto"
+      size="image"
       isOpen={this.state.isImageResizerOpen}
       closeModal={this.closeImageResizer}
     >
-    pooooop
-      <ImageResizer
+      <ImageResizeModal
         imageURL={this.props.imageURL}
         crop={this.props.crop}
         setImageCrop={this.setImageCrop}
@@ -169,7 +162,6 @@ class Image extends React.Component {
   )
 
   renderImage=() => {
-    console.log('test');
     const crop = this.props.crop;
     const cropCss =
       `polygon(
@@ -178,12 +170,10 @@ class Image extends React.Component {
       ${crop.x + crop.width}% ${crop.y + crop.height}%,
       ${crop.x}% ${crop.y + crop.height}%)
       `;
-    const translateX = (100 - crop.x) / 2;
-    const translateY = (100 - crop.y) / 2;
-    const scaleX = 100 / crop.width;
+    const translateX = 50 - crop.x;
+    const translateY = 50 - crop.y;
     const scaleY = 100 / crop.height;
-    const transform = `translate(${translateX}%, ${translateY}%) scale(${scaleX}, ${scaleY})`;
-    console.log(cropCss);
+    const transform = `translate(-50%, -50%) scale(${scaleY}) translate(${translateX}%, ${translateY}%) `;
     return (
       <img
         className="element__image"
@@ -208,36 +198,8 @@ class Image extends React.Component {
     </video>
   )
 
-  renderLoginScreen=() => (
-    <div className="image__login">
-      <div
-        className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
-      >
-        <div className="image__title">
-          Log In to Upload Images
-        </div>
-      </div>
-    </div>
-  )
-
-  renderImageUploadScreen=() => (
-    <div
-        tabIndex="0" //eslint-disable-line
-      role="button"
-      className={
-        `image__login ${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`
-      }
-      data-test="image__upload-container"
-      onClick={() => { this.showUploadArea(); }}
-      onKeyUp={() => this.showUploadArea()}
-    >
-      {this.renderUploadPopup()}
-    </div>
-  )
-
 
   render() {
-    console.log(this.displayImageUploadScreen());
     return (
       <div>
         <div
@@ -258,22 +220,15 @@ class Image extends React.Component {
               {this.displayVideo() && (
                 this.renderVideo()
               )}
-              <div className="image__edit-toolbar">
-                <button
-                  onClick={this.openFileUpload}
-                >
-                Upload new
-                </button>
-                <button
-                  onClick={this.openImageResizer}
-                >
-                Edit
-                </button>
-              </div>
+              {!this.props.preview && (
+                <ImageEditToolbar
+                  name={this.props.name}
+                  openFileUpload={this.openFileUpload}
+                  openImageResizer={this.openImageResizer}
+                  isImageSmall={this.state.isImageSmall}
+                />
+              )}
             </div>
-          )}
-          {this.displayLoginScreen() && (
-            this.renderLoginScreen()
           )}
 
           {this.displayImageUploadScreen() && (
@@ -283,6 +238,7 @@ class Image extends React.Component {
               imageURL={this.props.imageURL}
               container="image"
               isFileUploading={this.state.isFileUploading}
+              isSmall={this.state.isImageSmall}
             />
           )}
 

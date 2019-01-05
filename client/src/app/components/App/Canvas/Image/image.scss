@@ -47,6 +47,9 @@
       .image__title {
         display: none;
       }
+      .image-edit-toolbar__container {
+        display: flex;
+      }
     }
 
     &.image__container--small {
@@ -163,14 +166,6 @@
   text-align: center;
 }
 
-.image__drop_default {
-  padding: $large-padding;
-  // background-color: $lighter-gray;
-  margin: $small-margin $small-margin*2;
-  border-radius: $medium-border-radius;
-  color: $gray;
-}
-
 .image__drop {
   padding: $small-padding;
   margin: 0 $medium-margin;
@@ -186,6 +181,20 @@
 .image__url {
   width: 100%;
   margin: 0 auto;
+}
+
+.image{
+  &__upload-container {
+    padding: $medium-padding;
+  }
+  &__upload-notice {
+    width: 100%;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+  }
 }
 
 .element-image__input {
@@ -220,24 +229,66 @@
   width: 100%;
 }
 
-.image-reupload-form {
-  padding-top: 15px;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: $lighter-gray;
-  transition: 0.25s ease;
-}
-
 .element__button {
   @extend %modal__canvas-button;
 }
 
 .image-resizer__container {
-
+  width: 50%;
+  padding: $medium-margin;
+  margin: 0 auto;
 }
 
-.image__edit-toolbar {
-  position: absolute;
+.image-edit-toolbar {
+  &__container {
+    position: absolute;
+    bottom: 0;
+    background: $g6;
+    display: none;
+    padding: $medium-padding;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  &__button {
+    background: $green;
+    color: $g6;
+    padding: $small-padding/2;
+    border: $green solid $small-border;
+    margin: $small-margin 0;
+    width: 100%;
+    &:hover {
+      border: $green solid $small-border;
+      color: $green;
+      background: $g6;
+    }
+  }
+  &__upload-button {
+    position: absolute;
+    background: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    opacity: 0.8;
+    &:hover {
+      background: transparent;
+      border: none;
+      opacity: 1;
+    }
+  }
+  &__pop-up {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: $g6;
+    display: flex;
+    padding: $medium-padding;
+    flex-direction: column;
+    width: $image-upload-toolbar-width;
+    box-sizing: border-box;
+    box-shadow: 0 -5px 20px -10px $black;
+  }
 }
