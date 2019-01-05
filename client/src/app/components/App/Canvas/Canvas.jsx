@@ -172,7 +172,6 @@ class Canvas extends React.Component {
   }
 
   renderImage(editor) {
-    console.log(editor.crop);
     return (
       <div key={editor.id}>
         <Image
@@ -256,13 +255,28 @@ class Canvas extends React.Component {
             break;
           }
           case 'image': {
-            this.setWidgetSize(
-              localLayout[key],
-              WidgetSize.IMAGE_DEFAULT_WIDTH,
-              WidgetSize.IMAGE_DEFAULT_HEIGHT,
-              WidgetSize.IMAGE_MIN_WIDTH,
-              WidgetSize.IMAGE_MIN_HEIGHT
-            );
+            const layout = localLayout[key];
+            const imageRatio = this.props.editors[key].crop.width / this.props.editors[key].crop.height;
+            const layoutRatio = layout.w / layout.h;
+            const defaultWidth = WidgetSize.IMAGE_DEFAULT_WIDTH;
+            const defaultHeight = WidgetSize.IMAGE_DEFAULT_HEIGHT;
+            const minWidth = WidgetSize.IMAGE_MIN_WIDTH;
+            const minHeight = WidgetSize.IMAGE_MIN_HEIGHT;
+
+            layout.minW = minWidth;
+            layout.w = !layout.w ? defaultWidth : layout.w;
+            console.log(layout.w);
+            console.log(minWidth);
+            console.log(imageRatio);
+            console.log(layoutRatio);
+            if (imageRatio > layoutRatio) {
+              console.log('yo');
+              console.log(layout.w);
+              layout.w = layout.h * imageRatio;
+              console.log(layout.w);
+            }
+            layout.minH = minHeight;
+            layout.h = (layout.h < layout.minH) ? defaultHeight : layout.h;
             break;
           }
           case 'video': {
@@ -281,6 +295,8 @@ class Canvas extends React.Component {
         }
       }
     });
+    console.log(storageLayout);
+    console.log(localLayout);
     return (
       <section
         className={
