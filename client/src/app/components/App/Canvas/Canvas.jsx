@@ -261,7 +261,8 @@ class Canvas extends React.Component {
               ? this.props.editors[key].crop.width / this.props.editors[key].crop.height : 1;
             const imageRatio = imageEltRatio * imageCropRatio;
             const layoutRatio = localLayout[key].w / localLayout[key].h;
-            localLayout[key].w = localLayout[key].h * imageRatio;
+            // checking if crop is present, to ensure that older images are not affected
+            localLayout[key].w = this.props.editors[key].crop ? localLayout[key].h * imageRatio : localLayout[key].w;
             this.setWidgetSize(
               localLayout[key],
               WidgetSize.IMAGE_DEFAULT_WIDTH,
