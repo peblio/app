@@ -28,7 +28,13 @@ class Image extends React.Component {
       isImageSmall: false,
       isFileUploading: false,
       isVideo: false,
-      isImageResizerOpen: false
+      isImageResizerOpen: false,
+      defaultCrop: {
+        x: 0,
+        y: 0,
+        w: 100,
+        h: 100
+      }
     };
     this.setImageURL = url => this.props.setImageURL(this.props.id, url);
     this.setImageCrop = (crop) => {
@@ -162,7 +168,7 @@ class Image extends React.Component {
   )
 
   renderImage=() => {
-    const crop = this.props.crop;
+    const crop = this.props.crop ? this.props.crop : this.state.defaultCrop;
     const cropCss =
       `polygon(
       ${crop.x}% ${crop.y}%,
@@ -178,6 +184,10 @@ class Image extends React.Component {
       <img
         className="element__image"
         src={this.props.imageURL}
+        id={`ref-${this.props.id}`}
+        ref={(input) => {
+          this[`ref-${this.props.id}`] = input;
+        }}
         alt=""
         data-test="image__main"
         style={{

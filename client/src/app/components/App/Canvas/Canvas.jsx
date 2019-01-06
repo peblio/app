@@ -255,11 +255,13 @@ class Canvas extends React.Component {
             break;
           }
           case 'image': {
-            const imageRatio = this.props.editors[key].crop.width / this.props.editors[key].crop.height;
+            const imgElt = document.getElementById(`ref-${key}`);
+            const imageEltRatio = imgElt ? imgElt.width / imgElt.height : 1;
+            const imageCropRatio = this.props.editors[key].crop
+              ? this.props.editors[key].crop.width / this.props.editors[key].crop.height : 1;
+            const imageRatio = imageEltRatio * imageCropRatio;
             const layoutRatio = localLayout[key].w / localLayout[key].h;
-            if (imageRatio > layoutRatio) {
-              localLayout[key].w = localLayout[key].h * imageRatio;
-            }
+            localLayout[key].w = localLayout[key].h * imageRatio;
             this.setWidgetSize(
               localLayout[key],
               WidgetSize.IMAGE_DEFAULT_WIDTH,
