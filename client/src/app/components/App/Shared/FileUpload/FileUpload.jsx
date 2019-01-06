@@ -32,6 +32,7 @@ class FileUpload extends React.Component {
       {this.props.name && (
         <div
           className="image__upload-container"
+          data-test="image__upload-container"
           ref={(input) => { this.fileUpload = input; }}
         >
           <div className="image__title">Upload a file</div>
