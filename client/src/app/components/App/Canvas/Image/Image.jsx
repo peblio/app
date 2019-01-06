@@ -161,7 +161,7 @@ class Image extends React.Component {
     >
       <ImageResizeModal
         imageURL={this.props.imageURL}
-        crop={this.props.crop}
+        crop={this.props.crop ? this.props.crop : this.state.defaultCrop}
         setImageCrop={this.setImageCrop}
       />
     </Modal>
