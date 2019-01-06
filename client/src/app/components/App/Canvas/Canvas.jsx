@@ -255,28 +255,18 @@ class Canvas extends React.Component {
             break;
           }
           case 'image': {
-            const layout = localLayout[key];
             const imageRatio = this.props.editors[key].crop.width / this.props.editors[key].crop.height;
-            const layoutRatio = layout.w / layout.h;
-            const defaultWidth = WidgetSize.IMAGE_DEFAULT_WIDTH;
-            const defaultHeight = WidgetSize.IMAGE_DEFAULT_HEIGHT;
-            const minWidth = WidgetSize.IMAGE_MIN_WIDTH;
-            const minHeight = WidgetSize.IMAGE_MIN_HEIGHT;
-
-            layout.minW = minWidth;
-            layout.w = !layout.w ? defaultWidth : layout.w;
-            console.log(layout.w);
-            console.log(minWidth);
-            console.log(imageRatio);
-            console.log(layoutRatio);
+            const layoutRatio = localLayout[key].w / localLayout[key].h;
             if (imageRatio > layoutRatio) {
-              console.log('yo');
-              console.log(layout.w);
-              layout.w = layout.h * imageRatio;
-              console.log(layout.w);
+              localLayout[key].w = localLayout[key].h * imageRatio;
             }
-            layout.minH = minHeight;
-            layout.h = (layout.h < layout.minH) ? defaultHeight : layout.h;
+            this.setWidgetSize(
+              localLayout[key],
+              WidgetSize.IMAGE_DEFAULT_WIDTH,
+              WidgetSize.IMAGE_DEFAULT_HEIGHT,
+              WidgetSize.IMAGE_MIN_WIDTH,
+              WidgetSize.IMAGE_MIN_HEIGHT
+            );
             break;
           }
           case 'video': {
@@ -295,8 +285,7 @@ class Canvas extends React.Component {
         }
       }
     });
-    console.log(storageLayout);
-    console.log(localLayout);
+    // debugger;
     return (
       <section
         className={
@@ -318,7 +307,7 @@ class Canvas extends React.Component {
           cols={this.props.rgl.cols}
           width={this.props.rgl.width}
           rowHeight={this.props.rgl.rowHeight}
-          layout={storageLayout}
+          layout={localLayout}
           onLayoutChange={this.props.setPageLayout}
           compactType="vertical"
           margin={this.props.rgl.margin}
@@ -366,6 +355,7 @@ class Canvas extends React.Component {
                 })()}
               </div>
             </div>
+
           ))}
         </ReactGridLayout>
       </section>

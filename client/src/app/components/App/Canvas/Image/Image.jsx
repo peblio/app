@@ -192,8 +192,7 @@ class Image extends React.Component {
 
   renderVideo=() => (
     // eslint-disable-next-line
-      <video width="100%" controls>
-      <source src={this.props.imageURL} />
+    <video width="100%" controls><source src={this.props.imageURL} />
         Your browser does not support HTML5 video.
     </video>
   )
@@ -252,6 +251,12 @@ class Image extends React.Component {
 }
 
 Image.propTypes = {
+  crop: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
+    w: PropTypes.number,
+    h: PropTypes.number
+  }).isRequired,
   id: PropTypes.string.isRequired,
   imageURL: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

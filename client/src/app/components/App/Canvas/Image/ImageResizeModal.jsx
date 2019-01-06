@@ -24,7 +24,14 @@ class ImageResizeModal extends React.Component {
 }
 
 ImageResizeModal.propTypes = {
-
+  crop: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
+    w: PropTypes.number,
+    h: PropTypes.number
+  }).isRequired,
+  imageURL: PropTypes.string.isRequired,
+  setImageCrop: PropTypes.func.isRequired
 };
 
 

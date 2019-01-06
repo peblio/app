@@ -91,6 +91,9 @@ class ImageEditToolbar extends React.Component {
 }
 
 ImageEditToolbar.propTypes = {
-  isImageSmall: PropTypes.bool.isRequired
+  isImageSmall: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
+  openFileUpload: PropTypes.func.isRequired,
+  openImageResizer: PropTypes.func.isRequired
 };
 export default ImageEditToolbar;
