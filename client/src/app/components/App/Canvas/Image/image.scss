@@ -6,6 +6,10 @@
   height: 100%;
   position: absolute;
   top: 0;
+  &-legacy {
+    width: 100%;
+    object-fit: cover;
+  }
 }
 
 .image__container {

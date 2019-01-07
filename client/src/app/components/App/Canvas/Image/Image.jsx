@@ -182,7 +182,10 @@ class Image extends React.Component {
     const transform = `translate(-50%, -50%) scale(${scaleY}) translate(${translateX}%, ${translateY}%) `;
     return (
       <img
-        className="element__image"
+        className={
+          `element__image
+        ${this.props.crop ? '' : 'element__image-legacy'}`
+        }
         src={this.props.imageURL}
         id={`ref-${this.props.id}`}
         ref={(input) => {
