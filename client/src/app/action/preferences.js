@@ -3,20 +3,44 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 
 export function updateEditorTheme(e) {
   const value = e.target.value;
-  updatePrefrences({
+  axios.post('/current_user/preferences', {
     key: 'editorTheme',
     value
-  }, ActionTypes.UPDATE_EDITOR_THEME);
+  })
+    .then((res) => {
+      console.log('preferences updated');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.UPDATE_EDITOR_THEME,
+      value
+    });
+  };
 }
 
 export function updateEditorFontSize(e) {
   const value = e.target.value;
-  updatePrefrences({
+  axios.post('/current_user/preferences', {
     key: 'editorFontSize',
     value
-  }, ActionTypes.UPDATE_EDITOR_FONT_SIZE);
+  })
+    .then((res) => {
+      console.log('preferences updated');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.UPDATE_EDITOR_FONT_SIZE,
+      value
+    });
+  };
 }
-
 
 export function fetchUserPreferences() {
   return (dispatch, getState) => {
@@ -34,21 +58,3 @@ export function fetchUserPreferences() {
       });
   };
 }
-
-function updatePrefrences(keyValuePair, actionToDispatch) {
-  axios.post('/current_user/preferences', keyValuePair)
-    .then((res) => {
-      console.log('preferences updated');
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  return (dispatch) => {
-    dispatch({
-      type: actionToDispatch,
-      value: keyValuePair.value
-    });
-  };
-}
-
