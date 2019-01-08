@@ -40,5 +40,4 @@ ImageResizeModal.propTypes = {
   closeModal: PropTypes.func.isRequired
 };
 
-
 export default ImageResizeModal;

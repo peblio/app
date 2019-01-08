@@ -205,7 +205,6 @@ class Canvas extends React.Component {
     // reference: https://github.com/STRML/react-grid-layout/issues/382#issuecomment-299734450
     const storageLayout = JSON.parse(JSON.stringify(this.props.layout));
     const localLayout = {};
-
     storageLayout.forEach((x) => {
       const key = x.i;
       localLayout[key] = x;
@@ -360,7 +359,6 @@ class Canvas extends React.Component {
                 })()}
               </div>
             </div>
-
           ))}
         </ReactGridLayout>
       </section>

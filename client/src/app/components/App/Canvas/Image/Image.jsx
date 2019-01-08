@@ -1,7 +1,6 @@
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import PropTypes from 'prop-types';
 import React from 'react';
-
 import axiosOrg from 'axios';
 import URL from 'url';
 import { connect } from 'react-redux';
@@ -52,7 +51,6 @@ class Image extends React.Component {
     };
     this.openImageResizer = () => this.setState({ isImageResizerOpen: true });
     this.closeImageResizer = () => this.setState({ isImageResizerOpen: false });
-
     this.openFileUpload = () => this.setState({ isFileUploadOpen: true });
     this.closeFileUpload = () => this.setState({ isFileUploadOpen: false });
   }
