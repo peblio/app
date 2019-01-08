@@ -14,10 +14,15 @@ class ImageResizeModal extends React.Component {
           src={this.props.imageURL}
           crop={this.props.crop}
           onChange={(crop) => {
-            console.log(crop);
             this.props.setImageCrop(crop);
           }}
         />
+        <button
+          className="image-edit-toolbar__button"
+          onClick={this.props.closeModal}
+        >
+          Ok
+        </button>
       </div>
     );
   }
@@ -31,7 +36,8 @@ ImageResizeModal.propTypes = {
     h: PropTypes.number
   }).isRequired,
   imageURL: PropTypes.string.isRequired,
-  setImageCrop: PropTypes.func.isRequired
+  setImageCrop: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired
 };
 
 

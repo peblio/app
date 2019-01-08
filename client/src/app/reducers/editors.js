@@ -299,6 +299,15 @@ const editorsReducer = (state = initialState, action) => {
       editors[action.id].crop = action.crop;
       return { ...state, editors };
 
+    case ActionTypes.RESET_IMAGE_CROP:
+      editors[action.id].crop = {
+        x: 0,
+        y: 0,
+        height: 100,
+        width: 100
+      };
+      return { ...state, editors };
+
     case ActionTypes.LOGOUT_USER:
       return initialState;
 

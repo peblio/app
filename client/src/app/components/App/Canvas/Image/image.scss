@@ -44,6 +44,7 @@
   }
 
   &--exists {
+    background: transparent;
     &:hover {
       .image__content.image__replace-content {
         opacity: 1;

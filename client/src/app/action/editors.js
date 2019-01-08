@@ -373,3 +373,13 @@ export function setImageCrop(id, crop) {
     });
   };
 }
+
+export function resetImageCrop(id) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.RESET_IMAGE_CROP,
+      id
+    });
+  };
+}

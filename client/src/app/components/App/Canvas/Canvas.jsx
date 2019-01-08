@@ -205,6 +205,7 @@ class Canvas extends React.Component {
     // reference: https://github.com/STRML/react-grid-layout/issues/382#issuecomment-299734450
     const storageLayout = JSON.parse(JSON.stringify(this.props.layout));
     const localLayout = {};
+
     storageLayout.forEach((x) => {
       const key = x.i;
       localLayout[key] = x;
@@ -260,9 +261,11 @@ class Canvas extends React.Component {
             const imageCropRatio = this.props.editors[key].crop
               ? this.props.editors[key].crop.width / this.props.editors[key].crop.height : 1;
             const imageRatio = imageEltRatio * imageCropRatio;
-            const layoutRatio = localLayout[key].w / localLayout[key].h;
+            const trueLayoutHeight = localLayout[key].h - 1;
+            const trueLayoutWidth = trueLayoutHeight * imageRatio;
             // checking if crop is present, to ensure that older images are not affected
-            localLayout[key].w = this.props.editors[key].crop ? localLayout[key].h * imageRatio : localLayout[key].w;
+            localLayout[key].w = this.props.editors[key].crop ? Math.ceil(trueLayoutWidth + 1) : localLayout[key].w;
+            console.log(localLayout[key].w);
             this.setWidgetSize(
               localLayout[key],
               WidgetSize.IMAGE_DEFAULT_WIDTH,
@@ -288,7 +291,6 @@ class Canvas extends React.Component {
         }
       }
     });
-    // debugger;
     return (
       <section
         className={

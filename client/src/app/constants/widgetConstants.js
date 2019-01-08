@@ -26,7 +26,7 @@ export const QUESION_MIN_INNER_HEIGHT = 30;
 export const IMAGE_DEFAULT_HEIGHT = 12;
 export const IMAGE_DEFAULT_WIDTH = 12;
 export const IMAGE_MIN_WIDTH = 1;
-export const IMAGE_MIN_HEIGHT = 3;
+export const IMAGE_MIN_HEIGHT = 1;
 export const IMAGE_RESPONSIVE_TRIGGER_HEIGHT = 200;
 export const IMAGE_RESPONSIVE_TRIGGER_WIDTH = 160;
 

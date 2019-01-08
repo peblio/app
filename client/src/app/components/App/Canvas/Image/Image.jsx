@@ -8,9 +8,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ImageResizeModal from './ImageResizeModal.jsx';
 import ImageEditToolbar from './ImageEditToolbar.jsx';
-import { setImageURL, setImageCrop } from '../../../../action/editors.js';
+import { resetImageCrop, setImageURL, setImageCrop } from '../../../../action/editors.js';
 import axios from '../../../../utils/axios';
 import * as WidgetSize from '../../../../constants/widgetConstants.js';
+import styles from '../../../../styles/sass/variables.scss';
 import FileUpload from '../../Shared/FileUpload/FileUpload.jsx';
 import Modal from '../../Modal/Modal.jsx';
 
@@ -36,7 +37,9 @@ class Image extends React.Component {
         h: 100
       }
     };
-    this.setImageURL = url => this.props.setImageURL(this.props.id, url);
+    this.setImageURL = (url) => {
+      this.props.setImageURL(this.props.id, url);
+    };
     this.setImageCrop = (crop) => {
       this.props.setImageCrop(this.props.id, crop);
     };
@@ -44,6 +47,7 @@ class Image extends React.Component {
     this.urlSubmitted = (event, value) => {
       event.preventDefault();
       this.props.setImageURL(this.props.id, value);
+      this.props.resetImageCrop(this.props.id);
       this.renderUploadPopup(false);
     };
     this.openImageResizer = () => this.setState({ isImageResizerOpen: true });
@@ -70,6 +74,7 @@ class Image extends React.Component {
   }
 
   onDrop(files) {
+    this.props.resetImageCrop(this.props.id);
     const file = files[0];
     if (file.name.match(MEDIA_FILE_REGEX)) {
       this.startFileUpload();
@@ -163,6 +168,7 @@ class Image extends React.Component {
         imageURL={this.props.imageURL}
         crop={this.props.crop ? this.props.crop : this.state.defaultCrop}
         setImageCrop={this.setImageCrop}
+        closeModal={this.closeImageResizer}
       />
     </Modal>
   )
@@ -179,7 +185,9 @@ class Image extends React.Component {
     const translateX = 50 - crop.x;
     const translateY = 50 - crop.y;
     const scaleY = 100 / crop.height;
+    const scaleX = 100 / crop.width;
     const transform = `translate(-50%, -50%) scale(${scaleY}) translate(${translateX}%, ${translateY}%) `;
+    const maxWidth = styles.totalWidth / scaleY * scaleX;
     return (
       <img
         className={
@@ -197,7 +205,8 @@ class Image extends React.Component {
           clipPath: cropCss,
           WebkitlipPath: cropCss,
           transform,
-          WebkitTransform: transform
+          WebkitTransform: transform,
+          maxWidth
         }}
       />
     );
@@ -274,6 +283,7 @@ Image.propTypes = {
   imageURL: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
+  resetImageCrop: PropTypes.func.isRequired,
   setImageCrop: PropTypes.func.isRequired,
   setImageURL: PropTypes.func.isRequired,
 };
@@ -285,6 +295,7 @@ function mapStateToProps(state) {
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
+  resetImageCrop,
   setImageCrop,
   setImageURL
 }, dispatch);

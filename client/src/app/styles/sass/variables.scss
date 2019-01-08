@@ -150,3 +150,7 @@ $z-index-layer-4: 400;
 //shadow variables
 $shadow-v-offset: 2px;
 $shadow-blur: 4px;
+
+:export {
+  totalWidth: $total-width;
+}
