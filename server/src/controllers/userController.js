@@ -33,7 +33,7 @@ export function getUserNameById(req, res) {
 }
 
 export function getUserNameForPage(req, res) {
-  Page.findById(req.params.pageParentId, (err, page) => {
+  Page.findOne({ id: req.params.pageShortId }, (err, page) => {
     if (err) {
       return res.status(500).send(err);
     } else {

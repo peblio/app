@@ -6,6 +6,7 @@ const Page = require('../../src/models/page.js');
 const User = require('../../src/models/user.js');
 var findUserByIdSpy;
 var findPageByIdSpy;
+var findOnePageSpy;
 var request;
 var response;
 const pageId = "pageId";
@@ -63,7 +64,7 @@ describe('userController', function () {
         beforeEach(function () {
             request = {
                 params: {
-                    pageParentId: pageId
+                    pageShortId: pageId
                 }
             };
             response = {
@@ -79,41 +80,46 @@ describe('userController', function () {
 
         it('shall return error when retrieve page errors', function () {
             response.status = createResponseWithStatusCode(500);
-            findPageByIdSpy = sandbox.stub(Page, 'findById').yields("error retrieving page", null);
+            findOnePageSpy = sandbox.stub(Page, 'findOne').yields("error retrieving page", null);
             findUserByIdSpy = sandbox.stub(User, 'findById').yields("error retrieving user", null);
 
             userController.getUserNameForPage(request, response);
 
-            assertFindByIdPageWasCalledWithPageId();
+            assertFindOneWasCalledWithPageShortId();
             assertSendWasCalledWith("error retrieving page");
             assert.notCalled(findUserByIdSpy);
         });
 
         it('shall return error when retrieve user errors', function () {
             response.status = createResponseWithStatusCode(500);
-            findPageByIdSpy = sandbox.stub(Page, 'findById').yields(null, page);
+            findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, page);
             findUserByIdSpy = sandbox.stub(User, 'findById').yields("error retrieving user", null);
 
             userController.getUserNameForPage(request, response);
 
-            assertFindByIdPageWasCalledWithPageId();
+            assertFindOneWasCalledWithPageShortId();
             assertSendWasCalledWith("error retrieving user");
             assertFindByIdWasCalledWithUserId();
         });
 
         it('shall return user name given page id', function () {
-            findPageByIdSpy = sandbox.stub(Page, 'findById').yields(null, page);
+            findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, page);
             findUserByIdSpy = sandbox.stub(User, 'findById').yields(null, user);
 
             userController.getUserNameForPage(request, response);
 
-            assertFindByIdPageWasCalledWithPageId();
+            assertFindOneWasCalledWithPageShortId();
             assertSendWasCalledWith(expectedUserData);
             assertFindByIdWasCalledWithUserId();
         });
     });
 
 });
+
+function assertFindOneWasCalledWithPageShortId() {
+    assert.calledOnce(findOnePageSpy);
+    assert.calledWith(findOnePageSpy, { id: pageId });
+}
 
 function assertFindByIdWasCalledWithUserId() {
     assert.calledOnce(findUserByIdSpy);
