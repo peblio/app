@@ -52,5 +52,5 @@ export function getUserNameForPage(req, res) {
 
 userRoutes.route('/:userName/profile').get(getUserProfile);
 userRoutes.route('/:userObjectId').get(getUserNameById);
-userRoutes.route('/page/:pageParentId').get(getUserNameForPage);
+userRoutes.route('/page/:pageShortId').get(getUserNameForPage);
 export default userRoutes;
