@@ -4,6 +4,7 @@ import srcDoc from 'srcdoc-polyfill';
 
 const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
 const STRING_REGEX = /(['"])((\\\1|.)*?)\1/gm;
+const ANCHOR_LINK_REGEX = /^(#)/;
 const MEDIA_FILE_REGEX = /.+\.(gif|jpg|jpeg|png|bmp)$/i;
 
 class FrontEndOutput extends React.Component {
@@ -76,6 +77,7 @@ class FrontEndOutput extends React.Component {
     let sketchDoc = parser.parseFromString(htmlFile, 'text/html');
     this.resolveJSFile(sketchDoc, this.props.files);
     this.resolveCSSFile(sketchDoc, this.props.files);
+    this.resolveAnchorLinks(sketchDoc);
     sketchDoc = this.injectLocalFiles(sketchDoc);
     sketchDoc = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
     srcDoc.set(this.iframe, sketchDoc);
@@ -133,6 +135,21 @@ class FrontEndOutput extends React.Component {
 
   resolvePathToFile(filePath, files) {
     return files.find(file => file.name === filePath);
+  }
+
+
+  resolveAnchorLinks(sketchDoc) {
+    const allLinks = sketchDoc.getElementsByTagName('a');
+    const allLinksArray = Array.prototype.slice.call(allLinks);
+    allLinksArray.forEach((link) => {
+      if (link.getAttribute('href').match(ANCHOR_LINK_REGEX) !== null) {
+        link.setAttribute('onclick', `
+          event.preventDefault();
+          const anchorId = "${link.attributes.href.value}";
+          document.querySelector(anchorId).scrollIntoView(true);
+          `);
+      }
+    });
   }
 
   resolveCSSFile(sketchDoc, files) {
