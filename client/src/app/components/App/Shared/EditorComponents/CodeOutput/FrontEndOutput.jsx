@@ -77,7 +77,6 @@ class FrontEndOutput extends React.Component {
     let sketchDoc = parser.parseFromString(htmlFile, 'text/html');
     this.resolveJSFile(sketchDoc, this.props.files);
     this.resolveCSSFile(sketchDoc, this.props.files);
-    this.resolveAnchorLinks(sketchDoc);
     sketchDoc = this.injectLocalFiles(sketchDoc);
     sketchDoc = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
     srcDoc.set(this.iframe, sketchDoc);
@@ -142,7 +141,7 @@ class FrontEndOutput extends React.Component {
     const allLinksArray = Array.prototype.slice.call(allLinks);
     allLinksArray.forEach((link) => {
       if (link.getAttribute('href').match(ANCHOR_LINK_REGEX) !== null) {
-        link.attributes.onclick.value = `
+        link.attributes.onclick = `
         event.preventDefault();
         const anchorId = "${link.attributes.href.value}";
         document.querySelector(anchorId).scrollIntoView(false);
