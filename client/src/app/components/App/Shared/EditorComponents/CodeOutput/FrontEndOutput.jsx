@@ -146,7 +146,7 @@ class FrontEndOutput extends React.Component {
         link.setAttribute('onclick', `
           event.preventDefault();
           const anchorId = "${link.attributes.href.value}";
-          document.querySelector(anchorId).scrollIntoView(true);
+          document.querySelector(anchorId).scrollIntoView(false);
           `);
       }
     });
