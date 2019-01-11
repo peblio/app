@@ -255,16 +255,16 @@ class Canvas extends React.Component {
             break;
           }
           case 'image': {
-            const imgElt = document.getElementById(`ref-${key}`);
-            const imageEltRatio = imgElt ? imgElt.width / imgElt.height : 1;
-            const imageCropRatio = this.props.editors[key].crop
-              ? this.props.editors[key].crop.width / this.props.editors[key].crop.height : 1;
-            const imageRatio = imageEltRatio * imageCropRatio;
-            const trueLayoutHeight = localLayout[key].h - 1;
-            const trueLayoutWidth = trueLayoutHeight * imageRatio;
-            // checking if crop is present, to ensure that older images are not affected
-            localLayout[key].w = this.props.editors[key].crop ? Math.ceil(trueLayoutWidth + 1) : localLayout[key].w;
-            console.log(localLayout[key].w);
+            if (this.props.editors[key].crop) {
+              // checking if crop is present, to ensure that older images are not affected
+              const imgElt = document.getElementById(`ref-${key}`);
+              const imageEltRatio = imgElt ? imgElt.width / imgElt.height : 1;
+              const imageCropRatio = this.props.editors[key].crop.width / this.props.editors[key].crop.height;
+              const imageRatio = imageEltRatio * imageCropRatio;
+              const trueLayoutHeight = localLayout[key].h - 1;
+              const trueLayoutWidth = trueLayoutHeight * imageRatio;
+              localLayout[key].w = Math.ceil(trueLayoutWidth + 1);
+            }
             this.setWidgetSize(
               localLayout[key],
               WidgetSize.IMAGE_DEFAULT_WIDTH,

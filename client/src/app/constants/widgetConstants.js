@@ -39,3 +39,10 @@ export const EDITOR_THEME = {
   light: 'base16-light',
   dark: 'base16-dark'
 };
+
+export const DEFAULT_IMAGE_CROP = {
+  x: 0,
+  y: 0,
+  w: 100,
+  h: 100
+};

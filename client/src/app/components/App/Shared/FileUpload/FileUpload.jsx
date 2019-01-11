@@ -23,9 +23,7 @@ class FileUpload extends React.Component {
   renderContent = () => (
     <div>
       {!this.props.name && (
-        <p
-          className="image__upload-notice"
-        >
+        <p className="image__upload-notice">
             Please Log In to Upload Images
         </p>
       )}

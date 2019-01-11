@@ -28,16 +28,7 @@ class Image extends React.Component {
       isImageSmall: false,
       isFileUploading: false,
       isVideo: false,
-      isImageResizerOpen: false,
-      defaultCrop: {
-        x: 0,
-        y: 0,
-        w: 100,
-        h: 100
-      }
-    };
-    this.setImageURL = (url) => {
-      this.props.setImageURL(this.props.id, url);
+      isImageResizerOpen: false
     };
     this.setImageCrop = (crop) => {
       this.props.setImageCrop(this.props.id, crop);
@@ -95,7 +86,7 @@ class Image extends React.Component {
         .then((result) => {
           const url = URL.parse(result.request.responseURL);
           this.setUploadPopupVisibility(false);
-          this.setImageURL(`https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
+          this.props.setImageURL(this.props.id, `https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
           this.stopFileUpload();
           this.renderUploadPopup(false);
         })
@@ -164,7 +155,7 @@ class Image extends React.Component {
     >
       <ImageResizeModal
         imageURL={this.props.imageURL}
-        crop={this.props.crop ? this.props.crop : this.state.defaultCrop}
+        crop={this.props.crop ? this.props.crop : WidgetSize.DEFAULT_IMAGE_CROP}
         setImageCrop={this.setImageCrop}
         closeModal={this.closeImageResizer}
       />
@@ -172,7 +163,7 @@ class Image extends React.Component {
   )
 
   renderImage=() => {
-    const crop = this.props.crop ? this.props.crop : this.state.defaultCrop;
+    const crop = this.props.crop ? this.props.crop : WidgetSize.DEFAULT_IMAGE_CROP;
     const cropCss =
       `polygon(
       ${crop.x}% ${crop.y}%,
@@ -184,7 +175,7 @@ class Image extends React.Component {
     const translateY = 50 - crop.y;
     const scaleY = 100 / crop.height;
     const scaleX = 100 / crop.width;
-    const transform = `translate(-50%, -50%) scale(${scaleY}) translate(${translateX}%, ${translateY}%) `;
+    const cropAndScaleFromOriginTransform = `translate(-50%, -50%) scale(${scaleY}) translate(${translateX}%, ${translateY}%) `;
     const maxWidth = styles.totalWidth / scaleY * scaleX;
     return (
       <img
@@ -202,8 +193,8 @@ class Image extends React.Component {
         style={{
           clipPath: cropCss,
           WebkitlipPath: cropCss,
-          transform,
-          WebkitTransform: transform,
+          moveCropToOriginTransform,
+          WebkitTransform: moveCropToOriginTransform,
           maxWidth
         }}
       />

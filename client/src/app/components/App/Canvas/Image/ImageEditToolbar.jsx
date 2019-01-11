@@ -44,8 +44,7 @@ class ImageEditToolbar extends React.Component {
             Edit
           </button>
         </div>
-      )
-      }
+      )}
     </div>
   )
 
@@ -84,7 +83,6 @@ class ImageEditToolbar extends React.Component {
             {this.renderContent()}
           </div>
         )}
-
       </div>
     );
   }
@@ -96,4 +94,5 @@ ImageEditToolbar.propTypes = {
   openFileUpload: PropTypes.func.isRequired,
   openImageResizer: PropTypes.func.isRequired
 };
+
 export default ImageEditToolbar;
