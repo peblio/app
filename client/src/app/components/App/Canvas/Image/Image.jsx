@@ -193,8 +193,8 @@ class Image extends React.Component {
         style={{
           clipPath: cropCss,
           WebkitlipPath: cropCss,
-          moveCropToOriginTransform,
-          WebkitTransform: moveCropToOriginTransform,
+          cropAndScaleFromOriginTransform,
+          WebkitTransform: cropAndScaleFromOriginTransform,
           maxWidth
         }}
       />
