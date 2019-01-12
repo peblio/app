@@ -18,7 +18,7 @@ const expectedUserData = {
 };
 
 
-describe('userController', function () {
+describe('userService', function () {
     describe('getUserNameById', function () {
 
         beforeEach(function () {
