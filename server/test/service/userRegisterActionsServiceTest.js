@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 import { createUser, loginUser, confirmUser, forgotPassword, resetPassword, resendConfirmUser } from '../../src/controllers/userRegisterActionsController';
+import * as mailService from '../../src/service/mailSenderService';
 import { assert, spy, useFakeTimers } from 'sinon';
 const sandbox = require('sinon').sandbox.create();
 const User = require('../../src/models/user.js');
@@ -21,9 +22,11 @@ var saveSpy;
 var findSpy;
 var clock;
 var tokenSaveSpy;
+var sendSignUpConfirmationMailStub;
+var sendSuccessfulResetMailStub;
+var sendResetMailStub;
 
-
-describe('userControllerNew', function () {
+describe('userRegisterActionsService', function () {
     describe('createUser', function () {
         var userToBeSaved;
 
@@ -36,6 +39,8 @@ describe('userControllerNew', function () {
                 json: spy(),
                 status: createResponseWithStatusCode(200)
             };
+            sendSignUpConfirmationMailStub = sandbox.stub(mailService, 'sendSignUpConfirmationMail');
+
         });
 
         afterEach(function () {
@@ -52,6 +57,7 @@ describe('userControllerNew', function () {
             assertSendWasCalledWith({
                 msg: "Username not available! Please try again"
             });
+            assert.notCalled(sendSignUpConfirmationMailStub);
         });
 
         it('shall not create user when retrieving username fails', function () {
@@ -62,11 +68,14 @@ describe('userControllerNew', function () {
 
             assertFindOneWasCalledWithUsername();
             assertSendWasCalledWith(signUpFailedMessage);
+            assert.notCalled(sendSignUpConfirmationMailStub);
         });
 
         it('shall fail creating user when user could not be persisted', function () {
             findOneSpy = sandbox.stub(User, 'findOne').yields(null, null);
+            var userSaveMock = sandbox.mock(new User());
             saveSpy = sandbox.stub(User.prototype, 'save').yields({ error: "Could not save user" }, null);
+            userSaveMock.save = saveSpy;
             response.status = createResponseWithStatusCode(422);
 
             createUser(request, response);
@@ -74,6 +83,7 @@ describe('userControllerNew', function () {
             assertFindOneWasCalledWithUsername();
             assert.calledOnce(saveSpy);
             assertJsonWasCalledWith(signUpFailedMessage);
+            assert.notCalled(sendSignUpConfirmationMailStub);
         });
 
         it('shall save automatically verified user ', function () {
@@ -92,6 +102,7 @@ describe('userControllerNew', function () {
             const userSaved = actualResponse.user;
             expect(actualResponse.msg).to.be.equal("Successfully signed up! Please log in");
             assertUserSavedWithCorrectValues(userSaved);
+            assert.notCalled(sendSignUpConfirmationMailStub);
         });
 
         it('shall not save non verified user when error generating token', function () {
@@ -106,6 +117,7 @@ describe('userControllerNew', function () {
             assert.calledOnce(saveSpy);
             assert.calledOnce(tokenSaveSpy);
             assertSendWasCalledWith(signUpFailedMessage);
+            assert.notCalled(sendSignUpConfirmationMailStub);
         });
 
         it('shall save non verified user and send email', function () {
@@ -119,7 +131,17 @@ describe('userControllerNew', function () {
             assertFindOneWasCalledWithUsername();
             assert.calledOnce(saveSpy);
             assert.calledOnce(tokenSaveSpy);
+            assert.calledOnce(sendSignUpConfirmationMailStub);
+            assertSignupConfirmationEmailValues(sendSignUpConfirmationMailStub);
+
         });
+
+        function assertSignupConfirmationEmailValues(sendSignUpConfirmationMailStub) {
+            const sendSignUpConfirmationMailStubArgs = sendSignUpConfirmationMailStub.getCall(0).args;
+            expect(sendSignUpConfirmationMailStubArgs.length).to.be.equal(3);
+            expect(sendSignUpConfirmationMailStubArgs[0]).to.be.equal(body.mail);
+            expect(sendSignUpConfirmationMailStubArgs[1]).to.be.eql([body.name]);
+        }
 
         function assertUserSavedWithCorrectValues(userSaved) {
             expect(userSaved.name).to.be.equal(userToBeSaved.name);
@@ -387,6 +409,7 @@ describe('userControllerNew', function () {
                 json: spy(),
                 status: createResponseWithStatusCode(200)
             };
+            sendResetMailStub = sandbox.stub(mailService, 'sendResetMail');
         });
 
         afterEach(function () {
@@ -401,6 +424,7 @@ describe('userControllerNew', function () {
 
             assertJsonWasCalledWith({ msg: 'Password reset failed' });
             assertFindWasCalledWithEmail();
+            assert.notCalled(sendResetMailStub);
         });
 
         it('shall not update password when user update error', function () {
@@ -415,6 +439,7 @@ describe('userControllerNew', function () {
             assertJsonWasCalledWith({ msg: 'Password reset failed' });
             assertFindWasCalledWithEmail();
             assert.calledOnce(saveSpy);
+            assert.notCalled(sendResetMailStub);
         });
 
         it('shall update password after updating user', function () {
@@ -429,7 +454,16 @@ describe('userControllerNew', function () {
             assertSendWasCalledWith({ msg: 'Please check your email to reset your password' });
             assertFindWasCalledWithEmail();
             assert.calledOnce(saveSpy);
+            assert.calledOnce(sendResetMailStub);
+            assertResetPasswordEmailValues(sendResetMailStub);
         });
+
+        function assertResetPasswordEmailValues(sendResetMailStub) {
+            const sendResetMailStubArgs = sendResetMailStub.getCall(0).args;
+            expect(sendResetMailStubArgs.length).to.be.equal(3);
+            expect(sendResetMailStubArgs[0]).to.be.equal(body.email);
+            expect(sendResetMailStubArgs[1]).to.be.eql([getUser().name]);
+        }
 
     });
 
@@ -444,6 +478,7 @@ describe('userControllerNew', function () {
                 json: spy(),
                 status: createResponseWithStatusCode(200)
             };
+            sendSuccessfulResetMailStub = sandbox.stub(mailService, 'sendSuccessfulResetMail');
         });
 
         afterEach(function () {
@@ -459,6 +494,7 @@ describe('userControllerNew', function () {
 
             assertJsonWasCalledWith({ error: 'Looks like your reset link expired!' });
             assertFindOneWasCalledWithToken();
+            assert.notCalled(sendSuccessfulResetMailStub);
         });
 
         it('shall not reset password is user not found reset token not found', function () {
@@ -469,6 +505,7 @@ describe('userControllerNew', function () {
 
             assertJsonWasCalledWith({ error: 'Looks like your reset link expired!' });
             assertFindOneWasCalledWithToken();
+            assert.notCalled(sendSuccessfulResetMailStub);
         });
 
         it('shall not reset password when updating user fails', function () {
@@ -485,6 +522,7 @@ describe('userControllerNew', function () {
             assertFindOneWasCalledWithToken();
             assert.calledOnce(saveSpy);
             assert.calledOnce(retrievedUser.hashPassword);
+            assert.notCalled(sendSuccessfulResetMailStub);
         });
 
         it('shall reset password and updating user', function () {
@@ -501,7 +539,15 @@ describe('userControllerNew', function () {
             assertFindOneWasCalledWithToken();
             assert.calledOnce(saveSpy);
             assert.calledOnce(retrievedUser.hashPassword);
+            assert.calledOnce(sendSuccessfulResetMailStub);
+            assertResetMailValues(sendSuccessfulResetMailStub);
         });
+
+        function assertResetMailValues(sendSuccessfulResetMailStub) {
+            const sendSuccessfulResetMailStubArgs = sendSuccessfulResetMailStub.getCall(0).args;
+            expect(sendSuccessfulResetMailStubArgs.length).to.be.equal(1);
+            expect(sendSuccessfulResetMailStubArgs[0]).to.be.equal(getUser().email);
+        }
 
     });
 

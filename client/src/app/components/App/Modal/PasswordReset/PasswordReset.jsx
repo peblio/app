@@ -44,7 +44,7 @@ class PasswordReset extends React.Component {
 
   submitResetPassword(event, password, token) {
     if (this.passwordMatch(this.password.value, this.passwordConfirm.value)) {
-      axios.post('/users/reset', {
+      axios.post('/auth/reset', {
         password,
         token
       })
