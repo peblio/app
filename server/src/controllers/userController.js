@@ -20,16 +20,7 @@ export function getUserProfile(req, res) {
 }
 
 export function getUserNameById(req, res) {
-  User.findById(req.params.userObjectId, (err, user) => {
-    if (err || !user) {
-      res.status(500).send(err);
-    } else {
-      res.status(200).send({
-        name: user.name,
-        type: user.type
-      });
-    }
-  });
+  return getUserById(req.params.userObjectId, res);
 }
 
 export function getUserNameForPage(req, res) {
@@ -37,18 +28,10 @@ export function getUserNameForPage(req, res) {
     if (err) {
       return res.status(500).send(err);
     } else {
-      User.findById(page.user, (err, user) => {
-        if (err) {
-          return res.status(500).send(err);
-        }
-        return res.status(200).send({
-          name: user.name,
-          type: user.type
-        });
-      });
+      return getUserById(page.user, res);
     }
   });
-}
+};
 
 export function getUserNameForParentPage(req, res) {
   Page.findOne({ id: req.params.pageId }, (err, page) => {
@@ -59,15 +42,19 @@ export function getUserNameForParentPage(req, res) {
       if (parentPageRetrieveError) {
         return res.status(500).send(parentPageRetrieveError);
       }
-      User.findById(parentPage.user, (userRetrieveError, user) => {
-        if (userRetrieveError) {
-          return res.status(500).send(userRetrieveError);
-        }
-        return res.status(200).send({
-          name: user.name,
-          type: user.type
-        });
-      });
+      return getUserById(parentPage.user, res);
+    });
+  });
+};
+
+function getUserById(userId, res){
+  return User.findById(userId, (err, user) => {
+    if (err || !user) {
+      return res.status(500).send(err);
+    }
+    return res.status(200).send({
+      name: user.name,
+      type: user.type
     });
   });
 }
