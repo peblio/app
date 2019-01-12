@@ -38,6 +38,8 @@
     list-style: none;
     padding: 0 $medium-margin;
     margin: 0;
+    height: 100%;
+    overflow-x: scroll;
   }
   &__list-item {
     background: white;
