@@ -1,199 +1,60 @@
 import { expect } from 'chai';
 import * as userController from '../../src/controllers/userController';
+import * as userService from '../../src/service/userService';
 import { assert, spy } from 'sinon';
 const sandbox = require('sinon').sandbox.create();
-const Page = require('../../src/models/page.js');
-const User = require('../../src/models/user.js');
-var findUserByIdSpy;
-var findPageByIdSpy;
-var findOnePageSpy;
-var request;
-var response;
-const pageId = "pageId";
-const userObjectId = "userObjectId";
-const user = { _id: userObjectId, name: "username", type: "teacher" };
-const page = { user: userObjectId, parentId: pageId };
-const expectedUserData = {
+var request = new Object();
+var response = new Object();
+var getUserNameByIdStub;
+var getUserNameForPageStub;
+var getUserNameForParentPageStub;
+const returnValue = {
     name: "username",
     type: "teacher"
 };
 
 
 describe('userController', function () {
-    describe('getUserNameById', function () {
 
-        beforeEach(function () {
-            request = {
-                params: {
-                    userObjectId
-                }
-            };
-            response = {
-                send: spy(),
-                json: spy(),
-                status: createResponseWithStatusCode(200)
-            };
-        });
-
-        afterEach(function () {
-            sandbox.restore();
-        });
-
-        it('shall return error when retrieve user errors', function () {
-            response.status = createResponseWithStatusCode(500);
-            findUserByIdSpy = sandbox.stub(User, 'findById').yields("error retrieving user", null);
-
-            userController.getUserNameById(request, response);
-
-            assertFindByIdWasCalledWithUserId();
-            assertSendWasCalledWith("error retrieving user");
-        });
-
-        it('shall return user name when retrieve user by id', function () {
-            findUserByIdSpy = sandbox.stub(User, 'findById').yields(null, user);
-
-            userController.getUserNameById(request, response);
-
-            assertFindByIdWasCalledWithUserId();
-            assertSendWasCalledWith(expectedUserData);
-        });
+    beforeEach(function () {
+        request = new Object();
+        response = new Object();
     });
 
-    describe('getUserNameForPage', function () {
-
-        beforeEach(function () {
-            request = {
-                params: {
-                    pageId
-                }
-            };
-            response = {
-                send: spy(),
-                json: spy(),
-                status: createResponseWithStatusCode(200)
-            };
-        });
-
-        afterEach(function () {
-            sandbox.restore();
-        });
-
-        it('shall return error when retrieve page errors', function () {
-            response.status = createResponseWithStatusCode(500);
-            findOnePageSpy = sandbox.stub(Page, 'findOne').yields("error retrieving page", null);
-            findUserByIdSpy = sandbox.stub(User, 'findById').yields("error retrieving user", null);
-
-            userController.getUserNameForPage(request, response);
-
-            assertFindOneWasCalledWithPageShortId();
-            assertSendWasCalledWith("error retrieving page");
-            assert.notCalled(findUserByIdSpy);
-        });
-
-        it('shall return error when retrieve user errors', function () {
-            response.status = createResponseWithStatusCode(500);
-            findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, page);
-            findUserByIdSpy = sandbox.stub(User, 'findById').yields("error retrieving user", null);
-
-            userController.getUserNameForPage(request, response);
-
-            assertFindOneWasCalledWithPageShortId();
-            assertSendWasCalledWith("error retrieving user");
-            assertFindByIdWasCalledWithUserId();
-        });
-
-        it('shall return user name given page id', function () {
-            findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, page);
-            findUserByIdSpy = sandbox.stub(User, 'findById').yields(null, user);
-
-            userController.getUserNameForPage(request, response);
-
-            assertFindOneWasCalledWithPageShortId();
-            assertSendWasCalledWith(expectedUserData);
-            assertFindByIdWasCalledWithUserId();
-        });
+    afterEach(function () {
+        sandbox.restore();
     });
 
-    describe('getUserNameForParentPage', function () {
+    it('shall call getUserNameById from service', function () {
+        getUserNameByIdStub = sandbox.stub(userService, 'getUserNameById').returns(returnValue);
 
-        beforeEach(function () {
-            request = {
-                params: {
-                    pageId
-                }
-            };
-            response = {
-                send: spy(),
-                json: spy(),
-                status: createResponseWithStatusCode(200)
-            };
-        });
+        const actualValue = userController.getUserNameById(request, response);
 
-        afterEach(function () {
-            sandbox.restore();
-        });
+        expect(actualValue).to.be.eql(returnValue);
+        assert.calledOnce(getUserNameByIdStub);
+        assert.calledWith(getUserNameByIdStub, request, response);
+    });
 
-        it('shall return error when retrieve page errors', function () {
-            response.status = createResponseWithStatusCode(500);
-            findOnePageSpy = sandbox.stub(Page, 'findOne').yields("error retrieving page", null);
-            findUserByIdSpy = sandbox.stub(User, 'findById').yields(null, null);
 
-            userController.getUserNameForParentPage(request, response);
+    it('shall call getUserNameForPage from service', function () {
+        getUserNameForPageStub = sandbox.stub(userService, 'getUserNameForPage').returns(returnValue);
 
-            assertFindOneWasCalledWithPageShortId();
-            assertSendWasCalledWith("error retrieving page");
-            assert.notCalled(findUserByIdSpy);
-        });
+        const actualValue = userController.getUserNameForPage(request, response);
 
-        it('shall return error when retrieve user errors', function () {
-            response.status = createResponseWithStatusCode(500);
-            findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, page).yields(null, page);
-            findUserByIdSpy = sandbox.stub(User, 'findById').yields("error retrieving user", null);
+        expect(actualValue).to.be.eql(returnValue);
+        assert.calledOnce(getUserNameForPageStub);
+        assert.calledWith(getUserNameForPageStub, request, response);
+    });
 
-            userController.getUserNameForParentPage(request, response);
+    it('shall call getUserNameForParentPage from service', function () {
+        getUserNameForParentPageStub = sandbox.stub(userService, 'getUserNameForParentPage').returns(returnValue);
 
-            assertFindOneWasCalledTwiceWithPageShortId();
-            assertSendWasCalledWith("error retrieving user");
-            assertFindByIdWasCalledWithUserId();
-        });
+        const actualValue = userController.getUserNameForParentPage(request, response);
 
-        it('shall return user name given page id', function () {
-            findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, page).yields(null, page);
-            findUserByIdSpy = sandbox.stub(User, 'findById').yields(null, user);
-
-            userController.getUserNameForParentPage(request, response);
-
-            assertFindOneWasCalledTwiceWithPageShortId();
-            assertSendWasCalledWith(expectedUserData);
-            assertFindByIdWasCalledWithUserId();
-        });
+        expect(actualValue).to.be.eql(returnValue);
+        assert.calledOnce(getUserNameForParentPageStub);
+        assert.calledWith(getUserNameForParentPageStub, request, response);
     });
 
 });
 
-function assertFindOneWasCalledWithPageShortId() {
-    assert.calledOnce(findOnePageSpy);
-    assert.calledWith(findOnePageSpy, { id: pageId });
-}
-
-function assertFindOneWasCalledTwiceWithPageShortId() {
-    assert.calledTwice(findOnePageSpy);
-    assert.alwaysCalledWith(findOnePageSpy, { id: pageId });
-}
-
-function assertFindByIdWasCalledWithUserId() {
-    assert.calledOnce(findUserByIdSpy);
-    assert.calledWith(findUserByIdSpy, userObjectId);
-}
-
-function assertSendWasCalledWith(msg) {
-    assert.calledOnce(response.send);
-    assert.calledWith(response.send, msg);
-};
-
-function createResponseWithStatusCode(statusCode) {
-    return function (responseStatus) {
-        expect(responseStatus).to.be.equal(statusCode);
-        return this;
-    }
-};
