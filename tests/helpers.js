@@ -4,7 +4,7 @@ import config from './config';
 export * from '../server/src/testUtils';
 
 /* global baseUrl */
-export const login = ClientFunction((email, password) => window.fetch(`${baseUrl}/api/users/login`, {
+export const login = ClientFunction((email, password) => window.fetch(`${baseUrl}/api/auth/login`, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
