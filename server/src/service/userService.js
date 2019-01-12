@@ -22,7 +22,7 @@ export function getUserNameById(req, res) {
 }
 
 export function getUserNameForPage(req, res) {
-  Page.findOne({ id: req.params.pageId }, (err, page) => {
+  return Page.findOne({ id: req.params.pageId }, (err, page) => {
     if (err) {
       return res.status(500).send(err);
     } else {
@@ -32,7 +32,7 @@ export function getUserNameForPage(req, res) {
 };
 
 export function getUserNameForParentPage(req, res) {
-  Page.findOne({ id: req.params.pageId }, (err, page) => {
+  return Page.findOne({ id: req.params.pageId }, (err, page) => {
     if (err) {
       return res.status(500).send(err);
     }
