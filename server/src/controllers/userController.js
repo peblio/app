@@ -33,7 +33,7 @@ export function getUserNameById(req, res) {
 }
 
 export function getUserNameForPage(req, res) {
-  Page.findOne({ id: req.params.pageShortId }, (err, page) => {
+  Page.findOne({ id: req.params.pageId }, (err, page) => {
     if (err) {
       return res.status(500).send(err);
     } else {
@@ -50,7 +50,30 @@ export function getUserNameForPage(req, res) {
   });
 }
 
+export function getUserNameForParentPage(req, res) {
+  Page.findOne({ id: req.params.pageId }, (err, page) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    Page.findOne({id: page.parentId }, (parentPageRetrieveError, parentPage) => {
+      if (parentPageRetrieveError) {
+        return res.status(500).send(parentPageRetrieveError);
+      }
+      User.findById(parentPage.user, (userRetrieveError, user) => {
+        if (userRetrieveError) {
+          return res.status(500).send(userRetrieveError);
+        }
+        return res.status(200).send({
+          name: user.name,
+          type: user.type
+        });
+      });
+    });
+  });
+}
+
 userRoutes.route('/:userName/profile').get(getUserProfile);
 userRoutes.route('/:userObjectId').get(getUserNameById);
-userRoutes.route('/page/:pageShortId').get(getUserNameForPage);
+userRoutes.route('/page/:pageId').get(getUserNameForPage);
+userRoutes.route('/parentPageAuthor/:pageId').get(getUserNameForParentPage);
 export default userRoutes;
