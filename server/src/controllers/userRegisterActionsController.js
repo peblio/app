@@ -30,5 +30,3 @@ export function resetPassword(req, res) {
 export function resendConfirmUser(req, res) {
   return resendConfirmationToUser(req, res);
 }
-
-
