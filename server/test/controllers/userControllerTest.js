@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as userController from '../../src/controllers/userController';
 import * as userService from '../../src/service/userService';
-import { assert, spy } from 'sinon';
+import { assert } from 'sinon';
 const sandbox = require('sinon').sandbox.create();
 var request = new Object();
 var response = new Object();
@@ -34,7 +34,6 @@ describe('userController', function () {
         assert.calledOnce(getUserNameByIdStub);
         assert.calledWith(getUserNameByIdStub, request, response);
     });
-
 
     it('shall call getUserNameForPage from service', function () {
         getUserNameForPageStub = sandbox.stub(userService, 'getUserNameForPage').returns(returnValue);
