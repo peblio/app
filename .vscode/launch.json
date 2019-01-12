@@ -21,8 +21,6 @@
                 "--exit",
                 "--compilers",
                 "js:babel-core/register",
-                "--require",
-                "babel-polyfill",
                 "${file}"
             ],
             "console": "integratedTerminal",

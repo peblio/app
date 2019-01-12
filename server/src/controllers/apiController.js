@@ -2,14 +2,19 @@ const AWS = require('aws-sdk');
 const express = require('express');
 const multer = require('multer');
 const shortid = require('shortid');
-const Page = require('../models/page.js');
+
+
 const Folder = require('../models/folder.js');
+const Page = require('../models/page.js');
 const User = require('../models/user.js');
 
 // Amazon s3 config
 const s3 = new AWS.S3();
+
 const credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
 AWS.config.credentials = credentials;
+
+
 const myBucket = process.env.S3_BUCKET;
 // Multer config
 // memory storage keeps file data in a buffer
@@ -53,8 +58,6 @@ function uploadFiles(req, res) {
   });
 }
 
-
-
 function getSketches(req, res) {
   // TODO: make the request async
   if (!req.params.user) {
@@ -94,10 +97,26 @@ function getSketches(req, res) {
   }
 }
 
+function getExamples(req, res) {
+  User.find({ name: 'peblioexamples' }, (userFindError, user) => {
+    if (userFindError) {
+      res.send(userFindError);
+    } else {
+      Page.find({ user: user[0]._id }, (pageFindError, page) => {
+        if (pageFindError) {
+          res.send(pageFindError);
+        } else {
+          res.send(page);
+        }
+      });
+    }
+  });
+}
 
 const apiRoutes = express.Router();
+apiRoutes.route('/examples').get(getExamples);
 apiRoutes.route('/authenticate/:id').get(authenticatePage);
-apiRoutes.route('/upload/:user/:type').get(uploadFiles);
 apiRoutes.route('/sketches').get(getSketches);
 apiRoutes.route('/sketches/:user').get(getSketches);
+apiRoutes.route('/upload/:user/:type').get(uploadFiles);
 module.exports = apiRoutes;

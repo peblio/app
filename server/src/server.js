@@ -5,15 +5,13 @@ const mongoose = require('mongoose');
 mongoose.Promise = Promise;
 const bodyParser = require('body-parser');
 import express from 'express';
-import userRoutes from './controllers/userController';
-import examplesRoutes from './controllers/examplesController';
 const passport = require('passport');
 const cors = require('cors');
 const app = express();
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const currentUserRoutes = require('./controllers/currentUserController');
-const authRoutes = require('./controllers/authController.js');
+const userRoutes = require('./controllers/userController.js');
 const pageRoutes = require('./controllers/pageController.js');
 const folderRoutes = require('./controllers/folderController');
 const apiRoutes = require('./controllers/apiController.js');
@@ -50,11 +48,9 @@ app.use(passport.session());
 
 const router = express.Router();
 router.use('/current_user', currentUserRoutes);
-router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
 router.use('/pages', pageRoutes);
 router.use('/folders', folderRoutes);
-router.use('/examples', examplesRoutes);
 router.use('/', apiRoutes);
 app.use('/api', router);
 

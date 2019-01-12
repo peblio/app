@@ -42,7 +42,7 @@ class Login extends React.Component {
   }
 
   submitLoginUser(event, name, password) {
-    axios.post('/auth/login', {
+    axios.post('/users/login', {
       name,
       password
     })
