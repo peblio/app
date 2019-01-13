@@ -3,7 +3,7 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 
 export function updateEditorTheme(e) {
   const value = e.target.value;
-  axios.post('/users/preferences', {
+  axios.post('/current_user/preferences', {
     key: 'editorTheme',
     value
   })
@@ -24,7 +24,7 @@ export function updateEditorTheme(e) {
 
 export function updateEditorFontSize(e) {
   const value = e.target.value;
-  axios.post('/users/preferences', {
+  axios.post('/current_user/preferences', {
     key: 'editorFontSize',
     value
   })
@@ -48,7 +48,7 @@ export function fetchUserPreferences() {
     if (!user.name) {
       return false;
     }
-    return axios.get('/users/preferences')
+    return axios.get('/current_user/preferences')
       .then(({ data }) => dispatch({
         type: ActionTypes.SET_USER_PREFERENCES,
         data
