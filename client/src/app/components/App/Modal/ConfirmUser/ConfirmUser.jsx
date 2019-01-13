@@ -44,7 +44,7 @@ class ConfirmUser extends React.Component {
   }
 
   submitConfirmUser(token) {
-    axios.post('/users/confirmation', {
+    axios.post('/auth/confirmation', {
       token
     })
       .then((res) => {
@@ -56,7 +56,7 @@ class ConfirmUser extends React.Component {
   }
 
   resendConfirmUser(event, email) {
-    axios.post('/users/resendconfirmation', {
+    axios.post('/auth/resendconfirmation', {
       email
     })
       .then((res) => {
