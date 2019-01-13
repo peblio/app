@@ -2,10 +2,12 @@ import { expect } from 'chai';
 import { saveTag } from '../../src/controllers/tagController';
 import { assert, spy } from 'sinon';
 import Tag from '../../src/models/tag.js';
+import * as tagCreator from '../../src/models/creator/tagCreator.js';
 const sandbox = require('sinon').sandbox.create();
 const name = "Java";
 const tagRetrieveError = "error retrieving tag";
 const tagSaveError = "error saving tag";
+const buildTagFromRequestSpy = sandbox.stub(tagCreator, 'buildTagFromRequest').returns({ name });
 var findOneSpy;
 var saveTagSpy;
 var request;
@@ -38,6 +40,7 @@ describe('tagController', function () {
 
             saveTag(request, response);
 
+            assertBuildTagFromRequestWasCalled();
             assertFindOneWasCalledWithTagName();
             assertSendWasCalledWith(tagRetrieveError);
             assert.notCalled(saveTagSpy);
@@ -50,6 +53,7 @@ describe('tagController', function () {
 
             saveTag(request, response);
 
+            assertBuildTagFromRequestWasCalled();
             assertFindOneWasCalledWithTagName();
             assertSaveTagWasCalled();
             assertSendWasCalledWith(tagSaveError);
@@ -61,6 +65,7 @@ describe('tagController', function () {
 
             saveTag(request, response);
 
+            assertBuildTagFromRequestWasCalled();
             assertFindOneWasCalledWithTagName();
             assert.notCalled(saveTagSpy);
             assert.calledOnce(response.send);
@@ -72,6 +77,7 @@ describe('tagController', function () {
 
             saveTag(request, response);
 
+            assertBuildTagFromRequestWasCalled();
             assertFindOneWasCalledWithTagName();
             assertSaveTagWasCalled(saveTagSpy);
             assert.calledOnce(response.send);
@@ -82,6 +88,10 @@ describe('tagController', function () {
 function assertSendWasCalledWith(msg) {
     assert.calledOnce(response.send);
     assert.calledWith(response.send, msg);
+};
+
+function assertBuildTagFromRequestWasCalled() {
+    assert.calledOnce(buildTagFromRequestSpy);
 };
 
 function assertFindOneWasCalledWithTagName() {

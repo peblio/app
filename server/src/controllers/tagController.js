@@ -1,6 +1,7 @@
 const express = require('express');
 const tagRoutes = express.Router();
-import Tag, { buildTagFromRequest } from '../models/tag.js';
+import Tag from '../models/tag.js';
+import { buildTagFromRequest } from '../models/creator/tagCreator.js';
 
 export function saveTag(req, res) {
   const tag = buildTagFromRequest(req);

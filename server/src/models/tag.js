@@ -15,8 +15,4 @@ const tagSchema = new Schema({
   });
 
 const Tag = mongoose.model('Tag', tagSchema);
-export function buildTagFromRequest(request) {
-  return new Tag({ name: request.body.name });
-}
-
 export default Tag;
