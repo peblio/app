@@ -6,8 +6,26 @@
             "request": "launch",
             "name": "Server Debug",
             "program": "${workspaceFolder}/server/src/server.js",
+            "runtimeExecutable": "${workspaceFolder}/server/node_modules/.bin/babel-node",
+            "runtimeArgs": ["--nolazy"],
             "preLaunchTask": "decryptCredsForLocalRun",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "sourceMaps": true
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Mocha Current File",
+            "program": "${workspaceFolder}/server/node_modules/mocha/bin/_mocha",
+            "args": [
+                "--exit",
+                "--compilers",
+                "js:babel-core/register",
+                "${file}"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "sourceMaps": true
         }
     ]
 }
