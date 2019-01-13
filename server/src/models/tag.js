@@ -14,4 +14,11 @@ const tagSchema = new Schema({
     timestamps: true
   });
 
-module.exports = mongoose.model('Tag', tagSchema);
+
+const Tag = mongoose.model('Tag', tagSchema);
+
+export function buildTagFromRequest(request) {
+  return new Tag({ name: request.body.name });
+}
+
+export default Tag;

@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { saveTag } from '../../src/controllers/tagController';
 import { assert, spy } from 'sinon';
+import Tag from '../../src/models/tag.js';
 const sandbox = require('sinon').sandbox.create();
-const Tag = require('../../src/models/tag.js');
 const name = "Java";
 const tagRetrieveError = "error retrieving tag";
 const tagSaveError = "error saving tag";
