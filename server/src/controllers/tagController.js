@@ -1,11 +1,9 @@
 const express = require('express');
 const tagRoutes = express.Router();
-import Tag from '../models/tag.js';
+import Tag, { buildTagFromRequest } from '../models/tag.js';
 
 export function saveTag(req, res) {
-  const tag = new Tag({
-    name: req.body.name
-  });
+  const tag = buildTagFromRequest(req);
   return Tag.findOne({ name: tag.name }, (retrieveTagError, retrievedTag) => {
     if (retrieveTagError) {
       return res.status(500).send(retrieveTagError);
