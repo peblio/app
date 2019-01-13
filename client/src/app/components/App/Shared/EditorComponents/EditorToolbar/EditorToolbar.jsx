@@ -283,22 +283,15 @@ class EditorToolbar extends React.Component {
             >
               <i className="fas fa-times"></i>
             </button>
-            {this.props.name ? (
-              <FileUpload
-                onDrop={this.onDrop}
-                urlSubmitted={this.props.addMediaFile}
-                imageURL={this.props.imageURL}
-                readOnly={false}
-                container="editor"
-                isSmall={false}
-                isFileUploading={this.state.isFileUploading}
-              />
-            ) : (
-              <p className="editor-toolbar__image-notice">
-            Please Log In to Upload Images
-              </p>
-            )
-            }
+            <FileUpload
+              onDrop={this.onDrop}
+              urlSubmitted={this.props.addMediaFile}
+              imageURL={this.props.imageURL}
+              readOnly={false}
+              container="editor"
+              isSmall={false}
+              isFileUploading={this.state.isFileUploading}
+            />
           </div>
 
         )}

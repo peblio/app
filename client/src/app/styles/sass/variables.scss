@@ -125,7 +125,9 @@ $editor-preferences-width:140px;
 $editor-preferences-button:80px;
 $files-indicator-width:10px;
 $file-upload-width:200px;
-$image-notice-width:300px;
+$image-notice-width:500px;
+$image-upload-toolbar-width:200px;
+$image-upload-modal:200px;
 $insert-toolbar-height:45px;
 $main-toolbar-height:50px;
 $title-width:35px;
@@ -148,3 +150,7 @@ $z-index-layer-4: 400;
 //shadow variables
 $shadow-v-offset: 2px;
 $shadow-blur: 4px;
+
+:export {
+  totalWidth: $total-width;
+}

@@ -155,6 +155,12 @@
   height: fit-content;
 }
 
+.modal__image{
+  @extend %modal;
+  width: $image-notice-width;
+  height: fit-content;
+}
+
 .modal__close-button{
   position: absolute;
   top: 5px;

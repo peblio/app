@@ -13,7 +13,7 @@ const MICROBITS_LINK = '<div style="position:relative;height:calc(300px + 5em);w
 
 const DIRECT_LINK = 'https://www.peblio.co/';
 
-const SCRATCH_LINK = '<iframe allowtransparency=“true” width=“485" height=“402” src=“//scratch.mit.edu/projects/embed/259808211/?autostart=false” frameborder=“0” allowfullscreen></iframe>';
+const SCRATCH_LINK = '<iframe allowtransparency=“true” width=“485" height=“402” src=“https://scratch.mit.edu/projects/277694087/embed” frameborder=“0” allowfullscreen></iframe>';
 
 const VIMEO_LINK = `<iframe src="https://player.vimeo.com/video/97605620" width="640" height="480" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 <p><a href="https://vimeo.com/97605620">Generative Portraits</a> from <a href="https://vimeo.com/fdiba">fdiba</a> on <a href="https://vimeo.com">Vimeo</a>.</p>`;

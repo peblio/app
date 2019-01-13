@@ -55,6 +55,8 @@ export const UPDATE_ANSWER_CHANGE = 'UPDATE_ANSWER_CHANGE';
 
 export const ADD_IMAGE = 'ADD_IMAGE';
 export const SET_IMAGE_URL = 'SET_IMAGE_URL';
+export const SET_IMAGE_CROP = 'SET_IMAGE_CROP';
+export const RESET_IMAGE_CROP = 'RESET_IMAGE_CROP';
 
 export const SET_PAGE_TITLE = 'SET_PAGE_TITLE';
 export const SET_PAGE_HEADING = 'SET_PAGE_HEADING';

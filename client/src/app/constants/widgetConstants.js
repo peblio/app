@@ -25,8 +25,8 @@ export const QUESION_MIN_INNER_HEIGHT = 30;
 
 export const IMAGE_DEFAULT_HEIGHT = 12;
 export const IMAGE_DEFAULT_WIDTH = 12;
-export const IMAGE_MIN_WIDTH = 3;
-export const IMAGE_MIN_HEIGHT = 3;
+export const IMAGE_MIN_WIDTH = 1;
+export const IMAGE_MIN_HEIGHT = 1;
 export const IMAGE_RESPONSIVE_TRIGGER_HEIGHT = 200;
 export const IMAGE_RESPONSIVE_TRIGGER_WIDTH = 160;
 
@@ -38,4 +38,11 @@ export const VIDEO_MIN_HEIGHT = 6;
 export const EDITOR_THEME = {
   light: 'base16-light',
   dark: 'base16-dark'
+};
+
+export const DEFAULT_IMAGE_CROP = {
+  x: 0,
+  y: 0,
+  w: 100,
+  h: 100
 };
