@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'chai';
 import { createUser, loginUser, confirmUser, forgotPassword, resetPassword, resendConfirmUser } from '../../src/controllers/userRegisterActionsController';
 import * as mailService from '../../src/service/mailSenderService';
 import { assert, spy, useFakeTimers } from 'sinon';

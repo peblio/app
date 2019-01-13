@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 import express from 'express';
 import userRoutes from './controllers/userController';
 import examplesRoutes from './controllers/examplesController';
+import tagRoutes from './controllers/tagController';
 const passport = require('passport');
 const cors = require('cors');
 const app = express();
@@ -55,6 +56,7 @@ router.use('/users', userRoutes);
 router.use('/pages', pageRoutes);
 router.use('/folders', folderRoutes);
 router.use('/examples', examplesRoutes);
+router.use('/tags', tagRoutes);
 router.use('/', apiRoutes);
 app.use('/api', router);
 
