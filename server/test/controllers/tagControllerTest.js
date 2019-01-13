@@ -1,111 +1,35 @@
 import { expect } from 'chai';
+import { assert } from 'sinon';
 import { saveTag } from '../../src/controllers/tagController';
-import { assert, spy } from 'sinon';
-import Tag from '../../src/models/tag.js';
-import * as tagCreator from '../../src/models/creator/tagCreator.js';
+import * as saveTagService from '../../src/service/tagService';
 const sandbox = require('sinon').sandbox.create();
 const name = "Java";
-const tagRetrieveError = "error retrieving tag";
-const tagSaveError = "error saving tag";
-const buildTagFromRequestSpy = sandbox.stub(tagCreator, 'buildTagFromRequest').returns({ name });
-var findOneSpy;
-var saveTagSpy;
-var request;
-var response;
+const request = "request";
+const response = "response";
+var saveTagServiceStub;
 
 describe('tagController', function () {
     describe('saveTag', function () {
 
         beforeEach(function () {
-            request = {
-                body: {
-                    name
-                }
-            };
-            response = {
-                send: spy(),
-                json: spy(),
-                status: createResponseWithStatusCode(200)
-            };
+            saveTagServiceStub = sandbox.stub(saveTagService, 'saveTag').returns({ name });
         });
 
         afterEach(function () {
             sandbox.restore();
         });
 
-        it('shall return error if retrieving tag gives error', function () {
-            response.status = createResponseWithStatusCode(500);
-            findOneSpy = sandbox.stub(Tag, 'findOne').yields(tagRetrieveError, null);
-            saveTagSpy = sandbox.stub(Tag.prototype, 'save').yields(null, null);
+        it('shall call saveTag from service', function () {
 
-            saveTag(request, response);
+            const returnValue = saveTag(request, response);
 
-            assertBuildTagFromRequestWasCalled();
-            assertFindOneWasCalledWithTagName();
-            assertSendWasCalledWith(tagRetrieveError);
-            assert.notCalled(saveTagSpy);
-        });
-
-        it('shall return error if saving tag gives error', function () {
-            response.status = createResponseWithStatusCode(500);
-            findOneSpy = sandbox.stub(Tag, 'findOne').yields(null, null);
-            saveTagSpy = sandbox.stub(Tag.prototype, 'save').yields(tagSaveError, null);
-
-            saveTag(request, response);
-
-            assertBuildTagFromRequestWasCalled();
-            assertFindOneWasCalledWithTagName();
-            assertSaveTagWasCalled();
-            assertSendWasCalledWith(tagSaveError);
-        });
-
-        it('shall not save tag if name already exists', function () {
-            findOneSpy = sandbox.stub(Tag, 'findOne').yields(null, { name });
-            saveTagSpy = sandbox.stub(Tag.prototype, 'save').yields(null, null);
-
-            saveTag(request, response);
-
-            assertBuildTagFromRequestWasCalled();
-            assertFindOneWasCalledWithTagName();
-            assert.notCalled(saveTagSpy);
-            assert.calledOnce(response.send);
-        });
-
-        it('shall save tag if name does not exists already', function () {
-            findOneSpy = sandbox.stub(Tag, 'findOne').yields(null, null);
-            saveTagSpy = sandbox.stub(Tag.prototype, 'save').yields(null, null);
-
-            saveTag(request, response);
-
-            assertBuildTagFromRequestWasCalled();
-            assertFindOneWasCalledWithTagName();
-            assertSaveTagWasCalled(saveTagSpy);
-            assert.calledOnce(response.send);
+            expect(returnValue).to.be.eql({ name });
+            assertSaveTagFromServiceWasCalledWithRequestResponse();
         });
     });
 });
 
-function assertSendWasCalledWith(msg) {
-    assert.calledOnce(response.send);
-    assert.calledWith(response.send, msg);
-};
-
-function assertBuildTagFromRequestWasCalled() {
-    assert.calledOnce(buildTagFromRequestSpy);
-};
-
-function assertFindOneWasCalledWithTagName() {
-    assert.calledOnce(findOneSpy);
-    assert.calledWith(findOneSpy, { name });
+function assertSaveTagFromServiceWasCalledWithRequestResponse() {
+    assert.calledOnce(saveTagServiceStub);
+    assert.calledWith(saveTagServiceStub, request, response);
 }
-
-function assertSaveTagWasCalled() {
-    assert.calledOnce(saveTagSpy);
-}
-
-function createResponseWithStatusCode(statusCode) {
-    return function (responseStatus) {
-        expect(responseStatus).to.be.equal(statusCode);
-        return this;
-    }
-};
