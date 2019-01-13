@@ -5,11 +5,14 @@ import axiosOrg from 'axios';
 import URL from 'url';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
-import { setImageURL } from '../../../../action/editors.js';
+import ImageResizeModal from './ImageResizeModal.jsx';
+import ImageEditToolbar from './ImageEditToolbar.jsx';
+import { resetImageCrop, setImageURL, setImageCrop } from '../../../../action/editors.js';
 import axios from '../../../../utils/axios';
 import * as WidgetSize from '../../../../constants/widgetConstants.js';
+import styles from '../../../../styles/sass/variables.scss';
 import FileUpload from '../../Shared/FileUpload/FileUpload.jsx';
+import Modal from '../../Modal/Modal.jsx';
 
 const MEDIA_FILE_REGEX = /.+\.(gif|jpg|jpeg|png|bmp)$/i;
 const VIDEO_FILE_REGEX = /.+\.(mp4|avi|mov|mpg|wmv)$/i;
@@ -21,18 +24,26 @@ class Image extends React.Component {
     super(props);
     this.state = {
       url: '',
-      showUploadPopup: false,
+      isFileUploadOpen: false,
       isImageSmall: false,
       isFileUploading: false,
       isVideo: false,
+      isImageResizerOpen: false
     };
-    this.setImageURL = url => this.props.setImageURL(this.props.id, url);
+    this.setImageCrop = (crop) => {
+      this.props.setImageCrop(this.props.id, crop);
+    };
     this.onDrop = this.onDrop.bind(this);
     this.urlSubmitted = (event, value) => {
       event.preventDefault();
       this.props.setImageURL(this.props.id, value);
+      this.props.resetImageCrop(this.props.id);
       this.renderUploadPopup(false);
     };
+    this.openImageResizer = () => this.setState({ isImageResizerOpen: true });
+    this.closeImageResizer = () => this.setState({ isImageResizerOpen: false });
+    this.openFileUpload = () => this.setState({ isFileUploadOpen: true });
+    this.closeFileUpload = () => this.setState({ isFileUploadOpen: false });
   }
 
   componentDidMount() {
@@ -52,6 +63,7 @@ class Image extends React.Component {
   }
 
   onDrop(files) {
+    this.props.resetImageCrop(this.props.id);
     const file = files[0];
     if (file.name.match(MEDIA_FILE_REGEX)) {
       this.startFileUpload();
@@ -74,7 +86,7 @@ class Image extends React.Component {
         .then((result) => {
           const url = URL.parse(result.request.responseURL);
           this.setUploadPopupVisibility(false);
-          this.setImageURL(`https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
+          this.props.setImageURL(this.props.id, `https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
           this.stopFileUpload();
           this.renderUploadPopup(false);
         })
@@ -86,7 +98,7 @@ class Image extends React.Component {
 
   setUploadPopupVisibility(value) {
     const newState = { ...this.state };
-    newState.showUploadPopup = value;
+    newState.isFileUploadOpen = value;
     this.setState(newState);
   }
 
@@ -98,6 +110,17 @@ class Image extends React.Component {
     this.setState({ isFileUploading: false });
   }
 
+  imageExists = () => !!this.props.imageURL
+
+  displayImage = () => this.props.imageURL && !this.state.isVideo
+
+  displayVideo = () => this.props.imageURL && this.state.isVideo
+
+  displayLoginScreen = () => !this.props.preview && !this.props.name
+
+  displayImageUploadScreen = () => !this.props.preview && !this.imageExists()
+
+  displayImageEditScreen = () => !this.props.preview && this.props.imageURL && !this.state.isVideo
 
   imageSizeChanged = () => {
     const isImageSmall = (this.imageWidgetRef.clientWidth < WidgetSize.IMAGE_RESPONSIVE_TRIGGER_WIDTH ||
@@ -107,91 +130,132 @@ class Image extends React.Component {
     }
   }
 
-  handleOnClick() {
-    const newState = { ...this.state };
-    return (
-      this.imageWidgetRef && (this.state.isImageSmall)
-    ) &&
-    this.setUploadPopupVisibility(!newState.showUploadPopup);
-  }
-
-  renderUploadPopup(sizeOverride) {
-    return (
+  renderUploadPopup=() => (
+    <Modal
+      size="image"
+      isOpen={this.state.isFileUploadOpen}
+      closeModal={this.closeFileUpload}
+    >
       <FileUpload
         onDrop={this.onDrop}
         urlSubmitted={this.urlSubmitted}
         imageURL={this.props.imageURL}
         container="image"
-        isSmall={sizeOverride && this.state.isImageSmall}
         isFileUploading={this.state.isFileUploading}
+        isSmall={false}
+      />
+    </Modal>
+  )
+
+  renderImageEdit=() => (
+    <Modal
+      size="image"
+      isOpen={this.state.isImageResizerOpen}
+      closeModal={this.closeImageResizer}
+    >
+      <ImageResizeModal
+        imageURL={this.props.imageURL}
+        crop={this.props.crop ? this.props.crop : WidgetSize.DEFAULT_IMAGE_CROP}
+        setImageCrop={this.setImageCrop}
+        closeModal={this.closeImageResizer}
+      />
+    </Modal>
+  )
+
+  renderImage=() => {
+    const crop = this.props.crop ? this.props.crop : WidgetSize.DEFAULT_IMAGE_CROP;
+    const cropCss =
+      `polygon(
+      ${crop.x}% ${crop.y}%,
+      ${crop.x + crop.width}% ${crop.y}%,
+      ${crop.x + crop.width}% ${crop.y + crop.height}%,
+      ${crop.x}% ${crop.y + crop.height}%)
+      `;
+    const translateX = 50 - crop.x;
+    const translateY = 50 - crop.y;
+    const scaleY = 100 / crop.height;
+    const scaleX = 100 / crop.width;
+    const cropAndScaleFromOriginTransform =
+    `translate(-50%, -50%) scale(${scaleY}) translate(${translateX}%, ${translateY}%) `;
+    const maxWidth = styles.totalWidth / scaleY * scaleX;
+    return (
+      <img
+        className={
+          `element__image
+        ${this.props.crop ? '' : 'element__image-legacy'}`
+        }
+        src={this.props.imageURL}
+        id={`ref-${this.props.id}`}
+        ref={(input) => {
+          this[`ref-${this.props.id}`] = input;
+        }}
+        alt=""
+        data-test="image__main"
+        style={{
+          clipPath: cropCss,
+          WebkitlipPath: cropCss,
+          cropAndScaleFromOriginTransform,
+          WebkitTransform: cropAndScaleFromOriginTransform,
+          maxWidth
+        }}
       />
     );
   }
+
+  renderVideo=() => (
+    // eslint-disable-next-line
+    <video width="100%" controls><source src={this.props.imageURL} />
+        Your browser does not support HTML5 video.
+    </video>
+  )
+
 
   render() {
     return (
       <div>
         <div
           ref={(ref) => { this.imageWidgetRef = ref; }}
+          data-test="image__container"
           className={`
           image__container
           ${this.props.preview ? '' : 'image__container--edit'}
           ${this.props.name && this.imageWidgetRef && (this.state.isImageSmall) ? 'image__container--small' : ''}
           ${this.props.imageURL && 'image__container--exists'}
           `}
-          data-test="image__container"
         >
-          {(this.props.imageURL && !this.state.isVideo) && (
-            <img
-              className="element__image"
-              src={this.props.imageURL}
-              alt=""
-              data-test="image__main"
+          {this.imageExists() && (
+            <div>
+              {this.displayImage() && (
+                this.renderImage()
+              )}
+              {this.displayVideo() && (
+                this.renderVideo()
+              )}
+              {!this.props.preview && (
+                <ImageEditToolbar
+                  name={this.props.name}
+                  openFileUpload={this.openFileUpload}
+                  openImageResizer={this.openImageResizer}
+                  isImageSmall={this.state.isImageSmall}
+                />
+              )}
+            </div>
+          )}
+
+          {this.displayImageUploadScreen() && (
+            <FileUpload
+              onDrop={this.onDrop}
+              urlSubmitted={this.urlSubmitted}
+              imageURL={this.props.imageURL}
+              container="image"
+              isFileUploading={this.state.isFileUploading}
+              isSmall={this.state.isImageSmall}
             />
           )}
-          {(this.props.imageURL && this.state.isVideo) && (
-            // eslint-disable-next-line
-            <video width="100%" controls>
-              <source src={this.props.imageURL} />
-              Your browser does not support HTML5 video.
-            </video>
-          )}
-          {!this.props.preview && !this.props.name && (
-            <div className="image__login">
 
-              <div
-                className={`${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`}
-              >
-                <div className="image__title">
-                Log In to Upload Images
-                </div>
-              </div>
-            </div>
-          )}
+          {this.renderUploadPopup()}
+          {this.renderImageEdit()}
 
-          {!this.props.preview && this.props.name && (
-            <div
-              tabIndex="0" //eslint-disable-line
-              role="button"
-              className={
-                `image__login ${!this.props.imageURL ? 'image__content' : 'image__content image__replace-content'}`
-              }
-              data-test="image__upload-container"
-              onClick={() => { this.handleOnClick(); }}
-              onKeyUp={() => this.handleOnClick()}
-            >
-              {this.renderUploadPopup(true)}
-            </div>
-          )}
-
-          {this.state.showUploadPopup && (
-            <div
-              className='image__container image__container--popup'
-              data-test="image__upload-container"
-            >
-              {this.renderUploadPopup(false)}
-            </div>
-          )}
         </div>
       </div>
     );
@@ -199,10 +263,18 @@ class Image extends React.Component {
 }
 
 Image.propTypes = {
+  crop: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
+    w: PropTypes.number,
+    h: PropTypes.number
+  }).isRequired,
   id: PropTypes.string.isRequired,
   imageURL: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
+  resetImageCrop: PropTypes.func.isRequired,
+  setImageCrop: PropTypes.func.isRequired,
   setImageURL: PropTypes.func.isRequired,
 };
 
@@ -213,6 +285,8 @@ function mapStateToProps(state) {
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
+  resetImageCrop,
+  setImageCrop,
   setImageURL
 }, dispatch);
 

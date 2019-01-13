@@ -277,7 +277,13 @@ const editorsReducer = (state = initialState, action) => {
         type: 'image',
         id,
         index: stack.length,
-        url: ''
+        url: '',
+        crop: {
+          x: 0,
+          y: 0,
+          height: 100,
+          width: 100
+        }
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -287,6 +293,19 @@ const editorsReducer = (state = initialState, action) => {
 
     case ActionTypes.SET_IMAGE_URL:
       editors[action.id].url = action.url;
+      return { ...state, editors };
+
+    case ActionTypes.SET_IMAGE_CROP:
+      editors[action.id].crop = action.crop;
+      return { ...state, editors };
+
+    case ActionTypes.RESET_IMAGE_CROP:
+      editors[action.id].crop = {
+        x: 0,
+        y: 0,
+        height: 100,
+        width: 100
+      };
       return { ...state, editors };
 
     case ActionTypes.LOGOUT_USER:

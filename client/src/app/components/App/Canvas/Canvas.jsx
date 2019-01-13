@@ -177,6 +177,7 @@ class Canvas extends React.Component {
         <Image
           id={editor.id}
           imageURL={editor.url}
+          crop={editor.crop}
           layout={this.props.layout}
         />
       </div>
@@ -254,6 +255,17 @@ class Canvas extends React.Component {
             break;
           }
           case 'image': {
+            const imgElt = document.getElementById(`ref-${key}`);
+            // TODO: Move image calculation layout to a seperate class/util function
+            if (this.props.editors[key].crop && imgElt) {
+              // checking if crop is present, to ensure that older images are not affected
+              const imageEltRatio = imgElt.width / imgElt.height;
+              const imageCropRatio = this.props.editors[key].crop.width / this.props.editors[key].crop.height;
+              const imageRatio = imageEltRatio * imageCropRatio;
+              const trueLayoutHeight = localLayout[key].h - 1;
+              const trueLayoutWidth = trueLayoutHeight * imageRatio;
+              localLayout[key].w = Math.ceil(trueLayoutWidth + 1);
+            }
             this.setWidgetSize(
               localLayout[key],
               WidgetSize.IMAGE_DEFAULT_WIDTH,
@@ -300,7 +312,7 @@ class Canvas extends React.Component {
           cols={this.props.rgl.cols}
           width={this.props.rgl.width}
           rowHeight={this.props.rgl.rowHeight}
-          layout={storageLayout}
+          layout={localLayout}
           onLayoutChange={this.props.setPageLayout}
           compactType="vertical"
           margin={this.props.rgl.margin}
