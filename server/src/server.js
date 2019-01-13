@@ -1,15 +1,16 @@
-require("babel-core/register");
-require("babel-polyfill");
 const mongoose = require('mongoose');
 // use the native Promise object for Mongoose's promises
 mongoose.Promise = Promise;
 const bodyParser = require('body-parser');
-import express from 'express';
+const express = require('express'); // include the express library
 const passport = require('passport');
 const cors = require('cors');
+
 const app = express();
+
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+
 const currentUserRoutes = require('./controllers/currentUserController');
 const userRoutes = require('./controllers/userController.js');
 const pageRoutes = require('./controllers/pageController.js');
