@@ -175,7 +175,8 @@ class Image extends React.Component {
     const translateY = 50 - crop.y;
     const scaleY = 100 / crop.height;
     const scaleX = 100 / crop.width;
-    const cropAndScaleFromOriginTransform = `translate(-50%, -50%) scale(${scaleY}) translate(${translateX}%, ${translateY}%) `;
+    const cropAndScaleFromOriginTransform =
+    `translate(-50%, -50%) scale(${scaleY}) translate(${translateX}%, ${translateY}%) `;
     const maxWidth = styles.totalWidth / scaleY * scaleX;
     return (
       <img

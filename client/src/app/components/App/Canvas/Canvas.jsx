@@ -255,10 +255,11 @@ class Canvas extends React.Component {
             break;
           }
           case 'image': {
-            if (this.props.editors[key].crop) {
+            const imgElt = document.getElementById(`ref-${key}`);
+            // TODO: Move image calculation layout to a seperate class/util function
+            if (this.props.editors[key].crop && imgElt) {
               // checking if crop is present, to ensure that older images are not affected
-              const imgElt = document.getElementById(`ref-${key}`);
-              const imageEltRatio = imgElt ? imgElt.width / imgElt.height : 1;
+              const imageEltRatio = imgElt.width / imgElt.height;
               const imageCropRatio = this.props.editors[key].crop.width / this.props.editors[key].crop.height;
               const imageRatio = imageEltRatio * imageCropRatio;
               const trueLayoutHeight = localLayout[key].h - 1;
