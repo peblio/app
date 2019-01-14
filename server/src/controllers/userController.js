@@ -6,20 +6,20 @@ export function getUserProfile(req, res) {
   return userService.getUserProfile(req, res);
 }
 
-export function getUserNameById(req, res) {
-  return userService.getUserNameById(req, res);
+export function getUserDetailsById(req, res) {
+  return userService.getUserDetailsById(req, res);
 }
 
-export function getUserNameForPage(req, res) {
-  return userService.getUserNameForPage(req, res);
+export function getUserDetailsForPage(req, res) {
+  return userService.getUserDetailsForPage(req, res);
 };
 
-export function getUserNameForParentPage(req, res) {
-  return userService.getUserNameForParentPage(req, res);
+export function getUserDetailsForParentPage(req, res) {
+  return userService.getUserDetailsForParentPage(req, res);
 };
 
 userRoutes.route('/:userName/profile').get(getUserProfile);
-userRoutes.route('/:userObjectId').get(getUserNameById);
-userRoutes.route('/page/:pageId').get(getUserNameForPage);
-userRoutes.route('/parentPageAuthor/:pageId').get(getUserNameForParentPage);
+userRoutes.route('/:userObjectId').get(getUserDetailsById);
+userRoutes.route('/page/:pageId').get(getUserDetailsForPage);
+userRoutes.route('/parentPageAuthor/:pageId').get(getUserDetailsForParentPage);
 export default userRoutes;

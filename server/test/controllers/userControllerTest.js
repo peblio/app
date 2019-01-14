@@ -5,9 +5,9 @@ import { assert } from 'sinon';
 const sandbox = require('sinon').sandbox.create();
 var request = new Object();
 var response = new Object();
-var getUserNameByIdStub;
-var getUserNameForPageStub;
-var getUserNameForParentPageStub;
+var getUserDetailsByIdStub;
+var getUserDetailsForPageStub;
+var getUserDetailsForParentPageStub;
 const returnValue = {
     name: "username",
     type: "teacher"
@@ -25,34 +25,34 @@ describe('userController', function () {
         sandbox.restore();
     });
 
-    it('shall call getUserNameById from service', function () {
-        getUserNameByIdStub = sandbox.stub(userService, 'getUserNameById').returns(returnValue);
+    it('shall call getUserDetailsById from service', function () {
+        getUserDetailsByIdStub = sandbox.stub(userService, 'getUserDetailsById').returns(returnValue);
 
-        const actualValue = userController.getUserNameById(request, response);
+        const actualValue = userController.getUserDetailsById(request, response);
 
         expect(actualValue).to.be.eql(returnValue);
-        assert.calledOnce(getUserNameByIdStub);
-        assert.calledWith(getUserNameByIdStub, request, response);
+        assert.calledOnce(getUserDetailsByIdStub);
+        assert.calledWith(getUserDetailsByIdStub, request, response);
     });
 
-    it('shall call getUserNameForPage from service', function () {
-        getUserNameForPageStub = sandbox.stub(userService, 'getUserNameForPage').returns(returnValue);
+    it('shall call getUserDetailsForPage from service', function () {
+        getUserDetailsForPageStub = sandbox.stub(userService, 'getUserDetailsForPage').returns(returnValue);
 
-        const actualValue = userController.getUserNameForPage(request, response);
+        const actualValue = userController.getUserDetailsForPage(request, response);
 
         expect(actualValue).to.be.eql(returnValue);
-        assert.calledOnce(getUserNameForPageStub);
-        assert.calledWith(getUserNameForPageStub, request, response);
+        assert.calledOnce(getUserDetailsForPageStub);
+        assert.calledWith(getUserDetailsForPageStub, request, response);
     });
 
-    it('shall call getUserNameForParentPage from service', function () {
-        getUserNameForParentPageStub = sandbox.stub(userService, 'getUserNameForParentPage').returns(returnValue);
+    it('shall call getUserDetailsForParentPage from service', function () {
+        getUserDetailsForParentPageStub = sandbox.stub(userService, 'getUserDetailsForParentPage').returns(returnValue);
 
-        const actualValue = userController.getUserNameForParentPage(request, response);
+        const actualValue = userController.getUserDetailsForParentPage(request, response);
 
         expect(actualValue).to.be.eql(returnValue);
-        assert.calledOnce(getUserNameForParentPageStub);
-        assert.calledWith(getUserNameForParentPageStub, request, response);
+        assert.calledOnce(getUserDetailsForParentPageStub);
+        assert.calledWith(getUserDetailsForParentPageStub, request, response);
     });
 
 });
