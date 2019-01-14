@@ -17,11 +17,11 @@ export function getUserProfile(req, res) {
   });
 }
 
-export function getUserNameById(req, res) {
+export function getUserDetailsById(req, res) {
   return getUserById(req.params.userObjectId, res);
 }
 
-export function getUserNameForPage(req, res) {
+export function getUserDetailsForPage(req, res) {
   return Page.findOne({ id: req.params.pageId }, (err, page) => {
     if (err) {
       return res.status(500).send(err);
@@ -31,7 +31,7 @@ export function getUserNameForPage(req, res) {
   });
 };
 
-export function getUserNameForParentPage(req, res) {
+export function getUserDetailsForParentPage(req, res) {
   return Page.findOne({ id: req.params.pageId }, (err, page) => {
     if (err) {
       return res.status(500).send(err);
