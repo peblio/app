@@ -3,7 +3,7 @@ const Page = require('../models/page.js');
 
 export function getUserProfile(req, res) {
   User.findOne({ name: req.params.userName }, (err, user) => {
-    if (err) {
+    if (err || !user) {
       res.send(err);
     } else {
       res.send({
@@ -23,7 +23,7 @@ export function getUserDetailsById(req, res) {
 
 export function getUserDetailsForPage(req, res) {
   return Page.findOne({ id: req.params.pageId }, (err, page) => {
-    if (err) {
+    if (err || !page) {
       return res.status(500).send(err);
     } else {
       return getUserById(page.user, res);
@@ -33,11 +33,11 @@ export function getUserDetailsForPage(req, res) {
 
 export function getUserDetailsForParentPage(req, res) {
   return Page.findOne({ id: req.params.pageId }, (err, page) => {
-    if (err) {
+    if (err || !page) {
       return res.status(500).send(err);
     }
     Page.findOne({id: page.parentId }, (parentPageRetrieveError, parentPage) => {
-      if (parentPageRetrieveError) {
+      if (parentPageRetrieveError || !parentPage) {
         return res.status(500).send(parentPageRetrieveError);
       }
       return getUserById(parentPage.user, res);
