@@ -48,6 +48,16 @@ describe('userService', function () {
             assertSendWasCalledWith("error retrieving user");
         });
 
+        it('shall return error when retrieve user does not return user', function () {
+            response.status = createResponseWithStatusCode(500);
+            findUserByIdSpy = sandbox.stub(User, 'findById').yields(null, null);
+
+            userService.getUserDetailsById(request, response);
+
+            assertFindByIdWasCalledWithUserId();
+            assertSendWasCalledWith(null);
+        });
+
         it('shall return user name when retrieve user by id', function () {
             findUserByIdSpy = sandbox.stub(User, 'findById').yields(null, user);
 
@@ -89,6 +99,18 @@ describe('userService', function () {
             assert.notCalled(findUserByIdSpy);
         });
 
+        it('shall return error when retrieve page does not return page', function () {
+            response.status = createResponseWithStatusCode(500);
+            findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, null);
+            findUserByIdSpy = sandbox.stub(User, 'findById').yields("error retrieving user", null);
+
+            userService.getUserDetailsForPage(request, response);
+
+            assertFindOneWasCalledWithPageShortId();
+            assertSendWasCalledWith(null);
+            assert.notCalled(findUserByIdSpy);
+        });
+
         it('shall return error when retrieve user errors', function () {
             response.status = createResponseWithStatusCode(500);
             findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, page);
@@ -98,6 +120,18 @@ describe('userService', function () {
 
             assertFindOneWasCalledWithPageShortId();
             assertSendWasCalledWith("error retrieving user");
+            assertFindByIdWasCalledWithUserId();
+        });
+
+        it('shall return error when retrieve user errors', function () {
+            response.status = createResponseWithStatusCode(500);
+            findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, page);
+            findUserByIdSpy = sandbox.stub(User, 'findById').yields(null, null);
+
+            userService.getUserDetailsForPage(request, response);
+
+            assertFindOneWasCalledWithPageShortId();
+            assertSendWasCalledWith(null);
             assertFindByIdWasCalledWithUserId();
         });
 
@@ -144,6 +178,18 @@ describe('userService', function () {
             assert.notCalled(findUserByIdSpy);
         });
 
+        it('shall return error when retrieve page does not return page', function () {
+            response.status = createResponseWithStatusCode(500);
+            findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, null);
+            findUserByIdSpy = sandbox.stub(User, 'findById').yields(null, null);
+
+            userService.getUserDetailsForParentPage(request, response);
+
+            assertFindOneWasCalledWithPageShortId();
+            assertSendWasCalledWith(null);
+            assert.notCalled(findUserByIdSpy);
+        });
+
         it('shall return error when retrieve user errors', function () {
             response.status = createResponseWithStatusCode(500);
             findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, page).yields(null, page);
@@ -153,6 +199,18 @@ describe('userService', function () {
 
             assertFindOneWasCalledTwiceWithPageShortId();
             assertSendWasCalledWith("error retrieving user");
+            assertFindByIdWasCalledWithUserId();
+        });
+
+        it('shall return error when retrieve user does not return user', function () {
+            response.status = createResponseWithStatusCode(500);
+            findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, page).yields(null, page);
+            findUserByIdSpy = sandbox.stub(User, 'findById').yields(null, null);
+
+            userService.getUserDetailsForParentPage(request, response);
+
+            assertFindOneWasCalledTwiceWithPageShortId();
+            assertSendWasCalledWith(null);
             assertFindByIdWasCalledWithUserId();
         });
 
