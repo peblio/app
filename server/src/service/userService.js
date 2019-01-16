@@ -4,7 +4,8 @@ const Page = require('../models/page.js');
 export function getUserProfile(req, res) {
   User.findOne({ name: req.params.userName }, (err, user) => {
     if (err || !user) {
-      res.send(err);
+      const statusCode = err ? 500 : 404;
+      res.status(statusCode).send(err);
     } else {
       res.send({
         name: user.name,
@@ -24,7 +25,8 @@ export function getUserDetailsById(req, res) {
 export function getUserDetailsForPage(req, res) {
   return Page.findOne({ id: req.params.pageId }, (err, page) => {
     if (err || !page) {
-      return res.status(500).send(err);
+      const statusCode = err ? 500 : 404;
+      return res.status(statusCode).send(err);
     } else {
       return getUserById(page.user, res);
     }
@@ -34,11 +36,13 @@ export function getUserDetailsForPage(req, res) {
 export function getUserDetailsForParentPage(req, res) {
   return Page.findOne({ id: req.params.pageId }, (err, page) => {
     if (err || !page) {
-      return res.status(500).send(err);
+      const statusCode = err ? 500 : 404;
+      return res.status(statusCode).send(err);
     }
     Page.findOne({id: page.parentId }, (parentPageRetrieveError, parentPage) => {
       if (parentPageRetrieveError || !parentPage) {
-        return res.status(500).send(parentPageRetrieveError);
+        const statusCode = parentPageRetrieveError ? 500 : 404;
+        return res.status(statusCode).send(parentPageRetrieveError);
       }
       return getUserById(parentPage.user, res);
     });
@@ -48,7 +52,8 @@ export function getUserDetailsForParentPage(req, res) {
 function getUserById(userId, res){
   return User.findById(userId, (err, user) => {
     if (err || !user) {
-      return res.status(500).send(err);
+      const statusCode = err ? 500 : 404;
+      return res.status(statusCode).send(err);
     }
     return res.status(200).send({
       name: user.name,
