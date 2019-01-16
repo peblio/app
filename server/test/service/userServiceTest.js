@@ -49,7 +49,7 @@ describe('userService', function () {
         });
 
         it('shall return error when retrieve user does not return user', function () {
-            response.status = createResponseWithStatusCode(500);
+            response.status = createResponseWithStatusCode(404);
             findUserByIdSpy = sandbox.stub(User, 'findById').yields(null, null);
 
             userService.getUserDetailsById(request, response);
@@ -100,7 +100,7 @@ describe('userService', function () {
         });
 
         it('shall return error when retrieve page does not return page', function () {
-            response.status = createResponseWithStatusCode(500);
+            response.status = createResponseWithStatusCode(404);
             findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, null);
             findUserByIdSpy = sandbox.stub(User, 'findById').yields("error retrieving user", null);
 
@@ -123,8 +123,8 @@ describe('userService', function () {
             assertFindByIdWasCalledWithUserId();
         });
 
-        it('shall return error when retrieve user errors', function () {
-            response.status = createResponseWithStatusCode(500);
+        it('shall return error when retrieve user does not return user', function () {
+            response.status = createResponseWithStatusCode(404);
             findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, page);
             findUserByIdSpy = sandbox.stub(User, 'findById').yields(null, null);
 
@@ -179,7 +179,7 @@ describe('userService', function () {
         });
 
         it('shall return error when retrieve page does not return page', function () {
-            response.status = createResponseWithStatusCode(500);
+            response.status = createResponseWithStatusCode(404);
             findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, null);
             findUserByIdSpy = sandbox.stub(User, 'findById').yields(null, null);
 
@@ -192,7 +192,7 @@ describe('userService', function () {
 
         it('shall return error when retrieve user errors', function () {
             response.status = createResponseWithStatusCode(500);
-            findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, page).yields(null, page);
+            findOnePageSpy = sandbox.stub(Page, 'findOne').onCall(0).yields(null, page).onCall(1).yields(null, page);
             findUserByIdSpy = sandbox.stub(User, 'findById').yields("error retrieving user", null);
 
             userService.getUserDetailsForParentPage(request, response);
@@ -202,9 +202,21 @@ describe('userService', function () {
             assertFindByIdWasCalledWithUserId();
         });
 
+        it('shall return error when retrieve parentPage does not return page', function () {
+            response.status = createResponseWithStatusCode(404);
+            findOnePageSpy = sandbox.stub(Page, 'findOne').onCall(0).yields(null, page).onCall(1).yields(null, null);
+            findUserByIdSpy = sandbox.stub(User, 'findById').yields("error retrieving user", null);
+
+            userService.getUserDetailsForParentPage(request, response);
+
+            assertFindOneWasCalledTwiceWithPageShortId();
+            assertSendWasCalledWith(null);
+            assert.notCalled(findUserByIdSpy);
+        });
+
         it('shall return error when retrieve user does not return user', function () {
-            response.status = createResponseWithStatusCode(500);
-            findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, page).yields(null, page);
+            response.status = createResponseWithStatusCode(404);
+            findOnePageSpy = sandbox.stub(Page, 'findOne').onCall(0).yields(null, page).onCall(1).yields(null, page);
             findUserByIdSpy = sandbox.stub(User, 'findById').yields(null, null);
 
             userService.getUserDetailsForParentPage(request, response);
@@ -215,7 +227,7 @@ describe('userService', function () {
         });
 
         it('shall return user name given page id', function () {
-            findOnePageSpy = sandbox.stub(Page, 'findOne').yields(null, page).yields(null, page);
+            findOnePageSpy = sandbox.stub(Page, 'findOne').onCall(0).yields(null, page).onCall(1).yields(null, page);
             findUserByIdSpy = sandbox.stub(User, 'findById').yields(null, user);
 
             userService.getUserDetailsForParentPage(request, response);
