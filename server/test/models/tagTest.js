@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import Tag from '../../src/models/tag.js';
 
-describe('tagCreator', function () {
+describe('tagTest', function () {
     describe('buildTagFromRequest', function () {
 
         it('shall not validate tag if it does not have name', function () {
