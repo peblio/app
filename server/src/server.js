@@ -8,6 +8,7 @@ import express from 'express';
 import userRoutes from './controllers/userController';
 import examplesRoutes from './controllers/examplesController';
 import tagRoutes from './controllers/tagController';
+import pageRoutes from'./controllers/pageController.js';
 const passport = require('passport');
 const cors = require('cors');
 const app = express();
@@ -15,7 +16,6 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const currentUserRoutes = require('./controllers/currentUserController');
 const authRoutes = require('./controllers/authController.js');
-const pageRoutes = require('./controllers/pageController.js');
 const folderRoutes = require('./controllers/folderController');
 const apiRoutes = require('./controllers/apiController.js');
 
