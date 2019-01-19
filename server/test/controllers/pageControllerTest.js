@@ -121,35 +121,35 @@ describe('pageController', function () {
             sandbox.restore();
         });
 
-        it('shall return error if peblioguest user not found', async function(){
+        it('shall return error if peblioguest user not found', async function () {
             response.status = createResponseWithStatusCode(500);
-            execStub = sandbox.stub().throws({message: "peblioguest user not found"});
+            execStub = sandbox.stub().throws({ message: "peblioguest user not found" });
             findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: execStub });
-            savePageSpy = sandbox.stub(Page.prototype, 'save').throws({message: "Could not save Page as guest"});
+            savePageSpy = sandbox.stub(Page.prototype, 'save').throws({ message: "Could not save Page as guest" });
 
             await savePageAsGuest(request, response);
 
             assert.calledOnce(findOneUserSpy);
             assert.calledOnce(execStub);
             assert.notCalled(savePageSpy);
-            assertSendWasCalledWith({error:"peblioguest user not found"});
+            assertSendWasCalledWith({ error: "peblioguest user not found" });
         });
 
-        it('shall return error when saving page errors page by id', async function(){
+        it('shall return error when saving page errors page by id', async function () {
             response.status = createResponseWithStatusCode(500);
             execStub = sandbox.stub().returns(guestUser);
             findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: execStub });
-            savePageSpy = sandbox.stub(Page.prototype, 'save').throws({message: "Could not save Page as guest"});
+            savePageSpy = sandbox.stub(Page.prototype, 'save').throws({ message: "Could not save Page as guest" });
 
             await savePageAsGuest(request, response);
 
             assert.calledOnce(findOneUserSpy);
             assert.calledOnce(execStub);
             assert.calledOnce(savePageSpy);
-            assertSendWasCalledWith({error:"Could not save Page as guest"});
+            assertSendWasCalledWith({ error: "Could not save Page as guest" });
         });
 
-        it('shall save page as guest', async function(){
+        it('shall save page as guest', async function () {
             execStub = sandbox.stub().returns(guestUser);
             findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: execStub });
             savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
@@ -159,10 +159,11 @@ describe('pageController', function () {
             assert.calledOnce(findOneUserSpy);
             assert.calledOnce(execStub);
             assert.calledOnce(savePageSpy);
-            assertSendWasCalledWith({page:pageData});
+            assertSendWasCalledWith({ page: pageData });
         });
-        
+
     });
+
 });
 
 function assertFindWasCalledWithPageId() {
