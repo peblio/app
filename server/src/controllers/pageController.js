@@ -1,4 +1,4 @@
-import { getPage } from './pageControllerNew';
+import { getPage, getPagesWithTag } from './pageControllerNew';
 const express = require('express');
 const Page = require('../models/page.js');
 const User = require('../models/user.js');
@@ -50,7 +50,8 @@ export async function updatePage(req, res) {
     editors: req.body.editors,
     editorIndex: req.body.editorIndex,
     layout: req.body.layout,
-    workspace: req.body.workspace
+    workspace: req.body.workspace,
+    tags: req.body.tags
   },
     (err, data) => {
       if (err) {
@@ -100,6 +101,7 @@ export async function movePage(req, res) {
 }
 
 const pageRoutes = express.Router();
+pageRoutes.route('/withTags').get(getPagesWithTag);
 pageRoutes.route('/:pageId/move').post(movePage);
 pageRoutes.route('/:pageId').get(getPage);
 pageRoutes.route('/save').post(savePage);
