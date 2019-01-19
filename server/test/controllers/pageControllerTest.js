@@ -1,11 +1,12 @@
 import { createResponseWithStatusCode } from './utils.js';
-import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage } from '../../src/controllers/pageControllerNew';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage } from '../../src/controllers/pageControllerNew';
 import { assert, spy } from 'sinon';
 
 const sinon = require('sinon');
 const sandbox = sinon.sandbox.create();
 const Page = require('../../src/models/page.js');
 const User = require('../../src/models/user.js');
+const Folder = require('../../src/models/folder.js');
 const tag = "Java";
 
 const pageData = {
@@ -18,6 +19,7 @@ const pageData = {
     workspace: 'No workspace',
     tags: []
 };
+const folderId = "somefolderId";
 const pageId = 'pageId';
 const error = { error: 'Could not retrieve page' };
 const guestUser = {
@@ -34,10 +36,14 @@ let findOneUserSpy;
 let request;
 let response;
 let findOneExecStub;
+let findOnePageExecStub;
+let findOnePageStub;
 let updateUserSpy;
 let updateUserExecStub;
 let deleteOnePageSpy;
 let updatePageSpy;
+let folderCountStub;
+let folderCountExecStub;
 
 describe('pageController', function () {
     describe('getPage', function () {
@@ -359,6 +365,164 @@ describe('pageController', function () {
 
     });
 
+    describe('movePage', function () {
+
+        beforeEach(function () {
+            request = {
+                user: loggedInUser,
+                body: {
+                    folderId
+                },
+                params: {
+                    pageId
+                }
+            };
+            response = {
+                send: spy(),
+                json: spy(),
+                status: createResponseWithStatusCode(200),
+                sendStatus: createResponseWithStatusCode(200)
+            };
+        });
+
+        afterEach(function () {
+            sandbox.restore();
+        });
+
+        it('shall return error if request not authenticated', async function () {
+            response.status = createResponseWithStatusCode(403);
+            savePageSpy = sandbox.stub(Page.prototype, 'save');
+
+            await movePage({}, response);
+
+            assert.notCalled(savePageSpy);
+            assertSendWasCalledWith({ error: 'Please log in first' });
+        });
+
+        it('shall return 400 if no body', async function () {
+            response.sendStatus = createResponseWithStatusCode(400);
+            savePageSpy = sandbox.stub(Page.prototype, 'save');
+
+            await movePage({user: loggedInUser}, response);
+
+            assert.notCalled(savePageSpy);
+            assert.notCalled(response.send);
+        });
+
+        it('shall return error if page not found', async function () {
+            response.status = createResponseWithStatusCode(500);
+            findOnePageExecStub = sandbox.stub().throws({ message: "Could not find page" });
+            findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+            savePageSpy = sandbox.stub(Page.prototype, 'save');
+
+            await movePage(request, response);
+
+            assert.notCalled(savePageSpy);
+            assertSendWasCalledWith({ error: 'Could not find page' });
+            assertFindOnePageWasCalledWithId();
+        });
+
+        it('shall return 404 if page not found', async function () {
+            response.status = createResponseWithStatusCode(404);
+            findOnePageExecStub = sandbox.stub().returns(null);
+            findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+            savePageSpy = sandbox.stub(Page.prototype, 'save');
+
+            await movePage(request, response);
+
+            assert.notCalled(savePageSpy);
+            assertSendWasCalledWith({ error: `Page with id ${pageId} not found` });
+            assertFindOnePageWasCalledWithId();
+        });
+
+        it('shall return error if retrieve folder gives error', async function () {
+            response.status = createResponseWithStatusCode(500);
+            findOnePageExecStub = sandbox.stub().returns(pageData);
+            findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+            folderCountExecStub = sandbox.stub().throws({ message: "Folder not found" });
+            folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
+            savePageSpy = sandbox.stub(Page.prototype, 'save');
+
+            await movePage(request, response);
+
+            assert.notCalled(savePageSpy);
+            assertSendWasCalledWith({ error: "Folder not found" });
+            assertFindOnePageWasCalledWithId();
+            assert.calledOnce(folderCountExecStub);
+            assertFolderCountWasCalledWithFolderId();
+        });
+
+        it('shall return 404 if folder not found', async function () {
+            response.status = createResponseWithStatusCode(404);
+            findOnePageExecStub = sandbox.stub().returns(pageData);
+            findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+            folderCountExecStub = sandbox.stub().returns(null);
+            folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
+            savePageSpy = sandbox.stub(Page.prototype, 'save');
+
+            await movePage(request, response);
+
+            assert.notCalled(savePageSpy);
+            assertSendWasCalledWith({ error: "Folder with id somefolderId not found" });
+            assertFindOnePageWasCalledWithId();
+            assert.calledOnce(folderCountExecStub);
+            assertFolderCountWasCalledWithFolderId();
+        });
+
+        it('shall return error if saving page fails', async function () {
+            response.status = createResponseWithStatusCode(500);
+            findOnePageExecStub = sandbox.stub().returns(pageData);
+            findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+            folderCountExecStub = sandbox.stub().returns(1);
+            folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
+            savePageSpy = sandbox.stub(Page.prototype, 'save').throws({ message: "Save page failed" });
+            pageData.save = savePageSpy;
+
+            await movePage(request, response);
+
+            assert.calledOnce(savePageSpy);
+            assertSendWasCalledWith({ error: "Save page failed" });
+            assertFindOnePageWasCalledWithId();
+            assert.calledOnce(folderCountExecStub);
+            assertFolderCountWasCalledWithFolderId();
+        });
+
+        it('shall move page to new folder', async function () {
+            findOnePageExecStub = sandbox.stub().returns(pageData);
+            findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+            folderCountExecStub = sandbox.stub().returns(1);
+            folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
+            savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
+            pageData.save = savePageSpy;
+
+            await movePage(request, response);
+
+            assert.calledOnce(savePageSpy);
+            assertSendWasCalledWith({page: pageData});
+            assertFindOnePageWasCalledWithId();
+            assert.calledOnce(folderCountExecStub);
+            assertFolderCountWasCalledWithFolderId();
+        });
+
+        it('shall remove page from folder', async function () {
+            request.body.folderId = null;
+            findOnePageExecStub = sandbox.stub().returns(pageData);
+            findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+            folderCountExecStub = sandbox.stub().returns(1);
+            folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
+            savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
+            pageData.save = savePageSpy;
+
+            await movePage(request, response);
+
+            assert.calledOnce(savePageSpy);
+            assertSendWasCalledWith({page: pageData});
+            assert.notCalled(folderCountStub);
+            assertFindOnePageWasCalledWithId();
+        });
+
+    });
+
 });
 
 function assertUpdatePageWasCalledWithLatestPageData() {
@@ -377,10 +541,19 @@ function assertUpdatePageWasCalledWithLatestPageData() {
         sinon.match.any);
 }
 
-
 function assertFindWasCalledWithPageId() {
     assert.calledOnce(findSpy);
     assert.calledWith(findSpy, { id: pageId });
+}
+
+function assertFolderCountWasCalledWithFolderId() {
+    assert.calledOnce(folderCountStub);
+    assert.calledWith(folderCountStub, { _id: folderId, user: loggedInUser._id });
+}
+
+function  assertFindOnePageWasCalledWithId() {
+    assert.calledOnce(findOnePageStub);
+    assert.calledWith(findOnePageStub, { _id: pageId });
 }
 
 function assertDeleteOnePageWasCalledWithPageId() {
@@ -400,7 +573,7 @@ function assertFindWasCalledWithTag() {
 
 function assertSendWasCalledWith(msg) {
     assert.calledOnce(response.send);
-    assert.calledWith(response.send, msg);
+    assert.calledWith(response.send, sinon.match(msg));
 };
 
 function assertFindOneUserWasCalledWithName() {
