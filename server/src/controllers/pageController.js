@@ -1,25 +1,7 @@
-import { getPage, getPagesWithTag, savePageAsGuest } from './pageControllerNew';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage } from './pageControllerNew';
 const express = require('express');
 const Page = require('../models/page.js');
-const User = require('../models/user.js');
 const Folder = require('../models/folder.js');
-
-export async function savePage(req, res) {
-  const user = req.user;
-  if (!user) {
-    return res.status(403).send({ error: 'Please log in first' });
-  }
-  try {
-    const hydratedUser = await User.findOne({ _id: user._id }).exec();
-    await User.update({ _id: user._id }, { pages: hydratedUser.pages.concat(req.body.id) }).exec();
-
-    const page = new Page({ ...req.body, user: user._id });
-    const savedPage = await page.save();
-    return res.send({ page: savedPage });
-  } catch (err) {
-    return res.status(500).send({ error: err.message });
-  }
-}
 
 export async function deletePage(req, res) {
   const { pageId } = req.params;
