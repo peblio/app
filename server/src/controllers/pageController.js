@@ -1,17 +1,7 @@
-import { getPage, getPagesWithTag, savePageAsGuest, savePage } from './pageControllerNew';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage } from './pageControllerNew';
 const express = require('express');
 const Page = require('../models/page.js');
 const Folder = require('../models/folder.js');
-
-export async function deletePage(req, res) {
-  const { pageId } = req.params;
-  try {
-    await Page.deleteOne({ _id: pageId });
-    return res.sendStatus(204);
-  } catch (err) {
-    return res.status(500).send({ error: err.message });
-  }
-}
 
 export async function updatePage(req, res) {
   Page.update({ id: req.body.id }, {

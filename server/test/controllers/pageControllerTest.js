@@ -1,5 +1,5 @@
 import { createResponseWithStatusCode } from './utils.js';
-import { getPage, getPagesWithTag, savePageAsGuest, savePage } from '../../src/controllers/pageControllerNew';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage } from '../../src/controllers/pageControllerNew';
 import { assert, spy } from 'sinon';
 
 const sandbox = require('sinon').sandbox.create();
@@ -28,6 +28,7 @@ let response;
 let findOneExecStub;
 let updateUserSpy;
 let updateUserExecStub;
+let deleteOnePageSpy;
 
 describe('pageController', function () {
     describe('getPage', function () {
@@ -269,11 +270,58 @@ describe('pageController', function () {
 
     });
 
+    describe('deletePage', function () {
+
+        beforeEach(function () {
+            request = {
+                params: {
+                    pageId: newPageId
+                }
+            };
+            response = {
+                send: spy(),
+                json: spy(),
+                status: createResponseWithStatusCode(200),
+                sendStatus: createResponseWithStatusCode(200)
+            };
+        });
+
+        afterEach(function () {
+            sandbox.restore();
+        });
+
+        it('shall return error is deleting page fails', async function () {
+            response.status = createResponseWithStatusCode(500);
+            deleteOnePageSpy = sandbox.stub(Page, 'deleteOne').throws({ message: "Could not delete page" });
+
+            await deletePage(request, response);
+
+            assertDeleteOnePageWasCalledWithPageId();
+            assertSendWasCalledWith({ error: 'Could not delete page' });
+        });
+
+        it('shall return success after page is deleted', async function () {
+            response.sendStatus = createResponseWithStatusCode(204);
+            deleteOnePageSpy = sandbox.stub(Page, 'deleteOne');
+
+            await deletePage(request, response);
+
+            assertDeleteOnePageWasCalledWithPageId();
+            assert.notCalled(response.send);
+        });
+
+    });
+
 });
 
 function assertFindWasCalledWithPageId() {
     assert.calledOnce(findSpy);
     assert.calledWith(findSpy, { id: pageId });
+}
+
+function assertDeleteOnePageWasCalledWithPageId() {
+    assert.calledOnce(deleteOnePageSpy);
+    assert.calledWith(deleteOnePageSpy, { _id: newPageId });
 }
 
 function assertUpdateUserWasCalledWithPageId() {

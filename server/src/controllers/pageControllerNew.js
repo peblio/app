@@ -47,3 +47,13 @@ export async function savePage(req, res) {
     return res.status(500).send({ error: err.message });
   }
 }
+
+export async function deletePage(req, res) {
+  const { pageId } = req.params;
+  try {
+    await Page.deleteOne({ _id: pageId });
+    return res.sendStatus(204);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
