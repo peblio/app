@@ -1,26 +1,7 @@
-import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage } from './pageControllerNew';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage } from './pageControllerNew';
 const express = require('express');
 const Page = require('../models/page.js');
 const Folder = require('../models/folder.js');
-
-export async function updatePage(req, res) {
-  Page.update({ id: req.body.id }, {
-    heading: req.body.heading,
-    title: req.body.title,
-    editors: req.body.editors,
-    editorIndex: req.body.editorIndex,
-    layout: req.body.layout,
-    workspace: req.body.workspace,
-    tags: req.body.tags
-  },
-    (err, data) => {
-      if (err) {
-        res.send(err);
-      } else {
-        res.send({ data: 'Record has been Inserted..!!' });
-      }
-    });
-}
 
 export async function movePage(req, res) {
   const user = req.user;

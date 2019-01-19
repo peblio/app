@@ -1,14 +1,22 @@
 import { createResponseWithStatusCode } from './utils.js';
-import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage } from '../../src/controllers/pageControllerNew';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage } from '../../src/controllers/pageControllerNew';
 import { assert, spy } from 'sinon';
 
-const sandbox = require('sinon').sandbox.create();
+const sinon = require('sinon');
+const sandbox = sinon.sandbox.create();
 const Page = require('../../src/models/page.js');
 const User = require('../../src/models/user.js');
 const tag = "Java";
 
 const pageData = {
     data: 'SomePageData',
+    heading: 'Some heading',
+    title: 'Some title',
+    editors: 'Some editors',
+    editorIndex: ' Some editorIndex',
+    layout: 'A perfect layout',
+    workspace: 'No workspace',
+    tags: []
 };
 const pageId = 'pageId';
 const error = { error: 'Could not retrieve page' };
@@ -29,6 +37,7 @@ let findOneExecStub;
 let updateUserSpy;
 let updateUserExecStub;
 let deleteOnePageSpy;
+let updatePageSpy;
 
 describe('pageController', function () {
     describe('getPage', function () {
@@ -312,7 +321,62 @@ describe('pageController', function () {
 
     });
 
+    describe('updatePage', function () {
+
+        beforeEach(function () {
+            request = {
+                body: { ...pageData }
+            };
+            response = {
+                send: spy(),
+                json: spy(),
+                status: createResponseWithStatusCode(200),
+            };
+        });
+
+        afterEach(function () {
+            sandbox.restore();
+        });
+
+        it('shall return error if updating page fails', async function () {
+            response.status = createResponseWithStatusCode(500);
+            updatePageSpy = sandbox.stub(Page, 'update').yields({ message: "Could not update page" }, null);
+
+            await updatePage(request, response);
+
+            assertUpdatePageWasCalledWithLatestPageData();
+            assertSendWasCalledWith({ message: 'Could not update page' });
+        });
+
+        it('shall return success after updating page', async function () {
+            updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageData);
+
+            await updatePage(request, response);
+
+            assertUpdatePageWasCalledWithLatestPageData();
+            assertSendWasCalledWith({ data: 'Record has been Inserted..!!' });
+        });
+
+    });
+
 });
+
+function assertUpdatePageWasCalledWithLatestPageData() {
+    assert.calledOnce(updatePageSpy);
+    assert.calledWith(updatePageSpy,
+        { id: pageData.id },
+        {
+            heading: pageData.heading,
+            title: pageData.title,
+            editors: pageData.editors,
+            editorIndex: pageData.editorIndex,
+            layout: pageData.layout,
+            workspace: pageData.workspace,
+            tags: pageData.tags
+        },
+        sinon.match.any);
+}
+
 
 function assertFindWasCalledWithPageId() {
     assert.calledOnce(findSpy);

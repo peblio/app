@@ -57,3 +57,22 @@ export async function deletePage(req, res) {
     return res.status(500).send({ error: err.message });
   }
 }
+
+export async function updatePage(req, res) {
+  return Page.update({ id: req.body.id }, {
+    heading: req.body.heading,
+    title: req.body.title,
+    editors: req.body.editors,
+    editorIndex: req.body.editorIndex,
+    layout: req.body.layout,
+    workspace: req.body.workspace,
+    tags: req.body.tags
+  },
+    (err, data) => {
+      if (err) {
+        return res.status(500).send(err);
+      } else {
+        return res.status(200).send({ data: 'Record has been Inserted..!!' });
+      }
+    });
+}
