@@ -21,14 +21,25 @@ const initialState = {
   layout: [],
   textHeights: {},
   pageTitle: pageDefaults.DEFAULT_PAGE_TITLE,
-  pageHeading: '',
-  parentId: '',
   preview: false,
-  unsavedChanges: false
+  pageHeading: '',
+  unsavedChanges: false,
+  pageAuthor: '',
+  parentPageAuthor: ''
 };
 
 const page = (state = initialState, action) => {
   switch (action.type) {
+    case ActionTypes.SET_PAGE_AUTHOR:
+      return Object.assign({}, state, {
+        pageAuthor: action.value
+      });
+
+    case ActionTypes.SET_PARENT_PAGE_AUTHOR:
+      return Object.assign({}, state, {
+        parentPageAuthor: action.value
+      });
+
     case ActionTypes.SET_PAGE_TITLE:
       return Object.assign({}, state, {
         pageTitle: action.event.target.value

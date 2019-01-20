@@ -90,7 +90,11 @@ class App extends React.Component {
   projectID = () => {
     const location = this.props.location.pathname;
     const projectID = location.match(/\/pebl\/([\w-].*)/);
-    return projectID ? projectID[1] : null;
+    if (projectID) {
+      this.props.setPageId(projectID[1]);
+      return projectID[1];
+    }
+    return null;
   }
 
   resetPage = () => {
@@ -354,6 +358,7 @@ App.propTypes = {
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
   loadPage: PropTypes.func.isRequired,
+  setPageId: PropTypes.func.isRequired,
 
   setEditAccess: PropTypes.func.isRequired,
 

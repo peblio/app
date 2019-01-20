@@ -135,6 +135,15 @@ export function submitPage(parentId, title, heading, editors, editorIndex, layou
   };
 }
 
+export function setPageId(id) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_PAGE_ID,
+      id
+    });
+  };
+}
+
 export function updatePage(id, title, heading, editors, editorIndex, layout, workspace) {
   axios.post('/pages/update', {
     id,
@@ -191,6 +200,24 @@ export function updateTextHeight(id, height) {
       type: ActionTypes.UPDATE_TEXT_HEIGHT,
       id,
       height
+    });
+  };
+}
+
+export function setPageAuthor(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_PAGE_AUTHOR,
+      value
+    });
+  };
+}
+
+export function setParentPageAuthor(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_PARENT_PAGE_AUTHOR,
+      value
     });
   };
 }

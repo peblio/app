@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import EditorContainer from './EditorContainer/EditorContainer.jsx';
+import Heading from './Heading/Heading.jsx';
 import Questions from './Question/Question.jsx';
 import Iframe from './Iframe/Iframe.jsx';
 import Image from './Image/Image.jsx';
@@ -299,15 +300,7 @@ class Canvas extends React.Component {
           ${this.props.isNavigationOpen ? 'canvas-right' : ''}`
         }
       >
-        {(this.props.pageHeading === '' && this.props.preview) || (
-          <input
-            type="text"
-            className='canvas__title'
-            placeholder="Enter title.."
-            value={this.props.pageHeading}
-            onChange={this.props.setPageHeading}
-          />
-        )}
+        <Heading />
         <ReactGridLayout
           cols={this.props.rgl.cols}
           width={this.props.rgl.width}
