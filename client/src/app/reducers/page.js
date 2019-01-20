@@ -11,6 +11,7 @@ import foldersReducer, { initialState as foldersInitialState } from './folders';
 const initialState = {
   ...foldersInitialState,
   id: '',
+  parentId: '',
   rgl: {
     cols: 30,
     margin: [50, 25],
@@ -61,8 +62,10 @@ const page = (state = initialState, action) => {
       });
 
     case ActionTypes.SET_DB_PAGE:
+      console.log(action);
       return Object.assign({}, state, {
         id: action.id,
+        parentId: action.parentId,
         pageTitle: action.title,
         pageHeading: action.heading,
         layout: action.layout

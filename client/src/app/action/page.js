@@ -53,11 +53,12 @@ export function setPageLayout(value) {
   };
 }
 
-export function loadPage(id, title, heading, layout) {
+export function loadPage(id, parentId, title, heading, layout) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
       id,
+      parentId,
       title,
       heading,
       layout

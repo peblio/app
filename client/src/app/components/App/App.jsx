@@ -119,7 +119,7 @@ class App extends React.Component {
       const projectID = this.projectID();
       axios.get(`/pages/${projectID}`)
         .then((res) => {
-          this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].heading, res.data[0].layout);
+          this.props.loadPage(res.data[0].id, res.data[0].parentId, res.data[0].title, res.data[0].heading, res.data[0].layout);
           this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
           if (Object.keys(res.data[0].workspace).length > 0) {
             this.props.loadWorkspace(res.data[0].workspace);
