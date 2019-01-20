@@ -1,5 +1,6 @@
 import { createResponseWithStatusCode } from '../utils.js';
 import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage } from '../../src/service/pageService';
+import * as pageCreator from '../../src/models/creator/pageCreator';
 import { assert, spy } from 'sinon';
 
 const sinon = require('sinon');
@@ -10,7 +11,6 @@ const Folder = require('../../src/models/folder.js');
 const tag = "Java";
 
 const pageData = {
-    data: 'SomePageData',
     heading: 'Some heading',
     title: 'Some title',
     editors: 'Some editors',
@@ -44,6 +44,7 @@ let deleteOnePageSpy;
 let updatePageSpy;
 let folderCountStub;
 let folderCountExecStub;
+let buildPageForUpdateFromrequestStub;
 
 describe('pageService', function () {
     describe('getPage', function () {
@@ -346,20 +347,24 @@ describe('pageService', function () {
 
         it('shall return error if updating page fails', async function () {
             response.status = createResponseWithStatusCode(500);
+            buildPageForUpdateFromrequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromrequest').returns(pageData);
             updatePageSpy = sandbox.stub(Page, 'update').yields({ message: "Could not update page" }, null);
 
             await updatePage(request, response);
 
             assertUpdatePageWasCalledWithLatestPageData();
+            assert.calledOnce(buildPageForUpdateFromrequestStub);
             assertSendWasCalledWith({ message: 'Could not update page' });
         });
 
         it('shall return success after updating page', async function () {
             updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageData);
+            buildPageForUpdateFromrequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromrequest').returns(pageData);
 
             await updatePage(request, response);
 
             assertUpdatePageWasCalledWithLatestPageData();
+            assert.calledOnce(buildPageForUpdateFromrequestStub);
             assertSendWasCalledWith({ data: 'Record has been Inserted..!!' });
         });
 
@@ -403,7 +408,7 @@ describe('pageService', function () {
             response.sendStatus = createResponseWithStatusCode(400);
             savePageSpy = sandbox.stub(Page.prototype, 'save');
 
-            await movePage({user: loggedInUser}, response);
+            await movePage({ user: loggedInUser }, response);
 
             assert.notCalled(savePageSpy);
             assert.notCalled(response.send);
@@ -498,7 +503,7 @@ describe('pageService', function () {
             await movePage(request, response);
 
             assert.calledOnce(savePageSpy);
-            assertSendWasCalledWith({page: pageData});
+            assertSendWasCalledWith({ page: pageData });
             assertFindOnePageWasCalledWithId();
             assert.calledOnce(folderCountExecStub);
             assertFolderCountWasCalledWithFolderId();
@@ -516,7 +521,7 @@ describe('pageService', function () {
             await movePage(request, response);
 
             assert.calledOnce(savePageSpy);
-            assertSendWasCalledWith({page: pageData});
+            assertSendWasCalledWith({ page: pageData });
             assert.notCalled(folderCountStub);
             assertFindOnePageWasCalledWithId();
         });
@@ -551,7 +556,7 @@ function assertFolderCountWasCalledWithFolderId() {
     assert.calledWith(folderCountStub, { _id: folderId, user: loggedInUser._id });
 }
 
-function  assertFindOnePageWasCalledWithId() {
+function assertFindOnePageWasCalledWithId() {
     assert.calledOnce(findOnePageStub);
     assert.calledWith(findOnePageStub, { _id: pageId });
 }

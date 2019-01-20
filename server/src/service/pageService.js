@@ -1,6 +1,7 @@
 const Page = require('../models/page.js');
 const User = require('../models/user.js');
 const Folder = require('../models/folder.js');
+import { buildPageForUpdateFromrequest } from '../models/creator/pageCreator';
 
 export async function getPage(req, res) {
   return Page.find({ id: req.params.pageId }, (err, data) => {
@@ -60,22 +61,14 @@ export async function deletePage(req, res) {
 }
 
 export async function updatePage(req, res) {
-  return Page.update({ id: req.body.id }, {
-    heading: req.body.heading,
-    title: req.body.title,
-    editors: req.body.editors,
-    editorIndex: req.body.editorIndex,
-    layout: req.body.layout,
-    workspace: req.body.workspace,
-    tags: req.body.tags
-  },
-    (err, data) => {
-      if (err) {
-        return res.status(500).send(err);
-      } else {
-        return res.status(200).send({ data: 'Record has been Inserted..!!' });
-      }
-    });
+  const pageWithUpdatedData = buildPageForUpdateFromrequest(req);
+  return Page.update({ id: req.body.id }, pageWithUpdatedData, (err, data) => {
+    if (err) {
+      return res.status(500).send(err);
+    } else {
+      return res.status(200).send({ data: 'Record has been Inserted..!!' });
+    }
+  });
 }
 
 export async function movePage(req, res) {
