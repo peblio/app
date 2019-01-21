@@ -9,6 +9,9 @@ import {
   setParentPageAuthor
 } from '../../../../action/page.js';
 import axios from '../../../../utils/axios';
+import ForkSVG from '../../../../images/fork.svg';
+
+require('./heading.scss');
 
 class Heading extends React.Component {
   constructor(props) {
@@ -52,13 +55,16 @@ class Heading extends React.Component {
   renderAuthor(author, isAuthorStudent) {
     if (isAuthorStudent) {
       return (
-        <p>
+        <p
+          className="heading__author-name"
+        >
           {author}
         </p>
       );
     }
     return (
       <a
+        className="heading__author-name heading__author-link"
         href={`/user/${author}`}
       >
         {author}
@@ -72,30 +78,33 @@ class Heading extends React.Component {
         {(this.props.pageHeading === '' && this.props.preview) || (
           <input
             type="text"
-            className='canvas__title'
+            className='heading__title'
             placeholder="Enter title.."
             value={this.props.pageHeading}
             onChange={this.props.setPageHeading}
           />
         )}
-        <p>
+        <div className="heading__author-container">
 
           {(this.props.pageAuthor) && (
-            <p>
+            <p className="heading__author-text">
               by
-              {' '}
               {this.renderAuthor(this.props.pageAuthor, this.state.isAuthorStudent)}
             </p>
           )}
           {(this.props.parentPageAuthor) && (
-            <p>
-              (Forked from
-              {' '}
+            <p className="heading__author-text">
+              (
+              <ForkSVG
+                className="heading__svg"
+                alt="forked from"
+              />
+              Forked from
               {this.renderAuthor(this.props.parentPageAuthor, this.state.isParentAuthorStudent)}
             )
             </p>
           )}
-        </p>
+        </div>
       </div>
     );
   }

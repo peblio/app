@@ -1,0 +1,45 @@
+@import 'variables';
+@import 'mixins';
+
+.heading {
+  &__title {
+    text-transform: uppercase;
+    font-size: $title-size;
+    font-family: $sourceSansPro;
+    line-height: $title-line-height;
+    font-weight: 700;
+    color: $g4;
+    background: transparent;
+    border: none;
+    width: 100%;
+    margin-bottom: $widget-nav-height;
+    border-bottom: $small-border solid $g5;
+    &::placeholder {
+      color: $g5;
+    }
+  }
+  &__author-container {
+    display: flex;
+  }
+  &__author-text {
+    font-family: $sourceSansPro;
+    color: $g4;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    font-size: $medium-font-size;
+  }
+  &__author-name {
+    margin: 0;
+    color: $green;
+    margin:0 $small-margin/2;
+    text-decoration: none;
+    font-style: italic;
+  }
+  &__author-link {
+
+  }
+  &__svg {
+    margin: 0 $small-margin/2;
+  }
+}
