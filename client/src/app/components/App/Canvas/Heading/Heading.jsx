@@ -24,7 +24,7 @@ class Heading extends React.Component {
       axios.get(`/users/page/${this.props.id}`)
         .then((res) => {
           this.props.setPageAuthor(res.data.name);
-          if (this.res.type && this.res.type !== 'student') {
+          if (res.data.type && res.data.type !== 'student') {
             this.setState({ isAuthorStudent: false });
           }
         })
@@ -36,11 +36,10 @@ class Heading extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.parentId && (prevProps.parentId !== this.props.parentId)) {
-      console.log('in here');
       axios.get(`/users/parentPageAuthor/${this.props.id}`)
         .then((res) => {
           this.props.setParentPageAuthor(res.data.name);
-          if (this.res.type && this.res.type !== 'student') {
+          if (res.data.type && res.data.type !== 'student') {
             this.setState({ isParentAuthorStudent: false });
           }
         })
@@ -50,8 +49,24 @@ class Heading extends React.Component {
     }
   }
 
+  renderAuthor(author, isAuthorStudent) {
+    if (isAuthorStudent) {
+      return (
+        <p>
+          {author}
+        </p>
+      );
+    }
+    return (
+      <a
+        href={`/user/${author}`}
+      >
+        {author}
+      </a>
+    );
+  }
+
   render() {
-    console.log(this.props);
     return (
       <div>
         {(this.props.pageHeading === '' && this.props.preview) || (
@@ -64,24 +79,19 @@ class Heading extends React.Component {
           />
         )}
         <p>
+
           {(this.props.pageAuthor) && (
             <p>
-            by
-              <a
-                href={this.state.isAuthorStudent ? '/test' : 'popp'}
-              >
-                {' '}
-                {this.props.pageAuthor}
-              </a>
+              by
+              {' '}
+              {this.renderAuthor(this.props.pageAuthor, this.state.isAuthorStudent)}
             </p>
           )}
           {(this.props.parentPageAuthor) && (
             <p>
               (Forked from
-              <a>
-                {' '}
-                {this.props.parentPageAuthor}
-              </a>
+              {' '}
+              {this.renderAuthor(this.props.parentPageAuthor, this.state.isParentAuthorStudent)}
             )
             </p>
           )}
