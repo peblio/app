@@ -14,7 +14,6 @@ import WidgetNav from './WidgetNav/WidgetNav.jsx';
 import { convertPixelHeightToGridHeight } from '../../../utils/pixel-to-grid.js';
 import {
   resizeTextEditor,
-  setPageHeading,
   setPageLayout,
   updateTextHeight
 } from '../../../action/page.js';
@@ -366,7 +365,6 @@ Canvas.propTypes = {
   editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   isNavigationOpen: PropTypes.bool.isRequired,
-  pageHeading: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
   resizeTextEditor: PropTypes.func.isRequired,
   rgl: PropTypes.shape({
@@ -377,7 +375,6 @@ Canvas.propTypes = {
     width: PropTypes.number
   }).isRequired,
   setCurrentWidget: PropTypes.func.isRequired,
-  setPageHeading: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
   updateTextHeight: PropTypes.func.isRequired,
   textHeights: PropTypes.shape({}).isRequired
@@ -390,7 +387,6 @@ function mapStateToProps(state) {
     editors: state.editorsReducer.editors,
     layout: state.page.layout,
     isNavigationOpen: state.navigation.isNavigationOpen,
-    pageHeading: state.page.pageHeading,
     preview: state.page.preview,
     rgl: state.page.rgl,
     textHeights: state.page.textHeights
@@ -398,7 +394,6 @@ function mapStateToProps(state) {
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   resizeTextEditor,
-  setPageHeading,
   setPageLayout,
   updateTextHeight,
   setCurrentWidget
