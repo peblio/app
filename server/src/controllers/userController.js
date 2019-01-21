@@ -20,6 +20,6 @@ export function getUserDetailsForParentPage(req, res) {
 
 userRoutes.route('/:userName/profile').get(getUserProfile);
 userRoutes.route('/:userObjectId').get(getUserDetailsById);
-userRoutes.route('/page/:pageId').get(getUserDetailsForPage);
+userRoutes.route('/pageAuthor/:pageId').get(getUserDetailsForPage);
 userRoutes.route('/parentPageAuthor/:pageId').get(getUserDetailsForParentPage);
 export default userRoutes;
