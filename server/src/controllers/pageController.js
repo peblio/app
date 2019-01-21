@@ -1,4 +1,4 @@
-import { getPage, getExamples } from './pageControllerNew';
+import { getPage } from './pageControllerNew';
 const express = require('express');
 const Page = require('../models/page.js');
 const User = require('../models/user.js');

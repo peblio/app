@@ -1,22 +1,25 @@
 const express = require('express');
 const userRoutes = express.Router();
-const User = require('../models/user.js');
+import * as userService from '../service/userService.js';
 
 export function getUserProfile(req, res) {
-  User.findOne({ name: req.params.userName }, (err, user) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send({
-        name: user.name,
-        type: user.type,
-        image: user.image,
-        blurb: user.blurb,
-        isOwner: !!(req.user && req.user.name && req.user.name === user.name)
-      });
-    }
-  });
+  return userService.getUserProfile(req, res);
 }
 
+export function getUserDetailsById(req, res) {
+  return userService.getUserDetailsById(req, res);
+}
+
+export function getUserDetailsForPage(req, res) {
+  return userService.getUserDetailsForPage(req, res);
+};
+
+export function getUserDetailsForParentPage(req, res) {
+  return userService.getUserDetailsForParentPage(req, res);
+};
+
 userRoutes.route('/:userName/profile').get(getUserProfile);
+userRoutes.route('/:userObjectId').get(getUserDetailsById);
+userRoutes.route('/page/:pageId').get(getUserDetailsForPage);
+userRoutes.route('/parentPageAuthor/:pageId').get(getUserDetailsForParentPage);
 export default userRoutes;
