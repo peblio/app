@@ -28,16 +28,18 @@
     display: flex;
     align-items: center;
     font-size: $medium-font-size;
+    cursor: default;
   }
   &__author-name {
     margin: 0;
-    color: $green;
+    color: $g3;
     margin:0 $small-margin/2;
     text-decoration: none;
     font-style: italic;
   }
   &__author-link {
-
+    color: $green;
+    cursor: pointer;
   }
   &__svg {
     margin: 0 $small-margin/2;

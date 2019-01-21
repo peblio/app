@@ -142,7 +142,7 @@ class FrontEndOutput extends React.Component {
     const allLinks = sketchDoc.getElementsByTagName('a');
     const allLinksArray = Array.prototype.slice.call(allLinks);
     allLinksArray.forEach((link) => {
-      if (link.getAttribute('href').match(ANCHOR_LINK_REGEX) !== null) {
+      if (link.getAttribute('href') && link.getAttribute('href').match(ANCHOR_LINK_REGEX) !== null) {
         link.setAttribute('onclick', `
           event.preventDefault();
           const anchorId = "${link.attributes.href.value}";

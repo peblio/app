@@ -24,7 +24,7 @@ class Heading extends React.Component {
 
   componentDidMount() {
     if (this.props.id) {
-      axios.get(`/users/page/${this.props.id}`)
+      axios.get(`/users/pageAuthor/${this.props.id}`)
         .then((res) => {
           this.props.setPageAuthor(res.data.name);
           if (res.data.type && res.data.type !== 'student') {
@@ -66,6 +66,8 @@ class Heading extends React.Component {
       <a
         className="heading__author-name heading__author-link"
         href={`/user/${author}`}
+        target="_blank"
+        rel="noopener noreferrer"
       >
         {author}
       </a>
@@ -99,7 +101,7 @@ class Heading extends React.Component {
                 className="heading__svg"
                 alt="forked from"
               />
-              Forked from
+              Remixed from
               {this.renderAuthor(this.props.parentPageAuthor, this.state.isParentAuthorStudent)}
             )
             </p>
@@ -109,7 +111,6 @@ class Heading extends React.Component {
     );
   }
 }
-
 
 Heading.propTypes = {
   id: PropTypes.string.isRequired,
