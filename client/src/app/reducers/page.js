@@ -11,6 +11,7 @@ import foldersReducer, { initialState as foldersInitialState } from './folders';
 const initialState = {
   ...foldersInitialState,
   id: '',
+  parentId: '',
   rgl: {
     cols: 30,
     margin: [50, 25],
@@ -21,14 +22,26 @@ const initialState = {
   layout: [],
   textHeights: {},
   pageTitle: pageDefaults.DEFAULT_PAGE_TITLE,
-  pageHeading: '',
-  parentId: '',
   preview: false,
-  unsavedChanges: false
+  pageHeading: '',
+  unsavedChanges: false,
+  pageAuthor: '',
+  parentPageAuthor: '',
+  tags: []
 };
 
 const page = (state = initialState, action) => {
   switch (action.type) {
+    case ActionTypes.SET_PAGE_AUTHOR:
+      return Object.assign({}, state, {
+        pageAuthor: action.value
+      });
+
+    case ActionTypes.SET_PARENT_PAGE_AUTHOR:
+      return Object.assign({}, state, {
+        parentPageAuthor: action.value
+      });
+
     case ActionTypes.SET_PAGE_TITLE:
       return Object.assign({}, state, {
         pageTitle: action.event.target.value
@@ -50,8 +63,10 @@ const page = (state = initialState, action) => {
       });
 
     case ActionTypes.SET_DB_PAGE:
+      console.log(action);
       return Object.assign({}, state, {
         id: action.id,
+        parentId: action.parentId,
         pageTitle: action.title,
         pageHeading: action.heading,
         layout: action.layout
