@@ -47,23 +47,6 @@
   margin-left: $navigation-width !important;
 }
 
-.canvas__title {
-  text-transform: uppercase;
-  font-size: $title-size;
-  font-family: $sourceSansPro;
-  line-height: $title-line-height;
-  font-weight: 700;
-  color: $g4;
-  background: transparent;
-  border: none;
-  width: 100%;
-  margin-bottom: $widget-nav-height;
-  border-bottom: $small-border solid $g5;
-  &::placeholder {
-    color: $g5;
-  }
-}
-
 .canvas-edit-mode {
   & .react-resizable-handle {
     display: block;
