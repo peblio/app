@@ -4,43 +4,38 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {
-  setPageAuthor,
-  setPageHeading,
-  setParentPageAuthor
+  addPageTag,
+  // deletePageTag
 } from '../../../../action/page.js';
-import axios from '../../../../utils/axios';
-import ForkSVG from '../../../../images/fork.svg';
+// import axios from '../../../../utils/axios';
 
 
 class Tags extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isAuthorStudent: true,
-      isParentAuthorStudent: true,
-    };
+  componentDidUpdate() {
+    console.log('updated');
   }
 
-  componentDidMount() {
-    if (this.props.id) {
-      axios.get(`/users/pageAuthor/${this.props.id}`)
-        .then((res) => {
-          this.props.setPageAuthor(res.data.name);
-          if (res.data.type && res.data.type !== 'student') {
-            this.setState({ isAuthorStudent: false });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+  addTag=(e) => {
+    if (e.keyCode === 13) {
+      console.log(e.target.value);
+      console.log(this.props.tags);
+      this.props.addPageTag(e.target.value);
     }
   }
 
-  renderTagsList() {
+  renderTagsList(tags) {
+    const tests = [1, 2, 3];
     return (
       <ul className="tags__list">
+        {tags.map((tag, i) => (
+          <li
+            className="tags__name"
+          >
+          poop
+          </li>
+        ))}
         <li className="tags__name">
-      tag 1
+      tag 1s
         </li>
         <li className="tags__name">
       tag 2
@@ -53,42 +48,39 @@ class Tags extends React.Component {
   }
 
   render() {
+    console.log('**');
+    console.log(this.props.tags);
     return (
       <div className="tags__container">
         All the tags
-        <input className="tags__input" />
-        {this.renderTagsList()}
+        <input
+          className="tags__input"
+          type="text"
+          placeholder="Enter tags.."
+          onKeyDown={this.addTag}
+        />
+        {this.renderTagsList(this.props.tags)}
       </div>
     );
   }
 }
 
 Tags.propTypes = {
-  id: PropTypes.string.isRequired,
-  parentId: PropTypes.string.isRequired,
-  pageAuthor: PropTypes.string.isRequired,
-  parentPageAuthor: PropTypes.string.isRequired,
-  pageHeading: PropTypes.string.isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   preview: PropTypes.bool.isRequired,
-  setPageAuthor: PropTypes.func.isRequired,
-  setPageHeading: PropTypes.func.isRequired,
-  setParentPageAuthor: PropTypes.func.isRequired,
+  addPageTag: PropTypes.func.isRequired,
+  // deletePageTag: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    id: state.page.id,
-    parentId: state.page.parentId,
-    pageAuthor: state.page.pageAuthor,
-    parentPageAuthor: state.page.parentPageAuthor,
-    pageHeading: state.page.pageHeading,
+    tags: state.page.tags,
     preview: state.page.preview,
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setPageAuthor,
-  setPageHeading,
-  setParentPageAuthor
+  addPageTag,
+  // deletePageTag
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tags);

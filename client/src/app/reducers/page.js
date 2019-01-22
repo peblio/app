@@ -63,7 +63,6 @@ const page = (state = initialState, action) => {
       });
 
     case ActionTypes.SET_DB_PAGE:
-      console.log(action);
       return Object.assign({}, state, {
         id: action.id,
         parentId: action.parentId,
@@ -163,6 +162,20 @@ const page = (state = initialState, action) => {
         [action.id]: h
       };
       return Object.assign({}, state, { textHeights });
+    }
+
+    case ActionTypes.ADD_PAGE_TAG: {
+      const tempTags = state.tags;
+      tempTags.push(action.value);
+      return Object.assign({}, state, {
+        tags: tempTags
+      });
+    }
+
+    case ActionTypes.DELETE_PAGE_TAG: {
+      return Object.assign({}, state, {
+        tags: action.value
+      });
     }
 
     case ActionTypes.LOGOUT_USER:

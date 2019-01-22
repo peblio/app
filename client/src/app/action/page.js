@@ -223,6 +223,24 @@ export function setParentPageAuthor(value) {
   };
 }
 
+export function addPageTag(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.ADD_PAGE_TAG,
+      value
+    });
+  };
+}
+
+export function deletePageTag(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.DELETE_PAGE_TAG,
+      value
+    });
+  };
+}
+
 const currentUserFolderActions = namespaceActionCreators(folderActions, 'CURRENT_USER_FOLDERS');
 
 export const {
