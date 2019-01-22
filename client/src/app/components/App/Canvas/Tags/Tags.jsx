@@ -5,21 +5,27 @@ import { bindActionCreators } from 'redux';
 
 import {
   addPageTag,
-  // deletePageTag
+  deletePageTag
 } from '../../../../action/page.js';
-// import axios from '../../../../utils/axios';
+import axios from '../../../../utils/axios';
 
 
 class Tags extends React.Component {
-  componentDidUpdate() {
-    console.log('updated');
-  }
-
   addTag=(e) => {
+    const tagName = e.target.value;
     if (e.keyCode === 13) {
-      console.log(e.target.value);
-      console.log(this.props.tags);
-      this.props.addPageTag(e.target.value);
+      axios.post('/tags', {
+        name: tagName
+      })
+        .then((response) => {
+          console.log(response);
+        })
+    .catch((error) => { // eslint-disable-line
+          console.log(error);
+        });
+      this.props.addPageTag(tagName);
+      this.forceUpdate();
+      e.target.value = '';
     }
   }
 
@@ -31,25 +37,22 @@ class Tags extends React.Component {
           <li
             className="tags__name"
           >
-          poop
+            <p>
+              {tag}
+            </p>
+            <button
+              className="navigation__option-button"
+              onClick={() => this.props.deletePageTag(tag)}
+            >
+              <i className="fas fa-times"></i>
+            </button>
           </li>
         ))}
-        <li className="tags__name">
-      tag 1s
-        </li>
-        <li className="tags__name">
-      tag 2
-        </li>
-        <li className="tags__name">
-      tag 3
-        </li>
       </ul>
     );
   }
 
   render() {
-    console.log('**');
-    console.log(this.props.tags);
     return (
       <div className="tags__container">
         All the tags
@@ -69,7 +72,7 @@ Tags.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   preview: PropTypes.bool.isRequired,
   addPageTag: PropTypes.func.isRequired,
-  // deletePageTag: PropTypes.func.isRequired
+  deletePageTag: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -80,7 +83,7 @@ function mapStateToProps(state) {
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   addPageTag,
-  // deletePageTag
+  deletePageTag
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tags);

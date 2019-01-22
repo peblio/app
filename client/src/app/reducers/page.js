@@ -166,15 +166,19 @@ const page = (state = initialState, action) => {
 
     case ActionTypes.ADD_PAGE_TAG: {
       const tempTags = state.tags;
-      tempTags.push(action.value);
+      if (!tempTags.includes(action.value)) {
+        tempTags.push(action.value);
+      }
       return Object.assign({}, state, {
         tags: tempTags
       });
     }
 
     case ActionTypes.DELETE_PAGE_TAG: {
+      let tempTags = state.tags;
+      tempTags = tempTags.filter(item => item !== action.value);
       return Object.assign({}, state, {
-        tags: action.value
+        tags: tempTags
       });
     }
 
