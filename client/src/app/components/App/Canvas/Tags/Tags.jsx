@@ -9,6 +9,7 @@ import {
 } from '../../../../action/page.js';
 import axios from '../../../../utils/axios';
 
+require('./tags.scss');
 
 class Tags extends React.Component {
   addTag=(e) => {
@@ -24,28 +25,30 @@ class Tags extends React.Component {
           console.log(error);
         });
       this.props.addPageTag(tagName);
+      // TODO : Why do i need to forceupdate here?
       this.forceUpdate();
       e.target.value = '';
     }
   }
 
   renderTagsList(tags) {
-    const tests = [1, 2, 3];
     return (
       <ul className="tags__list">
         {tags.map((tag, i) => (
           <li
-            className="tags__name"
+            className="tags__list-item"
           >
-            <p>
+            <p className="tags__name">
               {tag}
             </p>
-            <button
-              className="navigation__option-button"
-              onClick={() => this.props.deletePageTag(tag)}
-            >
-              <i className="fas fa-times"></i>
-            </button>
+            {!this.props.preview && (
+              <button
+                className="tags__delete-tag"
+                onClick={() => this.props.deletePageTag(tag)}
+              >
+                <i className="fas fa-times"></i>
+              </button>
+            )}
           </li>
         ))}
       </ul>
@@ -55,13 +58,14 @@ class Tags extends React.Component {
   render() {
     return (
       <div className="tags__container">
-        All the tags
-        <input
-          className="tags__input"
-          type="text"
-          placeholder="Enter tags.."
-          onKeyDown={this.addTag}
-        />
+        {!this.props.preview && (
+          <input
+            className="tags__input"
+            type="text"
+            placeholder="Enter tags.."
+            onKeyDown={this.addTag}
+          />
+        )}
         {this.renderTagsList(this.props.tags)}
       </div>
     );

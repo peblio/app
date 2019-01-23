@@ -1,0 +1,79 @@
+@import 'variables';
+@import 'mixins';
+
+$colors: $tag-yellow, $tag-pink, $tag-blue, $tag-green;
+
+.tags {
+  &__container {
+    display: flex;
+    margin-bottom: $large-margin;
+    align-items: center;
+  }
+  &__input {
+    margin-right: $large-margin;
+    font-size: $p-size;
+    line-height: $p-line-height;
+    border: solid $small-border $g5;
+    border-radius: $small-border-radius;
+    padding: 0 $small-padding;
+    background: $g7;
+    color: $g4;
+    &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      font-style: italic;
+      color: $g5;
+    }
+    &::-moz-placeholder { /* Firefox 19+ */
+      font-style: italic;
+      color: $g5;
+    }
+    &::-ms-input-placeholder { /* IE 10+ */
+      font-style: italic;
+      color: $g5;
+    }
+    &::-moz-placeholder { /* Firefox 18- */
+      font-style: italic;
+      color: $g5;
+    }
+  }
+  &__list {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    height: fit-content;
+  }
+  &__list-item {
+    list-style: none;
+    display: flex;
+    height: fit-content;
+    border-radius: $small-border-radius;
+    padding-left: $small-padding;
+    font-weight: 300;
+    &+.tags__list-item {
+      margin-left: $medium-margin;
+    }
+  }
+  &__delete-tag {
+    background: transparent;
+    color: $g4;
+    border: 0;
+    &:hover {
+      color: $g2;
+      background: transparent;
+      border: 0;
+    }
+  }
+  &__name {
+    margin: 0;
+    color: $g4;
+    font-family: $roboto;
+    font-size: $p-size;
+    line-height: $p-line-height;
+  }
+}
+
+
+@for $i from 1 through length($colors) {
+    .tags__list-item:nth-child(#{length($colors)}n+#{$i}) {
+        background: nth($colors, $i)
+    }
+}
