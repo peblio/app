@@ -36,13 +36,15 @@ class PageRow extends Component {
     e.stopPropagation();
     const {
       title,
+      heading,
       folder,
       editors,
       editorIndex,
-      layout
+      layout,
+      tags
     } = this.props.page;
 
-    this.props.duplicatePage(title, folder, editors, editorIndex, layout);
+    this.props.duplicatePage(title, heading, folder, editors, editorIndex, layout, tags);
   }
 
   handleClick = (e) => {

@@ -53,7 +53,8 @@ export function setPageLayout(value) {
   };
 }
 
-export function loadPage(id, parentId, title, heading, layout) {
+export function loadPage(id, parentId, title, heading, layout, tags) {
+  console.log(tags);
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
@@ -61,20 +62,23 @@ export function loadPage(id, parentId, title, heading, layout) {
       parentId,
       title,
       heading,
-      layout
+      layout,
+      tags
     });
   };
 }
 
-export function duplicatePage(title, folder, editors, editorIndex, layout) {
+export function duplicatePage(title, heading, folder, editors, editorIndex, layout, tags) {
   return (dispatch) => {
     const id = shortid.generate();
     const data = {
       id,
       title: `${title}-Copy`,
+      heading,
       editors,
       editorIndex,
-      layout
+      layout,
+      tags
     };
     if (folder) {
       data.folder = folder;
@@ -103,7 +107,7 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, heading, editors, editorIndex, layout, type, workspace, isLoggedIn) {
+export function submitPage(parentId, title, heading, editors, editorIndex, layout, type, workspace, tags, isLoggedIn) {
   const id = shortid.generate();
   const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
   axios.post(axiosURL, {
@@ -114,7 +118,8 @@ export function submitPage(parentId, title, heading, editors, editorIndex, layou
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout,
-    workspace
+    workspace,
+    tags
   }).then(() => {
     if (type === 'fromWP') {
       window.open(`/pebl/${id}`, '_blank');
@@ -145,7 +150,8 @@ export function setPageId(id) {
   };
 }
 
-export function updatePage(id, title, heading, editors, editorIndex, layout, workspace) {
+export function updatePage(id, title, heading, editors, editorIndex, layout, workspace, tags) {
+  console.log(tags);
   axios.post('/pages/update', {
     id,
     title,
@@ -153,7 +159,8 @@ export function updatePage(id, title, heading, editors, editorIndex, layout, wor
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout,
-    workspace
+    workspace,
+    tags
   }).then(response => console.log('Page update'))
     .catch(error => console.error('Page update error', error));
 

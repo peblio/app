@@ -119,12 +119,14 @@ class App extends React.Component {
       const projectID = this.projectID();
       axios.get(`/pages/${projectID}`)
         .then((res) => {
+          console.log(res.data[0]);
           this.props.loadPage(
             res.data[0].id,
             res.data[0].parentId,
             res.data[0].title,
             res.data[0].heading,
-            res.data[0].layout
+            res.data[0].layout,
+            res.data[0].tags
           );
           this.props.loadEditors(
             res.data[0].editors,
@@ -177,6 +179,7 @@ class App extends React.Component {
           this.props.layout,
           'save',
           this.props.workspace,
+          this.props.tags,
           true
         );
       } else if (this.props.canEdit) {
@@ -187,7 +190,8 @@ class App extends React.Component {
           this.props.editors,
           this.props.editorIndex,
           this.props.layout,
-          this.props.workspace
+          this.props.workspace,
+          this.props.tags
         );
       } else {
         // this is for remix and save
@@ -200,6 +204,7 @@ class App extends React.Component {
           this.props.layout,
           'remix',
           this.props.workspace,
+          this.props.tags,
           true
         );
       }
@@ -343,6 +348,7 @@ App.propTypes = {
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   rgl: PropTypes.shape({}).isRequired,
   textHeights: PropTypes.shape({}).isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
 
   canEdit: PropTypes.bool.isRequired,
 
@@ -413,6 +419,7 @@ function mapStateToProps(state) {
     pageTitle: state.page.pageTitle,
     id: state.page.id,
     textHeights: state.page.textHeights,
+    tags: state.page.tags,
 
     canEdit: state.user.canEdit,
     name: state.user.name,

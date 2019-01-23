@@ -68,7 +68,8 @@ const page = (state = initialState, action) => {
         parentId: action.parentId,
         pageTitle: action.title,
         pageHeading: action.heading,
-        layout: action.layout
+        layout: action.layout,
+        tags: action.tags
       });
 
     case ActionTypes.DUPLICATE_PAGE: {

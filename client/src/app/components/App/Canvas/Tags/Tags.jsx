@@ -20,7 +20,7 @@ class Tags extends React.Component {
         .then((response) => {
           console.log(response);
         })
-    .catch((error) => { // eslint-disable-line
+        .catch((error) => {
           console.log(error);
         });
       this.props.addPageTag(tagName);
