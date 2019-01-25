@@ -6,6 +6,7 @@ import initHelpHero from 'helphero';
 
 import * as pageDefaults from '../../constants/pageConstants';
 
+import AddDescription from './Modal/AddDescription/AddDescription.jsx';
 import ConfirmUser from './Modal/ConfirmUser/ConfirmUser.jsx';
 import ExamplesModal from './Modal/ExamplesModal/ExamplesModal.jsx';
 import ForkPrompt from './Modal/ForkPrompt/ForkPrompt.jsx';
@@ -125,6 +126,7 @@ class App extends React.Component {
             res.data[0].parentId,
             res.data[0].title,
             res.data[0].heading,
+            res.data[0].description,
             res.data[0].layout,
             res.data[0].tags
           );
@@ -174,6 +176,7 @@ class App extends React.Component {
           '',
           title,
           this.props.pageHeading,
+          this.props.description,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout,
@@ -183,10 +186,12 @@ class App extends React.Component {
           true
         );
       } else if (this.props.canEdit) {
+        console.log(this.props.description);
         this.props.updatePage(
           this.props.id,
           title,
           this.props.pageHeading,
+          this.props.description,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout,
@@ -199,6 +204,7 @@ class App extends React.Component {
           this.props.id,
           `${this.props.pageTitle}-copy`,
           this.props.pageHeading,
+          this.props.description,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout,
@@ -309,6 +315,16 @@ class App extends React.Component {
         </Modal>
 
         <Modal
+          size="small"
+          isOpen={this.props.isAddDescriptionModalOpen}
+          closeModal={this.props.closeAddDescriptionModal}
+        >
+          <AddDescription
+            savePage={this.savePage}
+          />
+        </Modal>
+
+        <Modal
           size="auto"
           isOpen={this.props.isWelcomeModalOpen}
           closeModal={this.props.closeWelcomeModal}
@@ -357,6 +373,7 @@ App.propTypes = {
   fetchCurrentUser: PropTypes.func.isRequired,
   isBrowsingPebl: PropTypes.bool.isRequired,
 
+  isAddDescriptionModalOpen: PropTypes.bool.isRequired,
   isPagesModalOpen: PropTypes.bool.isRequired,
   isLoginModalOpen: PropTypes.bool.isRequired,
   isForgotModalOpen: PropTypes.bool.isRequired,
@@ -420,12 +437,14 @@ function mapStateToProps(state) {
     id: state.page.id,
     textHeights: state.page.textHeights,
     tags: state.page.tags,
+    description: state.page.description,
 
     canEdit: state.user.canEdit,
     name: state.user.name,
     isBrowsingPebl: state.user.isBrowsingPebl,
 
     isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
+    isAddDescriptionModalOpen: state.mainToolbar.isAddDescriptionModalOpen,
     isExamplesModalOpen: state.mainToolbar.isExamplesModalOpen,
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isHelpDropdownOpen: state.mainToolbar.isHelpDropdownOpen,

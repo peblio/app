@@ -82,7 +82,6 @@ Tags.propTypes = {
 function mapStateToProps(state) {
   return {
     tags: state.page.tags,
-    preview: state.page.preview,
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({

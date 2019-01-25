@@ -90,6 +90,7 @@ class Heading extends React.Component {
 
           {(this.props.pageAuthor) && (
             <p className="heading__author-text">
+``
               by
               {this.renderAuthor(this.props.pageAuthor, this.state.isAuthorStudent)}
             </p>

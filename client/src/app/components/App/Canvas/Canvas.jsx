@@ -18,6 +18,9 @@ import {
   setPageLayout,
   updateTextHeight
 } from '../../../action/page.js';
+import {
+  viewAddDescriptionModal
+} from '../../../action/mainToolbar.js';
 
 import { setCurrentWidget } from '../../../action/editors.js';
 
@@ -300,7 +303,22 @@ class Canvas extends React.Component {
           ${this.props.isNavigationOpen ? 'canvas-right' : ''}`
         }
       >
-        <Tags />
+        <div
+          className="canvas__tag-container"
+        >
+          <Tags
+            preview={this.props.preview}
+          />
+          <button
+            className="canvas__add-desc-button"
+            onClick={() => {
+              console.log('poop');
+              this.props.viewAddDescriptionModal();
+            }}
+          >
+            Add description
+          </button>
+        </div>
         <Heading />
         <ReactGridLayout
           cols={this.props.rgl.cols}
@@ -397,8 +415,9 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => bindActionCreators({
   resizeTextEditor,
   setPageLayout,
+  setCurrentWidget,
   updateTextHeight,
-  setCurrentWidget
+  viewAddDescriptionModal
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Canvas);

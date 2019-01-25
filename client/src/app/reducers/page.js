@@ -27,7 +27,8 @@ const initialState = {
   unsavedChanges: false,
   pageAuthor: '',
   parentPageAuthor: '',
-  tags: []
+  tags: [],
+  description: ''
 };
 
 const page = (state = initialState, action) => {
@@ -52,6 +53,11 @@ const page = (state = initialState, action) => {
         pageHeading: action.event.target.value
       });
 
+    case ActionTypes.SET_PAGE_DESCRIPTION:
+      return Object.assign({}, state, {
+        description: action.event.target.value
+      });
+
     case ActionTypes.SET_PAGE_LAYOUT:
       return Object.assign({}, state, {
         layout: action.value
@@ -69,7 +75,8 @@ const page = (state = initialState, action) => {
         pageTitle: action.title,
         pageHeading: action.heading,
         layout: action.layout,
-        tags: action.tags
+        tags: action.tags,
+        description: action.description
       });
 
     case ActionTypes.DUPLICATE_PAGE: {

@@ -32,6 +32,25 @@
   margin: 0 auto;
   margin-top: 20px;
   height: fit-content;
+  &__tag-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__add-desc-button {
+    margin: 0;
+    font-family: $roboto;
+    font-size: $p-size;
+    line-height: $p-line-height;
+    color: $white;
+    background: $green;
+    height: fit-content;
+    border: $green $small-border solid;
+    &:hover {
+      background: $white;
+      border: $green $small-border solid;
+      color: $green;
+    }
+  }
 }
 
 .canvas::after{

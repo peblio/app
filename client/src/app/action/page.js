@@ -43,6 +43,16 @@ export function setPageHeading(event) {
   };
 }
 
+export function setPageDescription(event) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.SET_PAGE_DESCRIPTION,
+      event
+    });
+  };
+}
+
 export function setPageLayout(value) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
@@ -53,8 +63,8 @@ export function setPageLayout(value) {
   };
 }
 
-export function loadPage(id, parentId, title, heading, layout, tags) {
-  console.log(tags);
+export function loadPage(id, parentId, title, heading, description, layout, tags) {
+  console.log(description);
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
@@ -62,19 +72,21 @@ export function loadPage(id, parentId, title, heading, layout, tags) {
       parentId,
       title,
       heading,
+      description,
       layout,
       tags
     });
   };
 }
 
-export function duplicatePage(title, heading, folder, editors, editorIndex, layout, tags) {
+export function duplicatePage(title, heading, description, folder, editors, editorIndex, layout, tags) {
   return (dispatch) => {
     const id = shortid.generate();
     const data = {
       id,
       title: `${title}-Copy`,
       heading,
+      description,
       editors,
       editorIndex,
       layout,
@@ -107,7 +119,7 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, heading, editors, editorIndex, layout, type, workspace, tags, isLoggedIn) {
+export function submitPage(parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn) {
   const id = shortid.generate();
   const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
   axios.post(axiosURL, {
@@ -115,6 +127,7 @@ export function submitPage(parentId, title, heading, editors, editorIndex, layou
     id,
     title,
     heading,
+    description,
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout,
@@ -150,12 +163,13 @@ export function setPageId(id) {
   };
 }
 
-export function updatePage(id, title, heading, editors, editorIndex, layout, workspace, tags) {
+export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags) {
   console.log(tags);
   axios.post('/pages/update', {
     id,
     title,
     heading,
+    description,
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout,

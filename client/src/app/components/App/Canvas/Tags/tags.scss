@@ -8,6 +8,7 @@ $colors: $tag-yellow, $tag-pink, $tag-blue, $tag-green;
     display: flex;
     margin-bottom: $large-margin;
     align-items: center;
+    overflow-x: scroll;
   }
   &__input {
     margin-right: $large-margin;
