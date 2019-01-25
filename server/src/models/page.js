@@ -13,7 +13,7 @@ const pageSchema = new Schema({
   layout: { type: Array, default: [] },
   folder: { type: Schema.Types.ObjectId, ref: 'Folder' },
   workspace: { type: Object, default: {} },
-  tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }]
+  tags: [String]
   }, {
     minimize: false,
     timestamps: true

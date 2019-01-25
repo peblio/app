@@ -14,6 +14,7 @@ export async function getPage(req, res) {
 
 export async function getPagesWithTag(req, res) {
   return Page.find({ tags: req.query.tag }, (err, data) => {
+
     if (err) {
       return res.status(500).send(err);
     }
