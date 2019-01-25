@@ -321,6 +321,7 @@ class App extends React.Component {
         >
           <AddDescription
             savePage={this.savePage}
+            closeModal={this.props.closeAddDescriptionModal}
           />
         </Modal>
 

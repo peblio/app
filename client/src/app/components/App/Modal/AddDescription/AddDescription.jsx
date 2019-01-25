@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Tags from '../../Canvas/Tags/Tags.jsx';
-import { setPageDescription } from '../../../../action/page.js';
+import {
+  setPageHeading,
+  setPageDescription
+} from '../../../../action/page.js';
 
 import axios from '../../../../utils/axios';
 import history from '../../../../utils/history';
@@ -22,7 +25,7 @@ class AddDescription extends React.Component {
           type="text"
           className='description-modal__input'
           placeholder="title.."
-          value={this.props.heading}
+          value={this.props.pageHeading}
           onChange={this.props.setPageHeading}
         />
         <input
@@ -39,8 +42,7 @@ class AddDescription extends React.Component {
           className="description-modal__button"
           onClick={() => {
             this.props.savePage();
-            // this.props.closeModal();
-            console.log(this.props.description);
+            this.props.closeModal();
           }}
         >
           Save
@@ -56,11 +58,13 @@ AddDescription.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    description: state.page.description,
+    pageHeading: state.page.pageHeading,
+    description: state.page.description
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   setPageDescription,
+  setPageHeading
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddDescription);

@@ -312,7 +312,6 @@ class Canvas extends React.Component {
           <button
             className="canvas__add-desc-button"
             onClick={() => {
-              console.log('poop');
               this.props.viewAddDescriptionModal();
             }}
           >
