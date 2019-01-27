@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { buildPageForUpdateFromrequest } from '../../../src/models/creator/pageCreator.js';
+import { buildPageForUpdateFromRequest } from '../../../src/models/creator/pageCreator.js';
 const request = {
     body: {
         heading: 'Some heading',
@@ -14,10 +14,10 @@ const request = {
 
 describe('pageCreator', function () {
     
-    describe('buildPageForUpdateFromrequest', function () {
+    describe('buildPageForUpdateFromRequest', function () {
 
         it('shall build Page for update from request', function () {
-            const actualPage = buildPageForUpdateFromrequest(request);
+            const actualPage = buildPageForUpdateFromRequest(request);
 
             expect(actualPage.name).to.be.eql(request.body.name);
             expect(actualPage.title).to.be.eql(request.body.title);
