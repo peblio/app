@@ -18,7 +18,8 @@ export async function getPagesWithTag(req, res) {
   var query = { tags: req.query.tag };
   var options = {
     offset,
-    limit
+    limit,
+    sort: 'title'
   };
   return Page.paginate(query, options, (err, data) => {
     if (err) {

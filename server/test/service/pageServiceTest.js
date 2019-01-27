@@ -590,12 +590,12 @@ function assertUpdateUserWasCalledWithPageId() {
 
 function assertPaginateWasCalledWithTag() {
     assert.calledOnce(paginateSpy);
-    assert.calledWith(paginateSpy, { tags: tag }, { offset: 0, limit: 10 });
+    assert.calledWith(paginateSpy, { tags: tag }, { offset: 0, limit: 10, sort: 'title' });
 }
 
 function assertPaginateWasCalledWithTagOffsetLimit(offset, limit) {
     assert.calledOnce(paginateSpy);
-    assert.calledWith(paginateSpy, { tags: tag }, { offset, limit});
+    assert.calledWith(paginateSpy, { tags: tag }, { offset, limit, sort: 'title'});
 }
 
 function assertSendWasCalledWith(msg) {
