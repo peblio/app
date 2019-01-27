@@ -13,7 +13,14 @@ export async function getPage(req, res) {
 }
 
 export async function getPagesWithTag(req, res) {
-  return Page.find({ tags: req.query.tag }, (err, data) => {
+  const offset = req.query.offset ? req.query.offset : 0;
+  const limit = req.query.limit ? req.query.limit : 10;
+  var query = { tags: req.query.tag };
+  var options = {
+    offset,
+    limit
+  };
+  return Page.paginate(query, options, (err, data) => {
     if (err) {
       return res.status(500).send(err);
     }

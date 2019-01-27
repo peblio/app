@@ -45,6 +45,7 @@ let updatePageSpy;
 let folderCountStub;
 let folderCountExecStub;
 let buildPageForUpdateFromRequestStub;
+let paginateSpy;
 
 describe('pageService', function () {
     describe('getPage', function () {
@@ -105,22 +106,38 @@ describe('pageService', function () {
             sandbox.restore();
         });
 
-        it('shall retrieve page by id', () => {
-            findSpy = sandbox.stub(Page, 'find').yields(null, pageData);
+        it('shall retrieve pages for tag and default pagination parameters', () => {
+            paginateSpy = sandbox.stub(Page, 'paginate').yields(null, pageData);
 
             getPagesWithTag(request, response);
 
-            assertFindWasCalledWithTag();
+            assertPaginateWasCalledWithTag();
+            assertSendWasCalledWith(pageData);
+        });
+
+        it('shall retrieve pages for tag with limit and offset from query', () => {
+            request = {
+                query: {
+                    tag,
+                    offset: 7,
+                    limit: 13
+                }
+            };
+            paginateSpy = sandbox.stub(Page, 'paginate').yields(null, pageData);
+
+            getPagesWithTag(request, response);
+
+            assertPaginateWasCalledWithTagOffsetLimit(request.query.offset, request.query.limit);
             assertSendWasCalledWith(pageData);
         });
 
         it('shall return error when retrieve page by id fails', function () {
             response.status = createResponseWithStatusCode(500);
-            findSpy = sandbox.stub(Page, 'find').yields(error, null);
+            paginateSpy = sandbox.stub(Page, 'paginate').yields(error, null);
 
             getPagesWithTag(request, response);
 
-            assertFindWasCalledWithTag();
+            assertPaginateWasCalledWithTag();
             assertSendWasCalledWith(error);
         });
     });
@@ -571,9 +588,14 @@ function assertUpdateUserWasCalledWithPageId() {
     assert.calledWith(updateUserSpy, { _id: loggedInUser._id }, { pages: [request.body.id] });
 }
 
-function assertFindWasCalledWithTag() {
-    assert.calledOnce(findSpy);
-    assert.calledWith(findSpy, { tags: tag });
+function assertPaginateWasCalledWithTag() {
+    assert.calledOnce(paginateSpy);
+    assert.calledWith(paginateSpy, { tags: tag }, { offset: 0, limit: 10 });
+}
+
+function assertPaginateWasCalledWithTagOffsetLimit(offset, limit) {
+    assert.calledOnce(paginateSpy);
+    assert.calledWith(paginateSpy, { tags: tag }, { offset, limit});
 }
 
 function assertSendWasCalledWith(msg) {
