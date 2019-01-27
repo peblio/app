@@ -1,7 +1,7 @@
 const Page = require('../models/page.js');
 const User = require('../models/user.js');
 const Folder = require('../models/folder.js');
-import { buildPageForUpdateFromrequest } from '../models/creator/pageCreator';
+import { buildPageForUpdateFromRequest } from '../models/creator/pageCreator';
 
 export async function getPage(req, res) {
   return Page.find({ id: req.params.pageId }, (err, data) => {
@@ -61,7 +61,7 @@ export async function deletePage(req, res) {
 }
 
 export async function updatePage(req, res) {
-  const pageWithUpdatedData = buildPageForUpdateFromrequest(req);
+  const pageWithUpdatedData = buildPageForUpdateFromRequest(req);
   return Page.update({ id: req.body.id }, pageWithUpdatedData, (err, data) => {
     if (err) {
       return res.status(500).send(err);

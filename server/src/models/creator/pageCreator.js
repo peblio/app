@@ -1,4 +1,4 @@
-export function buildPageForUpdateFromrequest(request) {
+export function buildPageForUpdateFromRequest(request) {
     return {
         heading: request.body.heading,
         title: request.body.title,

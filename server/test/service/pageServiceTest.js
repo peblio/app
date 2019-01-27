@@ -44,7 +44,7 @@ let deleteOnePageSpy;
 let updatePageSpy;
 let folderCountStub;
 let folderCountExecStub;
-let buildPageForUpdateFromrequestStub;
+let buildPageForUpdateFromRequestStub;
 
 describe('pageService', function () {
     describe('getPage', function () {
@@ -347,24 +347,24 @@ describe('pageService', function () {
 
         it('shall return error if updating page fails', async function () {
             response.status = createResponseWithStatusCode(500);
-            buildPageForUpdateFromrequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromrequest').returns(pageData);
+            buildPageForUpdateFromRequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromRequest').returns(pageData);
             updatePageSpy = sandbox.stub(Page, 'update').yields({ message: "Could not update page" }, null);
 
             await updatePage(request, response);
 
             assertUpdatePageWasCalledWithLatestPageData();
-            assert.calledOnce(buildPageForUpdateFromrequestStub);
+            assert.calledOnce(buildPageForUpdateFromRequestStub);
             assertSendWasCalledWith({ message: 'Could not update page' });
         });
 
         it('shall return success after updating page', async function () {
             updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageData);
-            buildPageForUpdateFromrequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromrequest').returns(pageData);
+            buildPageForUpdateFromRequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromRequest').returns(pageData);
 
             await updatePage(request, response);
 
             assertUpdatePageWasCalledWithLatestPageData();
-            assert.calledOnce(buildPageForUpdateFromrequestStub);
+            assert.calledOnce(buildPageForUpdateFromRequestStub);
             assertSendWasCalledWith({ data: 'Record has been Inserted..!!' });
         });
 
