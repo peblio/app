@@ -19,3 +19,26 @@ export function saveTag(req, res) {
     }
   });
 }
+
+export function getAllTags(req, res) {
+  return Tag.find({}, (retrieveTagError, retrievedTags) => {
+    if (retrieveTagError) {
+      return res.status(500).send(retrieveTagError);
+    }
+    return res.status(200).send(retrievedTags);
+  });
+}
+
+export function getAllTagsStartingWith(req, res) {
+  const tagPrefix = req.params.tagPrefix;
+  return Tag.find({
+    name: {
+      $regex: "^" + tagPrefix
+    }
+  }, (retrieveTagError, retrievedTags) => {
+    if (retrieveTagError) {
+      return res.status(500).send(retrieveTagError);
+    }
+    return res.status(200).send(retrievedTags);
+  });
+}
