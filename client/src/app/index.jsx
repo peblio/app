@@ -5,6 +5,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import reduxCatch from 'redux-catch';
 
 import rootReducer from './reducers/rootReducer.js';
 import App from './components/App/App.jsx';
@@ -16,13 +17,24 @@ import './styles/Draft.css';
 import './styles/reactGrid.css';
 import './styles/reactResize.css';
 
+function errorHandler(error, getState, lastAction, dispatch) {
+  console.log(error);
+  console.log('current state', getState());
+  console.log('last action was', lastAction);
+  // optionally dispatch an action due to the error using the dispatch parameter
+}
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   rootReducer,
   composeEnhancers(
-    applyMiddleware(thunk)
+    applyMiddleware(
+      thunk,
+      reduxCatch(errorHandler)
+    )
   )
 );
+
 
 class Main extends React.Component {
   render() {
