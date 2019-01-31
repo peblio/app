@@ -46,6 +46,7 @@ export function setPageHeading(event) {
 export function setPageDescription(event) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_PAGE_DESCRIPTION,
       event
@@ -163,7 +164,6 @@ export function setPageId(id) {
 }
 
 export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags) {
-  console.log(tags);
   axios.post('/pages/update', {
     id,
     title,
@@ -245,6 +245,7 @@ export function setParentPageAuthor(value) {
 
 export function addPageTag(value) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.ADD_PAGE_TAG,
       value
@@ -254,6 +255,7 @@ export function addPageTag(value) {
 
 export function deletePageTag(value) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.DELETE_PAGE_TAG,
       value

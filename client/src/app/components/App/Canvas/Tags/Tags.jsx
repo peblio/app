@@ -34,7 +34,7 @@ class Tags extends React.Component {
   renderTagsList(tags) {
     return (
       <ul className="tags__list">
-        {tags.map((tag, i) => (
+        {tags && tags.map((tag, i) => (
           <li
             className="tags__list-item"
           >

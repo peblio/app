@@ -309,14 +309,16 @@ class Canvas extends React.Component {
           <Tags
             preview={this.props.preview}
           />
-          <button
-            className="canvas__add-desc-button"
-            onClick={() => {
-              this.props.viewAddDescriptionModal();
-            }}
-          >
+          {!this.props.preview && (
+            <button
+              className="canvas__add-desc-button"
+              onClick={() => {
+                this.props.viewAddDescriptionModal();
+              }}
+            >
             Add description
-          </button>
+            </button>
+          )}
         </div>
         <Heading />
         <ReactGridLayout
@@ -396,7 +398,8 @@ Canvas.propTypes = {
   setCurrentWidget: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
   updateTextHeight: PropTypes.func.isRequired,
-  textHeights: PropTypes.shape({}).isRequired
+  textHeights: PropTypes.shape({}).isRequired,
+  viewAddDescriptionModal: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

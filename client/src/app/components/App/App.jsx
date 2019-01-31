@@ -120,7 +120,6 @@ class App extends React.Component {
       const projectID = this.projectID();
       axios.get(`/pages/${projectID}`)
         .then((res) => {
-          console.log(res.data[0]);
           this.props.loadPage(
             res.data[0].id,
             res.data[0].parentId,
@@ -186,7 +185,6 @@ class App extends React.Component {
           true
         );
       } else if (this.props.canEdit) {
-        console.log(this.props.description);
         this.props.updatePage(
           this.props.id,
           title,
@@ -361,6 +359,7 @@ App.propTypes = {
 
   // pebl
   pageTitle: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   rgl: PropTypes.shape({}).isRequired,
@@ -413,6 +412,7 @@ App.propTypes = {
   closeWelcomeModal: PropTypes.func.isRequired,
   isForkPromptOpen: PropTypes.bool.isRequired,
   closeForkPrompt: PropTypes.func.isRequired,
+  closeAddDescriptionModal: PropTypes.func.isRequired,
 
   // preferences
   fetchUserPreferences: PropTypes.func.isRequired,

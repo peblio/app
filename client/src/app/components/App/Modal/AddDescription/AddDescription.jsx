@@ -9,9 +9,6 @@ import {
   setPageDescription
 } from '../../../../action/page.js';
 
-import axios from '../../../../utils/axios';
-import history from '../../../../utils/history';
-
 require('./addDescription.scss');
 
 class AddDescription extends React.Component {
@@ -53,7 +50,12 @@ class AddDescription extends React.Component {
 }
 
 AddDescription.propTypes = {
-
+  closeModal: PropTypes.func.isRequired,
+  description: PropTypes.string.isRequired,
+  pageHeading: PropTypes.string.isRequired,
+  savePage: PropTypes.func.isRequired,
+  setPageHeading: PropTypes.func.isRequired,
+  setPageDescription: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

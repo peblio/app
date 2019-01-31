@@ -112,6 +112,8 @@ PageRow.propTypes = {
     folder: PropTypes.shape({}),
     layout: PropTypes.arrayOf(PropTypes.shape({})),
     title: PropTypes.string,
+    heading: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string)
   }).isRequired,
   viewPage: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired

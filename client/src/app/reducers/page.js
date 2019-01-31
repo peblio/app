@@ -173,7 +173,9 @@ const page = (state = initialState, action) => {
     }
 
     case ActionTypes.ADD_PAGE_TAG: {
+      console.log(state);
       const tempTags = state.tags;
+      console.log(tempTags);
       if (!tempTags.includes(action.value)) {
         tempTags.push(action.value);
       }

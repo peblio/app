@@ -25,7 +25,6 @@ export function toggleAccountDropdown() {
 }
 
 export function viewAddDescriptionModal() {
-  console.log('open desc');
   return (dispatch) => {
     dispatch({
       type: ActionTypes.VIEW_ADD_DESCRIPTION_MODAL
