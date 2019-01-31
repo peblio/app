@@ -12,6 +12,7 @@ import App from './components/App/App.jsx';
 import Profile from './components/Profile/Profile';
 import withTracker from './withTracker.jsx';
 import history from './utils/history';
+import axios from './utils/axios';
 
 import './styles/Draft.css';
 import './styles/reactGrid.css';
@@ -22,6 +23,20 @@ function errorHandler(error, getState, lastAction, dispatch) {
   console.log('current state', getState());
   console.log('last action was', lastAction);
   // optionally dispatch an action due to the error using the dispatch parameter
+  axios.post('/logs/', {
+    name: 'mg',
+    // user: ,
+    message: 'request.body.message',
+    info: 'request.body.info',
+    stacktrace: JSON.stringify(error),
+    path: 'request.body.path',
+    action: lastAction.type
+  }).then((response) => {
+    console.log('message sent');
+  }).catch((err) => {
+    debugger;
+    console.log(err);
+  });
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
