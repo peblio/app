@@ -38,7 +38,7 @@ class AddDescription extends React.Component {
         <button
           className="description-modal__button"
           onClick={() => {
-            this.props.savePage();
+            // this.props.savePage();
             this.props.closeModal();
           }}
         >

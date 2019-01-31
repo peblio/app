@@ -19,7 +19,7 @@ class Tags extends React.Component {
         name: tagName
       })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
         })
         .catch((error) => {
           console.log(error);
@@ -56,6 +56,7 @@ class Tags extends React.Component {
   }
 
   render() {
+    console.log(this.props.tags);
     return (
       <div className="tags__container">
         {!this.props.preview && (
