@@ -8,10 +8,10 @@ const logSchema = new Schema({
   message: { type: String, required: true },
   info: { type: String },
   stacktrace: { type: String },
-  module: { type: String, default: 'client' },
+  module: { type: String, enum: ['community-ui', 'ui', 'server'], default: 'community-ui' },
   path: { type: String, required: true },
   action: { type: String, required: true },
-  level: { type: String, default: 'ERROR' },
+  level: { type: String, enum: ['ERROR', 'INFO', 'DEBUG', 'TRACE', 'WARN'], default: 'ERROR' },
   occurredAt: { type: Date, default: Date.now }
 }, {
     minimize: false,

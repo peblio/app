@@ -14,3 +14,19 @@ export function buildLogFromRequest(request) {
   request.body.module ? (log.module = request.body.module) : null;
   return log;
 }
+
+export function getQueryForSearchLogs(request) {
+  const query = {};
+  request.query.level ? query.level = request.query.level : null;
+  request.query.module ? query.module = request.query.module : null;
+  request.query.path ? query.path = request.query.path : null;
+  request.query.action ? query.action = request.query.action : null;
+  return query;
+}
+
+export function getOptionsForSearchLogs(request) {
+  const options = {};
+  request.query.limit ? options.limit = parseInt(request.query.limit) : options.limit = 10;
+  request.query.offset ? options.offset = parseInt(request.query.offset) : options.offset = 0;
+  return options;
+}
