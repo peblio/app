@@ -10,8 +10,8 @@ describe('logTest', function () {
                 stacktrace: "Somestacktrace",
                 path: "Somepath",
                 action: "Someaction",
-                level: "Somelevel",
-                module: "Somemodule"
+                level: "DEBUG",
+                module: "ui"
             });
 
             actualLog.validate(err => {
@@ -25,8 +25,8 @@ describe('logTest', function () {
                 info: "Someinfo",
                 stacktrace: "Somestacktrace",
                 action: "Someaction",
-                level: "Somelevel",
-                module: "Somemodule"
+                level: "DEBUG",
+                module: "ui"
             });
 
             actualLog.validate(err => {
@@ -40,8 +40,8 @@ describe('logTest', function () {
                 info: "Someinfo",
                 stacktrace: "Somestacktrace",
                 path: "Somepath",
-                level: "Somelevel",
-                module: "Somemodule"
+                level: "DEBUG",
+                module: "ui"
             });
 
             actualLog.validate(err => {
@@ -61,7 +61,7 @@ describe('logTest', function () {
             actualLog.validate(err => {
                 expect(err).to.be.null;
                 expect(actualLog.level).to.be.eql("ERROR");
-                expect(actualLog.module).to.be.eql("client");
+                expect(actualLog.module).to.be.eql("community-ui");
                 expect(actualLog.occurredAt instanceof Date).to.be.true;
             })
         });
@@ -73,8 +73,8 @@ describe('logTest', function () {
                 info: "Someinfo",
                 stacktrace: "Somestacktrace",
                 path: "Somepath",
-                level: "Somelevel",
-                module: "Somemodule",
+                level: "DEBUG",
+                module: "ui",
                 action: "Someaction"
             });
 

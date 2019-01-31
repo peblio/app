@@ -2,7 +2,6 @@ import Log from "../log";
 
 export function buildLogFromRequest(request) {
   const log = new Log({
-    name: request.body.name,
     user: request.body.user,
     message: request.body.message,
     info: request.body.info,
