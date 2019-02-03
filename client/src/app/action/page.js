@@ -28,7 +28,7 @@ export function setPageTitle(event) {
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_PAGE_TITLE,
-      event: event.test
+      event
     });
   };
 }
