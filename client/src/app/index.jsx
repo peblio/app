@@ -7,7 +7,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 
 import thunk from 'redux-thunk';
 import reduxCatch from 'redux-catch';
-import axios from './utils/axios';
+import { saveErrorLog } from './utils/log';
 
 import rootReducer from './reducers/rootReducer.js';
 import App from './components/App/App.jsx';
@@ -20,20 +20,7 @@ import './styles/reactGrid.css';
 import './styles/reactResize.css';
 
 function errorHandler(error, getState, lastAction, dispatch) {
-  console.log(error);
-  console.log('current state', getState());
-  console.log('last action was', lastAction);
-  // optionally dispatch an action due to the error using the dispatch parameter
-  axios.post('/logs', {
-        "message": error.message,
-        "info": "ERROR",
-        "stacktrace": error.stack,
-        "path": "path",
-        "action": lastAction.type,
-        "module": "ui"
-      })
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+  saveErrorLog(error, getState, lastAction, 'ERROR');
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
