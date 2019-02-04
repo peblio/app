@@ -87,6 +87,7 @@ class Tags extends React.Component {
 }
 
 Tags.propTypes = {
+  container: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   preview: PropTypes.bool.isRequired,
   addPageTag: PropTypes.func.isRequired,

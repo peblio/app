@@ -122,6 +122,7 @@ PageRow.propTypes = {
     layout: PropTypes.arrayOf(PropTypes.shape({})),
     title: PropTypes.string,
     heading: PropTypes.string,
+    description: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string)
   }).isRequired,
   viewPage: PropTypes.func.isRequired,

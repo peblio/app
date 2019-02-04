@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import history from '../../../utils/history';
 import FileMenu from './FileMenu/FileMenu.jsx';
 import HelpMenu from './HelpMenu/HelpMenu.jsx';
 import Preferences from '../Preferences/Preferences.jsx';
