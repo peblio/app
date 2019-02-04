@@ -12,25 +12,10 @@ let saveTagServiceStub;
 let getAllTagsServiceStub;
 let getAllTagsStartingWithServiceStub;
 
-describe('tagController', function () {
-
-    describe('saveTag', function () {
-
-        beforeEach(function () {
-            saveTagServiceStub = sandbox.stub(saveTagService, 'saveTag').returns({ name });
-        });
-
-        afterEach(function () {
-            sandbox.restore();
-        });
-
-        it('shall call saveTag from service', function () {
-
-            const returnValue = saveTag(request, response);
-
-            expect(returnValue).to.be.eql({ name });
-            assertSaveTagFromServiceWasCalledWithRequestResponse();
-        });
+describe('tagController', () => {
+  describe('saveTag', () => {
+    beforeEach(() => {
+      saveTagServiceStub = sandbox.stub(saveTagService, 'saveTag').returns({ name });
     });
 
     afterEach(() => {
