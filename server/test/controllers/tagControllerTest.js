@@ -11,6 +11,7 @@ let getAllTagsServiceStub;
 let getAllTagsStartingWithServiceStub;
 
 describe('tagController', function () {
+
     describe('saveTag', function () {
 
         beforeEach(function () {

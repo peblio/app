@@ -48,6 +48,7 @@ let buildPageForUpdateFromRequestStub;
 let paginateSpy;
 
 describe('pageService', function () {
+    
     describe('getPage', function () {
 
         beforeEach(function () {
@@ -105,6 +106,7 @@ describe('pageService', function () {
         afterEach(function () {
             sandbox.restore();
         });
+
 
         it('shall retrieve pages for tag and default pagination parameters', () => {
             paginateSpy = sandbox.stub(Page, 'paginate').yields(null, pageData);
@@ -596,6 +598,11 @@ function assertPaginateWasCalledWithTag() {
 function assertPaginateWasCalledWithTagOffsetLimit(offset, limit) {
     assert.calledOnce(paginateSpy);
     assert.calledWith(paginateSpy, { tags: tag }, { offset, limit, sort: 'title'});
+}
+
+function assertFindWasCalledWithTag() {
+    assert.calledOnce(findSpy);
+    assert.calledWith(findSpy, { tags: tag });
 }
 
 function assertSendWasCalledWith(msg) {
