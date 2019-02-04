@@ -1,11 +1,10 @@
 import { expect } from 'chai';
-import { buildPageForUpdateFromrequest } from '../../../src/models/creator/pageCreator.js';
+import { buildPageForUpdateFromRequest } from '../../../src/models/creator/pageCreator.js';
 
 const request = {
   body: {
     heading: 'Some heading',
     title: 'Some title',
-    description: 'Some description',
     editors: 'Some editors',
     editorIndex: ' Some editorIndex',
     layout: 'A perfect layout',
@@ -15,13 +14,12 @@ const request = {
 };
 
 describe('pageCreator', () => {
-  describe('buildPageForUpdateFromrequest', () => {
+  describe('buildPageForUpdateFromRequest', () => {
     it('shall build Page for update from request', () => {
-      const actualPage = buildPageForUpdateFromrequest(request);
+      const actualPage = buildPageForUpdateFromRequest(request);
 
       expect(actualPage.name).to.be.eql(request.body.name);
       expect(actualPage.title).to.be.eql(request.body.title);
-      expect(actualPage.description).to.be.eql(request.body.description);
       expect(actualPage.editors).to.be.eql(request.body.editors);
       expect(actualPage.editorIndex).to.be.eql(request.body.editorIndex);
       expect(actualPage.layout).to.be.eql(request.body.layout);
