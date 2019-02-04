@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import EditorContainer from './EditorContainer/EditorContainer.jsx';
+import Heading from './Heading/Heading.jsx';
 import Questions from './Question/Question.jsx';
 import Iframe from './Iframe/Iframe.jsx';
 import Image from './Image/Image.jsx';
@@ -13,7 +14,6 @@ import WidgetNav from './WidgetNav/WidgetNav.jsx';
 import { convertPixelHeightToGridHeight } from '../../../utils/pixel-to-grid.js';
 import {
   resizeTextEditor,
-  setPageHeading,
   setPageLayout,
   updateTextHeight
 } from '../../../action/page.js';
@@ -299,15 +299,7 @@ class Canvas extends React.Component {
           ${this.props.isNavigationOpen ? 'canvas-right' : ''}`
         }
       >
-        {(this.props.pageHeading === '' && this.props.preview) || (
-          <input
-            type="text"
-            className='canvas__title'
-            placeholder="Enter title.."
-            value={this.props.pageHeading}
-            onChange={this.props.setPageHeading}
-          />
-        )}
+        <Heading />
         <ReactGridLayout
           cols={this.props.rgl.cols}
           width={this.props.rgl.width}
@@ -373,7 +365,6 @@ Canvas.propTypes = {
   editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   isNavigationOpen: PropTypes.bool.isRequired,
-  pageHeading: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
   resizeTextEditor: PropTypes.func.isRequired,
   rgl: PropTypes.shape({
@@ -384,7 +375,6 @@ Canvas.propTypes = {
     width: PropTypes.number
   }).isRequired,
   setCurrentWidget: PropTypes.func.isRequired,
-  setPageHeading: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
   updateTextHeight: PropTypes.func.isRequired,
   textHeights: PropTypes.shape({}).isRequired
@@ -397,7 +387,6 @@ function mapStateToProps(state) {
     editors: state.editorsReducer.editors,
     layout: state.page.layout,
     isNavigationOpen: state.navigation.isNavigationOpen,
-    pageHeading: state.page.pageHeading,
     preview: state.page.preview,
     rgl: state.page.rgl,
     textHeights: state.page.textHeights
@@ -405,7 +394,6 @@ function mapStateToProps(state) {
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   resizeTextEditor,
-  setPageHeading,
   setPageLayout,
   updateTextHeight,
   setCurrentWidget

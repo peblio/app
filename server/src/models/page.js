@@ -12,10 +12,11 @@ const pageSchema = new Schema({
   editorIndex: { type: Number, default: 0 },
   layout: { type: Array, default: [] },
   folder: { type: Schema.Types.ObjectId, ref: 'Folder' },
-  workspace: { type: Object, default: {} }
+  workspace: { type: Object, default: {} },
+  tags: [String]
 }, {
-  minimize: false,
-  timestamps: true
-});
+    minimize: false,
+    timestamps: true
+  });
 
 module.exports = mongoose.model('Page', pageSchema);

@@ -1,61 +1,148 @@
-import { getPage } from '../../src/controllers/pageControllerNew';
-import { assert, spy } from 'sinon';
-const sandbox = require('sinon').sandbox.create();
-const Page = require('../../src/models/page.js');
-var findSpy;
-var request;
-var response;
-const pageData = {
-    data: "SomePageData"
-};
-const pageId = "pageId";
-const error = {error: 'Could not retrieve page'};
+import { expect } from 'chai';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage } from '../../src/controllers/pageController';
+import * as pageService from '../../src/service/pageService';
+import { assert } from 'sinon';
+
+const sinon = require('sinon');
+const sandbox = sinon.sandbox.create();
+const request = "request";
+let response = response;
+let getPageServiceStub;
+let getPagesWithTagServiceStub;
+let savePageAsGuestServiceStub;
+let savePageServiceStub;
+let deletePageServiceStub;
+let updatePageServiceStub;
+let movePageServiceStub;
 
 describe('pageController', function () {
     describe('getPage', function () {
-
-        beforeEach(function () {
-            request = {
-                params: {
-                    pageId
-                }
-            };
-            response = {
-                send: spy(),
-                json: spy()
-            };
-        });
 
         afterEach(function () {
             sandbox.restore();
         });
 
-        it('shall retrieve page by id', function () {
-            findSpy = sandbox.stub(Page, 'find').yields(null, pageData);
+        it('shall call getPage from service', async function () {
+            const returnValue = "getPageResponse"
+            getPageServiceStub = sandbox.stub(pageService, 'getPage').returns(returnValue);
 
-            getPage(request, response);
-            
-            assertFindWasCalledWithPageId();
-            assertSendWasCalledWith(pageData);
-        });
+            const actualReturnValue = await getPage(request, response);
 
-        it('shall return error when retrieve page by id fails', function () {
-            findSpy = sandbox.stub(Page, 'find').yields(error, null);
-
-            getPage(request, response);
-            
-            assertFindWasCalledWithPageId();
-            assertSendWasCalledWith(error);
+            expect(actualReturnValue).to.be.eql(returnValue);
+            assert.calledOnce(getPageServiceStub);
+            assert.calledWith(getPageServiceStub, request, response);
         });
     });
+
+    describe('getPagesWithTag', function () {
+
+        afterEach(function () {
+            sandbox.restore();
+        });
+
+        it('shall call getPagesWithTag from service', async function () {
+            const returnValue = "getPagesWithTagResponse"
+            getPagesWithTagServiceStub = sandbox.stub(pageService, 'getPagesWithTag').returns(returnValue);
+
+            const actualReturnValue = await getPagesWithTag(request, response);
+
+            expect(actualReturnValue).to.be.eql(returnValue);
+            assert.calledOnce(getPagesWithTagServiceStub);
+            assert.calledWith(getPagesWithTagServiceStub, request, response);
+        });
+    });
+
+    describe('savePageAsGuest', function () {
+
+        afterEach(function () {
+            sandbox.restore();
+        });
+
+        it('shall call savePageAsGuest from service', async function () {
+            const returnValue = "savePageAsGuestResponse"
+            savePageAsGuestServiceStub = sandbox.stub(pageService, 'savePageAsGuest').returns(returnValue);
+
+            const actualReturnValue = await savePageAsGuest(request, response);
+
+            expect(actualReturnValue).to.be.eql(returnValue);
+            assert.calledOnce(savePageAsGuestServiceStub);
+            assert.calledWith(savePageAsGuestServiceStub, request, response);
+        });
+
+    });
+
+    describe('savePage', function () {
+
+        afterEach(function () {
+            sandbox.restore();
+        });
+
+        it('shall call savePage from service', async function () {
+            const returnValue = "savePageResponse"
+            savePageServiceStub = sandbox.stub(pageService, 'savePage').returns(returnValue);
+
+            const actualReturnValue = await savePage(request, response);
+
+            expect(actualReturnValue).to.be.eql(returnValue);
+            assert.calledOnce(savePageServiceStub);
+            assert.calledWith(savePageServiceStub, request, response);
+        });
+
+    });
+
+    describe('deletePage', function () {
+        afterEach(function () {
+            sandbox.restore();
+        });
+
+        it('shall call deletePage from service', async function () {
+            const returnValue = "deletePageResponse"
+            deletePageServiceStub = sandbox.stub(pageService, 'deletePage').returns(returnValue);
+
+            const actualReturnValue = await deletePage(request, response);
+
+            expect(actualReturnValue).to.be.eql(returnValue);
+            assert.calledOnce(deletePageServiceStub);
+            assert.calledWith(deletePageServiceStub, request, response);
+        });
+    });
+
+    describe('updatePage', function () {
+
+        afterEach(function () {
+            sandbox.restore();
+        });
+
+        it('shall call updatePage from service', async function () {
+            const returnValue = "updatePageResponse"
+            updatePageServiceStub = sandbox.stub(pageService, 'updatePage').returns(returnValue);
+
+            const actualReturnValue = await updatePage(request, response);
+
+            expect(actualReturnValue).to.be.eql(returnValue);
+            assert.calledOnce(updatePageServiceStub);
+            assert.calledWith(updatePageServiceStub, request, response);
+        });
+
+    });
+
+    describe('movePage', function () {
+
+        afterEach(function () {
+            sandbox.restore();
+        });
+
+        it('shall call movePage from service', async function () {
+            const returnValue = "movePageResponse"
+            movePageServiceStub = sandbox.stub(pageService, 'movePage').returns(returnValue);
+
+            const actualReturnValue = await movePage(request, response);
+
+            expect(actualReturnValue).to.be.eql(returnValue);
+            assert.calledOnce(movePageServiceStub);
+            assert.calledWith(movePageServiceStub, request, response);
+        });
+
+    });
+
 });
-
-function assertFindWasCalledWithPageId() {
-    assert.calledOnce(findSpy);
-    assert.calledWith(findSpy, { id: pageId });
-}
-
-function assertSendWasCalledWith(msg) {
-    assert.calledOnce(response.send);
-    assert.calledWith(response.send, msg);
-};

@@ -39,7 +39,7 @@ export function getUserDetailsForParentPage(req, res) {
       const statusCode = err ? 500 : 404;
       return res.status(statusCode).send(err);
     }
-    Page.findOne({id: page.parentId }, (parentPageRetrieveError, parentPage) => {
+    Page.findOne({ id: page.parentId }, (parentPageRetrieveError, parentPage) => {
       if (parentPageRetrieveError || !parentPage) {
         const statusCode = parentPageRetrieveError ? 500 : 404;
         return res.status(statusCode).send(parentPageRetrieveError);
@@ -49,7 +49,7 @@ export function getUserDetailsForParentPage(req, res) {
   });
 };
 
-function getUserById(userId, res){
+function getUserById(userId, res) {
   return User.findById(userId, (err, user) => {
     if (err || !user) {
       const statusCode = err ? 500 : 404;

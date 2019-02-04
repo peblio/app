@@ -90,7 +90,11 @@ class App extends React.Component {
   projectID = () => {
     const location = this.props.location.pathname;
     const projectID = location.match(/\/pebl\/([\w-].*)/);
-    return projectID ? projectID[1] : null;
+    if (projectID) {
+      this.props.setPageId(projectID[1]);
+      return projectID[1];
+    }
+    return null;
   }
 
   resetPage = () => {
@@ -115,8 +119,17 @@ class App extends React.Component {
       const projectID = this.projectID();
       axios.get(`/pages/${projectID}`)
         .then((res) => {
-          this.props.loadPage(res.data[0].id, res.data[0].title, res.data[0].heading, res.data[0].layout);
-          this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
+          this.props.loadPage(
+            res.data[0].id,
+            res.data[0].parentId,
+            res.data[0].title,
+            res.data[0].heading,
+            res.data[0].layout
+          );
+          this.props.loadEditors(
+            res.data[0].editors,
+            res.data[0].editorIndex
+          );
           if (Object.keys(res.data[0].workspace).length > 0) {
             this.props.loadWorkspace(res.data[0].workspace);
           }
@@ -354,6 +367,7 @@ App.propTypes = {
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
   loadPage: PropTypes.func.isRequired,
+  setPageId: PropTypes.func.isRequired,
 
   setEditAccess: PropTypes.func.isRequired,
 

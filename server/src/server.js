@@ -14,8 +14,8 @@ const app = express();
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const currentUserRoutes = require('./controllers/currentUserController');
+const pageRoutes = require('./routes/pageRoutes.js');
 const authRoutes = require('./controllers/authController.js');
-const pageRoutes = require('./controllers/pageController.js');
 const folderRoutes = require('./controllers/folderController');
 const apiRoutes = require('./controllers/apiController.js');
 
