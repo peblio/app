@@ -9,15 +9,17 @@ $colors: $tag-yellow, $tag-pink, $tag-blue, $tag-green;
     overflow-x: scroll;
     &--canvas {
       display: flex;
+      align-items: baseline;
     }
   }
   &__input {
+    text-transform: lowercase;
     margin-right: $large-margin;
     font-size: $p-size;
     line-height: $p-line-height;
     border: solid $small-border $g5;
     border-radius: $small-border-radius;
-    padding: 0 $small-padding;
+    padding: $small-padding/2;
     margin-bottom: $large-padding;
     background: $g7;
     color: $g4;
