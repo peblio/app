@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import Tag from '../../src/models/tag.js';
 
 describe('tagTest', function () {
+
     describe('buildTagFromRequest', function () {
 
         it('shall not validate tag if it does not have name', function () {
@@ -14,7 +15,7 @@ describe('tagTest', function () {
 
 
         it('shall validate tag and return no errors', function () {
-            const actualtag = new Tag({name:"name"});
+            const actualtag = new Tag({ name: "name" });
 
             actualtag.validate(err => {
                 expect(err).to.be.null;
@@ -22,4 +23,5 @@ describe('tagTest', function () {
 
         });
     });
+
 });
