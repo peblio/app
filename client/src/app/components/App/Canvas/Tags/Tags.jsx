@@ -42,7 +42,10 @@ class Tags extends React.Component {
           <li
             className="tags__list-item"
           >
-            <p className="tags__name">
+            <p
+              className="tags__name"
+              data-test="tags-name"
+            >
               {tag}
             </p>
             {!this.props.preview && (
@@ -74,6 +77,7 @@ class Tags extends React.Component {
             type="text"
             placeholder="Enter tags.."
             onKeyDown={this.addTag}
+            data-test="enter-tag"
           />
         )}
         {this.renderTagsList(this.props.tags)}

@@ -37,6 +37,7 @@ class PageRow extends Component {
     const {
       title,
       heading,
+      description,
       folder,
       editors,
       editorIndex,
@@ -44,7 +45,7 @@ class PageRow extends Component {
       tags
     } = this.props.page;
 
-    this.props.duplicatePage(title, heading, folder, editors, editorIndex, layout, tags);
+    this.props.duplicatePage(title, heading, description, folder, editors, editorIndex, layout, tags);
   }
 
   handleClick = (e) => {
@@ -85,10 +86,18 @@ class PageRow extends Component {
           </React.Fragment>
         )}
         <td className={colClassName}>
-          <button className="pages__icon" onClick={this.deletePage}>
+          <button
+            className="pages__icon"
+            onClick={this.deletePage}
+            data-test="delete-pebl"
+          >
             <DeleteIcon alt="delete page" />
           </button>
-          <button className="pages__icon" onClick={this.duplicatePage}>
+          <button
+            className="pages__icon"
+            onClick={this.duplicatePage}
+            data-test="duplicate-pebl"
+          >
             <DuplicateIcon alt="duplicate page" />
           </button>
         </td>
