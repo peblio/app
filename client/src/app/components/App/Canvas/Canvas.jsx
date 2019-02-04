@@ -308,6 +308,7 @@ class Canvas extends React.Component {
         >
           <Tags
             preview={this.props.preview}
+            container="canvas"
           />
           {!this.props.preview && (
             <button

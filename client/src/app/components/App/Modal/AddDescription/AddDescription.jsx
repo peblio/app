@@ -25,20 +25,22 @@ class AddDescription extends React.Component {
           value={this.props.pageHeading}
           onChange={this.props.setPageHeading}
         />
-        <input
+        <textarea
           type="text"
-          className='description-modal__input'
+          className='description-modal__input description-modal__desc-input'
           placeholder="description.."
           value={this.props.description}
           onChange={this.props.setPageDescription}
+          rows="3"
         />
         <Tags
           preview={false}
+          container="modal"
         />
         <button
           className="description-modal__button"
           onClick={() => {
-            // this.props.savePage();
+            this.props.savePage();
             this.props.closeModal();
           }}
         >

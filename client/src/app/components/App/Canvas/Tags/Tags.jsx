@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -18,9 +19,6 @@ class Tags extends React.Component {
       axios.post('/tags', {
         name: tagName
       })
-        .then((response) => {
-          // console.log(response);
-        })
         .catch((error) => {
           console.log(error);
         });
@@ -32,8 +30,11 @@ class Tags extends React.Component {
   }
 
   renderTagsList(tags) {
+    const tagsListClass = classNames('tags__list', {
+      'tags__list--preview': (this.props.preview === true)
+    });
     return (
-      <ul className="tags__list">
+      <ul className={classNames(tagsListClass)}>
         {tags && tags.map((tag, i) => (
           <li
             className="tags__list-item"
@@ -56,12 +57,17 @@ class Tags extends React.Component {
   }
 
   render() {
-    console.log(this.props.tags);
+    const tagsContainerClass = classNames('tags__container', {
+      'tags__container--canvas': (this.props.container === 'canvas')
+    });
+    const tagsInputClass = classNames('tags__input', {
+      'tags__input--modal': (this.props.container === 'modal')
+    });
     return (
-      <div className="tags__container">
+      <div className={classNames(tagsContainerClass)}>
         {!this.props.preview && (
           <input
-            className="tags__input"
+            className={classNames(tagsInputClass)}
             type="text"
             placeholder="Enter tags.."
             onKeyDown={this.addTag}
@@ -82,7 +88,7 @@ Tags.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    tags: state.page.tags,
+    tags: state.page.tags
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({

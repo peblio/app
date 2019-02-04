@@ -308,9 +308,6 @@ const editorsReducer = (state = initialState, action) => {
       };
       return { ...state, editors };
 
-    case ActionTypes.LOGOUT_USER:
-      return initialState;
-
     default:
       return state;
   }

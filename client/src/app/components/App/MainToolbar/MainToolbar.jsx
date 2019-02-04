@@ -40,9 +40,7 @@ class MainToolbar extends React.Component {
   }
 
   logout = () => {
-    this.props.logoutUser().then(() => {
-      history.push('/');
-    });
+    this.props.logoutUser();
   }
 
   focusOnButton(event) {

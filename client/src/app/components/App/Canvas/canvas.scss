@@ -37,7 +37,10 @@
     justify-content: space-between;
   }
   &__add-desc-button {
+    white-space: nowrap;
+    padding: $small-padding/2;
     margin: 0;
+    margin-left: $small-margin;
     font-family: $roboto;
     font-size: $p-size;
     line-height: $p-line-height;

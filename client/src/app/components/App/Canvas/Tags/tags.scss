@@ -5,10 +5,11 @@ $colors: $tag-yellow, $tag-pink, $tag-blue, $tag-green;
 
 .tags {
   &__container {
-    display: flex;
-    margin-bottom: $large-margin;
     align-items: center;
     overflow-x: scroll;
+    &--canvas {
+      display: flex;
+    }
   }
   &__input {
     margin-right: $large-margin;
@@ -17,6 +18,7 @@ $colors: $tag-yellow, $tag-pink, $tag-blue, $tag-green;
     border: solid $small-border $g5;
     border-radius: $small-border-radius;
     padding: 0 $small-padding;
+    margin-bottom: $large-padding;
     background: $g7;
     color: $g4;
     &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -35,23 +37,31 @@ $colors: $tag-yellow, $tag-pink, $tag-blue, $tag-green;
       font-style: italic;
       color: $g5;
     }
+    &--modal {
+      width: 100%;
+    }
   }
   &__list {
     display: flex;
     padding: 0;
     margin: 0;
     height: fit-content;
+    width: 100%;
+    overflow-x: scroll;
+    padding-bottom: $large-padding;
+    &--preview {
+      flex-wrap: wrap;
+    }
   }
   &__list-item {
     list-style: none;
     display: flex;
     height: fit-content;
     border-radius: $small-border-radius;
-    padding-left: $small-padding;
+    padding: $small-padding/2;
     font-weight: 300;
-    &+.tags__list-item {
-      margin-left: $medium-margin;
-    }
+    margin-right: $medium-margin;
+    margin-bottom: $small-margin;
   }
   &__delete-tag {
     background: transparent;
@@ -64,11 +74,12 @@ $colors: $tag-yellow, $tag-pink, $tag-blue, $tag-green;
     }
   }
   &__name {
-    margin: 0;
     color: $g4;
     font-family: $roboto;
     font-size: $p-size;
     line-height: $p-line-height;
+    white-space: nowrap;
+    margin: 0 $small-margin/2;
   }
 }
 

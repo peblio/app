@@ -16,6 +16,10 @@
   &__input{
     @extend %modal__input;
   }
+  &__desc-input{
+    resize: none;
+    height: auto;
+  }
 
   &__button{
     @extend %modal__button;
