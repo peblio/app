@@ -303,24 +303,26 @@ class Canvas extends React.Component {
           ${this.props.isNavigationOpen ? 'canvas-right' : ''}`
         }
       >
-        <div
-          className="canvas__tag-container"
-        >
-          <Tags
-            preview={this.props.preview}
-            container="canvas"
-          />
-          {!this.props.preview && (
-            <button
-              className="canvas__add-desc-button"
-              onClick={() => {
-                this.props.viewAddDescriptionModal();
-              }}
-            >
-            Add description
-            </button>
-          )}
-        </div>
+        {false && (
+          <div
+            className="canvas__tag-container"
+          >
+            <Tags
+              preview={this.props.preview}
+              container="canvas"
+            />
+            {!this.props.preview && (
+              <button
+                className="canvas__add-desc-button"
+                onClick={() => {
+                  this.props.viewAddDescriptionModal();
+                }}
+              >
+          Add description
+              </button>
+            )}
+          </div>
+        )}
         <Heading />
         <ReactGridLayout
           cols={this.props.rgl.cols}
