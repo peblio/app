@@ -5,6 +5,7 @@ const request = {
   body: {
     heading: 'Some heading',
     title: 'Some title',
+    description: 'Some description',
     editors: 'Some editors',
     editorIndex: ' Some editorIndex',
     layout: 'A perfect layout',
@@ -20,6 +21,7 @@ describe('pageCreator', () => {
 
       expect(actualPage.name).to.be.eql(request.body.name);
       expect(actualPage.title).to.be.eql(request.body.title);
+      expect(actualPage.description).to.be.eql(request.body.description);
       expect(actualPage.editors).to.be.eql(request.body.editors);
       expect(actualPage.editorIndex).to.be.eql(request.body.editorIndex);
       expect(actualPage.layout).to.be.eql(request.body.layout);
