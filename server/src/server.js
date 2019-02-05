@@ -8,7 +8,6 @@ import express from 'express';
 import userRoutes from './controllers/userController';
 import examplesRoutes from './controllers/examplesController';
 import tagRoutes from './controllers/tagController';
-// import { pageRoutes } from './controllers/pageController.js';
 const passport = require('passport');
 const cors = require('cors');
 const app = express();

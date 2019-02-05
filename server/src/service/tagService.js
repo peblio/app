@@ -41,4 +41,5 @@ export function getAllTagsStartingWith(req, res) {
     }
     return res.status(200).send(retrievedTags);
   });
+  
 }
