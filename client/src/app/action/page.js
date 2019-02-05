@@ -46,7 +46,6 @@ export function setPageHeading(event) {
 export function setPageDescription(event) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
-    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_PAGE_DESCRIPTION,
       event
