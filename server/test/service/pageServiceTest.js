@@ -115,19 +115,20 @@ describe('pageService', function () {
             assertSendWasCalledWith(pageData);
         });
 
-        it('shall retrieve pages for tag with limit and offset from query', () => {
+        it('shall retrieve pages for tag with limit, offset and sort from query', () => {
             request = {
                 query: {
                     tag,
                     offset: 7,
-                    limit: 13
+                    limit: 13,
+                    sort: 'heading'
                 }
             };
             paginateSpy = sandbox.stub(Page, 'paginate').yields(null, pageData);
 
             getPagesWithTag(request, response);
 
-            assertPaginateWasCalledWithTagOffsetLimit(request.query.offset, request.query.limit);
+            assertPaginateWasCalledWithTagOffsetLimit(request.query.offset, request.query.limit, request.query.sort);
             assertSendWasCalledWith(pageData);
         });
 
@@ -593,9 +594,9 @@ function assertPaginateWasCalledWithTag() {
     assert.calledWith(paginateSpy, { tags: tag }, { offset: 0, limit: 10, sort: 'title' });
 }
 
-function assertPaginateWasCalledWithTagOffsetLimit(offset, limit) {
+function assertPaginateWasCalledWithTagOffsetLimit(offset, limit, sort) {
     assert.calledOnce(paginateSpy);
-    assert.calledWith(paginateSpy, { tags: tag }, { offset, limit, sort: 'title'});
+    assert.calledWith(paginateSpy, { tags: tag }, { offset, limit, sort});
 }
 
 function assertSendWasCalledWith(msg) {
