@@ -16,6 +16,7 @@ const pageData = {
   heading: 'Some heading',
   title: 'Some title',
   editors: 'Some editors',
+  description: 'Some description',
   editorIndex: ' Some editorIndex',
   layout: 'A perfect layout',
   workspace: 'No workspace',
@@ -526,6 +527,7 @@ function assertUpdatePageWasCalledWithLatestPageData() {
     {
       heading: pageData.heading,
       title: pageData.title,
+      description: pageData.description,
       editors: pageData.editors,
       editorIndex: pageData.editorIndex,
       layout: pageData.layout,
