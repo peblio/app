@@ -6,6 +6,7 @@ import initHelpHero from 'helphero';
 
 import * as pageDefaults from '../../constants/pageConstants';
 
+import AddDescription from './Modal/AddDescription/AddDescription.jsx';
 import ConfirmUser from './Modal/ConfirmUser/ConfirmUser.jsx';
 import ExamplesModal from './Modal/ExamplesModal/ExamplesModal.jsx';
 import ForkPrompt from './Modal/ForkPrompt/ForkPrompt.jsx';
@@ -124,7 +125,9 @@ class App extends React.Component {
             res.data[0].parentId,
             res.data[0].title,
             res.data[0].heading,
-            res.data[0].layout
+            res.data[0].description,
+            res.data[0].layout,
+            res.data[0].tags
           );
           this.props.loadEditors(
             res.data[0].editors,
@@ -172,11 +175,13 @@ class App extends React.Component {
           '',
           title,
           this.props.pageHeading,
+          this.props.description,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout,
           'save',
           this.props.workspace,
+          this.props.tags,
           true
         );
       } else if (this.props.canEdit) {
@@ -184,10 +189,12 @@ class App extends React.Component {
           this.props.id,
           title,
           this.props.pageHeading,
+          this.props.description,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout,
-          this.props.workspace
+          this.props.workspace,
+          this.props.tags
         );
       } else {
         // this is for remix and save
@@ -195,11 +202,13 @@ class App extends React.Component {
           this.props.id,
           `${this.props.pageTitle}-copy`,
           this.props.pageHeading,
+          this.props.description,
           this.props.editors,
           this.props.editorIndex,
           this.props.layout,
           'remix',
           this.props.workspace,
+          this.props.tags,
           true
         );
       }
@@ -304,6 +313,17 @@ class App extends React.Component {
         </Modal>
 
         <Modal
+          size="small"
+          isOpen={this.props.isAddDescriptionModalOpen}
+          closeModal={this.props.closeAddDescriptionModal}
+        >
+          <AddDescription
+            savePage={this.savePage}
+            closeModal={this.props.closeAddDescriptionModal}
+          />
+        </Modal>
+
+        <Modal
           size="auto"
           isOpen={this.props.isWelcomeModalOpen}
           closeModal={this.props.closeWelcomeModal}
@@ -339,10 +359,12 @@ App.propTypes = {
 
   // pebl
   pageTitle: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   rgl: PropTypes.shape({}).isRequired,
   textHeights: PropTypes.shape({}).isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
 
   canEdit: PropTypes.bool.isRequired,
 
@@ -351,6 +373,7 @@ App.propTypes = {
   fetchCurrentUser: PropTypes.func.isRequired,
   isBrowsingPebl: PropTypes.bool.isRequired,
 
+  isAddDescriptionModalOpen: PropTypes.bool.isRequired,
   isPagesModalOpen: PropTypes.bool.isRequired,
   isLoginModalOpen: PropTypes.bool.isRequired,
   isForgotModalOpen: PropTypes.bool.isRequired,
@@ -389,6 +412,7 @@ App.propTypes = {
   closeWelcomeModal: PropTypes.func.isRequired,
   isForkPromptOpen: PropTypes.bool.isRequired,
   closeForkPrompt: PropTypes.func.isRequired,
+  closeAddDescriptionModal: PropTypes.func.isRequired,
 
   // preferences
   fetchUserPreferences: PropTypes.func.isRequired,
@@ -413,12 +437,15 @@ function mapStateToProps(state) {
     pageTitle: state.page.pageTitle,
     id: state.page.id,
     textHeights: state.page.textHeights,
+    tags: state.page.tags,
+    description: state.page.description,
 
     canEdit: state.user.canEdit,
     name: state.user.name,
     isBrowsingPebl: state.user.isBrowsingPebl,
 
     isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
+    isAddDescriptionModalOpen: state.mainToolbar.isAddDescriptionModalOpen,
     isExamplesModalOpen: state.mainToolbar.isExamplesModalOpen,
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isHelpDropdownOpen: state.mainToolbar.isHelpDropdownOpen,

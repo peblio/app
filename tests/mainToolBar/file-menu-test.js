@@ -50,6 +50,17 @@ test('are files displayed in the pages modal', async (t) => {
     .expect(pageTitles.nth(1).textContent).eql('Page Two');
 });
 
+test('duplicate pebl in the file menu', async (t) => {
+  const pageTitles = Selector('[data-test=page-title]');
+  const duplicatePeblButton = Selector('[data-test=duplicate-pebl]');
+
+  await t
+    .click(Selector('[data-test=toggle-file-dropdown]'))
+    .click(Selector('[data-test=file-menu__pages-button]'))
+    .click(duplicatePeblButton.nth(0))
+    .expect(pageTitles.nth(0).textContent).eql('Page One-Copy');
+});
+
 test('checking contents of file menu', async (t) => {
   const pageTitles = Selector('[data-test=page-title]');
 

@@ -43,6 +43,16 @@ export function setPageHeading(event) {
   };
 }
 
+export function setPageDescription(event) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.SET_PAGE_DESCRIPTION,
+      event
+    });
+  };
+}
+
 export function setPageLayout(value) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
@@ -53,7 +63,7 @@ export function setPageLayout(value) {
   };
 }
 
-export function loadPage(id, parentId, title, heading, layout) {
+export function loadPage(id, parentId, title, heading, description, layout, tags) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
@@ -61,20 +71,25 @@ export function loadPage(id, parentId, title, heading, layout) {
       parentId,
       title,
       heading,
-      layout
+      description,
+      layout,
+      tags
     });
   };
 }
 
-export function duplicatePage(title, folder, editors, editorIndex, layout) {
+export function duplicatePage(title, heading, description, folder, editors, editorIndex, layout, tags) {
   return (dispatch) => {
     const id = shortid.generate();
     const data = {
       id,
       title: `${title}-Copy`,
+      heading,
+      description,
       editors,
       editorIndex,
-      layout
+      layout,
+      tags
     };
     if (folder) {
       data.folder = folder;
@@ -103,7 +118,7 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, heading, editors, editorIndex, layout, type, workspace, isLoggedIn) {
+export function submitPage(parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn) {
   const id = shortid.generate();
   const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
   axios.post(axiosURL, {
@@ -111,10 +126,12 @@ export function submitPage(parentId, title, heading, editors, editorIndex, layou
     id,
     title,
     heading,
+    description,
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout,
-    workspace
+    workspace,
+    tags
   }).then(() => {
     if (type === 'fromWP') {
       window.open(`/pebl/${id}`, '_blank');
@@ -145,15 +162,17 @@ export function setPageId(id) {
   };
 }
 
-export function updatePage(id, title, heading, editors, editorIndex, layout, workspace) {
+export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags) {
   axios.post('/pages/update', {
     id,
     title,
     heading,
+    description,
     editors: convertEditorsToRaw(editors),
     editorIndex,
     layout,
-    workspace
+    workspace,
+    tags
   }).then(response => console.log('Page update'))
     .catch(error => console.error('Page update error', error));
 
@@ -218,6 +237,26 @@ export function setParentPageAuthor(value) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_PARENT_PAGE_AUTHOR,
+      value
+    });
+  };
+}
+
+export function addPageTag(value) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.ADD_PAGE_TAG,
+      value
+    });
+  };
+}
+
+export function deletePageTag(value) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.DELETE_PAGE_TAG,
       value
     });
   };

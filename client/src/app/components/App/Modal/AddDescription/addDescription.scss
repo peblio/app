@@ -1,0 +1,32 @@
+@import 'variables';
+@import 'mixins';
+@import 'modal';
+
+.description-modal{
+  &__content{
+    margin: auto;
+    width: 45%;
+    padding-top: 5%;
+  }
+
+  &__title{
+    @extend %modal__title;
+  }
+
+  &__input{
+    @extend %modal__input;
+  }
+  &__desc-input{
+    resize: none;
+    height: auto;
+  }
+
+  &__button{
+    @extend %modal__button;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+
+}

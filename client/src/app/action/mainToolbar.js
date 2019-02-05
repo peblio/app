@@ -24,6 +24,22 @@ export function toggleAccountDropdown() {
   };
 }
 
+export function viewAddDescriptionModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_ADD_DESCRIPTION_MODAL
+    });
+  };
+}
+
+export function closeAddDescriptionModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_ADD_DESCRIPTION_MODAL
+    });
+  };
+}
+
 export function viewPagesModal() {
   return (dispatch) => {
     dispatch({
