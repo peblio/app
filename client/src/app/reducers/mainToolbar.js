@@ -150,6 +150,9 @@ const mainToolbar = (state = initialState, action) => {
         isPreferencesPanelOpen: !state.isPreferencesPanelOpen
       });
 
+    case ActionTypes.LOGOUT_USER:
+      return initialState;
+
     default:
       return state;
   }

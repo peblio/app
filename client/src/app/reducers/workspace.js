@@ -99,6 +99,9 @@ const workspaceReducer = (state = initialState, action) => {
         isShareWorkspaceOpen: false
       });
 
+    case ActionTypes.LOGOUT_USER:
+      return initialState;
+
     default:
       return state;
   }
