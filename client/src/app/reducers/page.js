@@ -190,6 +190,9 @@ const page = (state = initialState, action) => {
       });
     }
 
+    case ActionTypes.LOGOUT_USER:
+      return initialState;
+
     default:
       return state;
   }
