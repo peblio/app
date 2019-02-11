@@ -26,7 +26,9 @@ const initialState = {
   pageHeading: '',
   unsavedChanges: false,
   pageAuthor: '',
-  parentPageAuthor: ''
+  parentPageAuthor: '',
+  tags: [],
+  description: ''
 };
 
 const page = (state = initialState, action) => {
@@ -51,6 +53,11 @@ const page = (state = initialState, action) => {
         pageHeading: action.event.target.value
       });
 
+    case ActionTypes.SET_PAGE_DESCRIPTION:
+      return Object.assign({}, state, {
+        description: action.event.target.value
+      });
+
     case ActionTypes.SET_PAGE_LAYOUT:
       return Object.assign({}, state, {
         layout: action.value
@@ -62,13 +69,14 @@ const page = (state = initialState, action) => {
       });
 
     case ActionTypes.SET_DB_PAGE:
-      console.log(action);
       return Object.assign({}, state, {
         id: action.id,
         parentId: action.parentId,
         pageTitle: action.title,
         pageHeading: action.heading,
-        layout: action.layout
+        layout: action.layout,
+        tags: action.tags,
+        description: action.description
       });
 
     case ActionTypes.DUPLICATE_PAGE: {
@@ -162,6 +170,24 @@ const page = (state = initialState, action) => {
         [action.id]: h
       };
       return Object.assign({}, state, { textHeights });
+    }
+
+    case ActionTypes.ADD_PAGE_TAG: {
+      const tempTags = state.tags;
+      if (!tempTags.includes(action.value)) {
+        tempTags.push(action.value);
+      }
+      return Object.assign({}, state, {
+        tags: tempTags
+      });
+    }
+
+    case ActionTypes.DELETE_PAGE_TAG: {
+      let tempTags = state.tags;
+      tempTags = tempTags.filter(item => item !== action.value);
+      return Object.assign({}, state, {
+        tags: tempTags
+      });
     }
 
     case ActionTypes.LOGOUT_USER:

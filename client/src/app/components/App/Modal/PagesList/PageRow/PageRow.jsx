@@ -36,13 +36,16 @@ class PageRow extends Component {
     e.stopPropagation();
     const {
       title,
+      heading,
+      description,
       folder,
       editors,
       editorIndex,
-      layout
+      layout,
+      tags
     } = this.props.page;
 
-    this.props.duplicatePage(title, folder, editors, editorIndex, layout);
+    this.props.duplicatePage(title, heading, description, folder, editors, editorIndex, layout, tags);
   }
 
   handleClick = (e) => {
@@ -83,10 +86,18 @@ class PageRow extends Component {
           </React.Fragment>
         )}
         <td className={colClassName}>
-          <button className="pages__icon" onClick={this.deletePage}>
+          <button
+            className="pages__icon"
+            onClick={this.deletePage}
+            data-test="delete-pebl"
+          >
             <DeleteIcon alt="delete page" />
           </button>
-          <button className="pages__icon" onClick={this.duplicatePage}>
+          <button
+            className="pages__icon"
+            onClick={this.duplicatePage}
+            data-test="duplicate-pebl"
+          >
             <DuplicateIcon alt="duplicate page" />
           </button>
         </td>
@@ -110,6 +121,9 @@ PageRow.propTypes = {
     folder: PropTypes.shape({}),
     layout: PropTypes.arrayOf(PropTypes.shape({})),
     title: PropTypes.string,
+    heading: PropTypes.string,
+    description: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string)
   }).isRequired,
   viewPage: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired

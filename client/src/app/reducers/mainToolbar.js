@@ -3,6 +3,7 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 const initialState = {
   isAccountDropdownOpen: false,
   isConfirmUserModalOpen: false,
+  isAddDescriptionModalOpen: false,
   isExamplesModalOpen: false,
   isFileDropdownOpen: false,
   isForgotModalOpen: false,
@@ -134,10 +135,23 @@ const mainToolbar = (state = initialState, action) => {
         isWelcomeModalOpen: false
       });
 
+    case ActionTypes.VIEW_ADD_DESCRIPTION_MODAL:
+      return Object.assign({}, state, {
+        isAddDescriptionModalOpen: true
+      });
+
+    case ActionTypes.CLOSE_ADD_DESCRIPTION_MODAL:
+      return Object.assign({}, state, {
+        isAddDescriptionModalOpen: false
+      });
+
     case ActionTypes.TOGGLE_PREFERENCES_PANEL:
       return Object.assign({}, state, {
         isPreferencesPanelOpen: !state.isPreferencesPanelOpen
       });
+
+    case ActionTypes.LOGOUT_USER:
+      return initialState;
 
     default:
       return state;
