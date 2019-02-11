@@ -21,6 +21,10 @@ const preferences = (state = initialState, action) => {
         editorFontSize: action.data.editorFontSize,
         editorAutoSave: action.data.editorAutoSave
       });
+
+    case ActionTypes.LOGOUT_USER:
+      return initialState;
+
     default:
       return state;
   }

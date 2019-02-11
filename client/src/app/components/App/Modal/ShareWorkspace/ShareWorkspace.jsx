@@ -66,6 +66,7 @@ class ShareWorkspace extends React.Component {
       `src-${this.props.id}`,
       this.title.value,
       this.title.value,
+      '',
       {
         'editor-0': tempDesc,
         'editor-1': tempEditor,
@@ -74,6 +75,7 @@ class ShareWorkspace extends React.Component {
       layout,
       'fromWP',
       PageDefaults.DEFAULT_WORKSPACE_MODE,
+      [],
       this.isLoggedIn()
     );
     this.props.closeModal();
