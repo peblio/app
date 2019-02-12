@@ -9,7 +9,9 @@ const initialState = {
   type: '',
   requiresGuardianConsent: false,
   guardianConsentedAt: '',
+  guardianEmail: null,
   isBrowsingPebl: false,
+  studentBirthday: null
 };
 
 const user = (state = initialState, action) => {
@@ -45,6 +47,16 @@ const user = (state = initialState, action) => {
     case ActionTypes.SET_GUARDIAN_CONSENT:
       return Object.assign({}, state, {
         requiresGuardianConsent: action.value
+      });
+
+    case ActionTypes.SET_GUARDIAN_EMAIL:
+      return Object.assign({}, state, {
+        guardianEmail: action.value
+      });
+
+    case ActionTypes.SET_STUDENT_BIRTHDAY:
+      return Object.assign({}, state, {
+        studentBirthday: action.value
       });
 
     case ActionTypes.LOGOUT_USER:

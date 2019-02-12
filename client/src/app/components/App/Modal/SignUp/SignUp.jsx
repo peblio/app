@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import StudentDetails from './StudentDetails/StudentDetails.jsx';
 import axios from '../../../../utils/axios';
 import { closeSignUpModal } from '../../../../action/mainToolbar.js';
 import { setUserName,
@@ -15,12 +16,10 @@ require('./signup.scss');
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       showNotice: false,
       notice: '',
       isUserTypeSelected: false,
-      guardianEmail: null,
       isFormVisible: true
     };
   }
@@ -64,7 +63,7 @@ class SignUp extends React.Component {
     this.props.closeSignUpModal();
   }
 
-  submitSignUpUser = (event, mail, name, userType, password, requiresGuardianConsent, guardianEmail) => {
+  submitSignUpUser = (event, mail, name, userType, password, requiresGuardianConsent, guardianEmail, studentBirthday) => {
     if (this.passwordMatch(this.password.value, this.passwordConfirm.value)) {
       axios.post('/auth/signup', {
         mail,
@@ -72,7 +71,8 @@ class SignUp extends React.Component {
         userType,
         password,
         requiresGuardianConsent,
-        guardianEmail
+        guardianEmail,
+        studentBirthday
       })
         .then(res => this.signUpSuccessful(res.data.msg))
         .catch(this.signUpFailed);
@@ -160,73 +160,12 @@ class SignUp extends React.Component {
                   </div>
 
                   {this.props.userType === 'student' && (
-                    <div>
-                      <ul className="signup-modal__list">
-                        <li className="signup-modal__listitem">
-                          <label
-                            className="signup-modal__label"
-                            htmlFor="above13"
-                          >
-                            <input
-                              required
-                              type="radio"
-                              className="signup-modal__checkbox"
-                              data-test="signup-modal__checkbox-above-13"
-                              name="studentAge"
-                              value="above13"
-                              onClick={(e) => {
-                                if (e.target.checked) {
-                                  this.props.setGuardianConsent(false);
-                                }
-                              }}
-                            />
-                            {'I\'m over 13'}
-                          </label>
-                        </li>
-                        <li className="signup-modal__listitem">
-                          <label
-                            className="signup-modal__label"
-                            htmlFor="above13"
-                          >
-                            <input
-                              type="radio"
-                              className="signup-modal__checkbox"
-                              name="studentAge"
-                              value="above13"
-                              onClick={(e) => {
-                                if (e.target.checked) {
-                                  this.props.setGuardianConsent(true);
-                                }
-                              }}
-                            />
-                            {'I\'m under 13'}
-                          </label>
-                        </li>
-                      </ul>
-                      {this.props.requiresGuardianConsent && (
-                        <div className="signup-modal__div">
-                          {/* eslint-disable */}
-                      <p className="signup__notice">
-                        {'Enter your parent\'s or guardian\'s email address and we will send them an email to confirm this account'}
-                      </p>
-                      {/* eslint-enable */}
-                          <input
-                            required
-                            className="signup-modal__input"
-                            id="signup-modal-guardian-mail"
-                            placeholder="Parent/Guardian email"
-                            ref={(guardianEmail) => { this.guardianEmail = guardianEmail; }}
-                            type="email"
-                            onChange={(e) => {
-                              this.setState({
-                                guardianEmail: e.target.value
-                              });
-                            }}
-                          />
-                        </div>
-                      )}
-                    </div>
-
+                    <StudentDetails
+                      setGuardianConsent={this.props.setGuardianConsent}
+                      requiresGuardianConsent={this.props.requiresGuardianConsent}
+                      guardianEmail={this.props.guardianEmail}
+                      setGuardianEmail={this.props.setGuardianEmail}
+                    />
                   )}
                   <input
                     required
@@ -279,7 +218,7 @@ class SignUp extends React.Component {
             {this.state.isUserTypeSelected && (
               <form
                 onSubmit={(event) => {
-                  const userMail = (this.userMail) ? this.userMail.value : this.state.guardianEmail;
+                  const userMail = (this.userMail) ? this.userMail.value : this.props.guardianEmail;
                   this.submitSignUpUser(
                     event,
                     userMail,
@@ -287,7 +226,8 @@ class SignUp extends React.Component {
                     this.props.userType,
                     this.password.value,
                     this.props.requiresGuardianConsent,
-                    this.state.guardianEmail
+                    this.props.guardianEmail,
+                    this.props.studentBirthday
                   );
                 }}
               >
@@ -297,10 +237,10 @@ class SignUp extends React.Component {
                     onLoginFailure={this.signUpFailed}
                     userType={this.props.userType}
                     requiresGuardianConsent={this.props.requiresGuardianConsent}
-                    guardianEmail={this.state.guardianEmail}
+                    guardianEmail={this.props.guardianEmail}
                   />
                   <p className="signup-modal__text-secondary">or</p>
-                  {this.state.guardianEmail === null && (
+                  {this.props.guardianEmail === null && (
                     <div className="signup-modal__div">
                       <input
                         required
@@ -378,14 +318,17 @@ SignUp.propTypes = {
   setGuardianConsent: PropTypes.func.isRequired,
   setUserName: PropTypes.func.isRequired,
   setUserType: PropTypes.func.isRequired,
-  userType: PropTypes.string.isRequired
+  userType: PropTypes.string.isRequired,
+  // studentBirthday: PropTypes.Date.isRequired
 };
 
 
 function mapStateToProps(state) {
   return {
     requiresGuardianConsent: state.user.requiresGuardianConsent,
-    userType: state.user.type
+    userType: state.user.type,
+    studentBirthday: state.user.studentBirthday,
+    guardianEmail: state.user.guardianEmail
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
