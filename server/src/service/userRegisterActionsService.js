@@ -12,8 +12,10 @@ export function createUser(req, res) {
     const password = req.body.password;
     const requiresGuardianConsent = req.body.requiresGuardianConsent;
     const guardianEmail = req.body.guardianEmail;
+    const studentBirthday = req.body.studentBirthday;
     const guardianConsentedAt = (requiresGuardianConsent === true) ? new Date() : '';
     const isVerified = (type === 'student');
+    console.log(studentBirthday)
     return User.findOne({ name }, (userFindViaNameError, userByName) => {
         if (userFindViaNameError) {
             return res.status(422).send({
@@ -35,7 +37,8 @@ export function createUser(req, res) {
             requiresGuardianConsent,
             guardianEmail,
             guardianConsentedAt,
-            isVerified
+            isVerified,
+            studentBirthday
         });
         user.hashPassword(password);
         return user.save((updateUserError, updatedUser) => {
