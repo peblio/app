@@ -2,6 +2,7 @@ import shortid from 'shortid';
 
 import * as ActionTypes from '../constants/reduxConstants.js';
 import axios from '../utils/axios';
+import { saveLog } from '../utils/log';
 
 export function deletePage(pageId) {
   return (dispatch) => {
@@ -10,6 +11,14 @@ export function deletePage(pageId) {
         type: ActionTypes.DELETE_PAGE,
         pageId
       });
+      const log = {
+        'message': 'Deleting Page',
+        'path': `/pages/${pageId}`,
+        'action': 'Deleting Page',
+        'module': 'ui',
+        'level': 'INFO'
+      };
+      saveLog(log);
     });
   };
 }
