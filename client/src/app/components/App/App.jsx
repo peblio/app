@@ -195,7 +195,8 @@ class App extends React.Component {
           this.props.editorIndex,
           this.props.layout,
           this.props.workspace,
-          this.props.tags
+          this.props.tags,
+          document.getElementById('content-canvas')
         );
       } else {
         // this is for remix and save

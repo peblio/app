@@ -297,6 +297,7 @@ class Canvas extends React.Component {
     });
     return (
       <section
+        id="content-canvas"
         className={
           `canvas
           ${this.props.preview ? 'canvas-preview-mode' : 'canvas-edit-mode'}

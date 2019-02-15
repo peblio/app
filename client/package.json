@@ -23,6 +23,7 @@
     "draft-js": "^0.10.1",
     "helphero": "^0.4.2",
     "history": "^4.7.2",
+    "html2canvas": "^1.0.0-alpha.12",
     "moment": "^2.22.2",
     "node-sass": "^4.5.3",
     "normalizr": "^3.2.4",

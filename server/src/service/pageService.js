@@ -1,6 +1,7 @@
 const Page = require('../models/page.js');
 const User = require('../models/user.js');
 const Folder = require('../models/folder.js');
+const fs = require('fs');
 import { buildPageForUpdateFromRequest } from '../models/creator/pageCreator';
 
 export async function getPage(req, res) {
@@ -70,6 +71,10 @@ export async function deletePage(req, res) {
 }
 
 export async function updatePage(req, res) {
+  var img = req.body.image;
+  var data = img.replace(/^data:image\/\w+;base64,/, "");
+  var buf = Buffer.from(data, 'base64');
+  fs.writeFileSync('image.png', buf);
   const pageWithUpdatedData = buildPageForUpdateFromRequest(req);
   return Page.update({ id: req.body.id }, pageWithUpdatedData, (err, data) => {
     if (err) {
