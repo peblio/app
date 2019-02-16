@@ -50,9 +50,11 @@ let folderCountExecStub;
 let buildPageForUpdateFromRequestStub;
 let paginateSpy;
 
-describe('pageService', () => {
-  describe('getPage', () => {
-    beforeEach(() => {
+describe('pageService', function () {
+
+  describe('getPage', function () {
+
+    beforeEach(function () {
       request = {
         params: {
           pageId
@@ -65,11 +67,11 @@ describe('pageService', () => {
       };
     });
 
-    afterEach(() => {
+    afterEach(function () {
       sandbox.restore();
     });
 
-    it('shall retrieve page by id', () => {
+    it('shall retrieve page by id', function () {
       findSpy = sandbox.stub(Page, 'find').yields(null, pageData);
 
       getPage(request, response);
@@ -78,7 +80,7 @@ describe('pageService', () => {
       assertSendWasCalledWith(pageData);
     });
 
-    it('shall return error when retrieve page by id fails', () => {
+    it('shall return error when retrieve page by id fails', function () {
       response.status = createResponseWithStatusCode(500);
       findSpy = sandbox.stub(Page, 'find').yields(error, null);
 
@@ -87,6 +89,7 @@ describe('pageService', () => {
       assertFindWasCalledWithPageId();
       assertSendWasCalledWith(error);
     });
+
   });
 
   describe('getPagesWithTag', () => {
@@ -521,22 +524,22 @@ describe('movePage', () => {
     assertFolderCountWasCalledWithFolderId();
   });
 
-  it('shall remove page from folder', async () => {
-    request.body.folderId = null;
-    findOnePageExecStub = sandbox.stub().returns(pageData);
-    findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
-    folderCountExecStub = sandbox.stub().returns(1);
-    folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
-    savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
-    pageData.save = savePageSpy;
+    it('shall remove page from folder', async () => {
+      request.body.folderId = null;
+      findOnePageExecStub = sandbox.stub().returns(pageData);
+      findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+      folderCountExecStub = sandbox.stub().returns(1);
+      folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
+      savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
+      pageData.save = savePageSpy;
 
-    await movePage(request, response);
+      await movePage(request, response);
 
-    assert.calledOnce(savePageSpy);
-    assertSendWasCalledWith({ page: pageData });
-    assert.notCalled(folderCountStub);
-    assertFindOnePageWasCalledWithId();
-  });
+      assert.calledOnce(savePageSpy);
+      assertSendWasCalledWith({ page: pageData });
+      assert.notCalled(folderCountStub);
+      assertFindOnePageWasCalledWithId();
+    });
 
 });
 
@@ -589,6 +592,11 @@ function assertPaginateWasCalledWithTag() {
 
 function assertPaginateWasCalledWithTagOffsetLimit(offset, limit, sort) {
   assert.calledOnce(paginateSpy);
+  assert.calledWith(paginateSpy, { tags: tag }, { offset, limit, sort });
+}
+
+function assertFindWasCalledWithTag() {
+  assert.calledOnce(findSpy);
   assert.calledWith(paginateSpy, { tags: tag }, { offset, limit, sort });
 }
 

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import axios from '../../../../utils/axios';
+import { saveLog } from '../../../../utils/log';
 import { closeSignUpModal } from '../../../../action/mainToolbar.js';
 import { setUserName,
   setUserType,
@@ -62,6 +63,15 @@ class SignUp extends React.Component {
   googleLoginSuccessful = (response) => {
     this.props.setUserName(response.data.user.name);
     this.props.closeSignUpModal();
+    const log = {
+      'message': 'User Logged In using Google',
+      'path': '/auth/login',
+      'action': 'LoginUserWithGoogle',
+      'module': 'ui',
+      'level': 'INFO',
+      'user': response.data.user.name
+    };
+    saveLog(log);
   }
 
   submitSignUpUser = (event, mail, name, userType, password, requiresGuardianConsent, guardianEmail) => {
@@ -75,6 +85,17 @@ class SignUp extends React.Component {
         guardianEmail
       })
         .then(res => this.signUpSuccessful(res.data.msg))
+        .then(() => {
+          const log = {
+            'message': 'User Signed up',
+            'path': '/auth/signup',
+            'action': 'Signup User',
+            'module': 'ui',
+            'level': 'INFO',
+            'user': name
+          };
+          saveLog(log);
+        })
         .catch(this.signUpFailed);
     } else {
       this.passwordMatchFailed();
