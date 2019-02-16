@@ -147,381 +147,382 @@ describe('pageService', function () {
       assertSendWasCalledWith(error);
     });
   });
+});
 
-  describe('savePageAsGuest', () => {
-    beforeEach(() => {
-      request = {
-        query: {
-          tag
-        }
-      };
-      response = {
-        send: spy(),
-        json: spy(),
-        status: createResponseWithStatusCode(200)
-      };
-    });
-
-    afterEach(() => {
-      sandbox.restore();
-    });
-
-    it('shall return error if peblioguest user not found', async () => {
-      response.status = createResponseWithStatusCode(500);
-      findOneExecStub = sandbox.stub().throws({ message: 'peblioguest user not found' });
-      findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: findOneExecStub });
-      savePageSpy = sandbox.stub(Page.prototype, 'save').throws({ message: 'Could not save Page as guest' });
-
-      await savePageAsGuest(request, response);
-
-      assertFindOneUserWasCalledWithName();
-      assert.calledOnce(findOneExecStub);
-      assert.notCalled(savePageSpy);
-      assertSendWasCalledWith({ error: 'peblioguest user not found' });
-    });
-
-    it('shall return error when saving page errors page by id', async () => {
-      response.status = createResponseWithStatusCode(500);
-      findOneExecStub = sandbox.stub().returns(guestUser);
-      findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: findOneExecStub });
-      savePageSpy = sandbox.stub(Page.prototype, 'save').throws({ message: 'Could not save Page as guest' });
-
-      await savePageAsGuest(request, response);
-
-      assertFindOneUserWasCalledWithName();
-      assert.calledOnce(findOneExecStub);
-      assert.calledOnce(savePageSpy);
-      assertSendWasCalledWith({ error: 'Could not save Page as guest' });
-    });
-
-    it('shall save page as guest', async () => {
-      findOneExecStub = sandbox.stub().returns(guestUser);
-      findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: findOneExecStub });
-      savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
-
-      await savePageAsGuest(request, response);
-
-      assertFindOneUserWasCalledWithName();
-      assert.calledOnce(findOneExecStub);
-      assert.calledOnce(savePageSpy);
-      assertSendWasCalledWith({ page: pageData });
-    });
+describe('savePageAsGuest', () => {
+  beforeEach(() => {
+    request = {
+      query: {
+        tag
+      }
+    };
+    response = {
+      send: spy(),
+      json: spy(),
+      status: createResponseWithStatusCode(200)
+    };
   });
 
-  describe('savePage', () => {
-    beforeEach(() => {
-      request = {
-        user: loggedInUser,
-        body: {
-          id: newPageId
-        }
-      };
-      response = {
-        send: spy(),
-        json: spy(),
-        status: createResponseWithStatusCode(200)
-      };
-    });
-
-    afterEach(() => {
-      sandbox.restore();
-    });
-
-    it('shall return unauthorized if user not present in request', async () => {
-      response.status = createResponseWithStatusCode(403);
-      savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
-
-      await savePage({}, response);
-
-      assert.notCalled(savePageSpy);
-      assertSendWasCalledWith({ error: 'Please log in first' });
-    });
-
-    it('shall return error if user not found', async () => {
-      response.status = createResponseWithStatusCode(500);
-      findOneExecStub = sandbox.stub().throws({ message: 'Could not find user' });
-      findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: findOneExecStub });
-      savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
-
-      await savePage(request, response);
-
-      assert.calledOnce(findOneExecStub);
-      assertFindOneUserWasCalledWithId();
-      assert.notCalled(savePageSpy);
-      assertSendWasCalledWith({ error: 'Could not find user' });
-    });
-
-    it('shall return error if updating while adding pageId to user fails', async () => {
-      response.status = createResponseWithStatusCode(500);
-      findOneExecStub = sandbox.stub().returns(loggedInUser);
-      findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: findOneExecStub });
-      updateUserExecStub = sandbox.stub().throws({ message: 'Could not update user with pageId' });
-      updateUserSpy = sandbox.stub(User, 'update').returns({ exec: updateUserExecStub });
-      savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
-
-      await savePage(request, response);
-
-      assert.calledOnce(findOneExecStub);
-      assertFindOneUserWasCalledWithId();
-      assert.calledOnce(updateUserExecStub);
-      assertUpdateUserWasCalledWithPageId();
-      assert.notCalled(savePageSpy);
-      assertSendWasCalledWith({ error: 'Could not update user with pageId' });
-    });
-
-    it('shall return error if saving page fails', async () => {
-      response.status = createResponseWithStatusCode(500);
-      findOneExecStub = sandbox.stub().returns(loggedInUser);
-      findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: findOneExecStub });
-      updateUserExecStub = sandbox.stub();
-      updateUserSpy = sandbox.stub(User, 'update').returns({ exec: updateUserExecStub });
-      savePageSpy = sandbox.stub(Page.prototype, 'save').throws({ message: 'Error saving page' });
-
-      await savePage(request, response);
-
-      assert.calledOnce(findOneExecStub);
-      assertFindOneUserWasCalledWithId();
-      assert.calledOnce(updateUserExecStub);
-      assertUpdateUserWasCalledWithPageId();
-      assert.calledOnce(savePageSpy);
-      assertSendWasCalledWith({ error: 'Error saving page' });
-    });
-
-    it('shall save page for logged in user', async () => {
-      findOneExecStub = sandbox.stub().returns(loggedInUser);
-      findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: findOneExecStub });
-      updateUserExecStub = sandbox.stub();
-      updateUserSpy = sandbox.stub(User, 'update').returns({ exec: updateUserExecStub });
-      savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
-
-      await savePage(request, response);
-
-      assert.calledOnce(findOneExecStub);
-      assertFindOneUserWasCalledWithId();
-      assert.calledOnce(updateUserExecStub);
-      assertUpdateUserWasCalledWithPageId();
-      assert.calledOnce(savePageSpy);
-      assertSendWasCalledWith({ page: pageData });
-    });
+  afterEach(() => {
+    sandbox.restore();
   });
 
-  describe('deletePage', () => {
-    beforeEach(() => {
-      request = {
-        params: {
-          pageId: newPageId
-        }
-      };
-      response = {
-        send: spy(),
-        json: spy(),
-        status: createResponseWithStatusCode(200),
-        sendStatus: createResponseWithStatusCode(200)
-      };
-    });
+  it('shall return error if peblioguest user not found', async () => {
+    response.status = createResponseWithStatusCode(500);
+    findOneExecStub = sandbox.stub().throws({ message: 'peblioguest user not found' });
+    findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: findOneExecStub });
+    savePageSpy = sandbox.stub(Page.prototype, 'save').throws({ message: 'Could not save Page as guest' });
 
-    afterEach(() => {
-      sandbox.restore();
-    });
+    await savePageAsGuest(request, response);
 
-    it('shall return error is deleting page fails', async () => {
-      response.status = createResponseWithStatusCode(500);
-      deleteOnePageSpy = sandbox.stub(Page, 'deleteOne').throws({ message: 'Could not delete page' });
-
-      await deletePage(request, response);
-
-      assertDeleteOnePageWasCalledWithPageId();
-      assertSendWasCalledWith({ error: 'Could not delete page' });
-    });
-
-    it('shall return success after page is deleted', async () => {
-      response.sendStatus = createResponseWithStatusCode(204);
-      deleteOnePageSpy = sandbox.stub(Page, 'deleteOne');
-
-      await deletePage(request, response);
-
-      assertDeleteOnePageWasCalledWithPageId();
-      assert.notCalled(response.send);
-    });
+    assertFindOneUserWasCalledWithName();
+    assert.calledOnce(findOneExecStub);
+    assert.notCalled(savePageSpy);
+    assertSendWasCalledWith({ error: 'peblioguest user not found' });
   });
 
-  describe('updatePage', () => {
-    beforeEach(() => {
-      request = {
-        body: { ...pageData }
-      };
-      response = {
-        send: spy(),
-        json: spy(),
-        status: createResponseWithStatusCode(200),
-      };
-    });
+  it('shall return error when saving page errors page by id', async () => {
+    response.status = createResponseWithStatusCode(500);
+    findOneExecStub = sandbox.stub().returns(guestUser);
+    findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: findOneExecStub });
+    savePageSpy = sandbox.stub(Page.prototype, 'save').throws({ message: 'Could not save Page as guest' });
 
-    afterEach(() => {
-      sandbox.restore();
-    });
+    await savePageAsGuest(request, response);
 
-    it('shall return error if updating page fails', async () => {
-      response.status = createResponseWithStatusCode(500);
-      buildPageForUpdateFromRequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromRequest').returns(pageData);
-      updatePageSpy = sandbox.stub(Page, 'update').yields({ message: 'Could not update page' }, null);
-
-      await updatePage(request, response);
-
-      assertUpdatePageWasCalledWithLatestPageData();
-      assert.calledOnce(buildPageForUpdateFromRequestStub);
-      assertSendWasCalledWith({ message: 'Could not update page' });
-    });
-
-    it('shall return success after updating page', async () => {
-      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageData);
-      buildPageForUpdateFromRequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromRequest').returns(pageData);
-
-      await updatePage(request, response);
-
-      assertUpdatePageWasCalledWithLatestPageData();
-      assert.calledOnce(buildPageForUpdateFromRequestStub);
-      assertSendWasCalledWith({ data: 'Record has been Inserted..!!' });
-    });
+    assertFindOneUserWasCalledWithName();
+    assert.calledOnce(findOneExecStub);
+    assert.calledOnce(savePageSpy);
+    assertSendWasCalledWith({ error: 'Could not save Page as guest' });
   });
 
-  describe('movePage', () => {
-    beforeEach(() => {
-      request = {
-        user: loggedInUser,
-        body: {
-          folderId
-        },
-        params: {
-          pageId
-        }
-      };
-      response = {
-        send: spy(),
-        json: spy(),
-        status: createResponseWithStatusCode(200),
-        sendStatus: createResponseWithStatusCode(200)
-      };
-    });
+  it('shall save page as guest', async () => {
+    findOneExecStub = sandbox.stub().returns(guestUser);
+    findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: findOneExecStub });
+    savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
 
-    afterEach(() => {
-      sandbox.restore();
-    });
+    await savePageAsGuest(request, response);
 
-    it('shall return error if request not authenticated', async () => {
-      response.status = createResponseWithStatusCode(403);
-      savePageSpy = sandbox.stub(Page.prototype, 'save');
+    assertFindOneUserWasCalledWithName();
+    assert.calledOnce(findOneExecStub);
+    assert.calledOnce(savePageSpy);
+    assertSendWasCalledWith({ page: pageData });
+  });
+});
 
-      await movePage({}, response);
+describe('savePage', () => {
+  beforeEach(() => {
+    request = {
+      user: loggedInUser,
+      body: {
+        id: newPageId
+      }
+    };
+    response = {
+      send: spy(),
+      json: spy(),
+      status: createResponseWithStatusCode(200)
+    };
+  });
 
-      assert.notCalled(savePageSpy);
-      assertSendWasCalledWith({ error: 'Please log in first' });
-    });
+  afterEach(() => {
+    sandbox.restore();
+  });
 
-    it('shall return 400 if no body', async () => {
-      response.sendStatus = createResponseWithStatusCode(400);
-      savePageSpy = sandbox.stub(Page.prototype, 'save');
+  it('shall return unauthorized if user not present in request', async () => {
+    response.status = createResponseWithStatusCode(403);
+    savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
 
-      await movePage({ user: loggedInUser }, response);
+    await savePage({}, response);
 
-      assert.notCalled(savePageSpy);
-      assert.notCalled(response.send);
-    });
+    assert.notCalled(savePageSpy);
+    assertSendWasCalledWith({ error: 'Please log in first' });
+  });
 
-    it('shall return error if page not found', async () => {
-      response.status = createResponseWithStatusCode(500);
-      findOnePageExecStub = sandbox.stub().throws({ message: 'Could not find page' });
-      findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
-      savePageSpy = sandbox.stub(Page.prototype, 'save');
+  it('shall return error if user not found', async () => {
+    response.status = createResponseWithStatusCode(500);
+    findOneExecStub = sandbox.stub().throws({ message: 'Could not find user' });
+    findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: findOneExecStub });
+    savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
 
-      await movePage(request, response);
+    await savePage(request, response);
 
-      assert.notCalled(savePageSpy);
-      assertSendWasCalledWith({ error: 'Could not find page' });
-      assertFindOnePageWasCalledWithId();
-    });
+    assert.calledOnce(findOneExecStub);
+    assertFindOneUserWasCalledWithId();
+    assert.notCalled(savePageSpy);
+    assertSendWasCalledWith({ error: 'Could not find user' });
+  });
 
-    it('shall return 404 if page not found', async () => {
-      response.status = createResponseWithStatusCode(404);
-      findOnePageExecStub = sandbox.stub().returns(null);
-      findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
-      savePageSpy = sandbox.stub(Page.prototype, 'save');
+  it('shall return error if updating while adding pageId to user fails', async () => {
+    response.status = createResponseWithStatusCode(500);
+    findOneExecStub = sandbox.stub().returns(loggedInUser);
+    findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: findOneExecStub });
+    updateUserExecStub = sandbox.stub().throws({ message: 'Could not update user with pageId' });
+    updateUserSpy = sandbox.stub(User, 'update').returns({ exec: updateUserExecStub });
+    savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
 
-      await movePage(request, response);
+    await savePage(request, response);
 
-      assert.notCalled(savePageSpy);
-      assertSendWasCalledWith({ error: `Page with id ${pageId} not found` });
-      assertFindOnePageWasCalledWithId();
-    });
+    assert.calledOnce(findOneExecStub);
+    assertFindOneUserWasCalledWithId();
+    assert.calledOnce(updateUserExecStub);
+    assertUpdateUserWasCalledWithPageId();
+    assert.notCalled(savePageSpy);
+    assertSendWasCalledWith({ error: 'Could not update user with pageId' });
+  });
 
-    it('shall return error if retrieve folder gives error', async () => {
-      response.status = createResponseWithStatusCode(500);
-      findOnePageExecStub = sandbox.stub().returns(pageData);
-      findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
-      folderCountExecStub = sandbox.stub().throws({ message: 'Folder not found' });
-      folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
-      savePageSpy = sandbox.stub(Page.prototype, 'save');
+  it('shall return error if saving page fails', async () => {
+    response.status = createResponseWithStatusCode(500);
+    findOneExecStub = sandbox.stub().returns(loggedInUser);
+    findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: findOneExecStub });
+    updateUserExecStub = sandbox.stub();
+    updateUserSpy = sandbox.stub(User, 'update').returns({ exec: updateUserExecStub });
+    savePageSpy = sandbox.stub(Page.prototype, 'save').throws({ message: 'Error saving page' });
 
-      await movePage(request, response);
+    await savePage(request, response);
 
-      assert.notCalled(savePageSpy);
-      assertSendWasCalledWith({ error: 'Folder not found' });
-      assertFindOnePageWasCalledWithId();
-      assert.calledOnce(folderCountExecStub);
-      assertFolderCountWasCalledWithFolderId();
-    });
+    assert.calledOnce(findOneExecStub);
+    assertFindOneUserWasCalledWithId();
+    assert.calledOnce(updateUserExecStub);
+    assertUpdateUserWasCalledWithPageId();
+    assert.calledOnce(savePageSpy);
+    assertSendWasCalledWith({ error: 'Error saving page' });
+  });
 
-    it('shall return 404 if folder not found', async () => {
-      response.status = createResponseWithStatusCode(404);
-      findOnePageExecStub = sandbox.stub().returns(pageData);
-      findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
-      folderCountExecStub = sandbox.stub().returns(null);
-      folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
-      savePageSpy = sandbox.stub(Page.prototype, 'save');
+  it('shall save page for logged in user', async () => {
+    findOneExecStub = sandbox.stub().returns(loggedInUser);
+    findOneUserSpy = sandbox.stub(User, 'findOne').returns({ exec: findOneExecStub });
+    updateUserExecStub = sandbox.stub();
+    updateUserSpy = sandbox.stub(User, 'update').returns({ exec: updateUserExecStub });
+    savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
 
-      await movePage(request, response);
+    await savePage(request, response);
 
-      assert.notCalled(savePageSpy);
-      assertSendWasCalledWith({ error: 'Folder with id somefolderId not found' });
-      assertFindOnePageWasCalledWithId();
-      assert.calledOnce(folderCountExecStub);
-      assertFolderCountWasCalledWithFolderId();
-    });
+    assert.calledOnce(findOneExecStub);
+    assertFindOneUserWasCalledWithId();
+    assert.calledOnce(updateUserExecStub);
+    assertUpdateUserWasCalledWithPageId();
+    assert.calledOnce(savePageSpy);
+    assertSendWasCalledWith({ page: pageData });
+  });
+});
 
-    it('shall return error if saving page fails', async () => {
-      response.status = createResponseWithStatusCode(500);
-      findOnePageExecStub = sandbox.stub().returns(pageData);
-      findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
-      folderCountExecStub = sandbox.stub().returns(1);
-      folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
-      savePageSpy = sandbox.stub(Page.prototype, 'save').throws({ message: 'Save page failed' });
-      pageData.save = savePageSpy;
+describe('deletePage', () => {
+  beforeEach(() => {
+    request = {
+      params: {
+        pageId: newPageId
+      }
+    };
+    response = {
+      send: spy(),
+      json: spy(),
+      status: createResponseWithStatusCode(200),
+      sendStatus: createResponseWithStatusCode(200)
+    };
+  });
 
-      await movePage(request, response);
+  afterEach(() => {
+    sandbox.restore();
+  });
 
-      assert.calledOnce(savePageSpy);
-      assertSendWasCalledWith({ error: 'Save page failed' });
-      assertFindOnePageWasCalledWithId();
-      assert.calledOnce(folderCountExecStub);
-      assertFolderCountWasCalledWithFolderId();
-    });
+  it('shall return error is deleting page fails', async () => {
+    response.status = createResponseWithStatusCode(500);
+    deleteOnePageSpy = sandbox.stub(Page, 'deleteOne').throws({ message: 'Could not delete page' });
 
-    it('shall move page to new folder', async () => {
-      findOnePageExecStub = sandbox.stub().returns(pageData);
-      findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
-      folderCountExecStub = sandbox.stub().returns(1);
-      folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
-      savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
-      pageData.save = savePageSpy;
+    await deletePage(request, response);
 
-      await movePage(request, response);
+    assertDeleteOnePageWasCalledWithPageId();
+    assertSendWasCalledWith({ error: 'Could not delete page' });
+  });
 
-      assert.calledOnce(savePageSpy);
-      assertSendWasCalledWith({ page: pageData });
-      assertFindOnePageWasCalledWithId();
-      assert.calledOnce(folderCountExecStub);
-      assertFolderCountWasCalledWithFolderId();
-    });
+  it('shall return success after page is deleted', async () => {
+    response.sendStatus = createResponseWithStatusCode(204);
+    deleteOnePageSpy = sandbox.stub(Page, 'deleteOne');
+
+    await deletePage(request, response);
+
+    assertDeleteOnePageWasCalledWithPageId();
+    assert.notCalled(response.send);
+  });
+});
+
+describe('updatePage', () => {
+  beforeEach(() => {
+    request = {
+      body: { ...pageData }
+    };
+    response = {
+      send: spy(),
+      json: spy(),
+      status: createResponseWithStatusCode(200),
+    };
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
+  it('shall return error if updating page fails', async () => {
+    response.status = createResponseWithStatusCode(500);
+    buildPageForUpdateFromRequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromRequest').returns(pageData);
+    updatePageSpy = sandbox.stub(Page, 'update').yields({ message: 'Could not update page' }, null);
+
+    await updatePage(request, response);
+
+    assertUpdatePageWasCalledWithLatestPageData();
+    assert.calledOnce(buildPageForUpdateFromRequestStub);
+    assertSendWasCalledWith({ message: 'Could not update page' });
+  });
+
+  it('shall return success after updating page', async () => {
+    updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageData);
+    buildPageForUpdateFromRequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromRequest').returns(pageData);
+
+    await updatePage(request, response);
+
+    assertUpdatePageWasCalledWithLatestPageData();
+    assert.calledOnce(buildPageForUpdateFromRequestStub);
+    assertSendWasCalledWith({ data: 'Record has been Inserted..!!' });
+  });
+});
+
+describe('movePage', () => {
+  beforeEach(() => {
+    request = {
+      user: loggedInUser,
+      body: {
+        folderId
+      },
+      params: {
+        pageId
+      }
+    };
+    response = {
+      send: spy(),
+      json: spy(),
+      status: createResponseWithStatusCode(200),
+      sendStatus: createResponseWithStatusCode(200)
+    };
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
+  it('shall return error if request not authenticated', async () => {
+    response.status = createResponseWithStatusCode(403);
+    savePageSpy = sandbox.stub(Page.prototype, 'save');
+
+    await movePage({}, response);
+
+    assert.notCalled(savePageSpy);
+    assertSendWasCalledWith({ error: 'Please log in first' });
+  });
+
+  it('shall return 400 if no body', async () => {
+    response.sendStatus = createResponseWithStatusCode(400);
+    savePageSpy = sandbox.stub(Page.prototype, 'save');
+
+    await movePage({ user: loggedInUser }, response);
+
+    assert.notCalled(savePageSpy);
+    assert.notCalled(response.send);
+  });
+
+  it('shall return error if page not found', async () => {
+    response.status = createResponseWithStatusCode(500);
+    findOnePageExecStub = sandbox.stub().throws({ message: 'Could not find page' });
+    findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+    savePageSpy = sandbox.stub(Page.prototype, 'save');
+
+    await movePage(request, response);
+
+    assert.notCalled(savePageSpy);
+    assertSendWasCalledWith({ error: 'Could not find page' });
+    assertFindOnePageWasCalledWithId();
+  });
+
+  it('shall return 404 if page not found', async () => {
+    response.status = createResponseWithStatusCode(404);
+    findOnePageExecStub = sandbox.stub().returns(null);
+    findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+    savePageSpy = sandbox.stub(Page.prototype, 'save');
+
+    await movePage(request, response);
+
+    assert.notCalled(savePageSpy);
+    assertSendWasCalledWith({ error: `Page with id ${pageId} not found` });
+    assertFindOnePageWasCalledWithId();
+  });
+
+  it('shall return error if retrieve folder gives error', async () => {
+    response.status = createResponseWithStatusCode(500);
+    findOnePageExecStub = sandbox.stub().returns(pageData);
+    findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+    folderCountExecStub = sandbox.stub().throws({ message: 'Folder not found' });
+    folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
+    savePageSpy = sandbox.stub(Page.prototype, 'save');
+
+    await movePage(request, response);
+
+    assert.notCalled(savePageSpy);
+    assertSendWasCalledWith({ error: 'Folder not found' });
+    assertFindOnePageWasCalledWithId();
+    assert.calledOnce(folderCountExecStub);
+    assertFolderCountWasCalledWithFolderId();
+  });
+
+  it('shall return 404 if folder not found', async () => {
+    response.status = createResponseWithStatusCode(404);
+    findOnePageExecStub = sandbox.stub().returns(pageData);
+    findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+    folderCountExecStub = sandbox.stub().returns(null);
+    folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
+    savePageSpy = sandbox.stub(Page.prototype, 'save');
+
+    await movePage(request, response);
+
+    assert.notCalled(savePageSpy);
+    assertSendWasCalledWith({ error: 'Folder with id somefolderId not found' });
+    assertFindOnePageWasCalledWithId();
+    assert.calledOnce(folderCountExecStub);
+    assertFolderCountWasCalledWithFolderId();
+  });
+
+  it('shall return error if saving page fails', async () => {
+    response.status = createResponseWithStatusCode(500);
+    findOnePageExecStub = sandbox.stub().returns(pageData);
+    findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+    folderCountExecStub = sandbox.stub().returns(1);
+    folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
+    savePageSpy = sandbox.stub(Page.prototype, 'save').throws({ message: 'Save page failed' });
+    pageData.save = savePageSpy;
+
+    await movePage(request, response);
+
+    assert.calledOnce(savePageSpy);
+    assertSendWasCalledWith({ error: 'Save page failed' });
+    assertFindOnePageWasCalledWithId();
+    assert.calledOnce(folderCountExecStub);
+    assertFolderCountWasCalledWithFolderId();
+  });
+
+  it('shall move page to new folder', async () => {
+    findOnePageExecStub = sandbox.stub().returns(pageData);
+    findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+    folderCountExecStub = sandbox.stub().returns(1);
+    folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
+    savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
+    pageData.save = savePageSpy;
+
+    await movePage(request, response);
+
+    assert.calledOnce(savePageSpy);
+    assertSendWasCalledWith({ page: pageData });
+    assertFindOnePageWasCalledWithId();
+    assert.calledOnce(folderCountExecStub);
+    assertFolderCountWasCalledWithFolderId();
+  });
 
     it('shall remove page from folder', async () => {
       request.body.folderId = null;
@@ -539,8 +540,6 @@ describe('pageService', function () {
       assert.notCalled(folderCountStub);
       assertFindOnePageWasCalledWithId();
     });
-
-  });
 
 });
 
