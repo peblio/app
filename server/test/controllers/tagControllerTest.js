@@ -12,14 +12,24 @@ let saveTagServiceStub;
 let getAllTagsServiceStub;
 let getAllTagsStartingWithServiceStub;
 
-describe('tagController', () => {
-  describe('saveTag', () => {
-    beforeEach(() => {
+describe('tagController', function () {
+
+  describe('saveTag', function () {
+
+    beforeEach(function () {
       saveTagServiceStub = sandbox.stub(saveTagService, 'saveTag').returns({ name });
     });
 
-    afterEach(() => {
+    afterEach(function () {
       sandbox.restore();
+    });
+
+    it('shall call saveTag from service', function () {
+
+      const returnValue = saveTag(request, response);
+
+      expect(returnValue).to.be.eql({ name });
+      assertSaveTagFromServiceWasCalledWithRequestResponse();
     });
 
     it('shall call saveTag from service', () => {
@@ -31,6 +41,7 @@ describe('tagController', () => {
   });
 
   describe('getAllTags', () => {
+
     beforeEach(() => {
       getAllTagsServiceStub = sandbox.stub(saveTagService, 'getAllTags').returns({ name });
     });
@@ -45,9 +56,11 @@ describe('tagController', () => {
       expect(returnValue).to.be.eql({ name });
       assertGetAllTagsFromServiceWasCalledWithRequestResponse();
     });
+
   });
 
   describe('getAllTagsStartingWith', () => {
+
     beforeEach(() => {
       getAllTagsStartingWithServiceStub = sandbox.stub(saveTagService, 'getAllTagsStartingWith').returns({ name });
     });
@@ -62,7 +75,9 @@ describe('tagController', () => {
       expect(returnValue).to.be.eql({ name });
       assertGetAllTagsStartingWithFromServiceWasCalledWithRequestResponse();
     });
+
   });
+
 });
 
 function assertSaveTagFromServiceWasCalledWithRequestResponse() {

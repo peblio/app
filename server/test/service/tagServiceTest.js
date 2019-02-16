@@ -5,10 +5,9 @@ import Tag from '../../src/models/tag.js';
 import * as tagCreator from '../../src/models/creator/tagCreator.js';
 
 const sandbox = require('sinon').sandbox.create();
-
-const name = 'Java';
-const tagRetrieveError = 'error retrieving tag';
-const tagSaveError = 'error saving tag';
+const name = "Java";
+const tagRetrieveError = "error retrieving tag";
+const tagSaveError = "error saving tag";
 
 let findSpy;
 let findOneSpy;
