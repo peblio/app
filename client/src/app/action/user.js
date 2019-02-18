@@ -1,6 +1,7 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 
 import axios from '../utils/axios';
+import { saveLog } from '../utils/log';
 
 export function setUserBrowsingPebl() {
   return (dispatch) => {
@@ -55,12 +56,21 @@ export function setUserType(value) {
   };
 }
 
-export function logoutUser() {
+export function logoutUser(name) {
   return dispatch => axios.get('/logout')
     .then(() => {
       dispatch({
         type: ActionTypes.LOGOUT_USER,
       });
+      const log = {
+        'message': 'User Logged Out',
+        'path': '/logout',
+        'action': 'LogoutUser',
+        'module': 'ui',
+        'level': 'INFO',
+        'user': name
+      };
+      saveLog(log);
     });
 }
 

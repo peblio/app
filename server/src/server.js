@@ -15,6 +15,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const currentUserRoutes = require('./controllers/currentUserController');
 const pageRoutes = require('./routes/pageRoutes.js');
+const logRoutes = require('./routes/logRoutes.js');
 const authRoutes = require('./controllers/authController.js');
 const folderRoutes = require('./controllers/folderController');
 const apiRoutes = require('./controllers/apiController.js');
@@ -54,6 +55,7 @@ router.use('/current_user', currentUserRoutes);
 router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
 router.use('/pages', pageRoutes);
+router.use('/logs', logRoutes);
 router.use('/folders', folderRoutes);
 router.use('/examples', examplesRoutes);
 router.use('/tags', tagRoutes);
@@ -75,7 +77,7 @@ function startServer() {
   });
 }
 
-mongoose.connect(process.env.MONGO_DB_PEBLIO, { useMongoClient: true });
+mongoose.connect(process.env.MONGO_DB_PEBLIO);
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);

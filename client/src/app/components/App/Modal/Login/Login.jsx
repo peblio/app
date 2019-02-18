@@ -5,11 +5,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import axios from '../../../../utils/axios';
-import { setUserName,
-  setUserType } from '../../../../action/user.js';
-import { closeLoginModal,
-  viewForgotModal } from '../../../../action/mainToolbar.js';
+import { setUserName, setUserType } from '../../../../action/user.js';
+import { closeLoginModal, viewForgotModal } from '../../../../action/mainToolbar.js';
 import GoogleLoginButton from '../../Shared/GoogleLoginButton/GoogleLoginButton.jsx';
+import { saveLog } from '../../../../utils/log';
 
 require('./login.scss');
 
@@ -47,6 +46,17 @@ class Login extends React.Component {
       password
     })
       .then(this.loginSuccessful)
+      .then(() => {
+        const log = {
+          'message': 'User Logged In',
+          'path': '/auth/login',
+          'action': 'LoginUser',
+          'module': 'ui',
+          'level': 'INFO',
+          'user': name
+        };
+        saveLog(log);
+      })
       .catch(this.loginFailed);
     event.preventDefault();
   }

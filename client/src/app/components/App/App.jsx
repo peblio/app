@@ -95,6 +95,7 @@ class App extends React.Component {
       this.props.setPageId(projectID[1]);
       return projectID[1];
     }
+    this.props.setPageId('');
     return null;
   }
 

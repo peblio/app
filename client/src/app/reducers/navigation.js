@@ -24,6 +24,9 @@ const navigation = (state = initialState, action) => {
         yNavigation: action.value
       });
 
+    case ActionTypes.LOGOUT_USER:
+      return initialState;
+
     default:
       return state;
   }

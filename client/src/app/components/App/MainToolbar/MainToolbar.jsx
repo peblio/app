@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import history from '../../../utils/history';
 import FileMenu from './FileMenu/FileMenu.jsx';
 import HelpMenu from './HelpMenu/HelpMenu.jsx';
 import Preferences from '../Preferences/Preferences.jsx';
@@ -39,7 +40,9 @@ class MainToolbar extends React.Component {
   }
 
   logout = () => {
-    this.props.logoutUser();
+    this.props.logoutUser(this.props.name).then(() => {
+      history.push('/');
+    });
   }
 
   focusOnButton(event) {
