@@ -128,7 +128,8 @@ class App extends React.Component {
             res.data[0].heading,
             res.data[0].description,
             res.data[0].layout,
-            res.data[0].tags
+            res.data[0].tags,
+            res.data[0].isPublished
           );
           this.props.loadEditors(
             res.data[0].editors,
@@ -183,7 +184,8 @@ class App extends React.Component {
           'save',
           this.props.workspace,
           this.props.tags,
-          true
+          true,
+          !(this.props.userType === 'student') || this.props.isPeblPublished
         );
       } else if (this.props.canEdit) {
         this.props.updatePage(
@@ -195,7 +197,8 @@ class App extends React.Component {
           this.props.editorIndex,
           this.props.layout,
           this.props.workspace,
-          this.props.tags
+          this.props.tags,
+          !(this.props.userType === 'student') || this.props.isPeblPublished
         );
       } else {
         // this is for remix and save
@@ -210,7 +213,8 @@ class App extends React.Component {
           'remix',
           this.props.workspace,
           this.props.tags,
-          true
+          true,
+          !(this.props.userType === 'student')
         );
       }
     } else {
@@ -440,9 +444,11 @@ function mapStateToProps(state) {
     textHeights: state.page.textHeights,
     tags: state.page.tags,
     description: state.page.description,
+    isPeblPublished: state.page.isPublished,
 
     canEdit: state.user.canEdit,
     name: state.user.name,
+    userType: state.user.type,
     isBrowsingPebl: state.user.isBrowsingPebl,
 
     isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,

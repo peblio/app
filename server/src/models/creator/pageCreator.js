@@ -7,6 +7,7 @@ export function buildPageForUpdateFromRequest(request) {
         editorIndex: request.body.editorIndex,
         layout: request.body.layout,
         workspace: request.body.workspace,
-        tags: request.body.tags
+        tags: request.body.tags,
+        isPublished: request.body.isPublished
       };
   }

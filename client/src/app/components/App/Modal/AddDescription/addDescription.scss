@@ -15,10 +15,15 @@
 
   &__input{
     @extend %modal__input;
+    &::placeholder {
+      font-size: $normal-size;
+      line-height: $normal-size*1.5;
+      font-style: italic;
+    }
   }
   &__desc-input{
     resize: none;
-    height: auto;
+    height: $normal-size*10;
   }
 
   &__button{

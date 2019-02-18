@@ -202,6 +202,15 @@ class Canvas extends React.Component {
     );
   }
 
+  renderDescriptionButton() {
+    if (this.props.userType === 'student' && this.props.isPeblPublished) {
+      return 'Edit Description';
+    } if (this.props.userType === 'student') {
+      return 'Publish';
+    }
+    return 'Add Description';
+  }
+
   render() {
     const ids = Object.keys(this.props.editors);
     // need to create copy of the layout because ReactGridLayout tests
@@ -295,6 +304,8 @@ class Canvas extends React.Component {
         }
       }
     });
+
+
     return (
       <section
         className={
@@ -318,7 +329,7 @@ class Canvas extends React.Component {
                   this.props.viewAddDescriptionModal();
                 }}
               >
-          Add description
+                {this.renderDescriptionButton()}
               </button>
             )}
           </div>
@@ -410,11 +421,13 @@ function mapStateToProps(state) {
     currentWidget: state.editorsReducer.currentWidget,
     editorIndex: state.editorsReducer.editorIndex,
     editors: state.editorsReducer.editors,
-    layout: state.page.layout,
     isNavigationOpen: state.navigation.isNavigationOpen,
+    isPeblPublished: state.page.isPublished,
+    layout: state.page.layout,
     preview: state.page.preview,
     rgl: state.page.rgl,
-    textHeights: state.page.textHeights
+    textHeights: state.page.textHeights,
+    userType: state.user.type
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({

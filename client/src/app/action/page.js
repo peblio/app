@@ -63,7 +63,7 @@ export function setPageLayout(value) {
   };
 }
 
-export function loadPage(id, parentId, title, heading, description, layout, tags) {
+export function loadPage(id, parentId, title, heading, description, layout, tags, isPublished) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
@@ -73,7 +73,8 @@ export function loadPage(id, parentId, title, heading, description, layout, tags
       heading,
       description,
       layout,
-      tags
+      tags,
+      isPublished
     });
   };
 }
@@ -118,7 +119,7 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn) {
+export function submitPage(parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished) {
   const id = shortid.generate();
   const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
   axios.post(axiosURL, {
@@ -131,7 +132,8 @@ export function submitPage(parentId, title, heading, description, editors, edito
     editorIndex,
     layout,
     workspace,
-    tags
+    tags,
+    isPublished
   }).then(() => {
     if (type === 'fromWP') {
       window.open(`/pebl/${id}`, '_blank');
@@ -153,16 +155,7 @@ export function submitPage(parentId, title, heading, description, editors, edito
   };
 }
 
-export function setPageId(id) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_PAGE_ID,
-      id
-    });
-  };
-}
-
-export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags) {
+export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, isPublished) {
   axios.post('/pages/update', {
     id,
     title,
@@ -172,7 +165,8 @@ export function updatePage(id, title, heading, description, editors, editorIndex
     editorIndex,
     layout,
     workspace,
-    tags
+    tags,
+    isPublished
   }).then(response => console.log('Page update'))
     .catch(error => console.error('Page update error', error));
 
@@ -181,6 +175,15 @@ export function updatePage(id, title, heading, description, editors, editorIndex
     // this action currently doesn't do anything because there is no corresponding handler in a reducer
     dispatch({
       type: ActionTypes.UPDATE_PAGE,
+      id
+    });
+  };
+}
+
+export function setPageId(id) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_PAGE_ID,
       id
     });
   };
@@ -258,6 +261,14 @@ export function deletePageTag(value) {
     dispatch({
       type: ActionTypes.DELETE_PAGE_TAG,
       value
+    });
+  };
+}
+
+export function publishPage() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.PUBLISH_PAGE
     });
   };
 }

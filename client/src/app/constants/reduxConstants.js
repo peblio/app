@@ -73,6 +73,7 @@ export const SET_ALL_PAGES = 'SET_ALL_PAGES';
 export const DELETE_PAGE = 'DELETE_PAGE';
 export const SET_UNSAVED_CHANGES = 'SET_UNSAVED_CHANGES';
 export const AUTO_SAVE_UNSAVED_CHANGES = 'AUTO_SAVE_UNSAVED_CHANGES';
+export const PUBLISH_PAGE = 'PUBLISH_PAGE';
 
 export const SET_DB_PAGE = 'SET_DB_PAGE';
 export const SET_PAGE_ID = 'SET_PAGE_ID';

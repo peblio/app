@@ -76,7 +76,8 @@ class ShareWorkspace extends React.Component {
       'fromWP',
       PageDefaults.DEFAULT_WORKSPACE_MODE,
       [],
-      this.isLoggedIn()
+      this.isLoggedIn(),
+      !(this.props.userType === 'student')
     );
     this.props.closeModal();
   }

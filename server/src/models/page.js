@@ -15,6 +15,7 @@ const pageSchema = new Schema({
   layout: { type: Array, default: [] },
   folder: { type: Schema.Types.ObjectId, ref: 'Folder' },
   workspace: { type: Object, default: {} },
+  isPublished: { type: Boolean, default: false },
   tags: [String]
   }, {
     minimize: false,
