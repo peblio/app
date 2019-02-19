@@ -2,17 +2,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { setStudentBirthday, setGuardianEmail } from '../../../../../action/user.js';
 
-import 'react-datepicker/dist/react-datepicker.css';
 
 class StudentDetails extends React.Component {
-  handleChange=(date) => {
+  constructor(props) {
+    super(props);
+    this.state = {
+      month: 0,
+      year: 1992
+    };
+  }
+
+  handleMonthChange = (month) => {
+    this.setState({ month });
+    const startDate = moment([this.state.year, month]);
+    this.handleChange(startDate);
+  }
+
+  handleYearChange = (year) => {
+    this.setState({ year });
+    const startDate = moment([year, this.state.month]);
+    this.handleChange(startDate);
+  }
+
+  handleChange=(startDate) => {
+    const endDate = moment(startDate).endOf('month');
+    const date = endDate.toDate();
     this.props.setStudentBirthday(date);
     const today = moment();
-    console.log(date);
     const birthday = moment(date);
     const age = today.diff(birthday, 'years');
     if (age < 13) {
@@ -22,26 +41,54 @@ class StudentDetails extends React.Component {
     }
   }
 
+  renderMonthDropdown() {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return (
+      <select
+        className="signup-modal__dropdown"
+        onChange={(e) => { this.handleMonthChange(e.target.value); }}
+        ref={(birthdayMonth) => { this.birthdayMonth = birthdayMonth; }}
+      >
+        {months.map((month, i) => (
+          <option value={i}>{month}</option>
+        ))}
+      </select>
+    );
+  }
+
+
+  renderYearDropdown() {
+    const currentYear = moment().year();
+    return (
+      <select
+        className="signup-modal__dropdown"
+        onChange={(e) => { this.handleYearChange(e.target.value); }}
+        ref={(birthdayYear) => { this.birthdayYear = birthdayYear; }}
+      >
+        {
+          Array.from({ length: 100 }, (v, k) => (<option value={currentYear - k}>{currentYear - k}</option>))
+        }
+      </select>
+    );
+  }
+
   render() {
     return (
       <div>
-        <DatePicker
-          placeholderText="Select your birthday"
-          selected={this.props.studentBirthday}
-          onChange={this.handleChange}
-          name="startDate"
-          dateFormat="MM/DD/YYYY"
-          showYearDropdown
-          scrollableYearDropdown
-          yearDropdownItemNumber={15}
-        />
+        <div className="signup-modal__birthday">
+          <p className="signup-modal__input-text">
+          Birthday
+          </p>
+          {this.renderMonthDropdown()}
+          {this.renderYearDropdown()}
+        </div>
         {this.props.requiresGuardianConsent && (
           <div className="signup-modal__div">
             {/* eslint-disable */}
-                      <p className="signup__notice">
-                        {'Enter your parent\'s or guardian\'s email address and we will send them an email to confirm this account'}
-                      </p>
-                      {/* eslint-enable */}
+              <p className="signup__notice">
+                {'Enter your parent\'s or guardian\'s email address and we will send them an email to confirm this account'}
+              </p>
+            {/* eslint-enable */}
             <input
               required
               className="signup-modal__input"
@@ -63,11 +110,13 @@ class StudentDetails extends React.Component {
 StudentDetails.propTypes = {
   requiresGuardianConsent: PropTypes.bool.isRequired,
   setGuardianConsent: PropTypes.func.isRequired,
+  setStudentBirthday: PropTypes.func.isRequired,
+  setGuardianEmail: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    // requiresGuardianConsent: state.user.requiresGuardianConsent,
+    requiresGuardianConsent: state.user.requiresGuardianConsent,
     studentBirthday: state.user.studentBirthday
   };
 }

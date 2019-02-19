@@ -63,17 +63,26 @@ class SignUp extends React.Component {
     this.props.setUserName(response.data.user.name);
     this.props.closeSignUpModal();
     const log = {
-      'message': 'User Logged In using Google',
-      'path': '/auth/login',
-      'action': 'LoginUserWithGoogle',
-      'module': 'ui',
-      'level': 'INFO',
-      'user': response.data.user.name
+      message: 'User Logged In using Google',
+      path: '/auth/login',
+      action: 'LoginUserWithGoogle',
+      module: 'ui',
+      level: 'INFO',
+      user: response.data.user.name
     };
     saveLog(log);
   }
 
-  submitSignUpUser = (event, mail, name, userType, password, requiresGuardianConsent, guardianEmail, studentBirthday) => {
+  submitSignUpUser = (
+    event,
+    mail,
+    name,
+    userType,
+    password,
+    requiresGuardianConsent,
+    guardianEmail,
+    studentBirthday
+  ) => {
     if (this.passwordMatch(this.password.value, this.passwordConfirm.value)) {
       axios.post('/auth/signup', {
         mail,
@@ -87,12 +96,12 @@ class SignUp extends React.Component {
         .then(res => this.signUpSuccessful(res.data.msg))
         .then(() => {
           const log = {
-            'message': 'User Signed up',
-            'path': '/auth/signup',
-            'action': 'Signup User',
-            'module': 'ui',
-            'level': 'INFO',
-            'user': name
+            message: 'User Signed up',
+            path: '/auth/signup',
+            action: 'Signup User',
+            module: 'ui',
+            level: 'INFO',
+            user: name
           };
           saveLog(log);
         })
@@ -185,7 +194,6 @@ class SignUp extends React.Component {
                       setGuardianConsent={this.props.setGuardianConsent}
                       requiresGuardianConsent={this.props.requiresGuardianConsent}
                       guardianEmail={this.props.guardianEmail}
-                      setGuardianEmail={this.props.setGuardianEmail}
                     />
                   )}
                   <input
@@ -335,12 +343,13 @@ class SignUp extends React.Component {
 SignUp.propTypes = {
   authLoadedPage: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
+  guardianEmail: PropTypes.string.isRequired,
   requiresGuardianConsent: PropTypes.bool.isRequired,
   setGuardianConsent: PropTypes.func.isRequired,
   setUserName: PropTypes.func.isRequired,
   setUserType: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired,
-  // studentBirthday: PropTypes.Date.isRequired
+  // studentBirthday: PropTypes.Object.isRequired,
 };
 
 
