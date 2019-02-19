@@ -400,6 +400,7 @@ Canvas.propTypes = {
   editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   isNavigationOpen: PropTypes.bool.isRequired,
+  isPeblPublished: PropTypes.bool.isRequired,
   preview: PropTypes.bool.isRequired,
   resizeTextEditor: PropTypes.func.isRequired,
   rgl: PropTypes.shape({
@@ -411,8 +412,9 @@ Canvas.propTypes = {
   }).isRequired,
   setCurrentWidget: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
-  updateTextHeight: PropTypes.func.isRequired,
   textHeights: PropTypes.shape({}).isRequired,
+  updateTextHeight: PropTypes.func.isRequired,
+  userType: PropTypes.string.isRequired,
   viewAddDescriptionModal: PropTypes.func.isRequired
 };
 

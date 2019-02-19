@@ -370,6 +370,7 @@ App.propTypes = {
   rgl: PropTypes.shape({}).isRequired,
   textHeights: PropTypes.shape({}).isRequired,
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isPeblPublished: PropTypes.bool.isRequired,
 
   canEdit: PropTypes.bool.isRequired,
 
@@ -377,6 +378,7 @@ App.propTypes = {
   name: PropTypes.string.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
   isBrowsingPebl: PropTypes.bool.isRequired,
+  userType: PropTypes.string.isRequired,
 
   isAddDescriptionModalOpen: PropTypes.bool.isRequired,
   isPagesModalOpen: PropTypes.bool.isRequired,

@@ -64,12 +64,12 @@ class SignUp extends React.Component {
     this.props.setUserName(response.data.user.name);
     this.props.closeSignUpModal();
     const log = {
-      'message': 'User Logged In using Google',
-      'path': '/auth/login',
-      'action': 'LoginUserWithGoogle',
-      'module': 'ui',
-      'level': 'INFO',
-      'user': response.data.user.name
+      message: 'User Logged In using Google',
+      path: '/auth/login',
+      action: 'LoginUserWithGoogle',
+      module: 'ui',
+      level: 'INFO',
+      user: response.data.user.name
     };
     saveLog(log);
   }
@@ -87,12 +87,12 @@ class SignUp extends React.Component {
         .then(res => this.signUpSuccessful(res.data.msg))
         .then(() => {
           const log = {
-            'message': 'User Signed up',
-            'path': '/auth/signup',
-            'action': 'Signup User',
-            'module': 'ui',
-            'level': 'INFO',
-            'user': name
+            message: 'User Signed up',
+            path: '/auth/signup',
+            action: 'Signup User',
+            module: 'ui',
+            level: 'INFO',
+            user: name
           };
           saveLog(log);
         })

@@ -12,7 +12,7 @@ import {
 
 require('./addDescription.scss');
 
-const descriptionPlaceholder = 'Add a description here. This description will be added to our home page, where your work can be discovered by the Peblio community';
+const descriptionPlaceholder = 'Add a description here. This description will be added to our home page, where your work can be discovered by the Peblio community'; /* eslint-disable-line */
 
 
 class AddDescription extends React.Component {
@@ -68,9 +68,11 @@ AddDescription.propTypes = {
   description: PropTypes.string.isRequired,
   isPeblPublished: PropTypes.bool.isRequired,
   pageHeading: PropTypes.string.isRequired,
+  publishPage: PropTypes.func.isRequired,
   savePage: PropTypes.func.isRequired,
   setPageHeading: PropTypes.func.isRequired,
   setPageDescription: PropTypes.func.isRequired,
+  userType: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {

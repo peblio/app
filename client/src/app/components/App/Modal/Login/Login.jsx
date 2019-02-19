@@ -48,12 +48,12 @@ class Login extends React.Component {
       .then(this.loginSuccessful)
       .then(() => {
         const log = {
-          'message': 'User Logged In',
-          'path': '/auth/login',
-          'action': 'LoginUser',
-          'module': 'ui',
-          'level': 'INFO',
-          'user': name
+          message: 'User Logged In',
+          path: '/auth/login',
+          action: 'LoginUser',
+          module: 'ui',
+          level: 'INFO',
+          user: name
         };
         saveLog(log);
       })

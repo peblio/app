@@ -175,6 +175,7 @@ ShareWorkspace.propTypes = {
     rowHeight: PropTypes.number,
   }).isRequired,
   submitPage: PropTypes.func.isRequired,
+  userType: PropTypes.string.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   workspace: PropTypes.shape({}).isRequired,
 };
@@ -184,7 +185,8 @@ function mapStateToProps(state) {
   return {
     name: state.user.name,
     rgl: state.page.rgl,
-    id: state.page.id
+    id: state.page.id,
+    userType: state.user.type
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
