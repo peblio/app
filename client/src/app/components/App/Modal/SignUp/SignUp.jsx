@@ -349,7 +349,7 @@ SignUp.propTypes = {
   setUserName: PropTypes.func.isRequired,
   setUserType: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired,
-  // studentBirthday: PropTypes.Object.isRequired,
+  studentBirthday: PropTypes.string.isRequired,
 };
 
 
