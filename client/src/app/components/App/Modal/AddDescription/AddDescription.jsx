@@ -48,8 +48,6 @@ class AddDescription extends React.Component {
           preview={false}
           container="modal"
         />
-        {this.props.isPeblPublished && 'true'}
-        {this.props.isPeblPublished || 'false'}
         <button
           className="description-modal__button"
           onClick={() => {

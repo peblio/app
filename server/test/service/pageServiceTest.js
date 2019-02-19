@@ -20,7 +20,7 @@ const pageData = {
   editorIndex: ' Some editorIndex',
   layout: 'A perfect layout',
   workspace: 'No workspace',
-  tags: []
+  tags: ['tag1', 'tag2']
 };
 const folderId = 'somefolderId';
 const pageId = 'pageId';
@@ -50,11 +50,9 @@ let folderCountExecStub;
 let buildPageForUpdateFromRequestStub;
 let paginateSpy;
 
-describe('pageService', function () {
-
-  describe('getPage', function () {
-
-    beforeEach(function () {
+describe('pageService', () => {
+  describe('getPage', () => {
+    beforeEach(() => {
       request = {
         params: {
           pageId
@@ -67,11 +65,11 @@ describe('pageService', function () {
       };
     });
 
-    afterEach(function () {
+    afterEach(() => {
       sandbox.restore();
     });
 
-    it('shall retrieve page by id', function () {
+    it('shall retrieve page by id', () => {
       findSpy = sandbox.stub(Page, 'find').yields(null, pageData);
 
       getPage(request, response);
@@ -80,7 +78,7 @@ describe('pageService', function () {
       assertSendWasCalledWith(pageData);
     });
 
-    it('shall return error when retrieve page by id fails', function () {
+    it('shall return error when retrieve page by id fails', () => {
       response.status = createResponseWithStatusCode(500);
       findSpy = sandbox.stub(Page, 'find').yields(error, null);
 
@@ -89,12 +87,10 @@ describe('pageService', function () {
       assertFindWasCalledWithPageId();
       assertSendWasCalledWith(error);
     });
-
   });
 
   describe('getPagesWithTag', () => {
-
-    beforeEach(function () {
+    beforeEach(() => {
       request = {
         query: {
           tag
@@ -107,7 +103,7 @@ describe('pageService', function () {
       };
     });
 
-    afterEach(function () {
+    afterEach(() => {
       sandbox.restore();
     });
 
@@ -137,7 +133,7 @@ describe('pageService', function () {
       assertSendWasCalledWith(pageData);
     });
 
-    it('shall return error when retrieve page by id fails', function () {
+    it('shall return error when retrieve page by id fails', () => {
       response.status = createResponseWithStatusCode(500);
       paginateSpy = sandbox.stub(Page, 'paginate').yields(error, null);
 
@@ -524,23 +520,22 @@ describe('movePage', () => {
     assertFolderCountWasCalledWithFolderId();
   });
 
-    it('shall remove page from folder', async () => {
-      request.body.folderId = null;
-      findOnePageExecStub = sandbox.stub().returns(pageData);
-      findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
-      folderCountExecStub = sandbox.stub().returns(1);
-      folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
-      savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
-      pageData.save = savePageSpy;
+  it('shall remove page from folder', async () => {
+    request.body.folderId = null;
+    findOnePageExecStub = sandbox.stub().returns(pageData);
+    findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+    folderCountExecStub = sandbox.stub().returns(1);
+    folderCountStub = sandbox.stub(Folder, 'count').returns({ exec: folderCountExecStub });
+    savePageSpy = sandbox.stub(Page.prototype, 'save').returns(pageData);
+    pageData.save = savePageSpy;
 
-      await movePage(request, response);
+    await movePage(request, response);
 
-      assert.calledOnce(savePageSpy);
-      assertSendWasCalledWith({ page: pageData });
-      assert.notCalled(folderCountStub);
-      assertFindOnePageWasCalledWithId();
-    });
-
+    assert.calledOnce(savePageSpy);
+    assertSendWasCalledWith({ page: pageData });
+    assert.notCalled(folderCountStub);
+    assertFindOnePageWasCalledWithId();
+  });
 });
 
 function assertUpdatePageWasCalledWithLatestPageData() {
