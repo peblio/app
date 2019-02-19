@@ -48,6 +48,7 @@ class StudentDetails extends React.Component {
         className="signup-modal__dropdown"
         onChange={(e) => { this.handleMonthChange(e.target.value); }}
         ref={(birthdayMonth) => { this.birthdayMonth = birthdayMonth; }}
+        data-test="signup-modal__month-dropdown"
       >
         {months.map((month, i) => (
           <option value={i}>{month}</option>
@@ -64,6 +65,7 @@ class StudentDetails extends React.Component {
         className="signup-modal__dropdown"
         onChange={(e) => { this.handleYearChange(e.target.value); }}
         ref={(birthdayYear) => { this.birthdayYear = birthdayYear; }}
+        data-test="signup-modal__year-dropdown"
       >
         {
           Array.from({ length: 100 }, (v, k) => (<option value={currentYear - k}>{currentYear - k}</option>))

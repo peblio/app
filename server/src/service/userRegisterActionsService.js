@@ -15,7 +15,6 @@ export function createUser(req, res) {
     const studentBirthday = req.body.studentBirthday;
     const guardianConsentedAt = (requiresGuardianConsent === true) ? new Date() : '';
     const isVerified = (type === 'student');
-    console.log(studentBirthday)
     return User.findOne({ name }, (userFindViaNameError, userByName) => {
         if (userFindViaNameError) {
             return res.status(422).send({
