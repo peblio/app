@@ -42,12 +42,15 @@ class Tags extends React.Component {
           <li
             className="tags__list-item"
           >
-            <p
+            <a
               className="tags__name"
               data-test="tags-name"
+              href={`https://peblio.co/studio/${tag}`}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               {tag}
-            </p>
+            </a>
             {!this.props.preview && (
               <button
                 className="tags__delete-tag"
