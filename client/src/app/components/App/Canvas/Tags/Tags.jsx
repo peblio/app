@@ -14,7 +14,7 @@ require('./tags.scss');
 
 class Tags extends React.Component {
   addTag=(e) => {
-    const tagName = e.target.value.toLowerCase();
+    const tagName = e.target.value.toLowerCase().trim();
     if (e.keyCode === 13) {
       axios.post('/tags', {
         name: tagName
