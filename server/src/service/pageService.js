@@ -71,15 +71,18 @@ export async function deletePage(req, res) {
 }
 
 export async function updatePage(req, res) {
-  var img = req.body.image;
-  var data = img.replace(/^data:image\/\w+;base64,/, "");
-  var buf = Buffer.from(data, 'base64');
-  fs.writeFileSync('image.png', buf);
+  
   const pageWithUpdatedData = buildPageForUpdateFromRequest(req);
   return Page.update({ id: req.body.id }, pageWithUpdatedData, (err, data) => {
     if (err) {
       return res.status(500).send(err);
     } else {
+      if(req.body.image){
+        var img = req.body.image;
+        var data = img.replace(/^data:image\/\w+;base64,/, "");
+        var buf = Buffer.from(data, 'base64');
+        fs.writeFileSync('image.png', buf);
+      }
       return res.status(200).send({ data: 'Record has been Inserted..!!' });
     }
   });
