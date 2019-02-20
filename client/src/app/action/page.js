@@ -164,7 +164,9 @@ export function setPageId(id) {
 
 export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, canvasElement) {
   html2canvas(canvasElement)
-  .then((canvas) => {
+  .then(canvas => {
+    saveAs(canvas.toDataURL(), 'file-name.png');
+  }).then(() => {
     axios.post('/pages/update', {
       id,
       title,
@@ -176,8 +178,6 @@ export function updatePage(id, title, heading, description, editors, editorIndex
       workspace,
       tags,
       image: canvas.toDataURL()
-    }).then(response => {
-      saveAs(canvas.toDataURL(), 'file-name.png')
     }).catch(error => console.error('Page update error', error));
     return (dispatch) => {
       dispatch(setUnsavedChanges(false));
@@ -188,7 +188,6 @@ export function updatePage(id, title, heading, description, editors, editorIndex
       });
     };
   });
-  
 }
 
 function saveAs(uri, filename) {
