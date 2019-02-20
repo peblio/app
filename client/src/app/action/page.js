@@ -165,8 +165,6 @@ export function setPageId(id) {
 export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, canvasElement) {
   html2canvas(canvasElement)
   .then(canvas => {
-    saveAs(canvas.toDataURL(), 'file-name.png');
-  }).then(() => {
     axios.post('/pages/update', {
       id,
       title,

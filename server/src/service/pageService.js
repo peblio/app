@@ -1,7 +1,12 @@
 const Page = require('../models/page.js');
+const AWS = require('aws-sdk');
 const User = require('../models/user.js');
 const Folder = require('../models/folder.js');
-const fs = require('fs');
+const s3 = new AWS.S3();
+const credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
+AWS.config.credentials = credentials;
+console.log("Credentials: ", credentials);
+const bucket = process.env.S3_BUCKET;
 import { buildPageForUpdateFromRequest } from '../models/creator/pageCreator';
 
 export async function getPage(req, res) {
@@ -71,20 +76,54 @@ export async function deletePage(req, res) {
 }
 
 export async function updatePage(req, res) {
-  
   const pageWithUpdatedData = buildPageForUpdateFromRequest(req);
   return Page.update({ id: req.body.id }, pageWithUpdatedData, (err, data) => {
     if (err) {
       return res.status(500).send(err);
     } else {
-      if(req.body.image){
-        var img = req.body.image;
-        var data = img.replace(/^data:image\/\w+;base64,/, "");
-        var buf = Buffer.from(data, 'base64');
-        fs.writeFileSync('image.png', buf);
-      }
-      return res.status(200).send({ data: 'Record has been Inserted..!!' });
+      res.status(200).send({ data: 'Record has been Inserted..!!' });
+      const fileName = `Snapshots/${req.body.id}.png`;
+      const buffer = Buffer.from(req.body.image.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+      const params = {
+        Bucket: bucket,
+        Key: fileName,
+        Body: buffer,
+        ContentType: 'img/png',
+        ContentEncoding: 'base64',
+        ACL: 'public-read'
+      };
+      var deleteParams = {
+        Bucket: bucket,
+        Key: fileName
+       };
+       s3.deleteObject(deleteParams, function(err, data) {
+          s3.putObject(params, (err, response) => {
+            return response
+          });
+      });
     }
+  });
+}
+
+export function uploadPageSnapshotToS3(body, callback) {
+  const img = body.image;
+  const data = img.replace(/^data:image\/\w+;base64,/, "");
+  //const buf = Buffer.from(data, 'base64');
+  //fs.writeFileSync('image.png', buf);
+  const fileName = `Snapshots/${body.id}.png`;
+  const params = {
+    Bucket: bucket,
+    Key: fileName,
+    Body: data,
+    // ContentType: req.query.filetype,
+    ACL: 'public-read'
+  };
+  s3.getSignedUrl('putObject', params, (err, data) => {
+    if (err) {
+      console.log(err);
+      return null
+    }
+    callback(fileName);
   });
 }
 
@@ -125,3 +164,5 @@ export async function movePage(req, res) {
     return res.status(500).send({ error: err.message });
   }
 }
+
+
