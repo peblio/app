@@ -203,7 +203,7 @@ class Canvas extends React.Component {
   }
 
   renderDescriptionButton() {
-    if (this.props.userType === 'student' && this.props.isPeblPublished) {
+    if (this.props.description && this.props.isPeblPublished) {
       return 'Edit Description';
     } if (this.props.userType === 'student') {
       return 'Publish';
@@ -421,6 +421,7 @@ Canvas.propTypes = {
 function mapStateToProps(state) {
   return {
     currentWidget: state.editorsReducer.currentWidget,
+    description: state.page.description,
     editorIndex: state.editorsReducer.editorIndex,
     editors: state.editorsReducer.editors,
     isNavigationOpen: state.navigation.isNavigationOpen,

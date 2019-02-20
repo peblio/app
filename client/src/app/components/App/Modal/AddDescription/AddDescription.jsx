@@ -51,9 +51,8 @@ class AddDescription extends React.Component {
         <button
           className="description-modal__button"
           onClick={() => {
-            this.props.savePage();
-            this.props.closeModal();
             this.props.publishPage();
+            this.props.closeModal();
           }}
         >
           {this.renderDescriptionButton()}
