@@ -174,7 +174,7 @@ export function updatePage(id, title, heading, description, editors, editorIndex
     workspace,
     tags
   }).then(() => {
-    html2canvas(canvasElement).then(canvas => {
+    html2canvas(canvasElement, { useCORS: true }).then(canvas => {
       axios.patch('/pages', {
         id,
         image: canvas.toDataURL()
