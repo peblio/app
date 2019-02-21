@@ -77,7 +77,7 @@ function startServer() {
   });
 }
 
-mongoose.connect(process.env.MONGO_DB_PEBLIO, { useMongoClient: true });
+mongoose.connect(process.env.MONGO_DB_PEBLIO);
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);

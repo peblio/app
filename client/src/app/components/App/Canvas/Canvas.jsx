@@ -304,7 +304,7 @@ class Canvas extends React.Component {
           ${this.props.isNavigationOpen ? 'canvas-right' : ''}`
         }
       >
-        {false && (
+        {
           <div
             className="canvas__tag-container"
           >
@@ -323,7 +323,7 @@ class Canvas extends React.Component {
               </button>
             )}
           </div>
-        )}
+        }
         <Heading />
         <ReactGridLayout
           cols={this.props.rgl.cols}

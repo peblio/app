@@ -623,22 +623,17 @@ function assertPaginateWasCalledWithTagOffsetLimit(offset, limit, sort) {
   assert.calledWith(paginateSpy, { tags: tag }, { offset, limit, sort });
 }
 
-function assertFindWasCalledWithTag() {
-  assert.calledOnce(findSpy);
-  assert.calledWith(paginateSpy, { tags: tag }, { offset, limit, sort });
-}
-
 function assertSendWasCalledWith(msg) {
   assert.calledOnce(response.send);
   assert.calledWith(response.send, sinon.match(msg));
 }
 
-function assertFindOneUserWasCalledWithName() {
-  assert.calledOnce(findOneUserSpy);
-  assert.calledWith(findOneUserSpy, { name: 'peblioguest' });
-}
-
 function assertFindOneUserWasCalledWithId() {
   assert.calledOnce(findOneUserSpy);
   assert.calledWith(findOneUserSpy, { _id: loggedInUser._id });
+}
+
+function assertFindOneUserWasCalledWithName() {
+  assert.calledOnce(findOneUserSpy);
+  assert.calledWith(findOneUserSpy, { name: 'peblioguest' });
 }
