@@ -5,7 +5,6 @@ const Folder = require('../models/folder.js');
 const s3 = new AWS.S3();
 const credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
 AWS.config.credentials = credentials;
-console.log("Credentials: ", credentials);
 const bucket = process.env.S3_BUCKET;
 import { buildPageForUpdateFromRequest } from '../models/creator/pageCreator';
 
@@ -81,49 +80,42 @@ export async function updatePage(req, res) {
     if (err) {
       return res.status(500).send(err);
     } else {
-      res.status(200).send({ data: 'Record has been Inserted..!!' });
-      const fileName = `Snapshots/${req.body.id}.png`;
-      const buffer = Buffer.from(req.body.image.replace(/^data:image\/\w+;base64,/, ""), 'base64');
-      const params = {
-        Bucket: bucket,
-        Key: fileName,
-        Body: buffer,
-        ContentType: 'img/png',
-        ContentEncoding: 'base64',
-        ACL: 'public-read'
-      };
-      var deleteParams = {
-        Bucket: bucket,
-        Key: fileName
-       };
-       s3.deleteObject(deleteParams, function(err, data) {
-          s3.putObject(params, (err, response) => {
-            return response
-          });
-      });
+      return res.status(200).send({ data: 'Record has been Inserted..!!' });
     }
   });
 }
 
-export function uploadPageSnapshotToS3(body, callback) {
-  const img = body.image;
-  const data = img.replace(/^data:image\/\w+;base64,/, "");
-  //const buf = Buffer.from(data, 'base64');
-  //fs.writeFileSync('image.png', buf);
-  const fileName = `Snapshots/${body.id}.png`;
+export function uploadPageSnapshotToS3(req, res) {
+  const fileName = `Snapshots/${req.body.id}.png`;
+  const buffer = Buffer.from(req.body.image.replace(/^data:image\/\w+;base64,/, ""), 'base64');
   const params = {
     Bucket: bucket,
     Key: fileName,
-    Body: data,
-    // ContentType: req.query.filetype,
+    Body: buffer,
+    ContentType: 'img/png',
+    ContentEncoding: 'base64',
     ACL: 'public-read'
   };
-  s3.getSignedUrl('putObject', params, (err, data) => {
-    if (err) {
-      console.log(err);
-      return null
-    }
-    callback(fileName);
+  var deleteParams = {
+    Bucket: bucket,
+    Key: fileName
+  };
+  return s3.deleteObject(deleteParams, () => {
+    return s3.putObject(params, (uploadImageError, response) => {
+      if (uploadImageError) {
+        return res.status(500).send(err);
+      }
+      return Page.update(
+        { id: req.body.id },
+        { snapshotPath: `https://s3.amazonaws.com/${bucket}/${fileName}` },
+        (pageUpdateErr, data) => {
+          if (pageUpdateErr) {
+            return res.status(500).send(err);
+          } else {
+            return res.status(200).send();
+          }
+        });
+    });
   });
 }
 

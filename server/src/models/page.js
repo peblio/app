@@ -9,6 +9,7 @@ const pageSchema = new Schema({
   id: { type: String, default: '' },
   title: { type: String, default: '' },
   heading: { type: String, default: '' },
+  snapshotPath: { type: String },
   description: { type: String, default: '' },
   editors: { type: Object, default: {} },
   editorIndex: { type: Number, default: 0 },
@@ -16,7 +17,7 @@ const pageSchema = new Schema({
   folder: { type: Schema.Types.ObjectId, ref: 'Folder' },
   workspace: { type: Object, default: {} },
   tags: [String]
-  }, {
+}, {
     minimize: false,
     timestamps: true
   });

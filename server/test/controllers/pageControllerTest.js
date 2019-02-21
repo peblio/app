@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage } from '../../src/controllers/pageController';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, uploadPageSnapshotToS3 } from '../../src/controllers/pageController';
 import * as pageService from '../../src/service/pageService';
 import { assert } from 'sinon';
 
@@ -14,8 +14,10 @@ let savePageServiceStub;
 let deletePageServiceStub;
 let updatePageServiceStub;
 let movePageServiceStub;
+let uploadPageSnapshotToS3ServiceStub;
 
 describe('pageController', function () {
+
     describe('getPage', function () {
 
         afterEach(function () {
@@ -143,6 +145,24 @@ describe('pageController', function () {
             assert.calledWith(movePageServiceStub, request, response);
         });
 
+    });
+
+    describe('uploadPageSnapshotToS3', function () {
+
+        afterEach(function () {
+            sandbox.restore();
+        });
+
+        it('shall call getPage from service', async function () {
+            const returnValue = "getPageResponse"
+            uploadPageSnapshotToS3ServiceStub = sandbox.stub(pageService, 'uploadPageSnapshotToS3').returns(returnValue);
+
+            const actualReturnValue = await uploadPageSnapshotToS3(request, response);
+
+            expect(actualReturnValue).to.be.eql(returnValue);
+            assert.calledOnce(uploadPageSnapshotToS3ServiceStub);
+            assert.calledWith(uploadPageSnapshotToS3ServiceStub, request, response);
+        });
     });
 
 });

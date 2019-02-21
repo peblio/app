@@ -9,4 +9,5 @@ pageRoutes.route('/save').post(pageController.savePage);
 pageRoutes.route('/saveAsGuest').post(pageController.savePageAsGuest);
 pageRoutes.route('/update').post(pageController.updatePage);
 pageRoutes.route('/:pageId').delete(pageController.deletePage);
+pageRoutes.route('/').patch(pageController.uploadPageSnapshotToS3);
 module.exports = pageRoutes;

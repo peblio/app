@@ -163,20 +163,23 @@ export function setPageId(id) {
 }
 
 export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, canvasElement) {
-  html2canvas(canvasElement)
-  .then(canvas => {
-    axios.post('/pages/update', {
-      id,
-      title,
-      heading,
-      description,
-      editors: convertEditorsToRaw(editors),
-      editorIndex,
-      layout,
-      workspace,
-      tags,
-      image: canvas.toDataURL()
-    }).catch(error => console.error('Page update error', error));
+  axios.post('/pages/update', {
+    id,
+    title,
+    heading,
+    description,
+    editors: convertEditorsToRaw(editors),
+    editorIndex,
+    layout,
+    workspace,
+    tags
+  }).then(() => {
+    html2canvas(canvasElement).then(canvas => {
+      axios.patch('/pages', {
+        id,
+        image: canvas.toDataURL()
+      });
+    }).catch(error => console.error('Page snapshot update error', error));
     return (dispatch) => {
       dispatch(setUnsavedChanges(false));
       // this action currently doesn't do anything because there is no corresponding handler in a reducer
@@ -185,19 +188,19 @@ export function updatePage(id, title, heading, description, editors, editorIndex
         id
       });
     };
-  });
+  }).catch(error => console.error('Page update error', error));;
 }
 
 function saveAs(uri, filename) {
   var link = document.createElement('a');
   if (typeof link.download === 'string') {
-      link.href = uri;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    link.href = uri;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   } else {
-      window.open(uri);
+    window.open(uri);
   }
 }
 

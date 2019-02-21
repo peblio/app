@@ -1,6 +1,6 @@
 import { assert, spy } from 'sinon';
 import { createResponseWithStatusCode } from '../utils.js';
-import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage } from '../../src/service/pageService';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, uploadPageSnapshotToS3ServiceStub } from '../../src/service/pageService';
 import * as pageCreator from '../../src/models/creator/pageCreator';
 
 const sinon = require('sinon');
@@ -9,6 +9,7 @@ const sandbox = sinon.sandbox.create();
 const Page = require('../../src/models/page.js');
 const User = require('../../src/models/user.js');
 const Folder = require('../../src/models/folder.js');
+const mockAWSSinon = require('mock-aws-sinon');
 
 const tag = 'Java';
 
@@ -51,6 +52,32 @@ let buildPageForUpdateFromRequestStub;
 let paginateSpy;
 
 describe('pageService', function () {
+
+  describe('uploadPageSnapshotToS3ServiceStub', () => {
+    beforeEach(() => {
+      request = {
+        body: {
+          id: pageId,
+          image: 'data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='
+        }
+      };
+      response = {
+        send: spy(),
+        json: spy(),
+        status: createResponseWithStatusCode(200),
+        sendStatus: createResponseWithStatusCode(200)
+      };
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall return error if image could not be deleted from s3', async () => {
+      //TODO add test
+    });
+
+  });
 
   describe('getPage', function () {
 
