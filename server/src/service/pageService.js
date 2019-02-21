@@ -16,7 +16,10 @@ export async function getPagesWithTag(req, res) {
   const offset = req.query.offset ? parseInt(req.query.offset) : 0;
   const limit = req.query.limit ? parseInt(req.query.limit) : 10;
   const sort = req.query.sort ? req.query.sort : 'title';
-  var query = { tags: req.query.tag };
+  var query = {
+    tags:req.query.tag,
+    $or:[{isPublished:true},{isPublished:null}]
+};
   var options = {
     offset,
     limit,
