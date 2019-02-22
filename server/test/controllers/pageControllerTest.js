@@ -153,7 +153,7 @@ describe('pageController', function () {
             sandbox.restore();
         });
 
-        it('shall call getPage from service', async function () {
+        it('shall call uploadPageSnapshotToS3 from service', async function () {
             const returnValue = "getPageResponse"
             uploadPageSnapshotToS3ServiceStub = sandbox.stub(pageService, 'uploadPageSnapshotToS3').returns(returnValue);
 
