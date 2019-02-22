@@ -133,23 +133,7 @@ export function submitPage(parentId, title, heading, description, editors, edito
     workspace,
     tags
   }).then(() => {
-    html2canvas(canvasElement,
-      {
-        useCORS: true,
-        scale: 1,
-        onclone(document) {
-          const list = document.getElementsByClassName('widget__container');
-          for (const item of list) {
-            item.style.transform = 'scale(2,2) translate(25%, 25%)';
-          }
-          document.querySelector('.react-grid-layout').style.transform = 'scale(0.5,0.5) translate(-50%,-50%)';
-        }
-      }).then(canvas => {
-        axios.patch('/pages', {
-          id,
-          image: canvas.toDataURL()
-        });
-      });
+    savePageSnapshot(canvasElement,id);
     if (type === 'fromWP') {
       window.open(`/pebl/${id}`, '_blank');
     } else {
@@ -177,6 +161,26 @@ export function setPageId(id) {
   };
 }
 
+function savePageSnapshot(canvasElement, id){
+  html2canvas(canvasElement,
+    {
+      useCORS: true,
+      scale: 1,
+      onclone(document) {
+        const list = document.getElementsByClassName('widget__container');
+        for (const item of list) {
+          item.style.transform = 'scale(2,2) translate(25%, 25%)';
+        }
+        document.querySelector('.react-grid-layout').style.transform = 'scale(0.5,0.5) translate(-50%,-50%)';
+      }
+    }).then(canvas => {
+      axios.patch('/pages', {
+        id,
+        image: canvas.toDataURL()
+      });
+    }).catch(error => console.error('Page snapshot update error', error));;
+}
+
 export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, canvasElement) {
   axios.post('/pages/update', {
     id,
@@ -189,23 +193,7 @@ export function updatePage(id, title, heading, description, editors, editorIndex
     workspace,
     tags
   }).then(() => {
-    html2canvas(canvasElement,
-      {
-        useCORS: true,
-        scale: 1,
-        onclone(document) {
-          const list = document.getElementsByClassName('widget__container');
-          for (const item of list) {
-            item.style.transform = 'scale(2,2) translate(25%, 25%)';
-          }
-          document.querySelector('.react-grid-layout').style.transform = 'scale(0.5,0.5) translate(-50%,-50%)';
-        }
-      }).then(canvas => {
-        axios.patch('/pages', {
-          id,
-          image: canvas.toDataURL()
-        });
-      }).catch(error => console.error('Page snapshot update error', error));
+    savePageSnapshot(canvasElement,id);
     return (dispatch) => {
       dispatch(setUnsavedChanges(false));
       // this action currently doesn't do anything because there is no corresponding handler in a reducer
