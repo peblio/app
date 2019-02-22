@@ -86,7 +86,7 @@ export async function updatePage(req, res) {
 }
 
 export function uploadPageSnapshotToS3(req, res) {
-  const fileName = `Snapshots/${req.body.id}.png`;
+  const fileName = `_Pebl_Snapshots/${req.body.id}.png`;
   const buffer = Buffer.from(req.body.image.replace(/^data:image\/\w+;base64,/, ""), 'base64');
   const params = {
     Bucket: bucket,
