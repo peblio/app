@@ -118,7 +118,7 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn) {
+export function submitPage(parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, canvasElement) {
   const id = shortid.generate();
   const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
   axios.post(axiosURL, {
@@ -133,6 +133,23 @@ export function submitPage(parentId, title, heading, description, editors, edito
     workspace,
     tags
   }).then(() => {
+    html2canvas(canvasElement,
+      {
+        useCORS: true,
+        scale: 1,
+        onclone(document) {
+          const list = document.getElementsByClassName('widget__container');
+          for (const item of list) {
+            item.style.transform = 'scale(2,2) translate(25%, 25%)';
+          }
+          document.querySelector('.react-grid-layout').style.transform = 'scale(0.5,0.5) translate(-50%,-50%)';
+        }
+      }).then(canvas => {
+        axios.patch('/pages', {
+          id,
+          image: canvas.toDataURL()
+        });
+      });
     if (type === 'fromWP') {
       window.open(`/pebl/${id}`, '_blank');
     } else {
@@ -141,9 +158,7 @@ export function submitPage(parentId, title, heading, description, editors, edito
     if (type === 'remix') {
       window.location.reload(true);
     }
-  })
-    .catch(error => console.error(error));
-
+  }).catch(error => console.error(error));
   return (dispatch) => {
     dispatch(setUnsavedChanges(false));
     dispatch({
