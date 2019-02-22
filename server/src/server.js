@@ -44,7 +44,7 @@ app.use(session({
 }));
 // add body parser
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb', extended: true }));
 
 // add routes
 app.use(passport.initialize());
