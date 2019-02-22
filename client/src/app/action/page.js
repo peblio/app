@@ -167,7 +167,7 @@ function savePageSnapshot(canvasElement, id){
       useCORS: true,
       scale: 1,
       height: 816,
-      width: 816,
+      width: 1000,
       onclone(document) {
         const list = document.getElementsByClassName('widget__container');
         for (const item of list) {
