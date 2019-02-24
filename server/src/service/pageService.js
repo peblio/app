@@ -1,6 +1,11 @@
 const Page = require('../models/page.js');
+const AWS = require('aws-sdk');
 const User = require('../models/user.js');
 const Folder = require('../models/folder.js');
+const s3 = new AWS.S3();
+const credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
+AWS.config.credentials = credentials;
+const bucket = process.env.S3_BUCKET;
 import { buildPageForUpdateFromRequest } from '../models/creator/pageCreator';
 
 export async function getPage(req, res) {
@@ -80,6 +85,40 @@ export async function updatePage(req, res) {
   });
 }
 
+export function uploadPageSnapshotToS3(req, res) {
+  const fileName = `_Pebl_Snapshots/${req.body.id}.png`;
+  const buffer = Buffer.from(req.body.image.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+  const params = {
+    Bucket: bucket,
+    Key: fileName,
+    Body: buffer,
+    ContentType: 'img/png',
+    ContentEncoding: 'base64',
+    ACL: 'public-read'
+  };
+  var deleteParams = {
+    Bucket: bucket,
+    Key: fileName
+  };
+  return s3.deleteObject(deleteParams, () => {
+    return s3.putObject(params, (uploadImageError, response) => {
+      if (uploadImageError) {
+        return res.status(500).send(err);
+      }
+      return Page.update(
+        { id: req.body.id },
+        { snapshotPath: `https://s3.amazonaws.com/${bucket}/${fileName}` },
+        (pageUpdateErr, data) => {
+          if (pageUpdateErr) {
+            return res.status(500).send(err);
+          } else {
+            return res.status(200).send();
+          }
+        });
+    });
+  });
+}
+
 export async function movePage(req, res) {
   const user = req.user;
   if (!user) {
@@ -117,3 +156,5 @@ export async function movePage(req, res) {
     return res.status(500).send({ error: err.message });
   }
 }
+
+

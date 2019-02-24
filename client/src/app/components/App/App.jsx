@@ -183,7 +183,8 @@ class App extends React.Component {
           'save',
           this.props.workspace,
           this.props.tags,
-          true
+          true,
+          document.getElementById('content-canvas')
         );
       } else if (this.props.canEdit) {
         this.props.updatePage(
@@ -195,7 +196,8 @@ class App extends React.Component {
           this.props.editorIndex,
           this.props.layout,
           this.props.workspace,
-          this.props.tags
+          this.props.tags,
+          document.getElementById('content-canvas')
         );
       } else {
         // this is for remix and save
@@ -210,7 +212,8 @@ class App extends React.Component {
           'remix',
           this.props.workspace,
           this.props.tags,
-          true
+          true,
+          document.getElementById('content-canvas')
         );
       }
     } else {
