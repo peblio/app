@@ -582,17 +582,12 @@ function assertUpdateUserWasCalledWithPageId() {
 
 function assertPaginateWasCalledWithTag() {
   assert.calledOnce(paginateSpy);
-  assert.calledWith(paginateSpy, { tags: tag }, { offset: 0, limit: 10, sort: 'title' });
+  assert.calledWith(paginateSpy, { $or: [{ isPublished: true }, { isPublished: null }], tags: tag }, { offset: 0, limit: 10, sort: 'title' });
 }
 
 function assertPaginateWasCalledWithTagOffsetLimit(offset, limit, sort) {
   assert.calledOnce(paginateSpy);
-  assert.calledWith(paginateSpy, { tags: tag }, { offset, limit, sort });
-}
-
-function assertFindWasCalledWithTag() {
-  assert.calledOnce(findSpy);
-  assert.calledWith(paginateSpy, { tags: tag }, { offset, limit, sort });
+  assert.calledWith(paginateSpy, { $or: [{ isPublished: true }, { isPublished: null }], tags: tag }, { offset, limit, sort });
 }
 
 function assertSendWasCalledWith(msg) {
