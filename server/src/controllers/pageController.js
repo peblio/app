@@ -24,6 +24,10 @@ export async function updatePage(req, res) {
     return pageService.updatePage(req, res);
 }
 
+export async function uploadPageSnapshotToS3(req, res) {
+    return pageService.uploadPageSnapshotToS3(req, res);
+}
+
 export async function movePage(req, res) {
     return pageService.movePage(req, res);
 }

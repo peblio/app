@@ -185,7 +185,8 @@ class App extends React.Component {
           this.props.workspace,
           this.props.tags,
           true,
-          !(this.props.userType === 'student') || this.props.isPeblPublished
+          !(this.props.userType === 'student') || this.props.isPeblPublished,
+          document.getElementById('content-canvas')
         );
       } else if (this.props.canEdit) {
         this.props.updatePage(
@@ -198,7 +199,8 @@ class App extends React.Component {
           this.props.layout,
           this.props.workspace,
           this.props.tags,
-          !(this.props.userType === 'student') || this.props.isPeblPublished
+          !(this.props.userType === 'student') || this.props.isPeblPublished,
+          document.getElementById('content-canvas')
         );
       } else {
         // this is for remix and save
@@ -214,7 +216,8 @@ class App extends React.Component {
           this.props.workspace,
           this.props.tags,
           true,
-          !(this.props.userType === 'student')
+          !(this.props.userType === 'student'),
+          document.getElementById('content-canvas')
         );
       }
     } else {
