@@ -63,7 +63,7 @@ export function setPageLayout(value) {
   };
 }
 
-export function loadPage(id, parentId, title, heading, description, layout, tags) {
+export function loadPage(id, parentId, title, heading, description, layout, tags, isPublished) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
@@ -73,7 +73,8 @@ export function loadPage(id, parentId, title, heading, description, layout, tags
       heading,
       description,
       layout,
-      tags
+      tags,
+      isPublished
     });
   };
 }
@@ -118,7 +119,7 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, canvasElement) {
+export function submitPage(parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished, canvasElement) {
   const id = shortid.generate();
   const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
   axios.post(axiosURL, {
@@ -131,9 +132,10 @@ export function submitPage(parentId, title, heading, description, editors, edito
     editorIndex,
     layout,
     workspace,
-    tags
+    tags,
+    isPublished
   }).then(() => {
-    savePageSnapshot(canvasElement,id);
+    savePageSnapshot(canvasElement, id);
     if (type === 'fromWP') {
       window.open(`/pebl/${id}`, '_blank');
     } else {
@@ -152,16 +154,8 @@ export function submitPage(parentId, title, heading, description, editors, edito
   };
 }
 
-export function setPageId(id) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_PAGE_ID,
-      id
-    });
-  };
-}
 
-function savePageSnapshot(canvasElement, id){
+function savePageSnapshot(canvasElement, id) {
   html2canvas(canvasElement,
     {
       useCORS: true,
@@ -175,15 +169,15 @@ function savePageSnapshot(canvasElement, id){
         }
         document.querySelector('.react-grid-layout').style.transform = 'scale(0.5,0.5) translate(-50%,-50%)';
       }
-    }).then(canvas => {
-      axios.patch('/pages', {
-        id,
-        image: canvas.toDataURL()
-      });
-    }).catch(error => console.error('Page snapshot update error', error));;
+    }).then((canvas) => {
+    axios.patch('/pages', {
+      id,
+      image: canvas.toDataURL()
+    });
+  }).catch(error => console.error('Page snapshot update error', error));
 }
 
-export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, canvasElement) {
+export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, isPublished, canvasElement) {
   axios.post('/pages/update', {
     id,
     title,
@@ -193,9 +187,10 @@ export function updatePage(id, title, heading, description, editors, editorIndex
     editorIndex,
     layout,
     workspace,
-    tags
+    tags,
+    isPublished
   }).then(() => {
-    savePageSnapshot(canvasElement,id);
+    savePageSnapshot(canvasElement, id);
     return (dispatch) => {
       dispatch(setUnsavedChanges(false));
       // this action currently doesn't do anything because there is no corresponding handler in a reducer
@@ -204,11 +199,11 @@ export function updatePage(id, title, heading, description, editors, editorIndex
         id
       });
     };
-  }).catch(error => console.error('Page update error', error));;
+  }).catch(error => console.error('Page update error', error));
 }
 
 function saveAs(uri, filename) {
-  var link = document.createElement('a');
+  const link = document.createElement('a');
   if (typeof link.download === 'string') {
     link.href = uri;
     link.download = filename;
@@ -218,6 +213,15 @@ function saveAs(uri, filename) {
   } else {
     window.open(uri);
   }
+}
+
+export function setPageId(id) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_PAGE_ID,
+      id
+    });
+  };
 }
 
 export function togglePreviewMode() {
@@ -292,6 +296,14 @@ export function deletePageTag(value) {
     dispatch({
       type: ActionTypes.DELETE_PAGE_TAG,
       value
+    });
+  };
+}
+
+export function publishPage() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.PUBLISH_PAGE
     });
   };
 }

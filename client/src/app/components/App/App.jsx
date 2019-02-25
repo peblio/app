@@ -128,7 +128,8 @@ class App extends React.Component {
             res.data[0].heading,
             res.data[0].description,
             res.data[0].layout,
-            res.data[0].tags
+            res.data[0].tags,
+            res.data[0].isPublished
           );
           this.props.loadEditors(
             res.data[0].editors,
@@ -184,6 +185,7 @@ class App extends React.Component {
           this.props.workspace,
           this.props.tags,
           true,
+          !(this.props.userType === 'student') || this.props.isPeblPublished,
           document.getElementById('content-canvas')
         );
       } else if (this.props.canEdit) {
@@ -197,6 +199,7 @@ class App extends React.Component {
           this.props.layout,
           this.props.workspace,
           this.props.tags,
+          !(this.props.userType === 'student') || this.props.isPeblPublished,
           document.getElementById('content-canvas')
         );
       } else {
@@ -213,6 +216,7 @@ class App extends React.Component {
           this.props.workspace,
           this.props.tags,
           true,
+          !(this.props.userType === 'student'),
           document.getElementById('content-canvas')
         );
       }
@@ -369,6 +373,7 @@ App.propTypes = {
   rgl: PropTypes.shape({}).isRequired,
   textHeights: PropTypes.shape({}).isRequired,
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isPeblPublished: PropTypes.bool.isRequired,
 
   canEdit: PropTypes.bool.isRequired,
 
@@ -376,6 +381,7 @@ App.propTypes = {
   name: PropTypes.string.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
   isBrowsingPebl: PropTypes.bool.isRequired,
+  userType: PropTypes.string.isRequired,
 
   isAddDescriptionModalOpen: PropTypes.bool.isRequired,
   isPagesModalOpen: PropTypes.bool.isRequired,
@@ -443,9 +449,11 @@ function mapStateToProps(state) {
     textHeights: state.page.textHeights,
     tags: state.page.tags,
     description: state.page.description,
+    isPeblPublished: state.page.isPublished,
 
     canEdit: state.user.canEdit,
     name: state.user.name,
+    userType: state.user.type,
     isBrowsingPebl: state.user.isBrowsingPebl,
 
     isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,

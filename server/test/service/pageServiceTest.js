@@ -6,10 +6,10 @@ import * as pageCreator from '../../src/models/creator/pageCreator';
 const sinon = require('sinon');
 
 const sandbox = sinon.sandbox.create();
+const mockAWSSinon = require('mock-aws-sinon');
 const Page = require('../../src/models/page.js');
 const User = require('../../src/models/user.js');
 const Folder = require('../../src/models/folder.js');
-const mockAWSSinon = require('mock-aws-sinon');
 
 const tag = 'Java';
 
@@ -21,7 +21,7 @@ const pageData = {
   editorIndex: ' Some editorIndex',
   layout: 'A perfect layout',
   workspace: 'No workspace',
-  tags: []
+  tags: ['tag1', 'tag2']
 };
 const folderId = 'somefolderId';
 const pageId = 'pageId';
@@ -51,8 +51,7 @@ let folderCountExecStub;
 let buildPageForUpdateFromRequestStub;
 let paginateSpy;
 
-describe('pageService', function () {
-
+describe('pageService', () => {
   describe('uploadPageSnapshotToS3ServiceStub', () => {
     beforeEach(() => {
       request = {
@@ -74,14 +73,12 @@ describe('pageService', function () {
     });
 
     it('shall return error if image could not be deleted from s3', async () => {
-      //TODO add test
+      // TODO add test
     });
-
   });
 
-  describe('getPage', function () {
-
-    beforeEach(function () {
+  describe('getPage', () => {
+    beforeEach(() => {
       request = {
         params: {
           pageId
@@ -94,11 +91,11 @@ describe('pageService', function () {
       };
     });
 
-    afterEach(function () {
+    afterEach(() => {
       sandbox.restore();
     });
 
-    it('shall retrieve page by id', function () {
+    it('shall retrieve page by id', () => {
       findSpy = sandbox.stub(Page, 'find').yields(null, pageData);
 
       getPage(request, response);
@@ -107,7 +104,7 @@ describe('pageService', function () {
       assertSendWasCalledWith(pageData);
     });
 
-    it('shall return error when retrieve page by id fails', function () {
+    it('shall return error when retrieve page by id fails', () => {
       response.status = createResponseWithStatusCode(500);
       findSpy = sandbox.stub(Page, 'find').yields(error, null);
 
@@ -116,12 +113,10 @@ describe('pageService', function () {
       assertFindWasCalledWithPageId();
       assertSendWasCalledWith(error);
     });
-
   });
 
   describe('getPagesWithTag', () => {
-
-    beforeEach(function () {
+    beforeEach(() => {
       request = {
         query: {
           tag
@@ -134,7 +129,7 @@ describe('pageService', function () {
       };
     });
 
-    afterEach(function () {
+    afterEach(() => {
       sandbox.restore();
     });
 
@@ -164,7 +159,7 @@ describe('pageService', function () {
       assertSendWasCalledWith(pageData);
     });
 
-    it('shall return error when retrieve page by id fails', function () {
+    it('shall return error when retrieve page by id fails', () => {
       response.status = createResponseWithStatusCode(500);
       paginateSpy = sandbox.stub(Page, 'paginate').yields(error, null);
 
@@ -566,9 +561,7 @@ describe('pageService', function () {
       assert.notCalled(folderCountStub);
       assertFindOnePageWasCalledWithId();
     });
-
   });
-
 });
 
 function assertUpdatePageWasCalledWithLatestPageData() {
@@ -615,12 +608,12 @@ function assertUpdateUserWasCalledWithPageId() {
 
 function assertPaginateWasCalledWithTag() {
   assert.calledOnce(paginateSpy);
-  assert.calledWith(paginateSpy, { tags: tag }, { offset: 0, limit: 10, sort: 'title' });
+  assert.calledWith(paginateSpy, { $or: [{ isPublished: true }, { isPublished: null }], tags: tag }, { offset: 0, limit: 10, sort: 'title' });
 }
 
 function assertPaginateWasCalledWithTagOffsetLimit(offset, limit, sort) {
   assert.calledOnce(paginateSpy);
-  assert.calledWith(paginateSpy, { tags: tag }, { offset, limit, sort });
+  assert.calledWith(paginateSpy, { $or: [{ isPublished: true }, { isPublished: null }], tags: tag }, { offset, limit, sort });
 }
 
 function assertSendWasCalledWith(msg) {
