@@ -193,8 +193,8 @@ class Image extends React.Component {
         data-test="image__main"
         style={{
           clipPath: cropCss,
-          WebkitlipPath: cropCss,
-          cropAndScaleFromOriginTransform,
+          WebkitClipPath: cropCss,
+          transform: cropAndScaleFromOriginTransform,
           WebkitTransform: cropAndScaleFromOriginTransform,
           maxWidth
         }}

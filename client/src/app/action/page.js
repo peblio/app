@@ -1,6 +1,6 @@
 import shortid from 'shortid';
 import { convertToRaw } from 'draft-js';
-
+import html2canvas from 'html2canvas';
 import * as ActionTypes from '../constants/reduxConstants.js';
 import axios from '../utils/axios';
 import history from '../utils/history';
@@ -63,7 +63,7 @@ export function setPageLayout(value) {
   };
 }
 
-export function loadPage(id, parentId, title, heading, description, layout, tags) {
+export function loadPage(id, parentId, title, heading, description, layout, tags, isPublished) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
@@ -73,7 +73,8 @@ export function loadPage(id, parentId, title, heading, description, layout, tags
       heading,
       description,
       layout,
-      tags
+      tags,
+      isPublished
     });
   };
 }
@@ -118,7 +119,7 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn) {
+export function submitPage(parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished, canvasElement) {
   const id = shortid.generate();
   const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
   axios.post(axiosURL, {
@@ -131,8 +132,10 @@ export function submitPage(parentId, title, heading, description, editors, edito
     editorIndex,
     layout,
     workspace,
-    tags
+    tags,
+    isPublished
   }).then(() => {
+    savePageSnapshot(canvasElement, id);
     if (type === 'fromWP') {
       window.open(`/pebl/${id}`, '_blank');
     } else {
@@ -141,9 +144,7 @@ export function submitPage(parentId, title, heading, description, editors, edito
     if (type === 'remix') {
       window.location.reload(true);
     }
-  })
-    .catch(error => console.error(error));
-
+  }).catch(error => console.error(error));
   return (dispatch) => {
     dispatch(setUnsavedChanges(false));
     dispatch({
@@ -153,16 +154,30 @@ export function submitPage(parentId, title, heading, description, editors, edito
   };
 }
 
-export function setPageId(id) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_PAGE_ID,
-      id
+
+function savePageSnapshot(canvasElement, id) {
+  html2canvas(canvasElement,
+    {
+      useCORS: true,
+      scale: 1,
+      height: 816,
+      width: 1016,
+      onclone(document) {
+        const list = document.getElementsByClassName('widget__container');
+        for (const item of list) {
+          item.style.transform = 'scale(2,2) translate(25%, 25%)';
+        }
+        document.querySelector('.react-grid-layout').style.transform = 'scale(0.5,0.5) translate(-50%,-50%)';
+      }
+    }).then((canvas) => {
+    axios.patch('/pages', {
+      id,
+      image: canvas.toDataURL()
     });
-  };
+  }).catch(error => console.error('Page snapshot update error', error));
 }
 
-export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags) {
+export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, isPublished, canvasElement) {
   axios.post('/pages/update', {
     id,
     title,
@@ -172,15 +187,38 @@ export function updatePage(id, title, heading, description, editors, editorIndex
     editorIndex,
     layout,
     workspace,
-    tags
-  }).then(response => console.log('Page update'))
-    .catch(error => console.error('Page update error', error));
+    tags,
+    isPublished
+  }).then(() => {
+    savePageSnapshot(canvasElement, id);
+    return (dispatch) => {
+      dispatch(setUnsavedChanges(false));
+      // this action currently doesn't do anything because there is no corresponding handler in a reducer
+      dispatch({
+        type: ActionTypes.UPDATE_PAGE,
+        id
+      });
+    };
+  }).catch(error => console.error('Page update error', error));
+}
 
+function saveAs(uri, filename) {
+  const link = document.createElement('a');
+  if (typeof link.download === 'string') {
+    link.href = uri;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } else {
+    window.open(uri);
+  }
+}
+
+export function setPageId(id) {
   return (dispatch) => {
-    dispatch(setUnsavedChanges(false));
-    // this action currently doesn't do anything because there is no corresponding handler in a reducer
     dispatch({
-      type: ActionTypes.UPDATE_PAGE,
+      type: ActionTypes.SET_PAGE_ID,
       id
     });
   };
@@ -258,6 +296,14 @@ export function deletePageTag(value) {
     dispatch({
       type: ActionTypes.DELETE_PAGE_TAG,
       value
+    });
+  };
+}
+
+export function publishPage() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.PUBLISH_PAGE
     });
   };
 }

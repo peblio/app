@@ -46,6 +46,7 @@ const userSchema = new Schema({
     required() { return this.requiresGuardianConsent === true; }
   },
   guardianConsentedAt: { type: Date },
+  studentBirthday: { type: Date },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   pages: { type: Array },

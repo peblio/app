@@ -28,7 +28,8 @@ const initialState = {
   pageAuthor: '',
   parentPageAuthor: '',
   tags: [],
-  description: ''
+  description: '',
+  isPublished: false
 };
 
 const page = (state = initialState, action) => {
@@ -76,7 +77,8 @@ const page = (state = initialState, action) => {
         pageHeading: action.heading,
         layout: action.layout,
         tags: action.tags,
-        description: action.description
+        description: action.description,
+        isPublished: action.isPublished
       });
 
     case ActionTypes.DUPLICATE_PAGE: {
@@ -187,6 +189,12 @@ const page = (state = initialState, action) => {
       tempTags = tempTags.filter(item => item !== action.value);
       return Object.assign({}, state, {
         tags: tempTags
+      });
+    }
+
+    case ActionTypes.PUBLISH_PAGE: {
+      return Object.assign({}, state, {
+        isPublished: true
       });
     }
 

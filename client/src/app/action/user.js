@@ -90,3 +90,21 @@ export function setGuardianConsent(value) {
     });
   };
 }
+
+export function setGuardianEmail(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_GUARDIAN_EMAIL,
+      value
+    });
+  };
+}
+
+export function setStudentBirthday(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_STUDENT_BIRTHDAY,
+      value
+    });
+  };
+}

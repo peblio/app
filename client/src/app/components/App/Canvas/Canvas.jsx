@@ -202,6 +202,15 @@ class Canvas extends React.Component {
     );
   }
 
+  renderDescriptionButton() {
+    if (this.props.description && this.props.isPeblPublished) {
+      return 'Edit Description';
+    } if (this.props.userType === 'student') {
+      return 'Publish';
+    }
+    return 'Add Description';
+  }
+
   render() {
     const ids = Object.keys(this.props.editors);
     // need to create copy of the layout because ReactGridLayout tests
@@ -295,8 +304,11 @@ class Canvas extends React.Component {
         }
       }
     });
+
+
     return (
       <section
+        id="content-canvas"
         className={
           `canvas
           ${this.props.preview ? 'canvas-preview-mode' : 'canvas-edit-mode'}
@@ -318,7 +330,7 @@ class Canvas extends React.Component {
                   this.props.viewAddDescriptionModal();
                 }}
               >
-          Add description
+                {this.renderDescriptionButton()}
               </button>
             )}
           </div>
@@ -389,6 +401,7 @@ Canvas.propTypes = {
   editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   isNavigationOpen: PropTypes.bool.isRequired,
+  isPeblPublished: PropTypes.bool.isRequired,
   preview: PropTypes.bool.isRequired,
   resizeTextEditor: PropTypes.func.isRequired,
   rgl: PropTypes.shape({
@@ -400,21 +413,25 @@ Canvas.propTypes = {
   }).isRequired,
   setCurrentWidget: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
-  updateTextHeight: PropTypes.func.isRequired,
   textHeights: PropTypes.shape({}).isRequired,
+  updateTextHeight: PropTypes.func.isRequired,
+  userType: PropTypes.string.isRequired,
   viewAddDescriptionModal: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     currentWidget: state.editorsReducer.currentWidget,
+    description: state.page.description,
     editorIndex: state.editorsReducer.editorIndex,
     editors: state.editorsReducer.editors,
-    layout: state.page.layout,
     isNavigationOpen: state.navigation.isNavigationOpen,
+    isPeblPublished: state.page.isPublished,
+    layout: state.page.layout,
     preview: state.page.preview,
     rgl: state.page.rgl,
-    textHeights: state.page.textHeights
+    textHeights: state.page.textHeights,
+    userType: state.user.type
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({

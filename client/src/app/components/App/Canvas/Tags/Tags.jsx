@@ -29,7 +29,7 @@ class Tags extends React.Component {
 
   handleInputChange=(e) => {
     this.setState({ value: e.target.value });
-    const enteredText = e.target.value.toLowerCase();
+    const enteredText = e.target.value.toLowerCase().trim();
     axios.get(`/tags/startingWith/${enteredText}`)
       .then((result) => {
         const suggestedTags = [];
@@ -44,7 +44,7 @@ class Tags extends React.Component {
   }
 
   handleEnter=(e) => {
-    const tagName = e.target.value.toLowerCase();
+    const tagName = e.target.value.toLowerCase().trim();
     if (e.keyCode === 13) {
       this.addTag(tagName);
     }
