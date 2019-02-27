@@ -400,7 +400,6 @@ App.propTypes = {
   workspace: PropTypes.shape({}).isRequired,
 
   // pebl
-  pageAuthor: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
@@ -471,6 +470,11 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string.isRequired
+      })
+    }),
     editors: state.editorsReducer.editors,
     editorIndex: state.editorsReducer.editorIndex,
 
@@ -478,7 +482,6 @@ function mapStateToProps(state) {
 
     layout: state.page.layout,
     rgl: state.page.rgl,
-    pageAuthor: state.page.pageAuthor,
     pageHeading: state.page.pageHeading,
     pageTitle: state.page.pageTitle,
     id: state.page.id,
