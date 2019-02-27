@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import initHelpHero from 'helphero';
+import { withRouter } from 'react-router-dom';
 
 import * as pageDefaults from '../../constants/pageConstants';
 
@@ -33,6 +34,7 @@ import * as userActions from '../../action/user.js';
 import { loadWorkspace } from '../../action/workspace.js';
 
 import axios from '../../utils/axios';
+import { saveLog } from '../../utils/log';
 
 require('./app.scss');
 
@@ -40,15 +42,23 @@ class App extends React.Component {
   componentWillMount() {
     this.onUserVisit();
     if (performance.navigation.type === 2) {
+      console.log('nav from toolbar');
       location.reload(true);
     }
   }
 
   componentDidMount() {
+    console.log(this.props.match.params.id);
     this.authAndLoadPage();
     if (this.projectID() === 'QJSEsqTOS') {
       const hlp = initHelpHero('1Dyo05WliMY');
       hlp.anonymous();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      window.location.reload(true);
     }
   }
 
@@ -188,6 +198,15 @@ class App extends React.Component {
           !(this.props.userType === 'student') || this.props.isPeblPublished,
           document.getElementById('content-canvas')
         );
+        const log = {
+          message: 'Saving Page',
+          path: '/pages/save',
+          action: 'Saving Page',
+          module: 'ui',
+          level: 'INFO',
+          user: this.props.name
+        };
+        saveLog(log);
       } else if (this.props.canEdit) {
         this.props.updatePage(
           this.props.id,
@@ -202,6 +221,15 @@ class App extends React.Component {
           !(this.props.userType === 'student') || this.props.isPeblPublished,
           document.getElementById('content-canvas')
         );
+        const log = {
+          message: `Updating Page with canEdit as ${this.props.canEdit}`,
+          path: `/pages/update/${this.props.id}`,
+          action: 'Updating Page',
+          module: 'ui',
+          level: 'INFO',
+          user: this.props.name
+        };
+        saveLog(log);
       } else {
         // this is for remix and save
         this.props.submitPage(
@@ -219,6 +247,15 @@ class App extends React.Component {
           !(this.props.userType === 'student'),
           document.getElementById('content-canvas')
         );
+        const log = {
+          message: `Remixing Page with id ${this.props.id}`,
+          path: '/pages/save',
+          action: 'Remixing Page',
+          module: 'ui',
+          level: 'INFO',
+          user: this.props.name
+        };
+        saveLog(log);
       }
     } else {
       this.props.viewLoginModal();
@@ -243,6 +280,8 @@ class App extends React.Component {
             savePage={this.savePage}
           />
         </nav>
+        {this.props.match.params.id}
+        {this.props.pageAuthor}
         <Canvas />
 
         <Modal
@@ -366,6 +405,7 @@ App.propTypes = {
   workspace: PropTypes.shape({}).isRequired,
 
   // pebl
+  pageAuthor: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
@@ -443,6 +483,7 @@ function mapStateToProps(state) {
 
     layout: state.page.layout,
     rgl: state.page.rgl,
+    pageAuthor: state.page.pageAuthor,
     pageHeading: state.page.pageHeading,
     pageTitle: state.page.pageTitle,
     id: state.page.id,
