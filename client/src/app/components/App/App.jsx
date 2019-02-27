@@ -470,11 +470,6 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: PropTypes.string.isRequired
-      })
-    }),
     editors: state.editorsReducer.editors,
     editorIndex: state.editorsReducer.editorIndex,
 
