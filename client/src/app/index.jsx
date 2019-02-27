@@ -43,7 +43,7 @@ class Main extends React.Component {
           <div>
             <Route exact path="/" component={withTracker(App)} />
             <Switch>
-              <Route path="/pebl" component={withTracker(App)} />
+              <Route path="/pebl/:id" component={withTracker(App)} />
               <Route path="/reset" component={withTracker(App)} />
               <Route path="/confirmation" component={withTracker(App)} />
               <Route path="/user/:userName/folder/:folderShortId" component={withTracker(Profile)} />
