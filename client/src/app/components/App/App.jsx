@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import initHelpHero from 'helphero';
-import { withRouter } from 'react-router-dom';
 
 import * as pageDefaults from '../../constants/pageConstants';
 
@@ -42,13 +41,11 @@ class App extends React.Component {
   componentWillMount() {
     this.onUserVisit();
     if (performance.navigation.type === 2) {
-      console.log('nav from toolbar');
       location.reload(true);
     }
   }
 
   componentDidMount() {
-    console.log(this.props.match.params.id);
     this.authAndLoadPage();
     if (this.projectID() === 'QJSEsqTOS') {
       const hlp = initHelpHero('1Dyo05WliMY');
@@ -280,8 +277,6 @@ class App extends React.Component {
             savePage={this.savePage}
           />
         </nav>
-        {this.props.match.params.id}
-        {this.props.pageAuthor}
         <Canvas />
 
         <Modal
