@@ -82,7 +82,7 @@ class Tags extends React.Component {
             <a
               className="tags__name"
               data-test="tags-name"
-              href={`https://peblio.co/studio/${tag}`}
+              href={`https://www.peblio.co/studio/${tag}`}
               target="_blank"
               rel="noopener noreferrer"
             >
