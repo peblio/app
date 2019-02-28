@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import Autocomplete from 'react-autocomplete';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -13,23 +14,59 @@ import axios from '../../../../utils/axios';
 require('./tags.scss');
 
 class Tags extends React.Component {
-  addTag=(e) => {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tags: [],
+    };
+  }
+
+  componentDidMount() {
+    this.input.handleKeyDown = (e) => {
+      this.handleEnter(e);
+    };
+  }
+
+  handleInputChange=(e) => {
+    this.setState({ value: e.target.value });
+    const enteredText = e.target.value.toLowerCase().trim();
+    axios.get(`/tags/startingWith/${enteredText}`)
+      .then((result) => {
+        const suggestedTags = [];
+        result.data.map((tag) => {
+          suggestedTags.push({ label: tag.name });
+        });
+        this.setState({ tags: suggestedTags });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  handleEnter=(e) => {
     const tagName = e.target.value.toLowerCase().trim();
     if (e.keyCode === 13) {
-      axios.post('/tags', {
-        name: tagName
-      })
-        .then((result) => {
-          document.querySelector('.tags__list-item:last-child').scrollIntoView(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      this.props.addPageTag(tagName);
-      // TODO : Why do i need to forceupdate here?
-      this.forceUpdate();
-      e.target.value = '';
+      this.addTag(tagName);
     }
+  }
+
+  handleSelect = (value) => {
+    this.addTag(value);
+  }
+
+  addTag=(tagName) => {
+    axios.post('/tags', {
+      name: tagName
+    })
+      .then((result) => {
+        document.querySelector('.tags__list-item:last-child').scrollIntoView(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    this.props.addPageTag(tagName);
+    // TODO : Why do i need to forceupdate here?
+    this.forceUpdate();
   }
 
   renderTagsList(tags) {
@@ -42,12 +79,15 @@ class Tags extends React.Component {
           <li
             className="tags__list-item"
           >
-            <p
+            <a
               className="tags__name"
               data-test="tags-name"
+              href={`https://www.peblio.co/studio/${tag}`}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               {tag}
-            </p>
+            </a>
             {!this.props.preview && (
               <button
                 className="tags__delete-tag"
@@ -72,12 +112,25 @@ class Tags extends React.Component {
     return (
       <div className={classNames(tagsContainerClass)}>
         {!this.props.preview && (
-          <input
-            className={classNames(tagsInputClass)}
-            type="text"
-            placeholder="Enter tags.."
-            onKeyDown={this.addTag}
-            data-test="enter-tag"
+          <Autocomplete
+            ref={el => this.input = el}
+            getItemValue={item => item.label}
+            items={this.state.tags}
+            renderItem={(item, isHighlighted) => (
+              <div
+                style={{ background: isHighlighted ? 'lightgray' : 'white' }}
+                className="tags__input-item"
+              >
+                {item.label}
+              </div>
+            )}
+            value={this.state.value}
+            onChange={e => this.handleInputChange(e)}
+            onSelect={value => this.handleSelect(value)}
+            inputProps={
+              { 'placeholder': 'Enter tags..',
+                'data-test': 'enter-tag' }
+            }
           />
         )}
         {this.renderTagsList(this.props.tags)}

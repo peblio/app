@@ -35,6 +35,7 @@
   &__tag-container {
     display: flex;
     justify-content: space-between;
+    margin-bottom: $large-margin; 
   }
   &__add-desc-button {
     white-space: nowrap;
