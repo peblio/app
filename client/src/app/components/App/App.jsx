@@ -127,9 +127,6 @@ class App extends React.Component {
   }
 
   authAndLoadPage = () => {
-    console.log('******');
-    console.log(this.props.id);
-    console.log('******');
     if (this.userConfirmation()) {
       this.props.viewConfirmUserModal();
     } else if (this.resetPage()) {
@@ -183,7 +180,6 @@ class App extends React.Component {
   }
 
   savePage = () => {
-    console.log(this.props.id);
     if (this.props.name) {
       let title = this.props.pageTitle;
       if (this.props.pageHeading !== '') {
@@ -276,7 +272,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.props.id);
     return (
       <div
         role="presentation"
