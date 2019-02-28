@@ -43,6 +43,9 @@ class App extends React.Component {
     if (performance.navigation.type === 2) {
       location.reload(true);
     }
+    if (this.props.match.params.id) {
+      this.props.setPageId(this.props.match.params.id);
+    }
   }
 
   componentDidMount() {
