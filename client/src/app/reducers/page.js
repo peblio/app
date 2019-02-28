@@ -65,6 +65,7 @@ const page = (state = initialState, action) => {
       });
 
     case ActionTypes.SET_PAGE_ID:
+      console.log(action.id);
       return Object.assign({}, state, {
         id: action.id
       });

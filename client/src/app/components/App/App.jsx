@@ -43,11 +43,15 @@ class App extends React.Component {
     if (performance.navigation.type === 2) {
       location.reload(true);
     }
+    if (this.props.match.params.id) {
+      this.props.setPageId(this.props.match.params.id);
+    }
+    // debugger;
   }
 
   componentDidMount() {
     this.authAndLoadPage();
-    if (this.projectID() === 'QJSEsqTOS') {
+    if (this.props.id === 'QJSEsqTOS') {
       const hlp = initHelpHero('1Dyo05WliMY');
       hlp.anonymous();
     }
@@ -56,6 +60,10 @@ class App extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.id !== this.props.match.params.id) {
       window.location.reload(true);
+    }
+    if (prevProps.id !== this.props.id) {
+      this.props.setPageId(this.props.id);
+      this.authAndLoadPage();
     }
   }
 
@@ -119,13 +127,16 @@ class App extends React.Component {
   }
 
   authAndLoadPage = () => {
+    console.log('******');
+    console.log(this.props.id);
+    console.log('******');
     if (this.userConfirmation()) {
       this.props.viewConfirmUserModal();
     } else if (this.resetPage()) {
       this.props.viewResetModal();
-    } else if (this.projectID()) {
+    } else if (this.props.id) {
       this.props.setEditAccess(false);
-      const projectID = this.projectID();
+      const projectID = this.props.id;
       axios.get(`/pages/${projectID}`)
         .then((res) => {
           this.props.loadPage(
@@ -161,9 +172,9 @@ class App extends React.Component {
   }
 
   authLoadedPage = () => {
-    if (this.projectID()) {
+    if (this.props.id) {
       this.props.setEditAccess(false);
-      const projectID = this.projectID();
+      const projectID = this.props.id;
       axios.get(`/authenticate/${projectID}`)
         .then((res1) => {
           this.props.setEditAccess(res1.data);
@@ -172,6 +183,7 @@ class App extends React.Component {
   }
 
   savePage = () => {
+    console.log(this.props.id);
     if (this.props.name) {
       let title = this.props.pageTitle;
       if (this.props.pageHeading !== '') {
@@ -264,6 +276,7 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.props.id);
     return (
       <div
         role="presentation"
@@ -273,7 +286,6 @@ class App extends React.Component {
       >
         <nav className="main-nav">
           <MainToolbar
-            projectID={this.projectID}
             savePage={this.savePage}
           />
         </nav>
@@ -412,6 +424,7 @@ App.propTypes = {
   canEdit: PropTypes.bool.isRequired,
 
   // user
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
   isBrowsingPebl: PropTypes.bool.isRequired,
