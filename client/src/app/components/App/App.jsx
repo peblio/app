@@ -43,10 +43,6 @@ class App extends React.Component {
     if (performance.navigation.type === 2) {
       location.reload(true);
     }
-    if (this.props.match.params.id) {
-      this.props.setPageId(this.props.match.params.id);
-    }
-    // debugger;
   }
 
   componentDidMount() {
@@ -101,17 +97,6 @@ class App extends React.Component {
   showForkPromptPreference=() => {
     const getForkPromptPreference = localStorage.getItem(process.env.LOCALSTORAGE_FORK_PROMPT);
     return !(getForkPromptPreference === 'suppress');
-  }
-
-  projectID = () => {
-    const location = this.props.location.pathname;
-    const projectID = location.match(/\/pebl\/([\w-].*)/);
-    if (projectID) {
-      this.props.setPageId(projectID[1]);
-      return projectID[1];
-    }
-    this.props.setPageId('');
-    return null;
   }
 
   resetPage = () => {
