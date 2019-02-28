@@ -407,7 +407,6 @@ App.propTypes = {
   canEdit: PropTypes.bool.isRequired,
 
   // user
-  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
   isBrowsingPebl: PropTypes.bool.isRequired,
