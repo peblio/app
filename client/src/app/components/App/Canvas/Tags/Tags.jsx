@@ -18,6 +18,7 @@ class Tags extends React.Component {
     super(props);
     this.state = {
       tags: [],
+      value: ''
     };
   }
 
@@ -27,10 +28,18 @@ class Tags extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (!this.props.preview && prevProps.preview) {
+      this.input.handleKeyDown = (e) => {
+        this.handleEnter(e);
+      };
+    }
+  }
+
   handleInputChange=(e) => {
     this.setState({ value: e.target.value });
     const enteredText = e.target.value.toLowerCase().trim();
-    axios.get(`/tags/startingWith/${enteredText}`)
+    enteredText && axios.get(`/tags/startingWith/${enteredText}`)
       .then((result) => {
         const suggestedTags = [];
         result.data.map((tag) => {
@@ -47,6 +56,10 @@ class Tags extends React.Component {
     const tagName = e.target.value.toLowerCase().trim();
     if (e.keyCode === 13) {
       this.addTag(tagName);
+      this.setState({
+        tags: [],
+        value: ''
+      });
     }
   }
 
