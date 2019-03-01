@@ -39,17 +39,24 @@ class Tags extends React.Component {
   handleInputChange=(e) => {
     this.setState({ value: e.target.value });
     const enteredText = e.target.value.toLowerCase().trim();
-    enteredText && axios.get(`/tags/startingWith/${enteredText}`)
-      .then((result) => {
-        const suggestedTags = [];
-        result.data.map((tag) => {
-          suggestedTags.push({ label: tag.name });
+    if (enteredText) {
+      axios.get(`/tags/startingWith/${enteredText}`)
+        .then((result) => {
+          const suggestedTags = [];
+          result.data.forEach((tag) => {
+            suggestedTags.push({ label: tag.name });
+          });
+          this.setState({ tags: suggestedTags });
+        })
+        .catch((error) => {
+          console.log(error);
         });
-        this.setState({ tags: suggestedTags });
-      })
-      .catch((error) => {
-        console.log(error);
+    } else {
+      this.setState({
+        tags: [],
+        value: ''
       });
+    }
   }
 
   handleEnter=(e) => {
@@ -119,14 +126,12 @@ class Tags extends React.Component {
     const tagsContainerClass = classNames('tags__container', {
       'tags__container--canvas': (this.props.container === 'canvas')
     });
-    const tagsInputClass = classNames('tags__input', {
-      'tags__input--modal': (this.props.container === 'modal')
-    });
+
     return (
       <div className={classNames(tagsContainerClass)}>
         {!this.props.preview && (
           <Autocomplete
-            ref={el => this.input = el}
+            ref={(element) => { this.input = element; }}
             getItemValue={item => item.label}
             items={this.state.tags}
             renderItem={(item, isHighlighted) => (
