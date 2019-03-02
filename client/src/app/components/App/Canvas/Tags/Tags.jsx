@@ -18,6 +18,7 @@ class Tags extends React.Component {
     super(props);
     this.state = {
       tags: [],
+      value: ''
     };
   }
 
@@ -27,26 +28,45 @@ class Tags extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (!this.props.preview && prevProps.preview) {
+      this.input.handleKeyDown = (e) => {
+        this.handleEnter(e);
+      };
+    }
+  }
+
   handleInputChange=(e) => {
     this.setState({ value: e.target.value });
     const enteredText = e.target.value.toLowerCase().trim();
-    axios.get(`/tags/startingWith/${enteredText}`)
-      .then((result) => {
-        const suggestedTags = [];
-        result.data.map((tag) => {
-          suggestedTags.push({ label: tag.name });
+    if (enteredText) {
+      axios.get(`/tags/startingWith/${enteredText}`)
+        .then((result) => {
+          const suggestedTags = [];
+          result.data.forEach((tag) => {
+            suggestedTags.push({ label: tag.name });
+          });
+          this.setState({ tags: suggestedTags });
+        })
+        .catch((error) => {
+          console.log(error);
         });
-        this.setState({ tags: suggestedTags });
-      })
-      .catch((error) => {
-        console.log(error);
+    } else {
+      this.setState({
+        tags: [],
+        value: ''
       });
+    }
   }
 
   handleEnter=(e) => {
     const tagName = e.target.value.toLowerCase().trim();
     if (e.keyCode === 13) {
       this.addTag(tagName);
+      this.setState({
+        tags: [],
+        value: ''
+      });
     }
   }
 
@@ -106,14 +126,12 @@ class Tags extends React.Component {
     const tagsContainerClass = classNames('tags__container', {
       'tags__container--canvas': (this.props.container === 'canvas')
     });
-    const tagsInputClass = classNames('tags__input', {
-      'tags__input--modal': (this.props.container === 'modal')
-    });
+
     return (
       <div className={classNames(tagsContainerClass)}>
         {!this.props.preview && (
           <Autocomplete
-            ref={el => this.input = el}
+            ref={(element) => { this.input = element; }}
             getItemValue={item => item.label}
             items={this.state.tags}
             renderItem={(item, isHighlighted) => (
