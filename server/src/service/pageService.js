@@ -22,9 +22,9 @@ export async function getPagesWithTag(req, res) {
   const limit = req.query.limit ? parseInt(req.query.limit) : 10;
   const sort = req.query.sort ? req.query.sort : 'title';
   var query = {
-    tags:req.query.tag,
-    $or:[{isPublished:true},{isPublished:null}]
-};
+    tags: req.query.tag,
+    $or: [{ isPublished: true }, { isPublished: null }]
+  };
   var options = {
     offset,
     limit,
@@ -78,14 +78,12 @@ export async function deletePage(req, res) {
 }
 
 export async function updatePage(req, res) {
+  const user = req.user;
+  if (!user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  }
   const pageWithUpdatedData = buildPageForUpdateFromRequest(req);
-  return Page.update({ id: req.body.id }, pageWithUpdatedData, (err, data) => {
-    if (err) {
-      return res.status(500).send(err);
-    } else {
-      return res.status(200).send({ data: 'Record has been Inserted..!!' });
-    }
-  });
+  return findPageAndUpdate(req, res, user, pageWithUpdatedData);
 }
 
 export function uploadPageSnapshotToS3(req, res) {
@@ -158,6 +156,25 @@ export async function movePage(req, res) {
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }
+}
+
+function findPageAndUpdate(req, res, user, pageWithUpdatedData) {
+  return Page.findOne({ id: req.body.id }, (pageFindError, retrievedPage) => {
+    if (pageFindError || !retrievedPage || !retrievedPage.user) {
+      return res.status(500).send({ error: 'Could not retrieve page!'});
+    }
+    if (retrievedPage.user.toString() !== user._id.toString()) {
+      return res.status(403).send({ error: 'Missing permission to update page' });
+    }
+    return Page.update({ id: req.body.id }, pageWithUpdatedData, (err, data) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+      else {
+        return res.status(200).send();
+      }
+    });
+  });
 }
 
 
