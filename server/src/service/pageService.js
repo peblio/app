@@ -1,9 +1,9 @@
 const Page = require('../models/page.js');
-const AWS = require('aws-sdk');
 const User = require('../models/user.js');
 const Folder = require('../models/folder.js');
+const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
-const credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
+const credentials = new AWS.SharedIniFileCredentials();
 AWS.config.credentials = credentials;
 const bucket = process.env.S3_BUCKET;
 import { buildPageForUpdateFromRequest } from '../models/creator/pageCreator';
@@ -104,7 +104,7 @@ export function uploadPageSnapshotToS3(req, res) {
   return s3.deleteObject(deleteParams, () => {
     return s3.putObject(params, (uploadImageError, response) => {
       if (uploadImageError) {
-        return res.status(500).send(err);
+        return res.status(500).send(uploadImageError);
       }
       return Page.update(
         { id: req.body.id },

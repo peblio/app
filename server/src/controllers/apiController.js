@@ -1,14 +1,12 @@
-const AWS = require('aws-sdk');
 const express = require('express');
 const multer = require('multer');
 const shortid = require('shortid');
 const Page = require('../models/page.js');
 const Folder = require('../models/folder.js');
 const User = require('../models/user.js');
-
-// Amazon s3 config
+const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
-const credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
+const credentials = new AWS.SharedIniFileCredentials();
 AWS.config.credentials = credentials;
 const myBucket = process.env.S3_BUCKET;
 // Multer config
