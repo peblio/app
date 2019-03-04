@@ -43,14 +43,11 @@ class App extends React.Component {
     if (performance.navigation.type === 2) {
       location.reload(true);
     }
-    if (this.props.match.params.id) {
-      this.props.setPageId(this.props.match.params.id);
-    }
   }
 
   componentDidMount() {
     this.authAndLoadPage();
-    if (this.props.id === 'QJSEsqTOS') {
+    if (this.projectID() === 'QJSEsqTOS') {
       const hlp = initHelpHero('1Dyo05WliMY');
       hlp.anonymous();
     }
@@ -59,10 +56,6 @@ class App extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.id !== this.props.match.params.id) {
       window.location.reload(true);
-    }
-    if (prevProps.id !== this.props.id) {
-      this.props.setPageId(this.props.id);
-      this.authAndLoadPage();
     }
   }
 
@@ -102,6 +95,17 @@ class App extends React.Component {
     return !(getForkPromptPreference === 'suppress');
   }
 
+  projectID = () => {
+    const location = this.props.location.pathname;
+    const projectID = location.match(/\/pebl\/([\w-].*)/);
+    if (projectID) {
+      this.props.setPageId(projectID[1]);
+      return projectID[1];
+    }
+    this.props.setPageId('');
+    return null;
+  }
+
   resetPage = () => {
     const location = this.props.location.pathname;
     const tokenID = location.match(/\/reset\/([\w-].*)/);
@@ -119,9 +123,9 @@ class App extends React.Component {
       this.props.viewConfirmUserModal();
     } else if (this.resetPage()) {
       this.props.viewResetModal();
-    } else if (this.props.id) {
+    } else if (this.projectID()) {
       this.props.setEditAccess(false);
-      const projectID = this.props.id;
+      const projectID = this.projectID();
       axios.get(`/pages/${projectID}`)
         .then((res) => {
           this.props.loadPage(
@@ -157,9 +161,9 @@ class App extends React.Component {
   }
 
   authLoadedPage = () => {
-    if (this.props.id) {
+    if (this.projectID()) {
       this.props.setEditAccess(false);
-      const projectID = this.props.id;
+      const projectID = this.projectID();
       axios.get(`/authenticate/${projectID}`)
         .then((res1) => {
           this.props.setEditAccess(res1.data);
@@ -269,6 +273,7 @@ class App extends React.Component {
       >
         <nav className="main-nav">
           <MainToolbar
+            projectID={this.projectID}
             savePage={this.savePage}
           />
         </nav>
