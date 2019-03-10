@@ -214,3 +214,8 @@ Playbooks map host groups to roles. This allows the same role to be used multipl
 ### Bash Scripts
 
 For convenience, there are several bash scripts (`staging_deploy.sh`, `prod_deploy.sh`, etc.) located in the [devops directory](server/devops) that abstract away the details of running ansible for common tasks like deployment and provisioning.
+
+
+### AWS Profile
+
+We use peblio profile for AWS and this is defined in AWS_PROFILE environment variable
