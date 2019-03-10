@@ -1,10 +1,10 @@
-import { expect } from 'chai';
+import { createResponseWithStatusCode } from '../utils';
 import { getExamples } from '../../src/controllers/examplesController';
 import { assert, spy } from 'sinon';
 const sandbox = require('sinon').sandbox.create();
 const Page = require('../../src/models/page.js');
 const User = require('../../src/models/user.js');
-const users = [{_id: 1}];
+const users = [{ _id: 1 }];
 const pageExamples = new Object();
 var findSpy;
 var userFindSpy;
@@ -19,7 +19,7 @@ describe('examplesController', function () {
             response = {
                 send: spy(),
                 json: spy(),
-                status:  createResponseWithStatusCode(500)
+                status: createResponseWithStatusCode(500)
             };
         });
 
@@ -31,7 +31,7 @@ describe('examplesController', function () {
             userFindSpy = sandbox.stub(User, 'find').yields("error retrieving user", null);
 
             getExamples(request, response);
-            
+
             assertFindUserWasCalledWithpeblioexamplesUser()
             assertSendWasCalledWith("error retrieving user");
         });
@@ -41,7 +41,7 @@ describe('examplesController', function () {
             findSpy = sandbox.stub(Page, 'find').yields("error retrieving page", null);
 
             getExamples(request, response);
-            
+
             assertFindUserWasCalledWithpeblioexamplesUser();
             assertFindWasCalledWithUserId();
             assertSendWasCalledWith("error retrieving page");
@@ -53,7 +53,7 @@ describe('examplesController', function () {
             response.status = createResponseWithStatusCode(200);
 
             getExamples(request, response);
-            
+
             assertFindUserWasCalledWithpeblioexamplesUser();
             assertFindWasCalledWithUserId();
             assertSendWasCalledWith(pageExamples);
@@ -74,11 +74,4 @@ function assertFindUserWasCalledWithpeblioexamplesUser() {
 function assertSendWasCalledWith(msg) {
     assert.calledOnce(response.send);
     assert.calledWith(response.send, msg);
-};
-
-function createResponseWithStatusCode(statusCode) {
-    return function (responseStatus) {
-        expect(responseStatus).to.be.equal(statusCode);
-        return this;
-    }
 };

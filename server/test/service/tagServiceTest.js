@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { createResponseWithStatusCode } from '../utils';
 import { assert, spy } from 'sinon';
 import { saveTag, getAllTags, getAllTagsStartingWith } from '../../src/service/tagService';
 import Tag from '../../src/models/tag.js';
@@ -191,11 +191,4 @@ function assertFindOneWasCalledWithTagName() {
 
 function assertSaveTagWasCalled() {
   assert.calledOnce(saveTagSpy);
-}
-
-function createResponseWithStatusCode(statusCode) {
-  return function (responseStatus) {
-    expect(responseStatus).to.be.equal(statusCode);
-    return this;
-  };
 }

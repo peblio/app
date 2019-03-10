@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { createResponseWithStatusCode } from '../utils';
 import { createUser, loginUser, confirmUser, forgotPassword, resetPassword, resendConfirmUser } from '../../src/controllers/userRegisterActionsController';
 import * as mailService from '../../src/service/mailSenderService';
 import { assert, spy, useFakeTimers } from 'sinon';
@@ -686,13 +687,6 @@ function getUserToBeSaved() {
 function assertJsonWasCalledWith(msg) {
     assert.calledOnce(response.json);
     assert.calledWith(response.json, msg);
-};
-
-function createResponseWithStatusCode(statusCode) {
-    return function (responseStatus) {
-        expect(responseStatus).to.be.equal(statusCode);
-        return this;
-    }
 };
 
 function assertSendWasCalledWith(msg) {

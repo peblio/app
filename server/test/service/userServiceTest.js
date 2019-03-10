@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { createResponseWithStatusCode } from '../utils';
 import * as userService from '../../src/service/userService';
 import { assert, spy } from 'sinon';
 const sandbox = require('sinon').sandbox.create();
@@ -258,11 +258,4 @@ function assertFindByIdWasCalledWithUserId() {
 function assertSendWasCalledWith(msg) {
     assert.calledOnce(response.send);
     assert.calledWith(response.send, msg);
-};
-
-function createResponseWithStatusCode(statusCode) {
-    return function (responseStatus) {
-        expect(responseStatus).to.be.equal(statusCode);
-        return this;
-    }
 };
