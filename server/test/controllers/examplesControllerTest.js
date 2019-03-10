@@ -1,4 +1,4 @@
-import { createResponseWithStatusCode } from '../utils';
+import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils';
 import { getExamples } from '../../src/controllers/examplesController';
 import { assert, spy } from 'sinon';
 const sandbox = require('sinon').sandbox.create();
@@ -62,16 +62,13 @@ describe('examplesController', function () {
 });
 
 function assertFindWasCalledWithUserId() {
-    assert.calledOnce(findSpy);
-    assert.calledWith(findSpy, { user: users[0]._id });
+    assertStubWasCalledOnceWith(findSpy, { user: users[0]._id });
 }
 
 function assertFindUserWasCalledWithpeblioexamplesUser() {
-    assert.calledOnce(userFindSpy);
-    assert.calledWith(userFindSpy, { name: 'peblioexamples' });
+    assertStubWasCalledOnceWith(userFindSpy, { name: 'peblioexamples' });
 }
 
 function assertSendWasCalledWith(msg) {
-    assert.calledOnce(response.send);
-    assert.calledWith(response.send, msg);
+    assertStubWasCalledOnceWith(response.send, msg);
 };

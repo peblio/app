@@ -1,4 +1,4 @@
-import { createResponseWithStatusCode } from '../utils.js';
+import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils.js';
 import { saveLog } from '../../src/service/logService';
 import * as logCreator from '../../src/models/creator/logCreator';
 import { assert, spy } from 'sinon';
@@ -78,8 +78,7 @@ describe('logService', function () {
 });
 
 function assertbuildLogFromRequestWasCalled() {
-    assert.calledOnce(buildLogFromRequestStub);
-    assert.calledWith(buildLogFromRequestStub, request);
+    assertStubWasCalledOnceWith(buildLogFromRequestStub, request);
 }
 
 function assertSaveLogWasCalled() {
@@ -87,6 +86,5 @@ function assertSaveLogWasCalled() {
 }
 
 function assertSendWasCalledWith(object) {
-    assert.calledOnce(response.send);
-    assert.calledWith(response.send, sinon.match(object));
+    assertStubWasCalledOnceWith(response.send, object);
 };

@@ -1,4 +1,4 @@
-import { createResponseWithStatusCode } from '../utils';
+import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils';
 import { assert, spy } from 'sinon';
 import { saveTag, getAllTags, getAllTagsStartingWith } from '../../src/service/tagService';
 import Tag from '../../src/models/tag.js';
@@ -185,8 +185,7 @@ function assertBuildTagFromRequestWasCalled() {
 }
 
 function assertFindOneWasCalledWithTagName() {
-  assert.calledOnce(findOneSpy);
-  assert.calledWith(findOneSpy, { name });
+  assertStubWasCalledOnceWith(findOneSpy, { name });
 }
 
 function assertSaveTagWasCalled() {

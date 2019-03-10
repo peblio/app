@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { createResponseWithStatusCode } from '../utils';
+import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils';
 import { createUser, loginUser, confirmUser, forgotPassword, resetPassword, resendConfirmUser } from '../../src/controllers/userRegisterActionsController';
 import * as mailService from '../../src/service/mailSenderService';
 import { assert, spy, useFakeTimers } from 'sinon';
@@ -270,11 +270,8 @@ describe('userRegisterActionsService', function () {
             assertSendWasCalledWith({ msg: "Login Successful", user: { name: body.name, type: body.userType } })
         });
 
-
-
         function assertPassportAuthenticateWasCalled() {
-            assert.calledOnce(passportAuthenticateStub);
-            assert.calledWith(passportAuthenticateStub, 'local');
+            assertStubWasCalledOnceWith(passportAuthenticateStub, 'local');
         };
 
     });
@@ -394,8 +391,7 @@ describe('userRegisterActionsService', function () {
         });
 
         function assertTokenFindWasCalled() {
-            assert.calledOnce(tokenRetrieveSpy);
-            assert.calledWith(tokenRetrieveSpy, { token: "token" });
+            assertStubWasCalledOnceWith(tokenRetrieveSpy, { token: "token" });
         };
 
     });
@@ -685,34 +681,28 @@ function getUserToBeSaved() {
 };
 
 function assertJsonWasCalledWith(msg) {
-    assert.calledOnce(response.json);
-    assert.calledWith(response.json, msg);
+    assertStubWasCalledOnceWith(response.json, msg);
 };
 
 function assertSendWasCalledWith(msg) {
-    assert.calledOnce(response.send);
-    assert.calledWith(response.send, msg);
+    assertStubWasCalledOnceWith(response.send, msg);
 };
 
 function assertFindOneWasCalledWithUsername() {
-    assert.calledOnce(findOneSpy);
-    assert.calledWith(findOneSpy, { name: "Bla" });
+    assertStubWasCalledOnceWith(findOneSpy, { name: "Bla" });
 }
 
 function assertFindOneWasCalledWithId() {
-    assert.calledOnce(findOneSpy);
-    assert.calledWith(findOneSpy, { _id: "bla@gmail.com" });
+    assertStubWasCalledOnceWith(findOneSpy, { _id: "bla@gmail.com" });
 }
 
 function assertFindOneWasCalledWithToken() {
-    assert.calledOnce(findOneSpy);
-    assert.calledWith(findOneSpy, {
+    assertStubWasCalledOnceWith(findOneSpy, {
         resetPasswordToken: getBodyToResetPassword().token,
         resetPasswordExpires: { $gt: now.getTime() }
     });
 }
 
 function assertFindWasCalledWithEmail() {
-    assert.calledOnce(findSpy);
-    assert.calledWith(findSpy, { email: "bla@gmail.com" });
+    assertStubWasCalledOnceWith(findSpy, { email: "bla@gmail.com" });
 }
