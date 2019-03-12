@@ -155,23 +155,31 @@ class Canvas extends React.Component {
 
   renderIframe(editor) {
     return (
-      <div key={editor.id}>
-        <Iframe
-          id={editor.id}
-          iframeURL={editor.url}
-        />
-      </div>
+      <VisibilitySensor
+        partialVisibility
+      >
+        <div key={editor.id}>
+          <Iframe
+            id={editor.id}
+            iframeURL={editor.url}
+          />
+        </div>
+      </VisibilitySensor>
     );
   }
 
   renderVideo(editor) {
     return (
-      <div key={editor.id}>
-        <Iframe
-          id={editor.id}
-          iframeURL={editor.url}
-        />
-      </div>
+      <VisibilitySensor
+        partialVisibility
+      >
+        <div key={editor.id}>
+          <Iframe
+            id={editor.id}
+            iframeURL={editor.url}
+          />
+        </div>
+      </VisibilitySensor>
     );
   }
 
