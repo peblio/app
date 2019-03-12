@@ -218,4 +218,4 @@ For convenience, there are several bash scripts (`staging_deploy.sh`, `prod_depl
 
 ### AWS Profile
 
-We use peblio profile for AWS and this is defined in AWS_PROFILE environment variable
+We use `peblio` profile for AWS and this is defined in AWS_PROFILE environment variable
