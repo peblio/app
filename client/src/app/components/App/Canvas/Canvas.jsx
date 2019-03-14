@@ -158,27 +158,33 @@ class Canvas extends React.Component {
       <VisibilitySensor
         partialVisibility
       >
-        <div key={editor.id}>
-          <Iframe
-            id={editor.id}
-            iframeURL={editor.url}
-          />
-        </div>
+        {({ isVisible }) => (
+          <div key={editor.id}>
+          {isVisible &&
+            <Iframe
+              id={editor.id}
+              iframeURL={editor.url}
+            />
+          }
+          </div>
+        )}
       </VisibilitySensor>
     );
   }
 
   renderVideo(editor) {
     return (
-      <VisibilitySensor
-        partialVisibility
-      >
+      <VisibilitySensor partialVisibility>
+      {({isVisible}) => (
         <div key={editor.id}>
-          <Iframe
-            id={editor.id}
-            iframeURL={editor.url}
-          />
+          {isVisible &&
+              <Iframe
+                id={editor.id}
+                iframeURL={editor.url}
+              />
+          }
         </div>
+      )}
       </VisibilitySensor>
     );
   }
