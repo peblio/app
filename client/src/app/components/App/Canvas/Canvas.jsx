@@ -160,12 +160,11 @@ class Canvas extends React.Component {
       >
         {({ isVisible }) => (
           <div key={editor.id}>
-          {isVisible &&
             <Iframe
               id={editor.id}
               iframeURL={editor.url}
+              isVisible={isVisible}
             />
-          }
           </div>
         )}
       </VisibilitySensor>
@@ -175,16 +174,15 @@ class Canvas extends React.Component {
   renderVideo(editor) {
     return (
       <VisibilitySensor partialVisibility>
-      {({isVisible}) => (
-        <div key={editor.id}>
-          {isVisible &&
-              <Iframe
-                id={editor.id}
-                iframeURL={editor.url}
-              />
-          }
-        </div>
-      )}
+        {({ isVisible }) => (
+          <div key={editor.id}>
+            <Iframe
+              id={editor.id}
+              iframeURL={editor.url}
+              isVisible={isVisible}
+            />
+          </div>
+        )}
       </VisibilitySensor>
     );
   }
