@@ -1,7 +1,7 @@
 import { assert, spy } from 'sinon';
 import { ObjectId } from 'mongodb';
 
-import { createResponseWithStatusCode } from '../utils.js';
+import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils.js';
 import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, uploadPageSnapshotToS3ServiceStub } from '../../src/service/pageService';
 import * as pageCreator from '../../src/models/creator/pageCreator';
 
@@ -654,56 +654,45 @@ function assertUpdatePageWasCalledWithLatestPageData() {
 }
 
 function assertFindWasCalledWithPageId() {
-  assert.calledOnce(findSpy);
-  assert.calledWith(findSpy, { id: pageId });
+  assertStubWasCalledOnceWith(findSpy, { id: pageId })
 }
 
 function assertFolderCountWasCalledWithFolderId() {
-  assert.calledOnce(folderCountStub);
-  assert.calledWith(folderCountStub, { _id: folderId, user: loggedInUser._id });
+  assertStubWasCalledOnceWith(folderCountStub, { _id: folderId, user: loggedInUser._id });
 }
 
 function assertFindOnePageWasCalledWithId() {
-  assert.calledOnce(findOnePageStub);
-  assert.calledWith(findOnePageStub, { _id: pageId });
+  assertStubWasCalledOnceWith(findOnePageStub, { _id: pageId });
 }
 
 function assertFindOnePageWasCalledWithPageId() {
-  assert.calledOnce(findOnePageStub);
-  assert.calledWith(findOnePageStub, { id: pageData.id });
+  assertStubWasCalledOnceWith(findOnePageStub, { id: pageData.id });
 }
 
 function assertDeleteOnePageWasCalledWithPageId() {
-  assert.calledOnce(deleteOnePageSpy);
-  assert.calledWith(deleteOnePageSpy, { _id: newPageId });
+  assertStubWasCalledOnceWith(deleteOnePageSpy, { _id: newPageId });
 }
 
 function assertUpdateUserWasCalledWithPageId() {
-  assert.calledOnce(updateUserSpy);
-  assert.calledWith(updateUserSpy, { _id: loggedInUser._id }, { pages: [request.body.id] });
+  assertStubWasCalledOnceWith(updateUserSpy, { _id: loggedInUser._id }, { pages: [request.body.id] });
 }
 
 function assertPaginateWasCalledWithTag() {
-  assert.calledOnce(paginateSpy);
-  assert.calledWith(paginateSpy, { $or: [{ isPublished: true }, { isPublished: null }], tags: tag }, { offset: 0, limit: 10, sort: 'title' });
+  assertStubWasCalledOnceWith(paginateSpy, { $or: [{ isPublished: true }, { isPublished: null }], tags: tag }, { offset: 0, limit: 10, sort: 'title' });
 }
 
 function assertPaginateWasCalledWithTagOffsetLimit(offset, limit, sort) {
-  assert.calledOnce(paginateSpy);
-  assert.calledWith(paginateSpy, { $or: [{ isPublished: true }, { isPublished: null }], tags: tag }, { offset, limit, sort });
+  assertStubWasCalledOnceWith(paginateSpy, { $or: [{ isPublished: true }, { isPublished: null }], tags: tag }, { offset, limit, sort });
 }
 
 function assertSendWasCalledWith(msg) {
-  assert.calledOnce(response.send);
-  assert.calledWith(response.send, sinon.match(msg));
+  assertStubWasCalledOnceWith(response.send, sinon.match(msg));
 }
 
 function assertFindOneUserWasCalledWithId() {
-  assert.calledOnce(findOneUserSpy);
-  assert.calledWith(findOneUserSpy, { _id: loggedInUser._id });
+  assertStubWasCalledOnceWith(findOneUserSpy, { _id: loggedInUser._id });
 }
 
 function assertFindOneUserWasCalledWithName() {
-  assert.calledOnce(findOneUserSpy);
-  assert.calledWith(findOneUserSpy, { name: 'peblioguest' });
+  assertStubWasCalledOnceWith(findOneUserSpy, { name: 'peblioguest' });
 }

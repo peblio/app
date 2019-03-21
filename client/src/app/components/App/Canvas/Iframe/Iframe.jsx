@@ -36,12 +36,14 @@ class Iframe extends React.Component {
     return (
       <div data-test="iframe__container">
         <div className="element__iframe">
-          <iframe
-            className="iframe__main"
-            title="embedded webpage"
-            src={this.props.iframeURL}
-            data-test="iframe__main"
-          />
+          {this.props.isVisible && (
+            <iframe
+              className="iframe__main"
+              title="embedded webpage"
+              src={this.props.iframeURL}
+              data-test="iframe__main"
+            />
+          )}
         </div>
         <form className="element__add-url" onSubmit={this.urlSubmitted.bind(this)}>
           <label htmlFor="element-name" className="element__label">

@@ -26,7 +26,7 @@ class MainToolbar extends React.Component {
     this.autoSaveTimeout = setInterval(() => {
       if (
         this.props.name && this.props.canEdit && this.props.unsavedChanges &&
-        this.props.editorAutoSave && this.props.pageId
+        this.props.editorAutoSave && this.props.projectID()
       ) {
         this.props.autoSaveUnsavedChanges();
         this.props.createNavigationContent(this.props.layout);
@@ -59,7 +59,7 @@ class MainToolbar extends React.Component {
         if (this.props.unsavedChanges) { // there are some unsaved changes
           saveButtonText = 'Save';
         } else { // there are no unsaved changes
-          if (this.props.pageId) { // eslint-disable-line
+          if (this.props.projectID()) { // eslint-disable-line
             // it is not a new sketch
             saveButtonText = <CheckSVG alt="check svg" />;
           } else { // it is a new sketch
@@ -70,7 +70,7 @@ class MainToolbar extends React.Component {
         saveButtonText = 'Remix';
       }
     } else { // user is not logged in
-      if (this.props.pageId) { // eslint-disable-line
+      if (this.props.projectID()) { // eslint-disable-line
         // it is not a new sketch
         saveButtonText = 'Remix';
       } else { // it is a new sketch
@@ -325,7 +325,7 @@ MainToolbar.propTypes = {
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
-  pageId: PropTypes.string.isRequired,
+  projectID: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   savePage: PropTypes.func.isRequired,
   toggleHelpDropdown: PropTypes.func.isRequired,
@@ -352,7 +352,6 @@ function mapStateToProps(state) {
     isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,
     layout: state.page.layout,
     name: state.user.name,
-    pageId: state.page.id,
     pageTitle: state.page.pageTitle,
     preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,
