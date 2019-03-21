@@ -55,7 +55,7 @@ test('able to embed microbits link', async(t) => {
 
 test('able to embed direct link', async(t) => {
   await checkEmbed(t, DIRECT_LINK);
-  await t.expect(Selector('#posts').exists).ok();
+  await t.expect(Selector('#root').exists).ok();
 });
 
 test('able to embed scratch link', async(t) => {
