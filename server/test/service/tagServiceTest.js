@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils';
 import { assert, spy } from 'sinon';
 import { saveTag, getAllTags, getAllTagsStartingWith } from '../../src/service/tagService';
 import Tag from '../../src/models/tag.js';
@@ -185,17 +185,9 @@ function assertBuildTagFromRequestWasCalled() {
 }
 
 function assertFindOneWasCalledWithTagName() {
-  assert.calledOnce(findOneSpy);
-  assert.calledWith(findOneSpy, { name });
+  assertStubWasCalledOnceWith(findOneSpy, { name });
 }
 
 function assertSaveTagWasCalled() {
   assert.calledOnce(saveTagSpy);
-}
-
-function createResponseWithStatusCode(statusCode) {
-  return function (responseStatus) {
-    expect(responseStatus).to.be.equal(statusCode);
-    return this;
-  };
 }

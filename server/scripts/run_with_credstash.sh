@@ -20,6 +20,7 @@ fi
 echo "Fetching environment variables from credstash..."
 
 export MONGO_DB_PEBLIO=`get_secret db.connection`
+export AWS_PROFILE=peblio
 export PEBLIO_SENDGRID_MAIL=`get_secret sendgrid.mail`
 export PEBLIO_SENDGRID_USER=`get_secret sendgrid.user`
 export PEBLIO_SENDGRID_PASSWORD=`get_secret sendgrid.password`
