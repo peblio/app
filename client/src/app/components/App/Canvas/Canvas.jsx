@@ -409,6 +409,7 @@ class Canvas extends React.Component {
 
 Canvas.propTypes = {
   currentWidget: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   editorIndex: PropTypes.number.isRequired,
   editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
