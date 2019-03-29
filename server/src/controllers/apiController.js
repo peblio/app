@@ -64,7 +64,7 @@ function getSketches(req, res) {
   let user = req.user;
   if (req.params.user) {
     User.findOne({ name: req.params.user }, (userFindError, data) => {
-      if (userFindError) {
+      if (userFindError || !data) {
         res.status(404).send({ error: userFindError });
       } else if (data.type === 'student') {
         res.status(403).send({ error: 'This users data cannot be accessed' });
