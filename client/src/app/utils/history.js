@@ -1,4 +1,15 @@
-import createBrowserHistory from 'history/createBrowserHistory';
+// import createBrowserHistory from 'history/createBrowserHistory';
+//
+// const history = createBrowserHistory();
+// export default history;
+//
 
-const history = createBrowserHistory();
+let history;
+
+if (typeof document !== 'undefined') {
+  const createBrowserHistory = require('history/createBrowserHistory').default;
+
+  history = createBrowserHistory();
+}
+
 export default history;
