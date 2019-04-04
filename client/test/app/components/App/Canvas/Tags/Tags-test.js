@@ -6,7 +6,7 @@ const sandbox = sinon.sandbox.create();
 import Adapter from 'enzyme-adapter-react-16';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import Tags from '../../../../../src/app/components/App/Canvas/Tags/Tags.jsx';
+import Tags from '../../../../../../src/app/components/App/Canvas/Tags/Tags.jsx';
 const mockStore = configureMockStore();
 const store = mockStore({
   page: {
@@ -24,7 +24,7 @@ const props = {
 };
 configure({ adapter: new Adapter() });
 
-describe('Canvas Component', () => {
+describe('Tags Component', () => {
 
   afterEach(() => {
     sandbox.restore();
