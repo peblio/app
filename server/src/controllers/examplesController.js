@@ -8,7 +8,7 @@ export function getExamples(req, res) {
     if (userFindError) {
       return res.status(500).send(userFindError);
     }
-    return Page.find({ user: user[0]._id }, (pageFindError, page) => {
+    return Page.find({ user: user[0]._id, deletedAt:null }, (pageFindError, page) => {
       if (pageFindError) {
         return res.status(500).send(pageFindError);
       }

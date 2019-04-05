@@ -9,7 +9,8 @@ const bucket = process.env.S3_BUCKET;
 import { buildPageForUpdateFromRequest } from '../models/creator/pageCreator';
 
 export async function getPage(req, res) {
-  return Page.find({ id: req.params.pageId }, (err, data) => {
+  return Page.find({ id: req.params.pageId,
+  deletedAt: null}, (err, data) => {
     if (err) {
       return res.status(500).send(err);
     }
@@ -23,7 +24,8 @@ export async function getPagesWithTag(req, res) {
   const sort = req.query.sort ? req.query.sort : 'title';
   var query = {
     tags: req.query.tag,
-    $or: [{ isPublished: true }, { isPublished: null }]
+    $or: [{ isPublished: true }, { isPublished: null }],
+    deletedAt: null
   };
   var options = {
     offset,
@@ -70,7 +72,10 @@ export async function savePage(req, res) {
 export async function deletePage(req, res) {
   const { pageId } = req.params;
   try {
-    await Page.deleteOne({ _id: pageId });
+    await Page.update({ _id: pageId },
+    {
+      deletedAt: Date.now()
+    });
     return res.sendStatus(204);
   } catch (err) {
     return res.status(500).send({ error: err.message });
@@ -133,7 +138,7 @@ export async function movePage(req, res) {
   const { folderId } = req.body;
 
   try {
-    const page = await Page.findOne({ _id: pageId }).exec();
+    const page = await Page.findOne({ _id: pageId, deletedAt:null }).exec();
     if (!page) {
       return res.status(404).send({ error: `Page with id ${pageId} not found` });
     }
@@ -159,7 +164,7 @@ export async function movePage(req, res) {
 }
 
 function findPageAndUpdate(req, res, user, pageWithUpdatedData) {
-  return Page.findOne({ id: req.body.id }, (pageFindError, retrievedPage) => {
+  return Page.findOne({ id: req.body.id, deletedAt:null }, (pageFindError, retrievedPage) => {
     if (pageFindError || !retrievedPage || !retrievedPage.user) {
       return res.status(500).send({ error: 'Could not retrieve page!'});
     }
@@ -176,5 +181,3 @@ function findPageAndUpdate(req, res, user, pageWithUpdatedData) {
     });
   });
 }
-
-
