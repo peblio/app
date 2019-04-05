@@ -399,6 +399,12 @@ App.propTypes = {
 
   workspace: PropTypes.shape({}).isRequired,
 
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.node,
+    }).isRequired,
+  }).isRequired,
+
   // pebl
   pageTitle: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,

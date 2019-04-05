@@ -73,6 +73,7 @@ class Iframe extends React.Component {
 Iframe.propTypes = {
   id: PropTypes.string.isRequired,
   iframeURL: PropTypes.string.isRequired,
+  isVisible: PropTypes.bool.isRequired,
   preview: PropTypes.bool.isRequired,
   setIframeURL: PropTypes.func.isRequired
 };
