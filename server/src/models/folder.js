@@ -36,4 +36,8 @@ folderSchema.pre('find', function() {
   this.where('deletedAt', null);
 });
 
+folderSchema.pre('findOne', function() {
+  this.where('deletedAt', null);
+});
+
 module.exports = mongoose.model('Folder', folderSchema);

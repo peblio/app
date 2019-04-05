@@ -138,7 +138,7 @@ export async function movePage(req, res) {
   const { folderId } = req.body;
 
   try {
-    const page = await Page.find({ _id: pageId}).exec();
+    const page = await Page.findOne({ _id: pageId}).exec();
     if (!page) {
       return res.status(404).send({ error: `Page with id ${pageId} not found` });
     }
@@ -164,7 +164,7 @@ export async function movePage(req, res) {
 }
 
 function findPageAndUpdate(req, res, user, pageWithUpdatedData) {
-  return Page.find({ id: req.body.id }, (pageFindError, retrievedPage) => {
+  return Page.findOne({ id: req.body.id }, (pageFindError, retrievedPage) => {
     if (pageFindError || !retrievedPage || !retrievedPage.user) {
       return res.status(500).send({ error: 'Could not retrieve page!'});
     }

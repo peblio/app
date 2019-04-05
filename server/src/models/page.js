@@ -30,4 +30,8 @@ pageSchema.pre('find', function() {
   this.where('deletedAt', null);
 });
 
+pageSchema.pre('findOne', function() {
+  this.where('deletedAt', null);
+});
+
 module.exports = mongoose.model('Page', pageSchema);

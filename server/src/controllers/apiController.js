@@ -82,7 +82,7 @@ function getSketches(req, res) {
     });
   } else {
     Promise.all([
-      Page.find({ user: user._id}).exec(),
+      Page.find({ user: user._id }).exec(),
       Folder.find({ user: user._id }).exec()
     ])
       .then(([pages, folders]) => {
