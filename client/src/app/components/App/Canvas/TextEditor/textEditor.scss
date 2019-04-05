@@ -36,7 +36,24 @@
   color:black;
 }
 
-.DraftEditor-editorContainer { // sass-lint:disable-line class-name-format
+%text-h1{
+  font-size: $h1-size;
+  line-height: $h1-line-height;
+  font-weight: 700;
+  color: $h1-color;
+  margin: 0;
+  border-bottom: $g5 solid $small-border;
+}
+
+%text-h2 {
+  font-size: $h2-size;
+  line-height: $h2-line-height;
+  font-weight: 600;
+  color: $h2-color;
+  margin: 0;
+}
+
+%text-normal {
   font-size: $p-size;
   font-family: $sourceSansPro;
   line-height: $p-line-height;
@@ -44,23 +61,29 @@
   margin: 0;
   padding: 0;
   color: $p-color;
+}
 
-  & h1{
-    font-size: $h1-size;
-    line-height: $h1-line-height;
-    font-weight: 700;
-    color: $h1-color;
-    margin: 0;
-    border-bottom: $g5 solid $small-border;
-  }
+.DraftEditor-editorContainer { // sass-lint:disable-line class-name-format
+  @extend %text-normal;
+    & span {
+     @extend %text-normal;
+    }
 
-  & h2{
-    font-size: $h2-size;
-    line-height: $h2-line-height;
-    font-weight: 600;
-    color: $h2-color;
-    margin: 0;
-  }
+    & h1{
+      @extend %text-h1;
+      & span {
+       @extend %text-h1;
+       border-bottom: none;
+      }
+    }
+
+    & h2{
+      @extend %text-h2;
+      & span {
+       @extend %text-h2;
+      }
+    }
+
 }
 
 .public-DraftStyleDefault-block { // sass-lint:disable-line class-name-format
