@@ -25,4 +25,9 @@ const pageSchema = new Schema({
   });
 
 pageSchema.plugin(mongoosePaginate);
+
+pageSchema.pre('find', function() {
+  this.where('deletedAt', null);
+});
+
 module.exports = mongoose.model('Page', pageSchema);

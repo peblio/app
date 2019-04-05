@@ -8,7 +8,8 @@ const folderSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   parent: { type: Schema.Types.ObjectId, ref: 'Folder' },
   title: { type: String, default: '' },
-  shortId: { type: String, default: shortid.generate, required: true, unique: true }
+  shortId: { type: String, default: shortid.generate, required: true, unique: true },
+  deletedAt: { type: Date, default: null }
 }, {
   timestamps: true,
   toJSON: { virtuals: true },

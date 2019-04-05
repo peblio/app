@@ -22,7 +22,7 @@ function authenticatePage(req, res) {
   if (!req.user) {
     res.send(false);
   } else {
-    Page.find({ id: req.params.id, deletedAt:null }, (err, data) => {
+    Page.find({ id: req.params.id }, (err, data) => {
       if (err) {
         res.send(false);
       } else {
@@ -71,7 +71,7 @@ function getSketches(req, res) {
       } else {
         user = data;
         Promise.all([
-          Page.find({ user: user._id , deletedAt:null}).exec(),
+          Page.find({ user: user._id }).exec(),
           Folder.find({ user: user._id }).exec()
         ])
           .then(([pages, folders]) => {
@@ -82,7 +82,7 @@ function getSketches(req, res) {
     });
   } else {
     Promise.all([
-      Page.find({ user: user._id , deletedAt:null}).exec(),
+      Page.find({ user: user._id}).exec(),
       Folder.find({ user: user._id }).exec()
     ])
       .then(([pages, folders]) => {

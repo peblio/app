@@ -23,7 +23,7 @@ export function getUserDetailsById(req, res) {
 }
 
 export function getUserDetailsForPage(req, res) {
-  return Page.findOne({ id: req.params.pageId , deletedAt:null}, (err, page) => {
+  return Page.find({ id: req.params.pageId }, (err, page) => {
     if (err || !page) {
       const statusCode = err ? 500 : 404;
       return res.status(statusCode).send(err);
@@ -34,12 +34,12 @@ export function getUserDetailsForPage(req, res) {
 };
 
 export function getUserDetailsForParentPage(req, res) {
-  return Page.findOne({ id: req.params.pageId, deletedAt:null }, (err, page) => {
+  return Page.find({ id: req.params.pageId }, (err, page) => {
     if (err || !page) {
       const statusCode = err ? 500 : 404;
       return res.status(statusCode).send(err);
     }
-    Page.findOne({ id: page.parentId, deletedAt:null }, (parentPageRetrieveError, parentPage) => {
+    Page.find({ id: page.parentId}, (parentPageRetrieveError, parentPage) => {
       if (parentPageRetrieveError || !parentPage) {
         const statusCode = parentPageRetrieveError ? 500 : 404;
         return res.status(statusCode).send(parentPageRetrieveError);
