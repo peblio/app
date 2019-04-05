@@ -18,7 +18,7 @@ const pageRoutes = require('./routes/pageRoutes.js');
 const logRoutes = require('./routes/logRoutes.js');
 const authRoutes = require('./controllers/authController.js');
 const folderRoutes = require('./controllers/folderController');
-const apiRoutes = require('./controllers/apiController.js');
+const apiRoutes = require('./routes/apiRoutes.js');
 
 require('./config/passport');
 
