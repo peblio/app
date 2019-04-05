@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Tooltip from 'react-tooltip-lite';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -202,40 +203,44 @@ class MainToolbar extends React.Component {
               </button>
               <div className="main-toolbar__spacer"></div>
               <div className="main-toolbar__pref-container">
-                <button
-                  className="main-toolbar__button "
-                  onMouseDown={this.props.togglePreferencesPanel}
-                  data-test="main-toolbar__preferences-button"
-                >
-                  <PreferencesSVG
-                    className={classNames(prefButtonClassName)}
-                    alt="open preferences"
-                  />
-                </button>
+                <Tooltip content="Settings">
+                  <button
+                    className="main-toolbar__button "
+                    onMouseDown={this.props.togglePreferencesPanel}
+                    data-test="main-toolbar__preferences-button"
+                  >
+                    <PreferencesSVG
+                      className={classNames(prefButtonClassName)}
+                      alt="open preferences"
+                    />
+                  </button>
+                </Tooltip>
                 {this.props.isPreferencesPanelOpen && <Preferences />}
               </div>
               <div className="main-toolbar__spacer"></div>
 
               {this.props.name ? (
                 <div>
-                  <button
-                    onMouseDown={this.props.toggleAccountDropdown}
-                    onKeyDown={this.props.toggleAccountDropdown}
-                    onBlur={() => {
-                      setTimeout(() => {
-                        if (this.props.isAccountDropdownOpen) {
-                          this.props.toggleAccountDropdown();
-                        }
-                      }, 50);
-                    }}
-                    className="main-toolbar__account-button"
-                    data-test="account-button"
-                  >
-                    <AccountSVG
-                      alt="account profile"
-                      className="account-man"
-                    />
-                  </button>
+                  <Tooltip content="Account">
+                    <button
+                      onMouseDown={this.props.toggleAccountDropdown}
+                      onKeyDown={this.props.toggleAccountDropdown}
+                      onBlur={() => {
+                        setTimeout(() => {
+                          if (this.props.isAccountDropdownOpen) {
+                            this.props.toggleAccountDropdown();
+                          }
+                        }, 50);
+                      }}
+                      className="main-toolbar__account-button"
+                      data-test="account-button"
+                    >
+                      <AccountSVG
+                        alt="account profile"
+                        className="account-man"
+                      />
+                    </button>
+                  </Tooltip>
                   {this.props.isAccountDropdownOpen && (
                     <div className="main-toolbar__account">
                       <ul className="main-toolbar__list">

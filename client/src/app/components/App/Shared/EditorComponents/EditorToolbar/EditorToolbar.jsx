@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
+import Tooltip from 'react-tooltip-lite';
 import PropTypes from 'prop-types';
 import axiosOrg from 'axios';
 import URL from 'url';
@@ -139,23 +140,27 @@ class EditorToolbar extends React.Component {
                 {this.props.editorMode}
               </p>
             )}
-            <button
-              className={`editor-toolbar__svg ${this.props.isPlaying ? 'editor-toolbar--isPlaying' : ''}`}
-              onClick={() => {
-                this.props.playCode();
-                if (this.props.isPlaying) { this.props.startCodeRefresh(); }
-              }}
-              data-test='play-sketch-button'
-            >
-              <PlaySVG alt='Run Code' />
-            </button>
-            <button
-              className={`editor-toolbar__svg ${!this.props.isPlaying ? 'editor-toolbar--isPaused' : ''}`}
-              onClick={this.props.stopCode}
-              data-test='pause-sketch-button'
-            >
-              <PauseSVG alt='Pause Code' />
-            </button>
+            <Tooltip content="Run Code">
+              <button
+                className={`editor-toolbar__svg ${this.props.isPlaying ? 'editor-toolbar--isPlaying' : ''}`}
+                onClick={() => {
+                  this.props.playCode();
+                  if (this.props.isPlaying) { this.props.startCodeRefresh(); }
+                }}
+                data-test='play-sketch-button'
+              >
+                <PlaySVG alt='Run Code' />
+              </button>
+            </Tooltip>
+            <Tooltip content="Stop Code">
+              <button
+                className={`editor-toolbar__svg ${!this.props.isPlaying ? 'editor-toolbar--isPaused' : ''}`}
+                onClick={this.props.stopCode}
+                data-test='pause-sketch-button'
+              >
+                <PauseSVG alt='Pause Code' />
+              </button>
+            </Tooltip>
           </div>
           <div className='editor-toolbar__button-container-right'>
             {this.props.container === 'workspace' && (
