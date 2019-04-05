@@ -25,8 +25,7 @@ export async function getPagesWithTag(req, res) {
   const sort = req.query.sort ? req.query.sort : 'title';
   var query = {
     tags: req.query.tag,
-    $or: [{ isPublished: true }, { isPublished: null }],
-    deletedAt: null
+    $or: [{ isPublished: true }, { isPublished: null }]
   };
   var options = {
     offset,

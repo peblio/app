@@ -32,4 +32,8 @@ folderSchema.virtual('files', {
 
 folderSchema.plugin(autopopulate);
 
+folderSchema.pre('find', function() {
+  this.where('deletedAt', null);
+});
+
 module.exports = mongoose.model('Folder', folderSchema);
