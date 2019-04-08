@@ -59,7 +59,8 @@ export function getSketches(req, res) {
     }
   }
   let user = req.user;
-  const sortBy = req.query.sortBy ? req.query.sortBy : {'updatedAt': -1};
+  const folderSortBy = {'updatedAt': -1};
+  const fileSortBy = req.query.sortBy ? req.query.sortBy : {'updatedAt': -1};
   if (req.params.user) {
     User.findOne({ name: req.params.user }, (userFindError, data) => {
       if (userFindError || !data) {
@@ -70,8 +71,8 @@ export function getSketches(req, res) {
         user = data;
         
         Promise.all([
-          Page.find({ user: user._id }).sort(sortBy).exec(),
-          Folder.find({ user: user._id }).exec()
+          Page.find({ user: user._id }).sort(fileSortBy).exec(),
+          Folder.find({ user: user._id }).sort(folderSortBy).exec()
         ])
           .then(([pages, folders]) => {
             res.status(200).send({ pages, folders });
@@ -81,8 +82,8 @@ export function getSketches(req, res) {
     });
   } else {
     Promise.all([
-      Page.find({ user: user._id }).sort(sortBy).exec(),
-      Folder.find({ user: user._id }).exec()
+      Page.find({ user: user._id }).sort(fileSortBy).exec(),
+      Folder.find({ user: user._id }).sort(folderSortBy).exec()
     ])
       .then(([pages, folders]) => {
         res.send({ pages, folders });
