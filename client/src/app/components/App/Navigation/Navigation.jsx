@@ -35,14 +35,14 @@ class Navigation extends React.Component {
   render() {
     return (
       <div>
-        <Tooltip content="Table of Contents">
-          <button
-            className="navigation__open-button"
-            onClick={this.props.openNavigationContent}
-          >
+        <button
+          className="navigation__open-button"
+          onClick={this.props.openNavigationContent}
+        >
+          <Tooltip content="Table of Contents">
             <i className="fas fa-bars"></i>
-          </button>
-        </Tooltip>
+          </Tooltip>
+        </button>
         {this.props.isNavigationOpen && (
           <section
             className={`navigation__container ${this.props.preview ? 'navigation__container--expanded' : ''}`}

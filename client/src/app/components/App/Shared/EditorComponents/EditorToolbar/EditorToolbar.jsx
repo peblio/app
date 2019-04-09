@@ -239,23 +239,22 @@ class EditorToolbar extends React.Component {
                   key={file.id}
                   className='editor-toolbar__file'
                 >
-                  <p className='editor-toolbar__file-name'>
-                    {file.name}
-                  </p>
-                  <button
-                    onClick={() => {
-                      this.props.setCurrentFile(index);
-                    }}
-                    disabled={isImage}
-                    className={
-                      `editor-toolbar__file-button
+                  <Tooltip content={file.name}>
+                    <button
+                      onClick={() => {
+                        this.props.setCurrentFile(index);
+                      }}
+                      disabled={isImage}
+                      className={
+                        `editor-toolbar__file-button
                     ${(this.props.currentFile === index) ? 'editor-toolbar__file-button--selected' : ''}
                     ${(isImage) ? 'editor-toolbar__file-button-static' : ''}`
-                    }
-                    data-test="editor-toolbar__file-name"
-                  >
-                    {file.name}
-                  </button>
+                      }
+                      data-test="editor-toolbar__file-name"
+                    >
+                      {file.name}
+                    </button>
+                  </Tooltip>
                 </li>
               );
             })
@@ -265,13 +264,15 @@ class EditorToolbar extends React.Component {
 
           (
             <li key='add-media' className='editor-toolbar__file'>
-              <button
-                className="editor-toolbar__file-button"
-                onClick={this.openFileUpload}
-                data-test='editor-toolbar__add-file-button'
-              >
-                <i className="fas fa-plus"></i>
-              </button>
+              <Tooltip content="Add Image">
+                <button
+                  className="editor-toolbar__file-button"
+                  onClick={this.openFileUpload}
+                  data-test='editor-toolbar__add-file-button'
+                >
+                  <i className="fas fa-plus"></i>
+                </button>
+              </Tooltip>
             </li>
           )
           }

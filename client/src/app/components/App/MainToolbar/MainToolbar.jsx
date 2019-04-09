@@ -167,10 +167,16 @@ class MainToolbar extends React.Component {
             data-test="main-toolbar__title"
           />
           {this.props.preview || (
-            <span
-              className="fa fa-pencil-alt main-toolbar__search-icon"
-            >
-            </span>
+            <div className="main-toolbar__pencil-container">
+              <Tooltip
+                content="Page Title"
+              >
+                <span
+                  className="fa fa-pencil-alt main-toolbar__search-icon"
+                >
+                </span>
+              </Tooltip>
+            </div>
           )}
           <div className="main-toolbar__div-right">
             <div className="main-toolbar__div-right-inside">
