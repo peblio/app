@@ -66,21 +66,24 @@
 .DraftEditor-editorContainer { // sass-lint:disable-line class-name-format
   @extend %text-normal;
     & span {
-     @extend %text-normal;
+      font-size: $p-size;
+      line-height: $p-line-height;
     }
 
     & h1{
       @extend %text-h1;
       & span {
-       @extend %text-h1;
-       border-bottom: none;
+        font-size: $h1-size;
+        line-height: $h1-line-height;
+        border-bottom: none;
       }
     }
 
     & h2{
       @extend %text-h2;
       & span {
-       @extend %text-h2;
+        font-size: $h2-size;
+        line-height: $h2-line-height;
       }
     }
 
