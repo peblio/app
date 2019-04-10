@@ -49,7 +49,6 @@
     "passport-local": "^1.0.0",
     "prop-types": "^15.6.0",
     "python-js": "^0.9.8",
-    "serve": "^6.0.2",
     "shortid": "^2.2.8"
   },
   "devDependencies": {
