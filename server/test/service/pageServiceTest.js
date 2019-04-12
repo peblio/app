@@ -47,7 +47,6 @@ let findOnePageExecStub;
 let findOnePageStub;
 let updateUserSpy;
 let updateUserExecStub;
-let deleteOnePageSpy;
 let updatePageSpy;
 let folderCountStub;
 let folderCountExecStub;
@@ -351,21 +350,21 @@ describe('pageService', () => {
 
     it('shall return error is deleting page fails', async () => {
       response.status = createResponseWithStatusCode(500);
-      deleteOnePageSpy = sandbox.stub(Page, 'deleteOne').throws({ message: 'Could not delete page' });
+      updatePageSpy = sandbox.stub(Page, 'update').throws({ message: 'Could not delete page' });
 
       await deletePage(request, response);
 
-      assertDeleteOnePageWasCalledWithPageId();
+      assertPageWasUpdatedWithDeletedAtDetails();
       assertSendWasCalledWith({ error: 'Could not delete page' });
     });
 
     it('shall return success after page is deleted', async () => {
       response.sendStatus = createResponseWithStatusCode(204);
-      deleteOnePageSpy = sandbox.stub(Page, 'deleteOne');
+      updatePageSpy = sandbox.stub(Page, 'update');
 
       await deletePage(request, response);
 
-      assertDeleteOnePageWasCalledWithPageId();
+      assertPageWasUpdatedWithDeletedAtDetails();
       assert.notCalled(response.send);
     });
   });
@@ -669,8 +668,8 @@ function assertFindOnePageWasCalledWithPageId() {
   assertStubWasCalledOnceWith(findOnePageStub, { id: pageData.id });
 }
 
-function assertDeleteOnePageWasCalledWithPageId() {
-  assertStubWasCalledOnceWith(deleteOnePageSpy, { _id: newPageId });
+function assertPageWasUpdatedWithDeletedAtDetails() {
+  assertStubWasCalledOnceWith(updatePageSpy, { _id: newPageId }, { deletedAt: Date.now() });
 }
 
 function assertUpdateUserWasCalledWithPageId() {
