@@ -59,8 +59,8 @@ export function getSketches(req, res) {
     }
   }
   let user = req.user;
-  const folderSortBy = {'updatedAt': -1};
-  const fileSortBy = req.query.sortBy ? req.query.sortBy : {'updatedAt': -1};
+  const folderSortBy = req.query.folderSortBy ? req.query.folderSortBy : {'updatedAt': -1};
+  const fileSortBy = req.query.fileSortBy ? req.query.fileSortBy : {'updatedAt': -1};
   if (req.params.user) {
     User.findOne({ name: req.params.user }, (userFindError, data) => {
       if (userFindError || !data) {
