@@ -108,6 +108,7 @@ export function closeForkPrompt() {
 }
 
 export function viewLoginModal() {
+  console.log('open login modal');
   return (dispatch) => {
     dispatch({
       type: ActionTypes.VIEW_LOGIN_MODAL

@@ -16,8 +16,8 @@ test('are menu items displayed', async (t) => {
     .expect(Selector('[data-test=main-toolbar__save-button]').exists).ok()
     .expect(Selector('[data-test=main-toolbar__preferences-button]').exists).ok()
     .expect(Selector('[data-test=main-toolbar__share-button]').exists).ok()
-    .expect(Selector('[data-test=main-toolbar__login-button]').exists).ok()
-    .expect(Selector('[data-test=main-toolbar__signup-button]').exists).ok()
+    .expect(Selector('[data-test=user-account__login-button]').exists).ok()
+    .expect(Selector('[data-test=user-account__signup-button]').exists).ok()
     .expect(Selector('[data-test=account-button]').exists).notOk();
 });
 
@@ -41,22 +41,22 @@ fixture('Main Menu when student logged in')
 
 test('are menu items displayed', async (t) => {
   await t
-    .expect(Selector('[data-test=main-toolbar__login-button]').exists).notOk()
-    .expect(Selector('[data-test=main-toolbar__signup-button]').exists).notOk()
+    .expect(Selector('[data-test=user-account__login-button]').exists).notOk()
+    .expect(Selector('[data-test=user-account__signup-button]').exists).notOk()
     .expect(Selector('[data-test=account-button]').exists).ok();
 });
 
 test('account man contents', async(t) => {
   await t
     .click(Selector('[data-test=account-button]'))
-    .expect(Selector('[data-test=main-toolbar__profile-link]').exists).notOk()
-    .expect(Selector('[data-test=main-toolbar__logout-button]').exists).ok();
+    .expect(Selector('[data-test=user-account__profile-link]').exists).notOk()
+    .expect(Selector('[data-test=user-account__logout-button]').exists).ok();
 });
 
 test('logging out', async(t) => {
   await t
     .click(Selector('[data-test=account-button]'))
-    .click(Selector('[data-test=main-toolbar__logout-button]'))
+    .click(Selector('[data-test=user-account__logout-button]'))
     .expect(Selector('[data-test=account-button]').exists).notOk();
 });
 
@@ -80,15 +80,15 @@ fixture('Main Menu when teacher logged in')
 test('account man contents', async(t) => {
   await t
     .click(Selector('[data-test=account-button]'))
-    .expect(Selector('[data-test=main-toolbar__profile-link]').exists).ok()
-    .expect(Selector('[data-test=main-toolbar__logout-button]').exists).ok();
+    .expect(Selector('[data-test=user-account__profile-link]').exists).ok()
+    .expect(Selector('[data-test=user-account__logout-button]').exists).ok();
 });
 
 test('navigate to profile', async(t) => {
   const getLocation = ClientFunction(() => document.location.href);
   await t
     .click(Selector('[data-test=account-button]'))
-    .click(Selector('[data-test=main-toolbar__profile-link]'))
+    .click(Selector('[data-test=user-account__profile-link]'))
     .expect(getLocation()).contains(`${config.baseUrl}/user/${teacherUser.name}`);
 });
 

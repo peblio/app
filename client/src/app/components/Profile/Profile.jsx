@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import Details from './Details/Details';
 import Pebls from './Pebls/Pebls';
+import UserAccount from '../Shared/UserAccount/UserAccount.jsx';
 
 import * as profileActions from '../../action/profile';
 import * as userActions from '../../action/user';
@@ -39,6 +40,9 @@ class Profile extends React.Component {
               profileName={userName}
               folderShortId={this.props.match.params.folderShortId}
             />
+            <div className="user-account__container">
+              <UserAccount />
+            </div>
           </div>
         )}
       </div>
