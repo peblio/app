@@ -9,15 +9,19 @@ const bucket = process.env.S3_BUCKET;
 import { buildPageForUpdateFromRequest } from '../models/creator/pageCreator';
 
 export async function getPage(req, res) {
-  return Page.find({
-    id: req.params.pageId
-  }, (err, data) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-    return res.status(200).send(data);
-  });
+ return Page.find({
+   id: req.params.pageId
+ }, (err, data) => {
+   if (err) {
+     return res.status(500).send(err);
+   }
+   if(!data){
+     return res.status(404).send();
+   }
+   return res.status(200).send(data);
+ });
 }
+
 
 export async function getPagesWithTag(req, res) {
   const offset = req.query.offset ? parseInt(req.query.offset) : 0;

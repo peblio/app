@@ -115,6 +115,16 @@ describe('pageService', () => {
       assertFindWasCalledWithPageId();
       assertSendWasCalledWith(error);
     });
+
+    it('shall return 404 when page not found', () => {
+      response.status = createResponseWithStatusCode(404);
+      findSpy = sandbox.stub(Page, 'find').yields(null, null);
+
+      getPage(request, response);
+
+      assertFindWasCalledWithPageId();
+      assert.calledOnce(response.send);
+    });
   });
 
   describe('getPagesWithTag', () => {
@@ -386,7 +396,7 @@ describe('pageService', () => {
     });
 
     it('shall return unauthorized error when page to be updated is not owned by user trying to update it', async () => {
-      pageData.user = ObjectId("507f1f77bcf86cd799439011");
+      pageData.user = ObjectId('507f1f77bcf86cd799439011');
       response.status = createResponseWithStatusCode(403);
       buildPageForUpdateFromRequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromRequest').returns(pageData);
       findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, pageData);
@@ -605,7 +615,7 @@ function assertUpdatePageWasCalledWithLatestPageData() {
 }
 
 function assertFindWasCalledWithPageId() {
-  assertStubWasCalledOnceWith(findSpy, { id: pageId })
+  assertStubWasCalledOnceWith(findSpy, { id: pageId });
 }
 
 function assertFolderCountWasCalledWithFolderId() {
