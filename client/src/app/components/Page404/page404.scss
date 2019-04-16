@@ -1,0 +1,23 @@
+@import 'variables';
+
+.page404 {
+  &__container {
+    background: $black;
+  }
+  &__nav {
+    display: flex;
+  }
+  &__sub-container {
+    background: $g7;
+    height: 100%;
+  }
+  &__heading {
+    font-family: $roboto;
+    font-size: $h2-size;
+    font-weight: 400;
+    color: $black;
+    display: flex;
+    justify-content: center;
+    padding-top: 10rem;
+  }
+}
