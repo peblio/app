@@ -27,10 +27,6 @@ class UserAccount extends React.Component {
     this.props.fetchCurrentUser();
   }
 
-  componentDidUpdate() {
-    console.log(this.props.name);
-  }
-
   logout = () => {
     this.props.logoutUser(this.props.name).then(() => {
       if (this.props.container === 'app') {

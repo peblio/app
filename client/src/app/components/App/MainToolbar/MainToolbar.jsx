@@ -21,7 +21,6 @@ require('./mainToolbar.scss');
 
 class MainToolbar extends React.Component {
   componentDidMount() {
-    console.log(this.props.location);
     this.autoSaveTimeout = setInterval(() => {
       if (
         this.props.name && this.props.canEdit && this.props.unsavedChanges &&

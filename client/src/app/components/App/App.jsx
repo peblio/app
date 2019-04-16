@@ -52,7 +52,6 @@ class App extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(this.props.name);
     if (prevProps.match.params.id !== this.props.match.params.id) {
       window.location.reload(true);
     }
