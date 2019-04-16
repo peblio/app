@@ -168,16 +168,6 @@
 
 
 .editor-toolbar {
-  &__file-name {
-    display: none;
-    position: absolute;
-    top: -2px;
-    background: $g6;
-    border: $light-black $small-border solid;
-    width: fit-content;
-    padding: 0 $small-padding;
-    font-size: $small-font-size;
-  }
   &__image-upload-gif {
     margin: 0 auto;
   }
@@ -313,9 +303,7 @@
             border: none;
           }
         }
-        &:hover .editor-toolbar__file-name {
-          display: block;
-        }
+      
       }
 
     }
