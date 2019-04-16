@@ -33,7 +33,9 @@ class UserAccount extends React.Component {
 
   logout = () => {
     this.props.logoutUser(this.props.name).then(() => {
-      history.push('/');
+      if (this.props.container === 'app') {
+        history.push('/');
+      }
     });
   }
 
@@ -102,17 +104,34 @@ class UserAccount extends React.Component {
                   </li>
                   {(this.props.userType === 'student') || (
                     <li className="user-account__list-item">
-                      <a
-                        className="user-account__link"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={`/user/${this.props.name}`}
-                        onMouseDown={(e) => { e.preventDefault(); }}
-                        onKeyDown={(e) => { e.preventDefault(); }}
-                        data-test="user-account__profile-link"
-                      >
-                      Profile
-                      </a>
+                      {this.props.container === 'app'
+                        ? (
+                          <a
+                            className="user-account__link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href={`/user/${this.props.name}`}
+                            onMouseDown={(e) => { e.preventDefault(); }}
+                            onKeyDown={(e) => { e.preventDefault(); }}
+                            data-test="user-account__profile-link"
+                          >
+                          Profile
+                          </a>
+                        )
+                        : (
+                          <a
+                            className="user-account__link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href='/'
+                            onMouseDown={(e) => { e.preventDefault(); }}
+                            onKeyDown={(e) => { e.preventDefault(); }}
+                            data-test="user-account__profile-link"
+                          >
+                          Workspace
+                          </a>
+                        )
+                      }
                     </li>
                   )}
                   <li className="user-account__list-item">
@@ -174,6 +193,8 @@ class UserAccount extends React.Component {
 UserAccount.propTypes = {
   closeLoginModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
+  container: PropTypes.string.isRequired,
+  fetchCurrentUser: PropTypes.func.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,
   isLoginModalOpen: PropTypes.bool.isRequired,
   isSignUpModalOpen: PropTypes.bool.isRequired,

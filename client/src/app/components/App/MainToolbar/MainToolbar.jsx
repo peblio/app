@@ -209,6 +209,7 @@ class MainToolbar extends React.Component {
               </div>
               <div className="main-toolbar__spacer"></div>
               <UserAccount
+                container='app'
                 location={this.props.location}
               />
 
