@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Tooltip from 'react-tooltip-lite';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -38,7 +39,9 @@ class Navigation extends React.Component {
           className="navigation__open-button"
           onClick={this.props.openNavigationContent}
         >
-          <i className="fas fa-bars"></i>
+          <Tooltip content="Table of Contents">
+            <i className="fas fa-bars"></i>
+          </Tooltip>
         </button>
         {this.props.isNavigationOpen && (
           <section
@@ -46,19 +49,23 @@ class Navigation extends React.Component {
           >
             <nav className="navigation__options">
               {this.props.preview || (
+                <Tooltip content="Refresh">
+                  <button
+                    className="navigation__option-button"
+                    onClick={() => { this.props.createNavigationContent(this.props.layout); }}
+                  >
+                    <i className="fas fa-redo"></i>
+                  </button>
+                </Tooltip>
+              )}
+              <Tooltip content="Close">
                 <button
                   className="navigation__option-button"
-                  onClick={() => { this.props.createNavigationContent(this.props.layout); }}
+                  onClick={this.props.closeNavigationContent}
                 >
-                  <i className="fas fa-redo"></i>
+                  <i className="fas fa-times"></i>
                 </button>
-              )}
-              <button
-                className="navigation__option-button"
-                onClick={this.props.closeNavigationContent}
-              >
-                <i className="fas fa-times"></i>
-              </button>
+              </Tooltip>
             </nav>
             <li className="navigation__items">
               {

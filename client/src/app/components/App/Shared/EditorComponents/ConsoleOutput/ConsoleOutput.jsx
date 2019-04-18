@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Tooltip from 'react-tooltip-lite';
 import ReactHtmlParser from 'react-html-parser';
 
 require('./consoleOutput.scss');
@@ -15,11 +16,13 @@ class ConsoleOutput extends React.Component {
           onClick={this.props.toggleConsole}
         >
           <p className="console__heading"> Console </p>
-          <button
-            className="console__toggle"
-          >
-            {ReactHtmlParser(toggleButton)}
-          </button>
+          <Tooltip content="Toggle Console">
+            <button
+              className="console__toggle"
+            >
+              {ReactHtmlParser(toggleButton)}
+            </button>
+          </Tooltip>
         </nav>
         {this.props.isConsoleOpen && (
           <p className="console__output-text">

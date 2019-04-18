@@ -49,7 +49,6 @@ const userSchema = new Schema({
   studentBirthday: { type: Date },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
-  pages: { type: Array },
   loginType: {
     type: 'string',
     enum: ['password', 'google'],

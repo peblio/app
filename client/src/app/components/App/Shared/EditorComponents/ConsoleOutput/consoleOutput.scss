@@ -22,6 +22,8 @@
   font-family: $roboto;
   padding: $small-padding/2;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
 }
 .console__heading{
   display: inline-block;

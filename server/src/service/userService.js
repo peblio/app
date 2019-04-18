@@ -39,7 +39,7 @@ export function getUserDetailsForParentPage(req, res) {
       const statusCode = err ? 500 : 404;
       return res.status(statusCode).send(err);
     }
-    Page.findOne({ id: page.parentId }, (parentPageRetrieveError, parentPage) => {
+    Page.findOne({ id: page.parentId}, (parentPageRetrieveError, parentPage) => {
       if (parentPageRetrieveError || !parentPage) {
         const statusCode = parentPageRetrieveError ? 500 : 404;
         return res.status(statusCode).send(parentPageRetrieveError);
