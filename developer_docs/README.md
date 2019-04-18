@@ -87,6 +87,17 @@ cd server
 npm test
 ```
 
+### Unit Tests For Client
+
+We have used enzyme to test react components along with chai, mocha, sinon
+You can run the from root folder by running
+```
+cd client 
+npm test
+```
+
+
+
 ## Git Workflow
 
 The expected git workflow for feature development is:

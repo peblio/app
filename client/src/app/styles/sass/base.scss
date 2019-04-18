@@ -67,4 +67,14 @@ button {
   width: 1px;
   background-color: #A2AEB5;
   margin: $medium-margin 0;
+
+.react-tooltip-lite {
+  background: $light-black;
+  color: $white;
+  font-size: $small-font-size;
+}
+
+.react-tooltip-lite-arrow {
+  border-color: $light-black;
+
 }

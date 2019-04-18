@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Tooltip from 'react-tooltip-lite';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -158,10 +159,16 @@ class MainToolbar extends React.Component {
             data-test="main-toolbar__title"
           />
           {this.props.preview || (
-            <span
-              className="fa fa-pencil-alt main-toolbar__search-icon"
-            >
-            </span>
+            <div className="main-toolbar__pencil-container">
+              <Tooltip
+                content="Page Title"
+              >
+                <span
+                  className="fa fa-pencil-alt main-toolbar__search-icon"
+                >
+                </span>
+              </Tooltip>
+            </div>
           )}
           <div className="main-toolbar__div-right">
             <div className="main-toolbar__div-right-inside">
@@ -194,16 +201,18 @@ class MainToolbar extends React.Component {
               </button>
               <div className="main-toolbar__spacer"></div>
               <div className="main-toolbar__pref-container">
-                <button
-                  className="main-toolbar__button "
-                  onMouseDown={this.props.togglePreferencesPanel}
-                  data-test="main-toolbar__preferences-button"
-                >
-                  <PreferencesSVG
-                    className={classNames(prefButtonClassName)}
-                    alt="open preferences"
-                  />
-                </button>
+                <Tooltip content="Settings">
+                  <button
+                    className="main-toolbar__button "
+                    onMouseDown={this.props.togglePreferencesPanel}
+                    data-test="main-toolbar__preferences-button"
+                  >
+                    <PreferencesSVG
+                      className={classNames(prefButtonClassName)}
+                      alt="open preferences"
+                    />
+                  </button>
+                </Tooltip>
                 {this.props.isPreferencesPanelOpen && <Preferences />}
               </div>
               <div className="main-toolbar__spacer"></div>

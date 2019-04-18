@@ -12,6 +12,9 @@
 .main-toolbar__container{
   width: 100%;
 }
+.main-toolbar__pencil-container{
+  display: inline-block;
+}
 
 .main-toolbar{
   background-color: $black;
@@ -40,6 +43,7 @@
     display: flex;
     position: relative;
     justify-content: center;
+    align-items: center;
   }
 }
 
