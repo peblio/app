@@ -60,7 +60,6 @@ describe('UserAccount component when logged in as teacher', () => {
   });
 });
 
-
 describe('UserAccount component when logged in as student', () => {
   beforeEach(() => {
     store = mockStore({
@@ -89,5 +88,37 @@ describe('UserAccount component when logged in as student', () => {
     expect(wrapper.find('.user-account__account-button')).to.have.lengthOf(1);
     expect(wrapper.find('.user-account__welcome')).to.have.lengthOf(1);
     expect(wrapper.find('.user-account__link')).to.have.lengthOf(1);
+  });
+});
+
+
+describe('UserAccount component when not logged in', () => {
+  beforeEach(() => {
+    store = mockStore({
+      mainToolbar: {
+        isAccountDropdownOpen: true
+      },
+      user: {
+        name: '',
+        type: ''
+      }
+    });
+    props = {
+      container: 'profile',
+      location: {
+        pathname: ''
+      }
+    };
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
+  it('renders 1 link, and account button', () => {
+    wrapper = shallow(<UserAccount store={store} />).dive();
+    expect(wrapper.find('.user-account__button')).to.have.lengthOf(2);
+    expect(wrapper.find('.user-account__button').first().text()).to.equal('Log In');
+    expect(wrapper.find('.user-account__button').last().text()).to.equal('Sign Up');
   });
 });
