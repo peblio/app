@@ -15,7 +15,7 @@ export async function getPage(req, res) {
    if (err) {
      return res.status(500).send(err);
    }
-   if(!data){
+   if(!data || !data.length){
      return res.status(404).send();
    }
    return res.status(200).send(data);
