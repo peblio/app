@@ -98,12 +98,12 @@ describe('pageService', () => {
     });
 
     it('shall retrieve page by id', () => {
-      findSpy = sandbox.stub(Page, 'find').yields(null, pageData);
+      findSpy = sandbox.stub(Page, 'find').yields(null, [pageData]);
 
       getPage(request, response);
 
       assertFindWasCalledWithPageId();
-      assertSendWasCalledWith(pageData);
+      assertSendWasCalledWith([pageData]);
     });
 
     it('shall return error when retrieve page by id fails', () => {
