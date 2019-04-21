@@ -125,6 +125,17 @@ describe('pageService', () => {
       assertFindWasCalledWithPageId();
       assert.calledOnce(response.send);
     });
+
+    it('shall return 404 when page not found', () => {
+      response.status = createResponseWithStatusCode(404);
+      findSpy = sandbox.stub(Page, 'find').yields(null, []);
+
+      getPage(request, response);
+
+      assertFindWasCalledWithPageId();
+      assert.calledOnce(response.send);
+    });
+
   });
 
   describe('getPagesWithTag', () => {
