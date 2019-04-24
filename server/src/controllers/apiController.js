@@ -59,6 +59,8 @@ export function getSketches(req, res) {
     }
   }
   let user = req.user;
+  const folderSortBy = req.query.folderSortBy ? req.query.folderSortBy : {'updatedAt': -1};
+  const fileSortBy = req.query.fileSortBy ? req.query.fileSortBy : {'updatedAt': -1};
   if (req.params.user) {
     User.findOne({ name: req.params.user }, (userFindError, data) => {
       if (userFindError || !data) {
@@ -67,9 +69,10 @@ export function getSketches(req, res) {
         res.status(403).send({ error: 'This users data cannot be accessed' });
       } else {
         user = data;
+        
         Promise.all([
-          Page.find({ user: user._id }).exec(),
-          Folder.find({ user: user._id }).exec()
+          Page.find({ user: user._id }).sort(fileSortBy).exec(),
+          Folder.find({ user: user._id }).sort(folderSortBy).exec()
         ])
           .then(([pages, folders]) => {
             res.status(200).send({ pages, folders });
@@ -79,8 +82,8 @@ export function getSketches(req, res) {
     });
   } else {
     Promise.all([
-      Page.find({ user: user._id }).exec(),
-      Folder.find({ user: user._id }).exec()
+      Page.find({ user: user._id }).sort(fileSortBy).exec(),
+      Folder.find({ user: user._id }).sort(folderSortBy).exec()
     ])
       .then(([pages, folders]) => {
         res.send({ pages, folders });
