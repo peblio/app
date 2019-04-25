@@ -85,9 +85,7 @@ class Account extends React.Component {
             </div>
           )}
           <div className="details__text-primary">
-            {' '}
             {this.props.name}
-            {' '}
           </div>
 
           <textarea

@@ -46,7 +46,7 @@ export function fetchAllPages(profileName) {
   return (dispatch, getState) => {
     let url = '/sketches';
     if (profileName) {
-      url = `${url}/${profileName}`;
+      url = `${url}/${profileName}?folderSortBy=title&fileSortBy=title`;
     } else {
       const { user } = getState();
       if (!user.name) {

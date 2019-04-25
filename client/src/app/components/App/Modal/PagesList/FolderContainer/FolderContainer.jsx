@@ -109,8 +109,7 @@ const mapStateToProps = (state, ownProps) => ({
     .filter(folder => folder.parent === ownProps.folderId)
     .sort(compareTimestamps),
   childPages: Object.values(state.page.pages.byId)
-    .filter(page => page.folder === ownProps.folderId)
-    .sort(compareTimestamps),
+    .filter(page => page.folder === ownProps.folderId),
   folder: state.page.folders.byId[ownProps.folderId]
 });
 

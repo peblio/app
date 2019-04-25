@@ -32,6 +32,7 @@ import { loadWorkspace } from '../../action/workspace.js';
 
 import axios from '../../utils/axios';
 import { saveLog } from '../../utils/log';
+import history from '../../utils/history';
 
 require('./app.scss');
 
@@ -149,6 +150,11 @@ class App extends React.Component {
             .then((res1) => {
               this.props.setEditAccess(res1.data);
             });
+        })
+        .catch((err) => {
+          if (err.response.status === 404) {
+            history.push('/404');
+          }
         });
     }
     this.props.fetchCurrentUser()
