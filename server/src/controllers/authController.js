@@ -12,6 +12,7 @@ function loginWithGoogle(req, res) {
   const type = req.body.userType;
   const requiresGuardianConsent = req.body.requiresGuardianConsent;
   const guardianEmail = req.body.guardianEmail;
+  const name = req.body.name;
   const guardianConsentedAt = (requiresGuardianConsent === true) ? new Date() : '';
   const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
   return client.verifyIdToken({
@@ -34,7 +35,8 @@ function loginWithGoogle(req, res) {
           isVerified: true,
           requiresGuardianConsent,
           guardianEmail,
-          guardianConsentedAt
+          guardianConsentedAt,
+          name
         });
         userPromise = newUser.save();
       }
