@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import { setStudentBirthday, setGuardianEmail } from '../../../../../action/user.js';
+import SignUpUsername from '../SignUpUsername.jsx';
 
 
 class StudentBirthDateDetails extends React.Component {
@@ -87,6 +88,9 @@ class StudentBirthDateDetails extends React.Component {
   }
 
   render() {
+    if (this.state.renderCreateUserNameScreen) {
+      return (<SignUpUsername />);
+    }
     return (
       <div>
         <div className="signup-modal__birthday">
