@@ -42,14 +42,14 @@ class Main extends React.Component {
       <Provider store={store}>
         <Router history={history}>
           <div>
-            <Route exact path="/" component={withTracker(App)} />
             <Switch>
+              <Route exact path="/" component={withTracker(App)} />
               <Route path="/pebl/:id" component={withTracker(App)} />
               <Route path="/reset" component={withTracker(App)} />
               <Route path="/confirmation" component={withTracker(App)} />
               <Route path="/user/:userName/folder/:folderShortId" component={withTracker(Profile)} />
               <Route path="/user/:userName" component={withTracker(Profile)} />
-              <Route component={withTracker(Page404)} />
+              <Route path="*" component={withTracker(Page404)} />
             </Switch>
           </div>
         </Router>
