@@ -27,9 +27,9 @@ class ProfileLevel extends Component {
   }
 
   render() {
+    console.log(this.context);
     const { childFolders, childPages, folderId, folder, profileName } = this.props;
     const title = folderId ? folder.title : 'All Work';
-    console.log(this.props);
     return (
       /* eslint-disable jsx-a11y/no-static-element-interactions */
       <div className="profile-pebls__level">

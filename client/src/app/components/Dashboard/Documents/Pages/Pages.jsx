@@ -12,7 +12,6 @@ import { deletePage, duplicatePage, viewPage } from '../../../../action/page';
 
 class Pages extends Component {
   deletePage = (e, id) => {
-    console.log(id);
     e.stopPropagation();
     if (confirm('Are you sure you want to delete this file?')) { // eslint-disable-line no-restricted-globals
       this.props.deletePage(id);
@@ -36,6 +35,7 @@ class Pages extends Component {
   }
 
   render() {
+    console.log(this);
     return (
       <ul className="profile-pebl__list">
         {this.props.pages.map(page => (
