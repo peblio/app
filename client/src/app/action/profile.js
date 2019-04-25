@@ -49,11 +49,9 @@ export function updateProfileImage(value) {
 }
 
 const profileFolderActions = namespaceActionCreators(folderActions, 'PROFILE_FOLDERS');
-const profilePageActions = namespaceActionCreators(pageActions, 'PROFILE_PAGE');
 
 export const {
   deletePage,
-  duplicatePage,
   fetchAllPages,
   viewFolder,
   viewPage,

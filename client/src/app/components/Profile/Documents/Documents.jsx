@@ -7,7 +7,7 @@ import ProfileLevel from './ProfileLevel/ProfileLevel';
 import {
   fetchAllPages,
   jumpToFolderByShortId
-} from '../../../action/profile';
+} from '../../../action/page';
 
 import './documents.scss';
 
@@ -66,7 +66,7 @@ Documents.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  selectedFolderIds: state.profile.selectedFolderIds,
+  selectedFolderIds: state.page.selectedFolderIds,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

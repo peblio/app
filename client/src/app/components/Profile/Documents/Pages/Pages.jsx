@@ -8,7 +8,7 @@ import formatDate from '../../../../utils/format-date';
 import './pages.scss';
 import DeleteIcon from '../../../../images/trash.svg';
 import DuplicateIcon from '../../../../images/duplicate.svg';
-import { deletePage, duplicatePage, viewPage } from '../../../../action/profile';
+import { deletePage, duplicatePage, viewPage } from '../../../../action/page';
 
 class Pages extends Component {
   deletePage = (e, id) => {

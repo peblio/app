@@ -29,7 +29,7 @@ class ProfileLevel extends Component {
   render() {
     const { childFolders, childPages, folderId, folder, profileName } = this.props;
     const title = folderId ? folder.title : 'All Work';
-    console.log(this.props.childPages);
+    console.log(this.props);
     return (
       /* eslint-disable jsx-a11y/no-static-element-interactions */
       <div className="profile-pebls__level">
@@ -76,15 +76,15 @@ ProfileLevel.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const folder = state.profile.folders.byId[ownProps.folderId];
+  const folder = state.page.folders.byId[ownProps.folderId];
   let parentFolderShortId;
   if (folder && folder.parent) {
-    parentFolderShortId = state.profile.folders.byId[folder.parent].shortId;
+    parentFolderShortId = state.page.folders.byId[folder.parent].shortId;
   }
   return {
-    childFolders: Object.values(state.profile.folders.byId)
+    childFolders: Object.values(state.page.folders.byId)
       .filter(f => f.parent === ownProps.folderId),
-    childPages: Object.values(state.profile.pages.byId)
+    childPages: Object.values(state.page.pages.byId)
       .filter(page => page.folder === ownProps.folderId),
     folder,
     parentFolderShortId

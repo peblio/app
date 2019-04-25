@@ -162,7 +162,7 @@ function savePageSnapshot(canvasElement, id) {
       scale: 1,
       height: 816,
       width: 1016,
-      allowTaint : false,
+      allowTaint: false,
       onclone(document) {
         const list = document.getElementsByClassName('widget__container');
         for (const item of list) {
@@ -324,5 +324,6 @@ export const {
   moveFolderToFolder,
   viewFolder,
   viewPage,
-  clearSelectedFolders
+  clearSelectedFolders,
+  jumpToFolderByShortId
 } = currentUserFolderActions;
