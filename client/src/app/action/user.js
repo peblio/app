@@ -63,12 +63,12 @@ export function logoutUser(name) {
         type: ActionTypes.LOGOUT_USER,
       });
       const log = {
-        'message': 'User Logged Out',
-        'path': '/logout',
-        'action': 'LogoutUser',
-        'module': 'ui',
-        'level': 'INFO',
-        'user': name
+        message: 'User Logged Out',
+        path: '/logout',
+        action: 'LogoutUser',
+        module: 'ui',
+        level: 'INFO',
+        user: name
       };
       saveLog(log);
     });
@@ -105,6 +105,14 @@ export function setStudentBirthday(value) {
     dispatch({
       type: ActionTypes.SET_STUDENT_BIRTHDAY,
       value
+    });
+  };
+}
+
+export function clearSignupSelectedValues() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLEAR_SIGNUP_VALUES
     });
   };
 }

@@ -59,6 +59,9 @@ const user = (state = initialState, action) => {
         studentBirthday: action.value
       });
 
+    case ActionTypes.CLEAR_SIGNUP_VALUES:
+      return initialState;
+
     case ActionTypes.LOGOUT_USER:
       return initialState;
 

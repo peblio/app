@@ -269,6 +269,12 @@ class App extends React.Component {
     this.props.createNavigationContent(this.props.layout);
   }
 
+  clearValuesAndCloseSignUpModal = () => {
+    this.props.clearSignupSelectedValues();
+    this.props.closeSignUpModal();
+  }
+
+
   render() {
     return (
       <div
@@ -335,7 +341,7 @@ class App extends React.Component {
         <Modal
           size="auto"
           isOpen={this.props.isSignUpModalOpen}
-          closeModal={this.props.closeSignUpModal}
+          closeModal={this.clearValuesAndCloseSignUpModal}
         >
           <SignUp
             authLoadedPage={this.authLoadedPage}
@@ -455,6 +461,7 @@ App.propTypes = {
   viewLoginModal: PropTypes.func.isRequired,
   closeLoginModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
+  clearSignupSelectedValues: PropTypes.func.isRequired,
   isShareModalOpen: PropTypes.bool.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeForgotModal: PropTypes.func.isRequired,
