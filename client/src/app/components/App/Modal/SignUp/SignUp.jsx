@@ -77,6 +77,32 @@ class SignUp extends React.Component {
     );
   }
 
+  renderSignupType(labelText, htmlFor) {
+    return (
+      <li className="signup-modal__listitem">
+        <label
+          className="signup-modal__label"
+          htmlFor={htmlFor}
+        >
+          <input
+            required
+            type="radio"
+            className="signup-modal__radio"
+            data-test={`signup-modal__radio-${htmlFor}`}
+            name="type"
+            value={htmlFor}
+            id={htmlFor}
+            onChange={(e) => {
+              this.props.setUserType(e.target.value);
+              this.userTypeSelected();
+            }}
+          />
+          {labelText}
+        </label>
+      </li>
+    );
+  }
+
   renderSignupTypes() {
     return (
       <div>
@@ -84,64 +110,9 @@ class SignUp extends React.Component {
         <div className="signup-modal__radio-holder">
           <h2 className="signup-modal__subtitle"> I am signing up as a...</h2>
           <ul className="signup-modal__list">
-            <li className="signup-modal__listitem">
-              <label
-                className="signup-modal__label"
-                htmlFor="student"
-              >
-                <input
-                  required
-                  type="radio"
-                  className="signup-modal__radio"
-                  data-test="signup-modal__radio-student"
-                  name="type"
-                  value="student"
-                  id="student"
-                  onChange={(e) => {
-                    this.props.setUserType(e.target.value);
-                    this.userTypeSelected();
-                  }}
-                />
-            Student
-              </label>
-            </li>
-            <li className="signup-modal__listitem">
-              <label
-                className="signup-modal__label"
-                htmlFor="teacher"
-              >
-                <input
-                  type="radio"
-                  className="signup-modal__radio"
-                  data-test="signup-modal__radio-teacher"
-                  name="type"
-                  value="teacher"
-                  onChange={(e) => {
-                    this.props.setUserType(e.target.value);
-                    this.userTypeSelected();
-                  }}
-                />
-            Teacher
-              </label>
-            </li>
-            <li className="signup-modal__listitem">
-              <label
-                className="signup-modal__label"
-                htmlFor="other"
-              >
-                <input
-                  type="radio"
-                  className="signup-modal__radio"
-                  name="type"
-                  value="other"
-                  onChange={(e) => {
-                    this.props.setUserType(e.target.value);
-                    this.userTypeSelected();
-                  }}
-                />
-            Other
-              </label>
-            </li>
+            {this.renderSignupType('Student', 'student')}
+            {this.renderSignupType('Teacher', 'teacher')}
+            {this.renderSignupType('Other', 'other')}
           </ul>
         </div>
         <input
