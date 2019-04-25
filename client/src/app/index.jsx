@@ -11,7 +11,7 @@ import { saveErrorLog } from './utils/log';
 
 import rootReducer from './reducers/rootReducer.js';
 import App from './components/App/App.jsx';
-import Profile from './components/Profile/Profile';
+import Dashboard from './components/Dashboard/Dashboard.jsx';
 import withTracker from './withTracker.jsx';
 import history from './utils/history';
 
@@ -46,8 +46,8 @@ class Main extends React.Component {
               <Route path="/pebl/:id" component={withTracker(App)} />
               <Route path="/reset" component={withTracker(App)} />
               <Route path="/confirmation" component={withTracker(App)} />
-              <Route path="/user/:userName/folder/:folderShortId" component={withTracker(Profile)} />
-              <Route path="/user/:userName" component={withTracker(Profile)} />
+              <Route path="/dashboard/:userName/folder/:folderShortId" component={withTracker(Dashboard)} />
+              <Route path="/dashboard/:userName" component={withTracker(Dashboard)} />
             </Switch>
           </div>
         </Router>

@@ -9,9 +9,9 @@ import ToolbarLogo from '../../../images/logo.svg';
 
 import axios from '../../../utils/axios';
 
-import './details.scss';
+import './account.scss';
 
-class Details extends React.Component {
+class Account extends React.Component {
   constructor(props) {
     super(props);
     this.onDrop = this.onDrop.bind(this);
@@ -106,7 +106,7 @@ class Details extends React.Component {
   }
 }
 
-Details.propTypes = {
+Account.propTypes = {
   blurb: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   isOwner: PropTypes.bool.isRequired,
@@ -116,4 +116,4 @@ Details.propTypes = {
   setProfileBlurb: PropTypes.func.isRequired
 };
 
-export default Details;
+export default Account;

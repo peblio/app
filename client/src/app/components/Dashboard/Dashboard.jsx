@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Details from './Details/Details';
+import Account from './Account/Account';
 import Documents from './Documents/Documents';
 import UserAccount from '../Shared/UserAccount/UserAccount.jsx';
 
 import * as profileActions from '../../action/profile';
 import * as userActions from '../../action/user';
 
-import './profile.scss';
+import './dashboard.scss';
 
-class Profile extends React.Component {
+class Dashboard extends React.Component {
   componentWillMount() {
     const userName = this.props.match.params.userName;
     if (!userName) {
@@ -25,35 +25,13 @@ class Profile extends React.Component {
     const userName = this.props.match.params.userName;
     return (
       <div>
-        {this.props.profileType !== 'student' && (
-          <div className="profile__container">
-            <Details
-              isOwner={this.props.isOwner}
-              name={this.props.name}
-              image={this.props.image}
-              blurb={this.props.blurb}
-              updateProfileImage={this.props.updateProfileImage}
-              updateProfileBlurb={this.props.updateProfileBlurb}
-              setProfileBlurb={this.props.setProfileBlurb}
-            />
-            <Documents
-              profileName={userName}
-              folderShortId={this.props.match.params.folderShortId}
-            />
-            <div className="user-account__container">
-              <UserAccount
-                container='profile'
-                location={this.props.location}
-              />
-            </div>
-          </div>
-        )}
+        TEST
       </div>
     );
   }
 }
 
-Profile.propTypes = {
+Dashboard.propTypes = {
   blurb: PropTypes.string.isRequired,
   fetchProfile: PropTypes.func.isRequired,
   image: PropTypes.string.isRequired,
@@ -90,4 +68,30 @@ function mapDispatchToProps(dispatch) {
     userActions),
   dispatch);
 }
-export default (connect(mapStateToProps, mapDispatchToProps)(Profile));
+export default (connect(mapStateToProps, mapDispatchToProps)(Dashboard));
+
+/*
+{this.props.profileType !== 'student' && (
+  <div className="profile__container">
+    <Account
+      isOwner={this.props.isOwner}
+      name={this.props.name}
+      image={this.props.image}
+      blurb={this.props.blurb}
+      updateProfileImage={this.props.updateProfileImage}
+      updateProfileBlurb={this.props.updateProfileBlurb}
+      setProfileBlurb={this.props.setProfileBlurb}
+    />
+    <Documents
+      profileName={userName}
+      folderShortId={this.props.match.params.folderShortId}
+    />
+    <div className="user-account__container">
+      <UserAccount
+        container='profile'
+        location={this.props.location}
+      />
+    </div>
+  </div>
+)}
+  */
