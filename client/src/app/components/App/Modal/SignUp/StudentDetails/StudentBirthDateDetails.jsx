@@ -11,14 +11,14 @@ class StudentBirthDateDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      month: -1,
+      month: 0,
       year: -1,
       renderCreateUserNameScreen: false
     };
   }
 
   onNextButtonClick = () => {
-    if (this.state.month !== -1 && this.state.year !== -1) {
+    if (this.state.year !== -1) {
       if (this.props.requiresGuardianConsent) {
         if (this.props.guardianEmail && this.props.guardianEmail !== '') {
           this.setState({ renderCreateUserNameScreen: true });
