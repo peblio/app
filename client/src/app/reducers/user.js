@@ -11,7 +11,8 @@ const initialState = {
   guardianConsentedAt: '',
   guardianEmail: null,
   isBrowsingPebl: false,
-  studentBirthday: null
+  studentBirthday: null,
+  nextScreen: null
 };
 
 const user = (state = initialState, action) => {
@@ -58,6 +59,12 @@ const user = (state = initialState, action) => {
       return Object.assign({}, state, {
         studentBirthday: action.value
       });
+
+    case ActionTypes.SET_NEXT_SCREEN: {
+      return Object.assign({}, state, {
+        nextScreen: action.value
+      });
+    }
 
     case ActionTypes.CLEAR_SIGNUP_VALUES:
       return initialState;

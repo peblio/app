@@ -116,3 +116,12 @@ export function clearSignupSelectedValues() {
     });
   };
 }
+
+export function setNextScreen(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_NEXT_SCREEN,
+      value
+    });
+  };
+}
