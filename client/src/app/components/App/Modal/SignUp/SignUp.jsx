@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import StudentDetails from './StudentDetails/StudentDetails.jsx';
+import StudentBirthDateDetails from './StudentDetails/StudentBirthDateDetails.jsx';
 import axios from '../../../../utils/axios';
 import { saveLog } from '../../../../utils/log';
 import { closeSignUpModal } from '../../../../action/mainToolbar.js';
@@ -116,7 +116,7 @@ class SignUp extends React.Component {
     if (this.props.userType === 'student') {
       return (
         <div className="signup-modal__content">
-          <StudentDetails
+          <StudentBirthDateDetails
             setGuardianConsent={this.props.setGuardianConsent}
             requiresGuardianConsent={this.props.requiresGuardianConsent}
             guardianEmail={this.props.guardianEmail}

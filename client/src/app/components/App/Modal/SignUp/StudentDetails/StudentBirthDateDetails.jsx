@@ -6,13 +6,26 @@ import moment from 'moment';
 import { setStudentBirthday, setGuardianEmail } from '../../../../../action/user.js';
 
 
-class StudentDetails extends React.Component {
+class StudentBirthDateDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      month: 0,
-      year: 1992
+      month: -1,
+      year: -1,
+      renderCreateUserNameScreen: false
     };
+  }
+
+  onNextButtonClick = () => {
+    if (this.state.month !== -1 && this.state.year !== -1) {
+      if (this.props.requiresGuardianConsent) {
+        if (this.props.guardianEmail && this.props.guardianEmail !== '') {
+          this.setState({ renderCreateUserNameScreen: true });
+        }
+      } else {
+        this.setState({ renderCreateUserNameScreen: true });
+      }
+    }
   }
 
   handleMonthChange = (month) => {
@@ -56,7 +69,6 @@ class StudentDetails extends React.Component {
       </select>
     );
   }
-
 
   renderYearDropdown() {
     const currentYear = moment().year();
@@ -104,22 +116,34 @@ class StudentDetails extends React.Component {
             />
           </div>
         )}
+        <div className="signup-modal__buttonholder">
+          <button
+            className="signup-modal__button"
+            data-test="signup-modal__button-next"
+            onClick={this.onNextButtonClick}
+            value="Submit"
+          >
+                Next
+          </button>
+        </div>
       </div>
     );
   }
 }
 
-StudentDetails.propTypes = {
+StudentBirthDateDetails.propTypes = {
   requiresGuardianConsent: PropTypes.bool.isRequired,
   setGuardianConsent: PropTypes.func.isRequired,
   setStudentBirthday: PropTypes.func.isRequired,
-  setGuardianEmail: PropTypes.func.isRequired
+  setGuardianEmail: PropTypes.func.isRequired,
+  guardianEmail: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     requiresGuardianConsent: state.user.requiresGuardianConsent,
-    studentBirthday: state.user.studentBirthday
+    studentBirthday: state.user.studentBirthday,
+    guardianEmail: state.user.guardianEmail
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -127,4 +151,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setGuardianEmail
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(StudentDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(StudentBirthDateDetails);
