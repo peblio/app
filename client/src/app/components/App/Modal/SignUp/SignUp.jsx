@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import StudentBirthDateDetails from './StudentDetails/StudentBirthDateDetails.jsx';
+import SignUpOption from './SignUpOption.jsx';
 import { setUserName, setUserType, setNextScreen } from '../../../../action/user.js';
 import SignUpUsername from './SignUpUsername.jsx';
+import PeblioSignUpForm from './PeblioSignUpForm.jsx';
 
 require('./signup.scss');
 
@@ -59,6 +61,22 @@ class SignUp extends React.Component {
     );
   }
 
+  renderSignupOption() {
+    return (
+      <div className="signup-modal__content">
+        <SignUpOption />
+      </div>
+    );
+  }
+
+  renderPeblioSignUpForm() {
+    return (
+      <div className="signup-modal__content">
+        <PeblioSignUpForm />
+      </div>
+    );
+  }
+
   renderSignupTypes() {
     return (
       <div>
@@ -106,7 +124,6 @@ class SignUp extends React.Component {
             Teacher
               </label>
             </li>
-
             <li className="signup-modal__listitem">
               <label
                 className="signup-modal__label"
@@ -185,6 +202,10 @@ class SignUp extends React.Component {
           return this.renderStudentBirthDateComponent();
         case 'SignupUsernameScreen':
           return this.renderSignupUsernameComponent();
+        case 'SignupOption':
+          return this.renderSignupOption();
+        case 'PeblioSignUpForm':
+          return this.renderPeblioSignUpForm();
         default:
           return this.renderSignupTypes();
       }

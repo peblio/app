@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import { setStudentBirthday, setGuardianEmail, setGuardianConsent } from '../../../../../action/user.js';
+import { setStudentBirthday, setGuardianEmail, setGuardianConsent, setNextScreen } from '../../../../../action/user.js';
 import SignUpUsername from '../SignUpUsername.jsx';
 
 
@@ -12,8 +12,7 @@ class StudentBirthDateDetails extends React.Component {
     super(props);
     this.state = {
       month: 0,
-      year: -1,
-      renderCreateUserNameScreen: false
+      year: -1
     };
   }
 
@@ -21,10 +20,10 @@ class StudentBirthDateDetails extends React.Component {
     if (this.state.year !== -1) {
       if (this.props.requiresGuardianConsent) {
         if (this.props.guardianEmail && this.props.guardianEmail !== '') {
-          this.setState({ renderCreateUserNameScreen: true });
+          this.props.setNextScreen('SignupUsernameScreen');
         }
       } else {
-        this.setState({ renderCreateUserNameScreen: true });
+        this.props.setNextScreen('SignupUsernameScreen');
       }
     }
   }
@@ -139,6 +138,7 @@ StudentBirthDateDetails.propTypes = {
   requiresGuardianConsent: PropTypes.bool.isRequired,
   setGuardianConsent: PropTypes.func.isRequired,
   setStudentBirthday: PropTypes.func.isRequired,
+  setNextScreen: PropTypes.func.isRequired,
   setGuardianEmail: PropTypes.func.isRequired,
   guardianEmail: PropTypes.string.isRequired
 };
@@ -147,13 +147,15 @@ function mapStateToProps(state) {
   return {
     requiresGuardianConsent: state.user.requiresGuardianConsent,
     studentBirthday: state.user.studentBirthday,
-    guardianEmail: state.user.guardianEmail
+    guardianEmail: state.user.guardianEmail,
+    nextScreen: state.user.nextScreen
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   setStudentBirthday,
   setGuardianEmail,
-  setGuardianConsent
+  setGuardianConsent,
+  setNextScreen
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentBirthDateDetails);

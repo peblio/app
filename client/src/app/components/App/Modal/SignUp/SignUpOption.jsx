@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { saveLog } from '../../../../utils/log';
 import { closeSignUpModal } from '../../../../action/mainToolbar.js';
 import GoogleLoginButton from '../../Shared/GoogleLoginButton/GoogleLoginButton.jsx';
+import { setNextScreen } from '../../../../action/user.js';
 import PeblioSignUpForm from './PeblioSignUpForm';
 
 require('./signupoption.scss');
@@ -21,7 +22,7 @@ class SignUpOption extends React.Component {
   }
 
   onClick = () => {
-    this.setState({ renderPeblioSignupForm: true });
+    this.props.setNextScreen('PeblioSignUpForm');
   }
 
   signUpFailed = (error) => {
@@ -53,9 +54,6 @@ class SignUpOption extends React.Component {
   }
 
   render() {
-    if (this.state.renderPeblioSignupForm) {
-      return <PeblioSignUpForm />;
-    }
     return (
       <div className="signup-modal__content">
         {this.state.isFormVisible && (
@@ -89,6 +87,7 @@ class SignUpOption extends React.Component {
 
 SignUpOption.propTypes = {
   closeSignUpModal: PropTypes.func.isRequired,
+  setNextScreen: PropTypes.func.isRequired,
   guardianEmail: PropTypes.string.isRequired,
   requiresGuardianConsent: PropTypes.bool.isRequired,
   userType: PropTypes.string.isRequired,
@@ -107,6 +106,7 @@ function mapStateToProps(state) {
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   closeSignUpModal,
+  setNextScreen
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpOption);

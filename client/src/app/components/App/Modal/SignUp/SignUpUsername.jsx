@@ -2,29 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import SignUpOption from './SignUpOption.jsx';
-import { setUserName } from '../../../../action/user.js';
-
+import { setUserName, setNextScreen } from '../../../../action/user.js';
 
 class SignUpUsername extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      renderCreateUserNameScreen: false
-    };
-  }
-
   onNextButtonClick = () => {
     if (this.userName.value && this.userName.value !== '') {
       this.props.setUserName(this.userName.value);
-      this.setState({ renderCreateUserNameScreen: true });
+      this.props.setNextScreen('SignupOption');
     }
   }
 
   render() {
-    if (this.state.renderCreateUserNameScreen) {
-      return (<SignUpOption />);
-    }
     return (
       <div>
         <div className="signup-modal__div">
@@ -55,6 +43,7 @@ class SignUpUsername extends React.Component {
 
 SignUpUsername.propTypes = {
   setUserName: PropTypes.func.isRequired,
+  setNextScreen: PropTypes.func.isRequired
 };
 
 function mapStateToProps() {
@@ -62,7 +51,8 @@ function mapStateToProps() {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setUserName
+  setUserName,
+  setNextScreen
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpUsername);
