@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import { setStudentBirthday, setGuardianEmail } from '../../../../../action/user.js';
+import { setStudentBirthday, setGuardianEmail, setGuardianConsent } from '../../../../../action/user.js';
 import SignUpUsername from '../SignUpUsername.jsx';
 
 
@@ -152,7 +152,8 @@ function mapStateToProps(state) {
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   setStudentBirthday,
-  setGuardianEmail
+  setGuardianEmail,
+  setGuardianConsent
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentBirthDateDetails);
