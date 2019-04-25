@@ -113,6 +113,17 @@ class SignUp extends React.Component {
   }
 
   render() {
+    if (this.props.userType === 'student') {
+      return (
+        <div className="signup-modal__content">
+          <StudentDetails
+            setGuardianConsent={this.props.setGuardianConsent}
+            requiresGuardianConsent={this.props.requiresGuardianConsent}
+            guardianEmail={this.props.guardianEmail}
+          />
+        </div>
+      );
+    }
     return (
       <div className="signup-modal__content">
         {this.state.isFormVisible && (
@@ -189,13 +200,7 @@ class SignUp extends React.Component {
                     </ul>
                   </div>
 
-                  {this.props.userType === 'student' && (
-                    <StudentDetails
-                      setGuardianConsent={this.props.setGuardianConsent}
-                      requiresGuardianConsent={this.props.requiresGuardianConsent}
-                      guardianEmail={this.props.guardianEmail}
-                    />
-                  )}
+
                   <input
                     required
                     type="checkbox"
