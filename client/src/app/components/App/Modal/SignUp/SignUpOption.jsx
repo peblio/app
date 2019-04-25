@@ -6,7 +6,6 @@ import { saveLog } from '../../../../utils/log';
 import { closeSignUpModal } from '../../../../action/mainToolbar.js';
 import GoogleLoginButton from '../../Shared/GoogleLoginButton/GoogleLoginButton.jsx';
 import { setNextScreen } from '../../../../action/user.js';
-import PeblioSignUpForm from './PeblioSignUpForm';
 
 require('./signupoption.scss');
 
@@ -16,7 +15,6 @@ class SignUpOption extends React.Component {
     this.state = {
       showNotice: false,
       notice: '',
-      renderPeblioSignupForm: false,
       isFormVisible: true
     };
   }
