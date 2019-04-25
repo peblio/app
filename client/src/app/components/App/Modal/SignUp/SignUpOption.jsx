@@ -24,10 +24,6 @@ class SignUpOption extends React.Component {
     };
   }
 
-  componentWillUnmount() {
-    this.props.authLoadedPage();
-  }
-
   passwordMatch = (a, b) => (a === b)
 
   passwordMatchFailed = () => {

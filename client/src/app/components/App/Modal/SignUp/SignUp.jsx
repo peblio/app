@@ -11,6 +11,7 @@ import { setUserName,
   setUserType,
   setGuardianConsent } from '../../../../action/user.js';
 import GoogleLoginButton from '../../Shared/GoogleLoginButton/GoogleLoginButton.jsx';
+import SignUpUsername from './SignUpUsername.jsx';
 
 require('./signup.scss');
 
@@ -112,17 +113,32 @@ class SignUp extends React.Component {
     event.preventDefault();
   }
 
+  renderStudentBirthDateComponent() {
+    return (
+      <div className="signup-modal__content">
+        <StudentBirthDateDetails
+          setGuardianConsent={this.props.setGuardianConsent}
+          requiresGuardianConsent={this.props.requiresGuardianConsent}
+          guardianEmail={this.props.guardianEmail}
+        />
+      </div>
+    );
+  }
+
+  renderSignupUsernameComponent() {
+    return (
+      <div className="signup-modal__content">
+        <SignUpUsername />
+      </div>
+    );
+  }
+
   render() {
     if (this.props.userType === 'student') {
-      return (
-        <div className="signup-modal__content">
-          <StudentBirthDateDetails
-            setGuardianConsent={this.props.setGuardianConsent}
-            requiresGuardianConsent={this.props.requiresGuardianConsent}
-            guardianEmail={this.props.guardianEmail}
-          />
-        </div>
-      );
+      return this.renderStudentBirthDateComponent();
+    }
+    if (this.props.userType === 'teacher' || this.props.userType === 'other') {
+      return this.renderSignupUsernameComponent();
     }
     return (
       <div className="signup-modal__content">
