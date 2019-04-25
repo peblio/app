@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Details from './Details/Details';
-import Pebls from './Pebls/Pebls';
+import Documents from './Documents/Documents';
 import UserAccount from '../Shared/UserAccount/UserAccount.jsx';
 
 import * as profileActions from '../../action/profile';
@@ -36,7 +36,7 @@ class Profile extends React.Component {
               updateProfileBlurb={this.props.updateProfileBlurb}
               setProfileBlurb={this.props.setProfileBlurb}
             />
-            <Pebls
+            <Documents
               profileName={userName}
               folderShortId={this.props.match.params.folderShortId}
             />

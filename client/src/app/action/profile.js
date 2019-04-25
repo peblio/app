@@ -2,6 +2,7 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 import axios from '../utils/axios';
 import { namespaceActionCreators } from '../utils/namespace-redux';
 import * as folderActions from './folders';
+import * as pageActions from './page';
 
 export function setIsOwner(value) {
   return (dispatch) => {
@@ -48,8 +49,11 @@ export function updateProfileImage(value) {
 }
 
 const profileFolderActions = namespaceActionCreators(folderActions, 'PROFILE_FOLDERS');
+const profilePageActions = namespaceActionCreators(pageActions, 'PROFILE_PAGE');
 
 export const {
+  deletePage,
+  duplicatePage,
   fetchAllPages,
   viewFolder,
   viewPage,

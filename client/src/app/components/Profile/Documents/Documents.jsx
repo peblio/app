@@ -9,9 +9,9 @@ import {
   jumpToFolderByShortId
 } from '../../../action/profile';
 
-import './pebls.scss';
+import './documents.scss';
 
-class Pebls extends React.Component {
+class Documents extends React.Component {
   static defaultProps = {
     folderShortId: null
   }
@@ -35,10 +35,12 @@ class Pebls extends React.Component {
     const { profileName, selectedFolderIds } = this.props;
     let folderContainer;
     if (selectedFolderIds.length === 0) {
+      console.log(selectedFolderIds);
       folderContainer = <ProfileLevel profileName={profileName} />;
     } else {
       const selectedFolderId = selectedFolderIds[selectedFolderIds.length - 1];
       const folderDepth = selectedFolderIds.length;
+      console.log(selectedFolderIds);
       folderContainer = (
         <ProfileLevel
           folderId={selectedFolderId}
@@ -55,7 +57,7 @@ class Pebls extends React.Component {
   }
 }
 
-Pebls.propTypes = {
+Documents.propTypes = {
   folderShortId: PropTypes.string,
   profileName: PropTypes.string.isRequired,
   selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -64,7 +66,7 @@ Pebls.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  selectedFolderIds: state.profile.selectedFolderIds
+  selectedFolderIds: state.profile.selectedFolderIds,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -72,4 +74,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchAllPages
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Pebls);
+export default connect(mapStateToProps, mapDispatchToProps)(Documents);

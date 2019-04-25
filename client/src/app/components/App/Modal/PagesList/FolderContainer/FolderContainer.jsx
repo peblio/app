@@ -54,6 +54,7 @@ class FolderContainer extends Component {
   }
 
   render() {
+    console.log(this.props.childPages);
     const { childFolders, childPages, folderDepth, folderId, folder } = this.props;
     const { newFolderDropdownIsOpen } = this.state;
     const title = folderId ? folder.title : 'My Files';
