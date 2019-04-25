@@ -58,7 +58,7 @@ test('duplicate pebl in the file menu', async (t) => {
     .click(Selector('[data-test=toggle-file-dropdown]'))
     .click(Selector('[data-test=file-menu__pages-button]'))
     .click(duplicatePeblButton.nth(0))
-    .expect(pageTitles.nth(0).textContent).eql('Page One-Copy');
+    .expect(pageTitles.nth(2).textContent).eql('Page One-Copy');
 });
 
 test('checking contents of file menu', async (t) => {
