@@ -13,7 +13,8 @@ class SignUp extends React.Component {
     super(props);
     this.state = {
       isUserTypeSelected: false,
-      isFormVisible: true
+      isFormVisible: true,
+      renderNextScreen: false
     };
   }
 
@@ -24,6 +25,20 @@ class SignUp extends React.Component {
   userTypeSelected = () => {
     this.setState({
       isUserTypeSelected: true
+    });
+  }
+
+  onNextButtonClick = () => {
+    if (this.state.isUserTypeSelected && this.state.termsAgreed) {
+      this.setState({
+        renderNextScreen: true
+      });
+    }
+  }
+
+  setTermsAgreed = () => {
+    this.setState({
+      termsAgreed: this.termsAgreed.checked
     });
   }
 
@@ -44,7 +59,7 @@ class SignUp extends React.Component {
   }
 
   render() {
-    if (this.state.isUserTypeSelected) {
+    if (this.state.renderNextScreen) {
       if (this.props.userType === 'student') {
         return this.renderStudentBirthDateComponent();
       }
@@ -126,7 +141,8 @@ class SignUp extends React.Component {
               className="signup-modal__checkbox"
               data-test="signup-modal__checkbox"
               name="checkbox"
-              value="check"
+              ref={(termsAgreed) => { this.termsAgreed = termsAgreed; }}
+              onChange={this.setTermsAgreed}
               id="agree"
             />
             <label
@@ -160,8 +176,8 @@ class SignUp extends React.Component {
               <button
                 className="signup-modal__button"
                 data-test="signup-modal__button-next"
-                type="submit"
                 value="Submit"
+                onClick={this.onNextButtonClick}
               >
                 Next
               </button>
