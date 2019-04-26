@@ -135,12 +135,17 @@ class StudentBirthDateDetails extends React.Component {
 }
 
 StudentBirthDateDetails.propTypes = {
-  requiresGuardianConsent: PropTypes.bool.isRequired,
   setGuardianConsent: PropTypes.func.isRequired,
   setStudentBirthday: PropTypes.func.isRequired,
   setNextScreen: PropTypes.func.isRequired,
   setGuardianEmail: PropTypes.func.isRequired,
-  guardianEmail: PropTypes.string.isRequired
+  guardianEmail: PropTypes.string,
+  requiresGuardianConsent: PropTypes.bool
+};
+
+StudentBirthDateDetails.defaultProps = {
+  requiresGuardianConsent: null,
+  guardianEmail: null
 };
 
 function mapStateToProps(state) {

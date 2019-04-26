@@ -45,12 +45,16 @@ class GoogleLoginButton extends React.Component {
 }
 
 GoogleLoginButton.propTypes = {
-  guardianEmail: PropTypes.string.isRequired,
+  guardianEmail: PropTypes.string,
   onLoginSuccess: PropTypes.func.isRequired,
   onLoginFailure: PropTypes.func.isRequired,
   requiresGuardianConsent: PropTypes.bool.isRequired,
   userType: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired
+};
+
+GoogleLoginButton.defaultProps = {
+  guardianEmail: null
 };
 
 export default GoogleLoginButton;

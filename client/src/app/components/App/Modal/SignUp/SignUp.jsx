@@ -194,14 +194,16 @@ SignUp.propTypes = {
   setUserType: PropTypes.func.isRequired,
   setNextScreen: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired,
-  nextScreen: PropTypes.string.isRequired
+  nextScreen: PropTypes.string
+};
+
+SignUp.defaultProps = {
+  nextScreen: null
 };
 
 function mapStateToProps(state) {
   return {
-    requiresGuardianConsent: state.user.requiresGuardianConsent,
     userType: state.user.type,
-    studentBirthday: state.user.studentBirthday,
     nextScreen: state.user.nextScreen
   };
 }

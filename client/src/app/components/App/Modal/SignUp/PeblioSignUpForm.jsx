@@ -161,11 +161,17 @@ class PeblioSignUpForm extends React.Component {
 PeblioSignUpForm.propTypes = {
   closeSignUpModal: PropTypes.func.isRequired,
   setUserName: PropTypes.func.isRequired,
-  guardianEmail: PropTypes.string.isRequired,
-  requiresGuardianConsent: PropTypes.bool.isRequired,
+  guardianEmail: PropTypes.string,
+  requiresGuardianConsent: PropTypes.bool,
   userType: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  studentBirthday: PropTypes.string.isRequired,
+  studentBirthday: PropTypes.string
+};
+
+PeblioSignUpForm.defaultProps = {
+  studentBirthday: null,
+  requiresGuardianConsent: null,
+  guardianEmail: null
 };
 
 

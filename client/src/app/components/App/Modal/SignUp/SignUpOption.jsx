@@ -86,10 +86,15 @@ class SignUpOption extends React.Component {
 SignUpOption.propTypes = {
   closeSignUpModal: PropTypes.func.isRequired,
   setNextScreen: PropTypes.func.isRequired,
-  guardianEmail: PropTypes.string.isRequired,
-  requiresGuardianConsent: PropTypes.bool.isRequired,
+  guardianEmail: PropTypes.string,
+  requiresGuardianConsent: PropTypes.bool,
   userType: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+};
+
+SignUpOption.defaultProps = {
+  requiresGuardianConsent: null,
+  guardianEmail: null
 };
 
 
