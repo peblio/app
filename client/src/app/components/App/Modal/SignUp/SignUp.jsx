@@ -197,7 +197,6 @@ SignUp.propTypes = {
   nextScreen: PropTypes.string.isRequired
 };
 
-
 function mapStateToProps(state) {
   return {
     requiresGuardianConsent: state.user.requiresGuardianConsent,
