@@ -45,20 +45,21 @@ class SignUp extends React.Component {
     });
   }
 
-  renderSignupScreenNumber(activeScreen) {
+  renderSignupScreenNumber(activeScreen, type) {
+    const numbers = [];
+    for (let i = 1; i <= 3; i++) {
+      numbers.push(
+        <div className="signup-modal__screen-no-container">
+          <li className={`signup-modal__screen-no-item${(i <= activeScreen) ? '--selected' : ''}`}>
+            {i}
+          </li>
+          <hr className={`signup-modal__screen-line${(i == 3) ? '--hide' : ''}`} />
+        </div>
+      );
+    }
     return (
       <ul className="signup-modal__screen-no">
-        <li className="signup-modal__screen-no-item">
-        1
-        </li>
-        <hr className="signup-modal__screen-line" />
-        <li className="signup-modal__screen-no-item">
-        2
-        </li>
-        <hr className="signup-modal__screen-line" />
-        <li className="signup-modal__screen-no-item">
-        3
-        </li>
+        {numbers}
       </ul>
     );
   }
@@ -66,7 +67,7 @@ class SignUp extends React.Component {
   renderStudentBirthDateComponent() {
     return (
       <div className="signup-modal__content">
-        {this.renderSignupScreenNumber()}
+        {this.renderSignupScreenNumber(1, this.props.userType)}
         <StudentBirthDateDetails />
       </div>
     );
@@ -75,7 +76,7 @@ class SignUp extends React.Component {
   renderSignupUsernameComponent() {
     return (
       <div className="signup-modal__content">
-        {this.renderSignupScreenNumber()}
+        {this.renderSignupScreenNumber(2, this.props.userType)}
         <SignUpUsername />
       </div>
     );
@@ -84,7 +85,7 @@ class SignUp extends React.Component {
   renderSignupOption() {
     return (
       <div className="signup-modal__content">
-        {this.renderSignupScreenNumber()}
+        {this.renderSignupScreenNumber(3, this.props.userType)}
         <SignUpOption />
       </div>
     );
@@ -93,7 +94,7 @@ class SignUp extends React.Component {
   renderPeblioSignUpForm() {
     return (
       <div className="signup-modal__content">
-        {this.renderSignupScreenNumber()}
+        {this.renderSignupScreenNumber(3, this.props.userType)}
         <PeblioSignUpForm />
       </div>
     );

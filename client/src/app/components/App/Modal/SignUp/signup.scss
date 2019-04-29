@@ -146,7 +146,8 @@
     list-style: none;
     flex-direction: row;
     padding: 0;
-    margin: $large-margin 0;
+    width: fit-content;
+    margin: $large-margin auto;
   }
 
   &__screen-no-item {
@@ -157,16 +158,34 @@
     justify-content: center;
     align-items: center;
     padding: 0 12px;
+    &--selected {
+      border-radius: 50%;
+      border: solid $black $small-border;
+      height: $button-size;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 12px;
+      background-color: $black;
+      color: $white;
+    }
   }
 
   &__screen-line {
     display: flex;
     border: solid $black $small-border/2;
-    width: -webkit-fill-available;
+    width: 30px;
     height: 0;
     justify-content: center;
     align-items: center;
     margin: auto $medium-margin;
+    &--hide {
+      display: none;
+    }
+  }
+  &__screen-no-container {
+    display: flex;
+    flex-direction: row;
   }
 
   &__or-container {
