@@ -45,7 +45,7 @@ class SignUp extends React.Component {
     });
   }
 
-  renderSignupScreenNumber(activeScreen, type) {
+  renderSignupScreenNumber(activeScreen) {
     const numbers = [];
     for (let i = 1; i <= 3; i++) {
       numbers.push(
@@ -67,7 +67,7 @@ class SignUp extends React.Component {
   renderStudentBirthDateComponent() {
     return (
       <div className="signup-modal__content">
-        {this.renderSignupScreenNumber(1, this.props.userType)}
+        {this.userType === 'student' && this.renderSignupScreenNumber(1)}
         <StudentBirthDateDetails />
       </div>
     );
@@ -76,7 +76,7 @@ class SignUp extends React.Component {
   renderSignupUsernameComponent() {
     return (
       <div className="signup-modal__content">
-        {this.renderSignupScreenNumber(2, this.props.userType)}
+        {this.userType === 'student' && this.renderSignupScreenNumber(2)}
         <SignUpUsername />
       </div>
     );
@@ -85,7 +85,7 @@ class SignUp extends React.Component {
   renderSignupOption() {
     return (
       <div className="signup-modal__content">
-        {this.renderSignupScreenNumber(3, this.props.userType)}
+        {this.userType === 'student' && this.renderSignupScreenNumber(3)}
         <SignUpOption />
       </div>
     );
@@ -94,7 +94,7 @@ class SignUp extends React.Component {
   renderPeblioSignUpForm() {
     return (
       <div className="signup-modal__content">
-        {this.renderSignupScreenNumber(3, this.props.userType)}
+        {this.userType === 'student' && this.renderSignupScreenNumber(3)}
         <PeblioSignUpForm />
       </div>
     );
