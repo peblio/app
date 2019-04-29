@@ -112,6 +112,7 @@ class PeblioSignUpForm extends React.Component {
           <div className="signup-modal__buttonholder">
             <button
               className="signup-modal__peblio-button"
+              data-test="signup-modal__button-submit"
               onClick={this.submitSignUpUser}
               value="Submit"
             >

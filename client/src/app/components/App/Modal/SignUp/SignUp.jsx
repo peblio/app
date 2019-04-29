@@ -107,12 +107,12 @@ class SignUp extends React.Component {
         <label
           className="signup-modal__label"
           htmlFor={htmlFor}
+          data-test={`signup-modal__radio-${htmlFor}`}
         >
           <input
             required
             type="radio"
             className="signup-modal__radio"
-            data-test={`signup-modal__radio-${htmlFor}`}
             name="type"
             value={htmlFor}
             id={htmlFor}

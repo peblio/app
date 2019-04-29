@@ -65,6 +65,7 @@ class SignUpOption extends React.Component {
           <button
             className="signup-modal__peblio-button"
             onClick={this.onClick}
+            data-test="signup-modal__button-peblio"
           >
                 Sign in with Peblio
           </button>
