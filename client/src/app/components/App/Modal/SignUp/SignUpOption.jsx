@@ -12,8 +12,7 @@ class SignUpOption extends React.Component {
     super(props);
     this.state = {
       showNotice: false,
-      notice: '',
-      isFormVisible: true
+      notice: ''
     };
   }
 
@@ -25,14 +24,6 @@ class SignUpOption extends React.Component {
     this.setState({
       showNotice: true,
       notice: error.response.data.msg
-    });
-  }
-
-  signUpSuccessful = (msg) => {
-    this.setState({
-      showNotice: true,
-      notice: msg,
-      isFormVisible: false
     });
   }
 
@@ -51,21 +42,28 @@ class SignUpOption extends React.Component {
 
   render() {
     return (
-      <div className="signup-modal__content">
-        {this.state.isFormVisible && (
-          <GoogleLoginButton
-            onLoginSuccess={this.googleLoginSuccessful}
-            onLoginFailure={this.signUpFailed}
-            userType={this.props.userType}
-            requiresGuardianConsent={this.props.requiresGuardianConsent}
-            guardianEmail={this.props.guardianEmail}
-            name={this.props.name}
-          />
-        )}
+      <div>
+        <h2 className="signup-modal__subtitle">
+        Almost signed up!
+        </h2>
+        <GoogleLoginButton
+          onLoginSuccess={this.googleLoginSuccessful}
+          onLoginFailure={this.signUpFailed}
+          userType={this.props.userType}
+          requiresGuardianConsent={this.props.requiresGuardianConsent}
+          guardianEmail={this.props.guardianEmail}
+          name={this.props.name}
+        />
+        <div className="signup-modal__or-container">
+          <hr className="signup-modal__or-line" />
+          <p className="signup-modal__or">
+            or
+          </p>
+          <hr className="signup-modal__or-line" />
+        </div>
         <div className="signup-modal__buttonholder">
           <button
-            className="signup-modal__button"
-            data-test="signup-modal__button-next"
+            className="signup-modal__peblio-button"
             onClick={this.onClick}
           >
                 Sign in with Peblio

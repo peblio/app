@@ -8,6 +8,7 @@
   }
   &__content{
     @extend %modal__content;
+    height: 450px;
   }
 
   &__div{
@@ -16,14 +17,18 @@
   }
 
   &__dropdown {
-    height: $large-height;
-    border-radius: $small-border-radius/2;
-    border: none;
-    width: -webkit-fill-available;
-    font-size: $p-size*0.75;
-    margin: 0 $small-margin/2;
+    min-width: 125px;
+    width: 100%;
+    max-width: 300px;
+    font-size: $p-size;
+    line-height: $p-line-height;
     border: $g4 $small-border solid;
-    color: $g4;
+    color: $black;
+    background: transparent;
+    height: calc( #{2*$small-padding} + #{$p-line-height});
+    margin: $small-margin;
+    display: flex;
+    border-radius: $small-border-radius;
   }
 
   &__title{
@@ -32,6 +37,7 @@
 
   &__subtitle {
     @extend %modal__subtitle;
+    margin-bottom: $large-margin;
   }
 
   &__link{
@@ -68,6 +74,15 @@
     display: flex;
     justify-content: space-evenly;
     margin-bottom: $medium-margin;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__username {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: $medium-margin;
+    flex-direction: column;
+    align-items: center;
   }
 
   &__input-text{
@@ -80,6 +95,11 @@
 
   &__button{
     @extend %modal__button;
+  }
+
+  &__peblio-button {
+    @extend %modal__button;
+    width: 191px;
   }
 
   &__buttonholder {
@@ -119,6 +139,53 @@
     &--selected {
       background: $b4;
     }
+  }
+
+  &__screen-no {
+    display: flex;
+    list-style: none;
+    flex-direction: row;
+    padding: 0;
+    margin: $large-margin 0;
+  }
+
+  &__screen-no-item {
+    border-radius: 50%;
+    border: dashed $black $small-border;
+    height: $button-size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 12px;
+  }
+
+  &__screen-line {
+    display: flex;
+    border: solid $black $small-border/2;
+    width: -webkit-fill-available;
+    height: 0;
+    justify-content: center;
+    align-items: center;
+    margin: auto $medium-margin;
+  }
+
+  &__or-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__or {
+    color: $g4;
+  }
+
+  &__or-line {
+    display: flex;
+    border: solid $g5 $small-border/2;
+    width: -webkit-fill-available;
+    height: 0;
+    justify-content: center;
+    align-items: center;
+    margin: auto $medium-margin;
   }
 
   &__notice {

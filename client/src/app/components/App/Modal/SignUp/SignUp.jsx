@@ -15,8 +15,7 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isUserTypeSelected: false,
-      isFormVisible: true
+      isUserTypeSelected: false
     };
   }
 
@@ -46,9 +45,28 @@ class SignUp extends React.Component {
     });
   }
 
+  renderSignupScreenNumber(activeScreen) {
+    return (
+      <ul className="signup-modal__screen-no">
+        <li className="signup-modal__screen-no-item">
+        1
+        </li>
+        <hr className="signup-modal__screen-line" />
+        <li className="signup-modal__screen-no-item">
+        2
+        </li>
+        <hr className="signup-modal__screen-line" />
+        <li className="signup-modal__screen-no-item">
+        3
+        </li>
+      </ul>
+    );
+  }
+
   renderStudentBirthDateComponent() {
     return (
       <div className="signup-modal__content">
+        {this.renderSignupScreenNumber()}
         <StudentBirthDateDetails />
       </div>
     );
@@ -57,6 +75,7 @@ class SignUp extends React.Component {
   renderSignupUsernameComponent() {
     return (
       <div className="signup-modal__content">
+        {this.renderSignupScreenNumber()}
         <SignUpUsername />
       </div>
     );
@@ -65,6 +84,7 @@ class SignUp extends React.Component {
   renderSignupOption() {
     return (
       <div className="signup-modal__content">
+        {this.renderSignupScreenNumber()}
         <SignUpOption />
       </div>
     );
@@ -73,6 +93,7 @@ class SignUp extends React.Component {
   renderPeblioSignUpForm() {
     return (
       <div className="signup-modal__content">
+        {this.renderSignupScreenNumber()}
         <PeblioSignUpForm />
       </div>
     );
@@ -190,7 +211,7 @@ class SignUp extends React.Component {
     }
     return (
       <div className="signup-modal__content">
-        {this.state.isFormVisible && this.renderSignupTypes() }
+        {this.renderSignupTypes() }
       </div>
     );
   }

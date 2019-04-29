@@ -1,4 +1,5 @@
 import {
+  checkUsernameAvailability as checkUsername,
   createUser as create,
   loginUser as login,
   confirmUser as confirm,
@@ -9,6 +10,10 @@ import {
 
 export function createUser(req, res) {
   return create(req, res);
+};
+
+export function checkUsernameAvailability(req, res) {
+  return checkUsername(req, res);
 };
 
 export function loginUser(req, res, next) {

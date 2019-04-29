@@ -1,6 +1,6 @@
 const express = require('express');
 const { OAuth2Client } = require('google-auth-library');
-const { createUser, loginUser, confirmUser, forgotPassword, resetPassword, resendConfirmUser } = require('./userRegisterActionsController.js');
+const { checkUsernameAvailability, createUser, loginUser, confirmUser, forgotPassword, resetPassword, resendConfirmUser } = require('./userRegisterActionsController.js');
 
 const User = require('../models/user.js');
 const UserConst = require('../userConstants.js');
@@ -58,6 +58,7 @@ function loginWithGoogle(req, res) {
 
 const authRoutes = express.Router();
 authRoutes.route('/login').post(loginUser);
+authRoutes.route('/checkusername').post(checkUsernameAvailability);
 authRoutes.route('/signup').post(createUser);
 authRoutes.route('/forgot').post(forgotPassword);
 authRoutes.route('/reset').post(resetPassword);
