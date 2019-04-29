@@ -12,7 +12,7 @@ const initialState = {
   isPagesModalOpen: false,
   isResetModalOpen: false,
   isShareModalOpen: false,
-  isSignUpModalOpen: false,
+  isSignUpModalOpen: true,
   isWelcomeModalOpen: false,
   isPreferencesPanelOpen: false,
   isForkPromptOpen: false

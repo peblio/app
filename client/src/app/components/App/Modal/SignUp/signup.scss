@@ -40,12 +40,24 @@
   }
 
   &__terms-label {
-    font-size: $small-font-size;
+    font-size: $p-size;
+    line-height: $p-line-height;
   }
 
-  &__label{
+  &__label {
     @extend %modal__label;
-    display: inline;
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    color: $black;
+    width: 100%;
+  }
+
+  &__check {
+    display: none;
+    &--selected {
+      display: block;
+    }
   }
 
   &__input{
@@ -81,7 +93,7 @@
   }
 
   &__radio {
-    @extend %modal__radio;
+    display: none;
   }
 
   &__list {
@@ -90,14 +102,23 @@
     list-style-type: none;
     list-style: none;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
   }
 
   &__listitem {
-    padding-right: $small-padding;
-    padding-left: $small-padding;
-    margin-left: $micro-margin;
-    margin-right: $micro-margin;
+    background: $g7;
+    padding: $small-padding;
+    margin: $small-margin;
+    display: flex;
+    border-radius: $small-border-radius;
+    box-shadow: 0px $shadow-v-offset $shadow-blur $g6;
+    min-width: 125px;
+    width: 100%;
+    max-width: 300px;
+    &--selected {
+      background: $b4;
+    }
   }
 
   &__notice {

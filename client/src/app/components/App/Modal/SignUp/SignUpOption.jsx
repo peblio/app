@@ -7,8 +7,6 @@ import { closeSignUpModal } from '../../../../action/mainToolbar.js';
 import GoogleLoginButton from '../../Shared/GoogleLoginButton/GoogleLoginButton.jsx';
 import { setNextScreen } from '../../../../action/user.js';
 
-require('./signupoption.scss');
-
 class SignUpOption extends React.Component {
   constructor(props) {
     super(props);

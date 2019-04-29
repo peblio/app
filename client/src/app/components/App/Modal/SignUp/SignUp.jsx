@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import StudentBirthDateDetails from './StudentDetails/StudentBirthDateDetails.jsx';
 import SignUpOption from './SignUpOption.jsx';
 import { setUserName, setUserType, setNextScreen } from '../../../../action/user.js';
+import CheckSVG from '../../../../images/green-check.svg';
 import SignUpUsername from './SignUpUsername.jsx';
 import PeblioSignUpForm from './PeblioSignUpForm.jsx';
 
@@ -78,8 +79,10 @@ class SignUp extends React.Component {
   }
 
   renderSignupType(labelText, htmlFor) {
+    const isCurrentUserType = this.props.userType === htmlFor;
+
     return (
-      <li className="signup-modal__listitem">
+      <li className={`signup-modal__listitem ${(isCurrentUserType) ? 'signup-modal__listitem--selected' : ''}`}>
         <label
           className="signup-modal__label"
           htmlFor={htmlFor}
@@ -98,6 +101,10 @@ class SignUp extends React.Component {
             }}
           />
           {labelText}
+          <CheckSVG
+            className={`signup-modal__check${(isCurrentUserType) ? '--selected' : ''}`}
+            alt="check svg"
+          />
         </label>
       </li>
     );
