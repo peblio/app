@@ -17,17 +17,10 @@ class Dashboard extends React.Component {
     this.props.fetchCurrentUser()
       .then(() => {
         this.props.fetchUserProfile(this.props.name);
-        console.log(this.props.name);
       });
-    // const userName = this.props.match.params.userName;
-    // if (!userName) {
-    //   return;
-    // }
-    // this.props.fetchProfile(userName);
   }
 
   renderDashboardView=(dashboardView) => {
-    const userName = this.props.match.params.userName;
     switch (dashboardView) {
       case 'documents':
         return (
@@ -46,6 +39,8 @@ class Dashboard extends React.Component {
           setUserBlurb={this.props.setUserBlurb}
         />
       );
+      default:
+        return null;
     }
   }
 
@@ -66,11 +61,16 @@ class Dashboard extends React.Component {
 Dashboard.propTypes = {
   blurb: PropTypes.string.isRequired,
   dashboardView: PropTypes.number.isRequired,
-  fetchProfile: PropTypes.func.isRequired,
+  fetchCurrentUser: PropTypes.func.isRequired,
+  fetchUserProfile: PropTypes.func.isRequired,
   image: PropTypes.string.isRequired,
-  isOwner: PropTypes.bool.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      folderShortId: PropTypes.string
+    }).isRequired,
   }).isRequired,
   name: PropTypes.string.isRequired,
   setUserBlurb: PropTypes.func.isRequired,

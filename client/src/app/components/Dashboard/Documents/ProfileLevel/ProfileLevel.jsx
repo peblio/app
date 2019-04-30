@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import Folders from '../Folders/Folders';
 import Pages from '../Pages/Pages';
 import { jumpToFolderByShortId, clearSelectedFolders } from '../../../../action/page';
-import compareTimestamps from '../../../../utils/compare-timestamps';
 import history from '../../../../utils/history';
 
 class ProfileLevel extends Component {
@@ -71,6 +70,7 @@ ProfileLevel.propTypes = {
   folderDepth: PropTypes.number,
   folderId: PropTypes.string,
   folder: PropTypes.shape({ parent: PropTypes.string }),
+  jumpToFolderByShortId: PropTypes.string.isRequired,
   parentFolderShortId: PropTypes.string,
   profileName: PropTypes.string.isRequired
 };

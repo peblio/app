@@ -53,13 +53,8 @@ class Nav extends React.Component {
 }
 
 Nav.propTypes = {
-  blurb: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  isOwner: PropTypes.bool.isRequired,
-  name: PropTypes.string.isRequired,
-  updateUserProfileImage: PropTypes.func.isRequired,
-  updateProfileBlurb: PropTypes.func.isRequired,
-  setUserBlurb: PropTypes.func.isRequired
+  setDashboardView: PropTypes.func.isRequired,
+  location: PropTypes.shape({}).isRequired,
 };
 
 

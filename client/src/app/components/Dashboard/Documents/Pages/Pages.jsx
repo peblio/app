@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
 
-import formatDate from '../../../../utils/format-date';
 import './pages.scss';
 import DeleteIcon from '../../../../images/trash.svg';
 import DuplicateIcon from '../../../../images/duplicate.svg';
@@ -43,6 +42,7 @@ class Pages extends Component {
             <a
               className="profile-pebl__link profile-pebl__overlay"
               target="_blank"
+              rel="noopener noreferrer"
               href={`/pebl/${page.id}`}
             >
               <div>
@@ -67,6 +67,7 @@ class Pages extends Component {
             <img
               src={page.snapshotPath}
               className="profile-pebl__image"
+              alt="snapshot of the pebl"
             />
             <h1
               className="profile-pebl__title"
@@ -102,7 +103,9 @@ class Pages extends Component {
 }
 
 Pages.propTypes = {
-  pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+  pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  deletePage: PropTypes.func.isRequired,
+  duplicatePage: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({

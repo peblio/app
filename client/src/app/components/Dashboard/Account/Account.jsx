@@ -5,7 +5,6 @@ import axiosOrg from 'axios';
 import URL from 'url';
 
 import ImageUploadSVG from '../../../images/imageUpload.svg';
-import ToolbarLogo from '../../../images/logo.svg';
 
 import axios from '../../../utils/axios';
 
@@ -94,7 +93,6 @@ class Account extends React.Component {
 Account.propTypes = {
   blurb: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
-  isOwner: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   updateUserProfileImage: PropTypes.func.isRequired,
   updateProfileBlurb: PropTypes.func.isRequired,
