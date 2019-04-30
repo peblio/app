@@ -7,7 +7,6 @@ import Account from './Account/Account';
 import Documents from './Documents/Documents';
 import Profile from '../Profile/Profile';
 import Nav from './Nav/Nav';
-import UserAccount from '../Shared/UserAccount/UserAccount.jsx';
 
 import * as profileActions from '../../action/profile';
 import * as userActions from '../../action/user';
@@ -16,11 +15,16 @@ import './dashboard.scss';
 
 class Dashboard extends React.Component {
   componentWillMount() {
-    const userName = this.props.match.params.userName;
-    if (!userName) {
-      return;
-    }
-    this.props.fetchProfile(userName);
+    this.props.fetchCurrentUser()
+      .then(() => {
+        this.props.fetchProfile(this.props.name);
+        console.log(this.props.name);
+      });
+    // const userName = this.props.match.params.userName;
+    // if (!userName) {
+    //   return;
+    // }
+    // this.props.fetchProfile(userName);
   }
 
   renderDashboardView=(dashboardView) => {
@@ -29,13 +33,12 @@ class Dashboard extends React.Component {
       case 0:
         return (
           <Documents
-            profileName={userName}
+            profileName={this.props.name}
             folderShortId={this.props.match.params.folderShortId}
           />
         );
       case 1: return (
         <Account
-          isOwner={this.props.isOwner}
           name={this.props.name}
           image={this.props.image}
           blurb={this.props.blurb}
@@ -53,16 +56,11 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
-        <div className="profile__container">
+        <div className="dashboard__container">
           <Nav />
 
-          {this.renderDashboardView(this.props.dashboardView)}
-          <div className="user-account__container">
-            <UserAccount
-              container='profile'
-              location={this.props.location}
-            />
-          </div>
+          {this.renderDashboardView(1)}
+
         </div>
       </div>
     );
@@ -79,13 +77,6 @@ Dashboard.propTypes = {
     pathname: PropTypes.string.isRequired,
   }).isRequired,
   name: PropTypes.string.isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      userName: PropTypes.string.isRequired,
-      folderShortId: PropTypes.string
-    }).isRequired,
-  }).isRequired,
-  profileType: PropTypes.string.isRequired,
   setProfileBlurb: PropTypes.func.isRequired,
   updateProfileBlurb: PropTypes.func.isRequired,
   updateProfileImage: PropTypes.func.isRequired,
@@ -93,11 +84,9 @@ Dashboard.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    image: state.profile.image,
-    isOwner: state.profile.isOwner,
-    name: state.profile.name,
-    blurb: state.profile.blurb,
-    profileType: state.profile.type,
+    image: state.user.image,
+    name: state.user.name,
+    blurb: state.user.blurb,
     dashboardView: state.dashboard.dashboardView
   };
 }

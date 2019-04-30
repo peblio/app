@@ -4,47 +4,57 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { setDashboardView } from '../../../action/dashboard.js';
+import PeblioLogo from '../../../images/logo.svg';
+import UserAccount from '../../Shared/UserAccount/UserAccount.jsx';
 
-// import './nav.scss';
+import './nav.scss';
 
 class Nav extends React.Component {
   render() {
     return (
       <div className="dashboard-nav__container">
-        <ul className="dashboard-nav__list">
-          <li className="dashboard-nav__list-item">
-            <button
-              className="dashboard-nav__button"
-              onClick={() => { this.props.setDashboardView(0); }}
-            >
+        <div className="dashboard-nav__upper-container">
+          <a
+            className="logo_toolbar"
+            href="https://www.peblio.co/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <PeblioLogo alt="logo in toolbar" />
+          </a>
+          <UserAccount
+            container='profile'
+            location={this.props.location}
+          />
+        </div>
+        <div className="dashboard-nav__lower-container">
+          <ul className="dashboard-nav__list">
+            <li className="dashboard-nav__list-item">
+              <button
+                className="dashboard-nav__button"
+                onClick={() => { this.props.setDashboardView(0); }}
+              >
               Documents
-            </button>
-          </li>
-          <li className="dashboard-nav__list-item">
-            <button
-              className="dashboard-nav__button"
-              onClick={() => { this.props.setDashboardView(1); }}
-            >
+              </button>
+            </li>
+            <li className="dashboard-nav__list-item">
+              <button
+                className="dashboard-nav__button"
+                onClick={() => { this.props.setDashboardView(1); }}
+              >
               Account
-            </button>
-          </li>
-          <li className="dashboard-nav__list-item">
-            <button
-              className="dashboard-nav__button"
-              onClick={() => { this.props.setDashboardView(3); }}
-            >
-              Trash
-            </button>
-          </li>
-          <li className="dashboard-nav__list-item">
-            <button
-              className="dashboard-nav__button"
-              onClick={() => { this.props.setDashboardView(3); }}
-            >
+              </button>
+            </li>
+            <li className="dashboard-nav__list-item">
+              <button
+                className="dashboard-nav__button"
+                onClick={() => { this.props.setDashboardView(3); }}
+              >
               Profile
-            </button>
-          </li>
-        </ul>
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
     );
   }

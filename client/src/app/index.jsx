@@ -48,7 +48,7 @@ class Main extends React.Component {
               <Route path="/reset" component={withTracker(App)} />
               <Route path="/confirmation" component={withTracker(App)} />
               <Route path="/dashboard/:userName/folder/:folderShortId" component={withTracker(Dashboard)} />
-              <Route path="/dashboard/:userName" component={withTracker(Dashboard)} />
+              <Route path="/dashboard/" component={withTracker(Dashboard)} />
               <Route path="*" component={withTracker(Page404)} />
             </Switch>
           </div>

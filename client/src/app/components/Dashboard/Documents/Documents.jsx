@@ -16,7 +16,11 @@ class Documents extends React.Component {
     folderShortId: null
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    this.autoSaveTimeout = setInterval(() => {
+      debugger;
+      console.log(this.props.profileName);
+    }, 10000);
     this.props.fetchAllPages(this.props.profileName)
       .then(() => {
         if (this.props.folderShortId) {
