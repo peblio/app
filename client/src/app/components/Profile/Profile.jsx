@@ -52,6 +52,7 @@ class Profile extends React.Component {
       <div className="profile-pebls__container" ref={(el) => { this.containerEl = el; }}>
         <Account />
         {folderContainer}
+
       </div>
     );
   }
