@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import Details from './Details/Details';
 import Pebls from './Pebls/Pebls';
+import UserAccount from '../Shared/UserAccount/UserAccount.jsx';
 
 import * as profileActions from '../../action/profile';
 import * as userActions from '../../action/user';
@@ -39,6 +40,12 @@ class Profile extends React.Component {
               profileName={userName}
               folderShortId={this.props.match.params.folderShortId}
             />
+            <div className="user-account__container">
+              <UserAccount
+                container='profile'
+                location={this.props.location}
+              />
+            </div>
           </div>
         )}
       </div>
@@ -48,20 +55,23 @@ class Profile extends React.Component {
 
 Profile.propTypes = {
   blurb: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  fetchProfile: PropTypes.func.isRequired,
   image: PropTypes.string.isRequired,
-  profileType: PropTypes.string.isRequired,
   isOwner: PropTypes.bool.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
+  name: PropTypes.string.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       userName: PropTypes.string.isRequired,
       folderShortId: PropTypes.string
     }).isRequired,
   }).isRequired,
-  fetchProfile: PropTypes.func.isRequired,
-  updateProfileImage: PropTypes.func.isRequired,
+  profileType: PropTypes.string.isRequired,
+  setProfileBlurb: PropTypes.func.isRequired,
   updateProfileBlurb: PropTypes.func.isRequired,
-  setProfileBlurb: PropTypes.func.isRequired
+  updateProfileImage: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

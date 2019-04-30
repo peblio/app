@@ -10,11 +10,9 @@ import AddDescription from './Modal/AddDescription/AddDescription.jsx';
 import ConfirmUser from './Modal/ConfirmUser/ConfirmUser.jsx';
 import ExamplesModal from './Modal/ExamplesModal/ExamplesModal.jsx';
 import ForkPrompt from './Modal/ForkPrompt/ForkPrompt.jsx';
-import Login from './Modal/Login/Login.jsx';
 import Modal from './Modal/Modal.jsx';
 import PasswordForgot from './Modal/PasswordForgot/PasswordForgot.jsx';
 import ShareModal from './Modal/ShareModal/ShareModal.jsx';
-import SignUp from './Modal/SignUp/SignUp.jsx';
 import PagesList from './Modal/PagesList/PagesList.jsx';
 import PasswordReset from './Modal/PasswordReset/PasswordReset.jsx';
 import Welcome from './Modal/Welcome/Welcome.jsx';
@@ -281,6 +279,7 @@ class App extends React.Component {
           <MainToolbar
             projectID={this.projectID}
             savePage={this.savePage}
+            location={this.props.location}
           />
         </nav>
         <Canvas />
@@ -299,16 +298,6 @@ class App extends React.Component {
           closeModal={this.props.closeExamplesModal}
         >
           <ExamplesModal />
-        </Modal>
-
-        <Modal
-          size="large"
-          isOpen={this.props.isLoginModalOpen}
-          closeModal={this.props.closeLoginModal}
-        >
-          <Login
-            authLoadedPage={this.authLoadedPage}
-          />
         </Modal>
 
         <Modal
@@ -332,15 +321,6 @@ class App extends React.Component {
           />
         </Modal>
 
-        <Modal
-          size="auto"
-          isOpen={this.props.isSignUpModalOpen}
-          closeModal={this.props.closeSignUpModal}
-        >
-          <SignUp
-            authLoadedPage={this.authLoadedPage}
-          />
-        </Modal>
         <Modal
           size="small"
           isOpen={this.props.isConfirmUserModalOpen}
@@ -431,9 +411,7 @@ App.propTypes = {
 
   isAddDescriptionModalOpen: PropTypes.bool.isRequired,
   isPagesModalOpen: PropTypes.bool.isRequired,
-  isLoginModalOpen: PropTypes.bool.isRequired,
   isForgotModalOpen: PropTypes.bool.isRequired,
-  isSignUpModalOpen: PropTypes.bool.isRequired,
   isResetModalOpen: PropTypes.bool.isRequired,
 
   isExamplesModalOpen: PropTypes.bool.isRequired,
@@ -453,8 +431,6 @@ App.propTypes = {
   viewPagesModal: PropTypes.func.isRequired,
   closePagesModal: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
-  closeLoginModal: PropTypes.func.isRequired,
-  closeSignUpModal: PropTypes.func.isRequired,
   isShareModalOpen: PropTypes.bool.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeForgotModal: PropTypes.func.isRequired,

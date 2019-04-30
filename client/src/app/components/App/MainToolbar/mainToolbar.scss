@@ -1,5 +1,6 @@
 @import 'variables';
 @import 'mixins';
+@import 'base';
 
 .main-nav {
   position: sticky;
@@ -44,19 +45,6 @@
     justify-content: center;
     align-items: center;
   }
-  &__account-link {
-    color: $black;
-    background-color: $transparent;
-    border: 0;
-    text-decoration: none;
-    font-size: $medium-font-size;
-    padding-left: $small-padding;
-    &:hover {
-      color: $gray;
-      background-color: $transparent;
-      border: 0;
-    }
-  }
 }
 
 .logo_toolbar{
@@ -79,90 +67,6 @@
 
 .main-toolbar__save {
   @extend %mainToolbar__button
-}
-
-.main-toolbar__account-button{
-  margin: $mini-padding $medium-margin 0 $medium-margin;
-  padding: $small-padding $medium-padding;
-  border: none;
-  background: $black;
-  -webkit-transition-duration: 150ms; /* Safari */
-  transition-duration: 150ms;
-  &:hover {
-    cursor: pointer;
-    background: $black;
-    border: none;
-  }
-}
-
-.main-toolbar__account-button-clicked{
-  border: none;
-  background: $white;
-  -webkit-transition-duration: 150ms; /* Safari */
-  transition-duration: 150ms;
-  &:hover {
-    cursor: pointer;
-    background: $white;
-    border: none;
-  }
-}
-
-.account-man {
-  & path, & circle {
-    fill: $white;
-  }
-  &:hover path, &:hover circle {
-    fill: $blue;
-  }
-}
-
-.account-man__clicked {
-  & path, & circle {
-    fill: $blue;
-    margin-left: $micro-margin;
-  }
-  &:hover path, &:hover circle{
-    fill: $black;
-    margin-left: $micro-margin;
-  }
-}
-
-.main-toolbar__list {
-  display: flex;
-  flex-direction: column;
-  list-style: none;
-  list-style-type: none;
-  padding-left: $micro-padding*2;
-  margin: 0;
-}
-
-.main-toolbar__list-item {
-  padding: 0 $small-padding $medium-padding 0;
-}
-
-.main-toolbar__welcome {
-  color: $gray;
-  margin-top: $small-margin;
-  margin-bottom: 0;
-  padding-left: $small-padding;
-  font-size: $small-font-size;
-  font-weight: $medium-font-weight;
-}
-
-.main-toolbar__account{
-  display: flex;
-  top: 1px;
-  right: $large-margin;
-  flex-direction: column;
-  background-color: $white;
-  border: 2px solid;
-  border-color: $white;
-  position: absolute;
-  border-radius: $medium-border-radius;
-  z-index: $z-index-layer-2;
-  box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
-  -moz-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
-  -webkit-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
 }
 
 .main-toolbar__preview {
@@ -298,28 +202,5 @@ input[type="checkbox"] ~ .main-toolbar__preview-off {
 }
 
 .main-toolbar__spacer{
-  height: 18px;
-  width: 1px;
-  background-color: #A2AEB5;
-  margin: $medium-margin 0;
-}
-
-%mainToolbar__button{
-  margin: 0 $small-margin;
-  padding: $main-toolbar-padding;
-  float: right;
-  font-size: 14px;
-  font-weight: normal;
-  border: none;
-  // border-radius: $small-border-radius;
-  color: $white;
-  // background-color: none;
-  -webkit-transition-duration: 150ms; /* Safari */
-  transition-duration: 150ms;
-  &:hover {
-    border: none;
-    color: $light-gray;
-    background: none;
-    cursor: pointer;
-  }
+  @extend %vertical-spacer;
 }
