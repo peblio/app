@@ -10,7 +10,7 @@ class Folders extends Component {
   redirectToFolder = (e, shortId) => {
     e.stopPropagation();
     this.props.jumpToFolderByShortId(shortId);
-    history.push(`/dashboard/${this.props.profileName}/folder/${shortId}`);
+    history.push(`/user/${this.props.profileName}/folder/${shortId}`);
   }
 
   render() {

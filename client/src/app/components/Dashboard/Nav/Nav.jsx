@@ -40,7 +40,7 @@ class Nav extends React.Component {
         </div>
         <div className="dashboard-nav__lower-container">
           <ul className="dashboard-nav__list">
-            {this.renderListItem('Dashboard', 'dashboard')}
+            {this.renderListItem('Documents', 'documents')}
             {this.renderListItem('Account', 'account')}
             {this.renderListItem('Trash', 'account')}
             {this.renderListItem('Profile', 'account')}

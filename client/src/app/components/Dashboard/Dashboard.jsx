@@ -32,7 +32,7 @@ class Dashboard extends React.Component {
       case 'documents':
         return (
           <Documents
-            profileName={this.props.name}
+            userName={this.props.name}
             folderShortId={this.props.match.params.folderShortId}
           />
         );
@@ -55,7 +55,7 @@ class Dashboard extends React.Component {
         <div className="dashboard__container">
           <Nav />
 
-          {this.renderDashboardView('account')}
+          {this.renderDashboardView(this.props.dashboardView)}
 
         </div>
       </div>
@@ -89,7 +89,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
-
     userActions),
   dispatch);
 }

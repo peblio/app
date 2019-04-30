@@ -35,7 +35,6 @@ class Pages extends Component {
   }
 
   render() {
-    console.log(this);
     return (
       <ul className="profile-pebl__list">
         {this.props.pages.map(page => (

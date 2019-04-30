@@ -36,7 +36,6 @@ const workspaceReducer = (state = initialState, action) => {
       return { ...state, workspace };
 
     case ActionTypes.WP_UPDATE_CONSOLE_OUTPUT: {
-      // debugger;
       const tempOutput = workspace.consoleOutputText.slice();
       if (action.event.data.arguments && (action.event.data.id === action.id)) {
         tempOutput.push(action.event.data.arguments.join());
