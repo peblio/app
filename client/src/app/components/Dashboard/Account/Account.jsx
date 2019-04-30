@@ -39,7 +39,7 @@ class Account extends React.Component {
       .then((result) => {
         const url = URL.parse(result.request.responseURL);
         const imageURL = `https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`;
-        this.props.updateProfileImage(imageURL);
+        this.props.updateUserProfileImage(imageURL);
       })
       .catch((err) => {
         console.log(err);
@@ -47,7 +47,7 @@ class Account extends React.Component {
   }
 
   handleBlurbChange = (e) => {
-    this.props.setProfileBlurb(e.target.value);
+    this.props.setUserBlurb(e.target.value);
   }
 
   handleBlurbBlur = (e) => {
@@ -56,27 +56,28 @@ class Account extends React.Component {
 
   render() {
     return (
-      <div className="details__content">
-        <div className="details__container">
-          <p className="details__welcome">
-            {`Welcome ${this.props.name}! Feel free to change your profile image and description.`}
-          </p>
+      <div className="account__container">
+        <div className="account__sub-container">
           <Dropzone
             onDrop={this.onDrop}
-            className="details__image-container"
+            className="account__image-container"
           >
-            <img className="details__image" src={this.props.image} alt="profile" />
-            <div className="details__image-upload">
+            <img className="account__image" src={this.props.image} alt="profile" />
+            <div className="account__image-upload">
               <ImageUploadSVG alt="upload profile image" />
             </div>
           </Dropzone>
 
-          <div className="details__text-primary">
+          <div className="account__text-primary">
             {this.props.name}
           </div>
-
+        </div>
+        <div className="account__sub-container">
+          <p className="account__text-secondary">
+            Bio
+          </p>
           <textarea
-            className="details__text-secondary"
+            className="account__text-blurb"
             type="text"
             value={this.props.blurb}
             rows={15}
@@ -95,9 +96,9 @@ Account.propTypes = {
   image: PropTypes.string.isRequired,
   isOwner: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
-  updateProfileImage: PropTypes.func.isRequired,
+  updateUserProfileImage: PropTypes.func.isRequired,
   updateProfileBlurb: PropTypes.func.isRequired,
-  setProfileBlurb: PropTypes.func.isRequired
+  setUserBlurb: PropTypes.func.isRequired
 };
 
 export default Account;

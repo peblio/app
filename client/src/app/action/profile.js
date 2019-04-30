@@ -27,33 +27,6 @@ export function fetchProfile(userName) {
     });
 }
 
-export function setProfileBlurb(value) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_PROFILE_BLURB,
-      value
-    });
-  };
-}
-
-export function updateProfileBlurb(value) {
-  return dispatch => axios.put('/current_user/profile', {
-    blurb: value
-  }).then(() => dispatch({
-    type: ActionTypes.SET_PROFILE_BLURB,
-    value
-  }));
-}
-
-export function updateProfileImage(value) {
-  return dispatch => axios.put('/current_user/profile', {
-    image: value,
-  }).then(() => dispatch({
-    type: ActionTypes.SET_PROFILE_IMAGE,
-    value
-  }));
-}
-
 const profileFolderActions = namespaceActionCreators(folderActions, 'PROFILE_FOLDERS');
 
 export const {

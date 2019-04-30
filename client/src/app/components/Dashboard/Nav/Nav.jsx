@@ -10,6 +10,17 @@ import UserAccount from '../../Shared/UserAccount/UserAccount.jsx';
 import './nav.scss';
 
 class Nav extends React.Component {
+  renderListItem=(displayText, viewName) => (
+    <li className="dashboard-nav__list-item">
+      <button
+        className="dashboard-nav__button"
+        onClick={() => { this.props.setDashboardView(viewName); }}
+      >
+        {displayText}
+      </button>
+    </li>
+  )
+
   render() {
     return (
       <div className="dashboard-nav__container">
@@ -29,36 +40,11 @@ class Nav extends React.Component {
         </div>
         <div className="dashboard-nav__lower-container">
           <ul className="dashboard-nav__list">
-            <li className="dashboard-nav__list-item">
-              <button
-                className="dashboard-nav__button"
-                onClick={() => { this.props.setDashboardView(0); }}
-              >
-              Documents
-              </button>
-            </li>
-            <li className="dashboard-nav__list-item">
-              <button
-                className="dashboard-nav__button"
-                onClick={() => { this.props.setDashboardView(1); }}
-              >
-              Account
-              </button>
-            </li>
-            <li className="dashboard-nav__list-item">
-              <button
-                className="dashboard-nav__button"
-              >
-              Trash
-              </button>
-            </li>
-            <li className="dashboard-nav__list-item">
-              <button
-                className="dashboard-nav__button"
-              >
-              Profile
-              </button>
-            </li>
+            {this.renderListItem('Dashboard', 'dashboard')}
+            {this.renderListItem('Account', 'account')}
+            {this.renderListItem('Trash', 'account')}
+            {this.renderListItem('Profile', 'account')}
+
           </ul>
         </div>
       </div>
@@ -71,16 +57,14 @@ Nav.propTypes = {
   image: PropTypes.string.isRequired,
   isOwner: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
-  updateProfileImage: PropTypes.func.isRequired,
+  updateUserProfileImage: PropTypes.func.isRequired,
   updateProfileBlurb: PropTypes.func.isRequired,
-  setProfileBlurb: PropTypes.func.isRequired
+  setUserBlurb: PropTypes.func.isRequired
 };
-const mapStateToProps = state => ({
 
-});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   setDashboardView
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Nav);
+export default connect(null, mapDispatchToProps)(Nav);

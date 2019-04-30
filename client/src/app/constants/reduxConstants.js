@@ -126,8 +126,8 @@ export const SET_USER = 'SET_USER';
 export const SET_PROFILE = 'SET_PROFILE';
 export const SET_PROFILE_PEBLS = 'SET_PROFILE_PEBLS';
 export const SET_PROFILE_FOLDERS = 'SET_PROFILE_FOLDERS';
-export const SET_PROFILE_IMAGE = 'SET_PROFILE_IMAGE';
-export const SET_PROFILE_BLURB = 'SET_PROFILE_BLURB';
+export const SET_USER_IMAGE = 'SET_USER_IMAGE';
+export const SET_USER_BLURB = 'SET_USER_BLURB';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const SET_IS_OWNER = 'SET_IS_OWNER';
 

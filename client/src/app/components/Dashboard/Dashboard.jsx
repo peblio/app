@@ -7,7 +7,7 @@ import Account from './Account/Account';
 import Documents from './Documents/Documents';
 import Nav from './Nav/Nav';
 
-import * as profileActions from '../../action/profile';
+
 import * as userActions from '../../action/user';
 
 import './dashboard.scss';
@@ -16,7 +16,7 @@ class Dashboard extends React.Component {
   componentWillMount() {
     this.props.fetchCurrentUser()
       .then(() => {
-        this.props.fetchProfile(this.props.name);
+        this.props.fetchUserProfile(this.props.name);
         console.log(this.props.name);
       });
     // const userName = this.props.match.params.userName;
@@ -29,21 +29,21 @@ class Dashboard extends React.Component {
   renderDashboardView=(dashboardView) => {
     const userName = this.props.match.params.userName;
     switch (dashboardView) {
-      case 0:
+      case 'documents':
         return (
           <Documents
             profileName={this.props.name}
             folderShortId={this.props.match.params.folderShortId}
           />
         );
-      case 1: return (
+      case 'account': return (
         <Account
           name={this.props.name}
           image={this.props.image}
           blurb={this.props.blurb}
-          updateProfileImage={this.props.updateProfileImage}
+          updateUserProfileImage={this.props.updateUserProfileImage}
           updateProfileBlurb={this.props.updateProfileBlurb}
-          setProfileBlurb={this.props.setProfileBlurb}
+          setUserBlurb={this.props.setUserBlurb}
         />
       );
     }
@@ -55,7 +55,7 @@ class Dashboard extends React.Component {
         <div className="dashboard__container">
           <Nav />
 
-          {this.renderDashboardView(1)}
+          {this.renderDashboardView('account')}
 
         </div>
       </div>
@@ -73,9 +73,9 @@ Dashboard.propTypes = {
     pathname: PropTypes.string.isRequired,
   }).isRequired,
   name: PropTypes.string.isRequired,
-  setProfileBlurb: PropTypes.func.isRequired,
+  setUserBlurb: PropTypes.func.isRequired,
   updateProfileBlurb: PropTypes.func.isRequired,
-  updateProfileImage: PropTypes.func.isRequired,
+  updateUserProfileImage: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -89,7 +89,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
-    profileActions,
+
     userActions),
   dispatch);
 }

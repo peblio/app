@@ -1,13 +1,13 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 
 const initialState = {
-  dashboardView: 0
+  dashboardView: 'account'
 };
 const dashboard = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.SET_DASHBOARD_VIEW:
       return Object.assign({}, state, {
-        dashboardView: action.viewNo
+        dashboardView: action.viewName
       });
 
     default:
