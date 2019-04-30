@@ -30,9 +30,6 @@ function findChildFolderIds(foldersById = {}, folderId = '') {
 const foldersReducer = (state = { ...initialState }, action) => {
   switch (action.type) {
     case ActionTypes.DELETE_PAGE: {
-      console.log(state);
-      console.log(state.pages);
-      console.log(state.selectedPageId);
       const { pages, selectedPageId } = state;
       delete pages.byId[action.pageId];
       return {

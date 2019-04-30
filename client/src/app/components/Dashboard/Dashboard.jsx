@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 
 import Account from './Account/Account';
 import Documents from './Documents/Documents';
-import Profile from '../Profile/Profile';
 import Nav from './Nav/Nav';
 
 import * as profileActions from '../../action/profile';
@@ -46,9 +45,6 @@ class Dashboard extends React.Component {
           updateProfileBlurb={this.props.updateProfileBlurb}
           setProfileBlurb={this.props.setProfileBlurb}
         />
-      );
-      case 3: return (
-        <Profile />
       );
     }
   }

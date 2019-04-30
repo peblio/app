@@ -48,7 +48,13 @@ class Nav extends React.Component {
             <li className="dashboard-nav__list-item">
               <button
                 className="dashboard-nav__button"
-                onClick={() => { this.props.setDashboardView(3); }}
+              >
+              Trash
+              </button>
+            </li>
+            <li className="dashboard-nav__list-item">
+              <button
+                className="dashboard-nav__button"
               >
               Profile
               </button>
