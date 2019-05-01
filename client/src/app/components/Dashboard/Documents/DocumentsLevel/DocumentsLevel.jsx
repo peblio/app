@@ -8,7 +8,7 @@ import Pages from '../Pages/Pages';
 import { jumpToFolderByShortId, clearSelectedFolders } from '../../../../action/page';
 import history from '../../../../utils/history';
 
-class ProfileLevel extends Component {
+class DocumentsLevel extends Component {
   static defaultProps = {
     folderDepth: 0,
     folderId: undefined,
@@ -63,7 +63,7 @@ class ProfileLevel extends Component {
   }
 }
 
-ProfileLevel.propTypes = {
+DocumentsLevel.propTypes = {
   childFolders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   childPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   clearSelectedFolders: PropTypes.func.isRequired,
@@ -96,4 +96,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   jumpToFolderByShortId
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileLevel);
+export default connect(mapStateToProps, mapDispatchToProps)(DocumentsLevel);

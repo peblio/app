@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import ProfileLevel from './ProfileLevel/ProfileLevel';
+import DocumentsLevel from './DocumentsLevel/DocumentsLevel';
 import {
   fetchAllPages,
   jumpToFolderByShortId
@@ -43,13 +43,13 @@ class Documents extends React.Component {
     let folderContainer;
     console.log(selectedFolderIds);
     if (selectedFolderIds.length === 0) {
-      folderContainer = <ProfileLevel userName={userName} />;
+      folderContainer = <DocumentsLevel userName={userName} />;
     } else {
       const selectedFolderId = selectedFolderIds[selectedFolderIds.length - 1];
       const folderDepth = selectedFolderIds.length;
       console.log(selectedFolderIds);
       folderContainer = (
-        <ProfileLevel
+        <DocumentsLevel
           folderId={selectedFolderId}
           folderDepth={folderDepth}
           profileName={userName}
