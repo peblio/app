@@ -30,6 +30,17 @@ export function sendSignUpConfirmationMail(email, users, tokens) {
     sendMail(mailOptions);
 }
 
+export function sendSignUpNotificationMail(email, user) {
+    const mailOptions = {
+        to: email,
+        from: process.env.PEBLIO_SENDGRID_MAIL,
+        subject: 'Peblio Confirmation',
+        text: `Hi, Username: ${user} \n`
+        + `You are receiving this because you have signed up for peblio.\n\n`
+    };
+    sendMail(mailOptions);
+}
+
 export function sendResetMail(email, users, tokens) {
     /* eslint-disable */
     let resetLinks = '';

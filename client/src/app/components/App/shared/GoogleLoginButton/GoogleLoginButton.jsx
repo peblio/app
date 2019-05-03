@@ -25,7 +25,8 @@ class GoogleLoginButton extends React.Component {
           userType: this.props.userType,
           requiresGuardianConsent: this.props.requiresGuardianConsent,
           guardianEmail: this.props.guardianEmail,
-          google_id_token: idToken
+          google_id_token: idToken,
+          name: this.props.name
         });
       })
       .then(this.props.onLoginSuccess)
@@ -44,11 +45,16 @@ class GoogleLoginButton extends React.Component {
 }
 
 GoogleLoginButton.propTypes = {
-  guardianEmail: PropTypes.string.isRequired,
+  guardianEmail: PropTypes.string,
   onLoginSuccess: PropTypes.func.isRequired,
   onLoginFailure: PropTypes.func.isRequired,
   requiresGuardianConsent: PropTypes.bool.isRequired,
-  userType: PropTypes.string.isRequired
+  userType: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired
+};
+
+GoogleLoginButton.defaultProps = {
+  guardianEmail: null
 };
 
 export default GoogleLoginButton;

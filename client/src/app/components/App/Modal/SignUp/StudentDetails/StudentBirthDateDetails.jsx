@@ -3,16 +3,29 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import { setStudentBirthday, setGuardianEmail } from '../../../../../action/user.js';
+import { setStudentBirthday, setGuardianEmail, setGuardianConsent, setNextScreen } from '../../../../../action/user.js';
+import SignUpUsername from '../SignUpUsername.jsx';
 
 
-class StudentDetails extends React.Component {
+class StudentBirthDateDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       month: 0,
-      year: 1992
+      year: -1
     };
+  }
+
+  onNextButtonClick = () => {
+    if (this.state.year !== -1) {
+      if (this.props.requiresGuardianConsent) {
+        if (this.props.guardianEmail && this.props.guardianEmail !== '') {
+          this.props.setNextScreen('SignupUsernameScreen');
+        }
+      } else {
+        this.props.setNextScreen('SignupUsernameScreen');
+      }
+    }
   }
 
   handleMonthChange = (month) => {
@@ -57,7 +70,6 @@ class StudentDetails extends React.Component {
     );
   }
 
-
   renderYearDropdown() {
     const currentYear = moment().year();
     return (
@@ -75,6 +87,9 @@ class StudentDetails extends React.Component {
   }
 
   render() {
+    if (this.state.renderCreateUserNameScreen) {
+      return (<SignUpUsername />);
+    }
     return (
       <div>
         <div className="signup-modal__birthday">
@@ -104,27 +119,48 @@ class StudentDetails extends React.Component {
             />
           </div>
         )}
+        <div className="signup-modal__buttonholder">
+          <button
+            className="signup-modal__button"
+            data-test="signup-modal__button-next"
+            onClick={this.onNextButtonClick}
+            value="Submit"
+          >
+                Next
+          </button>
+        </div>
       </div>
     );
   }
 }
 
-StudentDetails.propTypes = {
-  requiresGuardianConsent: PropTypes.bool.isRequired,
+StudentBirthDateDetails.propTypes = {
   setGuardianConsent: PropTypes.func.isRequired,
   setStudentBirthday: PropTypes.func.isRequired,
-  setGuardianEmail: PropTypes.func.isRequired
+  setNextScreen: PropTypes.func.isRequired,
+  setGuardianEmail: PropTypes.func.isRequired,
+  guardianEmail: PropTypes.string,
+  requiresGuardianConsent: PropTypes.bool
+};
+
+StudentBirthDateDetails.defaultProps = {
+  requiresGuardianConsent: null,
+  guardianEmail: null
 };
 
 function mapStateToProps(state) {
   return {
     requiresGuardianConsent: state.user.requiresGuardianConsent,
-    studentBirthday: state.user.studentBirthday
+    studentBirthday: state.user.studentBirthday,
+    guardianEmail: state.user.guardianEmail,
+    nextScreen: state.user.nextScreen
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   setStudentBirthday,
-  setGuardianEmail
+  setGuardianEmail,
+  setGuardianConsent,
+  setNextScreen
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(StudentDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(StudentBirthDateDetails);

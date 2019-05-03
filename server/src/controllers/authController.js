@@ -12,21 +12,26 @@ function loginWithGoogle(req, res) {
   const type = req.body.userType;
   const requiresGuardianConsent = req.body.requiresGuardianConsent;
   const guardianEmail = req.body.guardianEmail;
+  const name = req.body.name;
   const guardianConsentedAt = (requiresGuardianConsent === true) ? new Date() : '';
   const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
   return client.verifyIdToken({
     idToken: req.body.google_id_token,
     audience: process.env.GOOGLE_CLIENT_ID
   }).then((ticket) => {
+    
     const payload = ticket.getPayload();
     const googleId = payload.sub;
 
     User.findOne({ googleId }, (err, user) => {
       if (err) { return req.send({ msg: err }); }
-
-      let userPromise = Promise.resolve(user);
-      if (!user) {
-        const newUser = new User({
+      if (user) {
+        return res.status(400).send({
+          msg: 'User already signed up using Google with Peblio',
+        });
+      }
+      
+      const newUser = new User({
           googleId,
           type,
           loginType: 'google',
@@ -34,10 +39,10 @@ function loginWithGoogle(req, res) {
           isVerified: true,
           requiresGuardianConsent,
           guardianEmail,
-          guardianConsentedAt
-        });
-        userPromise = newUser.save();
-      }
+          guardianConsentedAt,
+          name
+      });
+      const userPromise = newUser.save();
 
       return userPromise.then((newRegisteredUser) => {
         req.login(newRegisteredUser, (loginError) => {

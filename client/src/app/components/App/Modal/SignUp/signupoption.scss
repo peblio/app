@@ -1,0 +1,110 @@
+@import 'variables';
+@import 'mixins';
+@import 'modal';
+
+.signup-modal {
+  &__checkbox {
+    display: inline-block !important;
+  }
+  &__content{
+    @extend %modal__content;
+  }
+
+  &__div{
+    display: block;
+    text-align: left;
+  }
+
+  &__dropdown {
+    height: $large-height;
+    border-radius: $small-border-radius/2;
+    border: none;
+    width: -webkit-fill-available;
+    font-size: $p-size*0.75;
+    margin: 0 $small-margin/2;
+    border: $g4 $small-border solid;
+    color: $g4;
+  }
+
+  &__title{
+    @extend %modal__title;
+  }
+
+  &__subtitle {
+    @extend %modal__subtitle;
+  }
+
+  &__link{
+    text-decoration: none;
+    color: $green;
+  }
+
+  &__terms-label {
+    font-size: $small-font-size;
+  }
+
+  &__label{
+    @extend %modal__label;
+    display: inline;
+  }
+
+  &__input{
+    @extend %modal__input;
+  }
+
+  &__birthday{
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: $medium-margin;
+  }
+
+  &__input-text{
+    color: $green;
+    margin: $small-margin 0;
+    line-height: $p-line-height;
+    font-size: $p-size;
+    margin: 0 $small-margin;
+  }
+
+  &__button{
+    @extend %modal__button;
+  }
+
+  &__buttonholder {
+    @extend %modal__buttonholder;
+    width: 100%;
+    margin-top: 0px;
+  }
+
+  &__radio-holder {
+    width: 100%;
+  }
+
+  &__radio {
+    @extend %modal__radio;
+  }
+
+  &__list {
+    justify-content: $center-align;
+    padding: $small-padding;
+    list-style-type: none;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__listitem {
+    padding-right: $small-padding;
+    padding-left: $small-padding;
+    margin-left: $micro-margin;
+    margin-right: $micro-margin;
+  }
+
+  &__notice {
+    @extend %modal__notice;
+  }
+
+  &__text-secondary {
+    @extend %modal__text;
+  }
+}
