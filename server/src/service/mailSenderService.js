@@ -35,14 +35,14 @@ export function sendSignUpNotificationMail(email, user) {
         to: email,
         from: process.env.PEBLIO_SENDGRID_MAIL,
         subject: 'Peblio Confirmation',
-        text: `Hello from Peblio! \n`
-        + `Your child signed up for a new account on Peblio with the username:\n`
+        text: 'Hello from Peblio! \n'
+        + 'Your child signed up for a new account on Peblio with the username:\n'
         + `${user}\n`
-        + `If you would like to close your child’s account, please contact us:\n`
-        + `https://demo.peblio.co/pebl/yWzLLSWLM\n`
-        + `Peblio is an instructional tool that makes it easy for anyone to learn or teach computer programming in any language and share their work with our community. Learn more at Peblio.co.\n`
-        + `Thank you for being a part of the Peblio community!\n`
-        + `The Peblio Team\n`
+        + 'If you would like to close your child’s account, please contact us:\n'
+        + 'https://demo.peblio.co/pebl/yWzLLSWLM  \n'
+        + 'Peblio is an instructional tool that makes it easy for anyone to learn or teach computer programming in any language and share their work with our community. Learn more at Peblio.co. \n'
+        + 'Thank you for being a part of the Peblio community! \n'
+        + 'The Peblio Team \n\n '
     };
     sendMail(mailOptions);
 }

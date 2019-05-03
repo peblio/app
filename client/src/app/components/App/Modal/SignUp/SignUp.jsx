@@ -47,7 +47,7 @@ class SignUp extends React.Component {
 
   renderSignupScreenNumber(activeScreen) {
     const numbers = [];
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= 3; i += 1) {
       numbers.push(
         <div className="signup-modal__screen-no-container">
           <li className={`signup-modal__screen-no-item${(i <= activeScreen) ? '--selected' : ''}`}>
