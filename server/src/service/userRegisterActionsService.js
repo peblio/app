@@ -5,6 +5,23 @@ const UserConst = require('../userConstants.js');
 const passport = require('passport');
 import { sendSuccessfulResetMail, sendSignUpConfirmationMail, sendResetMail, sendSignUpNotificationMail } from './mailSenderService';
 
+export function checkUsernameAvailability(req, res) {
+  const name  = req.body.name;
+  return User.findOne({ name }, (err, data) => {
+    if (err) {
+        return res.status(422).send({
+            msg: UserConst.SIGN_UP_FAILED
+        });
+    }
+    if (data) {
+        return res.status(400).send({
+            msg: UserConst.SIGN_UP_DUPLICATE_USER
+        });
+    }
+    return res.status(200).send();
+  })
+}
+
 export function createUser(req, res) {
     const email = req.body.mail;
     const name = req.body.name;

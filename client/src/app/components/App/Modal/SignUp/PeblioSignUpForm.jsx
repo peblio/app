@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import axios from '../../../../utils/axios';
 import { saveLog } from '../../../../utils/log';
 import { closeSignUpModal } from '../../../../action/mainToolbar.js';
-import { setUserName } from '../../../../action/user.js';
 import GoogleLoginButton from '../../Shared/GoogleLoginButton/GoogleLoginButton.jsx';
 
 require('./signup.scss');
@@ -15,8 +14,7 @@ class PeblioSignUpForm extends React.Component {
     super(props);
     this.state = {
       showNotice: false,
-      notice: '',
-      isFormVisible: true
+      notice: ''
     };
   }
 
@@ -39,13 +37,11 @@ class PeblioSignUpForm extends React.Component {
   signUpSuccessful = (msg) => {
     this.setState({
       showNotice: true,
-      notice: msg,
-      isFormVisible: false
+      notice: msg
     });
   }
 
   googleLoginSuccessful = (response) => {
-    this.props.setUserName(response.data.user.name);
     this.props.closeSignUpModal();
     const log = {
       message: 'User Logged In using Google',
@@ -91,63 +87,70 @@ class PeblioSignUpForm extends React.Component {
 
   render() {
     return (
-      <div className="signup-modal__content">
-        {this.state.isFormVisible && (
-          <div>
-            <GoogleLoginButton
-              onLoginSuccess={this.googleLoginSuccessful}
-              onLoginFailure={this.signUpFailed}
-              userType={this.props.userType}
-              requiresGuardianConsent={this.props.requiresGuardianConsent}
-              guardianEmail={this.props.guardianEmail}
-              name={this.props.name}
-            />
-            <p className="signup-modal__text-secondary">or</p>
-            {this.props.guardianEmail === null && (
-              <div className="signup-modal__div">
-                <input
-                  required
-                  className="signup-modal__input"
-                  data-test="signup-modal__input-email"
-                  id="signup-modal-mail"
-                  placeholder="email"
-                  ref={(userMail) => { this.userMail = userMail; }}
-                  type="email"
-                />
-              </div>
-            )}
+      <div>
+        <h2 className="signup-modal__subtitle">
+          Almost signed up!
+        </h2>
+        <GoogleLoginButton
+          onLoginSuccess={this.googleLoginSuccessful}
+          onLoginFailure={this.signUpFailed}
+          userType={this.props.userType}
+          requiresGuardianConsent={this.props.requiresGuardianConsent}
+          guardianEmail={this.props.guardianEmail}
+          name={this.props.name}
+        />
+        <div className="signup-modal__or-container">
+          <hr className="signup-modal__or-line" />
+          <p className="signup-modal__or">
+            or
+          </p>
+          <hr className="signup-modal__or-line" />
+        </div>
+        <div>
+          {this.props.guardianEmail === null && (
             <div className="signup-modal__div">
               <input
                 required
                 className="signup-modal__input"
-                data-test="signup-modal__input-pswd"
-                id="signup-modal-password"
-                placeholder="password"
-                ref={(password) => { this.password = password; }}
-                type="password"
-              />
-              <input
-                required
-                id="signup-modal-confirm"
-                className="signup-modal__input"
-                data-test="signup-modal__input-pswd-confirm"
-                placeholder="retype password"
-                type="password"
-                ref={(passwordConfirm) => { this.passwordConfirm = passwordConfirm; }}
+                data-test="signup-modal__input-email"
+                id="signup-modal-mail"
+                placeholder="email"
+                ref={(userMail) => { this.userMail = userMail; }}
+                type="email"
               />
             </div>
-            <div className="signup-modal__buttonholder">
-              <button
-                className="signup-modal__button"
-                data-test="signup-modal__button-submit"
-                onClick={this.submitSignUpUser}
-                value="Submit"
-              >
-                  Sign in with Peblio
-              </button>
-            </div>
+          )}
+          <div className="signup-modal__div">
+            <input
+              required
+              className="signup-modal__input"
+              data-test="signup-modal__input-pswd"
+              id="signup-modal-password"
+              placeholder="password"
+              ref={(password) => { this.password = password; }}
+              type="password"
+            />
+            <input
+              required
+              id="signup-modal-confirm"
+              className="signup-modal__input"
+              data-test="signup-modal__input-pswd-confirm"
+              placeholder="retype password"
+              type="password"
+              ref={(passwordConfirm) => { this.passwordConfirm = passwordConfirm; }}
+            />
           </div>
-        )}
+          <div className="signup-modal__buttonholder">
+            <button
+              className="signup-modal__peblio-button"
+              data-test="signup-modal__button-submit"
+              onClick={this.submitSignUpUser}
+              value="Submit"
+            >
+                  Sign in with Peblio
+            </button>
+          </div>
+        </div>
         {this.state.showNotice && (
           <p className="signup-modal__notice">
             {this.state.notice}
@@ -160,7 +163,6 @@ class PeblioSignUpForm extends React.Component {
 
 PeblioSignUpForm.propTypes = {
   closeSignUpModal: PropTypes.func.isRequired,
-  setUserName: PropTypes.func.isRequired,
   guardianEmail: PropTypes.string,
   requiresGuardianConsent: PropTypes.bool,
   userType: PropTypes.string.isRequired,
@@ -184,9 +186,9 @@ function mapStateToProps(state) {
     name: state.user.name
   };
 }
+
 const mapDispatchToProps = dispatch => bindActionCreators({
-  closeSignUpModal,
-  setUserName
+  closeSignUpModal
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PeblioSignUpForm);

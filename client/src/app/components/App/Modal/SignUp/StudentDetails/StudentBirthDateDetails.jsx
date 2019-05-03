@@ -93,9 +93,9 @@ class StudentBirthDateDetails extends React.Component {
     return (
       <div>
         <div className="signup-modal__birthday">
-          <p className="signup-modal__input-text">
-          Birthday
-          </p>
+          <h2 className="signup-modal__subtitle">
+            When is your birthday?
+          </h2>
           {this.renderMonthDropdown()}
           {this.renderYearDropdown()}
         </div>

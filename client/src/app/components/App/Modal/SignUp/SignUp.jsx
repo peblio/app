@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import StudentBirthDateDetails from './StudentDetails/StudentBirthDateDetails.jsx';
 import SignUpOption from './SignUpOption.jsx';
 import { setUserName, setUserType, setNextScreen } from '../../../../action/user.js';
+import CheckSVG from '../../../../images/green-check.svg';
 import SignUpUsername from './SignUpUsername.jsx';
 import PeblioSignUpForm from './PeblioSignUpForm.jsx';
 
@@ -14,8 +15,7 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isUserTypeSelected: false,
-      isFormVisible: true
+      isUserTypeSelected: false
     };
   }
 
@@ -45,9 +45,29 @@ class SignUp extends React.Component {
     });
   }
 
+  renderSignupScreenNumber(activeScreen) {
+    const numbers = [];
+    for (let i = 1; i <= 3; i += 1) {
+      numbers.push(
+        <div className="signup-modal__screen-no-container">
+          <li className={`signup-modal__screen-no-item${(i <= activeScreen) ? '--selected' : ''}`}>
+            {i}
+          </li>
+          <hr className={`signup-modal__screen-line${(i === 3) ? '--hide' : ''}`} />
+        </div>
+      );
+    }
+    return (
+      <ul className="signup-modal__screen-no">
+        {numbers}
+      </ul>
+    );
+  }
+
   renderStudentBirthDateComponent() {
     return (
       <div className="signup-modal__content">
+        {this.props.userType === 'student' && this.renderSignupScreenNumber(1)}
         <StudentBirthDateDetails />
       </div>
     );
@@ -56,6 +76,7 @@ class SignUp extends React.Component {
   renderSignupUsernameComponent() {
     return (
       <div className="signup-modal__content">
+        {this.props.userType === 'student' && this.renderSignupScreenNumber(2)}
         <SignUpUsername />
       </div>
     );
@@ -64,6 +85,7 @@ class SignUp extends React.Component {
   renderSignupOption() {
     return (
       <div className="signup-modal__content">
+        {this.props.userType === 'student' && this.renderSignupScreenNumber(3)}
         <SignUpOption />
       </div>
     );
@@ -72,23 +94,26 @@ class SignUp extends React.Component {
   renderPeblioSignUpForm() {
     return (
       <div className="signup-modal__content">
+        {this.props.userType === 'student' && this.renderSignupScreenNumber(3)}
         <PeblioSignUpForm />
       </div>
     );
   }
 
   renderSignupType(labelText, htmlFor) {
+    const isCurrentUserType = this.props.userType === htmlFor;
+
     return (
-      <li className="signup-modal__listitem">
+      <li className={`signup-modal__listitem ${(isCurrentUserType) ? 'signup-modal__listitem--selected' : ''}`}>
         <label
           className="signup-modal__label"
           htmlFor={htmlFor}
+          data-test={`signup-modal__radio-${htmlFor}`}
         >
           <input
             required
             type="radio"
             className="signup-modal__radio"
-            data-test={`signup-modal__radio-${htmlFor}`}
             name="type"
             value={htmlFor}
             id={htmlFor}
@@ -98,6 +123,10 @@ class SignUp extends React.Component {
             }}
           />
           {labelText}
+          <CheckSVG
+            className={`signup-modal__check${(isCurrentUserType) ? '--selected' : ''}`}
+            alt="check svg"
+          />
         </label>
       </li>
     );
@@ -183,7 +212,7 @@ class SignUp extends React.Component {
     }
     return (
       <div className="signup-modal__content">
-        {this.state.isFormVisible && this.renderSignupTypes() }
+        {this.renderSignupTypes() }
       </div>
     );
   }

@@ -32,7 +32,7 @@ describe('StudentBirthDateDetails Component', () => {
 
     expect(wrapper.find(StudentBirthDateDetails)).to.have.lengthOf(1);
     expect(wrapper.find('.signup-modal__birthday')).to.have.lengthOf(1);
-    expect(wrapper.find('.signup-modal__input-text')).to.have.lengthOf(1);
+    // expect(wrapper.find('.signup-modal-guardian-mail')).to.have.lengthOf(1);
   });
 
   it('should render StudentBirthDateDetails component with Month Dropdown', () => {

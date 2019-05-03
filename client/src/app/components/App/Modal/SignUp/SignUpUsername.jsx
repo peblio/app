@@ -2,19 +2,48 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import axios from '../../../../utils/axios';
 import { setUserName, setNextScreen } from '../../../../action/user.js';
 
 class SignUpUsername extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showNotice: false,
+      notice: ''
+    };
+  }
+
   onNextButtonClick = () => {
-    if (this.userName.value && this.userName.value !== '') {
-      this.props.setUserName(this.userName.value);
-      this.props.setNextScreen('SignupOption');
-    }
+    axios.post('/auth/checkusername', {
+      name: this.userName.value
+    })
+      .then(() => {
+        if (this.userName.value && this.userName.value !== '') {
+          this.props.setUserName(this.userName.value);
+          this.props.setNextScreen('SignupOption');
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          this.userNameUnavailable(err.response.data.msg);
+        }
+      });
+  }
+
+  userNameUnavailable = (msg) => {
+    this.setState({
+      showNotice: true,
+      notice: msg
+    });
   }
 
   render() {
     return (
-      <div>
+      <div className="signup-modal__username">
+        <h2 className="signup-modal__subtitle">
+            Create your username
+        </h2>
         <div className="signup-modal__div">
           <input
             required
@@ -33,9 +62,14 @@ class SignUpUsername extends React.Component {
             onClick={this.onNextButtonClick}
             value="Submit"
           >
-                Next
+                  Next
           </button>
         </div>
+        {this.state.showNotice && (
+          <p className="signup-modal__notice">
+            {this.state.notice}
+          </p>
+        )}
       </div>
     );
   }
