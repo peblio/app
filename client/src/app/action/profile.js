@@ -3,6 +3,7 @@ import axios from '../utils/axios';
 import history from '../utils/history';
 import { namespaceActionCreators } from '../utils/namespace-redux';
 import * as folderActions from './folders';
+import * as pageActions from './page';
 
 export function setIsOwner(value) {
   return (dispatch) => {
@@ -26,36 +27,10 @@ export function fetchProfile(userName) {
     });
 }
 
-export function setProfileBlurb(value) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_PROFILE_BLURB,
-      value
-    });
-  };
-}
-
-export function updateProfileBlurb(value) {
-  return dispatch => axios.put('/current_user/profile', {
-    blurb: value
-  }).then(() => dispatch({
-    type: ActionTypes.SET_PROFILE_BLURB,
-    value
-  }));
-}
-
-export function updateProfileImage(value) {
-  return dispatch => axios.put('/current_user/profile', {
-    image: value,
-  }).then(() => dispatch({
-    type: ActionTypes.SET_PROFILE_IMAGE,
-    value
-  }));
-}
-
 const profileFolderActions = namespaceActionCreators(folderActions, 'PROFILE_FOLDERS');
 
 export const {
+  deletePage,
   fetchAllPages,
   viewFolder,
   viewPage,

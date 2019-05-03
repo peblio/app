@@ -5,8 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import Folders from '../Folders/Folders';
 import Pages from '../Pages/Pages';
-import { clearSelectedFolders } from '../../../../action/profile';
-import compareTimestamps from '../../../../utils/compare-timestamps';
+import { jumpToFolderByShortId, clearSelectedFolders } from '../../../../action/page';
 import history from '../../../../utils/history';
 
 class ProfileLevel extends Component {
@@ -20,6 +19,7 @@ class ProfileLevel extends Component {
   handleClick = () => {
     this.props.clearSelectedFolders(this.props.folderDepth - 1);
     if (this.props.folder.parent) {
+      this.props.jumpToFolderByShortId(this.props.parentFolderShortId);
       history.push(`/user/${this.props.profileName}/folder/${this.props.parentFolderShortId}`);
     } else {
       history.push(`/user/${this.props.profileName}`);
@@ -53,7 +53,10 @@ class ProfileLevel extends Component {
           />
         )}
         <h2 className="profile-pebls__sub-heading">files</h2>
-        <Pages pages={childPages} folderId={folderId} />
+        <Pages
+          pages={childPages}
+          folderId={folderId}
+        />
       </div>
       /* eslint-enable jsx-a11y/no-static-element-interactions */
     );
@@ -67,21 +70,21 @@ ProfileLevel.propTypes = {
   folderDepth: PropTypes.number,
   folderId: PropTypes.string,
   folder: PropTypes.shape({ parent: PropTypes.string }),
+  jumpToFolderByShortId: PropTypes.string.isRequired,
   parentFolderShortId: PropTypes.string,
   profileName: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const folder = state.profile.folders.byId[ownProps.folderId];
+  const folder = state.page.folders.byId[ownProps.folderId];
   let parentFolderShortId;
   if (folder && folder.parent) {
-    parentFolderShortId = state.profile.folders.byId[folder.parent].shortId;
+    parentFolderShortId = state.page.folders.byId[folder.parent].shortId;
   }
   return {
-    childFolders: Object.values(state.profile.folders.byId)
-      .filter(f => f.parent === ownProps.folderId)
-      .sort(compareTimestamps),
-    childPages: Object.values(state.profile.pages.byId)
+    childFolders: Object.values(state.page.folders.byId)
+      .filter(f => f.parent === ownProps.folderId),
+    childPages: Object.values(state.page.pages.byId)
       .filter(page => page.folder === ownProps.folderId),
     folder,
     parentFolderShortId
@@ -90,6 +93,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   clearSelectedFolders,
+  jumpToFolderByShortId
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileLevel);

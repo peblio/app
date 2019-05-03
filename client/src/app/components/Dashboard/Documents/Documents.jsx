@@ -7,43 +7,52 @@ import ProfileLevel from './ProfileLevel/ProfileLevel';
 import {
   fetchAllPages,
   jumpToFolderByShortId
-} from '../../../action/profile';
+} from '../../../action/page';
 
-import './pebls.scss';
+import './documents.scss';
 
-class Pebls extends React.Component {
+class Documents extends React.Component {
   static defaultProps = {
     folderShortId: null
   }
 
-  componentWillMount() {
-    this.props.fetchAllPages(this.props.profileName)
-      .then(() => {
-        if (this.props.folderShortId) {
-          this.props.jumpToFolderByShortId(this.props.folderShortId);
-        }
-      });
-  }
-
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    console.log(this.props.selectedFolderIds);
+    if (prevProps.userName !== this.props.userName) {
+      this.props.fetchAllPages(this.props.userName)
+        .then(() => {
+          console.log('*****');
+          console.log(this.props.folderShortId);
+          console.log('*****');
+          if (this.props.folderShortId) {
+            this.props.jumpToFolderByShortId(this.props.folderShortId);
+          }
+        })
+        .catch((err) => {
+          console.log('*****');
+          console.log(err);
+        });
+    }
     if (this.containerEl && this.props.selectedFolderIds.length >= 2) {
       this.containerEl.scrollLeft = this.containerEl.scrollWidth - this.containerEl.clientWidth;
     }
   }
 
   render() {
-    const { profileName, selectedFolderIds } = this.props;
+    const { userName, selectedFolderIds } = this.props;
     let folderContainer;
+    console.log(selectedFolderIds);
     if (selectedFolderIds.length === 0) {
-      folderContainer = <ProfileLevel profileName={profileName} />;
+      folderContainer = <ProfileLevel userName={userName} />;
     } else {
       const selectedFolderId = selectedFolderIds[selectedFolderIds.length - 1];
       const folderDepth = selectedFolderIds.length;
+      console.log(selectedFolderIds);
       folderContainer = (
         <ProfileLevel
           folderId={selectedFolderId}
           folderDepth={folderDepth}
-          profileName={profileName}
+          profileName={userName}
         />
       );
     }
@@ -55,16 +64,16 @@ class Pebls extends React.Component {
   }
 }
 
-Pebls.propTypes = {
+Documents.propTypes = {
   folderShortId: PropTypes.string,
-  profileName: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
   selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchAllPages: PropTypes.func.isRequired,
   jumpToFolderByShortId: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  selectedFolderIds: state.profile.selectedFolderIds
+  selectedFolderIds: state.page.selectedFolderIds,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -72,4 +81,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchAllPages
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Pebls);
+export default connect(mapStateToProps, mapDispatchToProps)(Documents);

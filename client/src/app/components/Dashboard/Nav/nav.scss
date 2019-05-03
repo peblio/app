@@ -1,0 +1,50 @@
+@import 'variables';
+
+.dashboard-nav {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  &__upper-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background: $black;
+    justify-content: space-between;
+  }
+  &__lower-container {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    border-bottom: solid $small-border $g4;
+    margin: 0 auto;
+  }
+  &__list {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  &__list-item {
+    padding-right: $xlarge-padding;
+  }
+  &__button {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    border-bottom: solid $small-border transparent;
+    font-size: $p-size;
+    color: $g4;
+    font-weight: 500;
+    padding: $medium-padding 0;
+    &:hover {
+      border: none;
+      border-radius: 0;
+      border-bottom: solid $small-border $b2;
+      background: transparent;
+      color: $b2;
+    }
+  }
+}

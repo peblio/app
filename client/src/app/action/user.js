@@ -3,6 +3,20 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 import axios from '../utils/axios';
 import { saveLog } from '../utils/log';
 
+export function fetchUserProfile(userName) {
+  return dispatch => axios.get(`/users/${userName}/profile`)
+    .then(({ data }) => dispatch({
+      type: ActionTypes.SET_PROFILE,
+      data
+    }))
+    .catch((e) => {
+      if (e.response.status === 404) {
+        history.push('/404');
+      }
+    });
+}
+
+
 export function setUserBrowsingPebl() {
   return (dispatch) => {
     dispatch({
@@ -63,12 +77,12 @@ export function logoutUser(name) {
         type: ActionTypes.LOGOUT_USER,
       });
       const log = {
-        'message': 'User Logged Out',
-        'path': '/logout',
-        'action': 'LogoutUser',
-        'module': 'ui',
-        'level': 'INFO',
-        'user': name
+        message: 'User Logged Out',
+        path: '/logout',
+        action: 'LogoutUser',
+        module: 'ui',
+        level: 'INFO',
+        user: name
       };
       saveLog(log);
     });
@@ -107,4 +121,32 @@ export function setStudentBirthday(value) {
       value
     });
   };
+}
+
+export function setUserBlurb(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_USER_BLURB,
+      value
+    });
+  };
+}
+
+
+export function updateProfileBlurb(value) {
+  return dispatch => axios.put('/current_user/profile', {
+    blurb: value
+  }).then(() => dispatch({
+    type: ActionTypes.SET_USER_BLURB,
+    value
+  }));
+}
+
+export function updateUserProfileImage(value) {
+  return dispatch => axios.put('/current_user/profile', {
+    image: value,
+  }).then(() => dispatch({
+    type: ActionTypes.SET_USER_IMAGE,
+    value
+  }));
 }

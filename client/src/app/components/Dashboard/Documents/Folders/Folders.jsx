@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { jumpToFolderByShortId } from '../../../../action/profile';
+import { jumpToFolderByShortId } from '../../../../action/page';
 import history from '../../../../utils/history';
 
 class Folders extends Component {

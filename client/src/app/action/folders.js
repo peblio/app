@@ -12,11 +12,11 @@ export function deletePage(pageId) {
         pageId
       });
       const log = {
-        'message': 'Deleting Page',
-        'path': `/pages/${pageId}`,
-        'action': 'Deleting Page',
-        'module': 'ui',
-        'level': 'INFO'
+        message: 'Deleting Page',
+        path: `/pages/${pageId}`,
+        action: 'Deleting Page',
+        module: 'ui',
+        level: 'INFO'
       };
       saveLog(log);
     });

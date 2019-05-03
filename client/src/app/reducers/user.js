@@ -16,6 +16,16 @@ const initialState = {
 
 const user = (state = initialState, action) => {
   switch (action.type) {
+    case ActionTypes.SET_PROFILE: {
+      return {
+        ...state,
+        name: action.data.name,
+        type: action.data.type,
+        image: action.data.image,
+        blurb: action.data.blurb,
+        isOwner: action.data.isOwner
+      };
+    }
     case ActionTypes.SET_USER: {
       return {
         ...state,
@@ -57,6 +67,16 @@ const user = (state = initialState, action) => {
     case ActionTypes.SET_STUDENT_BIRTHDAY:
       return Object.assign({}, state, {
         studentBirthday: action.value
+      });
+
+    case ActionTypes.SET_USER_BLURB:
+      return Object.assign({}, state, {
+        blurb: action.value
+      });
+
+    case ActionTypes.SET_USER_IMAGE:
+      return Object.assign({}, state, {
+        image: action.value
       });
 
     case ActionTypes.LOGOUT_USER:

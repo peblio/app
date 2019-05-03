@@ -1,31 +1,6 @@
 @import 'variables';
 .profile {
 
-  &-pages {
-    &__link {
-      text-decoration: none;
-      color :$black;
-    }
-    &__list {
-      @extend %file-folder__list;
-    }
-    &__list-item {
-      @extend %file-folder__list-item;
-      height: 150px;
-      width: 220px;
-      border-top: $files-indicator-width solid $tab-yellow;
-      &:hover {
-        border: $medium-border solid $tab-yellow;
-        border-top: $files-indicator-width solid $tab-yellow;
-      }
-    }
-    &__title {
-      @extend %file-folder__title;
-    }
-    &__sub-title {
-      @extend %file-folder__sub-title;
-    }
-  }
 
   &-folders {
 
