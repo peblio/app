@@ -19,9 +19,10 @@ class SignUpUsername extends React.Component {
       name: this.userName.value
     })
       .then(() => {
-        console.log('hello');
-        this.props.setUserName(this.userName.value);
-        this.props.setNextScreen('SignupOption');
+        if (this.userName.value && this.userName.value !== '') {
+          this.props.setUserName(this.userName.value);
+          this.props.setNextScreen('SignupOption');
+        }
       })
       .catch((err) => {
         if (err.response.status === 400) {
@@ -41,7 +42,7 @@ class SignUpUsername extends React.Component {
     return (
       <div className="signup-modal__username">
         <h2 className="signup-modal__subtitle">
-          Create your username
+            Create your username
         </h2>
         <div className="signup-modal__div">
           <input
@@ -61,7 +62,7 @@ class SignUpUsername extends React.Component {
             onClick={this.onNextButtonClick}
             value="Submit"
           >
-                Next
+                  Next
           </button>
         </div>
         {this.state.showNotice && (

@@ -53,7 +53,7 @@ class SignUp extends React.Component {
           <li className={`signup-modal__screen-no-item${(i <= activeScreen) ? '--selected' : ''}`}>
             {i}
           </li>
-          <hr className={`signup-modal__screen-line${(i == 3) ? '--hide' : ''}`} />
+          <hr className={`signup-modal__screen-line${(i === 3) ? '--hide' : ''}`} />
         </div>
       );
     }

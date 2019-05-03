@@ -3,7 +3,7 @@ const User = require('../models/user.js');
 const Token = require('../models/token.js');
 const UserConst = require('../userConstants.js');
 const passport = require('passport');
-import { sendSuccessfulResetMail, sendSignUpConfirmationMail, sendResetMail } from './mailSenderService';
+import { sendSuccessfulResetMail, sendSignUpConfirmationMail, sendResetMail, sendSignUpNotificationMail } from './mailSenderService';
 
 export function checkUsernameAvailability(req, res) {
   const name  = req.body.name;
@@ -65,6 +65,9 @@ export function createUser(req, res) {
             }
 
             if (isVerified) {
+                if(guardianEmail) {
+                    sendSignUpNotificationMail(guardianEmail, name);
+                }
                 return res.status(200).send({
                     msg: UserConst.PROCEED_TO_LOG_IN, user
                 });

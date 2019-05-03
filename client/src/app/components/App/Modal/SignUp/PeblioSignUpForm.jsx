@@ -41,6 +41,19 @@ class PeblioSignUpForm extends React.Component {
     });
   }
 
+  googleLoginSuccessful = (response) => {
+    this.props.closeSignUpModal();
+    const log = {
+      message: 'User Logged In using Google',
+      path: '/auth/login',
+      action: 'LoginUserWithGoogle',
+      module: 'ui',
+      level: 'INFO',
+      user: response.data.user.name
+    };
+    saveLog(log);
+  }
+
   submitSignUpUser = (event) => {
     const loginData = {
       mail: this.userMail ? this.userMail.value : this.props.guardianEmail,
@@ -70,19 +83,6 @@ class PeblioSignUpForm extends React.Component {
       this.passwordMatchFailed();
     }
     event.preventDefault();
-  }
-
-  googleLoginSuccessful = (response) => {
-    this.props.closeSignUpModal();
-    const log = {
-      message: 'User Logged In using Google',
-      path: '/auth/login',
-      action: 'LoginUserWithGoogle',
-      module: 'ui',
-      level: 'INFO',
-      user: response.data.user.name
-    };
-    saveLog(log);
   }
 
   render() {
@@ -162,6 +162,7 @@ class PeblioSignUpForm extends React.Component {
 }
 
 PeblioSignUpForm.propTypes = {
+  closeSignUpModal: PropTypes.func.isRequired,
   guardianEmail: PropTypes.string,
   requiresGuardianConsent: PropTypes.bool,
   userType: PropTypes.string.isRequired,
