@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+// import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
 
-import Folders from '../Folders/Folders';
-import Pages from '../Pages/Pages';
-import { jumpToFolderByShortId, clearSelectedFolders } from '../../../../action/page';
-import history from '../../../../utils/history';
+import Folders from './Folders/Folders';
+import Pages from './Pages/Pages';
+import history from '../../../utils/history';
 
-class DocumentsLevel extends Component {
+class DocumentsView extends Component {
   static defaultProps = {
     folderDepth: 0,
     folderId: undefined,
@@ -27,6 +26,7 @@ class DocumentsLevel extends Component {
   }
 
   render() {
+    console.log(this.props);
     const { childFolders, childPages, folderId, folder, profileName } = this.props;
     const title = folderId ? folder.title : 'All Work';
     return (
@@ -45,7 +45,7 @@ class DocumentsLevel extends Component {
           </button>
         )}
         <h2 className="profile-pebls__sub-heading">folders</h2>
-        {childFolders.length > 0 && (
+        {childFolders && childFolders.length > 0 && (
           <Folders
             folders={childFolders}
             folderId={folderId}
@@ -63,7 +63,7 @@ class DocumentsLevel extends Component {
   }
 }
 
-DocumentsLevel.propTypes = {
+DocumentsView.propTypes = {
   childFolders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   childPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   clearSelectedFolders: PropTypes.func.isRequired,
@@ -75,25 +75,5 @@ DocumentsLevel.propTypes = {
   profileName: PropTypes.string.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const folder = state.page.folders.byId[ownProps.folderId];
-  let parentFolderShortId;
-  if (folder && folder.parent) {
-    parentFolderShortId = state.page.folders.byId[folder.parent].shortId;
-  }
-  return {
-    childFolders: Object.values(state.page.folders.byId)
-      .filter(f => f.parent === ownProps.folderId),
-    childPages: Object.values(state.page.pages.byId)
-      .filter(page => page.folder === ownProps.folderId),
-    folder,
-    parentFolderShortId
-  };
-};
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  clearSelectedFolders,
-  jumpToFolderByShortId
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(DocumentsLevel);
+export default DocumentsView;

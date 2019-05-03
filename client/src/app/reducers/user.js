@@ -16,7 +16,7 @@ const initialState = {
 
 const user = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.SET_PROFILE: {
+    case ActionTypes.SET_USER_PROFILE: {
       return {
         ...state,
         name: action.data.name,

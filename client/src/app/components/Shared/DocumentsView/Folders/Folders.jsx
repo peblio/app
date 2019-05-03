@@ -9,6 +9,7 @@ import history from '../../../../utils/history';
 class Folders extends Component {
   redirectToFolder = (e, shortId) => {
     e.stopPropagation();
+    debugger;
     this.props.jumpToFolderByShortId(shortId);
     history.push(`/user/${this.props.profileName}/folder/${shortId}`);
   }

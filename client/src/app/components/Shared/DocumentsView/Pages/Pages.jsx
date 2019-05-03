@@ -36,7 +36,7 @@ class Pages extends Component {
   render() {
     return (
       <ul className="profile-pebl__list">
-        {this.props.pages.map(page => (
+        {this.props.pages && this.props.pages.map(page => (
 
           <li className="profile-pebl__container" key={page.id}>
             <a
