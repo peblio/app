@@ -198,8 +198,7 @@ class App extends React.Component {
           this.props.workspace,
           this.props.tags,
           true,
-          !(this.props.userType === 'student') || this.props.isPeblPublished,
-          document.getElementById('content-canvas')
+          !(this.props.userType === 'student') || this.props.isPeblPublished
         );
         const log = {
           message: 'Saving Page',
@@ -221,8 +220,7 @@ class App extends React.Component {
           this.props.layout,
           this.props.workspace,
           this.props.tags,
-          !(this.props.userType === 'student') || this.props.isPeblPublished,
-          document.getElementById('content-canvas')
+          !(this.props.userType === 'student') || this.props.isPeblPublished
         );
         const log = {
           message: `Updating Page with canEdit as ${this.props.canEdit}`,
@@ -247,8 +245,7 @@ class App extends React.Component {
           this.props.workspace,
           this.props.tags,
           true,
-          !(this.props.userType === 'student'),
-          document.getElementById('content-canvas')
+          !(this.props.userType === 'student')
         );
         const log = {
           message: `Remixing Page with id ${this.props.id}`,
