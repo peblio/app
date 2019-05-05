@@ -26,7 +26,9 @@ class DocumentsView extends Component {
   }
 
   render() {
+    console.log('*****');
     console.log(this.props);
+    console.log('*****');
     const { childFolders, childPages, folderId, folder, profileName } = this.props;
     const title = folderId ? folder.title : 'All Work';
     return (
@@ -50,6 +52,7 @@ class DocumentsView extends Component {
             folders={childFolders}
             folderId={folderId}
             profileName={profileName}
+            jumpToFolderByShortId={this.props.jumpToFolderByShortId}
           />
         )}
         <h2 className="profile-pebls__sub-heading">files</h2>
@@ -70,7 +73,7 @@ DocumentsView.propTypes = {
   folderDepth: PropTypes.number,
   folderId: PropTypes.string,
   folder: PropTypes.shape({ parent: PropTypes.string }),
-  jumpToFolderByShortId: PropTypes.string.isRequired,
+  jumpToFolderByShortId: PropTypes.func.isRequired,
   parentFolderShortId: PropTypes.string,
   profileName: PropTypes.string.isRequired
 };

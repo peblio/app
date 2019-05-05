@@ -23,7 +23,7 @@ class Documents extends React.Component {
       this.props.fetchAllPages(this.props.userName)
         .then(() => {
           console.log('*****');
-          console.log(this.props.folderShortId);
+          console.log(this.props);
           console.log('*****');
           if (this.props.folderShortId) {
             this.props.jumpToFolderByShortId(this.props.folderShortId);
@@ -40,7 +40,8 @@ class Documents extends React.Component {
   }
 
   render() {
-    console.log(this.props.childPages);
+    console.log(this.props);
+    // debugger;
     const { userName, selectedFolderIds, folder, childFolders, childPages } = this.props;
     let folderContainer;
     console.log(selectedFolderIds);
@@ -50,8 +51,9 @@ class Documents extends React.Component {
           profileName={userName}
           folder={folder}
           childFolders={childFolders}
-          childPages={this.props.childPages}
+          childPages={childPages}
           clearSelectedFolders={this.props.clearSelectedFolders}
+          jumpToFolderByShortId={this.props.jumpToFolderByShortId}
         />
       );
     } else {
@@ -65,8 +67,9 @@ class Documents extends React.Component {
           profileName={userName}
           folder={folder}
           childFolders={childFolders}
-          childPages={this.props.childPages}
+          childPages={childPages}
           clearSelectedFolders={this.props.clearSelectedFolders}
+          jumpToFolderByShortId={this.props.jumpToFolderByShortId}
         />
       );
     }
@@ -89,6 +92,10 @@ Documents.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
+  console.log(state.page);
+  console.log(ownProps);
+  // const folderId = state.page.selectedFolderIds.length > 0 && state.page.selectedFolderIds[state.page.selectedFolderIds.length - 1];
+  // console.log(folderId);
   const folder = state.page.folders.byId[ownProps.folderId];
   const selectedFolderIds = state.page.selectedFolderIds;
   let parentFolderShortId;
