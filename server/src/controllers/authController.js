@@ -79,11 +79,13 @@ function loginWithGoogle(req, res) {
           msg: 'Please sign up first with Peblio',
         });
       }
-      return res.send({
-            msg: UserConst.LOGIN_SUCCESS,
-            user: { name: user.name, type: user.type }
+      return req.login(user, (loginError) => {
+        return res.send({
+              msg: UserConst.LOGIN_SUCCESS,
+              user: { name: user.name, type: user.type }
+            });
           });
-    });
+      });
   }).catch(err => res.status(401).send({ msg: UserConst.LOGIN_FAILED }));
 }
 
