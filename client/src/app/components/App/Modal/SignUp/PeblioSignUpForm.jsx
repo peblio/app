@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import axios from '../../../../utils/axios';
 import { saveLog } from '../../../../utils/log';
 import { closeSignUpModal } from '../../../../action/mainToolbar.js';
-import GoogleLoginButton from '../../Shared/GoogleLoginButton/GoogleLoginButton.jsx';
+import GoogleSignupButton from '../../Shared/GoogleButton/GoogleSignupButton.jsx';
 
 require('./signup.scss');
 
@@ -91,7 +91,7 @@ class PeblioSignUpForm extends React.Component {
         <h2 className="signup-modal__subtitle">
           Almost signed up!
         </h2>
-        <GoogleLoginButton
+        <GoogleSignupButton
           onLoginSuccess={this.googleLoginSuccessful}
           onLoginFailure={this.signUpFailed}
           userType={this.props.userType}
