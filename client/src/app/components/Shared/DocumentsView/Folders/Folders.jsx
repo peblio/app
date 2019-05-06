@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-// import { jumpToFolderByShortId } from '../../../../action/page';
 import history from '../../../../utils/history';
 
 class Folders extends Component {
@@ -47,8 +44,4 @@ Folders.propTypes = {
   jumpToFolderByShortId: PropTypes.string.isRequired
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  // jumpToFolderByShortId
-}, dispatch);
-
-export default connect(null, null)(Folders);
+export default Folders;

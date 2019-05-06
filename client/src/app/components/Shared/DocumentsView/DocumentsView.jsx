@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import Folders from './Folders/Folders';
 import Pages from './Pages/Pages';
@@ -26,9 +25,6 @@ class DocumentsView extends Component {
   }
 
   render() {
-    console.log('*****');
-    console.log(this.props);
-    console.log('*****');
     const { childFolders, childPages, folderId, folder, profileName } = this.props;
     const title = folderId ? folder.title : 'All Work';
     return (
@@ -78,5 +74,19 @@ DocumentsView.propTypes = {
   profileName: PropTypes.string.isRequired
 };
 
+const mapStateToProps = (state, ownProps) => {
+  const folder = ownProps.folders.byId[ownProps.folderId];
+  let parentFolderShortId;
+  if (folder && folder.parent) {
+    parentFolderShortId = ownProps.folders.byId[folder.parent].shortId;
+  }
+  return {
+    childFolders: Object.values(ownProps.folders.byId)
+      .filter(f => f.parent === ownProps.folderId),
+    childPages: Object.values(ownProps.pages.byId)
+      .filter(page => page.folder === ownProps.folderId),
+    parentFolderShortId
+  };
+};
 
-export default DocumentsView;
+export default connect(mapStateToProps, null)(DocumentsView);

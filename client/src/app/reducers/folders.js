@@ -284,23 +284,18 @@ const foldersReducer = (state = { ...initialState }, action) => {
     }
 
     case ActionTypes.JUMP_TO_FOLDER: {
-      // debugger;
       const { folderShortId } = action;
       const { folders } = state;
       const folder = Object.values(folders.byId).find(f => f.shortId === folderShortId);
       if (!folder) {
         return state;
       }
-      debugger;
       const selectedFolderIds = [folder._id];
       let currentFolder = folder;
-      console.log(currentFolder.parent);
-      console.log(currentFolder._id);
       while (currentFolder && currentFolder.parent && currentFolder._id !== currentFolder.parent) {
         selectedFolderIds.unshift(currentFolder.parent);
         currentFolder = folders.byId[currentFolder.parent];
       }
-      console.log(selectedFolderIds);
       return {
         ...state,
         selectedFolderIds: [...selectedFolderIds]

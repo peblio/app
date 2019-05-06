@@ -18,20 +18,14 @@ class Documents extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(this.props.selectedFolderIds);
     if (prevProps.userName !== this.props.userName) {
       this.props.fetchAllPages(this.props.userName)
         .then(() => {
-          console.log('*****');
-          console.log(this.props);
-          console.log('*****');
           if (this.props.folderShortId) {
             this.props.jumpToFolderByShortId(this.props.folderShortId);
           }
         })
         .catch((err) => {
-          console.log('*****');
-          console.log(err);
         });
     }
     if (this.containerEl && this.props.selectedFolderIds.length >= 2) {
@@ -40,18 +34,15 @@ class Documents extends React.Component {
   }
 
   render() {
-    console.log(this.props);
-    // debugger;
-    const { userName, selectedFolderIds, folder, childFolders, childPages } = this.props;
+    const { userName, selectedFolderIds, folder, folders, pages } = this.props;
     let folderContainer;
-    console.log(selectedFolderIds);
     if (selectedFolderIds.length === 0) {
       folderContainer = (
         <DocumentsView
           profileName={userName}
           folder={folder}
-          childFolders={childFolders}
-          childPages={childPages}
+          folders={folders}
+          pages={pages}
           clearSelectedFolders={this.props.clearSelectedFolders}
           jumpToFolderByShortId={this.props.jumpToFolderByShortId}
         />
@@ -59,15 +50,14 @@ class Documents extends React.Component {
     } else {
       const selectedFolderId = selectedFolderIds[selectedFolderIds.length - 1];
       const folderDepth = selectedFolderIds.length;
-      console.log(selectedFolderIds);
       folderContainer = (
         <DocumentsView
           folderId={selectedFolderId}
           folderDepth={folderDepth}
           profileName={userName}
           folder={folder}
-          childFolders={childFolders}
-          childPages={childPages}
+          folders={folders}
+          pages={pages}
           clearSelectedFolders={this.props.clearSelectedFolders}
           jumpToFolderByShortId={this.props.jumpToFolderByShortId}
         />
@@ -82,20 +72,20 @@ class Documents extends React.Component {
 }
 
 Documents.propTypes = {
-  childFolders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  childPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  folderShortId: PropTypes.string,
-  userName: PropTypes.string.isRequired,
-  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  clearSelectedFolders: PropTypes.func.isRequired,
   fetchAllPages: PropTypes.func.isRequired,
-  jumpToFolderByShortId: PropTypes.func.isRequired
+  folder: PropTypes.shape({}).isRequired,
+  folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  folderShortId: PropTypes.string,
+  jumpToFolderByShortId: PropTypes.func.isRequired,
+  pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  userName: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state.page);
-  console.log(ownProps);
-  // const folderId = state.page.selectedFolderIds.length > 0 && state.page.selectedFolderIds[state.page.selectedFolderIds.length - 1];
-  // console.log(folderId);
+  const folders = state.page.folders;
+  const pages = state.page.pages;
   const folder = state.page.folders.byId[ownProps.folderId];
   const selectedFolderIds = state.page.selectedFolderIds;
   let parentFolderShortId;
@@ -103,20 +93,18 @@ const mapStateToProps = (state, ownProps) => {
     parentFolderShortId = state.page.folders.byId[folder.parent].shortId;
   }
   return {
-    childFolders: Object.values(state.page.folders.byId)
-      .filter(f => f.parent === ownProps.folderId),
-    childPages: Object.values(state.page.pages.byId)
-      .filter(page => page.folder === ownProps.folderId),
     folder,
+    folders,
+    pages,
     parentFolderShortId,
-    selectedFolderIds
+    selectedFolderIds,
   };
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   clearSelectedFolders,
+  fetchAllPages,
   jumpToFolderByShortId,
-  fetchAllPages
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Documents);

@@ -181,7 +181,6 @@ export function viewPage(pageId) {
 }
 
 export function jumpToFolderByShortId(folderShortId) {
-  console.log(folderShortId);
   return dispatch => dispatch({
     type: ActionTypes.JUMP_TO_FOLDER,
     folderShortId

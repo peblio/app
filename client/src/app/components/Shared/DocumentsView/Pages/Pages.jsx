@@ -7,7 +7,7 @@ import moment from 'moment';
 import './pages.scss';
 import DeleteIcon from '../../../../images/trash.svg';
 import DuplicateIcon from '../../../../images/duplicate.svg';
-import { deletePage, duplicatePage, viewPage } from '../../../../action/page';
+import { deletePage, duplicatePage } from '../../../../action/page';
 
 class Pages extends Component {
   deletePage = (e, id) => {
@@ -110,8 +110,7 @@ Pages.propTypes = {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   deletePage,
-  duplicatePage,
-  viewPage
+  duplicatePage
 }, dispatch);
 
 export default connect(null, mapDispatchToProps)(Pages);
