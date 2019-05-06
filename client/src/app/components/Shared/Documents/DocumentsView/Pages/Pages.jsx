@@ -5,9 +5,9 @@ import { bindActionCreators } from 'redux';
 import moment from 'moment';
 
 import './pages.scss';
-import DeleteIcon from '../../../../images/trash.svg';
-import DuplicateIcon from '../../../../images/duplicate.svg';
-import { deletePage, duplicatePage } from '../../../../action/page';
+import DeleteIcon from '../../../../../images/trash.svg';
+import DuplicateIcon from '../../../../../images/duplicate.svg';
+import { deletePage, duplicatePage } from '../../../../../action/page';
 
 class Pages extends Component {
   deletePage = (e, id) => {
@@ -80,20 +80,25 @@ class Pages extends Component {
               >
                 {moment(page.updatedAt).format('DD/MMM/YYYY')}
               </p>
-              <button
-                className="pages__icon"
-                onClick={e => this.deletePage(e, page._id)}
-                data-test="delete-pebl"
-              >
-                <DeleteIcon alt="delete page" />
-              </button>
-              <button
-                className="pages__icon"
-                onClick={e => this.duplicatePage(e, page)}
-                data-test="duplicate-pebl"
-              >
-                <DuplicateIcon alt="duplicate page" />
-              </button>
+              {this.props.container === 'dashboard' && (
+                <div>
+                  <button
+                    className="pages__icon"
+                    onClick={e => this.deletePage(e, page._id)}
+                    data-test="delete-pebl"
+                  >
+                    <DeleteIcon alt="delete page" />
+                  </button>
+                  <button
+                    className="pages__icon"
+                    onClick={e => this.duplicatePage(e, page)}
+                    data-test="duplicate-pebl"
+                  >
+                    <DuplicateIcon alt="duplicate page" />
+                  </button>
+                </div>
+              )
+              }
             </div>
           </li>
         ))}

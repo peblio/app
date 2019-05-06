@@ -25,7 +25,7 @@
 Peblio can be used to create computer science lessons and instructions in various formats - lesson plans, worksheets, project documentation or tutorials.
 Below are some examples on how Peblio can be used.
 * [Examples of how p5 is used to recreate famous paintings](https://demo.peblio.co/pebl/7b9CH9fYT)
-* [Curriculum on introduction to web developement](https://demo.peblio.co/user/CT-CSTA/folder/Hkc7ke1Cgw7)
+* [Curriculum on introduction to web developement](https://demo.peblio.co/profile/CT-CSTA/folder/Hkc7ke1Cgw7)
 
 ## Contributing
 

@@ -89,7 +89,7 @@ test('navigate to profile', async(t) => {
   await t
     .click(Selector('[data-test=account-button]'))
     .click(Selector('[data-test=user-account__profile-link]'))
-    .expect(getLocation()).contains(`${config.baseUrl}/user/${teacherUser.name}`);
+    .expect(getLocation()).contains(`${config.baseUrl}/profile/${teacherUser.name}`);
 });
 
 test('save pebl', async(t) => {

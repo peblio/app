@@ -3,18 +3,26 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import DocumentsView from '../../Shared/DocumentsView/DocumentsView';
-import {
-  fetchAllPages,
-  jumpToFolderByShortId,
-  clearSelectedFolders
-} from '../../../action/page';
+import DocumentsView from './DocumentsView/DocumentsView';
 
 import './documents.scss';
 
 class Documents extends React.Component {
   static defaultProps = {
     folderShortId: null
+  }
+
+  componentWillMount() {
+    if (this.props.userName) {
+      this.props.fetchAllPages(this.props.userName)
+        .then(() => {
+          if (this.props.folderShortId) {
+            this.props.jumpToFolderByShortId(this.props.folderShortId);
+          }
+        })
+        .catch((err) => {
+        });
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -45,6 +53,7 @@ class Documents extends React.Component {
           pages={pages}
           clearSelectedFolders={this.props.clearSelectedFolders}
           jumpToFolderByShortId={this.props.jumpToFolderByShortId}
+          container={this.props.container}
         />
       );
     } else {
@@ -60,6 +69,7 @@ class Documents extends React.Component {
           pages={pages}
           clearSelectedFolders={this.props.clearSelectedFolders}
           jumpToFolderByShortId={this.props.jumpToFolderByShortId}
+          container={this.props.container}
         />
       );
     }
@@ -73,6 +83,7 @@ class Documents extends React.Component {
 
 Documents.propTypes = {
   clearSelectedFolders: PropTypes.func.isRequired,
+  container: PropTypes.string.isRequired,
   fetchAllPages: PropTypes.func.isRequired,
   folder: PropTypes.shape({}).isRequired,
   folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
@@ -84,13 +95,13 @@ Documents.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const folders = state.page.folders;
-  const pages = state.page.pages;
-  const folder = state.page.folders.byId[ownProps.folderId];
-  const selectedFolderIds = state.page.selectedFolderIds;
+  const folders = ownProps.folders;
+  const pages = ownProps.pages;
+  const folder = ownProps.folders.byId[ownProps.folderId];
+  const selectedFolderIds = ownProps.selectedFolderIds;
   let parentFolderShortId;
   if (folder && folder.parent) {
-    parentFolderShortId = state.page.folders.byId[folder.parent].shortId;
+    parentFolderShortId = ownProps.folders.byId[folder.parent].shortId;
   }
   return {
     folder,
@@ -101,10 +112,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  clearSelectedFolders,
-  fetchAllPages,
-  jumpToFolderByShortId,
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Documents);
+export default connect(mapStateToProps, null)(Documents);

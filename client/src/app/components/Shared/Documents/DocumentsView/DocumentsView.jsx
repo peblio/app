@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Folders from './Folders/Folders';
 import Pages from './Pages/Pages';
-import history from '../../../utils/history';
+import history from '../../../../utils/history';
 
 class DocumentsView extends Component {
   static defaultProps = {
@@ -18,9 +18,9 @@ class DocumentsView extends Component {
     this.props.clearSelectedFolders(this.props.folderDepth - 1);
     if (this.props.folder.parent) {
       this.props.jumpToFolderByShortId(this.props.parentFolderShortId);
-      history.push(`/user/${this.props.profileName}/folder/${this.props.parentFolderShortId}`);
+      history.push(`/${this.props.container}/${this.props.profileName}/folder/${this.props.parentFolderShortId}`);
     } else {
-      history.push(`/user/${this.props.profileName}`);
+      history.push(`/${this.props.container}/${this.props.profileName}`);
     }
   }
 
@@ -49,12 +49,14 @@ class DocumentsView extends Component {
             folderId={folderId}
             profileName={profileName}
             jumpToFolderByShortId={this.props.jumpToFolderByShortId}
+            container={this.props.container}
           />
         )}
         <h2 className="profile-pebls__sub-heading">files</h2>
         <Pages
           pages={childPages}
           folderId={folderId}
+          container={this.props.container}
         />
       </div>
       /* eslint-enable jsx-a11y/no-static-element-interactions */
@@ -66,6 +68,7 @@ DocumentsView.propTypes = {
   childFolders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   childPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   clearSelectedFolders: PropTypes.func.isRequired,
+  container: PropTypes.string.isRequired,
   folderDepth: PropTypes.number,
   folderId: PropTypes.string,
   folder: PropTypes.shape({ parent: PropTypes.string }),

@@ -34,5 +34,6 @@ const profile = (state = initialState, action) => {
 };
 
 export default reduceReducers(
+  profile,
   namespaceReducer(foldersReducer, 'PROFILE_FOLDERS')
 );
