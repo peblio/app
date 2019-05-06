@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import Account from './Account/Account';
 import Documents from '../Shared/Documents/Documents';
 import Nav from './Nav/Nav';
+import Profile from '../Profile/Profile';
 
 import {
   fetchAllPages,
@@ -52,6 +53,16 @@ class Dashboard extends React.Component {
           setUserBlurb={this.props.setUserBlurb}
         />
       );
+      case 'profile': {
+        const url = `${window.location.origin}/profile/${this.props.name}`;
+        return (
+          <div className="dashboard__profile">
+            <iframe
+              className="dashboard__iframe"
+              src={url}
+            />
+          </div>
+        ); }
       default:
         return null;
     }

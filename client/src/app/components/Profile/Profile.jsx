@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Documents from '../Shared/Documents/Documents';
+import PeblioLogo from '../../images/logo.svg';
+import UserAccount from '../Shared/UserAccount/UserAccount.jsx';
 
 import {
   fetchAllPages,
@@ -12,6 +14,8 @@ import {
   fetchProfile
 } from '../../action/profile';
 
+import './profile.scss';
+
 class Profile extends React.Component {
   componentWillMount() {
     this.props.fetchProfile(this.props.match.params.userName);
@@ -19,18 +23,31 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <div>
-        <Documents
-          userName={this.props.match.params.userName}
-          folderShortId={this.props.match.params.folderShortId}
-          fetchAllPages={this.props.fetchAllPages}
-          jumpToFolderByShortId={this.props.jumpToFolderByShortId}
-          clearSelectedFolders={this.props.clearSelectedFolders}
-          folders={this.props.folders}
-          pages={this.props.pages}
-          selectedFolderIds={this.props.selectedFolderIds}
-          container="profile"
-        />
+      <div className="profile__container">
+        <div className="profile__user-container">
+          <div className="profile__image-container">
+            <img className="profile__image" src={this.props.image} alt="profile" />
+          </div>
+          <h1 className="profile__name">
+            {this.props.name}
+          </h1>
+          <p className="profile__blurb">
+            {this.props.blurb}
+          </p>
+        </div>
+        <div className="profile__documents">
+          <Documents
+            userName={this.props.match.params.userName}
+            folderShortId={this.props.match.params.folderShortId}
+            fetchAllPages={this.props.fetchAllPages}
+            jumpToFolderByShortId={this.props.jumpToFolderByShortId}
+            clearSelectedFolders={this.props.clearSelectedFolders}
+            folders={this.props.folders}
+            pages={this.props.pages}
+            selectedFolderIds={this.props.selectedFolderIds}
+            container="profile"
+          />
+        </div>
       </div>
     );
   }

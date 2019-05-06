@@ -52,12 +52,12 @@
     }
     &__container {
       box-sizing: border-box;
-      width: 75%;
+      width: 100%;
       height: 100%;
       overflow-y: scroll;
       float: right;
-      background-color: $lighter-gray;
-      padding: $xlarge-padding;
+      background: $g8;
+      padding: $xlarge-padding 20%;
     }
 
     &__heading {
