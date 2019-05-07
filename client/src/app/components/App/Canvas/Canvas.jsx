@@ -4,6 +4,7 @@ import VisibilitySensor from 'react-visibility-sensor';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import Websocket from 'react-websocket';
 import EditorContainer from './EditorContainer/EditorContainer.jsx';
 import Heading from './Heading/Heading.jsx';
 import Tags from './Tags/Tags.jsx';
@@ -28,6 +29,9 @@ import * as WidgetSize from '../../../constants/widgetConstants.js';
 
 const ReactGridLayout = require('react-grid-layout');
 
+let refWebSocket;
+let hasSocketBeenConnected = false;
+
 require('./canvas.scss');
 
 class Canvas extends React.Component {
@@ -42,12 +46,36 @@ class Canvas extends React.Component {
     this.timeout = null;
   }
 
+  handleData(data) {
+    console.log('I received data', data);
+  }
+
+  handleOpen() {
+    hasSocketBeenConnected = true;
+    console.log('connected:)');
+  }
+
+  handleClose() {
+    hasSocketBeenConnected = false;
+    console.log('disconnected:(');
+  }
+
+  sendMessage = (message) => {
+    console.log(this.refWebSocket);
+    if (hasSocketBeenConnected) {
+      this.refWebSocket.sendMessage(message);
+    }
+  }
+
   componentDidUpdate(prevProps) {
+    console.log('sending data');
+    this.sendMessage('HOLA');
     const id = this.props.currentWidget;
     if (this.props.editorIndex > prevProps.editorIndex && document.getElementById(id)) {
       document.getElementById(id).focus({ preventScroll: false });
     }
   }
+
 
   componentWillUnmount() {
     if (this.timeout) {
@@ -327,6 +355,17 @@ class Canvas extends React.Component {
           ${this.props.isNavigationOpen ? 'canvas-right' : ''}`
         }
       >
+        <Websocket
+          url='ws://localhost:8081/api/live/echo/2'
+          onMessage={this.handleData}
+          onOpen={this.handleOpen}
+          onClose={this.handleClose}
+          reconnect
+          debug
+          ref={(socket) => {
+            this.refWebSocket = socket;
+          }}
+        />
         {
           <div
             className="canvas__tag-container"
