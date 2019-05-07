@@ -110,6 +110,7 @@ class Pages extends Component {
 }
 
 Pages.propTypes = {
+  container: PropTypes.string.isRequired,
   pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   deletePage: PropTypes.func.isRequired,
   duplicatePage: PropTypes.func.isRequired,

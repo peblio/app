@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import Account from './Account/Account';
 import Documents from '../Shared/Documents/Documents';
 import Nav from './Nav/Nav';
-import Profile from '../Profile/Profile';
 
 import {
   fetchAllPages,
@@ -58,6 +57,7 @@ class Dashboard extends React.Component {
         return (
           <div className="dashboard__profile">
             <iframe
+              title="preview user profile"
               className="dashboard__iframe"
               src={url}
             />
@@ -84,9 +84,13 @@ class Dashboard extends React.Component {
 
 Dashboard.propTypes = {
   blurb: PropTypes.string.isRequired,
+  clearSelectedFolders: PropTypes.func.isRequired,
   dashboardView: PropTypes.number.isRequired,
+  fetchAllPages: PropTypes.func.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
   fetchUserProfile: PropTypes.func.isRequired,
+  folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  jumpToFolderByShortId: PropTypes.func.isRequired,
   image: PropTypes.string.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
@@ -97,6 +101,8 @@ Dashboard.propTypes = {
     }).isRequired,
   }).isRequired,
   name: PropTypes.string.isRequired,
+  pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   setUserBlurb: PropTypes.func.isRequired,
   updateProfileBlurb: PropTypes.func.isRequired,
   updateUserProfileImage: PropTypes.func.isRequired,

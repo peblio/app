@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Documents from '../Shared/Documents/Documents';
-import PeblioLogo from '../../images/logo.svg';
-import UserAccount from '../Shared/UserAccount/UserAccount.jsx';
 
 import {
   fetchAllPages,
@@ -55,18 +53,24 @@ class Profile extends React.Component {
 
 Profile.propTypes = {
   blurb: PropTypes.string.isRequired,
+  clearSelectedFolders: PropTypes.func.isRequired,
+  fetchAllPages: PropTypes.func.isRequired,
   fetchProfile: PropTypes.func.isRequired,
+  folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  jumpToFolderByShortId: PropTypes.func.isRequired,
   image: PropTypes.string.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
-      folderShortId: PropTypes.string
+      folderShortId: PropTypes.string,
+      userName: PropTypes.string
     }).isRequired,
   }).isRequired,
   name: PropTypes.string.isRequired,
-  setUserBlurb: PropTypes.func.isRequired,
+  pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 
 };
 
