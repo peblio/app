@@ -16,7 +16,7 @@ app = expressWs.app;
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const currentUserRoutes = require('./controllers/currentUserController');
-const webSocketRoutes = require('./routes/webSocketRoutes.js');
+const webSocketRoutes = require('./routes/webSocketRoutes.js')(expressWs);
 const pageRoutes = require('./routes/pageRoutes.js');
 const logRoutes = require('./routes/logRoutes.js');
 const authRoutes = require('./controllers/authController.js');
@@ -89,4 +89,8 @@ mongoose.connection.on('error', () => {
 mongoose.connection.on('open', () => {
   console.log('MongoDB Connection success.');
   startServer();
+});
+
+expressWs.getWss().on('connection', function(ws, req) {
+  ws.request = req;
 });
