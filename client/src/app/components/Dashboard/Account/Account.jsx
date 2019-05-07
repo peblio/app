@@ -71,7 +71,7 @@ class Account extends React.Component {
             {this.props.name}
           </div>
         </div>
-        <div className="account__sub-container">
+        <div className="account__text-container">
           <p className="account__text-secondary">
             Bio
           </p>
