@@ -11,8 +11,8 @@
     }
     &__list-item {
       @extend %file-folder__list-item;
-      height: 220px;
-      width: 150px;
+      height: 80px;
+      width: 200px;
       border-left: $files-indicator-width solid $tab-blue;
       &:hover {
         border: $medium-border solid $tab-blue;

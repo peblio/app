@@ -81,7 +81,9 @@ class Pages extends Component {
                 {moment(page.updatedAt).format('DD/MMM/YYYY')}
               </p>
               {this.props.container === 'dashboard' && (
-                <div>
+                <div
+                  className="profile-pebl__sub-info"
+                >
                   <button
                     className="pages__icon"
                     onClick={e => this.deletePage(e, page._id)}
