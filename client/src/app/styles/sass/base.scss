@@ -43,3 +43,13 @@ button {
   letter-spacing: 1px;
   text-transform: uppercase;
 }
+
+.react-tooltip-lite {
+  background: $light-black;
+  color: $white;
+  font-size: $small-font-size;
+}
+
+.react-tooltip-lite-arrow {
+  border-color: $light-black;
+}

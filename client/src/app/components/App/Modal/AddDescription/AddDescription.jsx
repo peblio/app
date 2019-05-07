@@ -68,7 +68,6 @@ AddDescription.propTypes = {
   isPeblPublished: PropTypes.bool.isRequired,
   pageHeading: PropTypes.string.isRequired,
   publishPage: PropTypes.func.isRequired,
-  savePage: PropTypes.func.isRequired,
   setPageHeading: PropTypes.func.isRequired,
   setPageDescription: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired

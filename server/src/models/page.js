@@ -17,6 +17,7 @@ const pageSchema = new Schema({
   folder: { type: Schema.Types.ObjectId, ref: 'Folder' },
   workspace: { type: Object, default: {} },
   isPublished: { type: Boolean },
+  deletedAt: { type: Date, default: null },
   tags: [String]
 }, {
     minimize: false,
@@ -24,4 +25,13 @@ const pageSchema = new Schema({
   });
 
 pageSchema.plugin(mongoosePaginate);
+
+pageSchema.pre('find', function() {
+  this.where('deletedAt', null);
+});
+
+pageSchema.pre('findOne', function() {
+  this.where('deletedAt', null);
+});
+
 module.exports = mongoose.model('Page', pageSchema);

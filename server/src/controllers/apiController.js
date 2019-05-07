@@ -1,4 +1,3 @@
-const express = require('express');
 const multer = require('multer');
 const shortid = require('shortid');
 const Page = require('../models/page.js');
@@ -18,7 +17,7 @@ const upload = multer({
 });
 
 
-function authenticatePage(req, res) {
+export function authenticatePage(req, res) {
   if (!req.user) {
     res.send(false);
   } else {
@@ -32,7 +31,7 @@ function authenticatePage(req, res) {
   }
 }
 
-function uploadFiles(req, res) {
+export function uploadFiles(req, res) {
   const fileName =
   `${req.params.user}/${req.params.type}/${shortid.generate()}_${req.query.filename}`;
   const params = {
@@ -51,9 +50,7 @@ function uploadFiles(req, res) {
   });
 }
 
-
-
-function getSketches(req, res) {
+export function getSketches(req, res) {
   // TODO: make the request async
   if (!req.params.user) {
     if (!req.user) {
@@ -62,28 +59,31 @@ function getSketches(req, res) {
     }
   }
   let user = req.user;
+  const folderSortBy = req.query.folderSortBy ? req.query.folderSortBy : {'updatedAt': -1};
+  const fileSortBy = req.query.fileSortBy ? req.query.fileSortBy : {'updatedAt': -1};
   if (req.params.user) {
     User.findOne({ name: req.params.user }, (userFindError, data) => {
-      if (userFindError) {
+      if (userFindError || !data) {
         res.status(404).send({ error: userFindError });
       } else if (data.type === 'student') {
         res.status(403).send({ error: 'This users data cannot be accessed' });
       } else {
         user = data;
+        
         Promise.all([
-          Page.find({ user: user._id }).exec(),
-          Folder.find({ user: user._id }).exec()
+          Page.find({ user: user._id }).sort(fileSortBy).exec(),
+          Folder.find({ user: user._id }).sort(folderSortBy).exec()
         ])
           .then(([pages, folders]) => {
-            res.send({ pages, folders });
+            res.status(200).send({ pages, folders });
           })
           .catch(err => res.send(err));
       }
     });
   } else {
     Promise.all([
-      Page.find({ user: user._id }).exec(),
-      Folder.find({ user: user._id }).exec()
+      Page.find({ user: user._id }).sort(fileSortBy).exec(),
+      Folder.find({ user: user._id }).sort(folderSortBy).exec()
     ])
       .then(([pages, folders]) => {
         res.send({ pages, folders });
@@ -91,11 +91,3 @@ function getSketches(req, res) {
       .catch(err => res.send(err));
   }
 }
-
-
-const apiRoutes = express.Router();
-apiRoutes.route('/authenticate/:id').get(authenticatePage);
-apiRoutes.route('/upload/:user/:type').get(uploadFiles);
-apiRoutes.route('/sketches').get(getSketches);
-apiRoutes.route('/sketches/:user').get(getSketches);
-module.exports = apiRoutes;

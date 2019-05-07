@@ -8,6 +8,7 @@
   }
   &__content{
     @extend %modal__content;
+    height: 500px;
   }
 
   &__div{
@@ -16,14 +17,18 @@
   }
 
   &__dropdown {
-    height: $large-height;
-    border-radius: $small-border-radius/2;
-    border: none;
-    width: -webkit-fill-available;
-    font-size: $p-size*0.75;
-    margin: 0 $small-margin/2;
+    min-width: 125px;
+    width: 100%;
+    max-width: 300px;
+    font-size: $p-size;
+    line-height: $p-line-height;
     border: $g4 $small-border solid;
-    color: $g4;
+    color: $black;
+    background: transparent;
+    height: calc( #{2*$small-padding} + #{$p-line-height});
+    margin: $small-margin;
+    display: flex;
+    border-radius: $small-border-radius;
   }
 
   &__title{
@@ -32,6 +37,7 @@
 
   &__subtitle {
     @extend %modal__subtitle;
+    margin-bottom: $large-margin;
   }
 
   &__link{
@@ -40,12 +46,24 @@
   }
 
   &__terms-label {
-    font-size: $small-font-size;
+    font-size: $p-size;
+    line-height: $p-line-height;
   }
 
-  &__label{
+  &__label {
     @extend %modal__label;
-    display: inline;
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    color: $black;
+    width: 100%;
+  }
+
+  &__check {
+    display: none;
+    &--selected {
+      display: block;
+    }
   }
 
   &__input{
@@ -56,6 +74,15 @@
     display: flex;
     justify-content: space-evenly;
     margin-bottom: $medium-margin;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__username {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: $medium-margin;
+    flex-direction: column;
+    align-items: center;
   }
 
   &__input-text{
@@ -70,6 +97,11 @@
     @extend %modal__button;
   }
 
+  &__peblio-button {
+    @extend %modal__button;
+    width: 191px;
+  }
+
   &__buttonholder {
     @extend %modal__buttonholder;
     width: 100%;
@@ -81,7 +113,7 @@
   }
 
   &__radio {
-    @extend %modal__radio;
+    display: none;
   }
 
   &__list {
@@ -90,14 +122,89 @@
     list-style-type: none;
     list-style: none;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
   }
 
   &__listitem {
-    padding-right: $small-padding;
-    padding-left: $small-padding;
-    margin-left: $micro-margin;
-    margin-right: $micro-margin;
+    background: $g7;
+    padding: $small-padding;
+    margin: $small-margin;
+    display: flex;
+    border-radius: $small-border-radius;
+    box-shadow: 0px $shadow-v-offset $shadow-blur $g6;
+    min-width: 125px;
+    width: 100%;
+    max-width: 300px;
+    &--selected {
+      background: $b4;
+    }
+  }
+
+  &__screen-no {
+    display: flex;
+    list-style: none;
+    flex-direction: row;
+    padding: 0;
+    width: fit-content;
+    margin: $large-margin auto;
+  }
+
+  &__screen-no-item {
+    border-radius: 50%;
+    border: dashed $black $small-border;
+    height: $button-size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 12px;
+    &--selected {
+      border-radius: 50%;
+      border: solid $black $small-border;
+      height: $button-size;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 12px;
+      background-color: $black;
+      color: $white;
+    }
+  }
+
+  &__screen-line {
+    display: flex;
+    border: solid $black $small-border/2;
+    width: 30px;
+    height: 0;
+    justify-content: center;
+    align-items: center;
+    margin: auto $medium-margin;
+    &--hide {
+      display: none;
+    }
+  }
+  &__screen-no-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__or-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__or {
+    color: $g4;
+  }
+
+  &__or-line {
+    display: flex;
+    border: solid $g5 $small-border/2;
+    width: -webkit-fill-available;
+    height: 0;
+    justify-content: center;
+    align-items: center;
+    margin: auto $medium-margin;
   }
 
   &__notice {

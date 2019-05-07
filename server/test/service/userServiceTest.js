@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils';
 import * as userService from '../../src/service/userService';
 import { assert, spy } from 'sinon';
 const sandbox = require('sinon').sandbox.create();
@@ -241,8 +241,7 @@ describe('userService', function () {
 });
 
 function assertFindOneWasCalledWithPageShortId() {
-    assert.calledOnce(findOnePageSpy);
-    assert.calledWith(findOnePageSpy, { id: pageId });
+    assertStubWasCalledOnceWith(findOnePageSpy, { id: pageId });
 }
 
 function assertFindOneWasCalledTwiceWithPageShortId() {
@@ -251,18 +250,9 @@ function assertFindOneWasCalledTwiceWithPageShortId() {
 }
 
 function assertFindByIdWasCalledWithUserId() {
-    assert.calledOnce(findUserByIdSpy);
-    assert.calledWith(findUserByIdSpy, userObjectId);
+    assertStubWasCalledOnceWith(findUserByIdSpy, userObjectId);
 }
 
 function assertSendWasCalledWith(msg) {
-    assert.calledOnce(response.send);
-    assert.calledWith(response.send, msg);
-};
-
-function createResponseWithStatusCode(statusCode) {
-    return function (responseStatus) {
-        expect(responseStatus).to.be.equal(statusCode);
-        return this;
-    }
+    assertStubWasCalledOnceWith(response.send, msg);
 };

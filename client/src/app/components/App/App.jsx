@@ -34,6 +34,7 @@ import { loadWorkspace } from '../../action/workspace.js';
 
 import axios from '../../utils/axios';
 import { saveLog } from '../../utils/log';
+import history from '../../utils/history';
 
 require('./app.scss');
 
@@ -43,14 +44,11 @@ class App extends React.Component {
     if (performance.navigation.type === 2) {
       location.reload(true);
     }
-    if (this.props.match.params.id) {
-      this.props.setPageId(this.props.match.params.id);
-    }
   }
 
   componentDidMount() {
     this.authAndLoadPage();
-    if (this.props.id === 'QJSEsqTOS') {
+    if (this.projectID() === 'QJSEsqTOS') {
       const hlp = initHelpHero('1Dyo05WliMY');
       hlp.anonymous();
     }
@@ -59,10 +57,6 @@ class App extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.id !== this.props.match.params.id) {
       window.location.reload(true);
-    }
-    if (prevProps.id !== this.props.id) {
-      this.props.setPageId(this.props.id);
-      this.authAndLoadPage();
     }
   }
 
@@ -102,6 +96,17 @@ class App extends React.Component {
     return !(getForkPromptPreference === 'suppress');
   }
 
+  projectID = () => {
+    const location = this.props.location.pathname;
+    const projectID = location.match(/\/pebl\/([\w-].*)/);
+    if (projectID) {
+      this.props.setPageId(projectID[1]);
+      return projectID[1];
+    }
+    this.props.setPageId('');
+    return null;
+  }
+
   resetPage = () => {
     const location = this.props.location.pathname;
     const tokenID = location.match(/\/reset\/([\w-].*)/);
@@ -119,9 +124,9 @@ class App extends React.Component {
       this.props.viewConfirmUserModal();
     } else if (this.resetPage()) {
       this.props.viewResetModal();
-    } else if (this.props.id) {
+    } else if (this.projectID()) {
       this.props.setEditAccess(false);
-      const projectID = this.props.id;
+      const projectID = this.projectID();
       axios.get(`/pages/${projectID}`)
         .then((res) => {
           this.props.loadPage(
@@ -147,6 +152,11 @@ class App extends React.Component {
             .then((res1) => {
               this.props.setEditAccess(res1.data);
             });
+        })
+        .catch((err) => {
+          if (err.response.status === 404) {
+            history.push('/404');
+          }
         });
     }
     this.props.fetchCurrentUser()
@@ -157,9 +167,9 @@ class App extends React.Component {
   }
 
   authLoadedPage = () => {
-    if (this.props.id) {
+    if (this.projectID()) {
       this.props.setEditAccess(false);
-      const projectID = this.props.id;
+      const projectID = this.projectID();
       axios.get(`/authenticate/${projectID}`)
         .then((res1) => {
           this.props.setEditAccess(res1.data);
@@ -188,8 +198,7 @@ class App extends React.Component {
           this.props.workspace,
           this.props.tags,
           true,
-          !(this.props.userType === 'student') || this.props.isPeblPublished,
-          document.getElementById('content-canvas')
+          !(this.props.userType === 'student') || this.props.isPeblPublished
         );
         const log = {
           message: 'Saving Page',
@@ -211,8 +220,7 @@ class App extends React.Component {
           this.props.layout,
           this.props.workspace,
           this.props.tags,
-          !(this.props.userType === 'student') || this.props.isPeblPublished,
-          document.getElementById('content-canvas')
+          !(this.props.userType === 'student') || this.props.isPeblPublished
         );
         const log = {
           message: `Updating Page with canEdit as ${this.props.canEdit}`,
@@ -237,8 +245,7 @@ class App extends React.Component {
           this.props.workspace,
           this.props.tags,
           true,
-          !(this.props.userType === 'student'),
-          document.getElementById('content-canvas')
+          !(this.props.userType === 'student')
         );
         const log = {
           message: `Remixing Page with id ${this.props.id}`,
@@ -259,6 +266,12 @@ class App extends React.Component {
     this.props.createNavigationContent(this.props.layout);
   }
 
+  clearValuesAndCloseSignUpModal = () => {
+    this.props.clearSignupSelectedValues();
+    this.props.closeSignUpModal();
+  }
+
+
   render() {
     return (
       <div
@@ -269,6 +282,7 @@ class App extends React.Component {
       >
         <nav className="main-nav">
           <MainToolbar
+            projectID={this.projectID}
             savePage={this.savePage}
           />
         </nav>
@@ -324,7 +338,7 @@ class App extends React.Component {
         <Modal
           size="auto"
           isOpen={this.props.isSignUpModalOpen}
-          closeModal={this.props.closeSignUpModal}
+          closeModal={this.clearValuesAndCloseSignUpModal}
         >
           <SignUp
             authLoadedPage={this.authLoadedPage}
@@ -394,6 +408,12 @@ App.propTypes = {
 
   workspace: PropTypes.shape({}).isRequired,
 
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.node,
+    }).isRequired,
+  }).isRequired,
+
   // pebl
   pageTitle: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
@@ -438,6 +458,7 @@ App.propTypes = {
   viewLoginModal: PropTypes.func.isRequired,
   closeLoginModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
+  clearSignupSelectedValues: PropTypes.func.isRequired,
   isShareModalOpen: PropTypes.bool.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeForgotModal: PropTypes.func.isRequired,

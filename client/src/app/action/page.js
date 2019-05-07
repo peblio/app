@@ -119,7 +119,7 @@ function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished, canvasElement) {
+export function submitPage(parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished) {
   const id = shortid.generate();
   const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
   axios.post(axiosURL, {
@@ -135,7 +135,7 @@ export function submitPage(parentId, title, heading, description, editors, edito
     tags,
     isPublished
   }).then(() => {
-    savePageSnapshot(canvasElement, id);
+    savePageSnapshot(id);
     if (type === 'fromWP') {
       window.open(`/pebl/${id}`, '_blank');
     } else {
@@ -144,7 +144,7 @@ export function submitPage(parentId, title, heading, description, editors, edito
     if (type === 'remix') {
       window.location.reload(true);
     }
-  }).catch(error => console.error(error));
+  }).catch(error => console.error("Error",error));
   return (dispatch) => {
     dispatch(setUnsavedChanges(false));
     dispatch({
@@ -155,13 +155,16 @@ export function submitPage(parentId, title, heading, description, editors, edito
 }
 
 
-function savePageSnapshot(canvasElement, id) {
+export function savePageSnapshot(id) {
+  const canvasElement = document.getElementById('content-canvas');
+  document.getElementsByTagName('BODY')[0].append(canvasElement);
   html2canvas(canvasElement,
     {
       useCORS: true,
       scale: 1,
       height: 816,
       width: 1016,
+      allowTaint : false,
       onclone(document) {
         const list = document.getElementsByClassName('widget__container');
         for (const item of list) {
@@ -170,14 +173,17 @@ function savePageSnapshot(canvasElement, id) {
         document.querySelector('.react-grid-layout').style.transform = 'scale(0.5,0.5) translate(-50%,-50%)';
       }
     }).then((canvas) => {
-    axios.patch('/pages', {
-      id,
-      image: canvas.toDataURL()
-    });
-  }).catch(error => console.error('Page snapshot update error', error));
+      document.getElementsByTagName('BODY')[0].append(canvas);
+      axios.patch('/pages', {
+        id,
+        image: canvas.toDataURL()
+      });
+  }).catch(error => {
+    console.error('Page snapshot update error', error);
+  });
 }
 
-export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, isPublished, canvasElement) {
+export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, isPublished) {
   axios.post('/pages/update', {
     id,
     title,
@@ -190,7 +196,6 @@ export function updatePage(id, title, heading, description, editors, editorIndex
     tags,
     isPublished
   }).then(() => {
-    savePageSnapshot(canvasElement, id);
     return (dispatch) => {
       dispatch(setUnsavedChanges(false));
       // this action currently doesn't do anything because there is no corresponding handler in a reducer

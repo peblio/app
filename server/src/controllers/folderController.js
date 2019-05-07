@@ -46,13 +46,22 @@ folderRoutes.route('/:folderId').delete(async (req, res) => {
 
   const { folderId } = req.params;
   try {
-    const folder = await Folder.findOne({ _id: folderId, user: user._id }).exec();
+    const folder = await Folder.findOne({
+      _id: folderId,
+      user: user._id
+    }).exec();
     if (!folder) {
       return res.status(404).send({ error: `Folder with id ${folderId} not found` });
     }
     const folderIdsToDelete = findChildFolderIds(folder);
-    await Page.deleteMany({ folder: { $in: folderIdsToDelete } }).exec();
-    await Folder.deleteMany({ _id: { $in: folderIdsToDelete }, user: user._id }).exec();
+    await Page.updateMany(
+      { folder: { $in: folderIdsToDelete } },
+      { deletedAt: Date.now() }
+    ).exec();
+    await Folder.updateMany(
+      { _id: { $in: folderIdsToDelete }, user: user._id },
+      { deletedAt: Date.now() }
+    ).exec();
     return res.sendStatus(204);
   } catch (err) {
     return res.status(500).send({ error: err.message });
@@ -73,7 +82,10 @@ folderRoutes.route('/:folderId/move').post(async (req, res) => {
   }
 
   try {
-    const childFolder = await Folder.findOne({ _id: childFolderId, user: user._id }).exec();
+    const childFolder = await Folder.findOne({
+      _id: childFolderId,
+      user: user._id
+    }).exec();
     if (!childFolder) {
       return res.status(404).send({ error: `Folder with id ${childFolderId} not found` });
     }
@@ -104,7 +116,9 @@ folderRoutes.route('/:folderId/rename/:folderName').post(async (req, res) => {
   const { folderId, folderName } = req.params;
 
   try {
-    const renamedFolder = await Folder.findOne({ _id: folderId }).exec();
+    const renamedFolder = await Folder.findOne({
+      _id: folderId 
+    }).exec();
     await Folder.update({ _id: folderId }, { title: folderName }).exec();
     return res.sendStatus(204);
   } catch (err) {

@@ -1,5 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+import Tooltip from 'react-tooltip-lite';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CloseSVG from '../../../../images/close.svg';
@@ -22,25 +23,31 @@ class WidgetNav extends React.Component {
   render() {
     return (
       <nav className="widget__nav">
-        <button
-          className="widget__close"
-          onClick={this.duplicateEditor.bind(this)}
-          data-test="widget__duplicate"
-        >
-          <CopySVG alt="duplicate widget" />
-        </button>
-        <button
-          className={`widget__close widget__drag drag__${this.props.id}`}
-        >
-          <DragSVG alt="drag widget" />
-        </button>
-        <button
-          className="widget__close"
-          onClick={this.removeEditor.bind(this)}
-          data-test="widget__close"
-        >
-          <CloseSVG alt="close element" />
-        </button>
+        <Tooltip content="Duplicate">
+          <button
+            className="widget__close"
+            onClick={this.duplicateEditor.bind(this)}
+            data-test="widget__duplicate"
+          >
+            <CopySVG alt="duplicate widget" />
+          </button>
+        </Tooltip>
+        <Tooltip content="Drag and Drop">
+          <button
+            className={`widget__close widget__drag drag__${this.props.id}`}
+          >
+            <DragSVG alt="drag widget" />
+          </button>
+        </Tooltip>
+        <Tooltip content="Delete">
+          <button
+            className="widget__close"
+            onClick={this.removeEditor.bind(this)}
+            data-test="widget__close"
+          >
+            <CloseSVG alt="close element" />
+          </button>
+        </Tooltip>
       </nav>
     );
   }

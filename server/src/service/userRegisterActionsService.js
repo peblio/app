@@ -3,7 +3,24 @@ const User = require('../models/user.js');
 const Token = require('../models/token.js');
 const UserConst = require('../userConstants.js');
 const passport = require('passport');
-import { sendSuccessfulResetMail, sendSignUpConfirmationMail, sendResetMail } from './mailSenderService';
+import { sendSuccessfulResetMail, sendSignUpConfirmationMail, sendResetMail, sendSignUpNotificationMail } from './mailSenderService';
+
+export function checkUsernameAvailability(req, res) {
+  const name  = req.body.name;
+  return User.findOne({ name }, (err, data) => {
+    if (err) {
+        return res.status(422).send({
+            msg: UserConst.SIGN_UP_FAILED
+        });
+    }
+    if (data) {
+        return res.status(400).send({
+            msg: UserConst.SIGN_UP_DUPLICATE_USER
+        });
+    }
+    return res.status(200).send();
+  })
+}
 
 export function createUser(req, res) {
     const email = req.body.mail;
@@ -48,6 +65,9 @@ export function createUser(req, res) {
             }
 
             if (isVerified) {
+                if(guardianEmail) {
+                    sendSignUpNotificationMail(guardianEmail, name);
+                }
                 return res.status(200).send({
                     msg: UserConst.PROCEED_TO_LOG_IN, user
                 });

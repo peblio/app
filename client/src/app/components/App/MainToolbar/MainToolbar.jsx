@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Tooltip from 'react-tooltip-lite';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -16,7 +17,7 @@ import PreferencesSVG from '../../../images/preferences.svg';
 
 import { createNavigationContent } from '../../../action/navigation.js';
 import { logoutUser } from '../../../action/user.js';
-import { setPageTitle, togglePreviewMode, autoSaveUnsavedChanges } from '../../../action/page.js';
+import { setPageTitle, togglePreviewMode, autoSaveUnsavedChanges, savePageSnapshot } from '../../../action/page.js';
 import * as mainToolbarActions from '../../../action/mainToolbar.js';
 
 require('./mainToolbar.scss');
@@ -26,7 +27,7 @@ class MainToolbar extends React.Component {
     this.autoSaveTimeout = setInterval(() => {
       if (
         this.props.name && this.props.canEdit && this.props.unsavedChanges &&
-        this.props.editorAutoSave && this.props.pageId
+        this.props.editorAutoSave && this.props.projectID()
       ) {
         this.props.autoSaveUnsavedChanges();
         this.props.createNavigationContent(this.props.layout);
@@ -45,6 +46,11 @@ class MainToolbar extends React.Component {
     });
   }
 
+  saveSnapshotWithPage = () => {
+    savePageSnapshot(this.props.projectID());
+    this.props.savePage();
+  }
+
   focusOnButton(event) {
     event.target.focus();
   }
@@ -59,7 +65,7 @@ class MainToolbar extends React.Component {
         if (this.props.unsavedChanges) { // there are some unsaved changes
           saveButtonText = 'Save';
         } else { // there are no unsaved changes
-          if (this.props.pageId) { // eslint-disable-line
+          if (this.props.projectID()) { // eslint-disable-line
             // it is not a new sketch
             saveButtonText = <CheckSVG alt="check svg" />;
           } else { // it is a new sketch
@@ -70,7 +76,7 @@ class MainToolbar extends React.Component {
         saveButtonText = 'Remix';
       }
     } else { // user is not logged in
-      if (this.props.pageId) { // eslint-disable-line
+      if (this.props.projectID()) { // eslint-disable-line
         // it is not a new sketch
         saveButtonText = 'Remix';
       } else { // it is a new sketch
@@ -166,10 +172,16 @@ class MainToolbar extends React.Component {
             data-test="main-toolbar__title"
           />
           {this.props.preview || (
-            <span
-              className="fa fa-pencil-alt main-toolbar__search-icon"
-            >
-            </span>
+            <div className="main-toolbar__pencil-container">
+              <Tooltip
+                content="Page Title"
+              >
+                <span
+                  className="fa fa-pencil-alt main-toolbar__search-icon"
+                >
+                </span>
+              </Tooltip>
+            </div>
           )}
           <div className="main-toolbar__div-right">
             <div className="main-toolbar__div-right-inside">
@@ -187,7 +199,7 @@ class MainToolbar extends React.Component {
               </label>
               <button
                 className="main-toolbar__save"
-                onClick={this.props.savePage}
+                onClick={this.saveSnapshotWithPage}
                 data-test="main-toolbar__save-button"
               >
                 {saveButtonText}
@@ -202,40 +214,44 @@ class MainToolbar extends React.Component {
               </button>
               <div className="main-toolbar__spacer"></div>
               <div className="main-toolbar__pref-container">
-                <button
-                  className="main-toolbar__button "
-                  onMouseDown={this.props.togglePreferencesPanel}
-                  data-test="main-toolbar__preferences-button"
-                >
-                  <PreferencesSVG
-                    className={classNames(prefButtonClassName)}
-                    alt="open preferences"
-                  />
-                </button>
+                <Tooltip content="Settings">
+                  <button
+                    className="main-toolbar__button "
+                    onMouseDown={this.props.togglePreferencesPanel}
+                    data-test="main-toolbar__preferences-button"
+                  >
+                    <PreferencesSVG
+                      className={classNames(prefButtonClassName)}
+                      alt="open preferences"
+                    />
+                  </button>
+                </Tooltip>
                 {this.props.isPreferencesPanelOpen && <Preferences />}
               </div>
               <div className="main-toolbar__spacer"></div>
 
               {this.props.name ? (
                 <div>
-                  <button
-                    onMouseDown={this.props.toggleAccountDropdown}
-                    onKeyDown={this.props.toggleAccountDropdown}
-                    onBlur={() => {
-                      setTimeout(() => {
-                        if (this.props.isAccountDropdownOpen) {
-                          this.props.toggleAccountDropdown();
-                        }
-                      }, 50);
-                    }}
-                    className="main-toolbar__account-button"
-                    data-test="account-button"
-                  >
-                    <AccountSVG
-                      alt="account profile"
-                      className="account-man"
-                    />
-                  </button>
+                  <Tooltip content="Account">
+                    <button
+                      onMouseDown={this.props.toggleAccountDropdown}
+                      onKeyDown={this.props.toggleAccountDropdown}
+                      onBlur={() => {
+                        setTimeout(() => {
+                          if (this.props.isAccountDropdownOpen) {
+                            this.props.toggleAccountDropdown();
+                          }
+                        }, 50);
+                      }}
+                      className="main-toolbar__account-button"
+                      data-test="account-button"
+                    >
+                      <AccountSVG
+                        alt="account profile"
+                        className="account-man"
+                      />
+                    </button>
+                  </Tooltip>
                   {this.props.isAccountDropdownOpen && (
                     <div className="main-toolbar__account">
                       <ul className="main-toolbar__list">
@@ -325,7 +341,7 @@ MainToolbar.propTypes = {
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
-  pageId: PropTypes.string.isRequired,
+  projectID: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   savePage: PropTypes.func.isRequired,
   toggleHelpDropdown: PropTypes.func.isRequired,
@@ -352,7 +368,6 @@ function mapStateToProps(state) {
     isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,
     layout: state.page.layout,
     name: state.user.name,
-    pageId: state.page.id,
     pageTitle: state.page.pageTitle,
     preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,

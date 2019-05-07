@@ -7,7 +7,7 @@
 }
 
 %modal{
-  background: $white;
+  background: $g8;
   margin: auto;
   margin-top: 5%;
   margin-bottom: 5%;
@@ -25,7 +25,7 @@
 
 %modal__title{
   font-size: $large-font-size;
-  font-weight: $medium-font-weight;
+  font-weight: $heavy-font-weight;
   display: block;
   color: $green;
   text-align: center;
@@ -37,6 +37,8 @@
   display: block;
   text-align: center;
   margin: $small-margin;
+  font-weight: $heavy-font-weight;
+  color: $g3;
 }
 
 %modal__label{

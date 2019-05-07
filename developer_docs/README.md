@@ -87,6 +87,17 @@ cd server
 npm test
 ```
 
+### Unit Tests For Client
+
+We have used enzyme to test react components along with chai, mocha, sinon
+You can run the from root folder by running
+```
+cd client 
+npm test
+```
+
+
+
 ## Git Workflow
 
 The expected git workflow for feature development is:
@@ -214,3 +225,32 @@ Playbooks map host groups to roles. This allows the same role to be used multipl
 ### Bash Scripts
 
 For convenience, there are several bash scripts (`staging_deploy.sh`, `prod_deploy.sh`, etc.) located in the [devops directory](server/devops) that abstract away the details of running ansible for common tasks like deployment and provisioning.
+
+
+### AWS Profile
+
+We use `peblio` profile for AWS and this is defined in AWS_PROFILE environment variable
+
+### Creating a new instance (front and back) - WIP
+
+Let's talk about front end first
+
+1. Create an S3 bucket - this needs to be done manually 
+1. When creating bucket, you can copy the settings from an existing bucket
+1. Setup static website hosting for the bucket once its created
+1. Create cloudfront - choose web distribution
+1. Make note of the distribution ID
+1. Update distribution ID and S3 bucket name in [deploy.sh](https://github.com/peblio/app/blob/master/client/devops/deploy.sh) 
+1. Post this, you can use the deploy scripts, and it should be up on the S3 link
+1. To map this URL to a domain name, go to DNS provider (godaddy) and update the details
+
+regd Back end
+
+1. Create a new IAM user (this is not necessary, but will make for a clean, new system)
+1. Change the [cross_env_var](https://github.com/peblio/app/blob/master/server/devops/ansible/inventories/cross_env_vars.yml) to include the new github repo and new IAM user
+1. Change the variables inside [group_vars](https://github.com/peblio/app/tree/master/server/devops/ansible/inventories/staging/group_vars) - you will choose machine size here 
+1. Now you can run the create_webserver script and the deploy_webserver script!
+YAAAY!
+
+
+1. Post this, run the script to spin up the server 

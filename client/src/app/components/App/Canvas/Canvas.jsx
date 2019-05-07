@@ -155,23 +155,35 @@ class Canvas extends React.Component {
 
   renderIframe(editor) {
     return (
-      <div key={editor.id}>
-        <Iframe
-          id={editor.id}
-          iframeURL={editor.url}
-        />
-      </div>
+      <VisibilitySensor
+        partialVisibility
+      >
+        {({ isVisible }) => (
+          <div key={editor.id}>
+            <Iframe
+              id={editor.id}
+              iframeURL={editor.url}
+              isVisible={isVisible}
+            />
+          </div>
+        )}
+      </VisibilitySensor>
     );
   }
 
   renderVideo(editor) {
     return (
-      <div key={editor.id}>
-        <Iframe
-          id={editor.id}
-          iframeURL={editor.url}
-        />
-      </div>
+      <VisibilitySensor partialVisibility>
+        {({ isVisible }) => (
+          <div key={editor.id}>
+            <Iframe
+              id={editor.id}
+              iframeURL={editor.url}
+              isVisible={isVisible}
+            />
+          </div>
+        )}
+      </VisibilitySensor>
     );
   }
 
@@ -397,6 +409,7 @@ class Canvas extends React.Component {
 
 Canvas.propTypes = {
   currentWidget: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   editorIndex: PropTypes.number.isRequired,
   editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,

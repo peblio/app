@@ -1,5 +1,6 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 import axios from '../utils/axios';
+import history from '../utils/history';
 import { namespaceActionCreators } from '../utils/namespace-redux';
 import * as folderActions from './folders';
 
@@ -17,7 +18,12 @@ export function fetchProfile(userName) {
     .then(({ data }) => dispatch({
       type: ActionTypes.SET_PROFILE,
       data
-    }));
+    }))
+    .catch((e) => {
+      if (e.response.status === 404) {
+        history.push('/404');
+      }
+    });
 }
 
 export function setProfileBlurb(value) {

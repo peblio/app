@@ -11,6 +11,7 @@ import { saveErrorLog } from './utils/log';
 
 import rootReducer from './reducers/rootReducer.js';
 import App from './components/App/App.jsx';
+import Page404 from './components/Page404/Page404.jsx';
 import Profile from './components/Profile/Profile';
 import withTracker from './withTracker.jsx';
 import history from './utils/history';
@@ -41,13 +42,14 @@ class Main extends React.Component {
       <Provider store={store}>
         <Router history={history}>
           <div>
-            <Route exact path="/" component={withTracker(App)} />
             <Switch>
+              <Route exact path="/" component={withTracker(App)} />
               <Route path="/pebl/:id" component={withTracker(App)} />
               <Route path="/reset" component={withTracker(App)} />
               <Route path="/confirmation" component={withTracker(App)} />
               <Route path="/user/:userName/folder/:folderShortId" component={withTracker(Profile)} />
               <Route path="/user/:userName" component={withTracker(Profile)} />
+              <Route path="*" component={withTracker(Page404)} />
             </Switch>
           </div>
         </Router>
