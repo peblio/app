@@ -7,7 +7,7 @@ import classNames from 'classnames';
 
 import ItemTypes from '../itemTypes';
 import formatDate from '../../../../../utils/format-date';
-import { deletePage, duplicatePage, viewPage } from '../../../../../action/page';
+import { trashPage, duplicatePage, viewPage } from '../../../../../action/page';
 import DeleteIcon from '../../../../../images/trash.svg';
 import DuplicateIcon from '../../../../../images/duplicate.svg';
 
@@ -25,10 +25,10 @@ function collect(_connect, monitor) {
 }
 
 class PageRow extends Component {
-  deletePage = (e) => {
+  trashPage = (e) => {
     e.stopPropagation();
-    if (confirm('Are you sure you want to delete this file?')) { // eslint-disable-line no-restricted-globals
-      this.props.deletePage(this.props.page._id);
+    if (confirm('Are you sure you want to trash this file?')) { // eslint-disable-line no-restricted-globals
+      this.props.trashPage(this.props.page._id);
     }
   }
 
@@ -88,7 +88,7 @@ class PageRow extends Component {
         <td className={colClassName}>
           <button
             className="pages__icon"
-            onClick={this.deletePage}
+            onClick={this.trashPage}
             data-test="delete-pebl"
           >
             <DeleteIcon alt="delete page" />
@@ -109,7 +109,7 @@ class PageRow extends Component {
 
 PageRow.propTypes = {
   connectDragSource: PropTypes.func.isRequired,
-  deletePage: PropTypes.func.isRequired,
+  trashPage: PropTypes.func.isRequired,
   duplicatePage: PropTypes.func.isRequired,
   isDragging: PropTypes.bool.isRequired,
   isSelected: PropTypes.bool.isRequired,
@@ -134,7 +134,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  deletePage,
+  trashPage,
   duplicatePage,
   viewPage
 }, dispatch);

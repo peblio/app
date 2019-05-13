@@ -7,13 +7,13 @@ import moment from 'moment';
 import './pages.scss';
 import DeleteIcon from '../../../../images/trash.svg';
 import DuplicateIcon from '../../../../images/duplicate.svg';
-import { deletePage, duplicatePage, viewPage } from '../../../../action/page';
+import { trashPage, duplicatePage, viewPage } from '../../../../action/page';
 
 class Pages extends Component {
-  deletePage = (e, id) => {
+  trashPage = (e, id) => {
     e.stopPropagation();
-    if (confirm('Are you sure you want to delete this file?')) { // eslint-disable-line no-restricted-globals
-      this.props.deletePage(id);
+    if (confirm('Are you sure you want to trash this file?')) { // eslint-disable-line no-restricted-globals
+      this.props.trashPage(id);
     }
   }
 
@@ -82,7 +82,7 @@ class Pages extends Component {
               </p>
               <button
                 className="pages__icon"
-                onClick={e => this.deletePage(e, page._id)}
+                onClick={e => this.trashPage(e, page._id)}
                 data-test="delete-pebl"
               >
                 <DeleteIcon alt="delete page" />
@@ -104,12 +104,12 @@ class Pages extends Component {
 
 Pages.propTypes = {
   pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  deletePage: PropTypes.func.isRequired,
+  trashPage: PropTypes.func.isRequired,
   duplicatePage: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  deletePage,
+  trashPage,
   duplicatePage,
   viewPage
 }, dispatch);

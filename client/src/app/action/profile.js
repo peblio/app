@@ -30,7 +30,7 @@ export function fetchProfile(userName) {
 const profileFolderActions = namespaceActionCreators(folderActions, 'PROFILE_FOLDERS');
 
 export const {
-  deletePage,
+  trashPage,
   fetchAllPages,
   viewFolder,
   viewPage,
