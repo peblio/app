@@ -12,6 +12,14 @@ export async function savePageAsGuest(req, res) {
     return pageService.savePageAsGuest(req, res);
 }
 
+export async function trashPage(req, res) {
+    return pageService.trashPage(req, res);
+}
+
+export async function restoreFromTrash(req, res) {
+    return pageService.restoreFromTrash(req, res);
+}
+
 export async function savePage(req, res) {
     return pageService.savePage(req, res);
 }
@@ -22,6 +30,10 @@ export async function deletePage(req, res) {
 
 export async function updatePage(req, res) {
     return pageService.updatePage(req, res);
+}
+
+export async function getTrashPages(req, res) {
+    return pageService.getTrashPages(req, res);
 }
 
 export async function uploadPageSnapshotToS3(req, res) {
