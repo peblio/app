@@ -135,7 +135,7 @@ export function submitPage(parentId, title, heading, description, editors, edito
     tags,
     isPublished
   }).then(() => {
-    savePageSnapshot(id);
+    savePageSnapshot(id, true);
     if (type === 'fromWP') {
       window.open(`/pebl/${id}`, '_blank');
     } else {
@@ -155,14 +155,11 @@ export function submitPage(parentId, title, heading, description, editors, edito
 }
 
 
-export function savePageSnapshot(id) {
+export function savePageSnapshot(id, firstSave) {
   const canvasElement = document.getElementById('content-canvas');
-  const canvasDuplicate = canvasElement.cloneNode();
-  canvasDuplicate.className += ' canvas-duplicate';
-  // create a duplicate of the canvas to take snapshots of
-  document.getElementsByTagName('BODY')[0].appendChild(canvasDuplicate);
+  firstSave && document.getElementsByTagName('BODY')[0].append(canvasElement);
 
-  html2canvas(canvasElement,
+  html2canvas(document.getElementById('content-canvas'),
     {
       useCORS: true,
       scale: 1,
@@ -177,9 +174,13 @@ export function savePageSnapshot(id) {
         document.querySelector('.react-grid-layout').style.transform = 'scale(0.5,0.5) translate(-50%,-50%)';
       }
     }).then((canvas) => {
+    const elements = document.getElementsByClassName('canvas');
     // remove the duplicates
-    const elements = document.getElementsByClassName('canvas-duplicate');
-    while (elements.length > 0) elements[0].remove();
+    for (let i = 0; i < elements.length; i++) {
+      if (elements[i].parentElement.tagName === 'BODY') {
+        elements[i].remove();
+      }
+    }
 
     axios.patch('/pages', {
       id,
