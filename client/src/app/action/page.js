@@ -144,7 +144,7 @@ export function submitPage(parentId, title, heading, description, editors, edito
     if (type === 'remix') {
       window.location.reload(true);
     }
-  }).catch(error => console.error("Error",error));
+  }).catch(error => console.error('Error', error));
   return (dispatch) => {
     dispatch(setUnsavedChanges(false));
     dispatch({
@@ -157,14 +157,18 @@ export function submitPage(parentId, title, heading, description, editors, edito
 
 export function savePageSnapshot(id) {
   const canvasElement = document.getElementById('content-canvas');
-  document.getElementsByTagName('BODY')[0].append(canvasElement);
+  const canvasDuplicate = canvasElement.cloneNode();
+  canvasDuplicate.className += ' canvas-duplicate';
+  // create a duplicate of the canvas to take snapshots of
+  document.getElementsByTagName('BODY')[0].appendChild(canvasDuplicate);
+
   html2canvas(canvasElement,
     {
       useCORS: true,
       scale: 1,
       height: 816,
       width: 1016,
-      allowTaint : false,
+      allowTaint: false,
       onclone(document) {
         const list = document.getElementsByClassName('widget__container');
         for (const item of list) {
@@ -173,12 +177,15 @@ export function savePageSnapshot(id) {
         document.querySelector('.react-grid-layout').style.transform = 'scale(0.5,0.5) translate(-50%,-50%)';
       }
     }).then((canvas) => {
-      document.getElementsByTagName('BODY')[0].append(canvas);
-      axios.patch('/pages', {
-        id,
-        image: canvas.toDataURL()
-      });
-  }).catch(error => {
+    // remove the duplicates
+    const elements = document.getElementsByClassName('canvas-duplicate');
+    while (elements.length > 0) elements[0].remove();
+
+    axios.patch('/pages', {
+      id,
+      image: canvas.toDataURL()
+    });
+  }).catch((error) => {
     console.error('Page snapshot update error', error);
   });
 }
@@ -195,16 +202,14 @@ export function updatePage(id, title, heading, description, editors, editorIndex
     workspace,
     tags,
     isPublished
-  }).then(() => {
-    return (dispatch) => {
-      dispatch(setUnsavedChanges(false));
-      // this action currently doesn't do anything because there is no corresponding handler in a reducer
-      dispatch({
-        type: ActionTypes.UPDATE_PAGE,
-        id
-      });
-    };
+  }).then(() => (dispatch) => {
+    dispatch(setUnsavedChanges(false));
+    dispatch({
+      type: ActionTypes.UPDATE_PAGE,
+      id
+    });
   }).catch(error => console.error('Page update error', error));
+  return () => {};
 }
 
 function saveAs(uri, filename) {
