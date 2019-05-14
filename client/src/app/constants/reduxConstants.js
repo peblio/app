@@ -77,6 +77,7 @@ export const PUBLISH_PAGE = 'PUBLISH_PAGE';
 
 export const SET_DB_PAGE = 'SET_DB_PAGE';
 export const SET_PAGE_ID = 'SET_PAGE_ID';
+export const REFRESH_WITH_LIVE_PAGE_DATA = 'REFRESH_WITH_LIVE_PAGE_DATA';
 export const SET_PAGE_LAYOUT = 'SET_PAGE_LAYOUT';
 export const SET_DB_EDITORS = 'SET_DB_EDITORS';
 export const SET_DB_TEXT_EDITORS = 'SET_DB_TEXT_EDITORS';

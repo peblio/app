@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import initHelpHero from 'helphero';
 
+import Websocket from 'react-websocket';
+import WEBSOCKET_HOST from '../../utils/webSockets';
 import * as pageDefaults from '../../constants/pageConstants';
 
 import AddDescription from './Modal/AddDescription/AddDescription.jsx';
@@ -38,6 +40,9 @@ import history from '../../utils/history';
 
 require('./app.scss');
 
+let refWebSocket;
+let hasSocketBeenConnected = false;
+
 class App extends React.Component {
   componentWillMount() {
     this.onUserVisit();
@@ -59,6 +64,7 @@ class App extends React.Component {
       window.location.reload(true);
     }
   }
+
 
   onKeyPressed(e) {
     if (e.metaKey || e.ctrlKey) {
@@ -231,6 +237,7 @@ class App extends React.Component {
           user: this.props.name
         };
         saveLog(log);
+        this.sendMessage('SendingUpdate');
       } else {
         // this is for remix and save
         this.props.submitPage(
@@ -271,8 +278,28 @@ class App extends React.Component {
     this.props.closeSignUpModal();
   }
 
+  handleData = (data) => {
+    console.log('I received data', JSON.parse(data));
+    this.props.refreshWithLatestPageData(JSON.parse(data));
+  }
+
+  handleOpen = () => {
+    hasSocketBeenConnected = true;
+  }
+
+  handleClose = () => {
+    hasSocketBeenConnected = false;
+  }
+
+  sendMessage = (message) => {
+    if (this.props.id && hasSocketBeenConnected) {
+      console.log('Sending message');
+      this.refWebSocket.sendMessage(message);
+    }
+  }
 
   render() {
+    const webSocketUrl = `ws://${WEBSOCKET_HOST}/api/live/page/${this.props.id}`;
     return (
       <div
         role="presentation"
@@ -280,6 +307,19 @@ class App extends React.Component {
         onKeyDown={e => this.onKeyPressed(e)} // eslint-disable-line
         className="app__container"
       >
+        {this.props.id && (
+          <Websocket
+            url={webSocketUrl}
+            onMessage={this.handleData}
+            onOpen={this.handleOpen}
+            onClose={this.handleClose}
+            reconnect
+            debug
+            ref={(socket) => {
+              this.refWebSocket = socket;
+            }}
+          />
+        )}
         <nav className="main-nav">
           <MainToolbar
             projectID={this.projectID}
@@ -473,6 +513,7 @@ App.propTypes = {
   isForkPromptOpen: PropTypes.bool.isRequired,
   closeForkPrompt: PropTypes.func.isRequired,
   closeAddDescriptionModal: PropTypes.func.isRequired,
+  refreshWithLatestPageData: PropTypes.func.isRequired,
 
   // preferences
   fetchUserPreferences: PropTypes.func.isRequired,
@@ -521,7 +562,6 @@ function mapStateToProps(state) {
     isResetModalOpen: state.mainToolbar.isResetModalOpen,
     isConfirmUserModalOpen: state.mainToolbar.isConfirmUserModalOpen,
     isForkPromptOpen: state.mainToolbar.isForkPromptOpen,
-
     navigationContent: state.navigation.navigationContent
   };
 }
