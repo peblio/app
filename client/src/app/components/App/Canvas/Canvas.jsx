@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import VisibilitySensor from 'react-visibility-sensor';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import Websocket from 'react-websocket';
+
 import EditorContainer from './EditorContainer/EditorContainer.jsx';
 import Heading from './Heading/Heading.jsx';
 import Tags from './Tags/Tags.jsx';
@@ -26,6 +26,7 @@ import {
 import { setCurrentWidget } from '../../../action/editors.js';
 
 import * as WidgetSize from '../../../constants/widgetConstants.js';
+import WEBSOCKET_HOST from '../../../utils/webSockets';
 
 const ReactGridLayout = require('react-grid-layout');
 
@@ -47,29 +48,26 @@ class Canvas extends React.Component {
   }
 
   handleData(data) {
-    console.log('I received data', data);
+    console.log('I received data', JSON.parse(data));
   }
 
   handleOpen() {
     hasSocketBeenConnected = true;
-    console.log('connected:)');
   }
 
   handleClose() {
     hasSocketBeenConnected = false;
-    console.log('disconnected:(');
   }
 
   sendMessage = (message) => {
-    console.log(this.refWebSocket);
-    if (hasSocketBeenConnected) {
+    if (this.props.id && hasSocketBeenConnected) {
+      console.log('Sending message');
       this.refWebSocket.sendMessage(message);
     }
   }
 
   componentDidUpdate(prevProps) {
-    console.log('sending data');
-    this.sendMessage('HOLA');
+    this.sendMessage();
     const id = this.props.currentWidget;
     if (this.props.editorIndex > prevProps.editorIndex && document.getElementById(id)) {
       document.getElementById(id).focus({ preventScroll: false });
@@ -344,8 +342,7 @@ class Canvas extends React.Component {
         }
       }
     });
-
-
+    const webSocketUrl = `ws://${WEBSOCKET_HOST}/api/live/page/${this.props.id}`;
     return (
       <section
         id="content-canvas"
@@ -355,17 +352,19 @@ class Canvas extends React.Component {
           ${this.props.isNavigationOpen ? 'canvas-right' : ''}`
         }
       >
-        <Websocket
-          url='ws://localhost:8081/api/live/echo/2'
-          onMessage={this.handleData}
-          onOpen={this.handleOpen}
-          onClose={this.handleClose}
-          reconnect
-          debug
-          ref={(socket) => {
-            this.refWebSocket = socket;
-          }}
-        />
+        {this.props.id && (
+          <Websocket
+            url={webSocketUrl}
+            onMessage={this.handleData}
+            onOpen={this.handleOpen}
+            onClose={this.handleClose}
+            reconnect
+            debug
+            ref={(socket) => {
+              this.refWebSocket = socket;
+            }}
+          />
+        )}
         {
           <div
             className="canvas__tag-container"
@@ -468,7 +467,8 @@ Canvas.propTypes = {
   textHeights: PropTypes.shape({}).isRequired,
   updateTextHeight: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired,
-  viewAddDescriptionModal: PropTypes.func.isRequired
+  viewAddDescriptionModal: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {
@@ -482,6 +482,7 @@ function mapStateToProps(state) {
     layout: state.page.layout,
     preview: state.page.preview,
     rgl: state.page.rgl,
+    id: state.page.id,
     textHeights: state.page.textHeights,
     userType: state.user.type
   };
