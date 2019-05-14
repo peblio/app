@@ -1,19 +1,18 @@
 const express = require('express');
 const webSocketRoutes = express.Router();
+const pageController = require('../controllers/pageController.js');
 
 function webSocketRouter(wsInstance) {
 
-  webSocketRoutes.ws('/echo/:id', function (ws, req) {
-
+  webSocketRoutes.ws('/page/:id', function (ws, req) {
     ws.on('message', function (msg) {
-      const clients = wsInstance.getWss().clients;
-      console.log("All clients", clients);
-      ws.send(msg + req.params.id);
-      clients.forEach(client => {
-        if (client.request.url === req.url) {
-          client.send(msg + req.params.id);
+      const clientsToBeUpdated = [];
+      for(let client of wsInstance.getWss().clients) {
+        if(client.request.url === req.url) {
+          clientsToBeUpdated.push(client);
         }
-      });
+      }
+      pageController.updateClientsAboutPage(req, clientsToBeUpdated, ws);
     });
   });
 
