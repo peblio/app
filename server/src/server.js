@@ -93,4 +93,5 @@ mongoose.connection.on('open', () => {
 
 expressWs.getWss().on('connection', function(ws, req) {
   ws.request = req;
+  ws.uniqueId = req.headers['sec-websocket-key'];
 });

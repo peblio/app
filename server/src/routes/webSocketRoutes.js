@@ -8,7 +8,7 @@ function webSocketRouter(wsInstance) {
     ws.on('message', function (msg) {
       const clientsToBeUpdated = [];
       for(let client of wsInstance.getWss().clients) {
-        if(client.request.url === req.url) {
+        if(client.request.url === req.url && client.uniqueId !== ws.uniqueId) {
           clientsToBeUpdated.push(client);
         }
       }

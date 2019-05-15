@@ -72,7 +72,6 @@ export async function savePage(req, res) {
 
 export async function updateClientsAboutPage(req, clients, webSocket) {
   const pageData = JSON.stringify(await Page.findOne({id: req.params.id}));
-  webSocket.send(pageData);
   clients.forEach(client => {
     client.send(pageData);
   });
