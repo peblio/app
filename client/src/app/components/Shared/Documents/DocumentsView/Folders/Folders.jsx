@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-import { jumpToFolderByShortId } from '../../../../action/page';
-import history from '../../../../utils/history';
+import history from '../../../../../utils/history';
 
 class Folders extends Component {
   redirectToFolder = (e, shortId) => {
     e.stopPropagation();
     this.props.jumpToFolderByShortId(shortId);
-    history.push(`/user/${this.props.profileName}/folder/${shortId}`);
+    history.push(`/${this.props.container}/${this.props.profileName}/folder/${shortId}`);
   }
 
   render() {
@@ -42,13 +39,10 @@ class Folders extends Component {
 }
 
 Folders.propTypes = {
+  container: PropTypes.string.isRequired,
   folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   profileName: PropTypes.string.isRequired,
   jumpToFolderByShortId: PropTypes.string.isRequired
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  jumpToFolderByShortId
-}, dispatch);
-
-export default connect(null, mapDispatchToProps)(Folders);
+export default Folders;

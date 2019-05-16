@@ -24,12 +24,13 @@
     position: absolute;
     top: -$small-border-radius*1.5;
     left: 0;
-    background: $black;
-    opacity: 0.8;
+    background: $g4;
     width: 100%;
-    height: calc(100% + #{$small-border-radius*1.5});
-    border-top: $black $small-border-radius*1.5 solid;
+    height: calc(100% + #{$small-border-radius*1.5} - #{$pebl-profile-details});
+    border-top: $g4 $small-border-radius*1.5 solid;
     border-radius: $small-border-radius;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     padding: 0 $medium-padding;
     box-sizing: border-box;
     text-decoration: none;
@@ -71,8 +72,8 @@
     cursor: pointer;
     border-top: $tab-yellow $small-border-radius*1.5 solid;
     &:hover .profile-pebl__overlay{
-      // display: flex;
-      display: none;
+      display: flex;
+      // display: none;
       flex-direction: column;
       justify-content: space-between;
     }
@@ -92,8 +93,6 @@
   &__title {
     color: $black;
     font-size: $medium-font-size;
-    // height: $pebl-profile-image-size-height*0.45;
-    // line-height: $medium-line-height;
     padding: 0 $small-padding;
     font-weight: 600;
     text-align: left;
@@ -108,21 +107,17 @@
   }
   &__info {
     display: flex;
-    flex-direction: column;
-    height: $pebl-profile-image-size-height*0.2;
+    flex-direction: row;
+    height: $pebl-profile-details;
+    background: $g4;
+    justify-content: space-between;
   }
   &__sub-info {
     display: flex;
     margin: 0;
-    overflow-x: hidden;
-    background: $white;
     font-size: $small-font-size;
-    // line-height: $small-line-height;
     padding: $small-padding/2 $small-padding;
     color: $g5;
     font-weight: 600;
-    border-bottom-left-radius: $small-border-radius;
-    border-bottom-right-radius: $small-border-radius;
-
   }
 }

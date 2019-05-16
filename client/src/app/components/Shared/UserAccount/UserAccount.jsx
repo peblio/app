@@ -106,7 +106,7 @@ class UserAccount extends React.Component {
                             className="user-account__link"
                             target="_blank"
                             rel="noopener noreferrer"
-                            href={`/user/${this.props.name}`}
+                            href={`/profile/${this.props.name}`}
                             onMouseDown={(e) => { e.preventDefault(); }}
                             onKeyDown={(e) => { e.preventDefault(); }}
                             data-test="user-account__profile-link"

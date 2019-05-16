@@ -4,5 +4,18 @@
   &__container {
     display: flex;
     flex-direction: column;
+    background: $g8;
+  }
+  &__profile {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  &__iframe {
+    border: 0;
+    width: 80%;
+    height: 100%;
+    padding: $large-padding 0;
   }
 }
