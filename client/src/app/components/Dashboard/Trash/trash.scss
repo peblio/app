@@ -4,59 +4,16 @@
 .trash {
 
   &__container {
-
-  }
-
-  &__row {
-  }
-
-  &__row-item {
-
-  }
-
-  &__list-container {
-
-  }
-
-  &__image-container {
-    position: relative;
-    width: $account-image-width;
-    max-width: 90%;
+    width: 80%;
     margin: 0 auto;
   }
 
-  &__image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 50%;
-    width: $account-image-width;
-    height: $account-image-width;
-    cursor: pointer;
-    &:hover {
-      & + .account__image-upload
-      {
-        display: flex;
-      }
-    }
+  &__table {
+    width: 100%;
+    border-spacing: 0 $small-border-radius;
+    padding: $large-padding 0;
   }
 
-  &__image-upload {
-    max-width: 100%;
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: white;
-    width: $account-image-width;
-    height: $account-image-width;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    opacity: 0.8;
-    cursor: pointer;
-    &:hover {
-      display: flex;
-    }
-  }
+
 
 }

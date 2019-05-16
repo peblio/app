@@ -12,9 +12,8 @@ const dashboard = (state = initialState, action) => {
       });
 
     case ActionTypes.SET_TRASH_PAGES:
-      console.log('action');
       return Object.assign({}, state, {
-        trashPages: action.data
+        trashPages: action.data.data
       });
 
     default:
