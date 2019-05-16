@@ -213,15 +213,6 @@ export function updatePage(id, title, heading, description, editors, editorIndex
   return () => {};
 }
 
-export function refreshWithLatestPageData(page) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.REFRESH_WITH_LIVE_PAGE_DATA,
-      page
-    });
-  };
-}
-
 function saveAs(uri, filename) {
   const link = document.createElement('a');
   if (typeof link.download === 'string') {

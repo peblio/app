@@ -69,18 +69,6 @@ const page = (state = initialState, action) => {
         id: action.id
       });
 
-    case ActionTypes.REFRESH_WITH_LIVE_PAGE_DATA:
-      return Object.assign({}, state, {
-        id: action.page.id,
-        parentId: action.page.parentId,
-        pageTitle: action.page.title,
-        pageHeading: action.page.heading,
-        layout: action.page.layout,
-        tags: action.page.tags,
-        description: action.page.description,
-        isPublished: action.page.isPublished
-      });
-
     case ActionTypes.SET_DB_PAGE:
       return Object.assign({}, state, {
         id: action.id,

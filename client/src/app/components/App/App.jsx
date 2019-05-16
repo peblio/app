@@ -97,21 +97,6 @@ class App extends React.Component {
     }
   }
 
-  showForkPromptPreference=() => {
-    const getForkPromptPreference = localStorage.getItem(process.env.LOCALSTORAGE_FORK_PROMPT);
-    return !(getForkPromptPreference === 'suppress');
-  }
-
-  projectID = () => {
-    const location = this.props.location.pathname;
-    const projectID = location.match(/\/pebl\/([\w-].*)/);
-    if (projectID) {
-      this.props.setPageId(projectID[1]);
-      return projectID[1];
-    }
-    this.props.setPageId('');
-    return null;
-  }
 
   resetPage = () => {
     const location = this.props.location.pathname;
@@ -131,39 +116,7 @@ class App extends React.Component {
     } else if (this.resetPage()) {
       this.props.viewResetModal();
     } else if (this.projectID()) {
-      this.props.setEditAccess(false);
-      const projectID = this.projectID();
-      axios.get(`/pages/${projectID}`)
-        .then((res) => {
-          this.props.loadPage(
-            res.data[0].id,
-            res.data[0].parentId,
-            res.data[0].title,
-            res.data[0].heading,
-            res.data[0].description,
-            res.data[0].layout,
-            res.data[0].tags,
-            res.data[0].isPublished
-          );
-          this.props.loadEditors(
-            res.data[0].editors,
-            res.data[0].editorIndex
-          );
-          if (Object.keys(res.data[0].workspace).length > 0) {
-            this.props.loadWorkspace(res.data[0].workspace);
-          }
-          this.props.setPreviewMode(true);
-          this.loadNavigation();
-          axios.get(`/authenticate/${projectID}`)
-            .then((res1) => {
-              this.props.setEditAccess(res1.data);
-            });
-        })
-        .catch((err) => {
-          if (err.response.status === 404) {
-            history.push('/404');
-          }
-        });
+      this.getPage();
     }
     this.props.fetchCurrentUser()
       .then(() => {
@@ -269,6 +222,11 @@ class App extends React.Component {
     }
   }
 
+  showForkPromptPreference = () => {
+    const getForkPromptPreference = localStorage.getItem(process.env.LOCALSTORAGE_FORK_PROMPT);
+    return !(getForkPromptPreference === 'suppress');
+  }
+
   loadNavigation = () => {
     this.props.createNavigationContent(this.props.layout);
   }
@@ -278,9 +236,8 @@ class App extends React.Component {
     this.props.closeSignUpModal();
   }
 
-  handleData = (data) => {
-    console.log('I received data', JSON.parse(data));
-    this.props.refreshWithLatestPageData(JSON.parse(data));
+  handleData = (pageId) => {
+    this.getPage();
   }
 
   handleOpen = () => {
@@ -296,6 +253,42 @@ class App extends React.Component {
       console.log('Sending message');
       this.refWebSocket.sendMessage(message);
     }
+  }
+
+  getPage = () => {
+    this.props.setEditAccess(false);
+    const projectID = this.projectID();
+    axios.get(`/pages/${projectID}`)
+      .then((res) => {
+        this.props.loadPage(res.data[0].id, res.data[0].parentId, res.data[0].title, res.data[0].heading,
+          res.data[0].description, res.data[0].layout, res.data[0].tags, res.data[0].isPublished);
+        this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
+        if (Object.keys(res.data[0].workspace).length > 0) {
+          this.props.loadWorkspace(res.data[0].workspace);
+        }
+        this.props.setPreviewMode(true);
+        this.loadNavigation();
+        axios.get(`/authenticate/${projectID}`)
+          .then((res1) => {
+            this.props.setEditAccess(res1.data);
+          });
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          history.push('/404');
+        }
+      });
+  }
+
+  projectID = () => {
+    const location = this.props.location.pathname;
+    const projectID = location.match(/\/pebl\/([\w-].*)/);
+    if (projectID) {
+      this.props.setPageId(projectID[1]);
+      return projectID[1];
+    }
+    this.props.setPageId('');
+    return null;
   }
 
   render() {
@@ -513,7 +506,6 @@ App.propTypes = {
   isForkPromptOpen: PropTypes.bool.isRequired,
   closeForkPrompt: PropTypes.func.isRequired,
   closeAddDescriptionModal: PropTypes.func.isRequired,
-  refreshWithLatestPageData: PropTypes.func.isRequired,
 
   // preferences
   fetchUserPreferences: PropTypes.func.isRequired,
