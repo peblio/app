@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Dropzone from 'react-dropzone';
-import URL from 'url';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -96,7 +94,8 @@ function mapStateToProps(state) {
 }
 
 Trash.propTypes = {
-
+  setTrashPages: PropTypes.func.isRequired,
+  trashPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 };
 
 
