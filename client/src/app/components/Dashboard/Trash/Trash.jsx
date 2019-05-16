@@ -20,7 +20,6 @@ class Trash extends React.Component {
   loadTrashedPages = () => {
     axios.get('/pages/trash')
       .then((data) => {
-        console.log(data);
         this.props.setTrashPages(data);
       })
       .catch((err) => {
@@ -31,7 +30,6 @@ class Trash extends React.Component {
   restorePage = (id) => {
     axios.put(`/pages/trash/${id}`)
       .then((data) => {
-        console.log(data);
         this.loadTrashedPages(data);
       })
       .catch((err) => {
@@ -42,7 +40,6 @@ class Trash extends React.Component {
   deletePage = (id) => {
     axios.delete(`/pages/${id}`)
       .then((data) => {
-        console.log(data);
         this.loadTrashedPages(data);
       })
       .catch((err) => {
@@ -76,7 +73,6 @@ class Trash extends React.Component {
         </tr>
       );
     });
-    // this.props.trashPages.forEach(page => (<div>page.title</div>));
     return (pages);
   }
 
@@ -100,8 +96,7 @@ function mapStateToProps(state) {
 }
 
 Trash.propTypes = {
-  // setDashboardView: PropTypes.func.isRequired,
-  // location: PropTypes.shape({}).isRequired,
+
 };
 
 

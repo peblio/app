@@ -1,7 +1,7 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 
 const initialState = {
-  dashboardView: 'trash',
+  dashboardView: 'documents',
   trashPages: []
 };
 const dashboard = (state = initialState, action) => {

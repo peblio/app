@@ -56,7 +56,6 @@ class Dashboard extends React.Component {
       case 'trash': return (
         <Trash
           name={this.props.name}
-
         />
       );
       case 'profile': {

@@ -1,16 +1,17 @@
 @import 'variables';
 .profile {
 
-
   &-folders {
-
     &__container {
+
     }
     &__list {
       @extend %file-folder__list;
     }
     &__list-item {
       @extend %file-folder__list-item;
+      -webkit-box-shadow:0 0px 7px rgba(0, 0, 0, 0.3);
+      box-shadow:0 0px 7px rgba(0, 0, 0, 0.3);
       height: 80px;
       width: 200px;
       border-left: $files-indicator-width solid $tab-blue;
@@ -57,7 +58,7 @@
       overflow-y: scroll;
       float: right;
       background: $g8;
-      padding: $xlarge-padding 20%;
+      padding: $xlarge-padding 10%;
     }
 
     &__heading {
@@ -95,7 +96,7 @@
     background: $white;
     box-sizing: border-box;
     border-radius: $small-border-radius;
-    margin: $large-margin;
+    margin: $medium-margin;
     display: flex;
     justify-content: center;
     align-items: center;

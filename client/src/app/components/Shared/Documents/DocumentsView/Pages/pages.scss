@@ -8,6 +8,7 @@
   &__list {
     display: flex;
     flex-wrap: wrap;
+    padding: 0;
   }
 
   &__list-item {
@@ -24,10 +25,10 @@
     position: absolute;
     top: -$small-border-radius*1.5;
     left: 0;
-    background: $g4;
+    background: $g3;
     width: 100%;
     height: calc(100% + #{$small-border-radius*1.5} - #{$pebl-profile-details});
-    border-top: $g4 $small-border-radius*1.5 solid;
+    border-top: $g3 $small-border-radius*1.5 solid;
     border-radius: $small-border-radius;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
@@ -56,7 +57,7 @@
       font-size: $small-font-size;
       text-align: left;
       font-weight: 600;
-      color: $g5;
+      color: $g8;
     }
   }
   &__container {
@@ -109,15 +110,17 @@
     display: flex;
     flex-direction: row;
     height: $pebl-profile-details;
-    background: $g4;
+    background: $g3;
     justify-content: space-between;
+    border-bottom-left-radius: $small-border-radius;
+    border-bottom-right-radius: $small-border-radius;
   }
   &__sub-info {
     display: flex;
     margin: 0;
     font-size: $small-font-size;
     padding: $small-padding/2 $small-padding;
-    color: $g5;
+    color: $g8;
     font-weight: 600;
   }
 }
