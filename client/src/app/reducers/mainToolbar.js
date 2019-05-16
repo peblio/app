@@ -9,7 +9,7 @@ const initialState = {
   isForgotModalOpen: false,
   isHelpDropdownOpen: false,
   isLoginModalOpen: false,
-  isPagesModalOpen: false,
+  isPagesModalOpen: true,
   isResetModalOpen: false,
   isShareModalOpen: false,
   isSignUpModalOpen: false,

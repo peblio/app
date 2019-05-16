@@ -62,13 +62,13 @@ class Trash extends React.Component {
 
             <button
               className="pages__icon"
-              onClick={() => { this.props.deletePage(page._id); }}
+              onClick={() => { this.deletePage(page._id); }}
             >
               <DeleteIcon alt="delete page" />
             </button>
             <button
               className="pages__icon"
-              onClick={() => { this.props.restorePage(page._id); }}
+              onClick={() => { this.restorePage(page._id); }}
             >
               <DeleteIcon alt="restore page" />
             </button>
