@@ -8,3 +8,12 @@ export function setDashboardView(viewName) {
     });
   };
 }
+
+export function setTrashPages(data) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_TRASH_PAGES,
+      data
+    });
+  };
+}

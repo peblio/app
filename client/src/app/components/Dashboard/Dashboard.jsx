@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Account from './Account/Account';
+import Trash from './Trash/Trash';
 import Documents from '../Shared/Documents/Documents';
 import Nav from './Nav/Nav';
 
@@ -50,6 +51,12 @@ class Dashboard extends React.Component {
           updateUserProfileImage={this.props.updateUserProfileImage}
           updateProfileBlurb={this.props.updateProfileBlurb}
           setUserBlurb={this.props.setUserBlurb}
+        />
+      );
+      case 'trash': return (
+        <Trash
+          name={this.props.name}
+
         />
       );
       case 'profile': {
