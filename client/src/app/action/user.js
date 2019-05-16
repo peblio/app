@@ -6,7 +6,7 @@ import { saveLog } from '../utils/log';
 export function fetchUserProfile(userName) {
   return dispatch => axios.get(`/users/${userName}/profile`)
     .then(({ data }) => dispatch({
-      type: ActionTypes.SET_PROFILE,
+      type: ActionTypes.SET_USER_PROFILE,
       data
     }))
     .catch((e) => {

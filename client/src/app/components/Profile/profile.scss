@@ -1,0 +1,47 @@
+@import 'variables';
+
+.profile {
+  &__container {
+    background: $g8;
+  }
+  &__nav-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background: $black;
+    justify-content: space-between;
+  }
+  &__user-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  &__image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+    width: $account-image-width;
+    height: $account-image-width;
+    cursor: pointer;
+  }
+  &__image-container {
+    width: 100%;
+    background-color: $black;
+    background-image: linear-gradient($black 50%, $g8 50%);
+    display: flex;
+    justify-content: center;
+    padding: $large-padding;
+  }
+  &__name {
+    width: 50%;
+    text-align: center;
+    font-size: $h2-size;
+  }
+  &__blurb {
+    width: 50%;
+    text-align: center;
+    font-size: $p-size;
+    line-height: $p-line-height;
+  }
+}

@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-import Folders from '../Folders/Folders';
-import Pages from '../Pages/Pages';
-import { jumpToFolderByShortId, clearSelectedFolders } from '../../../../action/page';
+import Folders from './Folders/Folders';
+import Pages from './Pages/Pages';
 import history from '../../../../utils/history';
 
-class ProfileLevel extends Component {
+class DocumentsView extends Component {
   static defaultProps = {
     folderDepth: 0,
     folderId: undefined,
@@ -20,9 +18,9 @@ class ProfileLevel extends Component {
     this.props.clearSelectedFolders(this.props.folderDepth - 1);
     if (this.props.folder.parent) {
       this.props.jumpToFolderByShortId(this.props.parentFolderShortId);
-      history.push(`/user/${this.props.profileName}/folder/${this.props.parentFolderShortId}`);
+      history.push(`/${this.props.container}/${this.props.profileName}/folder/${this.props.parentFolderShortId}`);
     } else {
-      history.push(`/user/${this.props.profileName}`);
+      history.push(`/${this.props.container}/${this.props.profileName}`);
     }
   }
 
@@ -45,17 +43,20 @@ class ProfileLevel extends Component {
           </button>
         )}
         <h2 className="profile-pebls__sub-heading">folders</h2>
-        {childFolders.length > 0 && (
+        {childFolders && childFolders.length > 0 && (
           <Folders
             folders={childFolders}
             folderId={folderId}
             profileName={profileName}
+            jumpToFolderByShortId={this.props.jumpToFolderByShortId}
+            container={this.props.container}
           />
         )}
         <h2 className="profile-pebls__sub-heading">files</h2>
         <Pages
           pages={childPages}
           folderId={folderId}
+          container={this.props.container}
         />
       </div>
       /* eslint-enable jsx-a11y/no-static-element-interactions */
@@ -63,37 +64,32 @@ class ProfileLevel extends Component {
   }
 }
 
-ProfileLevel.propTypes = {
+DocumentsView.propTypes = {
   childFolders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   childPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   clearSelectedFolders: PropTypes.func.isRequired,
+  container: PropTypes.string.isRequired,
   folderDepth: PropTypes.number,
   folderId: PropTypes.string,
   folder: PropTypes.shape({ parent: PropTypes.string }),
-  jumpToFolderByShortId: PropTypes.string.isRequired,
+  jumpToFolderByShortId: PropTypes.func.isRequired,
   parentFolderShortId: PropTypes.string,
   profileName: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const folder = state.page.folders.byId[ownProps.folderId];
+  const folder = ownProps.folders.byId[ownProps.folderId];
   let parentFolderShortId;
   if (folder && folder.parent) {
-    parentFolderShortId = state.page.folders.byId[folder.parent].shortId;
+    parentFolderShortId = ownProps.folders.byId[folder.parent].shortId;
   }
   return {
-    childFolders: Object.values(state.page.folders.byId)
+    childFolders: Object.values(ownProps.folders.byId)
       .filter(f => f.parent === ownProps.folderId),
-    childPages: Object.values(state.page.pages.byId)
+    childPages: Object.values(ownProps.pages.byId)
       .filter(page => page.folder === ownProps.folderId),
-    folder,
     parentFolderShortId
   };
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  clearSelectedFolders,
-  jumpToFolderByShortId
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileLevel);
+export default connect(mapStateToProps, null)(DocumentsView);

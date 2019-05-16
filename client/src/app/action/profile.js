@@ -16,11 +16,12 @@ export function setIsOwner(value) {
 
 export function fetchProfile(userName) {
   return dispatch => axios.get(`/users/${userName}/profile`)
-    .then(({ data }) => dispatch({
+    .then(({ data }) => (dispatch({
       type: ActionTypes.SET_PROFILE,
       data
-    }))
+    })))
     .catch((e) => {
+      console.log(e);
       if (e.response.status === 404) {
         history.push('/404');
       }

@@ -5,9 +5,9 @@ import { bindActionCreators } from 'redux';
 import moment from 'moment';
 
 import './pages.scss';
-import DeleteIcon from '../../../../images/trash.svg';
-import DuplicateIcon from '../../../../images/duplicate.svg';
-import { trashPage, duplicatePage, viewPage } from '../../../../action/page';
+import DeleteIcon from '../../../../../images/trash.svg';
+import DuplicateIcon from '../../../../../images/duplicate.svg';
+import { trashPage, duplicatePage } from '../../../../../action/page';
 
 class Pages extends Component {
   trashPage = (e, id) => {
@@ -36,7 +36,7 @@ class Pages extends Component {
   render() {
     return (
       <ul className="profile-pebl__list">
-        {this.props.pages.map(page => (
+        {this.props.pages && this.props.pages.map(page => (
 
           <li className="profile-pebl__container" key={page.id}>
             <a
@@ -80,20 +80,27 @@ class Pages extends Component {
               >
                 {moment(page.updatedAt).format('DD/MMM/YYYY')}
               </p>
-              <button
-                className="pages__icon"
-                onClick={e => this.trashPage(e, page._id)}
-                data-test="delete-pebl"
-              >
-                <DeleteIcon alt="delete page" />
-              </button>
-              <button
-                className="pages__icon"
-                onClick={e => this.duplicatePage(e, page)}
-                data-test="duplicate-pebl"
-              >
-                <DuplicateIcon alt="duplicate page" />
-              </button>
+              {this.props.container === 'dashboard' && (
+                <div
+                  className="profile-pebl__sub-info"
+                >
+                  <button
+                    className="pages__icon"
+                    onClick={e => this.trashPage(e, page._id)}
+                    data-test="delete-pebl"
+                  >
+                    <DeleteIcon alt="delete page" />
+                  </button>
+                  <button
+                    className="pages__icon"
+                    onClick={e => this.duplicatePage(e, page)}
+                    data-test="duplicate-pebl"
+                  >
+                    <DuplicateIcon alt="duplicate page" />
+                  </button>
+                </div>
+              )
+              }
             </div>
           </li>
         ))}
@@ -103,6 +110,7 @@ class Pages extends Component {
 }
 
 Pages.propTypes = {
+  container: PropTypes.string.isRequired,
   pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   trashPage: PropTypes.func.isRequired,
   duplicatePage: PropTypes.func.isRequired,
@@ -110,8 +118,7 @@ Pages.propTypes = {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   trashPage,
-  duplicatePage,
-  viewPage
+  duplicatePage
 }, dispatch);
 
 export default connect(null, mapDispatchToProps)(Pages);

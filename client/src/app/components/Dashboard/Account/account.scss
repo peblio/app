@@ -5,8 +5,12 @@
 
   &__text-primary {
     margin: $medium-margin;
-    color: $white;
+    color: $g4;
     font-size: $large-font-size;
+  }
+
+  &__text-container {
+    width: 60%;
   }
 
   &__text-blurb {
@@ -14,11 +18,13 @@
     color: $black;
     font-size: $small-font-size;
     padding: $medium-padding;
-    margin-top: $medium-margin;
     width: 100%;
     border: none;
     resize: none;
     text-align: center;
+    height: 150px;
+    border-radius: $small-border-radius;
+    border: $small-border solid $g6;
   }
 
   &__container {
@@ -26,6 +32,8 @@
     flex-direction: row;
     padding: $xlarge-padding;
     margin-top: $xxlarge-margin;
+    width: 80%;
+    justify-content: center;
   }
 
   &__image-container {

@@ -43,7 +43,7 @@ class Nav extends React.Component {
             {this.renderListItem('Documents', 'documents')}
             {this.renderListItem('Account', 'account')}
             {this.renderListItem('Trash', 'account')}
-            {this.renderListItem('Profile', 'account')}
+            {this.renderListItem('Profile', 'profile')}
 
           </ul>
         </div>
