@@ -312,7 +312,7 @@ export function publishPage() {
 const currentUserFolderActions = namespaceActionCreators(folderActions, 'CURRENT_USER_FOLDERS');
 
 export const {
-  deletePage,
+  trashPage,
   createPage,
   fetchAllPages,
   createFolder,

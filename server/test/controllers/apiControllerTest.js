@@ -1,23 +1,25 @@
 import { expect } from 'chai';
+import { assert, spy } from 'sinon';
 import { getSketches } from '../../src/controllers/apiController';
 import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils.js';
-import { assert, spy } from 'sinon';
+
+const sinon = require('sinon');
 const User = require('../../src/models/user.js');
 const Folder = require('../../src/models/folder.js');
 const Page = require('../../src/models/page.js');
-const sinon = require('sinon');
+
 const sandbox = sinon.sandbox.create();
 const user = 'user';
 const error = 'error';
 const studentUser = {
-    type: 'student'
+  type: 'student'
 };
 const teacherUser = {
-    type: 'teacher',
-    _id: user
+  type: 'teacher',
+  _id: user
 };
-const pages = "pages";
-const folders = "folders";
+const pages = 'pages';
+const folders = 'folders';
 let request = {};
 let response = {};
 let userRetrieveStub;
@@ -25,12 +27,11 @@ let pageRetrieveStub;
 let folderRetrieveStub;
 
 function assertSendWasCalledWith(object) {
-    assertStubWasCalledOnceWith(response.send, object);
-};
+  assertStubWasCalledOnceWith(response.send, object);
+}
 
-describe('apiController', function () {
-
-    describe('getSketches', function () {
+describe('apiController', () => {
+  describe('getSketches', () => {
 
         beforeEach(function () {
             request = {
@@ -108,7 +109,4 @@ describe('apiController', function () {
         });
         */
     });
-
 });
-
-

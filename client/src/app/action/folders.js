@@ -4,17 +4,17 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 import axios from '../utils/axios';
 import { saveLog } from '../utils/log';
 
-export function deletePage(pageId) {
+export function trashPage(pageId) {
   return (dispatch) => {
-    axios.delete(`/pages/${pageId}`).then(() => {
+    axios.patch(`/pages/trash/${pageId}`).then(() => {
       dispatch({
         type: ActionTypes.DELETE_PAGE,
         pageId
       });
       const log = {
-        message: 'Deleting Page',
-        path: `/pages/${pageId}`,
-        action: 'Deleting Page',
+        message: 'Trashing Page',
+        path: `/pages/trash/${pageId}`,
+        action: 'Trashing Page',
         module: 'ui',
         level: 'INFO'
       };

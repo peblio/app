@@ -71,7 +71,7 @@ export function getSketches(req, res) {
         user = data;
         
         Promise.all([
-          Page.find({ user: user._id }).sort(fileSortBy).exec(),
+          Page.find({ user: user._id, trashedAt: null }).sort(fileSortBy).exec(),
           Folder.find({ user: user._id }).sort(folderSortBy).exec()
         ])
           .then(([pages, folders]) => {
@@ -82,7 +82,7 @@ export function getSketches(req, res) {
     });
   } else {
     Promise.all([
-      Page.find({ user: user._id }).sort(fileSortBy).exec(),
+      Page.find({ user: user._id, trashedAt: null }).sort(fileSortBy).exec(),
       Folder.find({ user: user._id }).sort(folderSortBy).exec()
     ])
       .then(([pages, folders]) => {
