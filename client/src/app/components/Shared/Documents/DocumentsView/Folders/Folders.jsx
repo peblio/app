@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -11,9 +12,13 @@ class Folders extends Component {
   }
 
   render() {
+    const documentViewCLass = classNames('profile-folders__list', {
+      'document-line': (this.props.documentView === 'line'),
+      'document-block': (this.props.documentView === 'block')
+    });
     return (
       <section className="profile-folders__container">
-        <ul className="profile-folders__list">
+        <ul className={classNames(documentViewCLass)}>
           {this.props.folders.map(folder => (
             <li // eslint-disable-line
               key={folder._id}

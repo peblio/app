@@ -1,9 +1,6 @@
 @import 'variables';
 .profile {
-
-
   &-folders {
-
     &__container {
     }
     &__list {
@@ -12,8 +9,10 @@
     &__list-item {
       @extend %file-folder__list-item;
       height: 80px;
-      width: 200px;
+      width: $pebl-profile-image-size-width;
       border-left: $files-indicator-width solid $tab-blue;
+      -webkit-box-shadow:0 0px 7px rgba(0, 0, 0, 0.3);
+      box-shadow:0 0px 7px rgba(0, 0, 0, 0.3);
       &:hover {
         border: $medium-border solid $tab-blue;
         border-left: $files-indicator-width solid $tab-blue;
@@ -26,7 +25,6 @@
       @extend %file-folder__sub-title;
     }
   }
-
 
   &-pebls {
     &__back {
@@ -122,5 +120,42 @@
     font-weight: normal;
     background-color: $light-gray;
     color:$white;
+  }
+}
+
+.document-line {
+  .profile-folders__list-item {
+    width: 100%;
+    margin: 2px 0;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    padding: $small-padding;
+    &:hover {
+      border: 0;
+      border-left: $files-indicator-width solid $tab-blue;
+      background: $g7;
+      -webkit-box-shadow:0 0px 7px rgba(0, 0, 0, 0.8);
+      box-shadow:0 0px 7px rgba(0, 0, 0, 0.8);
+    }
+  }
+  .profile-folders__sub-title {
+    background-color: transparent;
+    color: $g4;
+    padding: 0;
+    font-size: $p-size;
+    width: fit-content;
+    position: inherit;
+  }
+  .profile-folders__title {
+    margin: 0;
+    color: $g4;
+    font-size: $p-size;
+  }
+}
+
+.document-block {
+  .profile-folders__list-item {
+    width: $pebl-profile-image-size-width;
   }
 }

@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { setDashboardView, setDocumentSort } from '../../../action/dashboard.js';
+import {
+  setDashboardView,
+  setDocumentSort,
+  setDocumentView
+} from '../../../action/dashboard.js';
 import PeblioLogo from '../../../images/logo.svg';
 import UserAccount from '../../Shared/UserAccount/UserAccount.jsx';
 
@@ -103,7 +107,11 @@ class Nav extends React.Component {
 }
 
 Nav.propTypes = {
+  dashboardView: PropTypes.string.isRequired,
+  documentSort: PropTypes.string.isRequired,
+  setDocumentSort: PropTypes.func.isRequired,
   setDashboardView: PropTypes.func.isRequired,
+  setDocumentView: PropTypes.func.isRequired,
   location: PropTypes.shape({}).isRequired,
 };
 
@@ -115,6 +123,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   setDashboardView,
+  setDocumentView,
   setDocumentSort
 }, dispatch);
 

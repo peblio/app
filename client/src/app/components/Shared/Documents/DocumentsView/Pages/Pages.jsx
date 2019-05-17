@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -34,8 +35,12 @@ class Pages extends Component {
   }
 
   render() {
+    const documentViewCLass = classNames('profile-pebl__list', {
+      'document-line': (this.props.documentView === 'line'),
+      'document-block': (this.props.documentView === 'block')
+    });
     return (
-      <ul className="profile-pebl__list">
+      <ul className={classNames(documentViewCLass)}>
         {this.props.pages && this.props.pages.map(page => (
 
           <li className="profile-pebl__container" key={page.id}>
@@ -116,9 +121,15 @@ Pages.propTypes = {
   duplicatePage: PropTypes.func.isRequired,
 };
 
+function mapStateToProps(state) {
+  return {
+    documentView: state.dashboard.documentView
+  };
+}
+
 const mapDispatchToProps = dispatch => bindActionCreators({
   trashPage,
   duplicatePage
 }, dispatch);
 
-export default connect(null, mapDispatchToProps)(Pages);
+export default connect(mapStateToProps, mapDispatchToProps)(Pages);
