@@ -50,17 +50,17 @@
     }
     &__container {
       box-sizing: border-box;
-      width: 100%;
+      width: 80%;
       height: 100%;
       overflow-y: scroll;
       float: right;
       background: $g8;
-      padding: $xlarge-padding 20%;
+      margin: 0 auto;
     }
 
     &__heading {
       display: block !important;
-      font-size: $large-font-size;
+      font-size: $medium-font-size;
       font-weight: normal;
       margin: $small-margin $large-margin;
     }

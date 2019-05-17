@@ -6,6 +6,9 @@
     flex-direction: column;
     width: 100%;
     background: $white;
+    & div:last-child {
+      border: none !important;
+    }
   }
   &__upper-container {
     display: flex;
@@ -22,7 +25,6 @@
     margin: 0 10%;
     justify-content: space-between;
     background: $white;
-    padding: $medium-padding 0;
   }
   &__list {
     display: flex;
@@ -42,12 +44,18 @@
     font-size: $p-size;
     color: $g4;
     font-weight: 500;
+    padding: $medium-padding 0;
+    height: 100%;
     &:hover {
       border: none;
       border-radius: 0;
       border-bottom: solid $small-border $b2;
       background: transparent;
       color: $b2;
+    }
+    &--selected {
+      color: $b2;
+      border-bottom: solid $small-border $b2;
     }
   }
   &__dropdown {
@@ -69,6 +77,7 @@
   &__dropdown-container {
     display: flex;
     flex-direction: row;
+    padding: $medium-padding 0;
   }
   &__label {
     padding-left: $large-padding;

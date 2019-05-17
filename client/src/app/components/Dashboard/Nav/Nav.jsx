@@ -16,16 +16,19 @@ import UserAccount from '../../Shared/UserAccount/UserAccount.jsx';
 import './nav.scss';
 
 class Nav extends React.Component {
-  renderListItem=(displayText, viewName) => (
-    <li className="dashboard-nav__list-item">
-      <button
-        className="dashboard-nav__button"
-        onClick={() => { this.props.setDashboardView(viewName); }}
-      >
-        {displayText}
-      </button>
-    </li>
-  )
+  renderListItem=(displayText, viewName) => {
+    const isCurrentDashboardView = this.props.dashboardView === viewName;
+    return (
+      <li className="dashboard-nav__list-item">
+        <button
+          className={`dashboard-nav__button ${(isCurrentDashboardView) ? 'dashboard-nav__button--selected' : ''}`}
+          onClick={() => { this.props.setDashboardView(viewName); }}
+        >
+          {displayText}
+        </button>
+      </li>
+    );
+  }
 
   setDocumentSort = (e) => {
     this.props.setDocumentSort(e.target.value);
@@ -93,24 +96,26 @@ render() {
           </div>
         )}
       </div>
-      <div className="dashboard-nav__lower-container">
-        <div className="dashboard-nav__dropdown-container">
-          <p className="dashboard-nav__dropdown-label">
+      {this.props.dashboardView === 'documents' && (
+        <div className="dashboard-nav__lower-container">
+          <div className="dashboard-nav__dropdown-container">
+            <p className="dashboard-nav__dropdown-label">
         Arrange By
-          </p>
-          <select
-            className="dashboard-nav__dropdown"
-            id="dashboard-sort"
-            name="dashboard-sort"
-            onChange={this.setDocumentSort}
-            ref={(dashboardSort) => { this.dashboardSort = dashboardSort; }}
-            value={this.props.documentSort}
-          >
-            <option value="-updatedAt">Updated At</option>
-            <option value="title">Title</option>
-          </select>
+            </p>
+            <select
+              className="dashboard-nav__dropdown"
+              id="dashboard-sort"
+              name="dashboard-sort"
+              onChange={this.setDocumentSort}
+              ref={(dashboardSort) => { this.dashboardSort = dashboardSort; }}
+              value={this.props.documentSort}
+            >
+              <option value="-updatedAt">Updated At</option>
+              <option value="title">Title</option>
+            </select>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

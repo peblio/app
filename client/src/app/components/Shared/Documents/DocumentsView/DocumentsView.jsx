@@ -26,7 +26,7 @@ class DocumentsView extends Component {
 
   render() {
     const { childFolders, childPages, documentView, folderId, folder, profileName } = this.props;
-    const title = folderId ? folder.title : 'All Work';
+    const title = folderId ? folder.title : '';
     return (
       /* eslint-disable jsx-a11y/no-static-element-interactions */
       <div className="profile-pebls__level">
@@ -89,7 +89,8 @@ const mapStateToProps = (state, ownProps) => {
       .filter(f => f.parent === ownProps.folderId),
     childPages: Object.values(ownProps.pages.byId)
       .filter(page => page.folder === ownProps.folderId),
-    parentFolderShortId
+    parentFolderShortId,
+    folder
   };
 };
 
