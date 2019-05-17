@@ -7,7 +7,6 @@ import thunk from 'redux-thunk';
 import UserAccount from '../../../../../src/app/components/Shared/UserAccount/UserAccount.jsx';
 import { fetchCurrentUser } from '../../../../../src/app/action/user.js';
 
-
 const sinon = require('sinon');
 
 const sandbox = sinon.sandbox.create();
@@ -89,6 +88,9 @@ describe('UserAccount component when logged in as student', () => {
 
   it('renders 1 link, and account button', () => {
     wrapper = shallow(<UserAccount store={store} {...props} />).dive();
+    console.log('***');
+    console.log(wrapper.text());
+    console.log('***');
     expect(wrapper.find('.user-account__account-button')).to.have.lengthOf(1);
     expect(wrapper.find('.user-account__welcome')).to.have.lengthOf(1);
     expect(wrapper.find('.user-account__link')).to.have.lengthOf(1);

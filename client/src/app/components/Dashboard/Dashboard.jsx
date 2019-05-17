@@ -91,7 +91,7 @@ class Dashboard extends React.Component {
 Dashboard.propTypes = {
   blurb: PropTypes.string.isRequired,
   clearSelectedFolders: PropTypes.func.isRequired,
-  dashboardView: PropTypes.number.isRequired,
+  dashboardView: PropTypes.string.isRequired,
   fetchAllPages: PropTypes.func.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
   fetchUserProfile: PropTypes.func.isRequired,
