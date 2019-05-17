@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    background: $white;
   }
   &__upper-container {
     display: flex;
@@ -18,7 +19,10 @@
     flex-direction: row;
     width: 80%;
     border-bottom: solid $small-border $g4;
-    margin: 0 auto;
+    margin: 0 10%;
+    justify-content: space-between;
+    background: $white;
+    padding: $medium-padding 0;
   }
   &__list {
     display: flex;
@@ -38,7 +42,6 @@
     font-size: $p-size;
     color: $g4;
     font-weight: 500;
-    padding: $medium-padding 0;
     &:hover {
       border: none;
       border-radius: 0;
@@ -46,5 +49,41 @@
       background: transparent;
       color: $b2;
     }
+  }
+  &__dropdown {
+    height: $large-height;
+    width: fit-content;
+    border-radius: $small-border-radius/2;
+    border: solid $small-border $g5;
+    background: transparent;
+    color: $g3;
+    font-size: $small-font-size;
+  }
+  &__dropdown-label {
+    font-size: $small-font-size;
+    color: $g3;
+    padding-right:$small-padding;
+    line-height: $large-height;
+    margin: 0;
+  }
+  &__dropdown-container {
+    display: flex;
+    flex-direction: row;
+  }
+  &__label {
+    padding-left: $large-padding;
+  }
+  &__radio {
+    & svg path {
+      fill: $g3;
+    }
+    &--selected {
+      & svg path {
+        fill: $green;
+      }
+    }
+  }
+  &__hide {
+    display: none;
   }
 }

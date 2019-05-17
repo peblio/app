@@ -9,6 +9,8 @@ import {
   setDocumentView
 } from '../../../action/dashboard.js';
 import PeblioLogo from '../../../images/logo.svg';
+import Block from '../../../images/block.svg';
+import Line from '../../../images/stack.svg';
 import UserAccount from '../../Shared/UserAccount/UserAccount.jsx';
 
 import './nav.scss';
@@ -29,81 +31,89 @@ class Nav extends React.Component {
     this.props.setDocumentSort(e.target.value);
   }
 
-  render() {
-    return (
-      <div className="dashboard-nav__container">
-        <div className="dashboard-nav__upper-container">
-          <a
-            className="logo_toolbar"
-            href="https://www.peblio.co/"
-            target="_blank"
-            rel="noopener noreferrer"
+renderDocumentViewList = (displaySVG, documentView) => {
+  const svgIcon = [];
+  const isCurrentDocumentView = this.props.documentView === documentView;
+  if (documentView == 'line') {
+    svgIcon.push(<Line alt="line view" />);
+  } else {
+    svgIcon.push(<Block alt="block view" />);
+  }
+  return (
+    <div className={`dashboard-nav__button dashboard-nav__radio ${(isCurrentDocumentView) ? 'dashboard-nav__radio--selected' : ''}`}>
+      <label
+        className="dashboard-nav__label"
+        htmlFor={`dashboard-nav${documentView}`}
+      >
+        <input
+          required
+          type="radio"
+          className="dashboard-nav__hide"
+          name="documentView"
+          value={documentView}
+          id={`dashboard-nav${documentView}`}
+          onChange={(e) => {
+            this.props.setDocumentView(documentView);
+          }}
+        />
+        {svgIcon}
+      </label>
+    </div>
+  );
+}
+
+render() {
+  return (
+    <div className="dashboard-nav__container">
+      <div className="dashboard-nav__upper-container">
+        <a
+          className="logo_toolbar"
+          href="https://www.peblio.co/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <PeblioLogo alt="logo in toolbar" />
+        </a>
+        <UserAccount
+          container='profile'
+          location={this.props.location}
+        />
+      </div>
+      <div className="dashboard-nav__lower-container">
+        <ul className="dashboard-nav__list">
+          {this.renderListItem('Documents', 'documents')}
+          {this.renderListItem('Account', 'account')}
+          {this.renderListItem('Trash', 'account')}
+          {this.renderListItem('Profile', 'profile')}
+        </ul>
+        {this.props.dashboardView === 'documents' && (
+          <div className="dashboard-nav__list">
+            {this.renderDocumentViewList(PeblioLogo, 'block')}
+            {this.renderDocumentViewList(PeblioLogo, 'line')}
+          </div>
+        )}
+      </div>
+      <div className="dashboard-nav__lower-container">
+        <div className="dashboard-nav__dropdown-container">
+          <p className="dashboard-nav__dropdown-label">
+        Arrange By
+          </p>
+          <select
+            className="dashboard-nav__dropdown"
+            id="dashboard-sort"
+            name="dashboard-sort"
+            onChange={this.setDocumentSort}
+            ref={(dashboardSort) => { this.dashboardSort = dashboardSort; }}
+            value={this.props.documentSort}
           >
-            <PeblioLogo alt="logo in toolbar" />
-          </a>
-          <UserAccount
-            container='profile'
-            location={this.props.location}
-          />
-        </div>
-        <div className="dashboard-nav__lower-container">
-          <ul className="dashboard-nav__list">
-            {this.renderListItem('Documents', 'documents')}
-            {this.renderListItem('Account', 'account')}
-            {this.renderListItem('Trash', 'account')}
-            {this.renderListItem('Profile', 'profile')}
-          </ul>
-          {this.props.dashboardView === 'documents' && (
-            <div>
-              <select
-                className="dashboard-nav__dropdown"
-                id="dashboard-sort"
-                name="dashboard-sort"
-                onChange={this.setDocumentSort}
-                ref={(dashboardSort) => { this.dashboardSort = dashboardSort; }}
-                value={this.props.documentSort}
-              >
-                <option value="-updatedAt">Updated At</option>
-                <option value="title">Title</option>
-              </select>
-              <label
-                className="signup-modal__label"
-                htmlFor="student"
-              >
-                <input
-                  required
-                  type="radio"
-                  className="signup-modal__radio"
-                  name="documentView"
-                  value="block"
-                  onChange={(e) => {
-                    this.props.setDocumentView('block');
-                  }}
-                />
-                Block
-              </label>
-              <label
-                className="signup-modal__label"
-                htmlFor="student"
-              >
-                <input
-                  required
-                  type="radio"
-                  className="signup-modal__radio"
-                  name="documentView"
-                  value="line"
-                  onChange={(e) => {
-                    this.props.setDocumentView('line');
-                  }}
-                />
-                Line
-              </label>
-            </div>
-          )}
+            <option value="-updatedAt">Updated At</option>
+            <option value="title">Title</option>
+          </select>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 }
 
 Nav.propTypes = {
@@ -117,7 +127,8 @@ Nav.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    dashboardView: state.dashboard.dashboardView
+    dashboardView: state.dashboard.dashboardView,
+    documentView: state.dashboard.documentView
   };
 }
 
