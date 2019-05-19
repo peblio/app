@@ -20,6 +20,7 @@ import SignUp from './Modal/SignUp/SignUp.jsx';
 import PagesList from './Modal/PagesList/PagesList.jsx';
 import PasswordReset from './Modal/PasswordReset/PasswordReset.jsx';
 import Welcome from './Modal/Welcome/Welcome.jsx';
+import LiveRefreshPage from './Modal/LiveRefreshPage/LiveRefreshPage.jsx';
 
 import Canvas from './Canvas/Canvas.jsx';
 import MainToolbar from './MainToolbar/MainToolbar.jsx';
@@ -237,7 +238,8 @@ class App extends React.Component {
   }
 
   handleData = (pageId) => {
-    this.getPage();
+    //this.getPage();
+    this.props.viewLivePageRefreshModal();
   }
 
   handleOpen = () => {
@@ -344,6 +346,17 @@ class App extends React.Component {
         >
           <Login
             authLoadedPage={this.authLoadedPage}
+          />
+        </Modal>
+
+        <Modal
+          size="large"
+          isOpen={this.props.isLiveRefreshPageModalOpen}
+          closeModal={this.props.closeLiveRefreshPageModal}
+        >
+          <LiveRefreshPage
+            allowLiveRefresh={this.getPage}
+            closeLiveRefreshPageModal={this.props.closeLiveRefreshPageModal}
           />
         </Modal>
 
@@ -490,6 +503,8 @@ App.propTypes = {
   closePagesModal: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   closeLoginModal: PropTypes.func.isRequired,
+  viewLivePageRefreshModal: PropTypes.func.isRequired,
+  closeLiveRefreshPageModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
   clearSignupSelectedValues: PropTypes.func.isRequired,
   isShareModalOpen: PropTypes.bool.isRequired,
@@ -504,6 +519,7 @@ App.propTypes = {
   viewWelcomeModal: PropTypes.func.isRequired,
   closeWelcomeModal: PropTypes.func.isRequired,
   isForkPromptOpen: PropTypes.bool.isRequired,
+  isLiveRefreshPageModalOpen: PropTypes.bool.isRequired,
   closeForkPrompt: PropTypes.func.isRequired,
   closeAddDescriptionModal: PropTypes.func.isRequired,
 
@@ -533,6 +549,7 @@ function mapStateToProps(state) {
     tags: state.page.tags,
     description: state.page.description,
     isPeblPublished: state.page.isPublished,
+    isLiveRefreshPageModalOpen: state.page.isLiveRefreshPageModalOpen,
 
     canEdit: state.user.canEdit,
     name: state.user.name,

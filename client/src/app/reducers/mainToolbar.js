@@ -85,6 +85,7 @@ const mainToolbar = (state = initialState, action) => {
         isLoginModalOpen: false
       });
 
+    
     case ActionTypes.VIEW_SIGN_UP_MODAL:
       return Object.assign({}, state, {
         isSignUpModalOpen: true

@@ -273,6 +273,22 @@ export function updateTextHeight(id, height) {
   };
 }
 
+export function viewLivePageRefreshModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.VIEW_LIVE_PAGE_REFRESH_MODAL
+    });
+  };
+}
+
+export function closeLiveRefreshPageModal() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_LIVE_PAGE_REFRESH_MODAL
+    });
+  };
+}
+
 export function setPageAuthor(value) {
   return (dispatch) => {
     dispatch({
