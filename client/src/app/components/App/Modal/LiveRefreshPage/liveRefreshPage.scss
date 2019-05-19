@@ -1,0 +1,29 @@
+@import 'variables';
+@import 'mixins';
+@import 'modal';
+
+.liveRefreshPage-modal {
+  &__content{
+    margin: auto;
+    width: 50%;
+    padding-top: 5%;
+  }
+
+  &__div{
+    display: block;
+    text-align: left;
+  }
+
+  &__title{
+    @extend %modal__title;
+  }
+
+  &__label{
+    @extend %modal__label;
+  }
+
+  &__button{
+    @extend %modal__button;
+  }
+
+}
