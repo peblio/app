@@ -125,6 +125,7 @@ class App extends React.Component {
     } else if (this.resetPage()) {
       this.props.viewResetModal();
     } else if (this.projectID()) {
+      this.props.setUnsavedChanges(false);
       this.props.setEditAccess(false);
       const projectID = this.projectID();
       axios.get(`/pages/${projectID}`)

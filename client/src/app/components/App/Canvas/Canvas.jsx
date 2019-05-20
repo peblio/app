@@ -14,6 +14,7 @@ import TextEditor from './TextEditor/TextEditor.jsx';
 import WidgetNav from './WidgetNav/WidgetNav.jsx';
 import { convertPixelHeightToGridHeight } from '../../../utils/pixel-to-grid.js';
 import {
+  changePageLayout,
   resizeTextEditor,
   setPageLayout,
   updateTextHeight
@@ -353,7 +354,8 @@ class Canvas extends React.Component {
           width={this.props.rgl.width}
           rowHeight={this.props.rgl.rowHeight}
           layout={localLayout}
-          onDragStop={this.props.setPageLayout}
+          onLayoutChange={this.props.setPageLayout}
+          onDragStop={this.props.changePageLayout}
           compactType="vertical"
           margin={this.props.rgl.margin}
           draggableHandle=".widget__drag"
@@ -361,9 +363,10 @@ class Canvas extends React.Component {
           onResizeStart={this.handleGridItemResizeStart}
           onResize={this.handleGridItemResize}
           onResizeStop={(gridItems) => {
-            this.props.setPageLayout(gridItems);
+            this.props.changePageLayout(gridItems);
             this.handleGridItemResizeStop(gridItems);
-          }}
+          }
+          }
           autoSize
         >
           {ids.map(id => (
@@ -412,6 +415,7 @@ class Canvas extends React.Component {
 
 Canvas.propTypes = {
   currentWidget: PropTypes.string.isRequired,
+  changePageLayout: PropTypes.func.isRequired,
   description: PropTypes.string.isRequired,
   editorIndex: PropTypes.number.isRequired,
   editors: PropTypes.shape({}).isRequired,
@@ -451,6 +455,7 @@ function mapStateToProps(state) {
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
+  changePageLayout,
   resizeTextEditor,
   setPageLayout,
   setCurrentWidget,
