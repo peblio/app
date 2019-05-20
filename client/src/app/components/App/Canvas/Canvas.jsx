@@ -353,14 +353,17 @@ class Canvas extends React.Component {
           width={this.props.rgl.width}
           rowHeight={this.props.rgl.rowHeight}
           layout={localLayout}
-          onLayoutChange={this.props.setPageLayout}
+          onDragStop={this.props.setPageLayout}
           compactType="vertical"
           margin={this.props.rgl.margin}
           draggableHandle=".widget__drag"
           containerPadding={this.props.rgl.padding}
           onResizeStart={this.handleGridItemResizeStart}
           onResize={this.handleGridItemResize}
-          onResizeStop={this.handleGridItemResizeStop}
+          onResizeStop={(gridItems) => {
+            this.props.setPageLayout(gridItems);
+            this.handleGridItemResizeStop(gridItems);
+          }}
           autoSize
         >
           {ids.map(id => (
