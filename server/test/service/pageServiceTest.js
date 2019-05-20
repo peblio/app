@@ -2,7 +2,7 @@ import { assert, spy } from 'sinon';
 import { ObjectId } from 'mongodb';
 
 import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils.js';
-import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, trashPage, getTrashPages, restoreFromTrash } from '../../src/service/pageService';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, trashPage, getTrashPages, emptyTrash, restoreFromTrash } from '../../src/service/pageService';
 import * as pageCreator from '../../src/models/creator/pageCreator';
 
 const sinon = require('sinon');
@@ -469,6 +469,43 @@ describe('pageService', () => {
     });
   });
 
+  describe.only('emptyTrash', () => {
+    beforeEach(() => {
+      request = {
+        user: loggedInUser
+      };
+      response = {
+        send: spy(),
+        json: spy(),
+        status: createResponseWithStatusCode(204),
+        sendStatus: createResponseWithStatusCode(204)
+      };
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall return error is emptying trash fails', async () => {
+      response.status = createResponseWithStatusCode(500);
+      updatePageSpy = sandbox.stub(Page, 'update').throws({ message: 'Could not empty trash' });
+
+      await emptyTrash(request, response);
+
+      assertAllPagesForUserWasUpdatedWithDeletedAtDetails();
+      assertSendWasCalledWith({ error: 'Could not empty trash' });
+    });
+
+    it('shall return error is emptying trash fails', async () => {
+      updatePageSpy = sandbox.stub(Page, 'update').returns(null);
+
+      await emptyTrash(request, response);
+
+      assertAllPagesForUserWasUpdatedWithDeletedAtDetails();
+    });
+
+  });
+
   describe('updatePage', () => {
     beforeEach(() => {
       request = {
@@ -754,6 +791,14 @@ function assertUpdatePageWasCalledWithLatestPageData() {
 
 function assertFindWasCalledWithPageId() {
   assertStubWasCalledOnceWith(findSpy, { id: pageId });
+}
+
+function assertAllPagesForUserWasUpdatedWithDeletedAtDetails() {
+  assertStubWasCalledOnceWith(updatePageSpy, { user: loggedInUser._id, trashedAt: { $exists: true, $ne: null } }, {
+    trashedAt: null,
+    deletedAt: Date.now(),
+    folder: null
+  });
 }
 
 function assertTrashedPagesWereRequestedForUser() {
