@@ -41,6 +41,7 @@ class Documents extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     const { userName, selectedFolderIds, folder, folders, pages, documentView } = this.props;
     let folderContainer;
     if (selectedFolderIds.length === 0) {
