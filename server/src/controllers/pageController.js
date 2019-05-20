@@ -43,3 +43,7 @@ export async function uploadPageSnapshotToS3(req, res) {
 export async function movePage(req, res) {
     return pageService.movePage(req, res);
 }
+
+export async function emptyTrash(req, res) {
+    return pageService.emptyTrash(req, res);
+}

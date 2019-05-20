@@ -101,6 +101,29 @@ export async function restoreFromTrash(req, res) {
   }
 }
 
+export async function emptyTrash(req, res) {
+  const user = req.user;
+  if (!user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  }
+  try {
+    await Page.update(
+      { 
+        user: user._id,
+        trashedAt: { $exists: true, $ne: null }
+      },
+      {
+        trashedAt: null,
+        deletedAt: Date.now(),
+        folder: null
+      }
+    );
+    return res.sendStatus(204);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
 export async function trashPage(req, res) {
   const { pageId } = req.params;
   try {
