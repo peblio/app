@@ -294,7 +294,7 @@ class App extends React.Component {
   }
 
   render() {
-    const webSocketUrl = `ws://${WEBSOCKET_HOST}/api/live/page/${this.props.id}`;
+    const webSocketUrl = `${WEBSOCKET_HOST}/api/live/page/${this.props.id}`;
     return (
       <div
         role="presentation"
