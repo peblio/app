@@ -238,7 +238,10 @@ class App extends React.Component {
   }
 
   handleData = (pageId) => {
-    //this.getPage();
+    if (this.props.canEdit) {
+      this.getPage();
+      return;
+    }
     this.props.viewLivePageRefreshModal();
   }
 
