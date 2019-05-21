@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -34,8 +35,22 @@ class Pages extends Component {
   }
 
   render() {
+    const documentViewCLass = classNames('profile-pebl__list', {
+      'document-line': (this.props.documentView === 'line'),
+      'document-block': (this.props.documentView === 'block')
+    });
     return (
-      <ul className="profile-pebl__list">
+      <ul className={classNames(documentViewCLass)}>
+        {this.props.pages && (
+          <div className="profile-pebl__li-heading-container">
+            <h4 className="profile-pebl__li-heading">
+            name
+            </h4>
+            <h4 className="profile-pebl__li-heading">
+            Last Modified
+            </h4>
+          </div>
+        )}
         {this.props.pages && this.props.pages.map(page => (
 
           <li className="profile-pebl__container" key={page.id}>
@@ -85,14 +100,14 @@ class Pages extends Component {
                   className="profile-pebl__sub-info"
                 >
                   <button
-                    className="pages__icon"
+                    className="profile-pebl__icon"
                     onClick={e => this.trashPage(e, page._id)}
                     data-test="delete-pebl"
                   >
                     <DeleteIcon alt="delete page" />
                   </button>
                   <button
-                    className="pages__icon"
+                    className="profile-pebl__icon"
                     onClick={e => this.duplicatePage(e, page)}
                     data-test="duplicate-pebl"
                   >
@@ -111,14 +126,21 @@ class Pages extends Component {
 
 Pages.propTypes = {
   container: PropTypes.string.isRequired,
+  documentView: PropTypes.string.isRequired,
   pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   trashPage: PropTypes.func.isRequired,
   duplicatePage: PropTypes.func.isRequired,
 };
+
+function mapStateToProps(state) {
+  return {
+    documentView: state.dashboard.documentView
+  };
+}
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   duplicatePage,
   trashPage
 }, dispatch);
 
-export default connect(null, mapDispatchToProps)(Pages);
+export default connect(mapStateToProps, mapDispatchToProps)(Pages);

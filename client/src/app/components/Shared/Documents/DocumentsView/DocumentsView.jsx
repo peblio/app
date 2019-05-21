@@ -25,8 +25,8 @@ class DocumentsView extends Component {
   }
 
   render() {
-    const { childFolders, childPages, folderId, folder, profileName } = this.props;
-    const title = folderId ? folder.title : 'All Work';
+    const { childFolders, childPages, documentView, folderId, folder, profileName } = this.props;
+    const title = folderId ? folder.title : '';
     return (
       /* eslint-disable jsx-a11y/no-static-element-interactions */
       <div className="profile-pebls__level">
@@ -45,6 +45,8 @@ class DocumentsView extends Component {
         <h2 className="profile-pebls__sub-heading">folders</h2>
         {childFolders && childFolders.length > 0 && (
           <Folders
+            deleteFolder={this.props.deleteFolder}
+            documentView={documentView}
             folders={childFolders}
             folderId={folderId}
             profileName={profileName}
@@ -69,6 +71,8 @@ DocumentsView.propTypes = {
   childPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   clearSelectedFolders: PropTypes.func.isRequired,
   container: PropTypes.string.isRequired,
+  deleteFolder: PropTypes.func.isRequired,
+  documentView: PropTypes.string.isRequired,
   folderDepth: PropTypes.number,
   folderId: PropTypes.string,
   folder: PropTypes.shape({ parent: PropTypes.string }),
@@ -92,7 +96,8 @@ const mapStateToProps = (state, ownProps) => {
         const folderId = ownProps.folderId ? ownProps.folderId : null;
         return (page.folder === folderId);
       }),
-    parentFolderShortId
+    parentFolderShortId,
+    folder
   };
 };
 

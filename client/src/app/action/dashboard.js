@@ -17,3 +17,21 @@ export function setTrashPages(data) {
     });
   };
 }
+
+export function setDocumentView(viewType) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_DOCUMENT_VIEW,
+      viewType
+    });
+  };
+}
+
+export function setDocumentSort(sortType) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_DOCUMENT_SORT,
+      sortType
+    });
+  };
+}
