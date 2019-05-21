@@ -18,7 +18,7 @@ let store;
 let props;
 configure({ adapter: new Adapter() });
 
-describe('UserAccount component when logged in as teacher', () => {
+describe('Shared component Documents', () => {
   beforeEach(() => {
     store = mockStore({
       dashboard: {
@@ -43,10 +43,5 @@ describe('UserAccount component when logged in as teacher', () => {
   it('renders DocumentsView', () => {
     wrapper = shallow(<Documents store={store} {...props} />).dive();
     expect(wrapper.find(DocumentsView)).to.have.lengthOf(1);
-  });
-
-  it('renders DocumentsView', () => {
-    wrapper = shallow(<Documents store={store} {...props} />).dive().dive();
-    expect(wrapper.find(Folders)).to.have.lengthOf(1);
   });
 });
