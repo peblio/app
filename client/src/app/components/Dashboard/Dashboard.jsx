@@ -8,6 +8,7 @@ import Documents from '../Shared/Documents/Documents';
 import Nav from './Nav/Nav';
 
 import {
+  deleteFolder,
   fetchAllPages,
   jumpToFolderByShortId,
   clearSelectedFolders
@@ -34,6 +35,7 @@ class Dashboard extends React.Component {
             userName={this.props.name}
             folderShortId={this.props.match.params.folderShortId}
             fetchAllPages={this.props.fetchAllPages}
+            deleteFolder={this.props.deleteFolder}
             jumpToFolderByShortId={this.props.jumpToFolderByShortId}
             clearSelectedFolders={this.props.clearSelectedFolders}
             folders={this.props.folders}
@@ -86,6 +88,7 @@ Dashboard.propTypes = {
   blurb: PropTypes.string.isRequired,
   clearSelectedFolders: PropTypes.func.isRequired,
   dashboardView: PropTypes.number.isRequired,
+  deleteFolder: PropTypes.func.isRequired,
   fetchAllPages: PropTypes.func.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
   fetchUserProfile: PropTypes.func.isRequired,
@@ -123,6 +126,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     clearSelectedFolders,
+    deleteFolder,
     fetchAllPages,
     jumpToFolderByShortId,
     ...userActions

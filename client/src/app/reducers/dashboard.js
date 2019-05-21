@@ -2,7 +2,7 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 
 const initialState = {
   dashboardView: 'documents',
-  documentView: 'block',
+  documentView: 'line',
   documentSort: 'updatedAt'
 };
 const dashboard = (state = initialState, action) => {

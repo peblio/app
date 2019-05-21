@@ -1,6 +1,220 @@
 @import 'variables';
+
+
+%file-folder {
+  &__icon {
+    border: none;
+    background: none;
+    fill: $medium-gray;
+    border-radius: 50%;
+    height: 22px;
+    width: 22px;
+    padding: 0;
+    float: right;
+
+    &:hover {
+      border: none;
+      background: $g7;
+      box-shadow: none;
+    }
+    & path svg {
+      fill: red;
+    }
+  }
+
+  &__container {
+  }
+  &__list {
+    display: flex;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+  &__list-item {
+    position: relative;
+    background: $white;
+    box-sizing: border-box;
+    border-radius: $small-border-radius/2;
+    margin: $large-margin;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: $medium-padding;
+    cursor: pointer;
+  }
+  &__title {
+    text-align: center;
+    font-weight: 500;
+    margin-top: 0;
+    font-size: $medium-font-size;
+  }
+  &__sub-title {
+    left: 0;
+    margin: 0;
+    position: absolute;
+    bottom: 0;
+    border-bottom-right-radius: $small-border-radius/2;
+    font-size:$small-font-size;
+    padding: $small-padding;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: right;
+    text-transform: uppercase;
+    font-weight: normal;
+    background-color: $g4;
+    color:$white;
+  }
+}
+
 .profile {
+  &-pebl {
+    &__line-title {
+      display: none;
+    }
+    &__li-heading {
+      display: none;
+    }
+    &__icon {
+      @extend %file-folder__icon;
+      & svg path {
+        fill: $g7;
+      }
+      &:hover svg path {
+        fill: $g2;
+      }
+      & svg g rect {
+        fill: $g7;
+      }
+      &:hover svg g rect {
+        fill: $g2;
+      }
+    }
+
+    &__link {
+      text-decoration: none;
+      color :$black;
+    }
+    &__list {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0;
+    }
+
+    &__list-item {
+      height: 150px;
+      width: 220px;
+      border-top: $files-indicator-width solid $tab-yellow;
+      &:hover {
+        border: $medium-border solid $tab-yellow;
+        border-top: $files-indicator-width solid $tab-yellow;
+      }
+    }
+    &__overlay {
+      display: none;
+      position: absolute;
+      top: -$small-border-radius*1.5;
+      left: 0;
+      background: $g4;
+      width: 100%;
+      height: calc(100% + #{$small-border-radius*1.5} - #{$pebl-profile-details});
+      border-top: $g4 $small-border-radius*1.5 solid;
+      border-radius: $small-border-radius;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      padding: 0 $medium-padding;
+      box-sizing: border-box;
+      text-decoration: none;
+      &-title {
+        color: $white;
+        font-size: $medium-font-size;
+        // height: $pebl-profile-image-size-height*0.45;
+        // line-height: $medium-line-height;
+        font-weight: 800;
+        text-align: left;
+        overflow: hidden;
+      }
+      &-desc {
+        font-size: $small-font-size;
+        color: $white;
+        // line-height: $small-line-height;
+        text-align: left;
+        font-weight: 600;
+        height: $pebl-profile-image-size-height*0.8;
+        overflow: hidden;
+      }
+      &-author {
+        font-size: $small-font-size;
+        text-align: left;
+        font-weight: 600;
+        color: $g5;
+      }
+    }
+    &__container {
+      list-style: none;
+      margin: $large-margin;
+      border-radius: $small-border-radius;
+      background: $white;
+      border-radius: $small-border-radius;
+      -webkit-box-shadow:0 0px 7px rgba(0, 0, 0, 0.3);
+      box-shadow:0 0px 7px rgba(0, 0, 0, 0.3);
+      position: relative;
+      cursor: pointer;
+      border-top: $tab-yellow $small-border-radius*1.5 solid;
+      &:hover .profile-pebl__overlay{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+    }
+
+    &__title {
+      color: $black;
+      font-size: $medium-font-size;
+      padding: 0 $small-padding;
+      font-weight: 600;
+      text-align: left;
+      overflow: hidden;
+    }
+    &__tag-list {
+      display: flex;
+    }
+    &__image {
+      width: $pebl-profile-image-size-width;
+      height: $pebl-profile-image-size-height;
+    }
+    &__info {
+      display: flex;
+      flex-direction: row;
+      height: $pebl-profile-details;
+      background: $g4;
+      justify-content: space-between;
+    }
+    &__sub-info {
+      @extend %file-folder__sub-title;
+      padding: $small-padding/2;
+      padding-left: $small-padding;
+      text-align: left;
+      position: inherit;
+    }
+  }
+
   &-folders {
+    &__line-title {
+      display: none;
+    }
+    &__li-heading {
+      display: none;
+    }
+    &__sub-info {
+      @extend %file-folder__sub-title;
+      padding: $small-padding/2;
+      padding-left: $small-padding;
+      text-align: left;
+      position: inherit;
+      border-radius: 0;
+    }
     &__container {
     }
     &__list {
@@ -8,21 +222,37 @@
     }
     &__list-item {
       @extend %file-folder__list-item;
-      height: 80px;
+      height: 70px;
       width: $pebl-profile-image-size-width;
       border-left: $files-indicator-width solid $tab-blue;
       -webkit-box-shadow:0 0px 7px rgba(0, 0, 0, 0.3);
       box-shadow:0 0px 7px rgba(0, 0, 0, 0.3);
-      &:hover {
-        border: $medium-border solid $tab-blue;
-        border-left: $files-indicator-width solid $tab-blue;
-      }
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      // &:hover {
+      //   border: $medium-border solid $tab-blue;
+      //   border-left: $files-indicator-width solid $tab-blue;
+      // }
     }
     &__title {
       @extend %file-folder__title;
+      width: 100%;
+      text-align: left;
+      padding: $small-padding/2;
+      padding-left: $small-padding;
+      margin: auto;
+    }
+    &__info {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
     }
     &__sub-title {
       @extend %file-folder__sub-title;
+      padding: $small-padding/2;
+      padding-left: $small-padding;
+      text-align: left;
     }
   }
 
@@ -50,7 +280,7 @@
     }
     &__container {
       box-sizing: border-box;
-      width: 80%;
+      width: 85%;
       height: 100%;
       overflow-y: scroll;
       float: right;
@@ -76,81 +306,103 @@
   }
 }
 
-%file-folder {
-
-  &__container {
-  }
-  &__list {
-    display: flex;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    flex-wrap: wrap;
-  }
-  &__list-item {
-    position: relative;
-    background: $white;
-    box-sizing: border-box;
-    border-radius: $small-border-radius;
-    margin: $large-margin;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: $medium-padding;
-    cursor: pointer;
-  }
-  &__title {
-    text-align: center;
-    font-weight: normal;
-    margin-top: 0;
-  }
-  &__sub-title {
-    left: 0;
-    margin: 0;
-    position: absolute;
-    bottom: 0;
-    border-bottom-right-radius: $small-border-radius;
-    font-size:$small-font-size;
-    padding: $small-padding;
-    box-sizing: border-box;
-    width: 100%;
-    text-align: right;
-    text-transform: uppercase;
-    font-weight: normal;
-    background-color: $light-gray;
-    color:$white;
-  }
-}
-
 .document-line {
-  .profile-folders__list-item {
-    width: 100%;
-    margin: 2px 0;
-    height: fit-content;
-    display: flex;
-    justify-content: space-between;
-    padding: $small-padding;
-    &:hover {
-      border: 0;
-      border-left: $files-indicator-width solid $tab-blue;
-      background: $g7;
-      -webkit-box-shadow:0 0px 7px rgba(0, 0, 0, 0.8);
-      box-shadow:0 0px 7px rgba(0, 0, 0, 0.8);
+  .profile-folders {
+    &__li-heading {
+      display: block;
+      text-transform: uppercase;
+      font-size: $small-font-size;
+      width: 25%;
+      color: $g4;
+      font-weight: normal;
+      margin: $small-margin 0;
+    }
+    &__li-heading-container {
+      display: flex;
+      width: 100%;
+      margin: 0 $medium-margin;
+      padding-left: $large-padding;
+    }
+    &__list-item {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      padding: $small-padding;
+      margin: 2px $medium-margin;
+      &:hover {
+        border: 0;
+        border-left: $files-indicator-width solid $tab-blue;
+        background: $g7;
+        -webkit-box-shadow:0 0px 7px rgba(0, 0, 0, 0.8);
+        box-shadow:0 0px 7px rgba(0, 0, 0, 0.8);
+      }
+    }
+    &__sub-info {
+      background: transparent;
+      color: $g2;
+    }
+    &__sub-title {
+      background-color: transparent;
+      color: $g2;
+      padding: 0;
+      font-size: $p-size;
+      width: fit-content;
+      position: inherit;
+    }
+    &__title {
+      margin: 0;
+      color: $g2;
+      font-size: $p-size;
+      width: 50%;
+    }
+    &__line-title {
+      display: block;
+      color: $g2;
+      font-size: $small-font-size;
+      width: 50%;
+      padding: 0;
+      font-weight: normal;
+      margin: 0;
+      text-transform: uppercase;
+    }
+    &__sub-info {
+      padding: 0;
     }
   }
-  .profile-folders__sub-title {
-    background-color: transparent;
-    color: $g4;
-    padding: 0;
-    font-size: $p-size;
-    width: fit-content;
-    position: inherit;
-  }
-  .profile-folders__title {
-    margin: 0;
-    color: $g4;
-    font-size: $p-size;
+  .profile-pebl {
+    &__li-heading {
+      display: block;
+      text-transform: uppercase;
+      font-size: $small-font-size;
+      width: 25%;
+      color: $g4;
+      font-weight: normal;
+      margin: $small-margin 0;
+    }
+    &__li-heading-container {
+      display: flex;
+      width: 100%;
+      margin: 0 $medium-margin;
+      padding-left: $large-padding;
+    }
+    &__sub-info {
+      background: transparent;
+      color: $g2;
+    }
+    &__info {
+      width: 75%;
+    }
+    &__icon {
+      & svg path {
+        fill: $g4;
+      }
+    }
+    &__container {
+      margin: 2px $medium-margin;
+      align-items: center;
+    }
   }
 }
 

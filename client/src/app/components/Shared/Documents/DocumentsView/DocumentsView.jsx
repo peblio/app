@@ -45,6 +45,7 @@ class DocumentsView extends Component {
         <h2 className="profile-pebls__sub-heading">folders</h2>
         {childFolders && childFolders.length > 0 && (
           <Folders
+            deleteFolder={this.props.deleteFolder}
             documentView={documentView}
             folders={childFolders}
             folderId={folderId}

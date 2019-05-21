@@ -41,6 +41,16 @@ class Pages extends Component {
     });
     return (
       <ul className={classNames(documentViewCLass)}>
+        {this.props.pages && (
+          <div className="profile-pebl__li-heading-container">
+            <h4 className="profile-pebl__li-heading">
+            name
+            </h4>
+            <h4 className="profile-pebl__li-heading">
+            Last Modified
+            </h4>
+          </div>
+        )}
         {this.props.pages && this.props.pages.map(page => (
 
           <li className="profile-pebl__container" key={page.id}>
@@ -90,14 +100,14 @@ class Pages extends Component {
                   className="profile-pebl__sub-info"
                 >
                   <button
-                    className="pages__icon"
+                    className="profile-pebl__icon"
                     onClick={e => this.trashPage(e, page._id)}
                     data-test="delete-pebl"
                   >
                     <DeleteIcon alt="delete page" />
                   </button>
                   <button
-                    className="pages__icon"
+                    className="profile-pebl__icon"
                     onClick={e => this.duplicatePage(e, page)}
                     data-test="duplicate-pebl"
                   >

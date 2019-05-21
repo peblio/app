@@ -5,6 +5,8 @@ import Adapter from 'enzyme-adapter-react-16';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import Documents from '../../../../../src/app/components/Shared/Documents/Documents.jsx';
+import DocumentsView from '../../../../../src/app/components/Shared/Documents/DocumentsView/DocumentsView.jsx';
+import Folders from '../../../../../src/app/components/Shared/Documents/DocumentsView/Folders/Folders.jsx';
 
 const sinon = require('sinon');
 
@@ -26,8 +28,8 @@ describe('UserAccount component when logged in as teacher', () => {
     });
     props = {
       folders: {
-        allIds: [],
-        byId: {}
+        allIds: ['1'],
+        byId: { 1: {} }
       },
       pages: {},
       selectedFolderIds: [],
@@ -38,11 +40,13 @@ describe('UserAccount component when logged in as teacher', () => {
     sandbox.restore();
   });
 
-  it('renders Documents', () => {
+  it('renders DocumentsView', () => {
     wrapper = shallow(<Documents store={store} {...props} />).dive();
-    console.log('**');
-    console.log(wrapper);
-    console.log('**');
-    expect(wrapper.find('.user-account__link').first().text()).to.equal('Profile');
+    expect(wrapper.find(DocumentsView)).to.have.lengthOf(1);
+  });
+
+  it('renders DocumentsView', () => {
+    wrapper = shallow(<Documents store={store} {...props} />).dive().dive();
+    expect(wrapper.find(Folders)).to.have.lengthOf(1);
   });
 });

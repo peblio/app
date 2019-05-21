@@ -41,7 +41,6 @@ class Documents extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const { userName, selectedFolderIds, folder, folders, pages, documentView } = this.props;
     let folderContainer;
     if (selectedFolderIds.length === 0) {
@@ -52,6 +51,7 @@ class Documents extends React.Component {
           folder={folder}
           folders={folders}
           pages={pages}
+          deleteFolder={this.props.deleteFolder}
           clearSelectedFolders={this.props.clearSelectedFolders}
           jumpToFolderByShortId={this.props.jumpToFolderByShortId}
           container={this.props.container}
