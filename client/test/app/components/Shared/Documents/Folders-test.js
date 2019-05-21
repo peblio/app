@@ -31,7 +31,7 @@ const allProps = {
 };
 configure({ adapter: new Adapter() });
 
-describe.only('Folders component - Block View ', () => {
+describe('Folders component - Block View ', () => {
   beforeEach(() => {
     store = mockStore({
 
