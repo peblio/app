@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import DeleteIcon from '../../../images/trash.svg';
-import { setTrashPages } from '../../../action/dashboard.js';
+import RestoreIcon from '../../../images/restore.svg';
+import { setTrashPages, restoreTrashedPage, deletePage } from '../../../action/dashboard.js';
 
 import axios from '../../../utils/axios';
 
@@ -16,33 +17,15 @@ class Trash extends React.Component {
   }
 
   loadTrashedPages = () => {
-    axios.get('/pages/trash')
-      .then((data) => {
-        this.props.setTrashPages(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.props.setTrashPages();
   }
 
   restorePage = (id) => {
-    axios.put(`/pages/trash/${id}`)
-      .then((data) => {
-        this.loadTrashedPages(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.props.restoreTrashedPage(id);
   }
 
   deletePage = (id) => {
-    axios.delete(`/pages/${id}`)
-      .then((data) => {
-        this.loadTrashedPages(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.props.deletePage(id);
   }
 
   renderTrashPages=() => {
@@ -65,7 +48,7 @@ class Trash extends React.Component {
               className="pages__icon"
               onClick={() => { this.restorePage(page._id); }}
             >
-              <DeleteIcon alt="restore page" />
+              <RestoreIcon alt="restore page" />
             </button>
           </td>
         </tr>
@@ -94,13 +77,17 @@ function mapStateToProps(state) {
 }
 
 Trash.propTypes = {
+  deletePage: PropTypes.func.isRequired,
+  restoreTrashedPage: PropTypes.func.isRequired,
   setTrashPages: PropTypes.func.isRequired,
   trashPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 };
 
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setTrashPages
+  deletePage,
+  setTrashPages,
+  restoreTrashedPage
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trash);

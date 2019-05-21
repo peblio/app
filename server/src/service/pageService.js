@@ -108,7 +108,7 @@ export async function emptyTrash(req, res) {
   }
   try {
     await Page.update(
-      { 
+      {
         user: user._id,
         trashedAt: { $exists: true, $ne: null }
       },
@@ -129,7 +129,9 @@ export async function trashPage(req, res) {
   try {
     await Page.update(
       { _id: pageId },
-      { trashedAt: Date.now() }
+      { trashedAt: Date.now(),
+        folder: null
+       }
     );
     return res.sendStatus(204);
   } catch (err) {
