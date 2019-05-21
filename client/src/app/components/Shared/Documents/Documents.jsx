@@ -86,6 +86,7 @@ class Documents extends React.Component {
 Documents.propTypes = {
   clearSelectedFolders: PropTypes.func.isRequired,
   container: PropTypes.string.isRequired,
+  deleteFolder: PropTypes.func.isRequired,
   documentSort: PropTypes.string.isRequired,
   documentView: PropTypes.string.isRequired,
   fetchAllPages: PropTypes.func.isRequired,

@@ -81,6 +81,8 @@ class Folders extends Component {
 
 Folders.propTypes = {
   container: PropTypes.string.isRequired,
+  deleteFolder: PropTypes.func.isRequired,
+  documentView: PropTypes.string.isRequired,
   folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   profileName: PropTypes.string.isRequired,
   jumpToFolderByShortId: PropTypes.string.isRequired

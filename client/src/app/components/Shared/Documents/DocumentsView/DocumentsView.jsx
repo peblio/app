@@ -71,6 +71,8 @@ DocumentsView.propTypes = {
   childPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   clearSelectedFolders: PropTypes.func.isRequired,
   container: PropTypes.string.isRequired,
+  deleteFolder: PropTypes.func.isRequired,
+  documentView: PropTypes.string.isRequired,
   folderDepth: PropTypes.number,
   folderId: PropTypes.string,
   folder: PropTypes.shape({ parent: PropTypes.string }),

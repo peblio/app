@@ -126,6 +126,7 @@ class Pages extends Component {
 
 Pages.propTypes = {
   container: PropTypes.string.isRequired,
+  documentView: PropTypes.string.isRequired,
   pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   trashPage: PropTypes.func.isRequired,
   duplicatePage: PropTypes.func.isRequired,

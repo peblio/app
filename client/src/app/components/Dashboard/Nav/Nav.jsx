@@ -37,13 +37,17 @@ class Nav extends React.Component {
 renderDocumentViewList = (displaySVG, documentView) => {
   const svgIcon = [];
   const isCurrentDocumentView = this.props.documentView === documentView;
-  if (documentView == 'line') {
+  if (documentView === 'line') {
     svgIcon.push(<Line alt="line view" />);
   } else {
     svgIcon.push(<Block alt="block view" />);
   }
   return (
-    <div className={`dashboard-nav__button dashboard-nav__radio ${(isCurrentDocumentView) ? 'dashboard-nav__radio--selected' : ''}`}>
+    <div className={
+      `dashboard-nav__button dashboard-nav__radio ${(isCurrentDocumentView)
+        ? 'dashboard-nav__radio--selected' : ''
+      }`}
+    >
       <label
         className="dashboard-nav__label"
         htmlFor={`dashboard-nav${documentView}`}
@@ -124,6 +128,7 @@ render() {
 Nav.propTypes = {
   dashboardView: PropTypes.string.isRequired,
   documentSort: PropTypes.string.isRequired,
+  documentView: PropTypes.string.isRequired,
   setDocumentSort: PropTypes.func.isRequired,
   setDashboardView: PropTypes.func.isRequired,
   setDocumentView: PropTypes.func.isRequired,
