@@ -44,6 +44,20 @@ export async function getPagesWithTag(req, res) {
   });
 }
 
+export async function getMyPagesWithTag(req, res) {
+  const user = req.user;
+  if (!user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  }
+  const tags = req.query.tag;
+  return Page.find({ user: user._id, tags}, (err, data) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    return res.status(200).send(data);
+  });
+}
+
 export async function savePageAsGuest(req, res) {
   try {
     const hydratedUser = await User.findOne({ name: 'peblioguest' }).exec();

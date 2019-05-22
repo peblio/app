@@ -20,6 +20,10 @@ export async function deletePage(req, res) {
     return pageService.deletePage(req, res);
 }
 
+export async function getMyPagesWithTag(req, res) {
+    return pageService.getMyPagesWithTag(req, res);
+}
+
 export async function updatePage(req, res) {
     return pageService.updatePage(req, res);
 }

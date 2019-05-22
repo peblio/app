@@ -2,7 +2,7 @@ import { assert, spy } from 'sinon';
 import { ObjectId } from 'mongodb';
 
 import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils.js';
-import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, uploadPageSnapshotToS3ServiceStub } from '../../src/service/pageService';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, getMyPagesWithTag } from '../../src/service/pageService';
 import * as pageCreator from '../../src/models/creator/pageCreator';
 
 const sinon = require('sinon');
@@ -223,6 +223,57 @@ describe('pageService', () => {
 
       assertPaginateWasCalledWithTag();
       assertSendWasCalledWith(error);
+    });
+  });
+
+  describe('getMyPagesWithTag', () => {
+    beforeEach(() => {
+      request = {
+        query: {
+          tag
+        },
+        user: loggedInUser
+      };
+      response = {
+        send: spy(),
+        json: spy(),
+        status: createResponseWithStatusCode(200)
+      };
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall return unauthorized when user not found', () => {
+      request.user = null;
+      response.status = createResponseWithStatusCode(403);
+      findSpy = sandbox.stub(Page, 'find').yields(null, pageData);
+
+      getMyPagesWithTag(request, response);
+
+      assert.notCalled(findSpy);
+      assertSendWasCalledWith({ error: 'Please log in first' });
+    });
+
+    it('shall return error if retrieving my pages matching tags fails', () => {
+      response.status = createResponseWithStatusCode(500);
+      findSpy = sandbox.stub(Page, 'find').yields({ error: 'Could not connect to database' }, null);
+
+      getMyPagesWithTag(request, response);
+
+      assertStubWasCalledOnceWith(findSpy, { user: loggedInUser._id, tags: tag });
+      assertSendWasCalledWith({ error: 'Could not connect to database' });
+    });
+
+    it('shall return my pages matching tags', () => {
+      response.status = createResponseWithStatusCode(200);
+      findSpy = sandbox.stub(Page, 'find').yields(null, pageData);
+
+      getMyPagesWithTag(request, response);
+
+      assertStubWasCalledOnceWith(findSpy, { user: loggedInUser._id, tags: tag });
+      assertSendWasCalledWith(pageData);
     });
   });
 
