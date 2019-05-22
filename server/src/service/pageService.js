@@ -50,12 +50,14 @@ export async function getMyPagesWithTag(req, res) {
     return res.status(403).send({ error: 'Please log in first' });
   }
   const tags = req.query.tag;
-  return Page.find({ user: user._id, tags}, (err, data) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
+  const sortBy = {};
+  sortBy[req.query.sort ? req.query.sort : 'title'] = -1;
+  try {
+    const data = await Page.find({ user: user._id, tags}).sort(sortBy).exec();
     return res.status(200).send(data);
-  });
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
 }
 
 export async function savePageAsGuest(req, res) {
