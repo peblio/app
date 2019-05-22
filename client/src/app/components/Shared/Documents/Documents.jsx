@@ -12,6 +12,7 @@ class Documents extends React.Component {
   }
 
   componentWillMount() {
+    console.log(this.props.userName);
     if (this.props.userName) {
       this.props.fetchAllPages(this.props.userName, this.props.documentSort)
         .then(() => {
