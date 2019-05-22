@@ -62,3 +62,12 @@ export function setDocumentSort(sortType) {
     });
   };
 }
+
+export function setParentFolder(folderId) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_PARENT_FOLDER,
+      folderId
+    });
+  };
+}

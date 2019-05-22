@@ -14,6 +14,26 @@ button {
   @extend %menu-item ;
 }
 
+%peblio-button {
+  white-space: nowrap;
+  padding: $small-padding/2 $small-padding;
+  margin: 0;
+  margin-left: $small-margin;
+  font-family: $roboto;
+  font-size: $toolbar-font-size;
+  font-weight: 500;
+  line-height: $p-line-height;
+  color: $white;
+  background: $green;
+  height: fit-content;
+  border: $green $small-border solid;
+  &:hover {
+    background: $transparent  ;
+    border: $green $small-border solid;
+    color: $green;
+  }
+}
+
 %menu-item {
   border: $small-border solid $white;
   border-radius: $small-border-radius;

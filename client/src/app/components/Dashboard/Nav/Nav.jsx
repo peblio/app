@@ -8,6 +8,10 @@ import {
   setDocumentSort,
   setDocumentView
 } from '../../../action/dashboard.js';
+import {
+  createFolder,
+  createPage
+} from '../../../action/page.js';
 import PeblioLogo from '../../../images/logo.svg';
 import Block from '../../../images/block.svg';
 import Line from '../../../images/stack.svg';
@@ -28,6 +32,20 @@ class Nav extends React.Component {
         </button>
       </li>
     );
+  }
+
+  createFolder = (e) => {
+    const folderId = this.props.selectedFolderIds[this.props.selectedFolderIds.length - 1];
+    e.stopPropagation();
+    this.props.createFolder('New Folder', folderId);
+    // this.hideNewFolderDropdown();
+  }
+
+  createPage = (e) => {
+    const folderId = this.props.selectedFolderIds[this.props.selectedFolderIds.length - 1];
+    e.stopPropagation();
+    this.props.createPage('New Page', folderId);
+    // this.hideNewFolderDropdown();
   }
 
   setDocumentSort = (e) => {
@@ -70,6 +88,7 @@ renderDocumentViewList = (displaySVG, documentView) => {
 }
 
 render() {
+  console.log(this.props.selectedFolderIds);
   return (
     <div className="dashboard-nav__container">
       <div className="dashboard-nav__upper-container">
@@ -93,7 +112,7 @@ render() {
           {this.renderListItem('Trash', 'trash')}
           {this.renderListItem('Profile', 'profile')}
         </ul>
-        {this.props.dashboardView === 'documents' && (
+        {(this.props.dashboardView === 'documents' || this.props.dashboardView === 'trash') && (
           <div className="dashboard-nav__list">
             {this.renderDocumentViewList(PeblioLogo, 'block')}
             {this.renderDocumentViewList(PeblioLogo, 'line')}
@@ -118,6 +137,12 @@ render() {
               <option value="-updatedAt">Updated At</option>
               <option value="title">Title</option>
             </select>
+            <button onClick={this.createFolder}>
+              New Folder
+            </button>
+            <button onClick={this.createPage}>
+              New Page
+            </button>
           </div>
         </div>
       )}
@@ -139,11 +164,15 @@ Nav.propTypes = {
 function mapStateToProps(state) {
   return {
     dashboardView: state.dashboard.dashboardView,
-    documentView: state.dashboard.documentView
+    documentView: state.dashboard.documentView,
+    parentFolderId: state.dashboard.parentFolderId,
+    selectedFolderIds: state.page.selectedFolderIds
   };
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  createFolder,
+  createPage,
   setDashboardView,
   setDocumentView,
   setDocumentSort

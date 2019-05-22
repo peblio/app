@@ -1,10 +1,11 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 
 const initialState = {
-  dashboardView: 'trash',
+  dashboardView: 'documents',
   trashPages: [],
-  documentView: 'block',
-  documentSort: 'updatedAt'
+  documentView: 'line',
+  documentSort: 'updatedAt',
+  parentFolderId: ''
 };
 const dashboard = (state = initialState, action) => {
   switch (action.type) {
@@ -25,6 +26,11 @@ const dashboard = (state = initialState, action) => {
     case ActionTypes.SET_DOCUMENT_SORT:
       return Object.assign({}, state, {
         documentSort: action.sortType
+      });
+
+    case ActionTypes.SET_PARENT_FOLDER:
+      return Object.assign({}, state, {
+        parentFolderId: action.folderId
       });
 
     default:

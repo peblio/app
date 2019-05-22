@@ -1,17 +1,21 @@
 @import 'variables';
-@import 'mixins';
+@import 'base';
 
 .trash {
 
   &__container {
-    width: 80%;
+    width: 85%;
     margin: 0 auto;
   }
 
-  &__table {
-    width: 100%;
-    border-spacing: 0 $small-border-radius;
-    padding: $large-padding 0;
+  &__sub-container {
+    display: flex;
+    justify-content: space-between;
+    margin: $small-margin 0;
+  }
+
+  &__button {
+    @extend %peblio-button;
   }
 
 }

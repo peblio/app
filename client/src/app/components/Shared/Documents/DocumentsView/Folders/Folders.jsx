@@ -57,7 +57,7 @@ class Folders extends Component {
               </h3>
               <div className="profile-folders__info">
                 <p className="profile-folders__sub-info">
-                  {folder.files.length}
+                  {folder.files && folder.files.length}
                   {' '}
                   files
                 </p>

@@ -171,11 +171,12 @@
 
     &__title {
       color: $black;
-      font-size: $medium-font-size;
-      padding: 0 $small-padding;
-      font-weight: 600;
+      font-size: $p-size;
+      margin: $small-margin;
+      font-weight: 500;
       text-align: left;
       overflow: hidden;
+      white-space: nowrap;
     }
     &__tag-list {
       display: flex;
@@ -373,6 +374,12 @@
     }
   }
   .profile-pebl {
+    &__container {
+      padding: $small-padding;
+    }
+    &__title {
+      margin: 0;
+    }
     &__li-heading {
       display: block;
       text-transform: uppercase;
