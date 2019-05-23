@@ -3,7 +3,7 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 const initialState = {
   dashboardView: 'documents',
   trashPages: [],
-  documentView: 'line',
+  documentView: 'block',
   documentSort: 'updatedAt',
   parentFolderId: ''
 };
