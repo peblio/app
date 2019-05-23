@@ -488,7 +488,7 @@ describe('pageService', () => {
 
     it('shall return error is emptying trash fails', async () => {
       response.status = createResponseWithStatusCode(500);
-      updatePageSpy = sandbox.stub(Page, 'update').throws({ message: 'Could not empty trash' });
+      updatePageSpy = sandbox.stub(Page, 'updateMany').throws({ message: 'Could not empty trash' });
 
       await emptyTrash(request, response);
 
@@ -496,8 +496,8 @@ describe('pageService', () => {
       assertSendWasCalledWith({ error: 'Could not empty trash' });
     });
 
-    it('shall return error is emptying trash fails', async () => {
-      updatePageSpy = sandbox.stub(Page, 'update').returns(null);
+    it('shall return success after emptying trash', async () => {
+      updatePageSpy = sandbox.stub(Page, 'updateMany').returns(null);
 
       await emptyTrash(request, response);
 

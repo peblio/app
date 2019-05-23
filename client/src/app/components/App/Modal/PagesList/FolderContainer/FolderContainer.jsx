@@ -108,7 +108,12 @@ const mapStateToProps = (state, ownProps) => ({
     .filter(folder => folder.parent === ownProps.folderId)
     .sort(compareTimestamps),
   childPages: Object.values(state.page.pages.byId)
-    .filter(page => page.folder === ownProps.folderId),
+    .filter((page) => {
+      // this is to make sure that folderId is null, and not undefined
+      const folderId = ownProps.folderId ? ownProps.folderId : null;
+      const pageFolderId = page.folder ? page.folder : null;
+      return (pageFolderId === folderId);
+    }),
   folder: state.page.folders.byId[ownProps.folderId]
 });
 

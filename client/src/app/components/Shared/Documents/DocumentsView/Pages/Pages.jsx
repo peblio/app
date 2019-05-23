@@ -139,8 +139,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  trashPage,
-  duplicatePage
+  duplicatePage,
+  trashPage
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pages);

@@ -62,6 +62,7 @@ class Documents extends React.Component {
       const folderDepth = selectedFolderIds.length;
       folderContainer = (
         <DocumentsView
+          deleteFolder={this.props.deleteFolder}
           documentView={documentView}
           folderId={selectedFolderId}
           folderDepth={folderDepth}

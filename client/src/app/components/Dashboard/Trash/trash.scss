@@ -1,0 +1,21 @@
+@import 'variables';
+@import 'base';
+
+.trash {
+
+  &__container {
+    width: 85%;
+    margin: 0 auto;
+  }
+
+  &__sub-container {
+    display: flex;
+    justify-content: space-between;
+    margin: $small-margin 0;
+  }
+
+  &__button {
+    @extend %peblio-button;
+  }
+
+}

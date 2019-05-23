@@ -8,6 +8,10 @@ import {
   setDocumentSort,
   setDocumentView
 } from '../../../action/dashboard.js';
+import {
+  createFolder,
+  createPage
+} from '../../../action/page.js';
 import PeblioLogo from '../../../images/logo.svg';
 import Block from '../../../images/block.svg';
 import Line from '../../../images/stack.svg';
@@ -28,6 +32,22 @@ class Nav extends React.Component {
         </button>
       </li>
     );
+  }
+
+  createFolder = (e) => {
+    const folderId = this.props.selectedFolderIds[this.props.selectedFolderIds.length - 1];
+    e.stopPropagation();
+    this.props.createFolder('New Folder', folderId);
+    // this.hideNewFolderDropdown();
+  }
+
+  createPage = (e) => {
+    let folderId = null;
+    if (this.props.selectedFolderIds.length > 0) {
+      folderId = this.props.selectedFolderIds[this.props.selectedFolderIds.length - 1];
+    }
+    e.stopPropagation();
+    this.props.createPage('New Page', folderId);
   }
 
   setDocumentSort = (e) => {
@@ -90,21 +110,22 @@ render() {
         <ul className="dashboard-nav__list">
           {this.renderListItem('Documents', 'documents')}
           {this.renderListItem('Account', 'account')}
-          {this.renderListItem('Trash', 'account')}
+          {this.renderListItem('Trash', 'trash')}
           {this.renderListItem('Profile', 'profile')}
         </ul>
-        {this.props.dashboardView === 'documents' && (
+        {(this.props.dashboardView === 'documents' || this.props.dashboardView === 'trash') && (
           <div className="dashboard-nav__list">
             {this.renderDocumentViewList(PeblioLogo, 'block')}
             {this.renderDocumentViewList(PeblioLogo, 'line')}
           </div>
         )}
       </div>
+
       {this.props.dashboardView === 'documents' && (
         <div className="dashboard-nav__lower-container">
           <div className="dashboard-nav__dropdown-container">
             <p className="dashboard-nav__dropdown-label">
-        Arrange By
+            Arrange By
             </p>
             <select
               className="dashboard-nav__dropdown"
@@ -117,6 +138,12 @@ render() {
               <option value="-updatedAt">Updated At</option>
               <option value="title">Title</option>
             </select>
+            <button onClick={this.createFolder}>
+              New Folder
+            </button>
+            <button onClick={this.createPage}>
+              New Page
+            </button>
           </div>
         </div>
       )}
@@ -126,23 +153,30 @@ render() {
 }
 
 Nav.propTypes = {
+  createFolder: PropTypes.func.isRequired,
+  createPage: PropTypes.func.isRequired,
   dashboardView: PropTypes.string.isRequired,
   documentSort: PropTypes.string.isRequired,
   documentView: PropTypes.string.isRequired,
+  location: PropTypes.shape({}).isRequired,
   setDocumentSort: PropTypes.func.isRequired,
   setDashboardView: PropTypes.func.isRequired,
   setDocumentView: PropTypes.func.isRequired,
-  location: PropTypes.shape({}).isRequired,
+  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 function mapStateToProps(state) {
   return {
     dashboardView: state.dashboard.dashboardView,
-    documentView: state.dashboard.documentView
+    documentView: state.dashboard.documentView,
+    parentFolderId: state.dashboard.parentFolderId,
+    selectedFolderIds: state.page.selectedFolderIds
   };
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  createFolder,
+  createPage,
   setDashboardView,
   setDocumentView,
   setDocumentSort

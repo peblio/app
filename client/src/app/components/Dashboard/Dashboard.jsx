@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Account from './Account/Account';
+import Trash from './Trash/Trash';
 import Documents from '../Shared/Documents/Documents';
 import Nav from './Nav/Nav';
 
@@ -54,6 +55,11 @@ class Dashboard extends React.Component {
           setUserBlurb={this.props.setUserBlurb}
         />
       );
+      case 'trash': return (
+        <Trash
+          name={this.props.name}
+        />
+      );
       case 'profile': {
         const url = `${window.location.origin}/profile/${this.props.name}`;
         return (
@@ -87,7 +93,7 @@ class Dashboard extends React.Component {
 Dashboard.propTypes = {
   blurb: PropTypes.string.isRequired,
   clearSelectedFolders: PropTypes.func.isRequired,
-  dashboardView: PropTypes.number.isRequired,
+  dashboardView: PropTypes.string.isRequired,
   deleteFolder: PropTypes.func.isRequired,
   fetchAllPages: PropTypes.func.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,

@@ -4,6 +4,10 @@
   &__container {
     background: $g8;
   }
+  &_documents {
+    width: 100%;
+    display: flex;
+  }
   &__nav-container {
     display: flex;
     flex-direction: row;

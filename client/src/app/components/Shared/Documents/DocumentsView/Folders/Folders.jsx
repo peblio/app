@@ -57,19 +57,21 @@ class Folders extends Component {
               </h3>
               <div className="profile-folders__info">
                 <p className="profile-folders__sub-info">
-                  {folder.files.length}
+                  {folder.files && folder.files.length}
                   {' '}
                   files
                 </p>
-                <div className="profile-folders__sub-info">
-                  <button
-                    className="profile-pebl__icon"
-                    onClick={e => this.deleteFolder(e, folder._id)}
-                    data-test="delete-pebl"
-                  >
-                    <DeleteIcon alt="delete page" />
-                  </button>
-                </div>
+                {this.props.container === 'dashboard' && (
+                  <div className="profile-folders__sub-info">
+                    <button
+                      className="profile-pebl__icon"
+                      onClick={e => this.deleteFolder(e, folder._id)}
+                      data-test="delete-pebl"
+                    >
+                      <DeleteIcon alt="delete page" />
+                    </button>
+                  </div>
+                )}
               </div>
             </li>))}
         </ul>

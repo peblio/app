@@ -43,7 +43,6 @@ const foldersReducer = (state = { ...initialState }, action) => {
     }
 
     case ActionTypes.SET_ALL_PAGES: {
-      console.log(action.folders);
       const normalizedPageData = normalize(action.pages, [pageSchema]);
       const normalizedFolderData = normalize(action.folders, [folderSchema]);
       return Object.assign({}, state, {

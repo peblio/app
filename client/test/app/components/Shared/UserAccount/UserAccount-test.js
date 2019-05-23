@@ -7,7 +7,6 @@ import thunk from 'redux-thunk';
 import UserAccount from '../../../../../src/app/components/Shared/UserAccount/UserAccount.jsx';
 import { fetchCurrentUser } from '../../../../../src/app/action/user.js';
 
-
 const sinon = require('sinon');
 
 const sandbox = sinon.sandbox.create();

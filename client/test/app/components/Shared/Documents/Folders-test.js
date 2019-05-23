@@ -45,7 +45,6 @@ describe('Folders component - Block View ', () => {
 
   it('renders Folders details', () => {
     wrapper = shallow(<Folders store={store} {...props} />);
-    console.log(wrapper.debug());
     expect(wrapper.find('.profile-folders__title').first().text()).to.equal('Title');
     expect(wrapper.find('.profile-folders__line-title').first().text()).to.equal('17/Dec/1995');
     expect(wrapper.find('.profile-folders__sub-info').first().text()).to.equal('0 files');

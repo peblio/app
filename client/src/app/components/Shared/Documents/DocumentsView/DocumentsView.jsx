@@ -87,11 +87,19 @@ const mapStateToProps = (state, ownProps) => {
   if (folder && folder.parent) {
     parentFolderShortId = ownProps.folders.byId[folder.parent].shortId;
   }
+  const pagesById = (ownProps.container === 'profile')
+    ? state.profile.pages
+    : state.page.pages;
   return {
     childFolders: Object.values(ownProps.folders.byId)
       .filter(f => f.parent === ownProps.folderId),
-    childPages: Object.values(ownProps.pages.byId)
-      .filter(page => page.folder === ownProps.folderId),
+    childPages: Object.values(pagesById.byId)
+      .filter((page) => {
+        // this is to make sure that folderId is null, and not undefined
+        const folderId = ownProps.folderId ? ownProps.folderId : null;
+        const pageFolderId = page.folder ? page.folder : null;
+        return (pageFolderId === folderId);
+      }),
     parentFolderShortId,
     folder
   };
