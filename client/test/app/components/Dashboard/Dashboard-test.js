@@ -51,13 +51,8 @@ describe('Dashboard with account view', () => {
     sandbox.restore();
   });
 
-  it('renders account', () => {
-    wrapper = shallow(<Dashboard store={store} {...props} />);
-    console.log('****');
-    console.log(wrapper.text());
-    console.log('****');
-    // console.log(wrapper.dive());
-    expect(wrapper.find('dashboard__container')).to.have.lengthOf(1);
-    // expect(wrapper.find(Account)).to.have.lengthOf(1);
-  });
+  // it('renders account', () => {
+  //   wrapper = shallow(<Dashboard store={store} {...props} />);
+  //   // TODO: to be completed
+  // });
 });

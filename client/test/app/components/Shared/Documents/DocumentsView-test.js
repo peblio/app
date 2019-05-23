@@ -31,13 +31,20 @@ const allProps = {
   folderId: '',
   container: 'dashboard'
 };
+
+const allStore = {
+  page: {
+    pages: {
+      allIds: ['1'],
+      byId: { 1: { folder: '' } }
+    },
+  }
+};
 configure({ adapter: new Adapter() });
 
 describe('Shared component DocumentsView ', () => {
   beforeEach(() => {
-    store = mockStore({
-
-    });
+    store = mockStore(allStore);
     props = {
       profileName: 'pico',
       folders: {
@@ -50,9 +57,7 @@ describe('Shared component DocumentsView ', () => {
       },
       selectedFolderIds: [],
       folderId: '',
-      container: 'dashboard',
-      // jumpToFolderByShortId,
-      // clearSelectedFolders
+      container: 'dashboard'
 
     };
   });
@@ -71,9 +76,7 @@ describe('Shared component DocumentsView ', () => {
 
 describe('Shared component DocumentsView ', () => {
   beforeEach(() => {
-    store = mockStore({
-
-    });
+    store = mockStore(allStore);
     allProps.folders.allIds = [];
     allProps.folders.byId = {};
     props = allProps;

@@ -14,8 +14,6 @@ import {
   deletePage
 } from '../../../action/dashboard.js';
 
-import axios from '../../../utils/axios';
-
 import './trash.scss';
 
 class Trash extends React.Component {
@@ -153,6 +151,7 @@ function mapStateToProps(state) {
 
 Trash.propTypes = {
   deletePage: PropTypes.func.isRequired,
+  documentView: PropTypes.func.isRequired,
   emptyTrash: PropTypes.func.isRequired,
   restoreTrashedPage: PropTypes.func.isRequired,
   setTrashPages: PropTypes.func.isRequired,

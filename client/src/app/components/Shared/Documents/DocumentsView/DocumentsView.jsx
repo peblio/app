@@ -87,7 +87,9 @@ const mapStateToProps = (state, ownProps) => {
   if (folder && folder.parent) {
     parentFolderShortId = ownProps.folders.byId[folder.parent].shortId;
   }
-  const pagesById = (ownProps.container == 'profile') ? state.profile.pages : state.page.pages;
+  const pagesById = (ownProps.container === 'profile')
+    ? state.profile.pages
+    : state.page.pages;
   return {
     childFolders: Object.values(ownProps.folders.byId)
       .filter(f => f.parent === ownProps.folderId),
