@@ -42,10 +42,12 @@ class Nav extends React.Component {
   }
 
   createPage = (e) => {
-    const folderId = this.props.selectedFolderIds[this.props.selectedFolderIds.length - 1];
+    let folderId = null;
+    if (this.props.selectedFolderIds.length > 0) {
+      folderId = this.props.selectedFolderIds[this.props.selectedFolderIds.length - 1];
+    }
     e.stopPropagation();
     this.props.createPage('New Page', folderId);
-    // this.hideNewFolderDropdown();
   }
 
   setDocumentSort = (e) => {

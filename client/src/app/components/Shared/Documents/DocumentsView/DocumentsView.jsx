@@ -95,7 +95,8 @@ const mapStateToProps = (state, ownProps) => {
       .filter((page) => {
         // this is to make sure that folderId is null, and not undefined
         const folderId = ownProps.folderId ? ownProps.folderId : null;
-        return (page.folder === folderId);
+        const pageFolderId = page.folder ? page.folder : null;
+        return (pageFolderId === folderId);
       }),
     parentFolderShortId,
     folder

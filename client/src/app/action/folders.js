@@ -24,6 +24,7 @@ export function trashPage(pageId) {
 }
 
 export function createPage(title, folder) {
+  console.log(title, folder);
   return (dispatch) => {
     const id = shortid.generate();
     const data = { id, title };

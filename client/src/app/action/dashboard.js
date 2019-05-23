@@ -44,6 +44,16 @@ export function deletePage(id) {
     });
 }
 
+export function emptyTrash(id) {
+  return dispatch => axios.delete('/pages/trash')
+    .then(() => {
+      dispatch(setTrashPages());
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 
 export function setDocumentView(viewType) {
   return (dispatch) => {

@@ -7,7 +7,12 @@ import moment from 'moment';
 
 import DeleteIcon from '../../../images/trash.svg';
 import RestoreIcon from '../../../images/restore.svg';
-import { setTrashPages, restoreTrashedPage, deletePage } from '../../../action/dashboard.js';
+import {
+  emptyTrash,
+  setTrashPages,
+  restoreTrashedPage,
+  deletePage
+} from '../../../action/dashboard.js';
 
 import axios from '../../../utils/axios';
 
@@ -28,6 +33,10 @@ class Trash extends React.Component {
 
   deletePage = (id) => {
     this.props.deletePage(id);
+  }
+
+  emptyTrash = () => {
+    this.props.emptyTrash();
   }
 
   renderTrashPages=() => {
@@ -109,7 +118,10 @@ class Trash extends React.Component {
       <div className="trash__container">
         <div className="trash__sub-container">
           <h2 className="profile-pebls__sub-heading">files</h2>
-          <button className="trash__button">
+          <button
+            className="trash__button"
+            onClick={this.emptyTrash}
+          >
             Empty trash
           </button>
         </div>
@@ -141,6 +153,7 @@ function mapStateToProps(state) {
 
 Trash.propTypes = {
   deletePage: PropTypes.func.isRequired,
+  emptyTrash: PropTypes.func.isRequired,
   restoreTrashedPage: PropTypes.func.isRequired,
   setTrashPages: PropTypes.func.isRequired,
   trashPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired
@@ -149,6 +162,7 @@ Trash.propTypes = {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   deletePage,
+  emptyTrash,
   setTrashPages,
   restoreTrashedPage
 }, dispatch);

@@ -22,7 +22,6 @@ export async function getPage(req, res) {
   });
 }
 
-
 export async function getPagesWithTag(req, res) {
   const offset = req.query.offset ? parseInt(req.query.offset) : 0;
   const limit = req.query.limit ? parseInt(req.query.limit) : 10;
@@ -107,7 +106,7 @@ export async function emptyTrash(req, res) {
     return res.status(403).send({ error: 'Please log in first' });
   }
   try {
-    await Page.update(
+    await Page.updateMany(
       {
         user: user._id,
         trashedAt: { $exists: true, $ne: null }
