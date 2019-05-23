@@ -469,7 +469,7 @@ describe('pageService', () => {
     });
   });
 
-  describe.only('emptyTrash', () => {
+  describe('emptyTrash', () => {
     beforeEach(() => {
       request = {
         user: loggedInUser
@@ -503,7 +503,6 @@ describe('pageService', () => {
 
       assertAllPagesForUserWasUpdatedWithDeletedAtDetails();
     });
-
   });
 
   describe('updatePage', () => {

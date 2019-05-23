@@ -39,14 +39,14 @@ export function createPage(title, folder) {
   };
 }
 
-export function fetchAllPages(profileName) {
-  // TODO:
-  //  - refactor this route to be something like /api/users/:userName/sketches
-  //  - don't use two different routes for fetching pages for the current user vs. other users
+export function fetchAllPages(profileName, sortType) {
+  const sortTypeUrl = sortType || 'title';
+  const sortOrder = (sortType === 'title') ? 1 : -1;
   return (dispatch, getState) => {
     let url = '/sketches';
     if (profileName) {
-      url = `${url}/${profileName}?folderSortBy=title&fileSortBy=title`;
+      url = `${url}/${profileName}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}&sortOrder=${sortOrder}`;
+      console.log(url);
     } else {
       const { user } = getState();
       if (!user.name) {

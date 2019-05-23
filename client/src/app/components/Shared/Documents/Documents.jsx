@@ -13,7 +13,7 @@ class Documents extends React.Component {
 
   componentWillMount() {
     if (this.props.userName) {
-      this.props.fetchAllPages(this.props.userName)
+      this.props.fetchAllPages(this.props.userName, this.props.documentSort)
         .then(() => {
           if (this.props.folderShortId) {
             this.props.jumpToFolderByShortId(this.props.folderShortId);
@@ -25,8 +25,8 @@ class Documents extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.userName !== this.props.userName) {
-      this.props.fetchAllPages(this.props.userName)
+    if (prevProps.userName !== this.props.userName || prevProps.documentSort !== this.props.documentSort) {
+      this.props.fetchAllPages(this.props.userName, this.props.documentSort)
         .then(() => {
           if (this.props.folderShortId) {
             this.props.jumpToFolderByShortId(this.props.folderShortId);
@@ -41,15 +41,17 @@ class Documents extends React.Component {
   }
 
   render() {
-    const { userName, selectedFolderIds, folder, folders, pages } = this.props;
+    const { userName, selectedFolderIds, folder, folders, pages, documentView } = this.props;
     let folderContainer;
     if (selectedFolderIds.length === 0) {
       folderContainer = (
         <DocumentsView
+          documentView={documentView}
           profileName={userName}
           folder={folder}
           folders={folders}
           pages={pages}
+          deleteFolder={this.props.deleteFolder}
           clearSelectedFolders={this.props.clearSelectedFolders}
           jumpToFolderByShortId={this.props.jumpToFolderByShortId}
           container={this.props.container}
@@ -60,6 +62,7 @@ class Documents extends React.Component {
       const folderDepth = selectedFolderIds.length;
       folderContainer = (
         <DocumentsView
+          documentView={documentView}
           folderId={selectedFolderId}
           folderDepth={folderDepth}
           profileName={userName}
@@ -83,6 +86,9 @@ class Documents extends React.Component {
 Documents.propTypes = {
   clearSelectedFolders: PropTypes.func.isRequired,
   container: PropTypes.string.isRequired,
+  deleteFolder: PropTypes.func.isRequired,
+  documentSort: PropTypes.string.isRequired,
+  documentView: PropTypes.string.isRequired,
   fetchAllPages: PropTypes.func.isRequired,
   folder: PropTypes.shape({}).isRequired,
   folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
@@ -102,7 +108,11 @@ const mapStateToProps = (state, ownProps) => {
   if (folder && folder.parent) {
     parentFolderShortId = ownProps.folders.byId[folder.parent].shortId;
   }
+  const documentSort = state.dashboard.documentSort;
+  const documentView = state.dashboard.documentView;
   return {
+    documentSort,
+    documentView,
     folder,
     folders,
     pages,
