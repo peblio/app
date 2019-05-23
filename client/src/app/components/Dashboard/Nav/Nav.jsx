@@ -90,7 +90,6 @@ renderDocumentViewList = (displaySVG, documentView) => {
 }
 
 render() {
-  console.log(this.props.selectedFolderIds);
   return (
     <div className="dashboard-nav__container">
       <div className="dashboard-nav__upper-container">

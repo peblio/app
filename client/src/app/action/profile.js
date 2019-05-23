@@ -21,7 +21,6 @@ export function fetchProfile(userName) {
       data
     })))
     .catch((e) => {
-      console.log(e);
       if (e.response.status === 404) {
         history.push('/404');
       }

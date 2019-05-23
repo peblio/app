@@ -24,7 +24,6 @@ export function trashPage(pageId) {
 }
 
 export function createPage(title, folder) {
-  console.log(title, folder);
   return (dispatch) => {
     const id = shortid.generate();
     const data = { id, title };
@@ -47,7 +46,6 @@ export function fetchAllPages(profileName, sortType) {
     let url = '/sketches';
     if (profileName) {
       url = `${url}/${profileName}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}&sortOrder=${sortOrder}`;
-      console.log(url);
     } else {
       const { user } = getState();
       if (!user.name) {
