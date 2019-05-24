@@ -69,7 +69,17 @@ export async function savePage(req, res) {
   }
 }
 
+export async function updateClientsAboutPage(req, clients, webSocket) {
+  clients.forEach(client => {
+    client.send(req.params.id);
+  });
+}
+
 export async function deletePage(req, res) {
+  const user = req.user;
+  if (!user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  }
   const { pageId } = req.params;
   try {
     await Page.update(
@@ -136,6 +146,7 @@ export async function trashPage(req, res) {
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }
+  return res.status(403).send({ error: 'You do not have the permissions to delete this page' });
 }
 
 export async function getTrashPages(req, res) {

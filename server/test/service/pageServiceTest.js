@@ -24,7 +24,22 @@ const pageData = {
   layout: 'A perfect layout',
   workspace: 'No workspace',
   tags: ['tag1', 'tag2'],
-  id: '9NL7Svh1D'
+  id: '9NL7Svh1D',
+};
+
+let pageDataWithUser = {
+  heading: 'Some heading',
+  title: 'Some title',
+  editors: 'Some editors',
+  description: 'Some description',
+  editorIndex: ' Some editorIndex',
+  layout: 'A perfect layout',
+  workspace: 'No workspace',
+  tags: ['tag1', 'tag2'],
+  id: '9NL7Svh1D',
+  user: {
+    _id: new ObjectId('506f1f77bcf86cd799439011')
+  }
 };
 const folderId = 'somefolderId';
 const pageId = 'pageId';
@@ -36,6 +51,10 @@ const loggedInUser = {
   _id: 2,
   pages: []
 };
+const pageUpdateUserObjectId = new ObjectId('506f1f77bcf86cd799439011');
+const pageUpdateUser = {
+  _id: pageUpdateUserObjectId
+};
 const newPageId = 3;
 let findSpy;
 let savePageSpy;
@@ -46,7 +65,6 @@ let findOneExecStub;
 let findOnePageExecStub;
 let findOnePageStub;
 let updateUserSpy;
-let updateUserExecStub;
 let updatePageSpy;
 let folderCountStub;
 let folderCountExecStub;
@@ -54,6 +72,22 @@ let buildPageForUpdateFromRequestStub;
 let paginateSpy;
 
 describe('pageService', () => {
+  beforeEach(() => {
+    pageDataWithUser = {
+      heading: 'Some heading',
+      title: 'Some title',
+      editors: 'Some editors',
+      description: 'Some description',
+      editorIndex: ' Some editorIndex',
+      layout: 'A perfect layout',
+      workspace: 'No workspace',
+      tags: ['tag1', 'tag2'],
+      id: '9NL7Svh1D',
+      user: {
+        _id: pageUpdateUserObjectId
+      }
+    };
+  });
   describe('uploadPageSnapshotToS3ServiceStub', () => {
     beforeEach(() => {
       request = {
@@ -354,7 +388,8 @@ describe('pageService', () => {
       request = {
         params: {
           pageId: newPageId
-        }
+        },
+        user: pageUpdateUser
       };
       response = {
         send: spy(),
@@ -368,24 +403,61 @@ describe('pageService', () => {
       sandbox.restore();
     });
 
-    it('shall return error is deleting page fails', async () => {
+    it('shall return error when deleting page not owned by user', async () => {
+      pageDataWithUser.user = {
+        _id: new ObjectId('503f1f77bcf86cd799439011')
+      };
+      response.status = createResponseWithStatusCode(403);
+      updatePageSpy = sandbox.stub(Page, 'update');
+      findOnePageExecStub = sandbox.stub().returns(pageDataWithUser);
+      findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+
+      await deletePage(request, response);
+
+      assert.notCalled(updatePageSpy);
+      assertStubWasCalledOnceWith(findOnePageStub, { _id: newPageId });
+      assertSendWasCalledWith({ error: 'You do not have the permissions to delete this page' });
+    });
+
+    it('shall return error when deleting page', async () => {
+      pageDataWithUser.user = pageUpdateUser;
       response.status = createResponseWithStatusCode(500);
       updatePageSpy = sandbox.stub(Page, 'update').throws({ message: 'Could not delete page' });
+      findOnePageExecStub = sandbox.stub().returns(pageDataWithUser);
+      findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
 
       await deletePage(request, response);
 
       assertPageWasUpdatedWithDeletedAtDetails();
+      assertStubWasCalledOnceWith(findOnePageStub, { _id: newPageId });
       assertSendWasCalledWith({ error: 'Could not delete page' });
     });
 
     it('shall return success after page is deleted', async () => {
+      findOnePageExecStub = sandbox.stub().returns(pageDataWithUser);
+      findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
       response.sendStatus = createResponseWithStatusCode(204);
       updatePageSpy = sandbox.stub(Page, 'update');
 
       await deletePage(request, response);
 
+      assertStubWasCalledOnceWith(findOnePageStub, { _id: newPageId });
       assertPageWasUpdatedWithDeletedAtDetails();
       assert.notCalled(response.send);
+    });
+
+    it('shall return error when no user found', async () => {
+      request.user = null;
+      findOnePageExecStub = sandbox.stub().returns(pageDataWithUser);
+      findOnePageStub = sandbox.stub(Page, 'findOne').returns({ exec: findOnePageExecStub });
+      response.status = createResponseWithStatusCode(403);
+      updatePageSpy = sandbox.stub(Page, 'update');
+
+      await deletePage(request, response);
+
+      assert.notCalled(findOnePageStub);
+      assert.notCalled(updatePageSpy);
+      assertSendWasCalledWith({ error: 'Please log in first' });
     });
   });
 

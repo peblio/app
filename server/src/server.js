@@ -10,10 +10,13 @@ import examplesRoutes from './controllers/examplesController';
 import tagRoutes from './controllers/tagController';
 const passport = require('passport');
 const cors = require('cors');
-const app = express();
+let app = express();
+const expressWs = require('express-ws')(app);
+app = expressWs.app;
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const currentUserRoutes = require('./controllers/currentUserController');
+const webSocketRoutes = require('./routes/webSocketRoutes.js')(expressWs);
 const pageRoutes = require('./routes/pageRoutes.js');
 const logRoutes = require('./routes/logRoutes.js');
 const authRoutes = require('./controllers/authController.js');
@@ -59,6 +62,7 @@ router.use('/logs', logRoutes);
 router.use('/folders', folderRoutes);
 router.use('/examples', examplesRoutes);
 router.use('/tags', tagRoutes);
+router.use('/live', webSocketRoutes);
 router.use('/', apiRoutes);
 app.use('/api', router);
 
@@ -85,4 +89,9 @@ mongoose.connection.on('error', () => {
 mongoose.connection.on('open', () => {
   console.log('MongoDB Connection success.');
   startServer();
+});
+
+expressWs.getWss().on('connection', function(ws, req) {
+  ws.request = req;
+  ws.uniqueId = req.headers['sec-websocket-key'];
 });

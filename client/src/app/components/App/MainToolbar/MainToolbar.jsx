@@ -46,8 +46,12 @@ class MainToolbar extends React.Component {
   }
 
   saveSnapshotWithPage = () => {
-    savePageSnapshot(this.props.projectID());
     this.props.savePage();
+    if (this.props.projectID()) {
+      savePageSnapshot(this.props.projectID(), false);
+    } else {
+      console.log('Hola');
+    }
   }
 
   focusOnButton(event) {
