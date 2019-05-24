@@ -27,7 +27,6 @@ class TextEditor extends React.Component {
     this.setBackColor(this.props.backColor);
   }
 
-
   onChange = (state) => {
     this.props.updateTextChange(this.props.id, state);
   }
