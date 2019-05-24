@@ -5,8 +5,8 @@
 .liveRefreshPage-modal {
   &__content{
     margin: auto;
-    width: 50%;
-    padding-top: 5%;
+    width: 60%;
+    padding: 5% 0;
   }
 
   &__div{
@@ -14,8 +14,13 @@
     text-align: left;
   }
 
-  &__title{
-    @extend %modal__title;
+  &__sub-title{
+    @extend %modal__subtitle;
+  }
+  &__footnote {
+    @extend %modal__subtitle;
+    font-weight: 400;
+    font-size: $small-font-size;
   }
 
   &__label{

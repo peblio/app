@@ -5,11 +5,24 @@ require('./liveRefreshPage.scss');
 
 export default class LiveRefreshPage extends React.Component {
   getMessage() {
-    return (<div>This page has been updated by the author. Would you like to reload the page to view the changes?</div>);
+    return (
+      <div className="liveRefreshPage-modal__sub-title">
+      This page has been updated by the author. Would you like to reload the page to view the changes?
+      </div>
+    );
   }
 
   getMessageForAuthor() {
-    return (<div>It looks like you made changes to this page in another window. Would you like to refresh this page to view the latest version?</div>);
+    return (
+      <div>
+        <div className="liveRefreshPage-modal__sub-title">
+        It looks like you made changes to this page in another window. Would you like to refresh this page to view the latest version?
+        </div>
+        <div className="liveRefreshPage-modal__footnote">
+        If you don’t reload, any changes made to this page will override all other versions.
+        </div>
+      </div>
+    );
   }
 
   doLiveRefresh = () => {
@@ -20,7 +33,7 @@ export default class LiveRefreshPage extends React.Component {
   render() {
     return (
       <div className="liveRefreshPage-modal__content">
-        <h1 className="liveRefreshPage-modal__title">
+        <h1 className="liveRefreshPage-modal__sub-title">
           {!this.props.showMessageForAuthor && this.getMessage()}
           {this.props.showMessageForAuthor && this.getMessageForAuthor()}
         </h1>

@@ -349,7 +349,7 @@ class App extends React.Component {
         </Modal>
 
         <Modal
-          size="large"
+          size="small"
           isOpen={this.props.isLiveRefreshPageModalOpen}
           closeModal={this.props.closeLiveRefreshPageModal}
         >
