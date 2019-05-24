@@ -238,10 +238,6 @@ class App extends React.Component {
   }
 
   handleData = (pageId) => {
-    if (this.props.canEdit) {
-      this.getPage();
-      return;
-    }
     this.props.viewLivePageRefreshModal();
   }
 
@@ -360,6 +356,7 @@ class App extends React.Component {
           <LiveRefreshPage
             allowLiveRefresh={this.getPage}
             closeLiveRefreshPageModal={this.props.closeLiveRefreshPageModal}
+            showMessageForAuthor={this.props.canEdit}
           />
         </Modal>
 
