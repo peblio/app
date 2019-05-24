@@ -8,7 +8,8 @@ import { namespaceActionCreators } from '../utils/namespace-redux';
 import * as folderActions from './folders';
 import { viewForkPrompt } from './mainToolbar.js';
 
-export function setUnsavedChanges(value) {
+export function setUnsavedChanges(value, type) {
+  console.log('i got called here ', value, ' ', type);
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_UNSAVED_CHANGES,

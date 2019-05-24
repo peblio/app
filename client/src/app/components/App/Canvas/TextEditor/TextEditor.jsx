@@ -27,6 +27,7 @@ class TextEditor extends React.Component {
     this.setBackColor(this.props.backColor);
   }
 
+
   onChange = (state) => {
     this.props.updateTextChange(this.props.id, state);
   }
@@ -42,7 +43,6 @@ class TextEditor extends React.Component {
   setBackColor = (color) => {
     const colorStyle = `background: ${color}`;
     this.textEditor.getElementsByClassName('DraftEditor-editorContainer')[0].setAttribute('style', colorStyle);
-    this.updateTextBackColor(color);
   }
 
   toggleCollapse = () => {
@@ -50,6 +50,8 @@ class TextEditor extends React.Component {
   }
 
   updateTextBackColor = (color) => {
+    const colorStyle = `background: ${color}`;
+    this.textEditor.getElementsByClassName('DraftEditor-editorContainer')[0].setAttribute('style', colorStyle);
     this.props.updateTextBackColor(this.props.id, color);
   }
 
@@ -102,7 +104,7 @@ class TextEditor extends React.Component {
                 <BackColor
                   id={this.props.id}
                   editor={this.textEditor}
-                  setBackColor={this.setBackColor}
+                  setBackColor={this.updateTextBackColor}
                   backColor={this.props.backColor}
                   expanded={this.state.expanded}
                   toggleCollapse={this.toggleCollapse}

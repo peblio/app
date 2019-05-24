@@ -15,7 +15,7 @@ export function setCurrentWidget(id) {
 
 export function removeEditor(id) {
   return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.REMOVE_EDITOR,'));
     dispatch({
       type: ActionTypes.REMOVE_EDITOR,
       id
@@ -27,7 +27,7 @@ export function duplicateEditor(id) {
   return (dispatch, getState) => {
     const { editorsReducer } = getState();
     const duplicateEditorId = `editor-${editorsReducer.editorIndex}`;
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.DUPLICATE_EDITOR,'));
     dispatch({
       type: ActionTypes.DUPLICATE_EDITOR,
       originalEditorId: id,
@@ -62,7 +62,7 @@ export function addCodeEditor(mode) {
     const { editorsReducer } = getState();
     const currentId = editorsReducer.currentWidget;
     const newEditorId = `editor-${editorsReducer.editorIndex}`;
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.ADD_CODE_EDITOR,'));
     dispatch({
       type: ActionTypes.ADD_CODE_EDITOR,
       mode
@@ -133,7 +133,7 @@ export function clearConsoleOutput(id) {
 export function updateFile(id, index, content) {
   return (dispatch) => {
     dispatch(viewForkPrompt());
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.UPDATE_FILE,'));
     dispatch({
       type: ActionTypes.UPDATE_FILE,
       id,
@@ -155,7 +155,7 @@ export function setCurrentFile(id, index) {
 
 export function setInnerWidth(id, value) {
   return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.SET_INNER_WIDTH,'));
     dispatch({
       type: ActionTypes.SET_INNER_WIDTH,
       id,
@@ -180,7 +180,7 @@ export function addTextEditor() {
     const { editorsReducer } = getState();
     const currentId = editorsReducer.currentWidget;
     const newEditorId = `editor-${editorsReducer.editorIndex}`;
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.ADD_TEXT_EDITOR'));
     dispatch({
       type: ActionTypes.ADD_TEXT_EDITOR
     });
@@ -194,7 +194,7 @@ export function addTextEditor() {
 
 export function updateTextChange(id, state) {
   return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.UPDATE_TEXT_CHANGE,'));
     dispatch({
       type: ActionTypes.UPDATE_TEXT_CHANGE,
       id,
@@ -205,7 +205,7 @@ export function updateTextChange(id, state) {
 
 export function updateTextBackColor(id, color) {
   return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.UPDATE_TEXT_BACK_COLOR,'));
     dispatch({
       type: ActionTypes.UPDATE_TEXT_BACK_COLOR,
       id,
@@ -216,7 +216,7 @@ export function updateTextBackColor(id, color) {
 
 export function setEditorView(id, value) {
   return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.SET_EDITOR_VIEW,'));
     dispatch({
       type: ActionTypes.SET_EDITOR_VIEW,
       id,
@@ -231,7 +231,7 @@ export function addQuestionEditor() {
     const { editorsReducer } = getState();
     const currentId = editorsReducer.currentWidget;
     const newEditorId = `editor-${editorsReducer.editorIndex}`;
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.ADD_QUESTION_EDITOR'));
     dispatch({
       type: ActionTypes.ADD_QUESTION_EDITOR
     });
@@ -245,7 +245,7 @@ export function addQuestionEditor() {
 
 export function setQuestionInnerHeight(id, value) {
   return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.SET_QUESTION_INNER_HEIGHT,'));
     dispatch({
       type: ActionTypes.SET_QUESTION_INNER_HEIGHT,
       id,
@@ -255,7 +255,7 @@ export function setQuestionInnerHeight(id, value) {
 }
 export function updateQuestionChange(id, text) {
   return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.UPDATE_QUESTION_CHANGE,'));
     dispatch({
       type: ActionTypes.UPDATE_QUESTION_CHANGE,
       id,
@@ -267,7 +267,7 @@ export function updateQuestionChange(id, text) {
 export function updateAnswerChange(id, text) {
   return (dispatch) => {
     dispatch(viewForkPrompt());
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.UPDATE_ANSWER_CHANGE,'));
     dispatch({
       type: ActionTypes.UPDATE_ANSWER_CHANGE,
       id,
@@ -282,7 +282,7 @@ export function addIframe() {
     const { editorsReducer } = getState();
     const currentId = editorsReducer.currentWidget;
     const newEditorId = `editor-${editorsReducer.editorIndex}`;
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.ADD_IFRAME'));
     dispatch({
       type: ActionTypes.ADD_IFRAME
     });
@@ -296,7 +296,7 @@ export function addIframe() {
 
 export function setIframeURL(id, url) {
   return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.SET_IFRAME_URL,'));
     dispatch({
       type: ActionTypes.SET_IFRAME_URL,
       id,
@@ -311,7 +311,7 @@ export function addVideo() {
     const { editorsReducer } = getState();
     const currentId = editorsReducer.currentWidget;
     const newEditorId = `editor-${editorsReducer.editorIndex}`;
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.ADD_VIDEO'));
     dispatch({
       type: ActionTypes.ADD_VIDEO
     });
@@ -325,7 +325,7 @@ export function addVideo() {
 
 export function setVideoURL(id, url) {
   return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.SET_VIDEO_URL,'));
     dispatch({
       type: ActionTypes.SET_VIDEO_URL,
       id,
@@ -340,7 +340,7 @@ export function addImage() {
     const { editorsReducer } = getState();
     const currentId = editorsReducer.currentWidget;
     const newEditorId = `editor-${editorsReducer.editorIndex}`;
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.ADD_IMAGE'));
     dispatch({
       type: ActionTypes.ADD_IMAGE
     });
@@ -354,7 +354,7 @@ export function addImage() {
 
 export function setImageURL(id, url) {
   return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.SET_IMAGE_URL,'));
     dispatch({
       type: ActionTypes.SET_IMAGE_URL,
       id,
@@ -365,7 +365,7 @@ export function setImageURL(id, url) {
 
 export function setImageCrop(id, crop) {
   return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.SET_IMAGE_CROP,'));
     dispatch({
       type: ActionTypes.SET_IMAGE_CROP,
       id,
@@ -376,7 +376,7 @@ export function setImageCrop(id, crop) {
 
 export function resetImageCrop(id) {
   return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
+    dispatch(setUnsavedChanges(true, 'type: ActionTypes.RESET_IMAGE_CROP,'));
     dispatch({
       type: ActionTypes.RESET_IMAGE_CROP,
       id
