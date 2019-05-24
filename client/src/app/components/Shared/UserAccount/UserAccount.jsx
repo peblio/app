@@ -99,36 +99,51 @@ class UserAccount extends React.Component {
                     </p>
                   </li>
                   {(this.props.userType === 'student') || (
-                    <li className="user-account__list-item">
-                      {this.props.container === 'app'
-                        ? (
-                          <a
-                            className="user-account__link"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href={`/profile/${this.props.name}`}
-                            onMouseDown={(e) => { e.preventDefault(); }}
-                            onKeyDown={(e) => { e.preventDefault(); }}
-                            data-test="user-account__profile-link"
-                          >
+                    <div>
+                      <li className="user-account__list-item">
+                        <a
+                          className="user-account__link"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="/dashboard"
+                          onMouseDown={(e) => { e.preventDefault(); }}
+                          onKeyDown={(e) => { e.preventDefault(); }}
+                          data-test="user-account__profile-link"
+                        >
+                          Dashboard
+                        </a>
+                      </li>
+                      <li className="user-account__list-item">
+                        {this.props.container === 'app'
+                          ? (
+                            <a
+                              className="user-account__link"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              href={`/profile/${this.props.name}`}
+                              onMouseDown={(e) => { e.preventDefault(); }}
+                              onKeyDown={(e) => { e.preventDefault(); }}
+                              data-test="user-account__profile-link"
+                            >
                           Profile
-                          </a>
-                        )
-                        : (
-                          <a
-                            className="user-account__link"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href='/'
-                            onMouseDown={(e) => { e.preventDefault(); }}
-                            onKeyDown={(e) => { e.preventDefault(); }}
-                            data-test="user-account__profile-link"
-                          >
+                            </a>
+                          )
+                          : (
+                            <a
+                              className="user-account__link"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              href='/'
+                              onMouseDown={(e) => { e.preventDefault(); }}
+                              onKeyDown={(e) => { e.preventDefault(); }}
+                              data-test="user-account__profile-link"
+                            >
                           Workspace
-                          </a>
-                        )
-                      }
-                    </li>
+                            </a>
+                          )
+                        }
+                      </li>
+                    </div>
                   )}
                   <li className="user-account__list-item">
                     <button
