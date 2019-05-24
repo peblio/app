@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import VisibilitySensor from 'react-visibility-sensor';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import EditorContainer from './EditorContainer/EditorContainer.jsx';
 import Heading from './Heading/Heading.jsx';
 import Tags from './Tags/Tags.jsx';
@@ -48,6 +47,7 @@ class Canvas extends React.Component {
       document.getElementById(id).focus({ preventScroll: false });
     }
   }
+
 
   componentWillUnmount() {
     if (this.timeout) {
@@ -316,8 +316,6 @@ class Canvas extends React.Component {
         }
       }
     });
-
-
     return (
       <section
         id="content-canvas"

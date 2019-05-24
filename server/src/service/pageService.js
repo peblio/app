@@ -9,17 +9,17 @@ const bucket = process.env.S3_BUCKET;
 import { buildPageForUpdateFromRequest } from '../models/creator/pageCreator';
 
 export async function getPage(req, res) {
- return Page.find({
-   id: req.params.pageId
- }, (err, data) => {
-   if (err) {
-     return res.status(500).send(err);
-   }
-   if(!data || !data.length){
-     return res.status(404).send();
-   }
-   return res.status(200).send(data);
- });
+  return Page.find({
+    id: req.params.pageId
+  }, (err, data) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    if (!data || !data.length) {
+      return res.status(404).send();
+    }
+    return res.status(200).send(data);
+  });
 }
 
 
@@ -68,6 +68,12 @@ export async function savePage(req, res) {
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }
+}
+
+export async function updateClientsAboutPage(req, clients, webSocket) {
+  clients.forEach(client => {
+    client.send(req.params.id);
+  });
 }
 
 export async function deletePage(req, res) {
@@ -147,7 +153,7 @@ export async function movePage(req, res) {
   const { folderId } = req.body;
 
   try {
-    const page = await Page.findOne({ _id: pageId}).exec();
+    const page = await Page.findOne({ _id: pageId }).exec();
     if (!page) {
       return res.status(404).send({ error: `Page with id ${pageId} not found` });
     }
@@ -175,7 +181,7 @@ export async function movePage(req, res) {
 function findPageAndUpdate(req, res, user, pageWithUpdatedData) {
   return Page.findOne({ id: req.body.id }, (pageFindError, retrievedPage) => {
     if (pageFindError || !retrievedPage || !retrievedPage.user) {
-      return res.status(500).send({ error: 'Could not retrieve page!'});
+      return res.status(500).send({ error: 'Could not retrieve page!' });
     }
     if (retrievedPage.user.toString() !== user._id.toString()) {
       return res.status(403).send({ error: 'Missing permission to update page' });

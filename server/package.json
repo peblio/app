@@ -33,6 +33,7 @@
     "cors": "^2.8.4",
     "express": "^4.15.3",
     "express-session": "^1.15.6",
+    "express-ws": "^4.0.0",
     "google-auth-library": "^1.6.1",
     "mock-aws-sinon": "^1.3.2",
     "mongodb": "^2.2.33",

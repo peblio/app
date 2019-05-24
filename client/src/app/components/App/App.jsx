@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import initHelpHero from 'helphero';
 
+import Websocket from 'react-websocket';
+import WEBSOCKET_HOST from '../../utils/webSockets';
 import * as pageDefaults from '../../constants/pageConstants';
 
 import AddDescription from './Modal/AddDescription/AddDescription.jsx';
@@ -18,6 +20,7 @@ import SignUp from './Modal/SignUp/SignUp.jsx';
 import PagesList from './Modal/PagesList/PagesList.jsx';
 import PasswordReset from './Modal/PasswordReset/PasswordReset.jsx';
 import Welcome from './Modal/Welcome/Welcome.jsx';
+import LiveRefreshPage from './Modal/LiveRefreshPage/LiveRefreshPage.jsx';
 
 import Canvas from './Canvas/Canvas.jsx';
 import MainToolbar from './MainToolbar/MainToolbar.jsx';
@@ -37,6 +40,9 @@ import { saveLog } from '../../utils/log';
 import history from '../../utils/history';
 
 require('./app.scss');
+
+let refWebSocket;
+let hasSocketBeenConnected = false;
 
 class App extends React.Component {
   componentWillMount() {
@@ -59,6 +65,7 @@ class App extends React.Component {
       window.location.reload(true);
     }
   }
+
 
   onKeyPressed(e) {
     if (e.metaKey || e.ctrlKey) {
@@ -91,21 +98,6 @@ class App extends React.Component {
     }
   }
 
-  showForkPromptPreference=() => {
-    const getForkPromptPreference = localStorage.getItem(process.env.LOCALSTORAGE_FORK_PROMPT);
-    return !(getForkPromptPreference === 'suppress');
-  }
-
-  projectID = () => {
-    const location = this.props.location.pathname;
-    const projectID = location.match(/\/pebl\/([\w-].*)/);
-    if (projectID) {
-      this.props.setPageId(projectID[1]);
-      return projectID[1];
-    }
-    this.props.setPageId('');
-    return null;
-  }
 
   resetPage = () => {
     const location = this.props.location.pathname;
@@ -125,39 +117,7 @@ class App extends React.Component {
     } else if (this.resetPage()) {
       this.props.viewResetModal();
     } else if (this.projectID()) {
-      this.props.setEditAccess(false);
-      const projectID = this.projectID();
-      axios.get(`/pages/${projectID}`)
-        .then((res) => {
-          this.props.loadPage(
-            res.data[0].id,
-            res.data[0].parentId,
-            res.data[0].title,
-            res.data[0].heading,
-            res.data[0].description,
-            res.data[0].layout,
-            res.data[0].tags,
-            res.data[0].isPublished
-          );
-          this.props.loadEditors(
-            res.data[0].editors,
-            res.data[0].editorIndex
-          );
-          if (Object.keys(res.data[0].workspace).length > 0) {
-            this.props.loadWorkspace(res.data[0].workspace);
-          }
-          this.props.setPreviewMode(true);
-          this.loadNavigation();
-          axios.get(`/authenticate/${projectID}`)
-            .then((res1) => {
-              this.props.setEditAccess(res1.data);
-            });
-        })
-        .catch((err) => {
-          if (err.response.status === 404) {
-            history.push('/404');
-          }
-        });
+      this.getPage();
     }
     this.props.fetchCurrentUser()
       .then(() => {
@@ -231,6 +191,7 @@ class App extends React.Component {
           user: this.props.name
         };
         saveLog(log);
+        this.sendMessage('SendingUpdate');
       } else {
         // this is for remix and save
         this.props.submitPage(
@@ -262,6 +223,11 @@ class App extends React.Component {
     }
   }
 
+  showForkPromptPreference = () => {
+    const getForkPromptPreference = localStorage.getItem(process.env.LOCALSTORAGE_FORK_PROMPT);
+    return !(getForkPromptPreference === 'suppress');
+  }
+
   loadNavigation = () => {
     this.props.createNavigationContent(this.props.layout);
   }
@@ -271,8 +237,63 @@ class App extends React.Component {
     this.props.closeSignUpModal();
   }
 
+  handleData = (pageId) => {
+    this.props.viewLivePageRefreshModal();
+  }
+
+  handleOpen = () => {
+    hasSocketBeenConnected = true;
+  }
+
+  handleClose = () => {
+    hasSocketBeenConnected = false;
+  }
+
+  sendMessage = (message) => {
+    if (this.props.id && hasSocketBeenConnected) {
+      console.log('Sending message');
+      this.refWebSocket.sendMessage(message);
+    }
+  }
+
+  getPage = () => {
+    this.props.setEditAccess(false);
+    const projectID = this.projectID();
+    axios.get(`/pages/${projectID}`)
+      .then((res) => {
+        this.props.loadPage(res.data[0].id, res.data[0].parentId, res.data[0].title, res.data[0].heading,
+          res.data[0].description, res.data[0].layout, res.data[0].tags, res.data[0].isPublished);
+        this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
+        if (Object.keys(res.data[0].workspace).length > 0) {
+          this.props.loadWorkspace(res.data[0].workspace);
+        }
+        this.props.setPreviewMode(true);
+        this.loadNavigation();
+        axios.get(`/authenticate/${projectID}`)
+          .then((res1) => {
+            this.props.setEditAccess(res1.data);
+          });
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          history.push('/404');
+        }
+      });
+  }
+
+  projectID = () => {
+    const location = this.props.location.pathname;
+    const projectID = location.match(/\/pebl\/([\w-].*)/);
+    if (projectID) {
+      this.props.setPageId(projectID[1]);
+      return projectID[1];
+    }
+    this.props.setPageId('');
+    return null;
+  }
 
   render() {
+    const webSocketUrl = `${WEBSOCKET_HOST}/api/live/page/${this.props.id}`;
     return (
       <div
         role="presentation"
@@ -280,6 +301,19 @@ class App extends React.Component {
         onKeyDown={e => this.onKeyPressed(e)} // eslint-disable-line
         className="app__container"
       >
+        {this.props.id && (
+          <Websocket
+            url={webSocketUrl}
+            onMessage={this.handleData}
+            onOpen={this.handleOpen}
+            onClose={this.handleClose}
+            reconnect
+            debug
+            ref={(socket) => {
+              this.refWebSocket = socket;
+            }}
+          />
+        )}
         <nav className="main-nav">
           <MainToolbar
             projectID={this.projectID}
@@ -311,6 +345,18 @@ class App extends React.Component {
         >
           <Login
             authLoadedPage={this.authLoadedPage}
+          />
+        </Modal>
+
+        <Modal
+          size="small"
+          isOpen={this.props.isLiveRefreshPageModalOpen}
+          closeModal={this.props.closeLiveRefreshPageModal}
+        >
+          <LiveRefreshPage
+            allowLiveRefresh={this.getPage}
+            closeLiveRefreshPageModal={this.props.closeLiveRefreshPageModal}
+            showMessageForAuthor={this.props.canEdit}
           />
         </Modal>
 
@@ -457,6 +503,8 @@ App.propTypes = {
   closePagesModal: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   closeLoginModal: PropTypes.func.isRequired,
+  viewLivePageRefreshModal: PropTypes.func.isRequired,
+  closeLiveRefreshPageModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
   clearSignupSelectedValues: PropTypes.func.isRequired,
   isShareModalOpen: PropTypes.bool.isRequired,
@@ -471,6 +519,7 @@ App.propTypes = {
   viewWelcomeModal: PropTypes.func.isRequired,
   closeWelcomeModal: PropTypes.func.isRequired,
   isForkPromptOpen: PropTypes.bool.isRequired,
+  isLiveRefreshPageModalOpen: PropTypes.bool.isRequired,
   closeForkPrompt: PropTypes.func.isRequired,
   closeAddDescriptionModal: PropTypes.func.isRequired,
 
@@ -500,6 +549,7 @@ function mapStateToProps(state) {
     tags: state.page.tags,
     description: state.page.description,
     isPeblPublished: state.page.isPublished,
+    isLiveRefreshPageModalOpen: state.page.isLiveRefreshPageModalOpen,
 
     canEdit: state.user.canEdit,
     name: state.user.name,
@@ -521,7 +571,6 @@ function mapStateToProps(state) {
     isResetModalOpen: state.mainToolbar.isResetModalOpen,
     isConfirmUserModalOpen: state.mainToolbar.isConfirmUserModalOpen,
     isForkPromptOpen: state.mainToolbar.isForkPromptOpen,
-
     navigationContent: state.navigation.navigationContent
   };
 }

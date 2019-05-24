@@ -29,7 +29,8 @@ const initialState = {
   parentPageAuthor: '',
   tags: [],
   description: '',
-  isPublished: false
+  isPublished: false,
+  isLiveRefreshPageModalOpen: false
 };
 
 const page = (state = initialState, action) => {
@@ -68,6 +69,17 @@ const page = (state = initialState, action) => {
       return Object.assign({}, state, {
         id: action.id
       });
+
+    case ActionTypes.VIEW_LIVE_PAGE_REFRESH_MODAL:
+      return Object.assign({}, state, {
+        isLiveRefreshPageModalOpen: true
+      });
+
+    case ActionTypes.CLOSE_LIVE_PAGE_REFRESH_MODAL:
+      return Object.assign({}, state, {
+        isLiveRefreshPageModalOpen: false
+      });
+
 
     case ActionTypes.SET_DB_PAGE:
       return Object.assign({}, state, {
