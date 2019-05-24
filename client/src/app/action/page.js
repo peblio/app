@@ -55,6 +55,15 @@ export function setPageDescription(event) {
 
 export function setPageLayout(value) {
   return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_PAGE_LAYOUT,
+      value
+    });
+  };
+}
+
+export function changePageLayout(value) {
+  return (dispatch) => {
     dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.SET_PAGE_LAYOUT,
