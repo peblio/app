@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import axios from '../../../../utils/axios';
 import { setUserName, setUserType } from '../../../../action/user.js';
 import { closeLoginModal, viewForgotModal } from '../../../../action/mainToolbar.js';
-import GoogleLoginButton from '../../Shared/GoogleLoginButton/GoogleLoginButton.jsx';
+import GoogleLoginButton from '../../Shared/GoogleButton/GoogleLoginButton.jsx';
 import { saveLog } from '../../../../utils/log';
 
 require('./login.scss');

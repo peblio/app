@@ -15,7 +15,8 @@ import CheckSVG from '../../../images/check.svg';
 import PreferencesSVG from '../../../images/preferences.svg';
 
 import { createNavigationContent } from '../../../action/navigation.js';
-import { setPageTitle, togglePreviewMode, autoSaveUnsavedChanges } from '../../../action/page.js';
+import { logoutUser } from '../../../action/user.js';
+import { setPageTitle, togglePreviewMode, autoSaveUnsavedChanges, savePageSnapshot } from '../../../action/page.js';
 import * as mainToolbarActions from '../../../action/mainToolbar.js';
 
 require('./mainToolbar.scss');
@@ -36,6 +37,17 @@ class MainToolbar extends React.Component {
 
   componentWillUnmount() {
     clearTimeout(this.autoSaveTimeout);
+  }
+
+  logout = () => {
+    this.props.logoutUser(this.props.name).then(() => {
+      history.push('/');
+    });
+  }
+
+  saveSnapshotWithPage = () => {
+    savePageSnapshot(this.props.projectID());
+    this.props.savePage();
   }
 
   focusOnButton(event) {
@@ -186,7 +198,7 @@ class MainToolbar extends React.Component {
               </label>
               <button
                 className="main-toolbar__save"
-                onClick={this.props.savePage}
+                onClick={this.saveSnapshotWithPage}
                 data-test="main-toolbar__save-button"
               >
                 {saveButtonText}

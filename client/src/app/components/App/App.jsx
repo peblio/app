@@ -196,8 +196,7 @@ class App extends React.Component {
           this.props.workspace,
           this.props.tags,
           true,
-          !(this.props.userType === 'student') || this.props.isPeblPublished,
-          document.getElementById('content-canvas')
+          !(this.props.userType === 'student') || this.props.isPeblPublished
         );
         const log = {
           message: 'Saving Page',
@@ -219,8 +218,7 @@ class App extends React.Component {
           this.props.layout,
           this.props.workspace,
           this.props.tags,
-          !(this.props.userType === 'student') || this.props.isPeblPublished,
-          document.getElementById('content-canvas')
+          !(this.props.userType === 'student') || this.props.isPeblPublished
         );
         const log = {
           message: `Updating Page with canEdit as ${this.props.canEdit}`,
@@ -245,8 +243,7 @@ class App extends React.Component {
           this.props.workspace,
           this.props.tags,
           true,
-          !(this.props.userType === 'student'),
-          document.getElementById('content-canvas')
+          !(this.props.userType === 'student')
         );
         const log = {
           message: `Remixing Page with id ${this.props.id}`,
@@ -266,6 +263,12 @@ class App extends React.Component {
   loadNavigation = () => {
     this.props.createNavigationContent(this.props.layout);
   }
+
+  clearValuesAndCloseSignUpModal = () => {
+    this.props.clearSignupSelectedValues();
+    this.props.closeSignUpModal();
+  }
+
 
   render() {
     return (
@@ -431,6 +434,9 @@ App.propTypes = {
   viewPagesModal: PropTypes.func.isRequired,
   closePagesModal: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
+  closeLoginModal: PropTypes.func.isRequired,
+  closeSignUpModal: PropTypes.func.isRequired,
+  clearSignupSelectedValues: PropTypes.func.isRequired,
   isShareModalOpen: PropTypes.bool.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeForgotModal: PropTypes.func.isRequired,

@@ -132,6 +132,14 @@ export function setUserBlurb(value) {
   };
 }
 
+export function clearSignupSelectedValues() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLEAR_SIGNUP_VALUES
+    });
+  };
+}
+
 
 export function updateProfileBlurb(value) {
   return dispatch => axios.put('/current_user/profile', {
@@ -149,4 +157,13 @@ export function updateUserProfileImage(value) {
     type: ActionTypes.SET_USER_IMAGE,
     value
   }));
+}
+
+export function setNextScreen(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_NEXT_SCREEN,
+      value
+    });
+  };
 }
