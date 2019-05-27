@@ -55,6 +55,20 @@ const pageUpdateUserObjectId = new ObjectId('506f1f77bcf86cd799439011');
 const pageUpdateUser = {
   _id: pageUpdateUserObjectId
 };
+const aggregate = Page.aggregate()
+  .lookup({
+    from: 'users',
+    localField: 'user',
+    foreignField: '_id',
+    as: 'userDetail'
+  }).unwind('$userDetail')
+  .match(
+    {
+      'userDetail.type': { $ne: 'student' },
+      'tags': tag,
+      '$or': [{ isPublished: true }, { isPublished: null }]
+    }
+  );
 const newPageId = 3;
 let findSpy;
 let savePageSpy;
@@ -190,7 +204,8 @@ describe('pageService', () => {
     });
 
     it('shall retrieve pages for tag and default pagination parameters', () => {
-      paginateSpy = sandbox.stub(Page, 'paginate').yields(null, pageData);
+      paginateSpy = sandbox.stub(Page, 'aggregatePaginate').yields(null, pageData);
+
 
       getPagesWithTag(request, response);
 
@@ -207,7 +222,7 @@ describe('pageService', () => {
           sort: 'heading'
         }
       };
-      paginateSpy = sandbox.stub(Page, 'paginate').yields(null, pageData);
+      paginateSpy = sandbox.stub(Page, 'aggregatePaginate').yields(null, pageData);
 
       getPagesWithTag(request, response);
 
@@ -217,7 +232,7 @@ describe('pageService', () => {
 
     it('shall return error when retrieve page by id fails', () => {
       response.status = createResponseWithStatusCode(500);
-      paginateSpy = sandbox.stub(Page, 'paginate').yields(error, null);
+      paginateSpy = sandbox.stub(Page, 'aggregatePaginate').yields(error, null);
 
       getPagesWithTag(request, response);
 
@@ -721,11 +736,11 @@ function assertUpdateUserWasCalledWithPageId() {
 }
 
 function assertPaginateWasCalledWithTag() {
-  assertStubWasCalledOnceWith(paginateSpy, { $or: [{ isPublished: true }, { isPublished: null }], tags: tag }, { offset: 0, limit: 10, sort: 'title' });
+  assertStubWasCalledOnceWith(paginateSpy, aggregate, { offset: 0, limit: 10, sort: 'title' });
 }
 
 function assertPaginateWasCalledWithTagOffsetLimit(offset, limit, sort) {
-  assertStubWasCalledOnceWith(paginateSpy, { $or: [{ isPublished: true }, { isPublished: null }], tags: tag }, { offset, limit, sort });
+  assertStubWasCalledOnceWith(paginateSpy, aggregate, { $or: [{ isPublished: true }, { isPublished: null }], tags: tag }, { offset, limit, sort });
 }
 
 function assertSendWasCalledWith(msg) {
