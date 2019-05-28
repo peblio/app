@@ -19,6 +19,7 @@
   }
   &__lower-container {
     display: flex;
+    height: 60px;
     flex-direction: row;
     width: 80%;
     border-bottom: solid $small-border $g4;

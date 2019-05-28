@@ -1,5 +1,9 @@
 @import 'variables';
 
+.dashboard__iframe {
+  position: relative;
+  top: -50px;
+}
 .profile {
   &__container {
     background: $g8;

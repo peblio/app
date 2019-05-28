@@ -15,11 +15,17 @@ import {
 import PeblioLogo from '../../../images/logo.svg';
 import Block from '../../../images/block.svg';
 import Line from '../../../images/stack.svg';
-import UserAccount from '../../Shared/UserAccount/UserAccount.jsx';
+import UserAccount from '../UserAccount/UserAccount.jsx';
 
 import './nav.scss';
 
 class Nav extends React.Component {
+  componentWillMount() {
+    if (window.location.pathname.includes('profile')) {
+      this.props.setDashboardView('profile');
+    }
+  }
+
   renderListItem=(displayText, viewName) => {
     const isCurrentDashboardView = this.props.dashboardView === viewName;
     return (
@@ -90,6 +96,7 @@ renderDocumentViewList = (displaySVG, documentView) => {
 }
 
 render() {
+  console.log(this.props.dashboardView);
   return (
     <div className="dashboard-nav__container">
       <div className="dashboard-nav__upper-container">
@@ -106,20 +113,23 @@ render() {
           location={this.props.location}
         />
       </div>
-      <div className="dashboard-nav__lower-container">
-        <ul className="dashboard-nav__list">
-          {this.renderListItem('Documents', 'documents')}
-          {this.renderListItem('Account', 'account')}
-          {this.renderListItem('Trash', 'trash')}
-          {this.renderListItem('Profile', 'profile')}
-        </ul>
-        {(this.props.dashboardView === 'documents' || this.props.dashboardView === 'trash') && (
-          <div className="dashboard-nav__list">
-            {this.renderDocumentViewList(PeblioLogo, 'block')}
-            {this.renderDocumentViewList(PeblioLogo, 'line')}
-          </div>
-        )}
-      </div>
+      {this.props.dashboardView !== 'profile' &&
+      (
+        <div className="dashboard-nav__lower-container">
+          <ul className="dashboard-nav__list">
+            {this.renderListItem('Documents', 'documents')}
+            {this.renderListItem('Account', 'account')}
+            {this.renderListItem('Trash', 'trash')}
+            {this.renderListItem('Profile', 'profile')}
+          </ul>
+          {(this.props.dashboardView === 'documents' || this.props.dashboardView === 'trash') && (
+            <div className="dashboard-nav__list">
+              {this.renderDocumentViewList(PeblioLogo, 'block')}
+              {this.renderDocumentViewList(PeblioLogo, 'line')}
+            </div>
+          )}
+        </div>
+      )}
 
       {this.props.dashboardView === 'documents' && (
         <div className="dashboard-nav__lower-container">

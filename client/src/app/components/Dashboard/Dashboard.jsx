@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import Account from './Account/Account';
 import Trash from './Trash/Trash';
 import Documents from '../Shared/Documents/Documents';
-import Nav from './Nav/Nav';
+import Nav from '../Shared/Nav/Nav';
 
 import {
   deleteFolder,
