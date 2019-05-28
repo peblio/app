@@ -34,13 +34,24 @@ export async function getPagesWithTag(req, res) {
     localField: 'user',
     foreignField: '_id',
     as: 'userDetail'
-  }).unwind('$userDetail')
-  .match(
-    {
-      'userDetail.type': { $ne: 'student'},
-      'tags': req.query.tag, 
-      $or: [{ isPublished: true }, { isPublished: null }]
-    });
+  }).unwind('$userDetail');
+
+  if(req.query.showStudentPages && ( req.query.showStudentPages === true ||  req.query.showStudentPages === 'true')){
+    aggregate
+    .match(
+      {
+        'tags': req.query.tag, 
+        $or: [{ isPublished: true }, { isPublished: null }]
+      });
+  } else {
+    aggregate
+    .match(
+      {
+        'userDetail.type': { $ne: 'student'},
+        'tags': req.query.tag, 
+        $or: [{ isPublished: true }, { isPublished: null }]
+      });
+  }
 
   const options = {
     offset,
