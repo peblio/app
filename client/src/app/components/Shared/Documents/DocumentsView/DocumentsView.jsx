@@ -84,7 +84,11 @@ DocumentsView.propTypes = {
   folder: PropTypes.shape({ parent: PropTypes.string }),
   jumpToFolderByShortId: PropTypes.func.isRequired,
   parentFolderShortId: PropTypes.string,
-  profileName: PropTypes.string.isRequired
+  profileName: PropTypes.string.isRequired,
+  renameFolder: PropTypes.func.isRequired,
+  renamePage: PropTypes.func.isRequired,
+  setShareURL: PropTypes.func.isRequired,
+  viewShareModal: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {

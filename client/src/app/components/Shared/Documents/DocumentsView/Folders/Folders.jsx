@@ -130,7 +130,10 @@ Folders.propTypes = {
   documentView: PropTypes.string.isRequired,
   folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   profileName: PropTypes.string.isRequired,
-  jumpToFolderByShortId: PropTypes.string.isRequired
+  jumpToFolderByShortId: PropTypes.string.isRequired,
+  renameFolder: PropTypes.func.isRequired,
+  setShareURL: PropTypes.func.isRequired,
+  viewShareModal: PropTypes.func.isRequired,
 };
 
 export default Folders;

@@ -69,7 +69,8 @@ class Share extends React.Component {
 }
 
 Share.propTypes = {
-  pageTitle: PropTypes.string.isRequired
+  pageTitle: PropTypes.string.isRequired,
+  shareURL: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({

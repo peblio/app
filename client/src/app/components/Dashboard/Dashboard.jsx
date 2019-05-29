@@ -22,7 +22,6 @@ import {
 import {
   setShareURL,
   viewShareModal,
-  isShareModalOpen,
   closeShareModal
 } from '../../action/mainToolbar';
 
@@ -107,9 +106,7 @@ class Dashboard extends React.Component {
           isOpen={this.props.isShareModalOpen}
           closeModal={this.props.closeShareModal}
         >
-          <ShareModal
-            pageTitle={this.props.pageTitle}
-          />
+          <ShareModal />
         </Modal>
       </div>
     );
@@ -119,6 +116,7 @@ class Dashboard extends React.Component {
 Dashboard.propTypes = {
   blurb: PropTypes.string.isRequired,
   clearSelectedFolders: PropTypes.func.isRequired,
+  closeShareModal: PropTypes.func.isRequired,
   dashboardView: PropTypes.string.isRequired,
   deleteFolder: PropTypes.func.isRequired,
   fetchAllPages: PropTypes.func.isRequired,
@@ -127,6 +125,7 @@ Dashboard.propTypes = {
   folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   jumpToFolderByShortId: PropTypes.func.isRequired,
   image: PropTypes.string.isRequired,
+  isShareModalOpen: PropTypes.bool.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
@@ -137,10 +136,14 @@ Dashboard.propTypes = {
   }).isRequired,
   name: PropTypes.string.isRequired,
   pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  renameFolder: PropTypes.func.isRequired,
+  renamePage: PropTypes.func.isRequired,
   selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setShareURL: PropTypes.func.isRequired,
   setUserBlurb: PropTypes.func.isRequired,
   updateProfileBlurb: PropTypes.func.isRequired,
   updateUserProfileImage: PropTypes.func.isRequired,
+  viewShareModal: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

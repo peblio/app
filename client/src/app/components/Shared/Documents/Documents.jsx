@@ -104,8 +104,12 @@ Documents.propTypes = {
   folderShortId: PropTypes.string,
   jumpToFolderByShortId: PropTypes.func.isRequired,
   pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  renameFolder: PropTypes.func.isRequired,
+  renamePage: PropTypes.func.isRequired,
   selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setShareURL: PropTypes.func.isRequired,
   userName: PropTypes.string.isRequired,
+  viewShareModal: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {

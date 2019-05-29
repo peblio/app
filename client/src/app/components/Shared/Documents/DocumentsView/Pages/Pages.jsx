@@ -174,9 +174,12 @@ class Pages extends Component {
 Pages.propTypes = {
   container: PropTypes.string.isRequired,
   documentView: PropTypes.string.isRequired,
+  duplicatePage: PropTypes.func.isRequired,
   pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   trashPage: PropTypes.func.isRequired,
-  duplicatePage: PropTypes.func.isRequired,
+  renamePage: PropTypes.func.isRequired,
+  setShareURL: PropTypes.func.isRequired,
+  viewShareModal: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -187,7 +190,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   duplicatePage,
-  trashPage
+  trashPage,
+  renamePage
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pages);

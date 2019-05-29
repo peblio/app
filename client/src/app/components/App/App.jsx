@@ -480,7 +480,6 @@ App.propTypes = {
   viewPagesModal: PropTypes.func.isRequired,
   closePagesModal: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
-  closeLoginModal: PropTypes.func.isRequired,
   viewLivePageRefreshModal: PropTypes.func.isRequired,
   closeLiveRefreshPageModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
