@@ -46,15 +46,19 @@ class Documents extends React.Component {
     if (selectedFolderIds.length === 0) {
       folderContainer = (
         <DocumentsView
+          container={this.props.container}
           documentView={documentView}
           profileName={userName}
           folder={folder}
           folders={folders}
           pages={pages}
+          setShareURL={this.props.setShareURL}
           deleteFolder={this.props.deleteFolder}
           clearSelectedFolders={this.props.clearSelectedFolders}
           jumpToFolderByShortId={this.props.jumpToFolderByShortId}
-          container={this.props.container}
+          viewShareModal={this.props.viewShareModal}
+          renameFolder={this.props.renameFolder}
+          renamePage={this.props.renamePage}
         />
       );
     } else {
@@ -62,6 +66,7 @@ class Documents extends React.Component {
       const folderDepth = selectedFolderIds.length;
       folderContainer = (
         <DocumentsView
+          container={this.props.container}
           deleteFolder={this.props.deleteFolder}
           documentView={documentView}
           folderId={selectedFolderId}
@@ -70,9 +75,12 @@ class Documents extends React.Component {
           folder={folder}
           folders={folders}
           pages={pages}
+          setShareURL={this.props.setShareURL}
           clearSelectedFolders={this.props.clearSelectedFolders}
           jumpToFolderByShortId={this.props.jumpToFolderByShortId}
-          container={this.props.container}
+          viewShareModal={this.props.viewShareModal}
+          renameFolder={this.props.renameFolder}
+          renamePage={this.props.renamePage}
         />
       );
     }

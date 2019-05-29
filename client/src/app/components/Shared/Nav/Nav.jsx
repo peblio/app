@@ -113,7 +113,7 @@ render() {
           location={this.props.location}
         />
       </div>
-      {this.props.dashboardView !== 'profile' &&
+      {this.props.container !== 'profile' &&
       (
         <div className="dashboard-nav__lower-container">
           <ul className="dashboard-nav__list">
@@ -163,6 +163,7 @@ render() {
 }
 
 Nav.propTypes = {
+  container: PropTypes.string.isRequired,
   createFolder: PropTypes.func.isRequired,
   createPage: PropTypes.func.isRequired,
   dashboardView: PropTypes.string.isRequired,

@@ -14,5 +14,6 @@ pageRoutes.route('/saveAsGuest').post(pageController.savePageAsGuest);
 //TODO: Create issue for making url's rest compliant
 pageRoutes.route('/update').post(pageController.updatePage);
 pageRoutes.route('/:pageId').delete(pageController.deletePage);
+pageRoutes.route('/:pageId/rename/:pageName').patch(pageController.renamePage);
 pageRoutes.route('/').patch(pageController.uploadPageSnapshotToS3);
 module.exports = pageRoutes;

@@ -23,7 +23,9 @@ class Profile extends React.Component {
   render() {
     return (
       <div>
-        <Nav />
+        <Nav
+          container="profile"
+        />
         <div className="profile__container">
           <div className="profile__user-container">
             <div className="profile__image-container">

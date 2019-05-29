@@ -108,6 +108,17 @@ const page = (state = initialState, action) => {
       };
     }
 
+    case ActionTypes.RENAME_PAGE: {
+      const { pages } = state;
+      pages.byId[action.pageId].title = action.pageName;
+      return {
+        ...state,
+        pages: {
+          ...pages
+        }
+      };
+    }
+
     case ActionTypes.SET_UNSAVED_CHANGES:
       return Object.assign({}, state, {
         unsavedChanges: action.value

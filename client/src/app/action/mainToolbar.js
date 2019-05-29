@@ -75,6 +75,15 @@ export function closeShareModal() {
   };
 }
 
+export function setShareURL(url) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_SHARE_URL,
+      url
+    });
+  };
+}
+
 export function viewExamplesModal() {
   return (dispatch) => {
     dispatch({

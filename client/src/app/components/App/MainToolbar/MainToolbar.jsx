@@ -54,6 +54,11 @@ class MainToolbar extends React.Component {
     }
   }
 
+  sharePebl = () => {
+    this.props.setShareURL(window.location.href);
+    this.props.viewShareModal();
+  }
+
   focusOnButton(event) {
     event.target.focus();
   }
@@ -210,7 +215,7 @@ class MainToolbar extends React.Component {
               <div className="main-toolbar__spacer"></div>
               <button
                 className="main-toolbar__button"
-                onClick={this.props.viewShareModal}
+                onClick={this.sharePebl}
                 data-test="main-toolbar__share-button"
               >
               Share

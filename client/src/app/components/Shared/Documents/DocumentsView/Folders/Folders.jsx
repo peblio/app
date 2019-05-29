@@ -5,9 +5,13 @@ import moment from 'moment';
 
 import history from '../../../../../utils/history';
 import DeleteIcon from '../../../../../images/trash.svg';
+import ShareIcon from '../../../../../images/share.svg';
+import RenameIcon from '../../../../../images/rename.svg';
+
 
 class Folders extends Component {
   redirectToFolder = (e, shortId) => {
+    console.log('in redirect');
     e.stopPropagation();
     this.props.jumpToFolderByShortId(shortId);
     history.push(`/${this.props.container}/${this.props.profileName}/folder/${shortId}`);
@@ -18,6 +22,23 @@ class Folders extends Component {
     if (confirm('Are you sure you want to delete this folder?')) { // eslint-disable-line no-restricted-globals
       this.props.deleteFolder(id);
     }
+  }
+
+  shareFolder = (e, shortId) => {
+    const url = `${window.location.origin}/profile/${this.props.profileName}/folder/${shortId}`;
+    this.props.setShareURL(url);
+    this.props.viewShareModal();
+  }
+
+  renameFolder = (e, id) => {
+    e.stopPropagation();
+    this.props.renameFolder(id, e.target.value);
+  }
+
+  startRenameFolder = (e, key) => {
+    const title = document.getElementById(`folderTitle-${key}`);
+    title.focus();
+    e.stopPropagation();
   }
 
   render() {
@@ -39,7 +60,7 @@ class Folders extends Component {
             # Of files
             </h4>
           </div>
-          {this.props.folders.map(folder => (
+          {this.props.folders.map((folder, key) => (
             <li // eslint-disable-line
               key={folder._id}
               className="profile-folders__list-item"
@@ -48,7 +69,15 @@ class Folders extends Component {
               <h3
                 className="profile-folders__title"
               >
-                {folder.title}
+                <input
+                  className="pages__input"
+                  ref={(input) => { this.folderTitle = input; }}
+                  type="text"
+                  defaultValue={folder.title}
+                  id={`folderTitle-${key}`}
+                  onBlur={e => this.renameFolder(e, folder._id)}
+                  onClick={e => this.startRenameFolder(e, key)}
+                />
               </h3>
               <h3
                 className="profile-folders__line-title"
@@ -69,6 +98,20 @@ class Folders extends Component {
                       data-test="delete-pebl"
                     >
                       <DeleteIcon alt="delete page" />
+                    </button>
+                    <button
+                      className="profile-pebl__icon"
+                      onClick={e => this.shareFolder(e, folder.shortId)}
+                      data-test="share-folder"
+                    >
+                      <ShareIcon alt="share page" />
+                    </button>
+                    <button
+                      className="profile-pebl__icon"
+                      onClick={e => this.startRenameFolder(e, key)}
+                      data-test="share-folder"
+                    >
+                      <RenameIcon alt="rename folder" />
                     </button>
                   </div>
                 )}

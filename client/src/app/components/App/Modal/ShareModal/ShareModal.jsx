@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 
 require('./shareModal.scss');
 
@@ -25,7 +26,7 @@ class Share extends React.Component {
   renderClassroomWidget() {
     gapi.sharetoclassroom.render(this.widget, //eslint-disable-line
       { size: 64,
-        url: window.location.href });
+        url: this.props.shareURL });
   }
 
   render() {
@@ -33,17 +34,16 @@ class Share extends React.Component {
       <section className="share__container">
         <div className="share__option">
           <h2 className="share__text-primary">
-            {' '}
             Share
+            {' '}
             {this.props.pageTitle}
             {' '}
             via Link
-            {' '}
           </h2>
           <input
             className="share__input"
             ref={(element) => { this.input = element; }}
-            value={window.location.href}
+            value={this.props.shareURL}
             data-test="share-modal__input"
             readOnly
           />
@@ -72,4 +72,8 @@ Share.propTypes = {
   pageTitle: PropTypes.string.isRequired
 };
 
-export default Share;
+const mapStateToProps = state => ({
+  shareURL: state.mainToolbar.shareURL
+});
+
+export default connect(mapStateToProps, null)(Share);

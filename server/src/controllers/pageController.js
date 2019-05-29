@@ -51,3 +51,7 @@ export async function movePage(req, res) {
 export async function emptyTrash(req, res) {
     return pageService.emptyTrash(req, res);
 }
+
+export async function renamePage(req, res) {
+    return pageService.renamePage(req, res);
+}

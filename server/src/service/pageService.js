@@ -208,6 +208,23 @@ export function uploadPageSnapshotToS3(req, res) {
   });
 }
 
+export async function renamePage(req, res) {
+  const user = req.user;
+  if (!user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  }
+  const { pageId, pageName } = req.params;
+  try {
+    const renamedPage = await Page.findOne({
+      _id: pageId
+    }).exec();
+    await Page.update({ _id: pageId }, { title: pageName }).exec();
+    return res.sendStatus(204);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
 export async function movePage(req, res) {
   const user = req.user;
   if (!user) {
