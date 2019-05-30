@@ -88,7 +88,7 @@ export function loadPage(id, parentId, title, heading, description, layout, tags
   };
 }
 
-export function duplicatePage(title, heading, description, folder, editors, editorIndex, layout, tags) {
+export function duplicatePage(title, heading, description, folder, editors, editorIndex, layout, tags, snapshotPath) {
   return (dispatch) => {
     const id = shortid.generate();
     const data = {
@@ -99,7 +99,8 @@ export function duplicatePage(title, heading, description, folder, editors, edit
       editors,
       editorIndex,
       layout,
-      tags
+      tags,
+      snapshotPath
     };
     if (folder) {
       data.folder = folder;

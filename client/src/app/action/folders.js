@@ -12,11 +12,11 @@ export function deletePage(pageId) {
         pageId
       });
       const log = {
-        'message': 'Deleting Page',
-        'path': `/pages/${pageId}`,
-        'action': 'Deleting Page',
-        'module': 'ui',
-        'level': 'INFO'
+        message: 'Deleting Page',
+        path: `/pages/${pageId}`,
+        action: 'Deleting Page',
+        module: 'ui',
+        level: 'INFO'
       };
       saveLog(log);
     });
@@ -26,7 +26,7 @@ export function deletePage(pageId) {
 export function createPage(title, folder) {
   return (dispatch) => {
     const id = shortid.generate();
-    const data = { id, title };
+    const data = { id, title, snapshotPath: 'http://placekitten.com/200/300' };
     if (folder) {
       data.folder = folder;
     }
