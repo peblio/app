@@ -1,8 +1,9 @@
 import { assert, spy } from 'sinon';
 import { ObjectId } from 'mongodb';
+import { expect } from 'chai';
 
 import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils.js';
-import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, uploadPageSnapshotToS3ServiceStub } from '../../src/service/pageService';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, getMyPagesWithTag } from '../../src/service/pageService';
 import * as pageCreator from '../../src/models/creator/pageCreator';
 
 const sinon = require('sinon');
@@ -223,6 +224,69 @@ describe('pageService', () => {
 
       assertPaginateWasCalledWithTag();
       assertSendWasCalledWith(error);
+    });
+  });
+
+  describe('getMyPagesWithTag', () => {
+    beforeEach(() => {
+      request = {
+        query: {
+          tag
+        },
+        user: loggedInUser
+      };
+      response = {
+        send: spy(),
+        json: spy(),
+        status: createResponseWithStatusCode(200)
+      };
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall return unauthorized when user not found', () => {
+      request.user = null;
+      response.status = createResponseWithStatusCode(403);
+      findSpy = sandbox.stub(Page, 'find').yields(null, pageData);
+
+      getMyPagesWithTag(request, response);
+
+      assert.notCalled(findSpy);
+      assertSendWasCalledWith({ error: 'Please log in first' });
+    });
+
+    it('shall return error if retrieving my pages matching tags fails', async () => {
+      response.status = createResponseWithStatusCode(500);
+      const execSpy = sandbox.stub().throws({ message: 'Could not connect to database' });
+      const sortSpy = (sortByArgs) => {
+        expect(sortByArgs).to.be.eql({ title: -1 });
+        return { exec: execSpy };
+      };
+      findSpy = sandbox.stub(Page, 'find').returns({ sort: sortSpy, exec: execSpy });
+
+      await getMyPagesWithTag(request, response);
+
+      assertStubWasCalledOnceWith(findSpy, { user: loggedInUser._id, tags: tag });
+      assert.calledOnce(execSpy);
+      assertSendWasCalledWith({ error: 'Could not connect to database' });
+    });
+
+    it('shall return my pages matching tags', async () => {
+      response.status = createResponseWithStatusCode(200);
+      const execSpy = sandbox.stub().returns(pageData);
+      const sortSpy = (sortByArgs) => {
+        expect(sortByArgs).to.be.eql({ title: -1 });
+        return { exec: execSpy };
+      };
+      findSpy = sandbox.stub(Page, 'find').returns({ sort: sortSpy, exec: execSpy });
+
+      await getMyPagesWithTag(request, response);
+
+      assertStubWasCalledOnceWith(findSpy, { user: loggedInUser._id, tags: tag });
+      assert.calledOnce(execSpy);
+      assertSendWasCalledWith(pageData);
     });
   });
 
