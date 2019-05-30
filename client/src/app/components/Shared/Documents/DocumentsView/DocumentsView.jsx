@@ -6,6 +6,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import Folders from './Folders/Folders';
 import Pages from './Pages/Pages';
+import BreadCrumbs from './BreadCrumbs/BreadCrumbs';
 import history from '../../../../utils/history';
 
 class DocumentsView extends Component {
@@ -37,12 +38,21 @@ class DocumentsView extends Component {
         </h1>
 
         {this.props.folderDepth > 0 && (
-          <button
-            className="profile-pebls__back"
-            onClick={this.handleClick}
-          >
+          <div>
+            <BreadCrumbs
+              selectedFolderIds={this.props.selectedFolderIds}
+              folders={this.props.folders}
+              container={this.props.container}
+              profileName={profileName}
+              folderDepth={this.props.folderDepth}
+            />
+            <button
+              className="profile-pebls__back"
+              onClick={this.handleClick}
+            >
            &#9664; Back
-          </button>
+            </button>
+          </div>
         )}
         <h2 className="profile-pebls__sub-heading">folders</h2>
         {childFolders && childFolders.length > 0 && (

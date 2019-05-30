@@ -4,6 +4,7 @@ import moment from 'moment';
 import { DragSource, DropTarget } from 'react-dnd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import classNames from 'classnames';
 
 import history from '../../../../../utils/history';
 import DeleteIcon from '../../../../../images/trash.svg';
@@ -28,7 +29,6 @@ const folderSource = {
 
 const folderTarget = {
   drop(props, monitor) {
-    console.log(props);
     const itemType = monitor.getItemType();
     const item = monitor.getItem();
     if (itemType === ItemTypes.PAGE) {
@@ -99,10 +99,15 @@ class Folder extends Component {
       isSelected,
     } = this.props;
     const key = this.props.keyId;
+    const folderClassName = classNames('profile-folders__list-item', {
+      'profile-folders__list-item--is-selected': isSelected,
+      'profile-folders__list-item--is-dragging': isDragging,
+      'profile-folders__list-item--is-over': isOver
+    });
     return connectDragSource(connectDropTarget(
       <li // eslint-disable-line
         key={folder._id}
-        className="profile-folders__list-item"
+        className={classNames(folderClassName)}
         onClick={e => this.redirectToFolder(e, folder.shortId)}
       >
         <h3

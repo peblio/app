@@ -81,6 +81,7 @@ class Documents extends React.Component {
           viewShareModal={this.props.viewShareModal}
           renameFolder={this.props.renameFolder}
           renamePage={this.props.renamePage}
+          selectedFolderIds={this.props.selectedFolderIds}
         />
       );
     }
