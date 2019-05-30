@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import Folders from './Folders/Folders';
 import Pages from './Pages/Pages';
 import history from '../../../../utils/history';
@@ -115,4 +117,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, null)(DocumentsView);
+const DragDropDocumentsView = DragDropContext(HTML5Backend)(DocumentsView);
+
+export default connect(mapStateToProps, null)(DragDropDocumentsView);
