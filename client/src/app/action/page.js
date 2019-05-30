@@ -132,7 +132,7 @@ function convertEditorsToRaw(editors) {
 export function submitPage(parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished) {
   const id = shortid.generate();
   const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
-  axios.post(axiosURL, {
+  const pageData = {
     parentId,
     id,
     title,
@@ -143,8 +143,10 @@ export function submitPage(parentId, title, heading, description, editors, edito
     layout,
     workspace,
     tags,
-    isPublished
-  }).then(() => {
+    isPublished,
+    snapshotPath: 'http://placekitten.com/200/300'
+  };
+  axios.post(axiosURL, pageData).then(() => {
     savePageSnapshot(id, true);
     if (type === 'fromWP') {
       window.open(`/pebl/${id}`, '_blank');
