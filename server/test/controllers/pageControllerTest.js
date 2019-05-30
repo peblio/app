@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { assert } from 'sinon';
-import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, getTrashPages, trashPage, emptyTrash, restoreFromTrash, uploadPageSnapshotToS3 } from '../../src/controllers/pageController';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, getTrashPages, trashPage, emptyTrash, restoreFromTrash, uploadPageSnapshotToS3, renamePage } from '../../src/controllers/pageController';
 import * as pageService from '../../src/service/pageService';
 
 const sinon = require('sinon');
@@ -20,6 +20,7 @@ let trashPageServiceStub;
 let getTrashPagesServiceStub;
 let restoreFromTrashServiceStub;
 let emptyTrashServiceStub;
+let renamePageServiceStub;
 
 describe('pageController', () => {
   describe('getPage', () => {
@@ -36,6 +37,23 @@ describe('pageController', () => {
       expect(actualReturnValue).to.be.eql(returnValue);
       assert.calledOnce(getPageServiceStub);
       assert.calledWith(getPageServiceStub, request, response);
+    });
+  });
+
+  describe('renamePage', () => {
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall call renamePage from service', async () => {
+      const returnValue = 'renamePageResponse';
+      renamePageServiceStub = sandbox.stub(pageService, 'renamePage').returns(returnValue);
+
+      const actualReturnValue = await renamePage(request, response);
+
+      expect(actualReturnValue).to.be.eql(returnValue);
+      assert.calledOnce(renamePageServiceStub);
+      assert.calledWith(renamePageServiceStub, request, response);
     });
   });
 
