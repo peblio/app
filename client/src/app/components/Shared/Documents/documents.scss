@@ -78,10 +78,23 @@
     }
     &__icon {
       @extend %file-folder__icon;
+
       & svg path {
         fill: $g7;
       }
       &:hover svg path {
+        fill: $g2;
+      }
+      & svg line {
+        stroke: $g7;
+      }
+      &:hover svg line {
+        stroke: $g2;
+      }
+      & svg circle {
+        fill: $g7;
+      }
+      &:hover svg circle {
         fill: $g2;
       }
       & svg g rect {
@@ -162,6 +175,8 @@
       position: relative;
       cursor: pointer;
       border-top: $tab-yellow $small-border-radius*1.5 solid;
+    }
+    &__sub-container {
       &:hover .profile-pebl__overlay{
         display: flex;
         flex-direction: column;
@@ -403,8 +418,31 @@
       width: 75%;
     }
     &__icon {
+      @extend %file-folder__icon;
+
       & svg path {
         fill: $g4;
+      }
+      &:hover svg path {
+        fill: $g2;
+      }
+      & svg line {
+        stroke: $g4;
+      }
+      &:hover svg line {
+        stroke: $g2;
+      }
+      & svg circle {
+        fill: $g4;
+      }
+      &:hover svg circle {
+        fill: $g2;
+      }
+      & svg g rect {
+        fill: $g4;
+      }
+      &:hover svg g rect {
+        fill: $g2;
       }
     }
     &__container {

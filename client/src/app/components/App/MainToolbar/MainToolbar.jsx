@@ -54,6 +54,11 @@ class MainToolbar extends React.Component {
     }
   }
 
+  sharePebl = () => {
+    this.props.setShareURL(window.location.href);
+    this.props.viewShareModal();
+  }
+
   focusOnButton(event) {
     event.target.focus();
   }
@@ -210,7 +215,7 @@ class MainToolbar extends React.Component {
               <div className="main-toolbar__spacer"></div>
               <button
                 className="main-toolbar__button"
-                onClick={this.props.viewShareModal}
+                onClick={this.sharePebl}
                 data-test="main-toolbar__share-button"
               >
               Share
@@ -255,12 +260,14 @@ MainToolbar.propTypes = {
   isHelpDropdownOpen: PropTypes.bool.isRequired,
   isPreferencesPanelOpen: PropTypes.bool.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  logoutUser: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
   projectID: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   savePage: PropTypes.func.isRequired,
+  setShareURL: PropTypes.func.isRequired,
   toggleHelpDropdown: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,

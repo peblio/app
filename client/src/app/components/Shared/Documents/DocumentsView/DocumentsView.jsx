@@ -52,6 +52,9 @@ class DocumentsView extends Component {
             profileName={profileName}
             jumpToFolderByShortId={this.props.jumpToFolderByShortId}
             container={this.props.container}
+            setShareURL={this.props.setShareURL}
+            viewShareModal={this.props.viewShareModal}
+            renameFolder={this.props.renameFolder}
           />
         )}
         <h2 className="profile-pebls__sub-heading">files</h2>
@@ -59,6 +62,9 @@ class DocumentsView extends Component {
           pages={childPages}
           folderId={folderId}
           container={this.props.container}
+          setShareURL={this.props.setShareURL}
+          viewShareModal={this.props.viewShareModal}
+          renamePage={this.props.renamePage}
         />
       </div>
       /* eslint-enable jsx-a11y/no-static-element-interactions */
@@ -78,7 +84,11 @@ DocumentsView.propTypes = {
   folder: PropTypes.shape({ parent: PropTypes.string }),
   jumpToFolderByShortId: PropTypes.func.isRequired,
   parentFolderShortId: PropTypes.string,
-  profileName: PropTypes.string.isRequired
+  profileName: PropTypes.string.isRequired,
+  renameFolder: PropTypes.func.isRequired,
+  renamePage: PropTypes.func.isRequired,
+  setShareURL: PropTypes.func.isRequired,
+  viewShareModal: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {

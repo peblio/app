@@ -81,18 +81,22 @@ export async function deletePage(req, res) {
     return res.status(403).send({ error: 'Please log in first' });
   }
   const { pageId } = req.params;
-  try {
-    await Page.update(
-      { _id: pageId },
-      {
-        deletedAt: Date.now(),
-        trashedAt: null
-      }
+  const pageToBeDeleted = await Page.findOne({ _id: pageId }).exec();
+  if(pageToBeDeleted.user._id.equals(user._id)){
+    try {
+      await Page.update(
+        { _id: pageId },
+        { 
+          deletedAt: Date.now(),
+          trashedAt: null 
+        }
     );
     return res.sendStatus(204);
-  } catch (err) {
-    return res.status(500).send({ error: err.message });
+    } catch (err) {
+      return res.status(500).send({ error: err.message });
+    }
   }
+  return res.status(403).send({ error: 'You do not have the permissions to delete this page' });
 }
 
 export async function restoreFromTrash(req, res) {
@@ -206,6 +210,20 @@ export function uploadPageSnapshotToS3(req, res) {
         });
     });
   });
+}
+
+export async function renamePage(req, res) {
+  const user = req.user;
+  if (!user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  }
+  const { pageId, pageName } = req.params;
+  try {
+    await Page.update({ _id: pageId }, { title: pageName }).exec();
+    return res.sendStatus(204);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
 }
 
 export async function movePage(req, res) {

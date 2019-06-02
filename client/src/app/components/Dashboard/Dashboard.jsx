@@ -6,14 +6,24 @@ import { bindActionCreators } from 'redux';
 import Account from './Account/Account';
 import Trash from './Trash/Trash';
 import Documents from '../Shared/Documents/Documents';
-import Nav from './Nav/Nav';
+import Nav from '../Shared/Nav/Nav';
+import Modal from '../App/Modal/Modal.jsx';
+import ShareModal from '../App/Modal/ShareModal/ShareModal.jsx';
 
 import {
   deleteFolder,
   fetchAllPages,
   jumpToFolderByShortId,
-  clearSelectedFolders
+  clearSelectedFolders,
+  renameFolder,
+  renamePage
 } from '../../action/page';
+
+import {
+  setShareURL,
+  viewShareModal,
+  closeShareModal
+} from '../../action/mainToolbar';
 
 
 import * as userActions from '../../action/user';
@@ -42,6 +52,10 @@ class Dashboard extends React.Component {
             folders={this.props.folders}
             pages={this.props.pages}
             selectedFolderIds={this.props.selectedFolderIds}
+            setShareURL={this.props.setShareURL}
+            viewShareModal={this.props.viewShareModal}
+            renameFolder={this.props.renameFolder}
+            renamePage={this.props.renamePage}
             container="dashboard"
           />
         );
@@ -80,11 +94,20 @@ class Dashboard extends React.Component {
     return (
       <div>
         <div className="dashboard__container">
-          <Nav />
+          <Nav
+            container="dashboard"
+          />
 
           {this.renderDashboardView(this.props.dashboardView)}
 
         </div>
+        <Modal
+          size="small"
+          isOpen={this.props.isShareModalOpen}
+          closeModal={this.props.closeShareModal}
+        >
+          <ShareModal />
+        </Modal>
       </div>
     );
   }
@@ -93,6 +116,7 @@ class Dashboard extends React.Component {
 Dashboard.propTypes = {
   blurb: PropTypes.string.isRequired,
   clearSelectedFolders: PropTypes.func.isRequired,
+  closeShareModal: PropTypes.func.isRequired,
   dashboardView: PropTypes.string.isRequired,
   deleteFolder: PropTypes.func.isRequired,
   fetchAllPages: PropTypes.func.isRequired,
@@ -101,6 +125,7 @@ Dashboard.propTypes = {
   folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   jumpToFolderByShortId: PropTypes.func.isRequired,
   image: PropTypes.string.isRequired,
+  isShareModalOpen: PropTypes.bool.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
@@ -111,15 +136,20 @@ Dashboard.propTypes = {
   }).isRequired,
   name: PropTypes.string.isRequired,
   pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  renameFolder: PropTypes.func.isRequired,
+  renamePage: PropTypes.func.isRequired,
   selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setShareURL: PropTypes.func.isRequired,
   setUserBlurb: PropTypes.func.isRequired,
   updateProfileBlurb: PropTypes.func.isRequired,
   updateUserProfileImage: PropTypes.func.isRequired,
+  viewShareModal: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     image: state.user.image,
+    isShareModalOpen: state.mainToolbar.isShareModalOpen,
     name: state.user.name,
     blurb: state.user.blurb,
     dashboardView: state.dashboard.dashboardView,
@@ -135,6 +165,11 @@ function mapDispatchToProps(dispatch) {
     deleteFolder,
     fetchAllPages,
     jumpToFolderByShortId,
+    setShareURL,
+    viewShareModal,
+    closeShareModal,
+    renameFolder,
+    renamePage,
     ...userActions
   }, dispatch);
 }

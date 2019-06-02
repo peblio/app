@@ -15,7 +15,8 @@ const initialState = {
   isSignUpModalOpen: false,
   isWelcomeModalOpen: false,
   isPreferencesPanelOpen: false,
-  isForkPromptOpen: false
+  isForkPromptOpen: false,
+  shareURL: ''
 };
 
 const mainToolbar = (state = initialState, action) => {
@@ -75,6 +76,11 @@ const mainToolbar = (state = initialState, action) => {
         isShareModalOpen: false
       });
 
+    case ActionTypes.SET_SHARE_URL:
+      return Object.assign({}, state, {
+        shareURL: action.url
+      });
+
     case ActionTypes.VIEW_LOGIN_MODAL:
       return Object.assign({}, state, {
         isLoginModalOpen: true
@@ -85,7 +91,7 @@ const mainToolbar = (state = initialState, action) => {
         isLoginModalOpen: false
       });
 
-    
+
     case ActionTypes.VIEW_SIGN_UP_MODAL:
       return Object.assign({}, state, {
         isSignUpModalOpen: true

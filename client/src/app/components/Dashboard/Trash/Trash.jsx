@@ -30,11 +30,15 @@ class Trash extends React.Component {
   }
 
   deletePage = (id) => {
-    this.props.deletePage(id);
+    if (confirm('Are you sure you want to permanently delete this file?')) { // eslint-disable-line no-restricted-globals
+      this.props.deletePage(id);
+    }
   }
 
   emptyTrash = () => {
-    this.props.emptyTrash();
+    if (confirm('Are you sure you want to empty the trash?')) { // eslint-disable-line no-restricted-globals
+      this.props.emptyTrash();
+    }
   }
 
   renderTrashPages=() => {
