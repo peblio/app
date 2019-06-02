@@ -10,7 +10,9 @@ import {
 const initialState = {
   editors: {},
   editorIndex: 0,
-  currentWidget: ''
+  currentWidget: '',
+  deleteWidgetWarning: false,
+  widgetForDeleteWidgetWarning: ''
 };
 
 let stack = [];
@@ -53,6 +55,14 @@ const editorsReducer = (state = initialState, action) => {
 
     case ActionTypes.SET_CURRENT_WIDGET: {
       return { ...state, currentWidget: action.id };
+    }
+
+    case ActionTypes.CLOSE_DELETE_WIDGET_WARNING: {
+      return { ...state, widgetForDeleteWidgetWarning: action.id, deleteWidgetWarning: false };
+    }
+
+    case ActionTypes.OPEN_DELETE_WIDGET_WARNING: {
+      return { ...state, widgetForDeleteWidgetWarning: action.id, deleteWidgetWarning: true };
     }
 
     case ActionTypes.REMOVE_EDITOR:

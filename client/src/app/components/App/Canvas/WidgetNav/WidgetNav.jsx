@@ -6,8 +6,11 @@ import { bindActionCreators } from 'redux';
 import CloseSVG from '../../../../images/close.svg';
 import CopySVG from '../../../../images/copy.svg';
 import DragSVG from '../../../../images/drag.svg';
+import Modal from '../../Modal/Modal.jsx';
+import DeleteWidgetWarning from '../../Modal/DeleteWidgetWarning/DeleteWidgetWarning.jsx';
 
-import { duplicateEditor, removeEditor } from '../../../../action/editors.js';
+import { duplicateEditor, removeEditor,
+  closeDeleteWidgetWarning, openDeleteWidgetWarning } from '../../../../action/editors.js';
 
 require('./widgetNav.scss');
 
@@ -18,6 +21,14 @@ class WidgetNav extends React.Component {
     this.duplicateEditor = () => {
       this.props.duplicateEditor(this.props.id);
     };
+  }
+
+  showDeleteWidgetWarning = () => {
+    this.props.openDeleteWidgetWarning(this.props.id);
+  }
+
+  closeDeleteWidgetWarning = () => {
+    this.props.closeDeleteWidgetWarning(this.props.id);
   }
 
   render() {
@@ -42,12 +53,22 @@ class WidgetNav extends React.Component {
         <Tooltip content="Delete">
           <button
             className="widget__close"
-            onClick={this.removeEditor.bind(this)}
+            onClick={this.showDeleteWidgetWarning}
             data-test="widget__close"
           >
             <CloseSVG alt="close element" />
           </button>
         </Tooltip>
+        <Modal
+          size="small"
+          isOpen={this.props.showDeleteWidgetWarning}
+          closeModal={this.closeDeleteWidgetWarning}
+        >
+          <DeleteWidgetWarning
+            deleteWidget={this.removeEditor.bind(this)}
+            closeModal={this.closeDeleteWidgetWarning}
+          />
+        </Modal>
       </nav>
     );
   }
@@ -56,12 +77,17 @@ class WidgetNav extends React.Component {
 WidgetNav.propTypes = {
   duplicateEditor: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
+  showDeleteWidgetWarning: PropTypes.bool.isRequired,
   removeEditor: PropTypes.func.isRequired,
+  closeDeleteWidgetWarning: PropTypes.func.isRequired,
+  openDeleteWidgetWarning: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   duplicateEditor,
-  removeEditor
+  removeEditor,
+  closeDeleteWidgetWarning,
+  openDeleteWidgetWarning
 }, dispatch);
 
 export default connect(null, mapDispatchToProps)(WidgetNav);

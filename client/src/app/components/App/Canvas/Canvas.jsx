@@ -388,6 +388,8 @@ class Canvas extends React.Component {
                   <div className={`widget-nav__container${(this.props.currentWidget === id) ? '_highlighted' : ''}`}>
                     <WidgetNav
                       id={id}
+                      showDeleteWidgetWarning={this.props.deleteWidgetWarning &&
+                        this.props.widgetForDeleteWidgetWarning === id}
                     />
                   </div>
                 )}
@@ -416,10 +418,12 @@ Canvas.propTypes = {
   changePageLayout: PropTypes.func.isRequired,
   description: PropTypes.string.isRequired,
   editorIndex: PropTypes.number.isRequired,
+  widgetForDeleteWidgetWarning: PropTypes.string.isRequired,
   editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   isNavigationOpen: PropTypes.bool.isRequired,
   isPeblPublished: PropTypes.bool.isRequired,
+  deleteWidgetWarning: PropTypes.bool.isRequired,
   preview: PropTypes.bool.isRequired,
   resizeTextEditor: PropTypes.func.isRequired,
   rgl: PropTypes.shape({
@@ -442,6 +446,8 @@ function mapStateToProps(state) {
     currentWidget: state.editorsReducer.currentWidget,
     description: state.page.description,
     editorIndex: state.editorsReducer.editorIndex,
+    deleteWidgetWarning: state.editorsReducer.deleteWidgetWarning,
+    widgetForDeleteWidgetWarning: state.editorsReducer.widgetForDeleteWidgetWarning,
     editors: state.editorsReducer.editors,
     isNavigationOpen: state.navigation.isNavigationOpen,
     isPeblPublished: state.page.isPublished,
