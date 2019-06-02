@@ -13,7 +13,7 @@ class Documents extends React.Component {
 
   componentWillMount() {
     if (this.props.userName) {
-      this.props.fetchAllPages(this.props.userName, this.props.documentSort)
+      this.props.fetchAllPages(this.props.userName, this.props.documentSort, this.props.container)
         .then(() => {
           if (this.props.folderShortId) {
             this.props.jumpToFolderByShortId(this.props.folderShortId);
@@ -26,7 +26,7 @@ class Documents extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.userName !== this.props.userName || prevProps.documentSort !== this.props.documentSort) {
-      this.props.fetchAllPages(this.props.userName, this.props.documentSort)
+      this.props.fetchAllPages(this.props.userName, this.props.documentSort, this.props.container)
         .then(() => {
           if (this.props.folderShortId) {
             this.props.jumpToFolderByShortId(this.props.folderShortId);

@@ -39,11 +39,13 @@ export function createPage(title, folder) {
   };
 }
 
-export function fetchAllPages(profileName, sortType) {
+export function fetchAllPages(profileName, sortType, container) {
   const sortTypeUrl = sortType || 'title';
   const sortOrder = (sortType === 'title') ? 1 : -1;
+  // do not send in profile name if container is dashboard
+  profileName = (container === 'dashboard') ? null : profileName;
   return (dispatch, getState) => {
-    let url = '/sketches';
+    let url = `/sketches?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}&sortOrder=${sortOrder}`;
     if (profileName) {
       url = `${url}/${profileName}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}&sortOrder=${sortOrder}`;
     } else {
