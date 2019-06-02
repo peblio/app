@@ -2,7 +2,7 @@ import { assert, spy } from 'sinon';
 import { ObjectId } from 'mongodb';
 
 import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils.js';
-import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, trashPage, getTrashPages, emptyTrash, restoreFromTrash } from '../../src/service/pageService';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, trashPage, getTrashPages, emptyTrash, restoreFromTrash, renamePage } from '../../src/service/pageService';
 import * as pageCreator from '../../src/models/creator/pageCreator';
 
 const sinon = require('sinon');
@@ -66,6 +66,8 @@ let findOnePageExecStub;
 let findOnePageStub;
 let updateUserSpy;
 let updatePageSpy;
+let updatePageExecStub;
+let updatePageStub;
 let folderCountStub;
 let folderCountExecStub;
 let buildPageForUpdateFromRequestStub;
@@ -839,6 +841,66 @@ describe('pageService', () => {
       assertFindOnePageWasCalledWithId();
     });
   });
+
+  describe('renamePage', () => {
+    beforeEach(() => {
+      request = {
+        user: loggedInUser,
+        body: {
+          folderId
+        },
+        params: {
+          pageId: pageData._id,
+          pageName: 'NewName'
+        }
+      };
+      response = {
+        send: spy(),
+        json: spy(),
+        status: createResponseWithStatusCode(200),
+        sendStatus: createResponseWithStatusCode(204)
+      };
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall return error if request not authenticated', async () => {
+      response.status = createResponseWithStatusCode(403);
+      updatePageExecStub = sandbox.stub().returns({});
+      updatePageStub = sandbox.stub(Page, 'update').returns({ exec: updatePageExecStub });
+
+      await renamePage({}, response);
+
+      assert.notCalled(updatePageStub);
+      assertSendWasCalledWith({ error: 'Please log in first' });
+    });
+
+    it('shall update page with new pageName', async () => {
+      response.status = createResponseWithStatusCode(204);
+      updatePageExecStub = sandbox.stub().returns(Promise.resolve());
+      updatePageStub = sandbox.stub(Page, 'update').returns({ exec: updatePageExecStub });
+
+      await renamePage(request, response);
+
+      assertUpdatePageWasCalledWithNewPageTitle(updatePageExecStub);
+      assert.calledOnce(updatePageStub);
+      assert.notCalled(response.send);
+    });
+
+    it('shall return error while renaming page with new pageName', async () => {
+      response.status = createResponseWithStatusCode(500);
+      updatePageExecStub = sandbox.stub().throws({ message: 'Could not update page' });
+      updatePageStub = sandbox.stub(Page, 'update').returns({ exec: updatePageExecStub });
+
+      await renamePage(request, response);
+
+      assertUpdatePageWasCalledWithNewPageTitle(updatePageExecStub);
+      assert.calledOnce(updatePageStub);
+      assertSendWasCalledWith({ error: 'Could not update page' });
+    });
+  });
 });
 
 function assertUpdatePageWasCalledWithLatestPageData() {
@@ -858,6 +920,11 @@ function assertUpdatePageWasCalledWithLatestPageData() {
       user: loggedInUser._id
     },
     sinon.match.any);
+}
+
+function assertUpdatePageWasCalledWithNewPageTitle(stub) {
+  assert.calledOnce(stub);
+  assert.calledWith(updatePageStub, { _id: pageData._id }, { title: 'NewName' });
 }
 
 function assertFindWasCalledWithPageId() {
