@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-import { DropTarget } from 'react-dnd';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import classNames from 'classnames';
 import BreadCrumb from './BreadCrumb';
-import history from '../../../../../utils/history';
 
 class BreadCrumbs extends Component {
   render() {
-    const breadCrumbClass = classNames('profile-breadcrumb');
     const { folders, selectedFolderIds } = this.props;
     const homeFolder = {
       title: 'Home'
@@ -44,14 +37,11 @@ class BreadCrumbs extends Component {
 
 BreadCrumbs.propTypes = {
   container: PropTypes.string.isRequired,
-  deleteFolder: PropTypes.func.isRequired,
   folder: PropTypes.shape({}).isRequired,
-  keyId: PropTypes.number.isRequired,
+  folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  folderDepth: PropTypes.number.isRequired,
   profileName: PropTypes.string.isRequired,
-  jumpToFolderByShortId: PropTypes.string.isRequired,
-  renameFolder: PropTypes.func.isRequired,
-  setShareURL: PropTypes.func.isRequired,
-  viewShareModal: PropTypes.func.isRequired,
+  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default BreadCrumbs;

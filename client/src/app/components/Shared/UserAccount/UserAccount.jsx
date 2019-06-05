@@ -117,7 +117,8 @@ class UserAccount extends React.Component {
                   {this.props.container === 'app' || this.renderListItem('Workspace', '/') }
                   {this.props.container === 'dashboard' || this.renderListItem('Dashboard', '/dashboard') }
                   {(this.props.userType === 'student') ||
-                      this.props.container === 'profile' || this.renderListItem('Profile', `/profile/${this.props.name}`)
+                    this.props.container === 'profile' ||
+                    this.renderListItem('Profile', `/profile/${this.props.name}`)
                   }
                   <li className="user-account__list-item">
                     <button

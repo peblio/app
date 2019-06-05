@@ -76,9 +76,13 @@
   }
 
   &-breadcrumb {
+    background: transparent;
+    border: none;
     color: $g4;
     font-size: $small-font-size;
     &:hover {
+      background: transparent;
+      border: none;
       cursor: pointer;
       color: $g2;
     }

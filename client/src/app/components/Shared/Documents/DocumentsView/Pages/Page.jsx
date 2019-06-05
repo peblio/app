@@ -80,7 +80,7 @@ class Page extends Component {
 
   render() {
     const key = this.props.keyId;
-    const { connectDragSource, isDragging, isSelected, page } = this.props;
+    const { connectDragSource, page } = this.props;
     return connectDragSource(
       <li className="profile-pebl__container" key={page.id}>
         <div className="profile-pebl__sub-container">
@@ -180,6 +180,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 Page.propTypes = {
+  connectDragSource: PropTypes.func.isRequired,
   container: PropTypes.string.isRequired,
   duplicatePage: PropTypes.func.isRequired,
   keyId: PropTypes.number.isRequired,

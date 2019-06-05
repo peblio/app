@@ -189,10 +189,12 @@ Nav.propTypes = {
   documentSort: PropTypes.string.isRequired,
   documentView: PropTypes.string.isRequired,
   location: PropTypes.shape({}).isRequired,
+  name: PropTypes.string.isRequired,
   setDocumentSort: PropTypes.func.isRequired,
   setDashboardView: PropTypes.func.isRequired,
   setDocumentView: PropTypes.func.isRequired,
-  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired
+  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  userType: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {

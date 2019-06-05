@@ -7,7 +7,6 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import Folders from './Folders/Folders';
 import Pages from './Pages/Pages';
 import BreadCrumbs from './BreadCrumbs/BreadCrumbs';
-import history from '../../../../utils/history';
 
 class DocumentsView extends Component {
   static defaultProps = {
@@ -23,10 +22,6 @@ class DocumentsView extends Component {
     return (
       /* eslint-disable jsx-a11y/no-static-element-interactions */
       <div className="profile-pebls__level">
-        <h1 className="profile-pebls__heading">
-          {title}
-        </h1>
-
         {this.props.folderDepth > 0 && (
           <div>
             <BreadCrumbs
@@ -38,6 +33,9 @@ class DocumentsView extends Component {
             />
           </div>
         )}
+        <h1 className="profile-pebls__heading">
+          {title}
+        </h1>
         <h2 className="profile-pebls__sub-heading">folders</h2>
         {childFolders && childFolders.length > 0 && (
           <Folders
@@ -71,18 +69,19 @@ class DocumentsView extends Component {
 DocumentsView.propTypes = {
   childFolders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   childPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  clearSelectedFolders: PropTypes.func.isRequired,
   container: PropTypes.string.isRequired,
   deleteFolder: PropTypes.func.isRequired,
   documentView: PropTypes.string.isRequired,
   folderDepth: PropTypes.number,
   folderId: PropTypes.string,
   folder: PropTypes.shape({ parent: PropTypes.string }),
+  folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   jumpToFolderByShortId: PropTypes.func.isRequired,
-  parentFolderShortId: PropTypes.string,
+  parentFolderShortId: PropTypes.string, //eslint-disable-line
   profileName: PropTypes.string.isRequired,
   renameFolder: PropTypes.func.isRequired,
   renamePage: PropTypes.func.isRequired,
+  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   setShareURL: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
 };

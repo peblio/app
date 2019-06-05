@@ -171,10 +171,15 @@ class Folder extends Component {
 }
 
 Folder.propTypes = {
+  connectDragSource: PropTypes.func.isRequired,
+  connectDropTarget: PropTypes.func.isRequired,
   container: PropTypes.string.isRequired,
   deleteFolder: PropTypes.func.isRequired,
   folder: PropTypes.shape({}).isRequired,
   keyId: PropTypes.number.isRequired,
+  isDragging: PropTypes.bool.isRequired,
+  isOver: PropTypes.bool.isRequired,
+  isSelected: PropTypes.bool.isRequired,
   profileName: PropTypes.string.isRequired,
   jumpToFolderByShortId: PropTypes.string.isRequired,
   renameFolder: PropTypes.func.isRequired,

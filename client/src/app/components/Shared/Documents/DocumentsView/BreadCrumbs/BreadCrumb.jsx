@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import { DropTarget } from 'react-dnd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -60,35 +59,33 @@ class BreadCrumb extends Component {
       connectDropTarget,
       folder,
       isOver,
-      isSelected,
     } = this.props;
     const breadCrumbClass = classNames('profile-breadcrumb', {
       'profile-breadcrumb--is-over': isOver
     });
     return connectDropTarget(
-      <div className="profile-breadcrumb__container">
-        <li
+      <li className="profile-breadcrumb__container">
+        <button
           className={classNames(breadCrumbClass)}
           onClick={e => this.redirectToFolder(e, folder.shortId)}
         >
           {folder.title}
-        </li>
+        </button>
         <i className="profile-breadcrumb__icon fas fa-chevron-right"></i>
-      </div>
+      </li>
     );
   }
 }
 
 BreadCrumb.propTypes = {
+  clearSelectedFolders: PropTypes.func.isRequired,
+  connectDropTarget: PropTypes.func.isRequired,
   container: PropTypes.string.isRequired,
-  deleteFolder: PropTypes.func.isRequired,
   folder: PropTypes.shape({}).isRequired,
-  keyId: PropTypes.number.isRequired,
+  folderDepth: PropTypes.number.isRequired,
+  isOver: PropTypes.bool.isRequired,
   profileName: PropTypes.string.isRequired,
   jumpToFolderByShortId: PropTypes.string.isRequired,
-  renameFolder: PropTypes.func.isRequired,
-  setShareURL: PropTypes.func.isRequired,
-  viewShareModal: PropTypes.func.isRequired,
 };
 
 
