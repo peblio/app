@@ -21,6 +21,10 @@ const ItemTypes = {
 };
 
 const pageSource = {
+  canDrag(props) {
+    const userCanDrag = (props.container === 'dashboard');
+    return userCanDrag;
+  },
   beginDrag(props) {
     return { pageId: props.page._id };
   }

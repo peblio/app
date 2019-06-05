@@ -22,6 +22,10 @@ const ItemTypes = {
 };
 
 const folderSource = {
+  canDrag(props) {
+    const userCanDrag = (props.container === 'dashboard');
+    return userCanDrag;
+  },
   beginDrag(props) {
     return { folderId: props.folder._id };
   }
@@ -121,6 +125,7 @@ class Folder extends Component {
             id={`folderTitle-${key}`}
             onBlur={e => this.renameFolder(e, folder._id)}
             onClick={e => this.startRenameFolder(e, key)}
+            disabled={this.props.container === 'profile'}
           />
         </h3>
         <h3
