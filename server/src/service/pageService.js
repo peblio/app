@@ -43,6 +43,22 @@ export async function getPagesWithTag(req, res) {
   });
 }
 
+export async function getMyPagesWithTag(req, res) {
+  const user = req.user;
+  if (!user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  }
+  const tags = req.query.tag;
+  const sortBy = {};
+  sortBy[req.query.sort ? req.query.sort : 'title'] = -1;
+  try {
+    const data = await Page.find({ user: user._id, tags}).sort(sortBy).exec();
+    return res.status(200).send(data);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
 export async function savePageAsGuest(req, res) {
   try {
     const hydratedUser = await User.findOne({ name: 'peblioguest' }).exec();
