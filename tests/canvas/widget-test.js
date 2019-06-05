@@ -26,7 +26,7 @@ test('confirm and delete a widget', async (t) => {
   await t
     .click(Selector('[data-test=insert-toolbar__add-image]'))
     .expect(imageWidgets.count).eql(1)
-    .click(Selector('[data-test=widget__close]'))
+    .click(Selector('[data-test=widget__delete]'))
     .click(Selector('[data-test=widget__confirm]'))
     .expect(imageWidgets.count).eql(0);
 });
@@ -36,7 +36,7 @@ test('cancel deleting a widget', async (t) => {
   await t
     .click(Selector('[data-test=insert-toolbar__add-image]'))
     .expect(imageWidgets.count).eql(1)
-    .click(Selector('[data-test=widget__close]'))
+    .click(Selector('[data-test=widget__delete]'))
     .click(Selector('[data-test=widget__cancel]'))
     .expect(imageWidgets.count).eql(1);
 });

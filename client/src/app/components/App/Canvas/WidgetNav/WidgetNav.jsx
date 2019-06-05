@@ -36,7 +36,7 @@ class WidgetNav extends React.Component {
       <nav className="widget__nav">
         <Tooltip content="Duplicate">
           <button
-            className="widget__close"
+            className="widget__delete"
             onClick={this.duplicateEditor.bind(this)}
             data-test="widget__duplicate"
           >
@@ -45,16 +45,16 @@ class WidgetNav extends React.Component {
         </Tooltip>
         <Tooltip content="Drag and Drop">
           <button
-            className={`widget__close widget__drag drag__${this.props.id}`}
+            className={`widget__delete widget__drag drag__${this.props.id}`}
           >
             <DragSVG alt="drag widget" />
           </button>
         </Tooltip>
         <Tooltip content="Delete">
           <button
-            className="widget__close"
+            className="widget__delete"
             onClick={this.showDeleteWidgetWarning}
-            data-test="widget__close"
+            data-test="widget__delete"
           >
             <CloseSVG alt="close element" />
           </button>
