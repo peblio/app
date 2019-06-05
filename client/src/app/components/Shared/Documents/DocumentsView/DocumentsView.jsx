@@ -111,5 +111,4 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const DragDropDocumentsView = DragDropContext(HTML5Backend)(DocumentsView);
-
 export default connect(mapStateToProps, null)(DragDropDocumentsView);

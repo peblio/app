@@ -91,6 +91,7 @@
     @extend %peblio-button;
     margin: $medium-margin 0;
     text-decoration: none;
+    border-radius: $small-border-radius;
   }
   &__sub-container {
     display: flex;

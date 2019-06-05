@@ -68,6 +68,7 @@ describe('Shared component DocumentsView ', () => {
 
   it('renders Folders component if there are folders', () => {
     wrapper = shallow(<DocumentsView store={store} {...props} />).dive();
+    console.log(wrapper.debug());
     expect(wrapper.find(Folders)).to.have.lengthOf(1);
   });
   // TODO : add test that checks if Page renders - issue at time of writing is that connected components appear differently in the wrapper
