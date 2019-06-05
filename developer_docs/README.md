@@ -34,8 +34,12 @@ Thank you for wanting to contribute to Peblio. In this document, you will find i
 ## Local Development
 
 1. `cd client && npm start`
-2. In another terminal session, `cd server && npm start`
-3. Navigate to [http://localhost:8080](http://localhost:8080) in your browser.
+2. In another terminal session, `cd server && npm start` 
+4. Navigate to [http://localhost:8080](http://localhost:8080) in your browser.
+
+Nodeman has been configured to do life refresh on the server side.
+After any changes to the server, wait for the files to get
+re-interpreted and type `rs` on the console where the server runs
 
 ## Local Server Debug
 

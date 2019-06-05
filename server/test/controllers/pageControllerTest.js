@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { assert } from 'sinon';
-import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, getTrashPages, trashPage, emptyTrash, restoreFromTrash, uploadPageSnapshotToS3, renamePage } from '../../src/controllers/pageController';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, getTrashPages, trashPage, emptyTrash, restoreFromTrash, uploadPageSnapshotToS3, renamePage, getMyPagesWithTag } from '../../src/controllers/pageController';
 import * as pageService from '../../src/service/pageService';
 
 const sinon = require('sinon');
@@ -10,6 +10,7 @@ const request = 'request';
 const response = 'response';
 let getPageServiceStub;
 let getPagesWithTagServiceStub;
+let getMyPagesWithTagServiceStub;
 let savePageAsGuestServiceStub;
 let savePageServiceStub;
 let deletePageServiceStub;
@@ -105,6 +106,23 @@ describe('pageController', () => {
       expect(actualReturnValue).to.be.eql(returnValue);
       assert.calledOnce(emptyTrashServiceStub);
       assert.calledWith(emptyTrashServiceStub, request, response);
+    });
+  });
+
+  describe('getMyPagesWithTag', () => {
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall call getMyPagesWithTag from service', async () => {
+      const returnValue = 'getMyPagesWithTagResponse';
+      getMyPagesWithTagServiceStub = sandbox.stub(pageService, 'getMyPagesWithTag').returns(returnValue);
+
+      const actualReturnValue = await getMyPagesWithTag(request, response);
+
+      expect(actualReturnValue).to.be.eql(returnValue);
+      assert.calledOnce(getMyPagesWithTagServiceStub);
+      assert.calledWith(getMyPagesWithTagServiceStub, request, response);
     });
   });
 

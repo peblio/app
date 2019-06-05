@@ -7,6 +7,7 @@ pageRoutes.route('/trash/:pageId').patch(pageController.trashPage);
 pageRoutes.route('/trash/:pageId').put(pageController.restoreFromTrash);
 pageRoutes.route('/trash').delete(pageController.emptyTrash);
 pageRoutes.route('/trash').get(pageController.getTrashPages);
+pageRoutes.route('/my/withTags').get(pageController.getMyPagesWithTag);
 pageRoutes.route('/:pageId/move').post(pageController.movePage);
 pageRoutes.route('/:pageId').get(pageController.getPage);
 pageRoutes.route('/save').post(pageController.savePage);
