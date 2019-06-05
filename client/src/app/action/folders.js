@@ -45,10 +45,11 @@ export function fetchAllPages(profileName, sortType, container) {
   // do not send in profile name if container is dashboard
   profileName = (container === 'dashboard') ? null : profileName;
   return (dispatch, getState) => {
-    let url = `/sketches?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}&sortOrder=${sortOrder}`;
+    let url = '/sketches';
     if (profileName) {
       url = `${url}/${profileName}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}&sortOrder=${sortOrder}`;
     } else {
+      url = `${url}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}&sortOrder=${sortOrder}`;
       const { user } = getState();
       if (!user.name) {
         return false;

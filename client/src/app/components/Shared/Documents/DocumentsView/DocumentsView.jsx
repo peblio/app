@@ -17,16 +17,6 @@ class DocumentsView extends Component {
     parentFolderShortId: undefined
   }
 
-  handleClick = () => {
-    this.props.clearSelectedFolders(this.props.folderDepth - 1);
-    if (this.props.folder.parent) {
-      this.props.jumpToFolderByShortId(this.props.parentFolderShortId);
-      history.push(`/${this.props.container}/${this.props.profileName}/folder/${this.props.parentFolderShortId}`);
-    } else {
-      history.push(`/${this.props.container}/${this.props.profileName}`);
-    }
-  }
-
   render() {
     const { childFolders, childPages, documentView, folderId, folder, profileName } = this.props;
     const title = folderId ? folder.title : '';
@@ -46,12 +36,6 @@ class DocumentsView extends Component {
               profileName={profileName}
               folderDepth={this.props.folderDepth}
             />
-            <button
-              className="profile-pebls__back"
-              onClick={this.handleClick}
-            >
-           &#9664; Back
-            </button>
           </div>
         )}
         <h2 className="profile-pebls__sub-heading">folders</h2>

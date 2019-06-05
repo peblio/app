@@ -289,6 +289,7 @@
       padding: $small-padding/2;
       padding-left: $small-padding;
       margin: auto;
+      box-sizing: border-box;
     }
     &__info {
       display: flex;
@@ -304,21 +305,6 @@
   }
 
   &-pebls {
-    &__back {
-      margin: $large-margin;
-      font-size: $small-font-size;
-      cursor: pointer;
-      color: $light-gray;
-      background: transparent;
-      padding: 0;
-      border: none;
-      &:hover {
-        color: $blue;
-        background: transparent;
-        padding: 0;
-        border: none;
-      }
-    }
     &__level {
       display: none;
     }
