@@ -21,11 +21,22 @@ test('duplicate a widget', async (t) => {
     .expect(imageWidgets.count).eql(2);
 });
 
-test('delete a widget', async (t) => {
+test('confirm and delete a widget', async (t) => {
   const imageWidgets = Selector('[data-test=image__container]');
   await t
     .click(Selector('[data-test=insert-toolbar__add-image]'))
     .expect(imageWidgets.count).eql(1)
     .click(Selector('[data-test=widget__close]'))
+    .click(Selector('[data-test=widget__confirm]'))
     .expect(imageWidgets.count).eql(0);
+});
+
+test('cancel deleting a widget', async (t) => {
+  const imageWidgets = Selector('[data-test=image__container]');
+  await t
+    .click(Selector('[data-test=insert-toolbar__add-image]'))
+    .expect(imageWidgets.count).eql(1)
+    .click(Selector('[data-test=widget__close]'))
+    .click(Selector('[data-test=widget__cancel]'))
+    .expect(imageWidgets.count).eql(1);
 });

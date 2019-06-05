@@ -24,12 +24,14 @@ export default class DeleteWidgetWarning extends React.Component {
         </h1>
         <button
           className="deleteWidgetWarning-modal__button"
+          data-test="widget__confirm"
           onClick={this.deleteWidgetConfirm}
         >
           Delete
         </button>
         <button
           className="deleteWidgetWarning-modal__button"
+          data-test="widget__cancel"
           onClick={this.props.closeModal}
         >
           Cancel
