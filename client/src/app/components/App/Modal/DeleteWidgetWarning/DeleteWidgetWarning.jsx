@@ -22,20 +22,22 @@ export default class DeleteWidgetWarning extends React.Component {
             </div>
           </div>
         </h1>
-        <button
-          className="delete-widget-warning-modal__button"
-          data-test="widget__confirm"
-          onClick={this.deleteWidgetConfirm}
-        >
+        <div className="delete-widget-warning-modal__buttons-holder">
+          <button
+            className="delete-widget-warning-modal__button"
+            data-test="widget__confirm"
+            onClick={this.deleteWidgetConfirm}
+          >
           Delete
-        </button>
-        <button
-          className="delete-widget-warning-modal__button"
-          data-test="widget__cancel"
-          onClick={this.props.closeModal}
-        >
+          </button>
+          <button
+            className="delete-widget-warning-modal__button"
+            data-test="widget__cancel"
+            onClick={this.props.closeModal}
+          >
           Cancel
-        </button>
+          </button>
+        </div>
       </div>
     );
   }

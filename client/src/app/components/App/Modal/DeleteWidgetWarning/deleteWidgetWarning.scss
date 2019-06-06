@@ -27,6 +27,11 @@
     @extend %modal__label;
   }
 
+  &__buttons-holder{
+    display: flex;
+    justify-content: space-between;
+  }
+
   &__button{
     @extend %modal__button;
     max-width: 45%;
@@ -36,5 +41,7 @@
       border: solid $green $small-border;
     }
   }
+
+  
 
 }
