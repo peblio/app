@@ -144,7 +144,7 @@ export function submitPage(parentId, title, heading, description, editors, edito
     workspace,
     tags,
     isPublished,
-    snapshotPath: 'http://placekitten.com/200/300'
+    snapshotPath: 'https://s3.amazonaws.com/peblio-files/_Pebl_Snapshots/default.png'
   };
   axios.post(axiosURL, pageData).then(() => {
     savePageSnapshot(id, true);

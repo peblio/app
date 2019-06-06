@@ -26,7 +26,7 @@ export function deletePage(pageId) {
 export function createPage(title, folder) {
   return (dispatch) => {
     const id = shortid.generate();
-    const data = { id, title, snapshotPath: 'http://placekitten.com/200/300' };
+    const data = { id, title, snapshotPath: 'https://s3.amazonaws.com/peblio-files/_Pebl_Snapshots/default.png' };
     if (folder) {
       data.folder = folder;
     }
