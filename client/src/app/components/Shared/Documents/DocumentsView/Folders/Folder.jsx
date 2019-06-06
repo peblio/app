@@ -200,4 +200,5 @@ const DraggableFolder = DragSource(ItemTypes.FOLDER, folderSource, collectDragSo
 const DroppableFolder = DropTarget([ItemTypes.PAGE, ItemTypes.FOLDER], folderTarget, collectDropTarget)(DraggableFolder);
 /* eslint-enable max-len */
 
-export default (connect(null, mapDispatchToProps)(DroppableFolder));
+export const TestFolder = (Folder);
+export const ComponentFolder = connect(null, mapDispatchToProps)(DroppableFolder);

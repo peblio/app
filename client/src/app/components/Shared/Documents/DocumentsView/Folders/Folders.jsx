@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Folder from './Folder';
+import { ComponentFolder } from './Folder';
 
 class Folders extends Component {
   render() {
@@ -25,7 +25,7 @@ class Folders extends Component {
             </h4>
           </div>
           {this.props.folders.map((folder, key) => (
-            <Folder
+            <ComponentFolder
               folder={folder}
               keyId={key}
               container={this.props.container}
