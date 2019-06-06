@@ -29,6 +29,12 @@
 
   &__button{
     @extend %modal__button;
+    max-width: 45%;
+    &:hover {
+      background: transparent;
+      color: $green;
+      border: solid $green $small-border;
+    }
   }
 
 }
