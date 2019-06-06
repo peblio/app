@@ -11,7 +11,7 @@ const initialState = {
   editors: {},
   editorIndex: 0,
   currentWidget: '',
-  deleteWidgetWarning: false,
+  isDeleteWarningModalOpen: false,
   widgetForDeleteWidgetWarning: ''
 };
 
@@ -58,11 +58,11 @@ const editorsReducer = (state = initialState, action) => {
     }
 
     case ActionTypes.CLOSE_DELETE_WIDGET_WARNING: {
-      return { ...state, widgetForDeleteWidgetWarning: action.id, deleteWidgetWarning: false };
+      return { ...state, widgetForDeleteWidgetWarning: action.id, isDeleteWarningModalOpen: false };
     }
 
     case ActionTypes.OPEN_DELETE_WIDGET_WARNING: {
-      return { ...state, widgetForDeleteWidgetWarning: action.id, deleteWidgetWarning: true };
+      return { ...state, widgetForDeleteWidgetWarning: action.id, isDeleteWarningModalOpen: true };
     }
 
     case ActionTypes.REMOVE_EDITOR:
