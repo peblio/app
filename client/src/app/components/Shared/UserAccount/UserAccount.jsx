@@ -66,7 +66,7 @@ class UserAccount extends React.Component {
         href={link}
         onMouseDown={(e) => { e.preventDefault(); }}
         onKeyDown={(e) => { e.preventDefault(); }}
-        data-test="user-account__profile-link"
+        data-test={`user-account__${displayText}-link`}
       >
         {displayText}
       </a>
