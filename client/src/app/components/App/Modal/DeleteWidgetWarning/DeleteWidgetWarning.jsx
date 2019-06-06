@@ -11,26 +11,26 @@ export default class DeleteWidgetWarning extends React.Component {
 
   render() {
     return (
-      <div className="deleteWidgetWarning-modal__content">
-        <h1 className="deleteWidgetWarning-modal__sub-title">
+      <div className="delete-widget-warning-modal__content">
+        <h1 className="delete-widget-warning-modal__sub-title">
           <div>
-            <div className="deleteWidgetWarning-modal__sub-title">
+            <div className="delete-widget-warning-modal__sub-title">
         Are you sure you want to delete the widget?
             </div>
-            <div className="deleteWidgetWarning-modal__footnote">
+            <div className="delete-widget-warning-modal__footnote">
         This would delete the widget from your page permanently
             </div>
           </div>
         </h1>
         <button
-          className="deleteWidgetWarning-modal__button"
+          className="delete-widget-warning-modal__button"
           data-test="widget__confirm"
           onClick={this.deleteWidgetConfirm}
         >
           Delete
         </button>
         <button
-          className="deleteWidgetWarning-modal__button"
+          className="delete-widget-warning-modal__button"
           data-test="widget__cancel"
           onClick={this.props.closeModal}
         >
