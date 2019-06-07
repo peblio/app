@@ -73,6 +73,15 @@ export function setDocumentSort(sortType) {
   };
 }
 
+export function searchByTitle(searchText) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SEARCH_BY_TITLE,
+      searchText
+    });
+  };
+}
+
 export function setParentFolder(folderId) {
   return (dispatch) => {
     dispatch({

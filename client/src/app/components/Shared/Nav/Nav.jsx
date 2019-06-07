@@ -6,7 +6,8 @@ import { bindActionCreators } from 'redux';
 import {
   setDashboardView,
   setDocumentSort,
-  setDocumentView
+  setDocumentView,
+  searchByTitle
 } from '../../../action/dashboard.js';
 import {
   createFolder,
@@ -58,6 +59,10 @@ class Nav extends React.Component {
 
   setDocumentSort = (e) => {
     this.props.setDocumentSort(e.target.value);
+  }
+
+  searchByTitle = (e) => {
+    this.props.searchByTitle(e.target.value);
   }
 
 renderDocumentViewList = (displaySVG, documentView) => {
@@ -133,6 +138,12 @@ render() {
       {this.props.dashboardView === 'documents' && (
         <div className="dashboard-nav__lower-container">
           <div className="dashboard-nav__dropdown-container">
+            <input
+              type="text"
+              className="dashboard-nav__title-search"
+              placeholder="Search"
+              onChange={this.searchByTitle}
+            />
             <p className="dashboard-nav__dropdown-label">
             Arrange By
             </p>
@@ -172,6 +183,7 @@ Nav.propTypes = {
   setDocumentSort: PropTypes.func.isRequired,
   setDashboardView: PropTypes.func.isRequired,
   setDocumentView: PropTypes.func.isRequired,
+  searchByTitle: PropTypes.func.isRequired,
   selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
@@ -189,7 +201,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   createPage,
   setDashboardView,
   setDocumentView,
-  setDocumentSort
+  setDocumentSort,
+  searchByTitle
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav);

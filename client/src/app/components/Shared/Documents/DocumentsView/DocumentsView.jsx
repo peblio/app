@@ -99,7 +99,9 @@ const mapStateToProps = (state, ownProps) => {
   }
   const pagesById = (ownProps.container === 'profile')
     ? state.profile.pages
-    : state.page.pages;
+    : (state.page.isSearchByTitle
+      ? state.page.filteredPages
+      : state.page.pages);
   return {
     childFolders: Object.values(ownProps.folders.byId)
       .filter(f => f.parent === ownProps.folderId),

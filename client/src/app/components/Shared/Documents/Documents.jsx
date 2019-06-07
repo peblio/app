@@ -109,7 +109,7 @@ Documents.propTypes = {
   selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   setShareURL: PropTypes.func.isRequired,
   userName: PropTypes.string.isRequired,
-  viewShareModal: PropTypes.func.isRequired,
+  viewShareModal: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {

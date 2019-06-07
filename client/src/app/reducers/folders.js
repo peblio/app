@@ -8,12 +8,18 @@ export const initialState = {
     byId: {},
     allIds: [] // keeps track of display order
   },
+  filteredPages: {
+    byId: {},
+    allIds: [] // keeps track of display order
+  },
   folders: {
     byId: {},
     allIds: []
   },
   selectedFolderIds: [],
   selectedPageId: null,
+  searchText: null,
+  isSearchByTitle: false
 };
 
 function findChildFolderIds(foldersById = {}, folderId = '') {
@@ -58,6 +64,17 @@ const foldersReducer = (state = { ...initialState }, action) => {
         folders: {
           byId: (normalizedFolderData.entities.folders || {}),
           allIds: (normalizedFolderData.result || [])
+        }
+      });
+    }
+
+    case ActionTypes.SEARCH_BY_TITLE: {
+      return Object.assign({}, state, {
+        searchText: 'Page',
+        isSearchByTitle: true,
+        filteredPages: {
+          byId: Object.values(state.pages.byId)
+            .filter(page => page.title && page.title.includes('Page'))
         }
       });
     }

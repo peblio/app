@@ -68,6 +68,17 @@
     color: $g3;
     font-size: $small-font-size;
   }
+  &__title-search {
+    margin: 0rem 2.5rem 0rem 0rem;
+    font-size: 16px;
+    line-height: 24px;
+    border: solid $small-border $g5;
+    border-radius: $small-border-radius;
+    padding: $small-padding/2;
+    background: $g7;
+    color: $g4;
+    position: relative;
+  }
   &__dropdown-label {
     font-size: $small-font-size;
     color: $g3;
