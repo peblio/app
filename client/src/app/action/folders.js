@@ -172,6 +172,13 @@ export function viewFolder(folderId, depth) {
   });
 }
 
+export function filterPagesByTitle(searchText) {
+  return dispatch => dispatch({
+    type: ActionTypes.SEARCH_BY_TITLE,
+    searchText
+  });
+}
+
 export function viewPage(pageId) {
   return dispatch => dispatch({
     type: ActionTypes.VIEW_PAGE,
