@@ -21,7 +21,13 @@ import UserAccount from '../UserAccount/UserAccount.jsx';
 
 import './nav.scss';
 
+
 class Nav extends React.Component {
+  constructor(props) {
+    super(props);
+    this.titleSearch = {};
+  }
+
   componentWillMount() {
     if (window.location.pathname.includes('profile')) {
       this.props.setDashboardView('profile');
@@ -67,6 +73,11 @@ class Nav extends React.Component {
       this.props.clearSearchByTitle();
     }
     this.props.searchByTitle(e.target.value);
+  }
+
+  clearSearchText = () => {
+    this.titleSearch.value = '';
+    this.props.clearSearchByTitle();
   }
 
 renderDocumentViewList = (displaySVG, documentView) => {
@@ -147,6 +158,7 @@ render() {
               className="dashboard-nav__title-search"
               placeholder="Search"
               onChange={this.searchByTitle}
+              ref={(ts) => { this.titleSearch = ts; }}
             />
             <p className="dashboard-nav__dropdown-label">
             Arrange By
@@ -168,7 +180,7 @@ render() {
             <button onClick={this.createPage}>
               New Page
             </button>
-            <button className="dashboard-nav__clear-link" onClick={this.props.clearSearchByTitle}>
+            <button className="dashboard-nav__clear-link" onClick={this.clearSearchText}>
                 Clear Filter
             </button>
           </div>
