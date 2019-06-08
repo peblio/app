@@ -49,8 +49,6 @@ const foldersReducer = (state = { ...initialState }, action) => {
     }
 
     case ActionTypes.SET_ALL_PAGES: {
-      console.log('set document sort', action);
-
       const normalizedPageData = normalize(action.pages, [pageSchema]);
       const normalizedFolderData = normalize(action.folders, [folderSchema]);
       return Object.assign({}, state, {
@@ -77,6 +75,17 @@ const foldersReducer = (state = { ...initialState }, action) => {
         filteredPages: {
           byId: Object.values(state.pages.byId)
             .filter(page => page.title && page.title.includes(action.searchText))
+        }
+      });
+    }
+
+    case ActionTypes.CLEAR_SEARCH_BY_TITLE: {
+      return Object.assign({}, state, {
+        searchText: null,
+        isSearchByTitle: false,
+        filteredPages: {
+          byId: {},
+          allIds: []
         }
       });
     }

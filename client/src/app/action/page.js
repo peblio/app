@@ -376,6 +376,7 @@ export const {
   viewFolder,
   viewPage,
   filterPagesByTitle,
+  clearFilterPagesByTitle,
   clearSelectedFolders,
   jumpToFolderByShortId
 } = currentUserFolderActions;

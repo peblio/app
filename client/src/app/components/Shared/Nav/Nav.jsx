@@ -7,7 +7,8 @@ import {
   setDashboardView,
   setDocumentSort,
   setDocumentView,
-  searchByTitle
+  searchByTitle,
+  clearSearchByTitle
 } from '../../../action/dashboard.js';
 import {
   createFolder,
@@ -62,6 +63,9 @@ class Nav extends React.Component {
   }
 
   searchByTitle = (e) => {
+    if (e.target.value === '') {
+      this.props.clearSearchByTitle();
+    }
     this.props.searchByTitle(e.target.value);
   }
 
@@ -164,6 +168,9 @@ render() {
             <button onClick={this.createPage}>
               New Page
             </button>
+            <button className="dashboard-nav__clear-link" onClick={this.props.clearSearchByTitle}>
+                Clear Filter
+            </button>
           </div>
         </div>
       )}
@@ -184,6 +191,7 @@ Nav.propTypes = {
   setDashboardView: PropTypes.func.isRequired,
   setDocumentView: PropTypes.func.isRequired,
   searchByTitle: PropTypes.func.isRequired,
+  clearSearchByTitle: PropTypes.func.isRequired,
   selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
@@ -202,7 +210,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setDashboardView,
   setDocumentView,
   setDocumentSort,
-  searchByTitle
+  searchByTitle,
+  clearSearchByTitle
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav);

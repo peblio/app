@@ -1,6 +1,6 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 import axios from '../utils/axios';
-import { filterPagesByTitle } from './page.js';
+import { filterPagesByTitle, clearFilterPagesByTitle } from './page.js';
 
 export function setDashboardView(viewName) {
   return (dispatch) => {
@@ -75,6 +75,12 @@ export function setDocumentSort(sortType) {
 export function searchByTitle(searchText) {
   return (dispatch) => {
     dispatch(filterPagesByTitle(searchText));
+  };
+}
+
+export function clearSearchByTitle(searchText) {
+  return (dispatch) => {
+    dispatch(clearFilterPagesByTitle(searchText));
   };
 }
 
