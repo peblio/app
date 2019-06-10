@@ -42,13 +42,14 @@ class Nav extends React.Component {
   }
 
   createFolder = (e) => {
+    e.preventDefault();
     const folderId = this.props.selectedFolderIds[this.props.selectedFolderIds.length - 1];
     e.stopPropagation();
     this.props.createFolder('New Folder', folderId);
-    // this.hideNewFolderDropdown();
   }
 
   createPage = (e) => {
+    e.preventDefault();
     let folderId = null;
     if (this.props.selectedFolderIds.length > 0) {
       folderId = this.props.selectedFolderIds[this.props.selectedFolderIds.length - 1];
@@ -146,29 +147,42 @@ render() {
                 <option value="title">Title</option>
               </select>
             </div>
-            <button
-              className="dashboard-nav__add-button"
-              onClick={this.props.toggleAddNewMenu}
-            >
-              <PlusIcon />
-            Add New
-            </button>
-            {this.props.isAddNewMenuOpen && (
-              <div className="dashboard-nav__sub-container">
-                <button
-                  className="dashboard-nav__add-button"
-                  onClick={this.createFolder}
-                >
-                  New Folder
-                </button>
-                <button
-                  className="dashboard-nav__add-button"
-                  onClick={this.createPage}
-                >
-                  New Page
-                </button>
-              </div>
-            )}
+            <div className="dashboard-nav__new-container">
+              <button
+                className="dashboard-nav__add-button"
+                onMouseDown={this.props.toggleAddNewMenu}
+                onKeyDown={this.props.toggleAddNewMenu}
+                onBlur={() => {
+                  setTimeout(() => {
+                    if (this.props.isAddNewMenuOpen) {
+                      this.props.toggleAddNewMenu();
+                    }
+                  }, 50);
+                }}
+              >
+                <PlusIcon />
+                {' '}
+                Add New
+              </button>
+              {this.props.isAddNewMenuOpen && (
+                <ul className="dashboard-nav__sub-button-container">
+                  <button
+                    className="dashboard-nav__add-sub-button"
+                    onMouseDown={this.createPage}
+                    onKeyDown={this.createPage}
+                  >
+                  File
+                  </button>
+                  <button
+                    className="dashboard-nav__add-sub-button"
+                    onMouseDown={this.createFolder}
+                    onKeyDown={this.createFolder}
+                  >
+                    Folder
+                  </button>
+                </ul>
+              )}
+            </div>
           </div>
         </div>
       )}

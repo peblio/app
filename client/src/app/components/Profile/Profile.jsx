@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import Documents from '../Shared/Documents/Documents';
 import Nav from '../Shared/Nav/Nav';
+import TopNav from '../Shared/Nav/TopNav';
 
 import {
   fetchAllPages,
@@ -23,6 +24,9 @@ class Profile extends React.Component {
   render() {
     return (
       <div>
+        <TopNav
+          container="profile"
+        />
         <Nav
           container="profile"
         />

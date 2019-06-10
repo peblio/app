@@ -8,8 +8,8 @@ import Trash from './Trash/Trash';
 import Documents from '../Shared/Documents/Documents';
 import Nav from '../Shared/Nav/Nav';
 import TopNav from '../Shared/Nav/TopNav';
-import Modal from '../App/Modal/Modal.jsx';
-import ShareModal from '../App/Modal/ShareModal/ShareModal.jsx';
+import Modal from '../App/Modal/Modal';
+import ShareModal from '../App/Modal/ShareModal/ShareModal';
 
 import {
   deleteFolder,
