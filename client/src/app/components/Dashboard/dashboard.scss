@@ -2,8 +2,6 @@
 
 .dashboard {
   &__container {
-    display: flex;
-    flex-direction: column;
     background: $g8;
     height: 100% !important;
   }

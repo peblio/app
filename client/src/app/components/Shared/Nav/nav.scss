@@ -24,7 +24,7 @@
   }
   &__lower-container {
     display: flex;
-    height: 60px;
+    height: $dashboard-nav-height;
     flex-direction: row;
     width: 80%;
     border-bottom: solid $small-border $g4;
@@ -38,9 +38,11 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    height: $dashboard-nav-height;
   }
   &__list-item {
     padding-right: $xlarge-padding;
+    height: $dashboard-nav-height;
   }
   &__button {
     background: transparent;
