@@ -32,9 +32,8 @@ class UserAccount extends React.Component {
       if (this.props.container === 'app') {
         history.push('/');
       } else if (this.props.container === 'profile') {
-
       } else {
-        history.push('peblio.co');
+        window.location.assign('https://www.peblio.co');
       }
     });
   }

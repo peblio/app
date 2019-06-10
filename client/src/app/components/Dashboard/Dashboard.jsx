@@ -7,6 +7,7 @@ import Account from './Account/Account';
 import Trash from './Trash/Trash';
 import Documents from '../Shared/Documents/Documents';
 import Nav from '../Shared/Nav/Nav';
+import TopNav from '../Shared/Nav/TopNav';
 import Modal from '../App/Modal/Modal.jsx';
 import ShareModal from '../App/Modal/ShareModal/ShareModal.jsx';
 
@@ -93,14 +94,17 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
-        <div className="dashboard__container">
-          <Nav
-            container="dashboard"
-          />
-
-          {this.renderDashboardView(this.props.dashboardView)}
-
-        </div>
+        <TopNav
+          container="dashboard"
+        />
+        {this.props.name && (
+          <div className="dashboard__container">
+            <Nav
+              container="dashboard"
+            />
+            {this.renderDashboardView(this.props.dashboardView)}
+          </div>
+        )}
         <Modal
           size="small"
           isOpen={this.props.isShareModalOpen}

@@ -6,7 +6,8 @@ import { bindActionCreators } from 'redux';
 import {
   setDashboardView,
   setDocumentSort,
-  setDocumentView
+  setDocumentView,
+  toggleAddNewMenu
 } from '../../../action/dashboard.js';
 import {
   createFolder,
@@ -15,7 +16,7 @@ import {
 import PeblioLogo from '../../../images/logo.svg';
 import Block from '../../../images/block.svg';
 import Line from '../../../images/stack.svg';
-import UserAccount from '../UserAccount/UserAccount.jsx';
+import PlusIcon from '../../../images/plus.svg';
 
 import './nav.scss';
 
@@ -98,20 +99,6 @@ renderDocumentViewList = (displaySVG, documentView) => {
 render() {
   return (
     <div className="dashboard-nav__container">
-      <div className="dashboard-nav__upper-container">
-        <a
-          className="logo_toolbar"
-          href="https://www.peblio.co/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <PeblioLogo alt="logo in toolbar" />
-        </a>
-        <UserAccount
-          container={this.props.container}
-          location={this.props.location}
-        />
-      </div>
       {this.props.container !== 'profile' &&
       (
         <div className="dashboard-nav__lower-container">
@@ -159,20 +146,29 @@ render() {
                 <option value="title">Title</option>
               </select>
             </div>
-            <div className="dashboard-nav__sub-container">
-              <button
-                className="dashboard-nav__add-button"
-                onClick={this.createFolder}
-              >
-              New Folder
-              </button>
-              <button
-                className="dashboard-nav__add-button"
-                onClick={this.createPage}
-              >
-              New Page
-              </button>
-            </div>
+            <button
+              className="dashboard-nav__add-button"
+              onClick={this.props.toggleAddNewMenu}
+            >
+              <PlusIcon />
+            Add New
+            </button>
+            {this.props.isAddNewMenuOpen && (
+              <div className="dashboard-nav__sub-container">
+                <button
+                  className="dashboard-nav__add-button"
+                  onClick={this.createFolder}
+                >
+                  New Folder
+                </button>
+                <button
+                  className="dashboard-nav__add-button"
+                  onClick={this.createPage}
+                >
+                  New Page
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -203,6 +199,7 @@ function mapStateToProps(state) {
     dashboardView: state.dashboard.dashboardView,
     documentView: state.dashboard.documentView,
     parentFolderId: state.dashboard.parentFolderId,
+    isAddNewMenuOpen: state.dashboard.isAddNewMenuOpen,
     selectedFolderIds: state.page.selectedFolderIds,
     userType: state.user.type
   };
@@ -213,7 +210,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   createPage,
   setDashboardView,
   setDocumentView,
-  setDocumentSort
+  setDocumentSort,
+  toggleAddNewMenu
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav);

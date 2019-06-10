@@ -1,6 +1,13 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 import axios from '../utils/axios';
 
+export function toggleAddNewMenu() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.TOGGLE_ADD_NEW_MENU
+    });
+  };
+}
 
 export function setDashboardView(viewName) {
   return (dispatch) => {
@@ -53,7 +60,6 @@ export function emptyTrash(id) {
       console.log(err);
     });
 }
-
 
 export function setDocumentView(viewType) {
   return (dispatch) => {
