@@ -74,7 +74,7 @@ const foldersReducer = (state = { ...initialState }, action) => {
         isSearchByTitle: true,
         filteredPages: {
           byId: Object.values(state.pages.byId)
-            .filter(page => page.title && page.title.includes(action.searchText))
+            .filter(page => page.title && page.title.toLowerCase().includes(action.searchText.toLowerCase()))
         }
       });
     }
