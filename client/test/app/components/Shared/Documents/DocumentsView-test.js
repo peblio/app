@@ -57,7 +57,8 @@ describe('Shared component DocumentsView ', () => {
       },
       selectedFolderIds: [],
       folderId: '',
-      container: 'dashboard'
+      container: 'dashboard',
+      childFolders: [1: { parent: '' }]
 
     };
   });
@@ -67,7 +68,8 @@ describe('Shared component DocumentsView ', () => {
   });
 
   it('renders Folders component if there are folders', () => {
-    wrapper = shallow(<DocumentsView store={store} {...props} />).dive();
+    const OriginalDocumentsView = DocumentsView.DecoratedComponent;
+    wrapper = shallow(<OriginalDocumentsView store={store} {...props} />);
     expect(wrapper.find(Folders)).to.have.lengthOf(1);
   });
   // TODO : add test that checks if Page renders - issue at time of writing is that connected components appear differently in the wrapper
@@ -79,6 +81,7 @@ describe('Shared component DocumentsView ', () => {
     store = mockStore(allStore);
     allProps.folders.allIds = [];
     allProps.folders.byId = {};
+    allProps.childFolders = [];
     props = allProps;
   });
 
@@ -87,7 +90,8 @@ describe('Shared component DocumentsView ', () => {
   });
 
   it('does not render Folders component if there are no folders', () => {
-    wrapper = shallow(<DocumentsView store={store} {...props} />).dive();
+    const OriginalDocumentsView = DocumentsView.DecoratedComponent;
+    wrapper = shallow(<OriginalDocumentsView store={store} {...props} />);
     expect(wrapper.find(Folders)).to.have.lengthOf(0);
   });
 });

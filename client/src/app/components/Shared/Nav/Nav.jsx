@@ -108,7 +108,7 @@ render() {
           <PeblioLogo alt="logo in toolbar" />
         </a>
         <UserAccount
-          container='profile'
+          container={this.props.container}
           location={this.props.location}
         />
       </div>
@@ -119,7 +119,7 @@ render() {
             {this.renderListItem('Documents', 'documents')}
             {this.renderListItem('Account', 'account')}
             {this.renderListItem('Trash', 'trash')}
-            {this.renderListItem('Profile', 'profile')}
+            {this.props.userType === 'student' || this.renderListItem('Profile', 'profile')}
           </ul>
           {(this.props.dashboardView === 'documents' || this.props.dashboardView === 'trash') && (
             <div className="dashboard-nav__list">
@@ -127,32 +127,52 @@ render() {
               {this.renderDocumentViewList(PeblioLogo, 'line')}
             </div>
           )}
+          {(this.props.dashboardView === 'profile') && (
+            <a
+              className="dashboard-nav__profile-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`/profile/${this.props.name}`}
+            >
+              View Profile
+            </a>
+          )}
         </div>
       )}
 
       {this.props.dashboardView === 'documents' && (
         <div className="dashboard-nav__lower-container">
           <div className="dashboard-nav__dropdown-container">
-            <p className="dashboard-nav__dropdown-label">
-            Arrange By
-            </p>
-            <select
-              className="dashboard-nav__dropdown"
-              id="dashboard-sort"
-              name="dashboard-sort"
-              onChange={this.setDocumentSort}
-              ref={(dashboardSort) => { this.dashboardSort = dashboardSort; }}
-              value={this.props.documentSort}
-            >
-              <option value="-updatedAt">Updated At</option>
-              <option value="title">Title</option>
-            </select>
-            <button onClick={this.createFolder}>
+            <div className="dashboard-nav__sub-container">
+              <p className="dashboard-nav__dropdown-label">
+              Arrange By
+              </p>
+              <select
+                className="dashboard-nav__dropdown"
+                id="dashboard-sort"
+                name="dashboard-sort"
+                onChange={this.setDocumentSort}
+                ref={(dashboardSort) => { this.dashboardSort = dashboardSort; }}
+                value={this.props.documentSort}
+              >
+                <option value="-updatedAt">Updated At</option>
+                <option value="title">Title</option>
+              </select>
+            </div>
+            <div className="dashboard-nav__sub-container">
+              <button
+                className="dashboard-nav__add-button"
+                onClick={this.createFolder}
+              >
               New Folder
-            </button>
-            <button onClick={this.createPage}>
+              </button>
+              <button
+                className="dashboard-nav__add-button"
+                onClick={this.createPage}
+              >
               New Page
-            </button>
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -169,18 +189,22 @@ Nav.propTypes = {
   documentSort: PropTypes.string.isRequired,
   documentView: PropTypes.string.isRequired,
   location: PropTypes.shape({}).isRequired,
+  name: PropTypes.string.isRequired,
   setDocumentSort: PropTypes.func.isRequired,
   setDashboardView: PropTypes.func.isRequired,
   setDocumentView: PropTypes.func.isRequired,
-  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired
+  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  userType: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {
   return {
+    name: state.user.name,
     dashboardView: state.dashboard.dashboardView,
     documentView: state.dashboard.documentView,
     parentFolderId: state.dashboard.parentFolderId,
-    selectedFolderIds: state.page.selectedFolderIds
+    selectedFolderIds: state.page.selectedFolderIds,
+    userType: state.user.type
   };
 }
 

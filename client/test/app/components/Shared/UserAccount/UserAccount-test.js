@@ -42,17 +42,18 @@ describe('UserAccount component when logged in as teacher', () => {
     sandbox.restore();
   });
 
-  it('renders 2 links, and account button', () => {
+  it('renders 3 links, and account button', () => {
     wrapper = shallow(<UserAccount store={store} {...props} />).dive();
     expect(wrapper.find('.user-account__account-button')).to.have.lengthOf(1);
     expect(wrapper.find('.user-account__welcome')).to.have.lengthOf(1);
-    expect(wrapper.find('.user-account__link')).to.have.lengthOf(2);
+    expect(wrapper.find('.user-account__link')).to.have.lengthOf(3);
   });
 
   it('renders "Profile" when container is app', () => {
     props.container = 'app';
     wrapper = shallow(<UserAccount store={store} {...props} />).dive();
-    expect(wrapper.find('.user-account__link').first().text()).to.equal('Profile');
+    expect(wrapper.find('.user-account__link').at(0).text()).to.equal('Dashboard');
+    expect(wrapper.find('.user-account__link').at(1).text()).to.equal('Profile');
   });
 
   it('renders "Workspace" when container is profile', () => {
@@ -75,7 +76,7 @@ describe('UserAccount component when logged in as student', () => {
       }
     });
     props = {
-      container: 'profile',
+      container: 'app',
       location: {
         pathname: ''
       }
@@ -90,7 +91,7 @@ describe('UserAccount component when logged in as student', () => {
     wrapper = shallow(<UserAccount store={store} {...props} />).dive();
     expect(wrapper.find('.user-account__account-button')).to.have.lengthOf(1);
     expect(wrapper.find('.user-account__welcome')).to.have.lengthOf(1);
-    expect(wrapper.find('.user-account__link')).to.have.lengthOf(1);
+    expect(wrapper.find('.user-account__link')).to.have.lengthOf(2);
   });
 });
 
@@ -109,7 +110,7 @@ describe('UserAccount component when not logged in', () => {
       }
     });
     props = {
-      container: 'profile',
+      container: 'app',
       location: {
         pathname: ''
       }

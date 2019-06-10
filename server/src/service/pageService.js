@@ -102,9 +102,9 @@ export async function deletePage(req, res) {
     try {
       await Page.update(
         { _id: pageId },
-        { 
+        {
           deletedAt: Date.now(),
-          trashedAt: null 
+          trashedAt: null
         }
     );
     return res.sendStatus(204);

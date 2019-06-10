@@ -113,7 +113,8 @@ const mapStateToProps = (state, ownProps) => ({
       const folderId = ownProps.folderId ? ownProps.folderId : null;
       const pageFolderId = page.folder ? page.folder : null;
       return (pageFolderId === folderId);
-    }),
+    })
+    .sort(compareTimestamps),
   folder: state.page.folders.byId[ownProps.folderId]
 });
 
