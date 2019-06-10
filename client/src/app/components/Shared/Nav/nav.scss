@@ -10,10 +10,9 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+  }
+  &__white-back {
     background: $white;
-    & div:last-child {
-      border: none !important;
-    }
   }
   &__upper-container {
     display: flex;
@@ -27,10 +26,9 @@
     height: $dashboard-nav-height;
     flex-direction: row;
     width: 80%;
-    border-bottom: solid $small-border $g4;
+    border: none;
     margin: 0 10%;
     justify-content: space-between;
-    background: $white;
   }
   &__list {
     display: flex;
@@ -39,6 +37,9 @@
     padding: 0;
     margin: 0;
     height: $dashboard-nav-height;
+  }
+  &__top-nav {
+    border-bottom: solid $small-border $g4;
   }
   &__list-item {
     padding-right: $xlarge-padding;

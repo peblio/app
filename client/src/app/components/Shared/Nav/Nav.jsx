@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -98,11 +99,14 @@ renderDocumentViewList = (displaySVG, documentView) => {
 }
 
 render() {
+  const navClass = classNames('dashboard-nav__container ', {
+    'dashboard-nav__white-back': (this.props.dashboardView === 'documents')
+  });
   return (
-    <div className="dashboard-nav__container">
+    <div className={classNames(navClass)}>
       {this.props.container !== 'profile' &&
       (
-        <div className="dashboard-nav__lower-container">
+        <div className="dashboard-nav__lower-container dashboard-nav__top-nav">
           <ul className="dashboard-nav__list">
             {this.renderListItem('Documents', 'documents')}
             {this.renderListItem('Account', 'account')}

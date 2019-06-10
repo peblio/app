@@ -1,7 +1,7 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 
 const initialState = {
-  dashboardView: 'account',
+  dashboardView: 'documents',
   trashPages: [],
   documentView: 'block',
   documentSort: 'updatedAt',
