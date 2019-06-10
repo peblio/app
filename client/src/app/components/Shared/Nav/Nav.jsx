@@ -202,12 +202,14 @@ Nav.propTypes = {
   dashboardView: PropTypes.string.isRequired,
   documentSort: PropTypes.string.isRequired,
   documentView: PropTypes.string.isRequired,
+  isAddNewMenuOpen: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   name: PropTypes.string.isRequired,
   setDocumentSort: PropTypes.func.isRequired,
   setDashboardView: PropTypes.func.isRequired,
   setDocumentView: PropTypes.func.isRequired,
   selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  toggleAddNewMenu: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired
 };
 

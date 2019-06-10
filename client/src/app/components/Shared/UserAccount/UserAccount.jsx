@@ -31,8 +31,7 @@ class UserAccount extends React.Component {
     this.props.logoutUser(this.props.name).then(() => {
       if (this.props.container === 'app') {
         history.push('/');
-      } else if (this.props.container === 'profile') {
-      } else {
+      } else if (this.props.container === 'dashboard') {
         window.location.assign('https://www.peblio.co');
       }
     });
