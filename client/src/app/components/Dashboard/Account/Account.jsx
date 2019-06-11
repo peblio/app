@@ -82,6 +82,7 @@ class Account extends React.Component {
             rows={15}
             onChange={this.handleBlurbChange}
             onBlur={this.handleBlurbBlur}
+            placeholder="Type your profile description here.."
           >
           </textarea>
         </div>

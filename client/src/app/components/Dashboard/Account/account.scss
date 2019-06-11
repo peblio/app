@@ -4,25 +4,32 @@
 .account {
 
   &__text-primary {
-    margin: $medium-margin;
-    color: $g4;
-    font-size: $large-font-size;
+    margin: 0;
+    color: $g2;
+    font-size: $h2-size;
   }
 
   &__text-container {
     width: 60%;
   }
 
+  &__text-secondary {
+    margin: 0;
+    text-transform: uppercase;
+    margin-bottom: $large-margin;
+    color: $g3;
+  }
+
   &__text-blurb {
     background-color: $white;
-    color: $black;
-    font-size: $small-font-size;
+    color: $g2;
+    font-size: $p-size;
+    line-height: $p-line-height;
     padding: $medium-padding;
     width: 100%;
-    border: none;
     resize: none;
-    text-align: center;
-    height: 150px;
+    text-align: left;
+    height: $account-image-width;
     border-radius: $small-border-radius;
     border: $small-border solid $g6;
   }
@@ -30,21 +37,25 @@
   &__container {
     display: flex;
     flex-direction: row;
-    padding: $xlarge-padding;
+    padding: $xlarge-padding 0;
+    margin: 0 auto;
     margin-top: $xxlarge-margin;
-    width: 80%;
-    justify-content: center;
+    width: 70%;
+    justify-content: space-around;
   }
-
+  &__sub-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
   &__image-container {
     position: relative;
     width: $account-image-width;
-    max-width: 90%;
     margin: 0 auto;
   }
 
   &__image {
-    max-width: 100%;
     height: auto;
     border-radius: 50%;
     width: $account-image-width;

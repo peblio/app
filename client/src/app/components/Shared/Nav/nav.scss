@@ -2,14 +2,17 @@
 @import 'base';
 
 .dashboard-nav {
+  &__new-container {
+    display: flex;
+    flex-direction: column;
+  }
   &__container {
     display: flex;
     flex-direction: column;
     width: 100%;
+  }
+  &__white-back {
     background: $white;
-    & div:last-child {
-      border: none !important;
-    }
   }
   &__upper-container {
     display: flex;
@@ -20,13 +23,12 @@
   }
   &__lower-container {
     display: flex;
-    height: 60px;
+    height: $dashboard-nav-height;
     flex-direction: row;
     width: 80%;
-    border-bottom: solid $small-border $g4;
+    border: none;
     margin: 0 10%;
     justify-content: space-between;
-    background: $white;
   }
   &__list {
     display: flex;
@@ -34,9 +36,14 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    height: $dashboard-nav-height;
+  }
+  &__top-nav {
+    border-bottom: solid $small-border $g4;
   }
   &__list-item {
     padding-right: $xlarge-padding;
+    height: $dashboard-nav-height;
   }
   &__button {
     background: transparent;
@@ -86,16 +93,50 @@
   &__add-button {
     @extend %peblio-button;
     padding: 0 $small-padding;
+    margin: 0;
+    border-radius: 0;
+    display: flex;
+    align-items: baseline;
+    &:hover {
+      background: $green;
+      color: $white;
+    }
+  }
+  &__sub-container {
+    display: flex;
+    padding: 0;
+    margin: 0;
+  }
+  &__sub-button-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    z-index: $z-index-layer-4;
+    background: $g7;
+    box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+    -moz-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+    -webkit-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+  }
+  &__add-sub-button {
+    padding: 0 $small-padding;
+    background: transparent;
+    color: $g2;
+    border: 0;
+    font-size: $toolbar-font-size;
+    line-height: $p-line-height;
+    text-align: left;
+    &:hover {
+      border: 0;
+      background: transparent;
+      color: $green;
+    }
   }
   &__profile-link {
     @extend %peblio-button;
     margin: $medium-margin 0;
     text-decoration: none;
     border-radius: $small-border-radius;
-  }
-  &__sub-container {
-    display: flex;
-    flex-direction: row;
   }
   &__label {
     padding-left: $large-padding;

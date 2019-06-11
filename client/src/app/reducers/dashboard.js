@@ -5,10 +5,15 @@ const initialState = {
   trashPages: [],
   documentView: 'block',
   documentSort: 'updatedAt',
-  parentFolderId: ''
+  parentFolderId: '',
+  isAddNewMenuOpen: false
 };
 const dashboard = (state = initialState, action) => {
   switch (action.type) {
+    case ActionTypes.SET_DASHBOARD_VIEW:
+      return Object.assign({}, state, {
+        dashboardView: action.viewName
+      });
     case ActionTypes.SET_DASHBOARD_VIEW:
       return Object.assign({}, state, {
         dashboardView: action.viewName
@@ -31,6 +36,11 @@ const dashboard = (state = initialState, action) => {
     case ActionTypes.SET_PARENT_FOLDER:
       return Object.assign({}, state, {
         parentFolderId: action.folderId
+      });
+
+    case ActionTypes.TOGGLE_ADD_NEW_MENU:
+      return Object.assign({}, state, {
+        isAddNewMenuOpen: !state.isAddNewMenuOpen
       });
 
     default:

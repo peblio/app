@@ -31,12 +31,15 @@ class UserAccount extends React.Component {
     this.props.logoutUser(this.props.name).then(() => {
       if (this.props.container === 'app') {
         history.push('/');
+      } else if (this.props.container === 'dashboard') {
+        window.location.assign('https://www.peblio.co');
       }
     });
   }
 
   projectID = () => {
-    const location = this.props.location.pathname;
+    console.log(this.props);
+    const location = this.props.location ? this.props.location.pathname : '';
     const projectID = location.match(/\/pebl\/([\w-].*)/);
     if (projectID) {
       this.props.setPageId(projectID[1]);

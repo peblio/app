@@ -41,11 +41,14 @@
     width: 50%;
     text-align: center;
     font-size: $h2-size;
+    margin: $small-margin 0;
   }
   &__blurb {
     width: 50%;
     text-align: center;
     font-size: $p-size;
     line-height: $p-line-height;
+    margin: 0;
+    margin-bottom: $small-margin;
   }
 }
