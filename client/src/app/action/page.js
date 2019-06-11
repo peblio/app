@@ -2,6 +2,7 @@ import shortid from 'shortid';
 import { convertToRaw } from 'draft-js';
 import html2canvas from 'html2canvas';
 import * as ActionTypes from '../constants/reduxConstants.js';
+import { SNAPSHOT_DEFAULT_IMG } from '../constants/pageConstants.js';
 import axios from '../utils/axios';
 import history from '../utils/history';
 import { namespaceActionCreators } from '../utils/namespace-redux';
@@ -144,7 +145,7 @@ export function submitPage(parentId, title, heading, description, editors, edito
     workspace,
     tags,
     isPublished,
-    snapshotPath: 'https://s3.amazonaws.com/peblio-files/_Pebl_Snapshots/default.png'
+    snapshotPath: SNAPSHOT_DEFAULT_IMG
   };
   axios.post(axiosURL, pageData).then(() => {
     savePageSnapshot(id, true);
