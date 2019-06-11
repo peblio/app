@@ -135,6 +135,7 @@ class Canvas extends React.Component {
             isPlaying={editor.isPlaying && isVisible}
             isRefreshing={editor.isRefreshing}
             editorView={editor.editorView}
+            fullScreenMode={editor.fullScreenMode}
           />
         )}
       </VisibilitySensor>
@@ -348,6 +349,7 @@ class Canvas extends React.Component {
         }
         <Heading />
         <ReactGridLayout
+          className={`react-grid-layout ${this.props.isFullScreenMode ? 'react-grid__fullscreen' : ''}`}
           cols={this.props.rgl.cols}
           width={this.props.rgl.width}
           rowHeight={this.props.rgl.rowHeight}
@@ -371,15 +373,15 @@ class Canvas extends React.Component {
             <div
               key={id}
               data-grid={localLayout[id]}
-              className={`${this.props.currentWidget === id ? 'canvas-high' : ''}`
+              className={`editor__full-screen ${this.props.currentWidget === id ? 'canvas-high' : ''}`
               }
             >
               <div
-                className={
-                  this.props.editors[id].type === 'text'
-                    ? 'widget__container no-outline'
-                    : 'widget__container element__iframe-container'
-                }
+                className={`widget__container
+                  ${this.props.editors[id].type === 'text'
+              ? 'no-outline'
+              : 'element__iframe-container'}
+                `}
                 id={id}
                 tabIndex="0" // eslint-disable-line
                 onFocus={() => this.props.setCurrentWidget(id)}

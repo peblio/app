@@ -64,6 +64,15 @@ export function loadEditors(editors, editorIndex) {
   };
 }
 
+export function toggleWidgetFullscreen(id) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.TOGGLE_WIDGET_FULLSCREEN,
+      id
+    });
+  };
+}
+
 /** CODE EDITOR */
 
 export function viewEditorPreview(id) {

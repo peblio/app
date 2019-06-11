@@ -12,7 +12,8 @@ const initialState = {
   editorIndex: 0,
   currentWidget: '',
   isDeleteWarningModalOpen: false,
-  widgetForDeleteWidgetWarning: ''
+  widgetForDeleteWidgetWarning: '',
+  isFullScreenMode: false
 };
 
 let stack = [];
@@ -70,6 +71,15 @@ const editorsReducer = (state = initialState, action) => {
       delete editors[action.id];
       return { ...state, editors: updateIndices(editors) };
 
+    case ActionTypes.TOGGLE_WIDGET_FULLSCREEN:
+      const isWidgetFullScreen = state.editors[action.id].isFullScreenMode;
+      editors[action.id].isFullScreenMode = !isWidgetFullScreen;
+      return {
+        ...state,
+        editors,
+        isFullScreenMode: !state.isFullScreenMode
+      };
+
     case ActionTypes.DUPLICATE_EDITOR: {
       const originalEditor = state.editors[action.originalEditorId];
       let newEditor;
@@ -99,7 +109,8 @@ const editorsReducer = (state = initialState, action) => {
         isRefreshing: false,
         editorMode: action.mode,
         innerWidth: CODE_DEFAULT_INSIDE_WIDTH,
-        editorView: 'split'
+        editorView: 'split',
+        isFullScreenMode: false
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -192,7 +203,8 @@ const editorsReducer = (state = initialState, action) => {
         id,
         index: stack.length,
         editorState: EditorState.createEmpty(),
-        backColor: 'transparent'
+        backColor: 'transparent',
+        isFullScreenMode: false
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -219,7 +231,8 @@ const editorsReducer = (state = initialState, action) => {
         question: 'Enter question here ',
         answer: 'Enter answer here..',
         minHeight: QUESION_MIN_INNER_HEIGHT,
-        innerHeight: QUESION_DEFAULT_INNER_HEIGHT
+        innerHeight: QUESION_DEFAULT_INNER_HEIGHT,
+        isFullScreenMode: false
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -249,7 +262,8 @@ const editorsReducer = (state = initialState, action) => {
         type: 'iframe',
         id,
         index: stack.length,
-        url: 'https://peblio.github.io/instructions/embed.html'
+        url: 'https://peblio.github.io/instructions/embed.html',
+        isFullScreenMode: false
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -268,7 +282,8 @@ const editorsReducer = (state = initialState, action) => {
         type: 'video',
         id,
         index: stack.length,
-        url: 'https://peblio.github.io/instructions/video.html'
+        url: 'https://peblio.github.io/instructions/video.html',
+        isFullScreenMode: false
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -293,7 +308,8 @@ const editorsReducer = (state = initialState, action) => {
           y: 0,
           height: 100,
           width: 100
-        }
+        },
+        isFullScreenMode: false
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
