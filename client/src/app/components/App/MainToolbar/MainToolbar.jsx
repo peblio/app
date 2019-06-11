@@ -32,14 +32,20 @@ class MainToolbar extends React.Component {
         this.props.savePage();
       }
     }, 10000);
+    window.addEventListener('beforeunload', this.saveSnapshot);
   }
 
   componentWillUnmount() {
     clearTimeout(this.autoSaveTimeout);
+    window.removeEventListener('beforeunload', this.saveSnapshot);
   }
 
   saveSnapshotWithPage = () => {
     this.props.savePage();
+    this.saveSnapshot();
+  }
+
+  saveSnapshot = () => {
     if (this.props.projectID()) {
       savePageSnapshot(this.props.projectID(), false);
     }
