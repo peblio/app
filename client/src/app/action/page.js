@@ -88,7 +88,7 @@ export function loadPage(id, parentId, title, heading, description, layout, tags
   };
 }
 
-export function duplicatePage(title, heading, description, folder, editors, editorIndex, layout, tags) {
+export function duplicatePage(title, heading, description, folder, editors, editorIndex, layout, tags, snapshotPath) {
   return (dispatch) => {
     const id = shortid.generate();
     const data = {
@@ -99,7 +99,8 @@ export function duplicatePage(title, heading, description, folder, editors, edit
       editors,
       editorIndex,
       layout,
-      tags
+      tags,
+      snapshotPath
     };
     if (folder) {
       data.folder = folder;
@@ -131,7 +132,7 @@ function convertEditorsToRaw(editors) {
 export function submitPage(parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished) {
   const id = shortid.generate();
   const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
-  axios.post(axiosURL, {
+  const pageData = {
     parentId,
     id,
     title,
@@ -142,8 +143,10 @@ export function submitPage(parentId, title, heading, description, editors, edito
     layout,
     workspace,
     tags,
-    isPublished
-  }).then(() => {
+    isPublished,
+    snapshotPath: 'https://s3.amazonaws.com/peblio-files/_Pebl_Snapshots/default.png'
+  };
+  axios.post(axiosURL, pageData).then(() => {
     savePageSnapshot(id, true);
     if (type === 'fromWP') {
       window.open(`/pebl/${id}`, '_blank');
