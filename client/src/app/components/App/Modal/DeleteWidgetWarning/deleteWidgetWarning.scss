@@ -1,0 +1,47 @@
+@import 'variables';
+@import 'mixins';
+@import 'modal';
+
+.delete-widget-warning-modal {
+  &__content{
+    margin: auto;
+    width: 60%;
+    padding: 5% 0;
+  }
+
+  &__div{
+    display: block;
+    text-align: left;
+  }
+
+  &__sub-title{
+    @extend %modal__subtitle;
+  }
+  &__footnote {
+    @extend %modal__subtitle;
+    font-weight: 400;
+    font-size: $small-font-size;
+  }
+
+  &__label{
+    @extend %modal__label;
+  }
+
+  &__buttons-holder{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__button{
+    @extend %modal__button;
+    max-width: 45%;
+    &:hover {
+      background: transparent;
+      color: $green;
+      border: solid $green $small-border;
+    }
+  }
+
+  
+
+}
