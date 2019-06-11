@@ -59,7 +59,6 @@ class MainToolbar extends React.Component {
     }
   }
 
-
   focusOnButton(event) {
     event.target.focus();
   }
