@@ -18,6 +18,7 @@ const pageSchema = new Schema({
   workspace: { type: Object, default: {} },
   isPublished: { type: Boolean },
   deletedAt: { type: Date, default: null },
+  trashedAt: { type: Date, default: null },
   tags: [String]
 }, {
     minimize: false,

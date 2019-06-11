@@ -14,6 +14,26 @@ button {
   @extend %menu-item ;
 }
 
+%peblio-button {
+  white-space: nowrap;
+  padding: $small-padding/2 $small-padding;
+  margin: 0;
+  margin-left: $small-margin;
+  font-family: $roboto;
+  font-size: $toolbar-font-size;
+  font-weight: 500;
+  line-height: $p-line-height;
+  color: $white;
+  background: $green;
+  height: fit-content;
+  border: $green $small-border solid;
+  &:hover {
+    background: $transparent  ;
+    border: $green $small-border solid;
+    color: $green;
+  }
+}
+
 %menu-item {
   border: $small-border solid $white;
   border-radius: $small-border-radius;
@@ -30,8 +50,6 @@ button {
   }
 }
 
-
-
 %beta-tag {
   padding: 3px 5px;
   background: rgb(0, 152, 135);
@@ -42,6 +60,33 @@ button {
   border-radius: $small-border-radius;
   letter-spacing: 1px;
   text-transform: uppercase;
+}
+
+
+%mainToolbar__button{
+  margin: 0 $small-margin;
+  padding: $main-toolbar-padding;
+  float: right;
+  font-size: 14px;
+  font-weight: normal;
+  border: none;
+  color: $white;
+  -webkit-transition-duration: 150ms; /* Safari */
+  transition-duration: 150ms;
+  background: none;
+  &:hover {
+    border: none;
+    color: $light-gray;
+    background: none;
+    cursor: pointer;
+  }
+}
+
+%vertical-spacer {
+  height: 18px;
+  width: 1px;
+  background-color: #A2AEB5;
+  margin: $medium-margin 0;
 }
 
 .react-tooltip-lite {

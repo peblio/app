@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+import dashboard from './dashboard.js';
 import editorsReducer from './editors.js';
 import mainToolbar from './mainToolbar.js';
 import navigation from './navigation.js';
@@ -10,6 +11,7 @@ import user from './user.js';
 import workspace from './workspace.js';
 
 const rootReducer = combineReducers({
+  dashboard,
   editorsReducer,
   mainToolbar,
   navigation,

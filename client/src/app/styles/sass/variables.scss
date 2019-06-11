@@ -68,7 +68,7 @@ $canvas-padding: 100px;
 $title-line-height:50px;
 $h1-line-height:36px;
 $h2-line-height:26px;
-$p-line-height:24px;
+$p-line-height: 24px;
 $large-height: 1.5rem;
 
 //margin
@@ -100,7 +100,7 @@ $medium-font-size: 1rem;
 $small-font-size: 0.8rem;
 $large-font-size: 26px;
 $xlarge-font-size: 32px;
-$toolbar-font-size: 11px;
+$toolbar-font-size: 12px;
 
 $title-size: 36px;
 $h1-size: 28px;
@@ -119,10 +119,12 @@ $medium-font-weight: 400;
 $heavy-font-weight: 500;
 
 //sizes
+$account-image-width: 150px;
 $arrow-size: 25px;
 $button-size: 35px;
 $console-heading-height: 20px;
 $console-output-height: 45px;
+$dashboard-nav-height: 60px;
 $editor-toolbar-height: 32px;
 $editor-toolbar-files-height:32px;
 $editor-toolbar-content-height:23px;
@@ -138,6 +140,9 @@ $insert-toolbar-height:45px;
 $main-toolbar-height:50px;
 $title-width:35px;
 $navigation-width: 250px;
+$pebl-profile-image-size-width: 200px;
+$pebl-profile-image-size-height: 150px;
+$pebl-profile-details: 30px;
 $preferences-width: 250px;
 $toolbar-width: 500px;
 $total-width: 816px;

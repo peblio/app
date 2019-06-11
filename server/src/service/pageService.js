@@ -22,7 +22,6 @@ export async function getPage(req, res) {
   });
 }
 
-
 export async function getPagesWithTag(req, res) {
   const offset = req.query.offset ? parseInt(req.query.offset) : 0;
   const limit = req.query.limit ? parseInt(req.query.limit) : 10;
@@ -125,14 +124,87 @@ export async function deletePage(req, res) {
     try {
       await Page.update(
         { _id: pageId },
-        { deletedAt: Date.now() }
-      );
-      return res.sendStatus(204);
+        {
+          deletedAt: Date.now(),
+          trashedAt: null
+        }
+    );
+    return res.sendStatus(204);
     } catch (err) {
       return res.status(500).send({ error: err.message });
     }
   }
   return res.status(403).send({ error: 'You do not have the permissions to delete this page' });
+}
+
+export async function restoreFromTrash(req, res) {
+  const { pageId } = req.params;
+  try {
+    await Page.update(
+      { _id: pageId },
+      {
+        trashedAt: null
+      }
+    );
+    return res.sendStatus(204);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
+export async function emptyTrash(req, res) {
+  const user = req.user;
+  if (!user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  }
+  try {
+    await Page.updateMany(
+      {
+        user: user._id,
+        trashedAt: { $exists: true, $ne: null }
+      },
+      {
+        trashedAt: null,
+        deletedAt: Date.now(),
+        folder: null
+      }
+    );
+    return res.sendStatus(204);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
+export async function trashPage(req, res) {
+  const { pageId } = req.params;
+  try {
+    await Page.update(
+      { _id: pageId },
+      { trashedAt: Date.now(),
+        folder: null
+       }
+    );
+    return res.sendStatus(204);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+  return res.status(403).send({ error: 'You do not have the permissions to delete this page' });
+}
+
+export async function getTrashPages(req, res) {
+  const user = req.user;
+  if (!user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  }
+  return Page.find({
+    user: user._id,
+    trashedAt: { $exists: true, $ne: null }
+  }, (err, data) => {
+    if (err) {
+      return res.status(500).send({ error: err.message });
+    }
+    return res.status(200).send(data);
+  });
 }
 
 export async function updatePage(req, res) {
@@ -176,6 +248,20 @@ export function uploadPageSnapshotToS3(req, res) {
         });
     });
   });
+}
+
+export async function renamePage(req, res) {
+  const user = req.user;
+  if (!user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  }
+  const { pageId, pageName } = req.params;
+  try {
+    await Page.update({ _id: pageId }, { title: pageName }).exec();
+    return res.sendStatus(204);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
 }
 
 export async function movePage(req, res) {

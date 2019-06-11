@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import { assert } from 'sinon';
-import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, uploadPageSnapshotToS3, getMyPagesWithTag } from '../../src/controllers/pageController';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, getTrashPages, trashPage, emptyTrash, restoreFromTrash, uploadPageSnapshotToS3, renamePage, getMyPagesWithTag } from '../../src/controllers/pageController';
 import * as pageService from '../../src/service/pageService';
 
 const sinon = require('sinon');
 
 const sandbox = sinon.sandbox.create();
 const request = 'request';
-const response = response;
+const response = 'response';
 let getPageServiceStub;
 let getPagesWithTagServiceStub;
 let getMyPagesWithTagServiceStub;
@@ -17,6 +17,11 @@ let deletePageServiceStub;
 let updatePageServiceStub;
 let movePageServiceStub;
 let uploadPageSnapshotToS3ServiceStub;
+let trashPageServiceStub;
+let getTrashPagesServiceStub;
+let restoreFromTrashServiceStub;
+let emptyTrashServiceStub;
+let renamePageServiceStub;
 
 describe('pageController', () => {
   describe('getPage', () => {
@@ -36,6 +41,40 @@ describe('pageController', () => {
     });
   });
 
+  describe('renamePage', () => {
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall call renamePage from service', async () => {
+      const returnValue = 'renamePageResponse';
+      renamePageServiceStub = sandbox.stub(pageService, 'renamePage').returns(returnValue);
+
+      const actualReturnValue = await renamePage(request, response);
+
+      expect(actualReturnValue).to.be.eql(returnValue);
+      assert.calledOnce(renamePageServiceStub);
+      assert.calledWith(renamePageServiceStub, request, response);
+    });
+  });
+
+  describe('restoreFromTrash', () => {
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall call restoreFromTrash from service', async () => {
+      const returnValue = 'restoreFromTrash';
+      restoreFromTrashServiceStub = sandbox.stub(pageService, 'restoreFromTrash').returns(returnValue);
+
+      const actualReturnValue = await restoreFromTrash(request, response);
+
+      expect(actualReturnValue).to.be.eql(returnValue);
+      assert.calledOnce(restoreFromTrashServiceStub);
+      assert.calledWith(restoreFromTrashServiceStub, request, response);
+    });
+  });
+
   describe('getPagesWithTag', () => {
     afterEach(() => {
       sandbox.restore();
@@ -50,6 +89,23 @@ describe('pageController', () => {
       expect(actualReturnValue).to.be.eql(returnValue);
       assert.calledOnce(getPagesWithTagServiceStub);
       assert.calledWith(getPagesWithTagServiceStub, request, response);
+    });
+  });
+
+  describe('emptyTrash', () => {
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall call emptyTrash from service', async () => {
+      const returnValue = 'emptyTrashResponse';
+      emptyTrashServiceStub = sandbox.stub(pageService, 'emptyTrash').returns(returnValue);
+
+      const actualReturnValue = await emptyTrash(request, response);
+
+      expect(actualReturnValue).to.be.eql(returnValue);
+      assert.calledOnce(emptyTrashServiceStub);
+      assert.calledWith(emptyTrashServiceStub, request, response);
     });
   });
 
@@ -135,6 +191,40 @@ describe('pageController', () => {
       expect(actualReturnValue).to.be.eql(returnValue);
       assert.calledOnce(updatePageServiceStub);
       assert.calledWith(updatePageServiceStub, request, response);
+    });
+  });
+
+  describe('trashPage', () => {
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall call trashPage from service', async () => {
+      const returnValue = 'trashPageResponse';
+      trashPageServiceStub = sandbox.stub(pageService, 'trashPage').returns(returnValue);
+
+      const actualReturnValue = await trashPage(request, response);
+
+      expect(actualReturnValue).to.be.eql(returnValue);
+      assert.calledOnce(trashPageServiceStub);
+      assert.calledWith(trashPageServiceStub, request, response);
+    });
+  });
+
+  describe('getTrashPages', () => {
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall call getTrashPages from service', async () => {
+      const returnValue = 'getTrashPagesResponse';
+      getTrashPagesServiceStub = sandbox.stub(pageService, 'getTrashPages').returns(returnValue);
+
+      const actualReturnValue = await getTrashPages(request, response);
+
+      expect(actualReturnValue).to.be.eql(returnValue);
+      assert.calledOnce(getTrashPagesServiceStub);
+      assert.calledWith(getTrashPagesServiceStub, request, response);
     });
   });
 

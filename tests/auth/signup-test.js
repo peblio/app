@@ -25,7 +25,7 @@ const yearOption = yearSelect.find('option');
 
 test('through the signup form with a valid email and password', async (t) => {
   await t
-    .click(Selector('[data-test=main-toolbar__signup-button]'))
+    .click(Selector('[data-test=user-account__signup-button]'))
     .click(Selector('[data-test=signup-modal__radio-student]'))
     .click(Selector('[data-test=signup-modal__checkbox]'))
     .click(Selector('[data-test=signup-modal__button-next]'))

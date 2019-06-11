@@ -1,0 +1,91 @@
+@import 'variables';
+@import 'mixins';
+
+.account {
+
+  &__text-primary {
+    margin: 0;
+    color: $g2;
+    font-size: $h2-size;
+  }
+
+  &__text-container {
+    width: 60%;
+  }
+
+  &__text-secondary {
+    margin: 0;
+    text-transform: uppercase;
+    margin-bottom: $large-margin;
+    color: $g3;
+  }
+
+  &__text-blurb {
+    background-color: $white;
+    color: $g2;
+    font-size: $p-size;
+    line-height: $p-line-height;
+    padding: $medium-padding;
+    width: 100%;
+    resize: none;
+    text-align: left;
+    height: $account-image-width;
+    border-radius: $small-border-radius;
+    border: $small-border solid $g6;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    padding: $xlarge-padding 0;
+    margin: 0 auto;
+    margin-top: $xxlarge-margin;
+    width: 70%;
+    justify-content: space-around;
+  }
+  &__sub-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__image-container {
+    position: relative;
+    width: $account-image-width;
+    margin: 0 auto;
+  }
+
+  &__image {
+    height: auto;
+    border-radius: 50%;
+    width: $account-image-width;
+    height: $account-image-width;
+    cursor: pointer;
+    &:hover {
+      & + .account__image-upload
+      {
+        display: flex;
+      }
+    }
+  }
+
+  &__image-upload {
+    max-width: 100%;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+    width: $account-image-width;
+    height: $account-image-width;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    opacity: 0.8;
+    cursor: pointer;
+    &:hover {
+      display: flex;
+    }
+  }
+
+}

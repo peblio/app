@@ -4,17 +4,17 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 import axios from '../utils/axios';
 import { saveLog } from '../utils/log';
 
-export function deletePage(pageId) {
+export function trashPage(pageId) {
   return (dispatch) => {
-    axios.delete(`/pages/${pageId}`).then(() => {
+    axios.patch(`/pages/trash/${pageId}`).then(() => {
       dispatch({
         type: ActionTypes.DELETE_PAGE,
         pageId
       });
       const log = {
-        message: 'Deleting Page',
-        path: `/pages/${pageId}`,
-        action: 'Deleting Page',
+        message: 'Trashing Page',
+        path: `/pages/trash/${pageId}`,
+        action: 'Trashing Page',
         module: 'ui',
         level: 'INFO'
       };
@@ -39,15 +39,17 @@ export function createPage(title, folder) {
   };
 }
 
-export function fetchAllPages(profileName) {
-  // TODO:
-  //  - refactor this route to be something like /api/users/:userName/sketches
-  //  - don't use two different routes for fetching pages for the current user vs. other users
+export function fetchAllPages(profileName, sortType, container) {
+  const sortTypeUrl = sortType || 'title';
+  const sortOrder = (sortType === 'title') ? 1 : -1;
+  // do not send in profile name if container is dashboard
+  profileName = (container === 'dashboard') ? null : profileName;
   return (dispatch, getState) => {
     let url = '/sketches';
     if (profileName) {
-      url = `${url}/${profileName}?folderSortBy=title&fileSortBy=title`;
+      url = `${url}/${profileName}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}&sortOrder=${sortOrder}`;
     } else {
+      url = `${url}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}&sortOrder=${sortOrder}`;
       const { user } = getState();
       if (!user.name) {
         return false;

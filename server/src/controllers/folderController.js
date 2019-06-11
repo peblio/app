@@ -56,7 +56,10 @@ folderRoutes.route('/:folderId').delete(async (req, res) => {
     const folderIdsToDelete = findChildFolderIds(folder);
     await Page.updateMany(
       { folder: { $in: folderIdsToDelete } },
-      { deletedAt: Date.now() }
+      {
+        trashedAt: Date.now(),
+        folder: null
+      }
     ).exec();
     await Folder.updateMany(
       { _id: { $in: folderIdsToDelete }, user: user._id },
@@ -117,7 +120,7 @@ folderRoutes.route('/:folderId/rename/:folderName').post(async (req, res) => {
 
   try {
     const renamedFolder = await Folder.findOne({
-      _id: folderId 
+      _id: folderId
     }).exec();
     await Folder.update({ _id: folderId }, { title: folderName }).exec();
     return res.sendStatus(204);

@@ -3,7 +3,7 @@ import { ObjectId } from 'mongodb';
 import { expect } from 'chai';
 
 import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils.js';
-import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, getMyPagesWithTag } from '../../src/service/pageService';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, trashPage, getTrashPages, emptyTrash, restoreFromTrash, renamePage, getMyPagesWithTag } from '../../src/service/pageService';
 import * as pageCreator from '../../src/models/creator/pageCreator';
 
 const sinon = require('sinon');
@@ -94,6 +94,8 @@ let findOnePageExecStub;
 let findOnePageStub;
 let updateUserSpy;
 let updatePageSpy;
+let updatePageExecStub;
+let updatePageStub;
 let folderCountStub;
 let folderCountExecStub;
 let buildPageForUpdateFromRequestStub;
@@ -196,6 +198,54 @@ describe('pageService', () => {
 
       assertFindWasCalledWithPageId();
       assert.calledOnce(response.send);
+    });
+  });
+
+  describe('getTrashPages', () => {
+    beforeEach(() => {
+      request = {
+        user: loggedInUser
+      };
+      response = {
+        send: spy(),
+        json: spy(),
+        status: createResponseWithStatusCode(200)
+      };
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall retrieve all trashed pages for user', async () => {
+      findSpy = sandbox.stub(Page, 'find').yields(null, [pageData]);
+
+      await getTrashPages(request, response);
+
+      assertTrashedPagesWereRequestedForUser();
+      assertSendWasCalledWith([pageData]);
+    });
+
+    it('shall return error when retrieve trashed pages fails', async () => {
+      const retrievePageError = { message: 'Could not retrieve pages' };
+      response.status = createResponseWithStatusCode(500);
+      findSpy = sandbox.stub(Page, 'find').yields(retrievePageError, null);
+
+      await getTrashPages(request, response);
+
+      assertTrashedPagesWereRequestedForUser();
+      assertSendWasCalledWith({ error: 'Could not retrieve pages' });
+    });
+
+    it('shall return 403 when user not found', async () => {
+      request.user = null;
+      response.status = createResponseWithStatusCode(403);
+      findSpy = sandbox.stub(Page, 'find').yields(null, []);
+
+      await getTrashPages(request, response);
+
+      assert.notCalled(findSpy);
+      assertSendWasCalledWith({ error: 'Please log in first' });
     });
   });
 
@@ -541,6 +591,122 @@ describe('pageService', () => {
     });
   });
 
+  describe('restoreFromTrash', () => {
+    beforeEach(() => {
+      request = {
+        params: {
+          pageId: newPageId
+        }
+      };
+      response = {
+        send: spy(),
+        json: spy(),
+        status: createResponseWithStatusCode(200),
+        sendStatus: createResponseWithStatusCode(200)
+      };
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall return error is restore page fails', async () => {
+      response.status = createResponseWithStatusCode(500);
+      updatePageSpy = sandbox.stub(Page, 'update').throws({ message: 'Could not restore page' });
+
+      await restoreFromTrash(request, response);
+
+      assertPageWasUpdatedWithDeletedAtDetails();
+      assertSendWasCalledWith({ error: 'Could not restore page' });
+    });
+
+    it('shall return success after page trashedAt updated to null', async () => {
+      response.sendStatus = createResponseWithStatusCode(204);
+      updatePageSpy = sandbox.stub(Page, 'update');
+
+      await restoreFromTrash(request, response);
+
+      assertPageWasUpdatedWithTrashedAtAsNull();
+      assert.notCalled(response.send);
+    });
+  });
+
+  describe('trashPage', () => {
+    beforeEach(() => {
+      request = {
+        params: {
+          pageId: newPageId
+        }
+      };
+      response = {
+        send: spy(),
+        json: spy(),
+        status: createResponseWithStatusCode(200),
+        sendStatus: createResponseWithStatusCode(200)
+      };
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall return error is trashing page fails', async () => {
+      response.status = createResponseWithStatusCode(500);
+      updatePageSpy = sandbox.stub(Page, 'update').throws({ message: 'Could not trash page' });
+
+      await trashPage(request, response);
+
+      assertPageWasUpdatedWithTrashedAtDetails();
+      assertSendWasCalledWith({ error: 'Could not trash page' });
+    });
+
+    it('shall return success after page is trashed', async () => {
+      response.sendStatus = createResponseWithStatusCode(204);
+      updatePageSpy = sandbox.stub(Page, 'update');
+
+      await trashPage(request, response);
+
+      assertPageWasUpdatedWithTrashedAtDetails();
+      assert.notCalled(response.send);
+    });
+  });
+
+  describe('emptyTrash', () => {
+    beforeEach(() => {
+      request = {
+        user: loggedInUser
+      };
+      response = {
+        send: spy(),
+        json: spy(),
+        status: createResponseWithStatusCode(204),
+        sendStatus: createResponseWithStatusCode(204)
+      };
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall return error is emptying trash fails', async () => {
+      response.status = createResponseWithStatusCode(500);
+      updatePageSpy = sandbox.stub(Page, 'updateMany').throws({ message: 'Could not empty trash' });
+
+      await emptyTrash(request, response);
+
+      assertAllPagesForUserWasUpdatedWithDeletedAtDetails();
+      assertSendWasCalledWith({ error: 'Could not empty trash' });
+    });
+
+    it('shall return success after emptying trash', async () => {
+      updatePageSpy = sandbox.stub(Page, 'updateMany').returns(null);
+
+      await emptyTrash(request, response);
+
+      assertAllPagesForUserWasUpdatedWithDeletedAtDetails();
+    });
+  });
+
   describe('updatePage', () => {
     beforeEach(() => {
       request = {
@@ -803,6 +969,66 @@ describe('pageService', () => {
       assertFindOnePageWasCalledWithId();
     });
   });
+
+  describe('renamePage', () => {
+    beforeEach(() => {
+      request = {
+        user: loggedInUser,
+        body: {
+          folderId
+        },
+        params: {
+          pageId: pageData._id,
+          pageName: 'NewName'
+        }
+      };
+      response = {
+        send: spy(),
+        json: spy(),
+        status: createResponseWithStatusCode(200),
+        sendStatus: createResponseWithStatusCode(204)
+      };
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall return error if request not authenticated', async () => {
+      response.status = createResponseWithStatusCode(403);
+      updatePageExecStub = sandbox.stub().returns({});
+      updatePageStub = sandbox.stub(Page, 'update').returns({ exec: updatePageExecStub });
+
+      await renamePage({}, response);
+
+      assert.notCalled(updatePageStub);
+      assertSendWasCalledWith({ error: 'Please log in first' });
+    });
+
+    it('shall update page with new pageName', async () => {
+      response.status = createResponseWithStatusCode(204);
+      updatePageExecStub = sandbox.stub().returns(Promise.resolve());
+      updatePageStub = sandbox.stub(Page, 'update').returns({ exec: updatePageExecStub });
+
+      await renamePage(request, response);
+
+      assertUpdatePageWasCalledWithNewPageTitle(updatePageExecStub);
+      assert.calledOnce(updatePageStub);
+      assert.notCalled(response.send);
+    });
+
+    it('shall return error while renaming page with new pageName', async () => {
+      response.status = createResponseWithStatusCode(500);
+      updatePageExecStub = sandbox.stub().throws({ message: 'Could not update page' });
+      updatePageStub = sandbox.stub(Page, 'update').returns({ exec: updatePageExecStub });
+
+      await renamePage(request, response);
+
+      assertUpdatePageWasCalledWithNewPageTitle(updatePageExecStub);
+      assert.calledOnce(updatePageStub);
+      assertSendWasCalledWith({ error: 'Could not update page' });
+    });
+  });
 });
 
 function assertUpdatePageWasCalledWithLatestPageData() {
@@ -824,8 +1050,25 @@ function assertUpdatePageWasCalledWithLatestPageData() {
     sinon.match.any);
 }
 
+function assertUpdatePageWasCalledWithNewPageTitle(stub) {
+  assert.calledOnce(stub);
+  assert.calledWith(updatePageStub, { _id: pageData._id }, { title: 'NewName' });
+}
+
 function assertFindWasCalledWithPageId() {
   assertStubWasCalledOnceWith(findSpy, { id: pageId });
+}
+
+function assertAllPagesForUserWasUpdatedWithDeletedAtDetails() {
+  assertStubWasCalledOnceWith(updatePageSpy, { user: loggedInUser._id, trashedAt: { $exists: true, $ne: null } }, {
+    trashedAt: null,
+    deletedAt: Date.now(),
+    folder: null
+  });
+}
+
+function assertTrashedPagesWereRequestedForUser() {
+  assertStubWasCalledOnceWith(findSpy, { user: loggedInUser._id, trashedAt: { $exists: true } });
 }
 
 function assertFolderCountWasCalledWithFolderId() {
@@ -841,7 +1084,15 @@ function assertFindOnePageWasCalledWithPageId() {
 }
 
 function assertPageWasUpdatedWithDeletedAtDetails() {
-  assertStubWasCalledOnceWith(updatePageSpy, { _id: newPageId }, { deletedAt: Date.now() });
+  assertStubWasCalledOnceWith(updatePageSpy, { _id: newPageId }, { deletedAt: Date.now(), trashedAt: null });
+}
+
+function assertPageWasUpdatedWithTrashedAtAsNull() {
+  assertStubWasCalledOnceWith(updatePageSpy, { _id: newPageId }, { trashedAt: null });
+}
+
+function assertPageWasUpdatedWithTrashedAtDetails() {
+  assertStubWasCalledOnceWith(updatePageSpy, { _id: newPageId }, { trashedAt: Date.now() });
 }
 
 function assertUpdateUserWasCalledWithPageId() {

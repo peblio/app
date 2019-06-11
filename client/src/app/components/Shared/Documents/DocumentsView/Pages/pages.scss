@@ -1,0 +1,34 @@
+@import 'variables';
+
+.document-line {
+  padding: 0;
+  .profile-pebl__container {
+    width: 100%;
+    margin: 2px 0;
+    display: flex;
+    border-top: 0;
+    border-left: $files-indicator-width solid $tab-yellow;
+    justify-content: space-between;
+    &:hover {
+      background: $g7;
+      -webkit-box-shadow:0 0px 7px rgba(0, 0, 0, 0.8);
+      box-shadow:0 0px 7px rgba(0, 0, 0, 0.8);
+    }
+    &:hover .profile-pebl__overlay{
+      display: none;
+    }
+  }
+  .profile-pebl__image {
+    display: none;
+  }
+  .profile-pebl__info {
+    background: transparent;
+    color: $g4;
+  }
+}
+
+.document-block {
+  .profile-pebl__container {
+    width: $pebl-profile-image-size-width;
+  }
+}

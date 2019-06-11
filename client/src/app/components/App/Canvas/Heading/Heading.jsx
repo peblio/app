@@ -65,7 +65,7 @@ class Heading extends React.Component {
     return (
       <a
         className="heading__author-name heading__author-link"
-        href={`/user/${author}`}
+        href={`/profile/${author}`}
         target="_blank"
         rel="noopener noreferrer"
       >

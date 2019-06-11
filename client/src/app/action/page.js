@@ -339,6 +339,22 @@ export function deletePageTag(value) {
   };
 }
 
+export function renamePage(pageId, pageName) {
+  return (dispatch) => {
+    axios.patch(`/pages/${pageId}/rename/${pageName}`)
+      .then((response) => {
+        dispatch({
+          type: ActionTypes.RENAME_PAGE,
+          pageId,
+          pageName
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
 export function publishPage() {
   return (dispatch) => {
     dispatch({
@@ -350,7 +366,7 @@ export function publishPage() {
 const currentUserFolderActions = namespaceActionCreators(folderActions, 'CURRENT_USER_FOLDERS');
 
 export const {
-  deletePage,
+  trashPage,
   createPage,
   fetchAllPages,
   createFolder,
@@ -362,5 +378,6 @@ export const {
   moveFolderToFolder,
   viewFolder,
   viewPage,
-  clearSelectedFolders
+  clearSelectedFolders,
+  jumpToFolderByShortId
 } = currentUserFolderActions;

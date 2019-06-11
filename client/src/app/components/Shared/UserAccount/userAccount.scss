@@ -1,0 +1,134 @@
+@import 'variables';
+@import 'mixins';
+@import 'base';
+
+.account-man {
+  & path, & circle {
+    fill: $white;
+  }
+  &:hover path, &:hover circle {
+    fill: $blue;
+  }
+}
+
+.account-man__clicked {
+  & path, & circle {
+    fill: $blue;
+    margin-left: $micro-margin;
+  }
+  &:hover path, &:hover circle{
+    fill: $black;
+    margin-left: $micro-margin;
+  }
+}
+
+.user-account {
+  &__link {
+    color: $black;
+    background-color: $transparent;
+    border: 0;
+    text-decoration: none;
+    font-size: $medium-font-size;
+    padding-left: $small-padding;
+    &:hover {
+      color: $gray;
+      background-color: $transparent;
+      border: 0;
+    }
+  }
+  &__button {
+    @extend %mainToolbar__button;
+    padding: 0 !important;
+  }
+  &__div-right-inside{
+    @include flex;
+    padding-right: 10px;
+  }
+  &__list-item {
+    padding: 0 $small-padding $medium-padding 0;
+  }
+  &__list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    list-style-type: none;
+    padding-left: $micro-padding*2;
+    margin: 0;
+  }
+
+  &__account-button{
+    margin: $mini-padding $medium-margin 0 $medium-margin;
+    padding: $small-padding $medium-padding;
+    border: none;
+    background: none;
+    -webkit-transition-duration: 150ms; /* Safari */
+    transition-duration: 150ms;
+    &:hover {
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+  }
+
+  &__account-button-clicked{
+    border: none;
+    background: $white;
+    -webkit-transition-duration: 150ms; /* Safari */
+    transition-duration: 150ms;
+    &:hover {
+      cursor: pointer;
+      background: $white;
+      border: none;
+    }
+  }
+
+  &__account{
+    width: max-content;
+    display: flex;
+    top: 1px;
+    right: $large-margin;
+    flex-direction: column;
+    background-color: $white;
+    border: 2px solid;
+    border-color: $white;
+    position: absolute;
+    border-radius: $medium-border-radius;
+    z-index: $z-index-layer-2;
+    box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+    -moz-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+    -webkit-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+  }
+
+  &__welcome {
+    color: $gray;
+    margin-top: $small-margin;
+    margin-bottom: 0;
+    padding-left: $small-padding;
+    font-size: $small-font-size;
+    font-weight: $medium-font-weight;
+  }
+
+  &__spacer{
+    @extend %vertical-spacer;
+  }
+
+  &__container {
+    display: block;
+    position: absolute;
+    right: 0;
+    & .user-account__button {
+      color: $gray;
+      &:hover {
+        color: $green;
+      }
+    }
+    & .account-man {
+      & path, & circle {
+        fill: $gray;
+      }
+      &:hover path, &:hover circle {
+        fill: $blue;
+      }
+    }
+  }
+}
