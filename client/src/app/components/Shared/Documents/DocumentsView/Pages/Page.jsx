@@ -10,6 +10,7 @@ import DeleteIcon from '../../../../../images/trash.svg';
 import DuplicateIcon from '../../../../../images/duplicate.svg';
 import ShareIcon from '../../../../../images/share.svg';
 import RenameIcon from '../../../../../images/rename.svg';
+import { SNAPSHOT_DEFAULT_IMG } from '../../../../../constants/pageConstants.js';
 
 import {
   movePageToFolder,
@@ -110,7 +111,7 @@ class Page extends Component {
           </a>
 
           <img
-            src={page.snapshotPath}
+            src={page.snapshotPath ? page.snapshotPath : SNAPSHOT_DEFAULT_IMG}
             className="profile-pebl__image"
             alt="snapshot of the pebl"
           />

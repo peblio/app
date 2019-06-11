@@ -38,3 +38,4 @@ export const STARTER_WORKSPACE_LAYOUT = [
     x: 0,
     y: 10
   }];
+export const SNAPSHOT_DEFAULT_IMG = 'https://s3.amazonaws.com/peblio-files/_Pebl_Snapshots/default.png';

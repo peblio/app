@@ -1,6 +1,7 @@
 import shortid from 'shortid';
 
 import * as ActionTypes from '../constants/reduxConstants.js';
+import { SNAPSHOT_DEFAULT_IMG } from '../constants/pageConstants.js';
 import axios from '../utils/axios';
 import { saveLog } from '../utils/log';
 
@@ -26,7 +27,7 @@ export function trashPage(pageId) {
 export function createPage(title, folder) {
   return (dispatch) => {
     const id = shortid.generate();
-    const data = { id, title, snapshotPath: 'https://s3.amazonaws.com/peblio-files/_Pebl_Snapshots/default.png' };
+    const data = { id, title, snapshotPath: SNAPSHOT_DEFAULT_IMG };
     if (folder) {
       data.folder = folder;
     }
