@@ -61,10 +61,11 @@ class Page extends Component {
       editors,
       editorIndex,
       layout,
-      tags
+      tags,
+      snapshotPath
     } = page;
 
-    this.props.duplicatePage(title, heading, description, folder, editors, editorIndex, layout, tags);
+    this.props.duplicatePage(title, heading, description, folder, editors, editorIndex, layout, tags, snapshotPath);
   }
 
   renamePage = (e, id) => {
