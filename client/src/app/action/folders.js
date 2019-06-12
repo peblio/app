@@ -1,6 +1,7 @@
 import shortid from 'shortid';
 
 import * as ActionTypes from '../constants/reduxConstants.js';
+import { SNAPSHOT_DEFAULT_IMG } from '../constants/pageConstants.js';
 import axios from '../utils/axios';
 import { saveLog } from '../utils/log';
 
@@ -26,7 +27,7 @@ export function trashPage(pageId) {
 export function createPage(title, folder) {
   return (dispatch) => {
     const id = shortid.generate();
-    const data = { id, title };
+    const data = { id, title, snapshotPath: SNAPSHOT_DEFAULT_IMG };
     if (folder) {
       data.folder = folder;
     }
@@ -39,14 +40,17 @@ export function createPage(title, folder) {
   };
 }
 
-export function fetchAllPages(profileName, sortType) {
+export function fetchAllPages(profileName, sortType, container) {
   const sortTypeUrl = sortType || 'title';
   const sortOrder = (sortType === 'title') ? 1 : -1;
+  // do not send in profile name if container is dashboard
+  profileName = (container === 'dashboard') ? null : profileName;
   return (dispatch, getState) => {
     let url = '/sketches';
     if (profileName) {
       url = `${url}/${profileName}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}&sortOrder=${sortOrder}`;
     } else {
+      url = `${url}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}&sortOrder=${sortOrder}`;
       const { user } = getState();
       if (!user.name) {
         return false;

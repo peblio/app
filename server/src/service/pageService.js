@@ -26,16 +26,38 @@ export async function getPagesWithTag(req, res) {
   const offset = req.query.offset ? parseInt(req.query.offset) : 0;
   const limit = req.query.limit ? parseInt(req.query.limit) : 10;
   const sort = req.query.sort ? req.query.sort : 'title';
-  var query = {
-    tags: req.query.tag,
-    $or: [{ isPublished: true }, { isPublished: null }]
-  };
-  var options = {
+
+  const aggregate = Page.aggregate()
+  .lookup({
+    from: 'users',
+    localField: 'user',
+    foreignField: '_id',
+    as: 'userDetail'
+  }).unwind('$userDetail');
+
+  if(req.query.showStudentPages && ( req.query.showStudentPages === true ||  req.query.showStudentPages === 'true')){
+    aggregate
+    .match(
+      {
+        'tags': req.query.tag,
+        $or: [{ isPublished: true }, { isPublished: null }]
+      });
+  } else {
+    aggregate
+    .match(
+      {
+        'userDetail.type': { $ne: 'student'},
+        'tags': req.query.tag,
+        $or: [{ isPublished: true }, { isPublished: null }]
+      });
+  }
+
+  const options = {
     offset,
     limit,
     sort
   };
-  return Page.paginate(query, options, (err, data) => {
+  return Page.aggregatePaginate(aggregate, options, (err, data) => {
     if (err) {
       return res.status(500).send(err);
     }
@@ -102,9 +124,9 @@ export async function deletePage(req, res) {
     try {
       await Page.update(
         { _id: pageId },
-        { 
+        {
           deletedAt: Date.now(),
-          trashedAt: null 
+          trashedAt: null
         }
     );
     return res.sendStatus(204);

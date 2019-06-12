@@ -42,10 +42,11 @@ class PageRow extends Component {
       editors,
       editorIndex,
       layout,
-      tags
+      tags,
+      snapshotPath
     } = this.props.page;
 
-    this.props.duplicatePage(title, heading, description, folder, editors, editorIndex, layout, tags);
+    this.props.duplicatePage(title, heading, description, folder, editors, editorIndex, layout, tags, snapshotPath);
   }
 
   handleClick = (e) => {
@@ -123,7 +124,8 @@ PageRow.propTypes = {
     title: PropTypes.string,
     heading: PropTypes.string,
     description: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.string)
+    tags: PropTypes.arrayOf(PropTypes.string),
+    snapshotPath: PropTypes.string
   }).isRequired,
   viewPage: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired

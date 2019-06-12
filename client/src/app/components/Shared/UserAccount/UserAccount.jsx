@@ -31,12 +31,14 @@ class UserAccount extends React.Component {
     this.props.logoutUser(this.props.name).then(() => {
       if (this.props.container === 'app') {
         history.push('/');
+      } else if (this.props.container === 'dashboard') {
+        window.location.assign('https://www.peblio.co');
       }
     });
   }
 
   projectID = () => {
-    const location = this.props.location.pathname;
+    const location = this.props.location ? this.props.location.pathname : '';
     const projectID = location.match(/\/pebl\/([\w-].*)/);
     if (projectID) {
       this.props.setPageId(projectID[1]);
@@ -56,6 +58,22 @@ class UserAccount extends React.Component {
         });
     }
   }
+
+  renderListItem = (displayText, link) => (
+    <li className="user-account__list-item">
+      <a
+        className="user-account__link"
+        target="_blank"
+        rel="noopener noreferrer"
+        href={link}
+        onMouseDown={(e) => { e.preventDefault(); }}
+        onKeyDown={(e) => { e.preventDefault(); }}
+        data-test={`user-account__${displayText}-link`}
+      >
+        {displayText}
+      </a>
+    </li>
+  )
 
   render() {
     return (
@@ -98,51 +116,12 @@ class UserAccount extends React.Component {
                       </button>
                     </p>
                   </li>
-                  <li className="user-account__list-item">
-                    <a
-                      className="user-account__link"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href="/dashboard"
-                      onMouseDown={(e) => { e.preventDefault(); }}
-                      onKeyDown={(e) => { e.preventDefault(); }}
-                      data-test="user-account__profile-link"
-                    >
-                          Dashboard
-                    </a>
-                  </li>
-                  {(this.props.userType === 'student') || (
-                    <li className="user-account__list-item">
-                      {this.props.container === 'app'
-                        ? (
-                          <a
-                            className="user-account__link"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href={`/profile/${this.props.name}`}
-                            onMouseDown={(e) => { e.preventDefault(); }}
-                            onKeyDown={(e) => { e.preventDefault(); }}
-                            data-test="user-account__profile-link"
-                          >
-                          Profile
-                          </a>
-                        )
-                        : (
-                          <a
-                            className="user-account__link"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href='/'
-                            onMouseDown={(e) => { e.preventDefault(); }}
-                            onKeyDown={(e) => { e.preventDefault(); }}
-                            data-test="user-account__profile-link"
-                          >
-                          Workspace
-                          </a>
-                        )
-                      }
-                    </li>
-                  )}
+                  {this.props.container === 'app' || this.renderListItem('Workspace', '/') }
+                  {this.props.container === 'dashboard' || this.renderListItem('Dashboard', '/dashboard') }
+                  {(this.props.userType === 'student') ||
+                    this.props.container === 'profile' ||
+                    this.renderListItem('Profile', `/profile/${this.props.name}`)
+                  }
                   <li className="user-account__list-item">
                     <button
                       className="user-account__link"

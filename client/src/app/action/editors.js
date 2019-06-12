@@ -23,6 +23,24 @@ export function removeEditor(id) {
   };
 }
 
+export function closeDeleteWidgetWarning(id) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLOSE_DELETE_WIDGET_WARNING,
+      id
+    });
+  };
+}
+
+export function openDeleteWidgetWarning(id) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.OPEN_DELETE_WIDGET_WARNING,
+      id
+    });
+  };
+}
+
 export function duplicateEditor(id) {
   return (dispatch, getState) => {
     const { editorsReducer } = getState();

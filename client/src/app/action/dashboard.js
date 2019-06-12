@@ -2,6 +2,14 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 import axios from '../utils/axios';
 import { filterPagesByTitle, clearFilterPagesByTitle } from './page.js';
 
+export function toggleAddNewMenu() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.TOGGLE_ADD_NEW_MENU
+    });
+  };
+}
+
 export function setDashboardView(viewName) {
   return (dispatch) => {
     dispatch({

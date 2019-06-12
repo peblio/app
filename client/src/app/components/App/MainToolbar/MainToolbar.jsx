@@ -15,7 +15,6 @@ import CheckSVG from '../../../images/check.svg';
 import PreferencesSVG from '../../../images/preferences.svg';
 
 import { createNavigationContent } from '../../../action/navigation.js';
-import { logoutUser } from '../../../action/user.js';
 import { setPageTitle, togglePreviewMode, autoSaveUnsavedChanges, savePageSnapshot } from '../../../action/page.js';
 import * as mainToolbarActions from '../../../action/mainToolbar.js';
 
@@ -33,24 +32,22 @@ class MainToolbar extends React.Component {
         this.props.savePage();
       }
     }, 10000);
+    window.addEventListener('beforeunload', this.saveSnapshot);
   }
 
   componentWillUnmount() {
     clearTimeout(this.autoSaveTimeout);
-  }
-
-  logout = () => {
-    this.props.logoutUser(this.props.name).then(() => {
-      history.push('/');
-    });
+    window.removeEventListener('beforeunload', this.saveSnapshot);
   }
 
   saveSnapshotWithPage = () => {
     this.props.savePage();
+    this.saveSnapshot();
+  }
+
+  saveSnapshot = () => {
     if (this.props.projectID()) {
       savePageSnapshot(this.props.projectID(), false);
-    } else {
-      console.log('Hola');
     }
   }
 
@@ -260,7 +257,6 @@ MainToolbar.propTypes = {
   isHelpDropdownOpen: PropTypes.bool.isRequired,
   isPreferencesPanelOpen: PropTypes.bool.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  logoutUser: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,

@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import Adapter from 'enzyme-adapter-react-16';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import Folders from '../../../../../src/app/components/Shared/Documents/DocumentsView/Folders/Folders.jsx';
+import { TestFolder } from '../../../../../src/app/components/Shared/Documents/DocumentsView/Folders/Folder.jsx';
 import DeleteIcon from '../../../../../src/app/images/trash.svg';
 // import { jumpToFolderByShortId, clearSelectedFolders } from '../../../../../src/app/action/folder.js';
 
@@ -19,19 +19,21 @@ let props;
 
 const allProps = {
   profileName: 'Pico',
-  folders: [
+  folder:
     {
+      _id: 1,
       files: [],
       title: 'Title',
       updatedAt: new Date('December 17, 1995 03:24:00')
-    }
-  ],
+    },
   container: 'dashboard',
-  documentView: 'block'
+  documentView: 'block',
+  connectDropTarget: e => (e),
+  connectDragSource: e => (e),
 };
 configure({ adapter: new Adapter() });
 
-describe('Folders component - Block View ', () => {
+describe('Folder component - Block View ', () => {
   beforeEach(() => {
     store = mockStore({
 
@@ -44,9 +46,6 @@ describe('Folders component - Block View ', () => {
   });
 
   it('renders Folders details', () => {
-    wrapper = shallow(<Folders store={store} {...props} />);
-    expect(wrapper.find('.profile-folders__title').first().text()).to.equal('Title');
-    expect(wrapper.find('.profile-folders__line-title').first().text()).to.equal('17/Dec/1995');
-    expect(wrapper.find('.profile-folders__sub-info').first().text()).to.equal('0 files');
+
   });
 });
