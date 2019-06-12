@@ -95,3 +95,8 @@ canvas{
   display: flex;
   align-items: center;
 }
+
+.editor__fullscreen {
+  height: calc(100vh - 50px) !important;
+  width: 100% !important;
+}
