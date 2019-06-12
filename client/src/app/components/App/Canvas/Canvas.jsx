@@ -451,6 +451,7 @@ function mapStateToProps(state) {
     isDeleteWarningModalOpen: state.editorsReducer.isDeleteWarningModalOpen,
     widgetForDeleteWidgetWarning: state.editorsReducer.widgetForDeleteWidgetWarning,
     editors: state.editorsReducer.editors,
+    isFullScreenMode: state.editorsReducer.isFullScreenMode,
     isNavigationOpen: state.navigation.isNavigationOpen,
     isPeblPublished: state.page.isPublished,
     layout: state.page.layout,

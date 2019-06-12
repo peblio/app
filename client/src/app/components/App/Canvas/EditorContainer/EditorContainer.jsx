@@ -64,6 +64,7 @@ class EditorContainer extends React.Component {
       <div>
         <div className={classNames(themeClass)} data-test={`code-editor-${this.props.editorMode}`}>
           <EditorToolbar
+            id={this.props.id}
             addMediaFile={this.addMediaFile}
             container="canvas"
             currentFile={this.props.currentFile}
@@ -79,6 +80,7 @@ class EditorContainer extends React.Component {
             startCodeRefresh={this.startCodeRefresh}
             stopCode={this.stopCode}
             toggleConsole={this.toggleConsole}
+            toggleWidgetFullscreen={this.props.toggleWidgetFullscreen}
             viewEditorPreview={this.viewEditorPreview}
           />
           {this.editorView() === 'split' && (

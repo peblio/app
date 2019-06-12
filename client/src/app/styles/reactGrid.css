@@ -46,7 +46,7 @@
   cursor: se-resize;
 }
 
-.editor__full-screen {
+.react-grid__fullscreen {
   position: absolute;
   left: 0;
   top: $main-toolbar-height;

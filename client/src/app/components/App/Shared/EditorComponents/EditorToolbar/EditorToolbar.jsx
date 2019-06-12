@@ -28,6 +28,10 @@ class EditorToolbar extends React.Component {
     };
   }
 
+  toggleWidgetFullscreen = () => {
+    this.props.toggleWidgetFullscreen(this.props.id);
+  }
+
   toggleEditorView = () => {
     this.setState(prevState => (
       { isEditorViewOpen: !prevState.isEditorViewOpen }));
@@ -185,6 +189,13 @@ class EditorToolbar extends React.Component {
                   }, 50);
                 }}
               >
+                <button
+                  onMouseDown={this.toggleWidgetFullscreen}
+                  onKeyDown={this.toggleWidgetFullscreen}
+                  className="editor-toolbar__button"
+                >
+                  fullscreen
+                </button>
                 <button
                   onMouseDown={this.toggleEditorView}
                   onKeyDown={this.toggleEditorView}

@@ -72,6 +72,7 @@ const editorsReducer = (state = initialState, action) => {
       return { ...state, editors: updateIndices(editors) };
 
     case ActionTypes.TOGGLE_WIDGET_FULLSCREEN:
+      console.log('in here');
       const isWidgetFullScreen = state.editors[action.id].isFullScreenMode;
       editors[action.id].isFullScreenMode = !isWidgetFullScreen;
       return {
