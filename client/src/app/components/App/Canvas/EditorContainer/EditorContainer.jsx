@@ -58,7 +58,6 @@ class EditorContainer extends React.Component {
     const themeClass = classNames('editor__total-container', {
       editor__dark: (this.props.editorTheme === 'dark'),
       editor__light: (this.props.editorTheme === 'light'),
-      // 'editor__full-screen': (this.props.fullScreenMode === true)
     });
     return (
       <div>

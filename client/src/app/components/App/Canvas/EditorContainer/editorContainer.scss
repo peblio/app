@@ -99,4 +99,5 @@ canvas{
 .editor__fullscreen {
   height: calc(100vh - 50px) !important;
   width: 100% !important;
+  transform: translate(0,0) !important;
 }

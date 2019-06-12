@@ -135,7 +135,6 @@ class Canvas extends React.Component {
             isPlaying={editor.isPlaying && isVisible}
             isRefreshing={editor.isRefreshing}
             editorView={editor.editorView}
-            fullScreenMode={editor.fullScreenMode}
           />
         )}
       </VisibilitySensor>
@@ -369,46 +368,49 @@ class Canvas extends React.Component {
           }
           autoSize
         >
-          {ids.map(id => (
-            <div
-              key={id}
-              data-grid={localLayout[id]}
-              className={`${this.props.editors[id].isFullScreenMode ? 'editor__fullscreen' : ''} ${this.props.currentWidget === id ? 'canvas-high' : ''}`
-              }
-            >
+          {ids.map((id) => {
+            console.log(this.props.editors[id]);
+            return (
               <div
-                className={`widget__container
-                  ${this.props.editors[id].type === 'text'
-              ? 'no-outline'
-              : 'element__iframe-container'}
-                `}
-                id={id}
-                tabIndex="0" // eslint-disable-line
-                onFocus={() => this.props.setCurrentWidget(id)}
+                key={id}
+                data-grid={localLayout[id]}
+                className={`${this.props.editors[id].isWidgetFullScreenMode ? 'editor__fullscreen' : ''} ${this.props.currentWidget === id ? 'canvas-high' : ''}`
+                }
               >
-                {this.props.preview || (
-                  <div className={`widget-nav__container${(this.props.currentWidget === id) ? '_highlighted' : ''}`}>
-                    <WidgetNav
-                      id={id}
-                      showDeleteWidgetWarning={this.props.isDeleteWarningModalOpen &&
+                <div
+                  className={`widget__container
+                  ${this.props.editors[id].type === 'text'
+                ? 'no-outline'
+                : 'element__iframe-container'}
+                `}
+                  id={id}
+                tabIndex="0" // eslint-disable-line
+                  onFocus={() => this.props.setCurrentWidget(id)}
+                >
+                  {(this.props.preview) || (
+                    <div className={`widget-nav__container${(this.props.currentWidget === id) ? '_highlighted' : ''}`}>
+                      <WidgetNav
+                        id={id}
+                        showDeleteWidgetWarning={this.props.isDeleteWarningModalOpen &&
                         this.props.widgetForDeleteWidgetWarning === id}
-                    />
-                  </div>
-                )}
-                {(() => {
-                  switch (this.props.editors[id].type) {
-                    case 'code': return this.renderCodeEditor(this.props.editors[id]);
-                    case 'question': return this.renderQuestion(this.props.editors[id]);
-                    case 'iframe': return this.renderIframe(this.props.editors[id]);
-                    case 'video': return this.renderVideo(this.props.editors[id]);
-                    case 'image': return this.renderImage(this.props.editors[id]);
-                    case 'text': return this.renderTextEditor(this.props.editors[id]);
-                    default: return null;
-                  }
-                })()}
+                      />
+                    </div>
+                  )}
+                  {(() => {
+                    switch (this.props.editors[id].type) {
+                      case 'code': return this.renderCodeEditor(this.props.editors[id]);
+                      case 'question': return this.renderQuestion(this.props.editors[id]);
+                      case 'iframe': return this.renderIframe(this.props.editors[id]);
+                      case 'video': return this.renderVideo(this.props.editors[id]);
+                      case 'image': return this.renderImage(this.props.editors[id]);
+                      case 'text': return this.renderTextEditor(this.props.editors[id]);
+                      default: return null;
+                    }
+                  })()}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </ReactGridLayout>
       </section>
     );

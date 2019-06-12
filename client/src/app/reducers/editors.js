@@ -72,9 +72,8 @@ const editorsReducer = (state = initialState, action) => {
       return { ...state, editors: updateIndices(editors) };
 
     case ActionTypes.TOGGLE_WIDGET_FULLSCREEN:
-      console.log('in here');
-      const isWidgetFullScreen = state.editors[action.id].isFullScreenMode;
-      editors[action.id].isFullScreenMode = !isWidgetFullScreen;
+      const isWidgetFullScreen = state.editors[action.id].isWidgetFullScreenMode;
+      editors[action.id].isWidgetFullScreenMode = !isWidgetFullScreen;
       return {
         ...state,
         editors,
@@ -111,7 +110,7 @@ const editorsReducer = (state = initialState, action) => {
         editorMode: action.mode,
         innerWidth: CODE_DEFAULT_INSIDE_WIDTH,
         editorView: 'split',
-        isFullScreenMode: false
+        isWidgetFullScreenMode: false
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -205,7 +204,6 @@ const editorsReducer = (state = initialState, action) => {
         index: stack.length,
         editorState: EditorState.createEmpty(),
         backColor: 'transparent',
-        isFullScreenMode: false
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -233,7 +231,6 @@ const editorsReducer = (state = initialState, action) => {
         answer: 'Enter answer here..',
         minHeight: QUESION_MIN_INNER_HEIGHT,
         innerHeight: QUESION_DEFAULT_INNER_HEIGHT,
-        isFullScreenMode: false
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -264,7 +261,6 @@ const editorsReducer = (state = initialState, action) => {
         id,
         index: stack.length,
         url: 'https://peblio.github.io/instructions/embed.html',
-        isFullScreenMode: false
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -284,7 +280,6 @@ const editorsReducer = (state = initialState, action) => {
         id,
         index: stack.length,
         url: 'https://peblio.github.io/instructions/video.html',
-        isFullScreenMode: false
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -310,7 +305,6 @@ const editorsReducer = (state = initialState, action) => {
           height: 100,
           width: 100
         },
-        isFullScreenMode: false
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
