@@ -159,6 +159,7 @@ EditorContainer.propTypes = {
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
+  toggleWidgetFullscreen: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
   viewEditorPreview: PropTypes.func.isRequired,

@@ -341,6 +341,7 @@ EditorToolbar.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
+  id: PropTypes.string.isRequired,
   imageURL: PropTypes.string.isRequired,
   isConsoleOpen: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
@@ -354,6 +355,7 @@ EditorToolbar.propTypes = {
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   toggleConsole: PropTypes.func.isRequired,
+  toggleWidgetFullscreen: PropTypes.func.isRequired,
   viewEditorPreview: PropTypes.func.isRequired
 };
 

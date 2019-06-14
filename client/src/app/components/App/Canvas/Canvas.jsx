@@ -373,7 +373,9 @@ class Canvas extends React.Component {
             <div
               key={id}
               data-grid={localLayout[id]}
-              className={`${this.props.editors[id].isWidgetFullScreenMode ? 'editor__fullscreen' : ''} ${this.props.currentWidget === id ? 'canvas-high' : ''}`
+              className={`
+                ${this.props.editors[id].isWidgetFullScreenMode ? 'editor__fullscreen' : ''}
+                ${this.props.currentWidget === id ? 'canvas-high' : ''}`
               }
             >
               <div
@@ -423,6 +425,7 @@ Canvas.propTypes = {
   widgetForDeleteWidgetWarning: PropTypes.string.isRequired,
   editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  isFullScreenMode: PropTypes.bool.isRequired,
   isNavigationOpen: PropTypes.bool.isRequired,
   isPeblPublished: PropTypes.bool.isRequired,
   isDeleteWarningModalOpen: PropTypes.bool.isRequired,
