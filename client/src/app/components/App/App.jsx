@@ -273,7 +273,8 @@ class App extends React.Component {
           });
       })
       .catch((err) => {
-        if (err.response.status === 404) {
+        console.log(err);
+        if (err.response && err.response.status === 404) {
           history.push('/404');
         }
       });

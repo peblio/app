@@ -8,6 +8,8 @@ import URL from 'url';
 import InfoSVG from '../../../../../images/info.svg';
 import PauseSVG from '../../../../../images/pause.svg';
 import PlaySVG from '../../../../../images/play.svg';
+import EditorExpand from '../../../../../images/editor-expand.svg';
+import EditorCompress from '../../../../../images/editor-compress.svg';
 import PreferencesSVG from '../../../../../images/preferences.svg';
 import axios from '../../../../../utils/axios';
 import { ProcessingWarning, WorkspaceLanguageConfirmation } from '../../../../../constants/codeConstants.js';
@@ -44,6 +46,17 @@ class EditorToolbar extends React.Component {
   closeFileUpload = () => {
     this.setState({ isFileUploadOpen: false });
   }
+
+  renderEditorSizeIcon = () => {
+    console.log(this.props.isWidgetFullScreenMode);
+    if (this.props.isWidgetFullScreenMode) {
+      return (
+        <EditorCompress alt="compress editor" />
+      );
+    }
+    return (<EditorExpand alt="expand editor" />);
+  }
+
 
   startFileUpload = () => {
     this.setState({ isFileUploading: true });
@@ -189,13 +202,7 @@ class EditorToolbar extends React.Component {
                   }, 50);
                 }}
               >
-                <button
-                  onMouseDown={this.toggleWidgetFullscreen}
-                  onKeyDown={this.toggleWidgetFullscreen}
-                  className="editor-toolbar__button"
-                >
-                  fullscreen
-                </button>
+
                 <button
                   onMouseDown={this.toggleEditorView}
                   onKeyDown={this.toggleEditorView}
@@ -205,6 +212,13 @@ class EditorToolbar extends React.Component {
                     alt='view preferences'
                     className="editor-toolbar__pref-svg"
                   />
+                </button>
+                <button
+                  onMouseDown={this.toggleWidgetFullscreen}
+                  onKeyDown={this.toggleWidgetFullscreen}
+                  className="editor-toolbar__button"
+                >
+                  {this.renderEditorSizeIcon()}
                 </button>
                 {this.state.isEditorViewOpen && (
                   <EditorOptions
@@ -330,6 +344,7 @@ EditorToolbar.propTypes = {
   imageURL: PropTypes.string.isRequired,
   isConsoleOpen: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
+  isWidgetFullScreenMode: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   openShareWorkspace: PropTypes.func.isRequired,
   playCode: PropTypes.func.isRequired,

@@ -72,6 +72,7 @@ class EditorContainer extends React.Component {
             files={this.props.files}
             isConsoleOpen={this.state.isConsoleOpen}
             isPlaying={this.props.isPlaying}
+            isWidgetFullScreenMode={this.props.isWidgetFullScreenMode}
             name={this.props.name}
             playCode={this.playCode}
             setCurrentFile={this.setCurrentFile}
@@ -149,6 +150,7 @@ EditorContainer.propTypes = {
   innerWidth: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isRefreshing: PropTypes.bool.isRequired,
+  isWidgetFullScreenMode: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   playCode: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,

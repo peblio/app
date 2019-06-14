@@ -47,10 +47,11 @@
 }
 
 .react-grid__fullscreen {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: $main-toolbar-height;
   z-index: $z-index-layer-4;
-  height: 100vh;
+  height: 100vh !important;
   width: 100vw;
+  overflow: hidden;
 }

@@ -48,7 +48,12 @@ const editorsReducer = (state = initialState, action) => {
             convertFromRaw(JSON.parse(rawContentState))
           );
           newEditors[id] = newEditor;
-        } else newEditors[id] = action.editors[id];
+        } else {
+          if (action.editors[id].type === 'code') {
+            action.editors[id].isWidgetFullScreenMode = false;
+          }
+          newEditors[id] = action.editors[id];
+        }
       });
       stack.sort((e1, e2) => newEditors[e1].index - newEditors[e2].index);
       return { editors: newEditors, editorIndex: action.editorIndex };
@@ -72,8 +77,8 @@ const editorsReducer = (state = initialState, action) => {
       return { ...state, editors: updateIndices(editors) };
 
     case ActionTypes.TOGGLE_WIDGET_FULLSCREEN:
-      const isWidgetFullScreen = state.editors[action.id].isWidgetFullScreenMode;
-      editors[action.id].isWidgetFullScreenMode = !isWidgetFullScreen;
+      const isWidgetFullScreenMode = state.editors[action.id].isWidgetFullScreenMode;
+      editors[action.id].isWidgetFullScreenMode = !isWidgetFullScreenMode;
       return {
         ...state,
         editors,

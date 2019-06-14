@@ -20,10 +20,8 @@
         background-color: $g4;
       }
       .editor-toolbar__button {
-        background-color: $g2;
         color: $g5;
         &:hover {
-          background-color: $g5;
           color: $g2;
         }
       }
@@ -303,7 +301,7 @@
             border: none;
           }
         }
-      
+
       }
 
     }
