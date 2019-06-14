@@ -100,4 +100,5 @@ canvas{
   height: calc(100vh - 50px) !important;
   width: 100% !important;
   transform: translate(0,0) !important;
+  z-index: 400;
 }
