@@ -130,7 +130,6 @@ class EditorToolbar extends React.Component {
                 </div>
               </div>
             )}
-
             {(this.props.editorMode === 'python') && (
               <span
                 className='beta-tag'
@@ -138,19 +137,17 @@ class EditorToolbar extends React.Component {
              beta
               </span>
             )}
-
-            {this.props.container === 'workspace' && (
-              <select
-                className='editor-toolbar__dropdown'
-                onChange={this.confirmLanguageChange}
-                value={this.props.editorMode}
-              >
-                <option value='html'>HTML</option>
-                <option value='webdev'>HTML/JS/CSS</option>
-                <option value='p5'>p5</option>
-                <option value='processing'>Processing</option>
-                <option value='python'>Python</option>
-              </select>
+            <select
+              className='editor-toolbar__dropdown'
+              onChange={this.confirmLanguageChange}
+              value={this.props.editorMode}
+            >
+              <option value='html'>HTML</option>
+              <option value='webdev'>HTML/JS/CSS</option>
+              <option value='p5'>p5</option>
+              <option value='processing'>Processing</option>
+              <option value='python'>Python</option>
+            </select>
             )}
             {this.props.container === 'canvas' && (
               <p className='editor-toolbar__title'>
@@ -202,7 +199,6 @@ class EditorToolbar extends React.Component {
                   }, 50);
                 }}
               >
-
                 <button
                   onMouseDown={this.toggleEditorView}
                   onKeyDown={this.toggleEditorView}
@@ -235,7 +231,6 @@ class EditorToolbar extends React.Component {
             )}
           </div>
         </div>
-
         <ul className='editor-toolbar__files'>
           {this.props.editorView === 'tabbed' && (
             <li
@@ -286,7 +281,6 @@ class EditorToolbar extends React.Component {
           }
           {
             (this.props.editorMode === 'p5' || this.props.editorMode === 'webdev') &&
-
           (
             <li key='add-media' className='editor-toolbar__file'>
               <Tooltip content="Add Image">
@@ -324,7 +318,6 @@ class EditorToolbar extends React.Component {
               isFileUploading={this.state.isFileUploading}
             />
           </div>
-
         )}
       </div>
     );
