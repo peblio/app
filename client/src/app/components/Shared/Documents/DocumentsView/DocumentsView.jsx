@@ -17,7 +17,7 @@ class DocumentsView extends Component {
   }
 
   render() {
-    const { childFolders, childPages, documentView, folderId, folder, profileName } = this.props;
+    const { childFolders, childPages, documentView, folderId, folder, profileName, searchText } = this.props;
     const title = folderId ? folder.title : '';
     return (
       /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -36,8 +36,10 @@ class DocumentsView extends Component {
         <h1 className="profile-pebls__heading">
           {title}
         </h1>
-        <h2 className="profile-pebls__sub-heading">folders</h2>
-        {childFolders && childFolders.length > 0 && (
+        {!searchText && (
+          <h2 className="profile-pebls__sub-heading">folders</h2>
+        )}
+        {!searchText && childFolders && childFolders.length > 0 && (
           <Folders
             deleteFolder={this.props.deleteFolder}
             documentView={documentView}
@@ -97,6 +99,7 @@ const mapStateToProps = (state, ownProps) => {
     : (state.page.isSearchByTitle
       ? state.page.filteredPages
       : state.page.pages);
+  const searchText = state.page.searchText;
   return {
     childFolders: Object.values(ownProps.folders.byId)
       .filter(f => f.parent === ownProps.folderId),
@@ -108,7 +111,8 @@ const mapStateToProps = (state, ownProps) => {
         return (pageFolderId === folderId);
       }),
     parentFolderShortId,
-    folder
+    folder,
+    searchText
   };
 };
 
