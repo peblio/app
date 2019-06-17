@@ -156,28 +156,33 @@ render() {
       {this.props.dashboardView === 'documents' && (
         <div className="dashboard-nav__lower-container">
           <div className="dashboard-nav__dropdown-container">
-            <input
-              type="text"
-              className="dashboard-nav__title-search"
-              placeholder="Search"
-              onChange={this.searchByTitle}
-              ref={(ts) => { this.titleSearch = ts; }}
-            />
-            <div className="dashboard-nav__sub-container">
-              <p className="dashboard-nav__dropdown-label">
+            <div className="dashboard-nav__dropdown-sub-container">
+              <input
+                type="text"
+                className="dashboard-nav__title-search"
+                placeholder="Search"
+                onChange={this.searchByTitle}
+                ref={(ts) => { this.titleSearch = ts; }}
+              />
+              <div className="dashboard-nav__sub-container">
+                <p className="dashboard-nav__dropdown-label">
               Arrange By
-              </p>
-              <select
-                className="dashboard-nav__dropdown"
-                id="dashboard-sort"
-                name="dashboard-sort"
-                onChange={this.setDocumentSort}
-                ref={(dashboardSort) => { this.dashboardSort = dashboardSort; }}
-                value={this.props.documentSort}
-              >
-                <option value="-updatedAt">Updated At</option>
-                <option value="title">Title</option>
-              </select>
+                </p>
+                <select
+                  className="dashboard-nav__dropdown"
+                  id="dashboard-sort"
+                  name="dashboard-sort"
+                  onChange={this.setDocumentSort}
+                  ref={(dashboardSort) => { this.dashboardSort = dashboardSort; }}
+                  value={this.props.documentSort}
+                >
+                  <option value="-updatedAt">Updated At</option>
+                  <option value="title">Title</option>
+                </select>
+              </div>
+              <button className="dashboard-nav__clear-link" onClick={this.clearSearchText}>
+                Clear Filter
+              </button>
             </div>
             <div className="dashboard-nav__new-container">
               <button
@@ -214,9 +219,6 @@ render() {
                   </button>
                 </ul>
               )}
-              <button className="dashboard-nav__clear-link" onClick={this.clearSearchText}>
-                  Clear Filter
-              </button>
             </div>
           </div>
         </div>

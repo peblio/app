@@ -84,17 +84,17 @@
     color: #337ab7;
     border-radius: 0;
     text-decoration: underline;
+    font-size: $small-font-size;
   }
   &__title-search {
-    margin: 0rem 2.5rem 0rem 0rem;
-    font-size: 16px;
-    line-height: 24px;
+    height: $large-height;
+    width: fit-content;
+    border-radius: $small-border-radius/2;
     border: solid $small-border $g5;
-    border-radius: $small-border-radius;
-    padding: $small-padding/2;
-    background: $g7;
-    color: $g4;
-    position: relative;
+    background: transparent;
+    color: $g3;
+    font-size: $small-font-size;
+    margin-right: $medium-margin;
   }
   &__dropdown-label {
     font-size: $small-font-size;
@@ -109,6 +109,10 @@
     padding: $medium-padding 0;
     width: 100%;
     justify-content: space-between;
+  }
+  &__dropdown-sub-container {
+    display: flex;
+    flex-direction: row;
   }
   &__add-button {
     @extend %peblio-button;
@@ -126,6 +130,7 @@
     display: flex;
     padding: 0;
     margin: 0;
+    margin-right: $medium-margin;
   }
   &__sub-button-container {
     display: flex;
