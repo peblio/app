@@ -299,9 +299,7 @@
             border: none;
           }
         }
-
       }
-
     }
   }
   &__svg-info {
@@ -328,11 +326,9 @@
   }
 }
 
-
 .editor-toolbar__item {
   @extend %small-button;
 }
-
 
 // used for editor toolbar
 %small-button {
