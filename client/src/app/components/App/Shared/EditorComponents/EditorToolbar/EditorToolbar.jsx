@@ -137,17 +137,18 @@ class EditorToolbar extends React.Component {
              beta
               </span>
             )}
-            <select
-              className='editor-toolbar__dropdown'
-              onChange={this.confirmLanguageChange}
-              value={this.props.editorMode}
-            >
-              <option value='html'>HTML</option>
-              <option value='webdev'>HTML/JS/CSS</option>
-              <option value='p5'>p5</option>
-              <option value='processing'>Processing</option>
-              <option value='python'>Python</option>
-            </select>
+            {this.props.container === 'workspace' && (
+              <select
+                className='editor-toolbar__dropdown'
+                onChange={this.confirmLanguageChange}
+                value={this.props.editorMode}
+              >
+                <option value='html'>HTML</option>
+                <option value='webdev'>HTML/JS/CSS</option>
+                <option value='p5'>p5</option>
+                <option value='processing'>Processing</option>
+                <option value='python'>Python</option>
+              </select>
             )}
             {this.props.container === 'canvas' && (
               <p className='editor-toolbar__title'>
