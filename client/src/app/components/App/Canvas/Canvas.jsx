@@ -134,6 +134,7 @@ class Canvas extends React.Component {
             innerWidth={editor.innerWidth}
             isPlaying={editor.isPlaying && isVisible}
             isRefreshing={editor.isRefreshing}
+            isWidgetFullScreenMode={editor.isWidgetFullScreenMode}
             editorView={editor.editorView}
           />
         )}
@@ -348,6 +349,7 @@ class Canvas extends React.Component {
         }
         <Heading />
         <ReactGridLayout
+          className={`react-grid-layout ${this.props.isFullScreenMode ? 'react-grid__fullscreen' : ''}`}
           cols={this.props.rgl.cols}
           width={this.props.rgl.width}
           rowHeight={this.props.rgl.rowHeight}
@@ -371,20 +373,22 @@ class Canvas extends React.Component {
             <div
               key={id}
               data-grid={localLayout[id]}
-              className={`${this.props.currentWidget === id ? 'canvas-high' : ''}`
+              className={`
+                ${this.props.editors[id].isWidgetFullScreenMode ? 'editor__fullscreen' : ''}
+                ${this.props.currentWidget === id ? 'canvas-high' : ''}`
               }
             >
               <div
-                className={
-                  this.props.editors[id].type === 'text'
-                    ? 'widget__container no-outline'
-                    : 'widget__container element__iframe-container'
-                }
+                className={`widget__container
+                  ${this.props.editors[id].type === 'text'
+              ? 'no-outline'
+              : 'element__iframe-container'}
+                `}
                 id={id}
                 tabIndex="0" // eslint-disable-line
                 onFocus={() => this.props.setCurrentWidget(id)}
               >
-                {this.props.preview || (
+                {(this.props.preview) || (
                   <div className={`widget-nav__container${(this.props.currentWidget === id) ? '_highlighted' : ''}`}>
                     <WidgetNav
                       id={id}
@@ -421,6 +425,7 @@ Canvas.propTypes = {
   widgetForDeleteWidgetWarning: PropTypes.string.isRequired,
   editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  isFullScreenMode: PropTypes.bool.isRequired,
   isNavigationOpen: PropTypes.bool.isRequired,
   isPeblPublished: PropTypes.bool.isRequired,
   isDeleteWarningModalOpen: PropTypes.bool.isRequired,
@@ -449,6 +454,7 @@ function mapStateToProps(state) {
     isDeleteWarningModalOpen: state.editorsReducer.isDeleteWarningModalOpen,
     widgetForDeleteWidgetWarning: state.editorsReducer.widgetForDeleteWidgetWarning,
     editors: state.editorsReducer.editors,
+    isFullScreenMode: state.editorsReducer.isFullScreenMode,
     isNavigationOpen: state.navigation.isNavigationOpen,
     isPeblPublished: state.page.isPublished,
     layout: state.page.layout,

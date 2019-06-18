@@ -9,7 +9,7 @@ export function trashPage(pageId) {
   return (dispatch) => {
     axios.patch(`/pages/trash/${pageId}`).then(() => {
       dispatch({
-        type: ActionTypes.DELETE_PAGE,
+        type: ActionTypes.TRASH_PAGE,
         pageId
       });
       const log = {

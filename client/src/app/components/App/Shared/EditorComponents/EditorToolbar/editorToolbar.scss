@@ -20,10 +20,8 @@
         background-color: $g4;
       }
       .editor-toolbar__button {
-        background-color: $g2;
         color: $g5;
         &:hover {
-          background-color: $g5;
           color: $g2;
         }
       }
@@ -96,10 +94,8 @@
         background-color: $g6;
       }
       .editor-toolbar__button {
-        background-color: $g6;
         color: $b2;
         &:hover {
-          background-color: $b2;
           color: $g6;
         }
       }
@@ -303,9 +299,7 @@
             border: none;
           }
         }
-
       }
-
     }
   }
   &__svg-info {
@@ -332,11 +326,9 @@
   }
 }
 
-
 .editor-toolbar__item {
   @extend %small-button;
 }
-
 
 // used for editor toolbar
 %small-button {

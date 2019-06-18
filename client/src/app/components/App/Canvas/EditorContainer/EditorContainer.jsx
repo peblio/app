@@ -57,12 +57,13 @@ class EditorContainer extends React.Component {
   render() {
     const themeClass = classNames('editor__total-container', {
       editor__dark: (this.props.editorTheme === 'dark'),
-      editor__light: (this.props.editorTheme === 'light')
+      editor__light: (this.props.editorTheme === 'light'),
     });
     return (
       <div>
         <div className={classNames(themeClass)} data-test={`code-editor-${this.props.editorMode}`}>
           <EditorToolbar
+            id={this.props.id}
             addMediaFile={this.addMediaFile}
             container="canvas"
             currentFile={this.props.currentFile}
@@ -71,6 +72,7 @@ class EditorContainer extends React.Component {
             files={this.props.files}
             isConsoleOpen={this.state.isConsoleOpen}
             isPlaying={this.props.isPlaying}
+            isWidgetFullScreenMode={this.props.isWidgetFullScreenMode}
             name={this.props.name}
             playCode={this.playCode}
             setCurrentFile={this.setCurrentFile}
@@ -78,6 +80,7 @@ class EditorContainer extends React.Component {
             startCodeRefresh={this.startCodeRefresh}
             stopCode={this.stopCode}
             toggleConsole={this.toggleConsole}
+            toggleWidgetFullscreen={this.props.toggleWidgetFullscreen}
             viewEditorPreview={this.viewEditorPreview}
           />
           {this.editorView() === 'split' && (
@@ -147,6 +150,7 @@ EditorContainer.propTypes = {
   innerWidth: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isRefreshing: PropTypes.bool.isRequired,
+  isWidgetFullScreenMode: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   playCode: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
@@ -155,6 +159,7 @@ EditorContainer.propTypes = {
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
+  toggleWidgetFullscreen: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
   viewEditorPreview: PropTypes.func.isRequired,

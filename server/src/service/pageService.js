@@ -15,7 +15,10 @@ export async function getPage(req, res) {
     if (err) {
       return res.status(500).send(err);
     }
-    if (!data || !data.length) {
+    if (!data || !data.length || data.length == 0) {
+      return res.status(404).send();
+    }
+    if(data[0].deletedAt || data[0].trashedAt){
       return res.status(404).send();
     }
     return res.status(200).send(data);
