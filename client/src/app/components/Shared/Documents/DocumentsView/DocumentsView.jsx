@@ -17,7 +17,7 @@ class DocumentsView extends Component {
   }
 
   render() {
-    const { childFolders, childPages, documentView, folderId, folder, profileName, searchText, isSearchByTitle } = this.props;
+    const { childFolders, childPages, documentView, folderId, folder, profileName, isSearchByTitle } = this.props;
     const title = folderId ? folder.title : '';
     return (
       /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -74,6 +74,7 @@ DocumentsView.propTypes = {
   container: PropTypes.string.isRequired,
   deleteFolder: PropTypes.func.isRequired,
   documentView: PropTypes.string.isRequired,
+  isSearchByTitle: PropTypes.bool.isRequired,
   folderDepth: PropTypes.number,
   folderId: PropTypes.string,
   folder: PropTypes.shape({ parent: PropTypes.string }),
@@ -100,7 +101,6 @@ const mapStateToProps = (state, ownProps) => {
       ? state.page.filteredPages
       : state.page.pages);
   const isSearchByTitle = state.page.isSearchByTitle;
-  const searchText = state.page.searchText;
   return {
     childFolders: Object.values(ownProps.folders.byId)
       .filter(f => f.parent === ownProps.folderId),
@@ -116,7 +116,6 @@ const mapStateToProps = (state, ownProps) => {
       }),
     parentFolderShortId,
     folder,
-    searchText,
     isSearchByTitle
   };
 };

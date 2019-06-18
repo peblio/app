@@ -75,6 +75,7 @@ class Nav extends React.Component {
   searchByTitle = (e) => {
     if (e.target.value === '') {
       this.props.clearSearchByTitle();
+      return;
     }
     this.props.searchByTitle(e.target.value);
   }
