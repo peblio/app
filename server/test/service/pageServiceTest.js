@@ -199,6 +199,30 @@ describe('pageService', () => {
       assertFindWasCalledWithPageId();
       assert.calledOnce(response.send);
     });
+
+    it('shall return 404 when page is trashed', () => {
+      const trashedPage = Object.assign({}, pageData);
+      trashedPage.trashedAt = Date.now();
+      response.status = createResponseWithStatusCode(404);
+      findSpy = sandbox.stub(Page, 'find').yields(null, [trashedPage]);
+
+      getPage(request, response);
+
+      assertFindWasCalledWithPageId();
+      assert.calledOnce(response.send);
+    });
+
+    it('shall return 404 when page is deleted', () => {
+      const deletedPage = Object.assign({}, pageData);
+      deletedPage.deletedAt = Date.now();
+      response.status = createResponseWithStatusCode(404);
+      findSpy = sandbox.stub(Page, 'find').yields(null, [deletedPage]);
+
+      getPage(request, response);
+
+      assertFindWasCalledWithPageId();
+      assert.calledOnce(response.send);
+    });
   });
 
   describe('getTrashPages', () => {
