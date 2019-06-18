@@ -8,6 +8,8 @@ import URL from 'url';
 import InfoSVG from '../../../../../images/info.svg';
 import PauseSVG from '../../../../../images/pause.svg';
 import PlaySVG from '../../../../../images/play.svg';
+import EditorExpand from '../../../../../images/editor-expand.svg';
+import EditorCompress from '../../../../../images/editor-compress.svg';
 import PreferencesSVG from '../../../../../images/preferences.svg';
 import axios from '../../../../../utils/axios';
 import { ProcessingWarning, WorkspaceLanguageConfirmation } from '../../../../../constants/codeConstants.js';
@@ -28,6 +30,10 @@ class EditorToolbar extends React.Component {
     };
   }
 
+  toggleWidgetFullscreen = () => {
+    this.props.toggleWidgetFullscreen(this.props.id);
+  }
+
   toggleEditorView = () => {
     this.setState(prevState => (
       { isEditorViewOpen: !prevState.isEditorViewOpen }));
@@ -40,6 +46,17 @@ class EditorToolbar extends React.Component {
   closeFileUpload = () => {
     this.setState({ isFileUploadOpen: false });
   }
+
+  renderEditorSizeIcon = () => {
+    console.log(this.props.isWidgetFullScreenMode);
+    if (this.props.isWidgetFullScreenMode) {
+      return (
+        <EditorCompress alt="compress editor" />
+      );
+    }
+    return (<EditorExpand alt="expand editor" />);
+  }
+
 
   startFileUpload = () => {
     this.setState({ isFileUploading: true });
@@ -113,7 +130,6 @@ class EditorToolbar extends React.Component {
                 </div>
               </div>
             )}
-
             {(this.props.editorMode === 'python') && (
               <span
                 className='beta-tag'
@@ -121,7 +137,6 @@ class EditorToolbar extends React.Component {
              beta
               </span>
             )}
-
             {this.props.container === 'workspace' && (
               <select
                 className='editor-toolbar__dropdown'
@@ -195,6 +210,13 @@ class EditorToolbar extends React.Component {
                     className="editor-toolbar__pref-svg"
                   />
                 </button>
+                <button
+                  onMouseDown={this.toggleWidgetFullscreen}
+                  onKeyDown={this.toggleWidgetFullscreen}
+                  className="editor-toolbar__button"
+                >
+                  {this.renderEditorSizeIcon()}
+                </button>
                 {this.state.isEditorViewOpen && (
                   <EditorOptions
                     editorView={this.props.editorView}
@@ -210,7 +232,6 @@ class EditorToolbar extends React.Component {
             )}
           </div>
         </div>
-
         <ul className='editor-toolbar__files'>
           {this.props.editorView === 'tabbed' && (
             <li
@@ -261,7 +282,6 @@ class EditorToolbar extends React.Component {
           }
           {
             (this.props.editorMode === 'p5' || this.props.editorMode === 'webdev') &&
-
           (
             <li key='add-media' className='editor-toolbar__file'>
               <Tooltip content="Add Image">
@@ -299,7 +319,6 @@ class EditorToolbar extends React.Component {
               isFileUploading={this.state.isFileUploading}
             />
           </div>
-
         )}
       </div>
     );
@@ -316,9 +335,11 @@ EditorToolbar.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
+  id: PropTypes.string.isRequired,
   imageURL: PropTypes.string.isRequired,
   isConsoleOpen: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
+  isWidgetFullScreenMode: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   openShareWorkspace: PropTypes.func.isRequired,
   playCode: PropTypes.func.isRequired,
@@ -328,6 +349,7 @@ EditorToolbar.propTypes = {
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   toggleConsole: PropTypes.func.isRequired,
+  toggleWidgetFullscreen: PropTypes.func.isRequired,
   viewEditorPreview: PropTypes.func.isRequired
 };
 

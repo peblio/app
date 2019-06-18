@@ -12,7 +12,8 @@ const initialState = {
   editorIndex: 0,
   currentWidget: '',
   isDeleteWarningModalOpen: false,
-  widgetForDeleteWidgetWarning: ''
+  widgetForDeleteWidgetWarning: '',
+  isFullScreenMode: false
 };
 
 let stack = [];
@@ -47,7 +48,12 @@ const editorsReducer = (state = initialState, action) => {
             convertFromRaw(JSON.parse(rawContentState))
           );
           newEditors[id] = newEditor;
-        } else newEditors[id] = action.editors[id];
+        } else {
+          if (action.editors[id].type === 'code') {
+            action.editors[id].isWidgetFullScreenMode = false;
+          }
+          newEditors[id] = action.editors[id];
+        }
       });
       stack.sort((e1, e2) => newEditors[e1].index - newEditors[e2].index);
       return { editors: newEditors, editorIndex: action.editorIndex };
@@ -69,6 +75,15 @@ const editorsReducer = (state = initialState, action) => {
       stack.splice(stack.indexOf(action.id), 1);
       delete editors[action.id];
       return { ...state, editors: updateIndices(editors) };
+
+    case ActionTypes.TOGGLE_WIDGET_FULLSCREEN:
+      const isWidgetFullScreenMode = state.editors[action.id].isWidgetFullScreenMode;
+      editors[action.id].isWidgetFullScreenMode = !isWidgetFullScreenMode;
+      return {
+        ...state,
+        editors,
+        isFullScreenMode: !state.isFullScreenMode
+      };
 
     case ActionTypes.DUPLICATE_EDITOR: {
       const originalEditor = state.editors[action.originalEditorId];
@@ -99,7 +114,8 @@ const editorsReducer = (state = initialState, action) => {
         isRefreshing: false,
         editorMode: action.mode,
         innerWidth: CODE_DEFAULT_INSIDE_WIDTH,
-        editorView: 'split'
+        editorView: 'split',
+        isWidgetFullScreenMode: false
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -192,7 +208,7 @@ const editorsReducer = (state = initialState, action) => {
         id,
         index: stack.length,
         editorState: EditorState.createEmpty(),
-        backColor: 'transparent'
+        backColor: 'transparent',
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -219,7 +235,7 @@ const editorsReducer = (state = initialState, action) => {
         question: 'Enter question here ',
         answer: 'Enter answer here..',
         minHeight: QUESION_MIN_INNER_HEIGHT,
-        innerHeight: QUESION_DEFAULT_INNER_HEIGHT
+        innerHeight: QUESION_DEFAULT_INNER_HEIGHT,
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -249,7 +265,7 @@ const editorsReducer = (state = initialState, action) => {
         type: 'iframe',
         id,
         index: stack.length,
-        url: 'https://peblio.github.io/instructions/embed.html'
+        url: 'https://peblio.github.io/instructions/embed.html',
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -268,7 +284,7 @@ const editorsReducer = (state = initialState, action) => {
         type: 'video',
         id,
         index: stack.length,
-        url: 'https://peblio.github.io/instructions/video.html'
+        url: 'https://peblio.github.io/instructions/video.html',
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -293,7 +309,7 @@ const editorsReducer = (state = initialState, action) => {
           y: 0,
           height: 100,
           width: 100
-        }
+        },
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
