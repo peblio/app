@@ -68,6 +68,16 @@ const workspaceReducer = (state = initialState, action) => {
       });
     }
 
+    case ActionTypes.WP_ADD_FILE_TO_EDITOR: {
+      workspace.files.push({
+        name: action.name,
+        content: action.content
+      });
+      return Object.assign({}, state, {
+        workspace
+      });
+    }
+
     case ActionTypes.WP_SET_CURRENT_FILE: {
       workspace.currentFile = action.index;
       return { ...state, workspace };

@@ -125,8 +125,8 @@ const editorsReducer = (state = initialState, action) => {
 
     case ActionTypes.ADD_FILE_TO_EDITOR: {
       editors[action.id].files.push({
-        name: 'test.js',
-        content: ''
+        name: action.name,
+        content: action.content
       });
       return Object.assign({}, state, {
         editors

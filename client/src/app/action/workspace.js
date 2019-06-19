@@ -131,3 +131,12 @@ export function addMediaFile(name, link) {
     });
   };
 }
+export function addFileToEditor(name, content) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.WP_ADD_FILE_TO_EDITOR,
+      name,
+      content
+    });
+  };
+}

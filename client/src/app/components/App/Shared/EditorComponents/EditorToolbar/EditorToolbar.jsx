@@ -17,6 +17,7 @@ import EditorOptions from '../EditorOptions/EditorOptions.jsx';
 import FileUpload from '../../FileUpload/FileUpload.jsx';
 
 const MEDIA_FILE_REGEX = /.+\.(gif|jpg|jpeg|png|bmp)$/i;
+const CODE_FILE_REGEX = /.+\.(csv|txt|json|js|css)$/i;
 
 require('./editorToolbar.scss');
 
@@ -78,6 +79,15 @@ class EditorToolbar extends React.Component {
 
   onDrop=(files) => {
     const file = files[0];
+    if (file.name.match(CODE_FILE_REGEX)) {
+      axiosOrg.get(file.preview)
+        .then((data) => {
+          this.props.addFileToEditor(file.name, data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
     if (file.name.match(MEDIA_FILE_REGEX)) {
       this.startFileUpload();
       axios.get(`/upload/${this.props.name}/images`, {
@@ -295,7 +305,7 @@ class EditorToolbar extends React.Component {
               </Tooltip>
               <button
                 className="editor-toolbar__file-button"
-                onClick={this.props.addFileToEditor}
+                onClick={() => { this.props.addFileToEditor('test1.js'); }}
                 data-test='editor-toolbar__add-file-button'
               >
               Add File

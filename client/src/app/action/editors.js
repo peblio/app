@@ -102,11 +102,13 @@ export function addCodeEditor(mode) {
   };
 }
 
-export function addFileToEditor(id) {
+export function addFileToEditor(id, name, content) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.ADD_FILE_TO_EDITOR,
-      id
+      id,
+      name,
+      content
     });
   };
 }

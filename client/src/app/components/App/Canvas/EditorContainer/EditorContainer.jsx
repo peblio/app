@@ -22,7 +22,7 @@ class EditorContainer extends React.Component {
     this.startResize = this.startResize.bind(this);
     this.finishResize = this.finishResize.bind(this);
     this.addMediaFile = (name, link) => this.props.addMediaFile(this.props.id, name, link);
-    this.addFileToEditor = () => this.props.addFileToEditor(this.props.id);
+    this.addFileToEditor = (name, content) => this.props.addFileToEditor(this.props.id, name, content);
     this.playCode = () => this.props.playCode(this.props.id);
     this.stopCode = () => this.props.stopCode(this.props.id);
     this.setEditorView = value => this.props.setEditorView(this.props.id, value);
