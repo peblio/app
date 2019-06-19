@@ -102,6 +102,15 @@ export function addCodeEditor(mode) {
   };
 }
 
+export function addFileToEditor(id) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.ADD_FILE_TO_EDITOR,
+      id
+    });
+  };
+}
+
 export function playCode(id) {
   return (dispatch) => {
     dispatch({

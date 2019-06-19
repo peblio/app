@@ -123,6 +123,16 @@ const editorsReducer = (state = initialState, action) => {
       return { editors, editorIndex, currentWidget };
     }
 
+    case ActionTypes.ADD_FILE_TO_EDITOR: {
+      editors[action.id].files.push({
+        name: 'test.js',
+        content: ''
+      });
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
     case ActionTypes.PLAY_CODE:
       editors[action.id].isPlaying = true;
       return { ...state, editors };

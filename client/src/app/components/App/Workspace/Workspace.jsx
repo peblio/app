@@ -82,6 +82,7 @@ class Workspace extends React.Component {
               <div>
                 <EditorToolbar
                   addMediaFile={this.props.addMediaFile}
+                  // addFileToEditor={this.props.addFileToEditor}
                   currentFile={this.props.currentFile}
                   editorMode={this.props.editorMode}
                   files={this.props.files}
