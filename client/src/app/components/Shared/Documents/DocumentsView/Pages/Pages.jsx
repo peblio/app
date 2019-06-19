@@ -16,6 +16,9 @@ import {
 
 class Pages extends Component {
   render() {
+    if (this.props.isSearchByTitle && this.props.pages.length === 0) {
+      return (<div className="profile-pebl__warning">No Files Found matching search</div>);
+    }
     const documentViewCLass = classNames('profile-pebl__list', {
       'document-line': (this.props.documentView === 'line'),
       'document-block': (this.props.documentView === 'block')
@@ -43,7 +46,6 @@ class Pages extends Component {
             page={page}
             keyId={key}
           />
-
         ))}
       </ul>
     );
@@ -53,6 +55,7 @@ class Pages extends Component {
 Pages.propTypes = {
   container: PropTypes.string.isRequired,
   documentView: PropTypes.string.isRequired,
+  isSearchByTitle: PropTypes.bool.isRequired,
   duplicatePage: PropTypes.func.isRequired,
   pages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   trashPage: PropTypes.func.isRequired,
@@ -63,7 +66,7 @@ Pages.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    documentView: state.dashboard.documentView
+    documentView: state.dashboard.documentView,
   };
 }
 

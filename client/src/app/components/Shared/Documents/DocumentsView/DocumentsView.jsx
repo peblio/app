@@ -53,9 +53,11 @@ class DocumentsView extends Component {
             renameFolder={this.props.renameFolder}
           />
         )}
+
         <h2 className="profile-pebls__sub-heading">files</h2>
         <Pages
           pages={childPages}
+          isSearchByTitle={isSearchByTitle}
           folderId={folderId}
           container={this.props.container}
           setShareURL={this.props.setShareURL}

@@ -19,7 +19,6 @@ import {
 import PeblioLogo from '../../../images/logo.svg';
 import Block from '../../../images/block.svg';
 import Line from '../../../images/stack.svg';
-import UserAccount from '../UserAccount/UserAccount.jsx';
 import PlusIcon from '../../../images/plus.svg';
 
 import './nav.scss';
