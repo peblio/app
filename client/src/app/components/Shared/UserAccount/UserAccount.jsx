@@ -38,7 +38,6 @@ class UserAccount extends React.Component {
   }
 
   projectID = () => {
-    console.log(this.props);
     const location = this.props.location ? this.props.location.pathname : '';
     const projectID = location.match(/\/pebl\/([\w-].*)/);
     if (projectID) {
@@ -117,11 +116,11 @@ class UserAccount extends React.Component {
                       </button>
                     </p>
                   </li>
-                  {this.props.container === 'app' || this.renderListItem('Workspace', '/') }
-                  {this.props.container === 'dashboard' || this.renderListItem('Dashboard', '/dashboard') }
+                  {this.props.container === 'app' || this.renderListItem('workspace', '/') }
+                  {this.props.container === 'dashboard' || this.renderListItem('dashboard', '/dashboard') }
                   {(this.props.userType === 'student') ||
                     this.props.container === 'profile' ||
-                    this.renderListItem('Profile', `/profile/${this.props.name}`)
+                    this.renderListItem('profile', `/profile/${this.props.name}`)
                   }
                   <li className="user-account__list-item">
                     <button

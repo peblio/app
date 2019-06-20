@@ -34,6 +34,7 @@ export const {
   fetchAllPages,
   viewFolder,
   viewPage,
+  filterPagesByTitle,
   jumpToFolderByShortId,
   clearSelectedFolders
 } = profileFolderActions;

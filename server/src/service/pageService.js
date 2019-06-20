@@ -42,7 +42,7 @@ export async function getPagesWithTag(req, res) {
     aggregate
     .match(
       {
-        'tags': req.query.tag, 
+        'tags': req.query.tag,
         $or: [{ isPublished: true }, { isPublished: null }]
       });
   } else {
@@ -50,7 +50,7 @@ export async function getPagesWithTag(req, res) {
     .match(
       {
         'userDetail.type': { $ne: 'student'},
-        'tags': req.query.tag, 
+        'tags': req.query.tag,
         $or: [{ isPublished: true }, { isPublished: null }]
       });
   }
