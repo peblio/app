@@ -163,7 +163,7 @@ class FrontEndOutput extends React.Component {
             const style = sketchDoc.createElement('style');
             style.innerHTML = file.content;
             sketchDoc.head.appendChild(style);
-            css.parentElement.removeChild(css);
+            css || css.parentElement.removeChild(css);
           }
         });
       }

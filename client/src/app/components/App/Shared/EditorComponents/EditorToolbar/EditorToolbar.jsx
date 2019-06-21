@@ -303,14 +303,6 @@ class EditorToolbar extends React.Component {
                   <i className="fas fa-plus"></i>
                 </button>
               </Tooltip>
-              <button
-                className="editor-toolbar__file-button"
-                onClick={() => { this.props.addFileToEditor('test1.js'); }}
-                data-test='editor-toolbar__add-file-button'
-              >
-              Add File
-                <i className="fas fa-plus"></i>
-              </button>
             </li>
           )
           }
@@ -328,6 +320,7 @@ class EditorToolbar extends React.Component {
               <i className="fas fa-times"></i>
             </button>
             <FileUpload
+              addFileToEditor={this.props.addFileToEditor}
               onDrop={this.onDrop}
               urlSubmitted={this.props.addMediaFile}
               imageURL={this.props.imageURL}

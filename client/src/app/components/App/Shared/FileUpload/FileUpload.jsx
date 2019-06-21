@@ -27,67 +27,96 @@ class FileUpload extends React.Component {
             Please Log In to Upload Images
         </p>
       )}
+
       {this.props.name && (
-        <div
-          className="image__upload-container"
-          data-test="image__upload-container"
-          ref={(input) => { this.fileUpload = input; }}
-        >
-          <div className="image__title">Upload a file</div>
-          <Dropzone
-            onDrop={(files) => { this.props.onDrop(files); }}
-            className="element-image"
-          >
-            <div
-              className="image__drop"
-              data-test="image__drop"
-            >
-              <div className="image__svg">
-                <UploadSVG alt="upload image" />
-              </div>
-              <div className="image__svg--text">Drop a file or click to upload</div>
-            </div>
-          </Dropzone>
-          {this.props.isFileUploading && (
-            <ReactLoading
-              className="editor-toolbar__image-upload-gif"
-              height="20%"
-              width="20%"
-              color="#B1B1B1"
-            />
-          )}
-          {this.props.container === 'image' && (
+        <div>
+          {this.props.container === 'editor' && (
             <div>
-              <div className="image__title">or add a URL</div>
+
               <div
                 className="image__url"
                 data-test="image__url"
               >
-                <form
-                  className="element-image__add-url"
-                  onSubmit={e => this.props.urlSubmitted(e, this.url.value)}
+                <input
+                  id="element-image-name"
+                  className="element-image__input"
+                  data-test="image__url-input"
+                  type="text"
+                  ref={(element) => { this.url = element; }}
+                  defaultValue={this.props.imageURL}
+                  readOnly={this.props.preview}
+                />
+                <button
+                  className="element__button"
+                  onClick={() => { this.props.addFileToEditor('test1.css', ''); }}
                 >
-                  <label htmlFor="element-image-name" className="element-image__label">
-                    <input
-                      id="element-image-name"
-                      className="element-image__input"
-                      data-test="image__url-input"
-                      type="text"
-                      ref={(element) => { this.url = element; }}
-                      defaultValue={this.props.imageURL}
-                      readOnly={this.props.preview}
-                    />
-                  </label>
-                  <input
-                    className="element__button"
-                    type="submit"
-                    value="Upload New"
-                    data-test="image__upload"
-                  />
-                </form>
+                  Add File
+                </button>
               </div>
+              <div className="image__title">OR</div>
             </div>
           )}
+          <div
+            className="image__upload-container"
+            data-test="image__upload-container"
+            ref={(input) => { this.fileUpload = input; }}
+          >
+            <div className="image__title">Add file</div>
+            <Dropzone
+              onDrop={(files) => { this.props.onDrop(files); }}
+              className="element-image"
+            >
+              <div
+                className="image__drop"
+                data-test="image__drop"
+              >
+                <div className="image__svg">
+                  <UploadSVG alt="upload image" />
+                </div>
+                <div className="image__svg--text">Drop a file or click to upload</div>
+              </div>
+            </Dropzone>
+            {this.props.isFileUploading && (
+              <ReactLoading
+                className="editor-toolbar__image-upload-gif"
+                height="20%"
+                width="20%"
+                color="#B1B1B1"
+              />
+            )}
+            {this.props.container === 'image' && (
+              <div>
+                <div className="image__title">or add a URL</div>
+                <div
+                  className="image__url"
+                  data-test="image__url"
+                >
+                  <form
+                    className="element-image__add-url"
+                    onSubmit={e => this.props.urlSubmitted(e, this.url.value)}
+                  >
+                    <label htmlFor="element-image-name" className="element-image__label">
+                      <input
+                        id="element-image-name"
+                        className="element-image__input"
+                        data-test="image__url-input"
+                        type="text"
+                        ref={(element) => { this.url = element; }}
+                        defaultValue={this.props.imageURL}
+                        readOnly={this.props.preview}
+                      />
+                    </label>
+                    <input
+                      className="element__button"
+                      type="submit"
+                      value="Upload New"
+                      data-test="image__upload"
+                    />
+                  </form>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>

@@ -104,6 +104,7 @@ export function addCodeEditor(mode) {
 
 export function addFileToEditor(id, name, content) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.ADD_FILE_TO_EDITOR,
       id,
