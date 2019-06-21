@@ -124,6 +124,7 @@ export function closeShareWorkspace() {
 
 export function addMediaFile(name, link) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.WP_ADD_MEDIA_FILE,
       name,
@@ -131,8 +132,10 @@ export function addMediaFile(name, link) {
     });
   };
 }
+
 export function addFileToEditor(name, content) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.WP_ADD_FILE_TO_EDITOR,
       name,

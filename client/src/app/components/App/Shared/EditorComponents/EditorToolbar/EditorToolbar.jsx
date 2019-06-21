@@ -320,6 +320,7 @@ class EditorToolbar extends React.Component {
               <i className="fas fa-times"></i>
             </button>
             <FileUpload
+              files={this.props.files}
               addFileToEditor={this.props.addFileToEditor}
               onDrop={this.onDrop}
               urlSubmitted={this.props.addMediaFile}

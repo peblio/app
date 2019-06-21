@@ -114,6 +114,18 @@ export function addFileToEditor(id, name, content) {
   };
 }
 
+// export function deleteFileFromEditor(id, name) {
+//   return (dispatch) => {
+//     dispatch(setUnsavedChanges(true));
+//     dispatch({
+//       type: ActionTypes.ADD_FILE_TO_EDITOR,
+//       id,
+//       name,
+//       content
+//     });
+//   };
+// }
+
 export function playCode(id) {
   return (dispatch) => {
     dispatch({

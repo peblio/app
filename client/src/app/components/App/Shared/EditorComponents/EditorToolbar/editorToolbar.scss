@@ -162,11 +162,7 @@
   }
 }
 
-
 .editor-toolbar {
-  &__image-upload-gif {
-    margin: 0 auto;
-  }
   &__image-upload {
     position: absolute;
     background: $lighter-gray;
@@ -281,6 +277,7 @@
     }
 
     .editor-toolbar__files {
+      overflow: scroll;
       display: flex;
       margin: 0;
       padding: 0 !important;
