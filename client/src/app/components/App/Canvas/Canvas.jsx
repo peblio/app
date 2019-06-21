@@ -374,7 +374,7 @@ class Canvas extends React.Component {
               key={id}
               data-grid={localLayout[id]}
               className={`
-                ${this.props.editors[id].isWidgetFullScreenMode ? 'editor__fullscreen' : ''}
+                ${this.props.editors[id].isWidgetFullScreenMode ? 'editor__fullscreen' : 'editor__non-fullscreen'}
                 ${this.props.currentWidget === id ? 'canvas-high' : ''}`
               }
             >

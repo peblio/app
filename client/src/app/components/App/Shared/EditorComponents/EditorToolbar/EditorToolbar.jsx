@@ -48,7 +48,6 @@ class EditorToolbar extends React.Component {
   }
 
   renderEditorSizeIcon = () => {
-    console.log(this.props.isWidgetFullScreenMode);
     if (this.props.isWidgetFullScreenMode) {
       return (
         <EditorCompress alt="compress editor" />

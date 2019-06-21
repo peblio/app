@@ -41,14 +41,14 @@
       outline:0;
     }
     &:hover{
-      color:$blue;
+      color:$green;
       box-shadow: none;
       background-color: $lighter-gray;
     }
     &:hover #Shape {
       -webkit-transition-duration: 0.4s; /* Safari */
       transition-duration: 0.2s;
-      fill:$blue;
+      fill:$green;
     }
   }
 

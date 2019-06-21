@@ -176,7 +176,7 @@ render() {
                   ref={(dashboardSort) => { this.dashboardSort = dashboardSort; }}
                   value={this.props.documentSort}
                 >
-                  <option value="-updatedAt">Updated At</option>
+                  <option value="updatedAt">Updated At</option>
                   <option value="title">Title</option>
                 </select>
               </div>

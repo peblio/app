@@ -18,7 +18,7 @@
 
 .main-toolbar{
   background-color: $black;
-  height: $main-toolbar-height;
+  height: calc(#{$main-toolbar-height} + 2px);
   &__search-icon {
     font-size: 20px;
     line-height: $title-width;
@@ -87,7 +87,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: $blue;
+  background-color: $green;
   border-radius: $large-border-radius;
   width: $large-border-radius*2;
   height: $large-border-radius;

@@ -96,9 +96,15 @@ canvas{
   align-items: center;
 }
 
-.editor__fullscreen {
-  height: calc(100vh - 50px) !important;
-  width: 100% !important;
-  transform: translate(0,0) !important;
-  z-index: 400;
+.react-grid__fullscreen {
+  & .editor__fullscreen {
+    height: calc(100vh - 50px) !important;
+    width: 100% !important;
+    transform: translate(0,0) !important;
+    z-index: 400;
+  }
+
+  & .editor__non-fullscreen {
+    display: none;
+  }
 }

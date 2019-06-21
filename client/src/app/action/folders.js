@@ -41,16 +41,15 @@ export function createPage(title, folder) {
 }
 
 export function fetchAllPages(profileName, sortType, container) {
-  const sortTypeUrl = sortType || 'title';
-  const sortOrder = (sortType === 'title') ? 1 : -1;
+  const sortTypeUrl = (container === 'profile' || !sortType) ? 'title' : sortType;
   // do not send in profile name if container is dashboard
   profileName = (container === 'dashboard') ? null : profileName;
   return (dispatch, getState) => {
     let url = '/sketches';
     if (profileName) {
-      url = `${url}/${profileName}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}&sortOrder=${sortOrder}`;
+      url = `${url}/${profileName}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}`;
     } else {
-      url = `${url}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}&sortOrder=${sortOrder}`;
+      url = `${url}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}`;
       const { user } = getState();
       if (!user.name) {
         return false;
