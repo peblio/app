@@ -97,7 +97,7 @@ const mapStateToProps = (state, ownProps) => {
   if (folder && folder.parent) {
     parentFolderShortId = ownProps.folders.byId[folder.parent].shortId;
   }
-  const pagesById = (ownProps.container === 'profile')
+  const pagesById = (ownProps.container === 'profile') //eslint-disable-line
     ? state.profile.pages
     : (state.page.isSearchByTitle
       ? state.page.filteredPages

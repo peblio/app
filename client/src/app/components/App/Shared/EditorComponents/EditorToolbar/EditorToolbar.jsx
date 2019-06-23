@@ -277,7 +277,8 @@ class EditorToolbar extends React.Component {
               return (
                 <li
                   key={file.id}
-                  className={`editor-toolbar__file ${(this.props.currentFile === index) ? 'editor-toolbar__file--selected' : ''}`}
+                  className={`editor-toolbar__file
+                    ${(this.props.currentFile === index) ? 'editor-toolbar__file--selected' : ''}`}
                 >
                   <Tooltip content={file.name}>
                     <button
@@ -361,7 +362,6 @@ EditorToolbar.propTypes = {
   addFileToEditor: PropTypes.func.isRequired,
   container: PropTypes.string.isRequired,
   currentFile: PropTypes.number.isRequired,
-  deleteFile: PropTypes.func.isRequired,
   deleteFileFromEditor: PropTypes.func.isRequired,
   editorMode: PropTypes.string.isRequired,
   editorView: PropTypes.string.isRequired,

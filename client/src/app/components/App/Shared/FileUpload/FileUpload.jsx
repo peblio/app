@@ -48,24 +48,21 @@ class FileUpload extends React.Component {
     }
   }
 
-  checkDuplicateFileNames(fileName) {
-    let isDuplicateFileName = false;
-    this.props.files.forEach((file) => {
-      if (fileName === file.name) {
-        isDuplicateFileName = true;
-        return isDuplicateFileName;
-      }
-    });
-    return isDuplicateFileName;
+  fileOnDrop = (files) => {
+    if (this.props.container === 'image') {
+      this.validateFile(
+        files,
+        VALID_IMG_UPLOAD_FILE_EXT,
+        'File must have extension .svg .png .jpg or .jpeg',
+      );
+    } else {
+      this.validateFile(
+        files,
+        VALID_UPLOAD_FILE_EXT,
+        'File must have extension .js .css .svg .png .jpg or .jpeg',
+      );
+    }
   }
-
-  checkFileExtension(fileName, exts) {
-    return (new RegExp(`(${exts.join('|').replace(/\./g, '\\.')})$`)).test(fileName);
-  }
-
-  closeToolbar = () => { this.setState({ isToolbarVisible: false }); };
-
-  openToolbar = () => { this.setState({ isToolbarVisible: true }); };
 
   validateFile = (files, validExtensions, message) => {
     if (this.checkFileExtension(files[0].name, validExtensions)) {
@@ -82,20 +79,23 @@ class FileUpload extends React.Component {
     }
   }
 
-  fileOnDrop = (files) => {
-    if (this.props.container === 'image') {
-      this.validateFile(
-        files,
-        VALID_IMG_UPLOAD_FILE_EXT,
-        'File must have extension .svg .png .jpg or .jpeg',
-      );
-    } else {
-      this.validateFile(
-        files,
-        VALID_UPLOAD_FILE_EXT,
-        'File must have extension .js .css .svg .png .jpg or .jpeg',
-      );
-    }
+  closeToolbar = () => { this.setState({ isToolbarVisible: false }); };
+
+  openToolbar = () => { this.setState({ isToolbarVisible: true }); };
+
+  checkDuplicateFileNames(fileName) {
+    let isDuplicateFileName = false;
+    this.props.files.forEach((file) => {
+      if (fileName === file.name) {
+        isDuplicateFileName = true;
+      }
+      return isDuplicateFileName;
+    });
+    return isDuplicateFileName;
+  }
+
+  checkFileExtension(fileName, exts) {
+    return (new RegExp(`(${exts.join('|').replace(/\./g, '\\.')})$`)).test(fileName);
   }
 
   renderContent = () => (
@@ -243,6 +243,12 @@ class FileUpload extends React.Component {
 
 
 FileUpload.propTypes = {
+  addFileToEditor: PropTypes.func.isRequired,
+  closeFileUpload: PropTypes.func.isRequired,
+  files: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
+  })).isRequired,
   container: PropTypes.string.isRequired,
   imageURL: PropTypes.string.isRequired,
   isFileUploading: PropTypes.bool.isRequired,

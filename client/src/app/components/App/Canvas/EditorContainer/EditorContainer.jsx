@@ -145,6 +145,7 @@ EditorContainer.propTypes = {
   clearConsoleOutput: PropTypes.func.isRequired,
   consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired,
   currentFile: PropTypes.number.isRequired,
+  deleteFileFromEditor: PropTypes.func.isRequired,
   editorMode: PropTypes.string.isRequired,
   editorTheme: PropTypes.string.isRequired,
   editorView: PropTypes.string.isRequired,
