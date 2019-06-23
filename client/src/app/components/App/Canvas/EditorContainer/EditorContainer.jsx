@@ -23,6 +23,7 @@ class EditorContainer extends React.Component {
     this.finishResize = this.finishResize.bind(this);
     this.addMediaFile = (name, link) => this.props.addMediaFile(this.props.id, name, link);
     this.addFileToEditor = (name, content) => this.props.addFileToEditor(this.props.id, name, content);
+    this.deleteFileFromEditor = index => this.props.deleteFileFromEditor(this.props.id, index);
     this.playCode = () => this.props.playCode(this.props.id);
     this.stopCode = () => this.props.stopCode(this.props.id);
     this.setEditorView = value => this.props.setEditorView(this.props.id, value);
@@ -69,6 +70,7 @@ class EditorContainer extends React.Component {
             addFileToEditor={this.addFileToEditor}
             container="canvas"
             currentFile={this.props.currentFile}
+            deleteFileFromEditor={this.deleteFileFromEditor}
             editorMode={this.props.editorMode}
             editorView={this.props.editorView}
             files={this.props.files}

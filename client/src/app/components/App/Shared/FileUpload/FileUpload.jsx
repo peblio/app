@@ -40,7 +40,7 @@ class FileUpload extends React.Component {
       });
     } else {
       this.props.addFileToEditor(this.fileName.value, '');
-      this.closeToolbar();
+      this.props.closeFileUpload();
       this.setState({
         fileTypeWarning: '',
         isFileTypeWarningShowing: false

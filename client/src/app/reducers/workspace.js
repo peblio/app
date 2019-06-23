@@ -78,6 +78,14 @@ const workspaceReducer = (state = initialState, action) => {
       });
     }
 
+    case ActionTypes.WP_DELETE_FILE_FROM_EDITOR: {
+      workspace.currentFile = action.index - 1;
+      workspace.files.splice(action.index, 1);
+      return Object.assign({}, state, {
+        workspace
+      });
+    }
+
     case ActionTypes.WP_SET_CURRENT_FILE: {
       workspace.currentFile = action.index;
       return { ...state, workspace };

@@ -52,14 +52,16 @@
     .editor-toolbar__files {
       background-color: $g2;
       .editor-toolbar__file {
+        background-color: $g4;
+        border: $small-border solid $g2;
+        &:hover, &--selected { // sass-lint:disable-line class-name-format
+          background-color: $g2;
+        }
         &-button {
           white-space: nowrap;
-          background-color: $g4;
           color: $white;
-          border: $small-border solid $g2;
           box-sizing: border-box;
           &:hover, &--selected { // sass-lint:disable-line class-name-format
-            background-color: $g2;
             color: $white;
           }
           &-static {
@@ -133,13 +135,16 @@
     .editor-toolbar__files {
       background-color: $g5;
       .editor-toolbar__file {
+        background-color: $g8;
+        border: $small-border solid $g5;
+        &:hover, &--selected { // sass-lint:disable-line class-name-format
+          background-color: $g4;
+          color: $g8;
+        }
         &-button {
-          background-color: $g8;
           color: $g3;
-          border: $small-border solid $g5;
           box-sizing: border-box;
           &:hover, &--selected { // sass-lint:disable-line class-name-format
-            background-color: $g4;
             color: $g8;
           }
           &-static {
@@ -283,17 +288,21 @@
       padding: 0 !important;
       height: $editor-toolbar-files-height;
       .editor-toolbar__file {
+        padding: 0px 3px !important;
         text-decoration: none;
         list-style: none;
-        width: $editor-toolbar-file-width;
+        width: auto;
+        display: flex;
+        flex-direction: row;
         &-button {
           border-radius: 0;
+          border: none;
           box-shadow: none;
-          padding: 0px 3px !important;
-          width: 65px;
           height: 100%;
+          background: transparent;
           &:hover, &--selected { // sass-lint:disable-line class-name-format
             border: none;
+            background: transparent;
           }
         }
       }

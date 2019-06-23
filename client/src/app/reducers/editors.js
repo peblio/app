@@ -133,6 +133,14 @@ const editorsReducer = (state = initialState, action) => {
       });
     }
 
+    case ActionTypes.DELETE_FILE_FROM_EDITOR: {
+      editors[action.id].currentFile = action.index - 1;
+      editors[action.id].files.splice(action.index, 1);
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
     case ActionTypes.PLAY_CODE:
       editors[action.id].isPlaying = true;
       return { ...state, editors };

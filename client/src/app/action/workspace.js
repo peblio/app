@@ -143,3 +143,13 @@ export function addFileToEditor(name, content) {
     });
   };
 }
+
+export function deleteFileFromEditor(index) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.WP_DELETE_FILE_FROM_EDITOR,
+      index
+    });
+  };
+}

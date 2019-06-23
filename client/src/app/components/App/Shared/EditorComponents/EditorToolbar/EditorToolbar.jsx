@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import axiosOrg from 'axios';
 import URL from 'url';
 
+import CloseSVG from '../../../../../images/close.svg';
 import InfoSVG from '../../../../../images/info.svg';
 import PauseSVG from '../../../../../images/pause.svg';
 import PlaySVG from '../../../../../images/play.svg';
@@ -18,6 +19,7 @@ import FileUpload from '../../FileUpload/FileUpload.jsx';
 
 const MEDIA_FILE_REGEX = /.+\.(gif|jpg|jpeg|png|bmp)$/i;
 const CODE_FILE_REGEX = /.+\.(csv|txt|json|js|css)$/i;
+const HTML_FILE_REGEX = /.+\.(html)$/i;
 
 require('./editorToolbar.scss');
 
@@ -46,6 +48,13 @@ class EditorToolbar extends React.Component {
 
   closeFileUpload = () => {
     this.setState({ isFileUploadOpen: false });
+  }
+
+  deleteFile = (e, index) => {
+    e.stopPropagation();
+    if (confirm('Are you sure you want to delete this file?')) { // eslint-disable-line no-restricted-globals
+      this.props.deleteFileFromEditor(index);
+    }
   }
 
   renderEditorSizeIcon = () => {
@@ -268,7 +277,7 @@ class EditorToolbar extends React.Component {
               return (
                 <li
                   key={file.id}
-                  className='editor-toolbar__file'
+                  className={`editor-toolbar__file ${(this.props.currentFile === index) ? 'editor-toolbar__file--selected' : ''}`}
                 >
                   <Tooltip content={file.name}>
                     <button
@@ -278,7 +287,7 @@ class EditorToolbar extends React.Component {
                       disabled={isImage}
                       className={
                         `editor-toolbar__file-button
-                    ${(this.props.currentFile === index) ? 'editor-toolbar__file-button--selected' : ''}
+                         ${(this.props.currentFile === index) ? 'editor-toolbar__file-button--selected' : ''}
                     ${(isImage) ? 'editor-toolbar__file-button-static' : ''}`
                       }
                       data-test="editor-toolbar__file-name"
@@ -286,6 +295,15 @@ class EditorToolbar extends React.Component {
                       {file.name}
                     </button>
                   </Tooltip>
+                  {!file.name.match(HTML_FILE_REGEX) && (
+                    <button
+                      className="editor-toolbar__file-button"
+                      onClick={(e) => { this.deleteFile(e, index); }}
+                      data-test="widget__delete"
+                    >
+                      <CloseSVG alt="close element" />
+                    </button>
+                  )}
                 </li>
               );
             })
@@ -322,6 +340,7 @@ class EditorToolbar extends React.Component {
             <FileUpload
               files={this.props.files}
               addFileToEditor={this.props.addFileToEditor}
+              closeFileUpload={this.closeFileUpload}
               onDrop={this.onDrop}
               urlSubmitted={this.props.addMediaFile}
               imageURL={this.props.imageURL}
@@ -342,6 +361,8 @@ EditorToolbar.propTypes = {
   addFileToEditor: PropTypes.func.isRequired,
   container: PropTypes.string.isRequired,
   currentFile: PropTypes.number.isRequired,
+  deleteFile: PropTypes.func.isRequired,
+  deleteFileFromEditor: PropTypes.func.isRequired,
   editorMode: PropTypes.string.isRequired,
   editorView: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({

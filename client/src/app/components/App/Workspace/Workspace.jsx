@@ -83,6 +83,7 @@ class Workspace extends React.Component {
                 <EditorToolbar
                   addMediaFile={this.props.addMediaFile}
                   addFileToEditor={this.props.addFileToEditor}
+                  deleteFileFromEditor={this.props.deleteFileFromEditor}
                   currentFile={this.props.currentFile}
                   editorMode={this.props.editorMode}
                   files={this.props.files}
@@ -175,6 +176,7 @@ Workspace.propTypes = {
   closeShareWorkspace: PropTypes.func.isRequired,
   consoleOutputText: PropTypes.string.isRequired,
   currentFile: PropTypes.number.isRequired,
+  deleteFileFromEditor: PropTypes.func.isRequired,
   editorFontSize: PropTypes.number.isRequired,
   editorMode: PropTypes.string.isRequired,
   editorTheme: PropTypes.string.isRequired,
