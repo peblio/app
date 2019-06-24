@@ -70,7 +70,7 @@ test('upload image in p5 editor', async(t) => {
     .click(Selector('[data-test=add-code-editor]'))
     .click(Selector('[data-test=add-p5-editor]'))
     .click(Selector('[data-test=editor-toolbar__add-file-button]'))
-    .setFilesToUpload('.editor-toolbar__image-upload input', [
+    .setFilesToUpload('.file-upload__dropzone input', [
       '../assets/cat.jpeg'
     ])
     .expect(fileList.nth(3).textContent).eql('cat.jpeg');

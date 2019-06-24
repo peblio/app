@@ -145,7 +145,7 @@ class FileUpload extends React.Component {
 
             <Dropzone
               onDrop={this.fileOnDrop}
-              className="element-image"
+              className="file-upload__dropzone"
             >
               <div
                 className="file-upload__drop"
@@ -196,7 +196,7 @@ class FileUpload extends React.Component {
                       className="file-upload__button"
                       type="submit"
                       value="Upload New"
-                      data-test="image__upload"
+                      data-test="file-upload__upload"
                     />
                   </form>
                 </div>

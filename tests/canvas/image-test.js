@@ -44,15 +44,15 @@ fixture('Use Image widgets when logged in ')
 test('upload when logged in through url', async(t) => {
   await t
     .click(Selector('[data-test=insert-toolbar__add-image]'))
-    .typeText(Selector('[data-test=image__url-input]'), DIRECT_LINK)
-    .click(Selector('[data-test=image__upload]'))
+    .typeText(Selector('[data-test=file-upload__url-input]'), DIRECT_LINK)
+    .click(Selector('[data-test=file-upload__upload]'))
     .expect(Selector('[data-test=image__main]').nth(0).getAttribute('src')).contains(DIRECT_LINK);
 });
 
 test('upload when logged in through image upload', async(t) => {
   await t
     .click(Selector('[data-test=insert-toolbar__add-image]'))
-    .setFilesToUpload('[data-test=image__upload-container] input', [
+    .setFilesToUpload('[data-test=file-upload__upload-container] input', [
       FILE_LINK
     ])
     .expect(Selector('[data-test=image__main]').nth(0).getAttribute('src')).contains(AWS_LINK);
