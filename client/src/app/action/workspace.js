@@ -124,10 +124,32 @@ export function closeShareWorkspace() {
 
 export function addMediaFile(name, link) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.WP_ADD_MEDIA_FILE,
       name,
       link
+    });
+  };
+}
+
+export function addFileToEditor(name, content) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.WP_ADD_FILE_TO_EDITOR,
+      name,
+      content
+    });
+  };
+}
+
+export function deleteFileFromEditor(index) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.WP_DELETE_FILE_FROM_EDITOR,
+      index
     });
   };
 }

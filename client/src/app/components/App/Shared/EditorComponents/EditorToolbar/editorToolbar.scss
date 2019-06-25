@@ -52,26 +52,24 @@
     .editor-toolbar__files {
       background-color: $g2;
       .editor-toolbar__file {
+        background-color: $g4;
+        border: $small-border solid $g2;
+        &:hover, &--selected { // sass-lint:disable-line class-name-format
+          background-color: $g2;
+        }
         &-button {
           white-space: nowrap;
-          background-color: $g4;
           color: $white;
-          border: $small-border solid $g2;
           box-sizing: border-box;
           &:hover, &--selected { // sass-lint:disable-line class-name-format
-            background-color: $g2;
             color: $white;
           }
           &-static {
             overflow: hidden;
-            background-color: $g3;
             color: $g5;
-            border: $small-border solid $g2;
             &:hover {
-              background-color: $g3;
               color: $g5;
               cursor: default;
-              border: $small-border solid $g2;
             }
           }
         }
@@ -133,24 +131,29 @@
     .editor-toolbar__files {
       background-color: $g5;
       .editor-toolbar__file {
+        background-color: $g8;
+        border: $small-border solid $g5;
+        &:hover, &--selected { // sass-lint:disable-line class-name-format
+          background-color: $g4;
+          color: $g8;
+        }
         &-button {
-          background-color: $g8;
           color: $g3;
-          border: $small-border solid $g5;
           box-sizing: border-box;
+          & #ShapeCNTRL {
+            fill: $g3;
+          }
           &:hover, &--selected { // sass-lint:disable-line class-name-format
-            background-color: $g4;
             color: $g8;
+            & #ShapeCNTRL {
+              fill: $g8;
+            }
           }
           &-static {
             overflow: hidden;
-            background-color: $g6;
-            color: $g3;
-            border: $small-border solid $g7;
+            color: $g5;
             &:hover {
-              background-color: $g6;
-              color: $g3;
-              border: $small-border solid $g7;
+              color: $g5;
               cursor: default;
             }
           }
@@ -162,11 +165,7 @@
   }
 }
 
-
 .editor-toolbar {
-  &__image-upload-gif {
-    margin: 0 auto;
-  }
   &__image-upload {
     position: absolute;
     background: $lighter-gray;
@@ -281,22 +280,27 @@
     }
 
     .editor-toolbar__files {
+      overflow-y: scroll;
       display: flex;
       margin: 0;
       padding: 0 !important;
       height: $editor-toolbar-files-height;
       .editor-toolbar__file {
+        padding: 0px 3px !important;
         text-decoration: none;
         list-style: none;
-        width: $editor-toolbar-file-width;
+        width: auto;
+        display: flex;
+        flex-direction: row;
         &-button {
           border-radius: 0;
+          border: none;
           box-shadow: none;
-          padding: 0px 3px !important;
-          width: 65px;
           height: 100%;
+          background: transparent;
           &:hover, &--selected { // sass-lint:disable-line class-name-format
             border: none;
+            background: transparent;
           }
         }
       }

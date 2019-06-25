@@ -1,0 +1,107 @@
+@import 'variables';
+@import 'base';
+@import 'mixins';
+@import 'modal';
+
+.file-upload {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+  }
+  &__sub-container {
+    display: flex;
+  }
+  &__image-upload-gif {
+    margin: 0 auto;
+  }
+  &__upload-button {
+    position: absolute;
+    background: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    opacity: 0.8;
+    &:hover {
+      background: transparent;
+      border: none;
+      opacity: 1;
+    }
+  }
+  &__upload-notice {
+    width: 100%;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+  }
+  &__add-url {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0 $medium-padding;
+    text-align: center;
+    width: 100%;
+    z-index: 1;
+
+    .file-upload__label {
+      display: flex;
+      flex-direction: row;
+      flex: 1;
+    }
+  }
+  &__svg--text {
+    text-align: center;
+  }
+  &__input {
+    width: 100%;
+    border: none;
+    border-radius: $small-border-radius;
+    box-shadow: 0 1px #dedede;
+    margin: auto;
+    padding: 5px;
+    line-height: $p-line-height;
+  }
+  &__drop {
+    padding: $small-padding;
+    margin: 0 $medium-margin;
+    border-radius: $medium-border-radius;
+    border: 1px dashed $light-gray;
+    color: $gray;
+
+    &.popup {
+      max-width: 110px;
+    }
+  }
+  &__title {
+    @extend %modal__subtitle;
+    margin-top: 0;
+  }
+  &__sub-title {
+    @extend %modal__subtitle;
+  }
+  &__svg {
+    width: 100%;
+    text-align: center;
+  }
+  &__button {
+    @extend %peblio-button;
+  }
+  &__url {
+    width: 100%;
+    margin: 0 auto;
+  }
+  &__warning {
+    @extend %modal__subtitle;
+    font-size: $p-size*0.8;
+    color: $red;
+  }
+}

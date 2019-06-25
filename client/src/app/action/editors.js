@@ -102,6 +102,29 @@ export function addCodeEditor(mode) {
   };
 }
 
+export function addFileToEditor(id, name, content) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.ADD_FILE_TO_EDITOR,
+      id,
+      name,
+      content
+    });
+  };
+}
+
+export function deleteFileFromEditor(id, index) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.DELETE_FILE_FROM_EDITOR,
+      id,
+      index
+    });
+  };
+}
+
 export function playCode(id) {
   return (dispatch) => {
     dispatch({

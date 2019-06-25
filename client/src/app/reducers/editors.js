@@ -123,6 +123,24 @@ const editorsReducer = (state = initialState, action) => {
       return { editors, editorIndex, currentWidget };
     }
 
+    case ActionTypes.ADD_FILE_TO_EDITOR: {
+      editors[action.id].files.push({
+        name: action.name,
+        content: action.content
+      });
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
+    case ActionTypes.DELETE_FILE_FROM_EDITOR: {
+      editors[action.id].currentFile = action.index - 1;
+      editors[action.id].files.splice(action.index, 1);
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
     case ActionTypes.PLAY_CODE:
       editors[action.id].isPlaying = true;
       return { ...state, editors };
