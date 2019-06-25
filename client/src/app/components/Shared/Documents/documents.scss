@@ -73,6 +73,8 @@
     list-style: none;
     display: flex;
     flex-direction: row;
+    margin: $medium-margin $large-margin;
+    padding: 0;
   }
 
   &-breadcrumb {
@@ -80,6 +82,8 @@
     border: none;
     color: $g4;
     font-size: $small-font-size;
+    padding: 0;
+    padding-bottom: $small-padding/2;
     &:hover {
       background: transparent;
       border: none;
@@ -89,6 +93,9 @@
     &__container {
       display: flex;
       flex-direction: row;
+      &:last-child .profile-breadcrumb__icon{
+        transform: rotate(90deg);
+      }
     }
     &--is-over {
       background: $b4;

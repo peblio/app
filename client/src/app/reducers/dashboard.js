@@ -4,7 +4,7 @@ const initialState = {
   dashboardView: 'documents',
   trashPages: [],
   documentView: 'block',
-  documentSort: 'updatedAt',
+  documentSort: '-updatedAt',
   parentFolderId: '',
   isAddNewMenuOpen: false
 };

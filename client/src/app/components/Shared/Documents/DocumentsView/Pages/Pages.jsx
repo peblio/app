@@ -17,7 +17,11 @@ import {
 class Pages extends Component {
   render() {
     if (this.props.isSearchByTitle && this.props.pages.length === 0) {
-      return (<div className="profile-pebl__warning">No Files Found matching search</div>);
+      return (
+        <div className="profile-pebl__warning">
+          No files found matching search
+        </div>
+      );
     }
     const documentViewCLass = classNames('profile-pebl__list', {
       'document-line': (this.props.documentView === 'line'),

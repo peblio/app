@@ -5,6 +5,7 @@
   &__new-container {
     display: flex;
     flex-direction: column;
+    height: 100%;
   }
   &__container {
     display: flex;
@@ -81,7 +82,7 @@
     background-color: transparent;
     box-shadow: none;
     font-weight: 400;
-    color: $blue;
+    color: $green;
     border-radius: 0;
     text-decoration: underline;
     font-size: $small-font-size;
