@@ -66,14 +66,10 @@
           }
           &-static {
             overflow: hidden;
-            background-color: $g3;
             color: $g5;
-            border: $small-border solid $g2;
             &:hover {
-              background-color: $g3;
               color: $g5;
               cursor: default;
-              border: $small-border solid $g2;
             }
           }
         }
@@ -144,18 +140,20 @@
         &-button {
           color: $g3;
           box-sizing: border-box;
+          & #ShapeCNTRL {
+            fill: $g3;
+          }
           &:hover, &--selected { // sass-lint:disable-line class-name-format
             color: $g8;
+            & #ShapeCNTRL {
+              fill: $g8;
+            }
           }
           &-static {
             overflow: hidden;
-            background-color: $g6;
-            color: $g3;
-            border: $small-border solid $g7;
+            color: $g5;
             &:hover {
-              background-color: $g6;
-              color: $g3;
-              border: $small-border solid $g7;
+              color: $g5;
               cursor: default;
             }
           }

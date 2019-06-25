@@ -11,8 +11,8 @@ import UploadSVG from '../../../../images/upload.svg';
 require('./fileUpload.scss');
 
 const VALID_FILE_EXT = ['.js', '.css'];
-const VALID_UPLOAD_FILE_EXT = ['.js', '.css', '.png', '.jpg', '.jpeg', '.svg'];
-const VALID_IMG_UPLOAD_FILE_EXT = ['.png', '.jpg', '.jpeg', '.svg'];
+const VALID_UPLOAD_FILE_EXT = ['.js', '.css', '.gif', '.png', '.jpg', '.jpeg', '.svg'];
+const VALID_IMG_UPLOAD_FILE_EXT = ['.gif', '.png', '.jpg', '.jpeg', '.svg'];
 
 class FileUpload extends React.Component {
   constructor(props) {
