@@ -80,7 +80,6 @@ const page = (state = initialState, action) => {
         isLiveRefreshPageModalOpen: false
       });
 
-
     case ActionTypes.SET_DB_PAGE:
       return Object.assign({}, state, {
         id: action.id,
@@ -139,20 +138,20 @@ const page = (state = initialState, action) => {
         preview: action.value
       });
 
-    case ActionTypes.DUPLICATE_EDITOR: {
+    case ActionTypes.DUPLICATE_WIDGET: {
       const layout = state.layout;
       const originalEditorIndex = layout.findIndex(x => x.i === action.originalEditorId);
       const originalEditor = layout[originalEditorIndex];
-      const duplicateEditor = { ...originalEditor };
-      duplicateEditor.i = action.duplicateEditorId;
+      const duplicateWidget = { ...originalEditor };
+      duplicateWidget.i = action.duplicateWidgetId;
       // setting the duplicate's y to 1 less than the original's y + height
       // seems to place the duplicate directly below the original
-      duplicateEditor.y = originalEditor.y + originalEditor.h + -1;
-      layout.splice(originalEditorIndex, 0, duplicateEditor);
+      duplicateWidget.y = originalEditor.y + originalEditor.h + -1;
+      layout.splice(originalEditorIndex, 0, duplicateWidget);
       return Object.assign({}, state, { layout });
     }
 
-    case ActionTypes.ADD_EDITOR: {
+    case ActionTypes.ADD_WIDGET: {
       const layout = state.layout;
       const currentEditorIndex = layout.findIndex(x => x.i === action.currentId);
       const currentEditor = layout[currentEditorIndex];

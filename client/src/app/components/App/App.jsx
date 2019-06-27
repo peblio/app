@@ -261,7 +261,7 @@ class App extends React.Component {
       .then((res) => {
         this.props.loadPage(res.data[0].id, res.data[0].parentId, res.data[0].title, res.data[0].heading,
           res.data[0].description, res.data[0].layout, res.data[0].tags, res.data[0].isPublished);
-        this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
+        this.props.loadWidgets(res.data[0].editors, res.data[0].editorIndex);
         if (Object.keys(res.data[0].workspace).length > 0) {
           this.props.loadWorkspace(res.data[0].workspace);
         }
@@ -467,7 +467,7 @@ App.propTypes = {
   isExamplesModalOpen: PropTypes.bool.isRequired,
   closeExamplesModal: PropTypes.func.isRequired,
 
-  loadEditors: PropTypes.func.isRequired,
+  loadWidgets: PropTypes.func.isRequired,
   loadWorkspace: PropTypes.func.isRequired,
 
   setPreviewMode: PropTypes.func.isRequired,
