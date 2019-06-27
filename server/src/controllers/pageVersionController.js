@@ -6,6 +6,6 @@ export async function savePageVersion(req, res) {
 }
 
 
-export async function getAllVersion(req, res) {
-    return pageVersionService.getAllVersion(req, res);
+export async function get(req, res) {
+    return pageVersionService.get(req, res);
 }

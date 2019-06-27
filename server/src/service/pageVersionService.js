@@ -20,14 +20,19 @@ export async function savePageVersion(req, res) {
 }
 
 
-export async function getAllVersion(req, res) {
+export async function get(req, res) {
   const user = req.user;
   if (!user) {
     return res.status(403).send({ error: 'Please log in first' });
   }
   try {
-    const pageVersions = await PageVersion.find({ id: req.query.id}).sort([['createdAt']]).exec();
-    return res.send({ pageVersions: pageVersions });
+    const { version, id } = req.query;
+    if(!version){
+      const pageVersions = await PageVersion.find({ id}).sort([['createdAt']]).exec();
+      return res.send({ data: pageVersions });
+    }
+    const pageVersions = await PageVersion.find({ id, version_id: version} ).exec();
+    return res.send({ data: pageVersions });
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }
