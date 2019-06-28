@@ -17,6 +17,8 @@ class BreadCrumbs extends Component {
           container={this.props.container}
           profileName={this.props.profileName}
           folderDepth={this.props.folderDepth}
+          jumpToFolderByShortId={this.props.jumpToFolderByShortId}
+          clearSelectedFolders={this.props.clearSelectedFolders}
         />
         {breadCrumbFolders.map((folderId) => {
           const folder = folders.byId[folderId];
@@ -26,6 +28,8 @@ class BreadCrumbs extends Component {
               container={this.props.container}
               profileName={this.props.profileName}
               folderDepth={this.props.folderDepth}
+              jumpToFolderByShortId={this.props.jumpToFolderByShortId}
+              clearSelectedFolders={this.props.clearSelectedFolders}
             />
           );
         })

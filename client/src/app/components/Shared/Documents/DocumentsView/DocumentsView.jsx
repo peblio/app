@@ -9,6 +9,10 @@ import Pages from './Pages/Pages';
 import BreadCrumbs from './BreadCrumbs/BreadCrumbs';
 
 class DocumentsView extends Component {
+  componentWillMount() {
+
+  }
+
   static defaultProps = {
     folderDepth: 0,
     folderId: undefined,
@@ -30,6 +34,8 @@ class DocumentsView extends Component {
               container={this.props.container}
               profileName={profileName}
               folderDepth={this.props.folderDepth}
+              jumpToFolderByShortId={this.props.jumpToFolderByShortId}
+              clearSelectedFolders={this.props.clearSelectedFolders}
             />
           </div>
         )}

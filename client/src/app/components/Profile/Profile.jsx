@@ -18,6 +18,7 @@ import './profile.scss';
 
 class Profile extends React.Component {
   componentWillMount() {
+
     this.props.fetchProfile(this.props.match.params.userName);
   }
 
