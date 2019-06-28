@@ -9,10 +9,6 @@ import Pages from './Pages/Pages';
 import BreadCrumbs from './BreadCrumbs/BreadCrumbs';
 
 class DocumentsView extends Component {
-  componentWillMount() {
-
-  }
-
   static defaultProps = {
     folderDepth: 0,
     folderId: undefined,
@@ -79,6 +75,7 @@ class DocumentsView extends Component {
 DocumentsView.propTypes = {
   childFolders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   childPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  clearSelectedFolders: PropTypes.func.isRequired,
   container: PropTypes.string.isRequired,
   deleteFolder: PropTypes.func.isRequired,
   documentView: PropTypes.string.isRequired,
