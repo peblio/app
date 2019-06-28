@@ -57,7 +57,7 @@ class PeblioSignUpForm extends React.Component {
   submitSignUpUser = (event) => {
     const loginData = {
       mail: this.userMail ? this.userMail.value : this.props.guardianEmail,
-      name: this.props.name,
+      name: this.props.tempUsername,
       userType: this.props.userType,
       password: this.password.value,
       requiresGuardianConsent: this.props.requiresGuardianConsent,
@@ -74,7 +74,7 @@ class PeblioSignUpForm extends React.Component {
             action: 'Signup User',
             module: 'ui',
             level: 'INFO',
-            user: this.props.name
+            user: this.props.tempUsername
           };
           saveLog(log);
         })
@@ -97,7 +97,7 @@ class PeblioSignUpForm extends React.Component {
           userType={this.props.userType}
           requiresGuardianConsent={this.props.requiresGuardianConsent}
           guardianEmail={this.props.guardianEmail}
-          name={this.props.name}
+          name={this.props.tempUsername}
         />
         <div className="signup-modal__or-container">
           <hr className="signup-modal__or-line" />
@@ -166,7 +166,7 @@ PeblioSignUpForm.propTypes = {
   guardianEmail: PropTypes.string,
   requiresGuardianConsent: PropTypes.bool,
   userType: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  tempUsername: PropTypes.string.isRequired,
   studentBirthday: PropTypes.string
 };
 
@@ -183,7 +183,6 @@ function mapStateToProps(state) {
     userType: state.user.type,
     studentBirthday: state.user.studentBirthday,
     guardianEmail: state.user.guardianEmail,
-    name: state.user.name
   };
 }
 

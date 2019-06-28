@@ -15,8 +15,13 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isUserTypeSelected: false
+      isUserTypeSelected: false,
+      tempUsername: ''
     };
+  }
+
+  componentWillMount() {
+    this.props.setNextScreen('');
   }
 
   componentWillUnmount() {
@@ -26,6 +31,12 @@ class SignUp extends React.Component {
   userTypeSelected = () => {
     this.setState({
       isUserTypeSelected: true
+    });
+  }
+
+  setTempUserName = (name) => {
+    this.setState({
+      tempUsername: name
     });
   }
 
@@ -77,7 +88,10 @@ class SignUp extends React.Component {
     return (
       <div className="signup-modal__content">
         {this.props.userType === 'student' && this.renderSignupScreenNumber(2)}
-        <SignUpUsername />
+        <SignUpUsername
+          setTempUserName={this.setTempUserName}
+          tempUsername={this.state.tempUsername}
+        />
       </div>
     );
   }
@@ -86,7 +100,9 @@ class SignUp extends React.Component {
     return (
       <div className="signup-modal__content">
         {this.props.userType === 'student' && this.renderSignupScreenNumber(3)}
-        <SignUpOption />
+        <SignUpOption
+          tempUsername={this.state.tempUsername}
+        />
       </div>
     );
   }
@@ -95,7 +111,9 @@ class SignUp extends React.Component {
     return (
       <div className="signup-modal__content">
         {this.props.userType === 'student' && this.renderSignupScreenNumber(3)}
-        <PeblioSignUpForm />
+        <PeblioSignUpForm
+          tempUsername={this.state.tempUsername}
+        />
       </div>
     );
   }
