@@ -36,6 +36,7 @@ import { loadWorkspace } from '../../action/workspace.js';
 import axios from '../../utils/axios';
 import { saveLog } from '../../utils/log';
 import history from '../../utils/history';
+import PageHistory from './Navigation/PageHistory';
 
 require('./app.scss');
 
@@ -420,7 +421,9 @@ class App extends React.Component {
           </Modal>
         )}
         <Navigation />
+        <PageHistory />
         <Workspace />
+
       </div>
     );
   }
