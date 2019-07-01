@@ -28,14 +28,13 @@ class PageHistory extends React.Component {
         </button>
         {this.props.isNavigationOpen && this.props.pageHistory && (
           <section
-            className="navigation__container navigation__container--expanded"
+            className="navigation__container navigation__container--expanded history__container"
           >
             <nav className="navigation__options">
               {this.props.preview || (
                 <Tooltip content="Refresh">
                   <button
                     className="navigation__option-button"
-
                   >
                     <i className="fas fa-redo"></i>
                   </button>
