@@ -93,6 +93,12 @@ class UserAccount extends React.Component {
               className="user-account__account-button"
               data-test="account-button"
             >
+              <div id="google-tm-usertype" className="google-tm-hidden">
+                {this.props.userType}
+              </div>
+              <div id="google-tm-username" className="google-tm-hidden">
+                {this.props.name}
+              </div>
               <AccountSVG
                 alt="account profile"
                 className="account-man"
