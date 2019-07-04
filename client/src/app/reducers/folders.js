@@ -312,6 +312,7 @@ const foldersReducer = (state = { ...initialState }, action) => {
     }
 
     case ActionTypes.JUMP_TO_FOLDER: {
+
       const { folderShortId } = action;
       const { folders } = state;
       const folder = Object.values(folders.byId).find(f => f.shortId === folderShortId);

@@ -30,6 +30,8 @@ class DocumentsView extends Component {
               container={this.props.container}
               profileName={profileName}
               folderDepth={this.props.folderDepth}
+              jumpToFolderByShortId={this.props.jumpToFolderByShortId}
+              clearSelectedFolders={this.props.clearSelectedFolders}
             />
           </div>
         )}
@@ -73,6 +75,7 @@ class DocumentsView extends Component {
 DocumentsView.propTypes = {
   childFolders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   childPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  clearSelectedFolders: PropTypes.func.isRequired,
   container: PropTypes.string.isRequired,
   deleteFolder: PropTypes.func.isRequired,
   documentView: PropTypes.string.isRequired,
