@@ -243,6 +243,9 @@
         padding: 2px 4px;
         margin-left: 10px;
         border-radius: $medium-border-radius;
+        min-width: 57px;
+        text-align: center;
+        margin-right: 0.0rem;
       }
       .editor-toolbar__dropdown{
         height: $editor-toolbar-content-height;

@@ -8,10 +8,8 @@ import classNames from 'classnames';
 import history from '../../../../../utils/history';
 
 import {
-  jumpToFolderByShortId,
   moveFolderToFolder,
   movePageToFolder,
-  clearSelectedFolders
 } from '../../../../../action/page';
 
 const ItemTypes = {
@@ -85,14 +83,12 @@ BreadCrumb.propTypes = {
   folderDepth: PropTypes.number.isRequired,
   isOver: PropTypes.bool.isRequired,
   profileName: PropTypes.string.isRequired,
-  jumpToFolderByShortId: PropTypes.string.isRequired,
+  jumpToFolderByShortId: PropTypes.func.isRequired,
 };
 
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    clearSelectedFolders,
-    jumpToFolderByShortId,
     moveFolderToFolder,
     movePageToFolder
   }, dispatch);

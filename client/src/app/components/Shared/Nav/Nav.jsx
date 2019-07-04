@@ -176,8 +176,8 @@ render() {
                   ref={(dashboardSort) => { this.dashboardSort = dashboardSort; }}
                   value={this.props.documentSort}
                 >
-                  <option value="updatedAt">Updated At</option>
                   <option value="title">Title</option>
+                  <option value="-updatedAt">Updated At</option>
                 </select>
               </div>
               <button className="dashboard-nav__clear-link" onClick={this.clearSearchText}>

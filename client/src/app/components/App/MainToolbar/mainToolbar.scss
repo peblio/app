@@ -21,15 +21,16 @@
   height: calc(#{$main-toolbar-height} + 2px);
   &__search-icon {
     font-size: 20px;
-    line-height: $title-width;
+    line-height: $title-width * 0.8;
     color: $white;
-    height: $title-width;
+    height: $title-width * 0.8;
     margin: $small-margin 0;
+    margin-top: 10px;
     padding: 0 $small-padding;
     background: $light-black;
     border-radius: $small-border-radius;
     position: relative;
-    left: -$small-border-radius;
+    left: -40px;
   }
   &__pref{
     transform: rotate(15deg);
@@ -63,6 +64,7 @@
   font-size: 14px;
   width: 20%;
   float: left;
+  padding-right: 40px;
  }
 
 .main-toolbar__save {

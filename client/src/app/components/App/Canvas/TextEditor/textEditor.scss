@@ -29,11 +29,18 @@
 }
 
 .rdw-image-modal-btn{
-  color:black;
+  color: $black ;
+}
+
+.rdw-link-modal-btn{
+  color: $black !important; 
+  &:disabled {
+    cursor: auto;
+  }
 }
 
 .rdw-embedded-modal-btn{
-  color:black;
+  color: $black;
 }
 
 %text-h1{
