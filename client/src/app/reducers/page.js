@@ -82,6 +82,7 @@ const page = (state = initialState, action) => {
 
 
     case ActionTypes.SET_DB_PAGE:
+      console.log('action.heading');
       return Object.assign({}, state, {
         id: action.id,
         parentId: action.parentId,

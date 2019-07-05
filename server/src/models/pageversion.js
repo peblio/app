@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 
 const pageVersionSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  version_id: { type: String, default: '' },
   parentId: { type: String, default: '' },
   id: { type: String, default: '' },
-  version_id: { type: String, default: '' },
   title: { type: String, default: '' },
   heading: { type: String, default: '' },
   snapshotPath: { type: String },

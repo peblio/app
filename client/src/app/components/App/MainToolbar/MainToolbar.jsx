@@ -17,6 +17,7 @@ import PreferencesSVG from '../../../images/preferences.svg';
 import { createNavigationContent } from '../../../action/navigation.js';
 import { setPageTitle, togglePreviewMode, autoSaveUnsavedChanges, savePageSnapshot } from '../../../action/page.js';
 import * as mainToolbarActions from '../../../action/mainToolbar.js';
+import axios from '../../../utils/axios';
 
 require('./mainToolbar.scss');
 
@@ -38,6 +39,23 @@ class MainToolbar extends React.Component {
   componentWillUnmount() {
     clearTimeout(this.autoSaveTimeout);
     window.removeEventListener('beforeunload', this.saveSnapshot);
+  }
+
+  savePageVersion = () => {
+    axios.post('/pagesversion', {
+      parentId: this.props.parentId,
+      id: this.props.id,
+      title: this.props.title,
+      heading: this.props.heading,
+      snapshotPath: this.props.snapshotPath,
+      description: this.props.description,
+      editors: this.props.editors,
+      editorIndex: this.props.editorIndex,
+      layout: this.props.layout,
+      workspace: this.props.workspace,
+      isPublished: this.props.isPublished,
+      tags: this.props.tags,
+    }).then();
   }
 
   saveSnapshotWithPage = () => {
@@ -212,6 +230,12 @@ class MainToolbar extends React.Component {
               <div className="main-toolbar__spacer"></div>
               <button
                 className="main-toolbar__button"
+                onClick={this.savePageVersion}
+              >
+                Save Version
+              </button>
+              <button
+                className="main-toolbar__button"
                 onClick={this.sharePebl}
                 data-test="main-toolbar__share-button"
               >
@@ -291,6 +315,18 @@ function mapStateToProps(state) {
     unsavedChanges: state.page.unsavedChanges,
     editorAutoSave: state.preferences.editorAutoSave,
 
+    parentId: state.page.parentId,
+    id: state.page.id,
+    title: state.page.pageTitle,
+    heading: state.page.pageHeading,
+    snapshotPath: '',
+    description: state.page.description,
+    editors: state.editorsReducer.editors,
+    editorIndex: state.editorsReducer.editorIndex,
+    layout: state.page.layout,
+    workspace: state.workspace.workspace,
+    isPublished: state.page.isPublished,
+    tags: state.page.tags,
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({

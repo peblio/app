@@ -35,36 +35,6 @@ export function openNavigationContent() {
   };
 }
 
-export function loadHistoryForPage(id) {
-  return (dispatch) => {
-    axios.get(`/pagesversion?id=${id}`)
-      .then(({ data }) => dispatch({
-        type: ActionTypes.LOAD_NAVIGATION_HISTORY,
-        data
-      }))
-      .catch((e) => {
-        if (e.response.status === 404) {
-          history.push('/404');
-        }
-      });
-  };
-}
-
-export function loadPageVersion(id, versionId) {
-  return (dispatch) => {
-    axios.get(`/pagesversion?id=${id}&version=${versionId}`)
-      .then(({ data }) => dispatch({
-        type: ActionTypes.SETUP_PAGE_HISTORY,
-        data
-      }))
-      .catch((e) => {
-        if (e.response.status === 404) {
-          history.push('/404');
-        }
-      });
-  };
-}
-
 export function closeNavigationContent() {
   return (dispatch) => {
     dispatch({

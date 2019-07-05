@@ -74,6 +74,7 @@ export function changePageLayout(value) {
 }
 
 export function loadPage(id, parentId, title, heading, description, layout, tags, isPublished) {
+  console.log('in here');
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,

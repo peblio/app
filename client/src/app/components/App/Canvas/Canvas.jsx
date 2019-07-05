@@ -230,6 +230,7 @@ class Canvas extends React.Component {
     // need to create copy of the layout because ReactGridLayout tests
     // for object equality when deciding whether to re-render grid items
     // reference: https://github.com/STRML/react-grid-layout/issues/382#issuecomment-299734450
+    console.log(this.props);
     const storageLayout = JSON.parse(JSON.stringify(this.props.layout));
     const localLayout = {};
     storageLayout.forEach((x) => {
