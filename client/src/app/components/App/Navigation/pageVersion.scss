@@ -3,6 +3,12 @@
 
 .page-version{
   &__button {
-
+    border: none;
+    font-size: $p-size;
+    &:hover {
+      border: none;
+      background: none;
+      color: $green;
+    }
   }
 }

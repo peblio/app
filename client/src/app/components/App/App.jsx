@@ -57,6 +57,7 @@ class App extends React.Component {
       const hlp = initHelpHero('1Dyo05WliMY');
       hlp.anonymous();
     }
+    this.props.createNavigationContent(this.props.layout);
   }
 
   componentDidUpdate(prevProps) {
@@ -64,7 +65,6 @@ class App extends React.Component {
       window.location.reload(true);
     }
   }
-
 
   onKeyPressed(e) {
     if (e.metaKey || e.ctrlKey) {
@@ -86,7 +86,6 @@ class App extends React.Component {
     }
   }
 
-
   onUserVisit =() => {
     const isUserFirstVisit = localStorage.getItem(process.env.LOCALSTORAGE_VARIABLE);
     // check if it is the first visit
@@ -96,7 +95,6 @@ class App extends React.Component {
       this.props.viewWelcomeModal();
     }
   }
-
 
   resetPage = () => {
     const location = this.props.location.pathname;
@@ -227,9 +225,9 @@ class App extends React.Component {
     return !(getForkPromptPreference === 'suppress');
   }
 
-  loadNavigation = () => {
-    this.props.createNavigationContent(this.props.layout);
-  }
+  // loadNavigation = () => {
+  //   this.props.createNavigationContent(this.props.layout);
+  // }
 
   clearValuesAndCloseSignUpModal = () => {
     this.props.clearSignupSelectedValues();
@@ -258,26 +256,10 @@ class App extends React.Component {
   getPage = () => {
     this.props.setEditAccess(false);
     const projectID = this.projectID();
-    axios.get(`/pages/${projectID}`)
-      .then((res) => {
-        this.props.loadPage(res.data[0].id, res.data[0].parentId, res.data[0].title, res.data[0].heading,
-          res.data[0].description, res.data[0].layout, res.data[0].tags, res.data[0].isPublished);
-        this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
-        if (Object.keys(res.data[0].workspace).length > 0) {
-          this.props.loadWorkspace(res.data[0].workspace);
-        }
-        this.props.setPreviewMode(true);
-        this.loadNavigation();
-        axios.get(`/authenticate/${projectID}`)
-          .then((res1) => {
-            this.props.setEditAccess(res1.data);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err.response && err.response.status === 404) {
-          history.push('/404');
-        }
+    this.props.loadCurrentPage(projectID);
+    axios.get(`/authenticate/${projectID}`)
+      .then((res1) => {
+        this.props.setEditAccess(res1.data);
       });
   }
 

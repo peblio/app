@@ -2,7 +2,7 @@ import axios from '../utils/axios';
 import * as ActionTypes from '../constants/reduxConstants.js';
 import history from '../utils/history';
 
-import { loadPage } from './page.js';
+import { loadPage, convertEditorsToRaw } from './page.js';
 import { loadEditors } from './editors.js';
 import { loadWorkspace } from './workspace.js';
 
@@ -26,9 +26,10 @@ export function loadPageVersion(id, versionId) {
     axios.get(`/pagesversion?id=${id}&version=${versionId}`)
       .then(({ data }) => {
         const pageData = data.data[0];
+        console.log(pageData.editors);
+        dispatch(loadEditors(pageData.editors, pageData.editorIndex));
         dispatch(loadPage(pageData.id, pageData.parentId, pageData.title, pageData.heading,
           pageData.description, pageData.layout, pageData.tags, pageData.isPublished));
-        dispatch(loadEditors(pageData.editors, pageData.editorIndex));
         if (pageData.workspace) {
           dispatch(loadWorkspace(pageData.workspace));
         }
@@ -42,4 +43,34 @@ export function loadPageVersion(id, versionId) {
         }
       });
   };
+}
+
+export function savePageVersion(
+  parentId,
+  id,
+  title,
+  heading,
+  snapshotPath,
+  description,
+  editors,
+  editorIndex,
+  layout,
+  workspace,
+  isPublished,
+  tags,
+) {
+  axios.post('/pagesversion', {
+    parentId,
+    id,
+    title,
+    heading,
+    snapshotPath,
+    description,
+    editors: convertEditorsToRaw(editors),
+    editorIndex,
+    layout,
+    workspace,
+    isPublished,
+    tags,
+  }).then();
 }

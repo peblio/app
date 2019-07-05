@@ -1,7 +1,8 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 
 const initialState = {
-  pageVersion: []
+  pageVersion: [],
+  isOldVersionShowing: false
 };
 
 const pageVersion = (state = initialState, action) => {
@@ -9,6 +10,16 @@ const pageVersion = (state = initialState, action) => {
     case ActionTypes.LOAD_PAGE_VERSIONS:
       return Object.assign({}, state, {
         pageVersion: [...action.data.data]
+      });
+
+    case ActionTypes.SHOW_OLD_PAGE_VERSION:
+      return Object.assign({}, state, {
+        isOldVersionShowing: true
+      });
+
+    case ActionTypes.HIDE_OLD_PAGE_VERSION:
+      return Object.assign({}, state, {
+        isOldVersionShowing: false
       });
 
     case ActionTypes.LOGOUT_USER:

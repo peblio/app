@@ -43,12 +43,13 @@ class Canvas extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    // console.log(this.props.editors);
+    // console.log(this.props.layout);
     const id = this.props.currentWidget;
     if (this.props.editorIndex > prevProps.editorIndex && document.getElementById(id)) {
       document.getElementById(id).focus({ preventScroll: false });
     }
   }
-
 
   componentWillUnmount() {
     if (this.timeout) {
@@ -230,7 +231,7 @@ class Canvas extends React.Component {
     // need to create copy of the layout because ReactGridLayout tests
     // for object equality when deciding whether to re-render grid items
     // reference: https://github.com/STRML/react-grid-layout/issues/382#issuecomment-299734450
-    console.log(this.props);
+    // console.log(this.props.editors);
     const storageLayout = JSON.parse(JSON.stringify(this.props.layout));
     const localLayout = {};
     storageLayout.forEach((x) => {

@@ -14,8 +14,9 @@ import ToolbarLogo from '../../../images/logo.svg';
 import CheckSVG from '../../../images/check.svg';
 import PreferencesSVG from '../../../images/preferences.svg';
 
+import { savePageVersion } from '../../../action/pageVersion.js';
 import { createNavigationContent } from '../../../action/navigation.js';
-import { setPageTitle, togglePreviewMode, autoSaveUnsavedChanges, savePageSnapshot } from '../../../action/page.js';
+import { convertEditorsToRaw, setPageTitle, togglePreviewMode, autoSaveUnsavedChanges, savePageSnapshot } from '../../../action/page.js';
 import * as mainToolbarActions from '../../../action/mainToolbar.js';
 import axios from '../../../utils/axios';
 
@@ -42,20 +43,20 @@ class MainToolbar extends React.Component {
   }
 
   savePageVersion = () => {
-    axios.post('/pagesversion', {
-      parentId: this.props.parentId,
-      id: this.props.id,
-      title: this.props.title,
-      heading: this.props.heading,
-      snapshotPath: this.props.snapshotPath,
-      description: this.props.description,
-      editors: this.props.editors,
-      editorIndex: this.props.editorIndex,
-      layout: this.props.layout,
-      workspace: this.props.workspace,
-      isPublished: this.props.isPublished,
-      tags: this.props.tags,
-    }).then();
+    this.props.savePageVersion(
+      this.props.parentId,
+      this.props.id,
+      this.props.title,
+      this.props.heading,
+      this.props.snapshotPath,
+      this.props.description,
+      this.props.editors,
+      this.props.editorIndex,
+      this.props.layout,
+      this.props.workspace,
+      this.props.isPublished,
+      this.props.tags,
+    );
   }
 
   saveSnapshotWithPage = () => {
@@ -334,6 +335,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setPageTitle,
   togglePreviewMode,
   autoSaveUnsavedChanges,
+  convertEditorsToRaw,
+  savePageVersion,
   ...mainToolbarActions
 }, dispatch);
 
