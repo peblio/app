@@ -15,9 +15,11 @@ import { convertPixelHeightToGridHeight } from '../../../utils/pixel-to-grid.js'
 import {
   changePageLayout,
   resizeTextEditor,
+  loadCurrentPage,
   setPageLayout,
   updateTextHeight
 } from '../../../action/page.js';
+import { hideOldPageVersion } from '../../../action/pageVersion.js';
 import {
   viewAddDescriptionModal
 } from '../../../action/mainToolbar.js';
@@ -43,8 +45,6 @@ class Canvas extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    // console.log(this.props.editors);
-    // console.log(this.props.layout);
     const id = this.props.currentWidget;
     if (this.props.editorIndex > prevProps.editorIndex && document.getElementById(id)) {
       document.getElementById(id).focus({ preventScroll: false });
@@ -226,6 +226,33 @@ class Canvas extends React.Component {
     return 'Add Description';
   }
 
+  renderCanvasPreview() {
+    console.log(this.props.isOldVersionShowing);
+    if (this.props.isOldVersionShowing) {
+      return (
+        <div className="canvas-overlay__container">
+          <div className="canvas-overlay__button-container">
+            <button
+              className="canvas-overlay__button"
+              onClick={() => { console.log('restore'); }}
+            >
+              Restore
+            </button>
+            <button
+              className="canvas-overlay__button"
+              onClick={() => {
+                this.props.loadCurrentPage(this.props.id);
+                this.props.hideOldPageVersion();
+              }}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      );
+    }
+  }
+
   render() {
     const ids = Object.keys(this.props.editors);
     // need to create copy of the layout because ReactGridLayout tests
@@ -329,6 +356,7 @@ class Canvas extends React.Component {
           ${this.props.isNavigationOpen ? 'canvas-right' : ''}`
         }
       >
+        {this.renderCanvasPreview()}
         {
           <div
             className="canvas__tag-container"
@@ -453,10 +481,12 @@ function mapStateToProps(state) {
     currentWidget: state.editorsReducer.currentWidget,
     description: state.page.description,
     editorIndex: state.editorsReducer.editorIndex,
+    id: state.page.id,
     isDeleteWarningModalOpen: state.editorsReducer.isDeleteWarningModalOpen,
     widgetForDeleteWidgetWarning: state.editorsReducer.widgetForDeleteWidgetWarning,
     editors: state.editorsReducer.editors,
     isFullScreenMode: state.editorsReducer.isFullScreenMode,
+    isOldVersionShowing: state.pageVersion.isOldVersionShowing,
     isNavigationOpen: state.navigation.isNavigationOpen,
     isPeblPublished: state.page.isPublished,
     layout: state.page.layout,
@@ -468,6 +498,8 @@ function mapStateToProps(state) {
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   changePageLayout,
+  hideOldPageVersion,
+  loadCurrentPage,
   resizeTextEditor,
   setPageLayout,
   setCurrentWidget,

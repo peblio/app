@@ -39,17 +39,11 @@ const editorsReducer = (state = initialState, action) => {
   switch (action.type) {
     /** ALL */
     case ActionTypes.SET_DB_EDITORS: {
-      console.log(action.editors);
       const newEditors = {};
       stack = Object.keys(action.editors); // An array of keys
       stack.forEach((id) => {
-        console.log(stack);
         if (action.editors[id].type === 'text') {
-          console.log(action.editors[id]);
           const { rawContentState, ...newEditor } = action.editors[id];
-          console.log(rawContentState);
-          console.log(JSON.parse(rawContentState));
-          console.log(convertFromRaw(JSON.parse(rawContentState)));
           newEditor.editorState = EditorState.createWithContent(
             convertFromRaw(JSON.parse(rawContentState))
           );
@@ -62,8 +56,6 @@ const editorsReducer = (state = initialState, action) => {
         }
       });
       stack.sort((e1, e2) => newEditors[e1].index - newEditors[e2].index);
-      console.log('action.editors');
-      console.log(newEditors);
       return { editors: newEditors, editorIndex: action.editorIndex };
     }
 

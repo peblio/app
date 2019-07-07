@@ -18,8 +18,13 @@ class PageVersion extends React.Component {
   }
 
   displayOldVersion = (id, versionId) => {
-    console.log(versionId);
     this.props.loadPageVersion(id, versionId);
+    this.props.showOldPageVersion();
+  }
+
+  loadCurrentPage = (id) => {
+    this.props.loadCurrentPage(id);
+    this.props.hideOldPageVersion();
   }
 
   renderCurrentVersionButton = id => (
@@ -27,7 +32,7 @@ class PageVersion extends React.Component {
       <button
         className="navigation__item navigation__item-title page-version__button"
         onClick={(e) => {
-          this.props.loadCurrentPage(id);
+          this.loadCurrentPage(id);
         }}
       >
         current Version
@@ -64,15 +69,6 @@ class PageVersion extends React.Component {
             className="navigation__container navigation__container--expanded history__container"
           >
             <nav className="navigation__options">
-              {this.props.preview || (
-                <Tooltip content="Refresh">
-                  <button
-                    className="navigation__option-button"
-                  >
-                    <i className="fas fa-redo"></i>
-                  </button>
-                </Tooltip>
-              )}
               <Tooltip content="Close">
                 <button
                   className="navigation__option-button"

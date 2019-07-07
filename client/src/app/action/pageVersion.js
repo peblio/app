@@ -59,18 +59,45 @@ export function savePageVersion(
   isPublished,
   tags,
 ) {
-  axios.post('/pagesversion', {
-    parentId,
-    id,
-    title,
-    heading,
-    snapshotPath,
-    description,
-    editors: convertEditorsToRaw(editors),
-    editorIndex,
-    layout,
-    workspace,
-    isPublished,
-    tags,
-  }).then();
+  let newPageVersion;
+  return (dispatch) => {
+    axios.post('/pagesversion', {
+      parentId,
+      id,
+      title,
+      heading,
+      snapshotPath,
+      description,
+      editors: convertEditorsToRaw(editors),
+      editorIndex,
+      layout,
+      workspace,
+      isPublished,
+      tags,
+    })
+      .then((res) => {
+        newPageVersion = res.data.pageVersion;
+        console.log(newPageVersion);
+        dispatch(loadHistoryForPage(id));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
+export function showOldPageVersion() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SHOW_OLD_PAGE_VERSION
+    });
+  };
+}
+
+export function hideOldPageVersion() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.HIDE_OLD_PAGE_VERSION
+    });
+  };
 }

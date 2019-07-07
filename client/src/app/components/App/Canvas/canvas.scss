@@ -41,6 +41,14 @@
   &__add-desc-button {
     @extend %peblio-button;
   }
+  &__page-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: $black;
+    opacity: 0.2;
+    z-index: $z-index-layer-3;
+  }
 }
 
 .canvas::after{

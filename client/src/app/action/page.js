@@ -143,7 +143,6 @@ export function duplicatePage(title, heading, description, folder, editors, edit
 }
 
 export function convertEditorsToRaw(editors) {
-  console.log(editors);
   const rawEditors = {};
   Object.keys(editors).forEach((id) => {
     if (editors[id].type === 'text') {
@@ -154,7 +153,6 @@ export function convertEditorsToRaw(editors) {
       rawEditors[id] = rawEditor;
     } else rawEditors[id] = editors[id];
   });
-  console.log(rawEditors);
   return rawEditors;
 }
 
