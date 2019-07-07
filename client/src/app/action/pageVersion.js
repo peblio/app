@@ -26,7 +26,6 @@ export function loadPageVersion(id, versionId) {
     axios.get(`/pagesversion?id=${id}&version=${versionId}`)
       .then(({ data }) => {
         const pageData = data.data[0];
-        console.log(pageData.editors);
         dispatch(loadEditors(pageData.editors, pageData.editorIndex));
         dispatch(loadPage(pageData.id, pageData.parentId, pageData.title, pageData.heading,
           pageData.description, pageData.layout, pageData.tags, pageData.isPublished));
@@ -41,6 +40,31 @@ export function loadPageVersion(id, versionId) {
         } else {
           console.log(e);
         }
+      });
+  };
+}
+
+export function saveCurrentToVersion(id) {
+  return (dispatch) => {
+    axios.get(`/pages/${id}`)
+      .then((res) => {
+        dispatch(savePageVersion(
+          res.data[0].parentId,
+          res.data[0].id,
+          res.data[0].title,
+          res.data[0].heading,
+          res.data[0].snapshotPath,
+          res.data[0].description,
+          res.data[0].editors,
+          res.data[0].editorIndex,
+          res.data[0].layout,
+          res.data[0].workspace,
+          res.data[0].isPublished,
+          res.data[0].tags,
+        ));
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 }
@@ -60,6 +84,7 @@ export function savePageVersion(
   tags,
 ) {
   let newPageVersion;
+  console.log(heading);
   return (dispatch) => {
     axios.post('/pagesversion', {
       parentId,

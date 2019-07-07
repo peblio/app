@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { saveCurrentToVersion, savePageVersion } from '../../../action/pageVersion.js';
 
 class CanvasOverlay extends React.Component {
   restorePage=() => {
+    this.props.saveCurrentToVersion(this.props.id);
     this.props.savePage();
   }
 
@@ -38,4 +42,24 @@ CanvasOverlay.propTypes = {
   openImageResizer: PropTypes.func.isRequired
 };
 
-export default CanvasOverlay;
+const mapStateToProps = state => ({
+  parentId: state.page.parentId,
+  id: state.page.id,
+  title: state.page.pageTitle,
+  heading: state.page.pageHeading,
+  snapshotPath: '',
+  description: state.page.description,
+  editors: state.editorsReducer.editors,
+  editorIndex: state.editorsReducer.editorIndex,
+  layout: state.page.layout,
+  workspace: state.workspace.workspace,
+  isPublished: state.page.isPublished,
+  tags: state.page.tags,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  saveCurrentToVersion,
+  savePageVersion
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CanvasOverlay);

@@ -54,6 +54,14 @@
     top: 0;
     left: 0;
   }
+  &__button-container {
+    top: 2*$main-toolbar-height;
+    width: 100%;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .canvas::after{

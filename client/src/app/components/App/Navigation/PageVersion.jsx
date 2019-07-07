@@ -83,7 +83,7 @@ class PageVersion extends React.Component {
             <ul className="navigation__items">
               {this.renderCurrentVersionButton(this.props.id)}
               {
-                this.props.pageVersion.reverse().map((historyItem, i) => this.renderPageVersionButton(historyItem))
+                this.props.pageVersion.slice().reverse().map((historyItem, i) => this.renderPageVersionButton(historyItem))
               }
             </ul>
           </section>
