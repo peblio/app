@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as pageVersionAction from '../../../action/pageVersion.js';
-import { loadCurrentPage } from '../../../action/page.js';
+import { loadCurrentPage, setPreviewMode } from '../../../action/page.js';
 
 require('./pageVersion.scss');
 
@@ -20,11 +20,13 @@ class PageVersion extends React.Component {
   displayOldVersion = (id, versionId) => {
     this.props.loadPageVersion(id, versionId);
     this.props.showOldPageVersion();
+    this.props.setPreviewMode(true);
   }
 
   loadCurrentPage = (id) => {
     this.props.loadCurrentPage(id);
     this.props.hideOldPageVersion();
+    this.props.setPreviewMode(false);
   }
 
   renderCurrentVersionButton = id => (
@@ -110,7 +112,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   ...pageVersionAction,
-  loadCurrentPage
+  loadCurrentPage,
+  setPreviewMode
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageVersion);

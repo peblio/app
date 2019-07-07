@@ -45,12 +45,14 @@
 
 .canvas-overlay {
   &__container {
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     background: $black;
     opacity: 0.2;
-    z-index: $z-index-layer-3;
+    z-index: $z-index-layer-1-5;
+    top: 0;
+    left: 0;
   }
 }
 

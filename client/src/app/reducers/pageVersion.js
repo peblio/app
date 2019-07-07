@@ -1,6 +1,6 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 
-const initialState = {
+export const initialState = {
   pageVersion: [],
   isOldVersionShowing: false
 };

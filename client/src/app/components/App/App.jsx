@@ -303,7 +303,9 @@ class App extends React.Component {
             location={this.props.location}
           />
         </nav>
-        <Canvas />
+        <Canvas
+          savePage={this.savePage}
+        />
 
         <Modal
           size="xlarge"
@@ -513,6 +515,8 @@ function mapStateToProps(state) {
     description: state.page.description,
     isPeblPublished: state.page.isPublished,
     isLiveRefreshPageModalOpen: state.page.isLiveRefreshPageModalOpen,
+
+    isOldVersionShowing: state.pageVersion.isOldVersionShowing,
 
     canEdit: state.user.canEdit,
     name: state.user.name,

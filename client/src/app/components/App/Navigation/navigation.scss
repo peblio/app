@@ -44,7 +44,7 @@
     width: $navigation-width;
     padding-right: $xlarge-padding;
     height: calc(100% - #{$main-toolbar-height*2} - #{$workspace-navbar-height});
-    z-index: $z-index-layer-4;
+    z-index: $z-index-layer-2;
     overflow-x: scroll;
     &--expanded {
       top: $main-toolbar-height;

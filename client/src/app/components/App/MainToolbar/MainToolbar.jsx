@@ -218,6 +218,7 @@ class MainToolbar extends React.Component {
                   type="checkbox"
                   checked={this.props.preview}
                   data-test="main-toolbar__edit-mode-toggle"
+                  disabled={this.props.isOldVersionShowing}
                 />
                 <div className="main-toolbar__slider"></div>
               </label>
@@ -308,6 +309,7 @@ function mapStateToProps(state) {
     canEdit: state.user.canEdit,
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isHelpDropdownOpen: state.mainToolbar.isHelpDropdownOpen,
+    isOldVersionShowing: state.pageVersion.isOldVersionShowing,
     isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,
     layout: state.page.layout,
     name: state.user.name,

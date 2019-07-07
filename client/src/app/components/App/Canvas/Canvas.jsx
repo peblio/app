@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import VisibilitySensor from 'react-visibility-sensor';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import CanvasOverlay from './CanvasOverlay.jsx';
 import EditorContainer from './EditorContainer/EditorContainer.jsx';
 import Heading from './Heading/Heading.jsx';
 import Tags from './Tags/Tags.jsx';
@@ -226,29 +227,16 @@ class Canvas extends React.Component {
     return 'Add Description';
   }
 
+
   renderCanvasPreview() {
-    console.log(this.props.isOldVersionShowing);
     if (this.props.isOldVersionShowing) {
       return (
-        <div className="canvas-overlay__container">
-          <div className="canvas-overlay__button-container">
-            <button
-              className="canvas-overlay__button"
-              onClick={() => { console.log('restore'); }}
-            >
-              Restore
-            </button>
-            <button
-              className="canvas-overlay__button"
-              onClick={() => {
-                this.props.loadCurrentPage(this.props.id);
-                this.props.hideOldPageVersion();
-              }}
-            >
-              Close
-            </button>
-          </div>
-        </div>
+        <CanvasOverlay
+          loadCurrentPage={this.props.loadCurrentPage}
+          hideOldPageVersion={this.props.hideOldPageVersion}
+          id={this.props.id}
+          savePage={this.props.savePage}
+        />
       );
     }
   }
