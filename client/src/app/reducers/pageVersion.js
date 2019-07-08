@@ -15,7 +15,6 @@ const pageVersion = (state = initialState, action) => {
       });
 
     case ActionTypes.SHOW_OLD_PAGE_VERSION:
-      console.log(action.id);
       return Object.assign({}, state, {
         isOldVersionShowing: true,
         selectedPageVersion: action.id

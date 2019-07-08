@@ -45,25 +45,21 @@ class PageVersion extends React.Component {
     </li>
   )
 
-  renderPageVersionButton = (historyItem) => {
-    console.log(historyItem.version_id);
-    console.log(this.props.selectedPageVersion);
-    return (
-      <li>
-        <button
-          className={
-            `navigation__item-title page-version__button
+  renderPageVersionButton = historyItem => (
+    <li>
+      <button
+        className={
+          `navigation__item-title page-version__button
             ${(this.props.selectedPageVersion === historyItem.version_id)
-              ? 'page-version__button--selected' : ''}`}
-          onClick={(e) => {
-            this.displayOldVersion(historyItem.id, historyItem.version_id);
-          }}
-        >
-          {moment(historyItem.createdAt).format('LLL')}
-        </button>
-      </li>
-    );
-  }
+            ? 'page-version__button--selected' : ''}`}
+        onClick={(e) => {
+          this.displayOldVersion(historyItem.id, historyItem.version_id);
+        }}
+      >
+        {moment(historyItem.createdAt).format('LLL')}
+      </button>
+    </li>
+  )
 
   render() {
     return (

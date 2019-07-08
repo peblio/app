@@ -28,11 +28,16 @@
     color: $g5;
     padding: 0 $xlarge-padding;
     width: 100%;
-    &:hover, &--selected {
+    &--selected {
       border: none;
       background: $g5;
       color: $black;
       border-radius: 0;
+    }
+    &:hover {
+      color: $green;
+      background: transparent;
+      border: 0;
     }
   }
 }

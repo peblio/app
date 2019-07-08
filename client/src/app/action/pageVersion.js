@@ -5,6 +5,7 @@ import history from '../utils/history';
 import { loadPage, convertEditorsToRaw } from './page.js';
 import { loadEditors } from './editors.js';
 import { loadWorkspace } from './workspace.js';
+import { createNavigationContent } from './navigation.js';
 
 export function loadHistoryForPage(id) {
   return (dispatch) => {
@@ -32,6 +33,7 @@ export function loadPageVersion(id, versionId) {
         if (pageData.workspace) {
           dispatch(loadWorkspace(pageData.workspace));
         }
+        dispatch(createNavigationContent(pageData.layout));
       })
       .catch((e) => {
         console.log(e);
@@ -84,7 +86,6 @@ export function savePageVersion(
   tags,
 ) {
   let newPageVersion;
-  console.log(heading);
   return (dispatch) => {
     axios.post('/pagesversion', {
       parentId,
@@ -102,7 +103,6 @@ export function savePageVersion(
     })
       .then((res) => {
         newPageVersion = res.data.pageVersion;
-        console.log(newPageVersion);
         dispatch(loadHistoryForPage(id));
       })
       .catch((err) => {

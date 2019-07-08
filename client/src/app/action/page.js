@@ -16,15 +16,13 @@ export function loadCurrentPage(projectID) {
   return (dispatch) => {
     axios.get(`/pages/${projectID}`)
       .then((res) => {
-        // debugger;
         dispatch(loadPage(res.data[0].id, res.data[0].parentId, res.data[0].title, res.data[0].heading,
           res.data[0].description, res.data[0].layout, res.data[0].tags, res.data[0].isPublished));
         dispatch(loadEditors(res.data[0].editors, res.data[0].editorIndex));
         if (Object.keys(res.data[0].workspace).length > 0) {
           dispatch(loadWorkspace(res.data[0].workspace));
         }
-        setPreviewMode(true);
-      // createNavigationContent(res.data[0].layout);
+        dispatch(createNavigationContent(res.data[0].layout));
       })
       .catch((err) => {
         console.log(err);
@@ -99,7 +97,6 @@ export function changePageLayout(value) {
 }
 
 export function loadPage(id, parentId, title, heading, description, layout, tags, isPublished) {
-  console.log('in here');
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_PAGE,
