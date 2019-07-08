@@ -2,7 +2,9 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 
 export const initialState = {
   pageVersion: [],
-  isOldVersionShowing: false
+  isOldVersionShowing: false,
+  isPageVersionOpen: true,
+  selectedPageVersion: ''
 };
 
 const pageVersion = (state = initialState, action) => {
@@ -13,8 +15,10 @@ const pageVersion = (state = initialState, action) => {
       });
 
     case ActionTypes.SHOW_OLD_PAGE_VERSION:
+      console.log(action.id);
       return Object.assign({}, state, {
-        isOldVersionShowing: true
+        isOldVersionShowing: true,
+        selectedPageVersion: action.id
       });
 
     case ActionTypes.HIDE_OLD_PAGE_VERSION:

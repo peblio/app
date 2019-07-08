@@ -111,10 +111,11 @@ export function savePageVersion(
   };
 }
 
-export function showOldPageVersion() {
+export function showOldPageVersion(id) {
   return (dispatch) => {
     dispatch({
-      type: ActionTypes.SHOW_OLD_PAGE_VERSION
+      type: ActionTypes.SHOW_OLD_PAGE_VERSION,
+      id
     });
   };
 }

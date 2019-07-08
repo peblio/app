@@ -3,11 +3,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { saveCurrentToVersion, savePageVersion } from '../../../action/pageVersion.js';
+import { setPreviewMode } from '../../../action/page.js';
 
 class CanvasOverlay extends React.Component {
-  restorePage=() => {
+  restorePage = () => {
     this.props.saveCurrentToVersion(this.props.id);
     this.props.savePage();
+    this.props.hideOldPageVersion();
+    this.props.setPreviewMode(false);
+  }
+
+  cancelPageVersion = () => {
+    this.props.loadCurrentPage(this.props.id);
+    this.props.hideOldPageVersion();
+    this.props.setPreviewMode(false);
   }
 
   render() {
@@ -16,18 +25,15 @@ class CanvasOverlay extends React.Component {
         <div className="canvas-overlay__button-container">
           <button
             className="canvas-overlay__button"
-            onClick={() => { this.restorePage(); }}
+            onClick={this.restorePage}
           >
-            Restore
+            Restore to this Version
           </button>
           <button
             className="canvas-overlay__button"
-            onClick={() => {
-              this.props.loadCurrentPage(this.props.id);
-              this.props.hideOldPageVersion();
-            }}
+            onClick={this.cancelPageVersion}
           >
-            Close
+            Back
           </button>
         </div>
       </div>
@@ -59,7 +65,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   saveCurrentToVersion,
-  savePageVersion
+  savePageVersion,
+  setPreviewMode
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(CanvasOverlay);

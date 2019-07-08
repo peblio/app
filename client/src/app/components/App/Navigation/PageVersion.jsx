@@ -19,7 +19,7 @@ class PageVersion extends React.Component {
 
   displayOldVersion = (id, versionId) => {
     this.props.loadPageVersion(id, versionId);
-    this.props.showOldPageVersion();
+    this.props.showOldPageVersion(versionId);
     this.props.setPreviewMode(true);
   }
 
@@ -32,7 +32,7 @@ class PageVersion extends React.Component {
   renderCurrentVersionButton = id => (
     <li>
       <button
-        className="navigation__item navigation__item-title page-version__button"
+        className={`navigation__item-title page-version__button ${this.props.isOldVersionShowing ? '' : 'page-version__button--selected'}`}
         onClick={(e) => {
           this.loadCurrentPage(id);
         }}
@@ -42,18 +42,22 @@ class PageVersion extends React.Component {
     </li>
   )
 
-  renderPageVersionButton = historyItem => (
-    <li>
-      <button
-        className="navigation__item navigation__item-title page-version__button"
-        onClick={(e) => {
-          this.displayOldVersion(historyItem.id, historyItem.version_id);
-        }}
-      >
-        {moment(historyItem.createdAt).format('LLL')}
-      </button>
-    </li>
-  )
+  renderPageVersionButton = (historyItem) => {
+    console.log(historyItem.version_id);
+    console.log(this.props.selectedPageVersion);
+    return (
+      <li>
+        <button
+          className={`navigation__item-title page-version__button ${(this.props.selectedPageVersion === historyItem.version_id) ? 'page-version__button--selected' : ''}`}
+          onClick={(e) => {
+            this.displayOldVersion(historyItem.id, historyItem.version_id);
+          }}
+        >
+          {moment(historyItem.createdAt).format('LLL')}
+        </button>
+      </li>
+    );
+  }
 
   render() {
     return (
@@ -66,21 +70,14 @@ class PageVersion extends React.Component {
             <i className="fas fa-bars"></i>
           </Tooltip>
         </button>
-        {this.props.isNavigationOpen && this.props.pageVersion && (
+        {this.props.isPageVersionOpen && this.props.pageVersion && (
           <section
-            className="navigation__container navigation__container--expanded history__container"
+            className="navigation__container navigation__container--expanded page-version__container"
           >
-            <nav className="navigation__options">
-              <Tooltip content="Close">
-                <button
-                  className="navigation__option-button"
-                  onClick={this.props.closeNavigationContent}
-                >
-                  <i className="fas fa-times"></i>
-                </button>
-              </Tooltip>
-            </nav>
-            <ul className="navigation__items">
+            <h1 className="navigation__item-title page-version__title">
+              History
+            </h1>
+            <ul className="navigation__items page-version__items">
               {this.renderCurrentVersionButton(this.props.id)}
               {
                 this.props.pageVersion.slice().reverse().map((historyItem, i) => this.renderPageVersionButton(historyItem))
@@ -95,7 +92,7 @@ class PageVersion extends React.Component {
 
 PageVersion.propTypes = {
   closeNavigationContent: PropTypes.func.isRequired,
-  isNavigationOpen: PropTypes.bool.isRequired,
+  isPageVersionOpen: PropTypes.bool.isRequired,
   openNavigationContent: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
@@ -104,10 +101,12 @@ PageVersion.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isNavigationOpen: state.navigation.isNavigationOpen,
-  preview: state.page.preview,
   id: state.page.id,
-  pageVersion: state.pageVersion.pageVersion
+  isOldVersionShowing: state.pageVersion.isOldVersionShowing,
+  isPageVersionOpen: state.pageVersion.isPageVersionOpen,
+  pageVersion: state.pageVersion.pageVersion,
+  preview: state.page.preview,
+  selectedPageVersion: state.pageVersion.selectedPageVersion
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
