@@ -239,6 +239,7 @@ class Canvas extends React.Component {
         />
       );
     }
+    return null;
   }
 
   render() {
@@ -440,13 +441,16 @@ Canvas.propTypes = {
   changePageLayout: PropTypes.func.isRequired,
   description: PropTypes.string.isRequired,
   editorIndex: PropTypes.number.isRequired,
-  widgetForDeleteWidgetWarning: PropTypes.string.isRequired,
   editors: PropTypes.shape({}).isRequired,
+  hideOldPageVersion: PropTypes.func.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  id: PropTypes.string.isRequired,
   isFullScreenMode: PropTypes.bool.isRequired,
   isNavigationOpen: PropTypes.bool.isRequired,
+  isOldVersionShowing: PropTypes.bool.isRequired,
   isPeblPublished: PropTypes.bool.isRequired,
   isDeleteWarningModalOpen: PropTypes.bool.isRequired,
+  loadCurrentPage: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
   resizeTextEditor: PropTypes.func.isRequired,
   rgl: PropTypes.shape({
@@ -456,12 +460,14 @@ Canvas.propTypes = {
     rowHeight: PropTypes.number,
     width: PropTypes.number
   }).isRequired,
+  savePage: PropTypes.func.isRequired,
   setCurrentWidget: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
   textHeights: PropTypes.shape({}).isRequired,
   updateTextHeight: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired,
-  viewAddDescriptionModal: PropTypes.func.isRequired
+  viewAddDescriptionModal: PropTypes.func.isRequired,
+  widgetForDeleteWidgetWarning: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state) {

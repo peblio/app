@@ -23,7 +23,8 @@ const pageVersion = (state = initialState, action) => {
 
     case ActionTypes.HIDE_OLD_PAGE_VERSION:
       return Object.assign({}, state, {
-        isOldVersionShowing: false
+        isOldVersionShowing: false,
+        selectedPageVersion: ''
       });
 
     case ActionTypes.LOGOUT_USER:

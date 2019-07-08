@@ -42,10 +42,12 @@ class CanvasOverlay extends React.Component {
 }
 
 CanvasOverlay.propTypes = {
-  isImageSmall: PropTypes.bool.isRequired,
-  name: PropTypes.string.isRequired,
-  openFileUpload: PropTypes.func.isRequired,
-  openImageResizer: PropTypes.func.isRequired
+  hideOldPageVersion: PropTypes.func.isRequired,
+  loadCurrentPage: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  saveCurrentToVersion: PropTypes.func.isRequired,
+  savePage: PropTypes.func.isRequired,
+  setPreviewMode: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

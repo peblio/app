@@ -31,11 +31,9 @@ import * as navigationActions from '../../action/navigation.js';
 import * as pageActions from '../../action/page.js';
 import * as preferencesActions from '../../action/preferences.js';
 import * as userActions from '../../action/user.js';
-import { loadWorkspace } from '../../action/workspace.js';
 
 import axios from '../../utils/axios';
 import { saveLog } from '../../utils/log';
-import history from '../../utils/history';
 import PageVersion from './Navigation/PageVersion';
 
 require('./app.scss');
@@ -454,13 +452,8 @@ App.propTypes = {
   isExamplesModalOpen: PropTypes.bool.isRequired,
   closeExamplesModal: PropTypes.func.isRequired,
 
-  loadEditors: PropTypes.func.isRequired,
-  loadWorkspace: PropTypes.func.isRequired,
-
-  setPreviewMode: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
   updatePage: PropTypes.func.isRequired,
-  loadPage: PropTypes.func.isRequired,
   setPageId: PropTypes.func.isRequired,
 
   setEditAccess: PropTypes.func.isRequired,
@@ -492,6 +485,7 @@ App.propTypes = {
   fetchUserPreferences: PropTypes.func.isRequired,
 
   fetchAllPages: PropTypes.func.isRequired,
+  loadCurrentPage: PropTypes.func.isRequired,
 
   // navigation
   pageHeading: PropTypes.string.isRequired,
@@ -550,7 +544,6 @@ function mapDispatchToProps(dispatch) {
     ...pageActions,
     ...preferencesActions,
     ...userActions,
-    loadWorkspace
   }, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);

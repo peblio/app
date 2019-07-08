@@ -16,9 +16,13 @@ import PreferencesSVG from '../../../images/preferences.svg';
 
 import { savePageVersion } from '../../../action/pageVersion.js';
 import { createNavigationContent } from '../../../action/navigation.js';
-import { convertEditorsToRaw, setPageTitle, togglePreviewMode, autoSaveUnsavedChanges, savePageSnapshot } from '../../../action/page.js';
+import {
+  convertEditorsToRaw,
+  setPageTitle,
+  togglePreviewMode,
+  autoSaveUnsavedChanges,
+  savePageSnapshot } from '../../../action/page.js';
 import * as mainToolbarActions from '../../../action/mainToolbar.js';
-import axios from '../../../utils/axios';
 
 require('./mainToolbar.scss');
 
@@ -277,12 +281,17 @@ class MainToolbar extends React.Component {
 }
 
 MainToolbar.propTypes = {
+  autoSaveUnsavedChanges: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
   createNavigationContent: PropTypes.func.isRequired,
+  editorAutoSave: PropTypes.bool.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isHelpDropdownOpen: PropTypes.bool.isRequired,
   isPreferencesPanelOpen: PropTypes.bool.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
@@ -295,12 +304,21 @@ MainToolbar.propTypes = {
   togglePreviewMode: PropTypes.func.isRequired,
   togglePreferencesPanel: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
-  autoSaveUnsavedChanges: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
-  editorAutoSave: PropTypes.bool.isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired
+
+  parentId: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  heading: PropTypes.string.isRequired,
+  snapshotPath: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  editors: PropTypes.shape({}).isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  editorIndex: PropTypes.number.isRequired,
+  workspace: PropTypes.shape({}).isRequired,
+  isPublished: PropTypes.bool.isRequired,
+  savePageVersion: PropTypes.func.isRequired,
+  isOldVersionShowing: PropTypes.bool.isRequired,
 };
 
 
@@ -326,7 +344,6 @@ function mapStateToProps(state) {
     description: state.page.description,
     editors: state.editorsReducer.editors,
     editorIndex: state.editorsReducer.editorIndex,
-    layout: state.page.layout,
     workspace: state.workspace.workspace,
     isPublished: state.page.isPublished,
     tags: state.page.tags,

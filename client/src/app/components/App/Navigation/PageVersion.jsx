@@ -32,7 +32,10 @@ class PageVersion extends React.Component {
   renderCurrentVersionButton = id => (
     <li>
       <button
-        className={`navigation__item-title page-version__button ${this.props.isOldVersionShowing ? '' : 'page-version__button--selected'}`}
+        className={
+          `navigation__item-title page-version__button
+          ${this.props.isOldVersionShowing ? '' : 'page-version__button--selected'}`
+        }
         onClick={(e) => {
           this.loadCurrentPage(id);
         }}
@@ -48,7 +51,10 @@ class PageVersion extends React.Component {
     return (
       <li>
         <button
-          className={`navigation__item-title page-version__button ${(this.props.selectedPageVersion === historyItem.version_id) ? 'page-version__button--selected' : ''}`}
+          className={
+            `navigation__item-title page-version__button
+            ${(this.props.selectedPageVersion === historyItem.version_id)
+              ? 'page-version__button--selected' : ''}`}
           onClick={(e) => {
             this.displayOldVersion(historyItem.id, historyItem.version_id);
           }}
@@ -80,7 +86,9 @@ class PageVersion extends React.Component {
             <ul className="navigation__items page-version__items">
               {this.renderCurrentVersionButton(this.props.id)}
               {
-                this.props.pageVersion.slice().reverse().map((historyItem, i) => this.renderPageVersionButton(historyItem))
+                this.props.pageVersion.slice().reverse().map(
+                  (historyItem, i) => this.renderPageVersionButton(historyItem)
+                )
               }
             </ul>
           </section>
@@ -91,13 +99,18 @@ class PageVersion extends React.Component {
 }
 
 PageVersion.propTypes = {
-  closeNavigationContent: PropTypes.func.isRequired,
-  isPageVersionOpen: PropTypes.bool.isRequired,
-  openNavigationContent: PropTypes.func.isRequired,
-  preview: PropTypes.bool.isRequired,
+  hideOldPageVersion: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
+  isOldVersionShowing: PropTypes.bool.isRequired,
+  isPageVersionOpen: PropTypes.bool.isRequired,
+  loadCurrentPage: PropTypes.func.isRequired,
   loadHistoryForPage: PropTypes.func.isRequired,
+  loadPageVersion: PropTypes.func.isRequired,
+  openNavigationContent: PropTypes.func.isRequired,
   pageVersion: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  selectedPageVersion: PropTypes.string.isRequired,
+  setPreviewMode: PropTypes.func.isRequired,
+  showOldPageVersion: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
