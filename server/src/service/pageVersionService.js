@@ -6,6 +6,9 @@ export async function savePageVersion(req, res) {
   if (!user) {
     return res.status(403).send({ error: 'Please log in first' });
   }
+  if (!req.body.id) {
+    return res.status(200).send();
+  }
   try {
     const pageVersion = new PageVersion({ ...req.body, user: user._id, version_id: Math.round(new Date().getTime()/1000) });
     const savedPageVersion = await pageVersion.save();
