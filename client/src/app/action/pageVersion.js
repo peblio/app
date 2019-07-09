@@ -127,3 +127,19 @@ export function hideOldPageVersion() {
     });
   };
 }
+
+export function showPageVersion() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SHOW_PAGE_VERSION
+    });
+  };
+}
+
+export function hidePageVersion() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.HIDE_PAGE_VERSION
+    });
+  };
+}

@@ -9,6 +9,7 @@ import ImageSVG from '../../../../images/image.svg';
 import QuestionSVG from '../../../../images/question.svg';
 import TextSVG from '../../../../images/text.svg';
 import VideoSVG from '../../../../images/video.svg';
+import HistorySVG from '../../../../images/history.svg';
 import {
   addCodeEditor,
   addIframe,
@@ -17,6 +18,7 @@ import {
   addQuestionEditor,
   addVideo
 } from '../../../../action/editors.js';
+import { showPageVersion } from '../../../../action/pageVersion.js';
 
 require('./insertToolbar.scss');
 
@@ -200,7 +202,15 @@ class InsertToolbar extends React.Component {
           </button>
         </div>
         <div className="insert-toolbar__container-right">
-
+          <button
+            onMouseDown={this.props.showPageVersion}
+            onKeyDown={this.props.showPageVersion}
+            id="elementButton"
+            className="insert-toolbar__button"
+            data-test="insert-toolbar__show-page-version"
+          >
+            <HistorySVG alt="show page version" />
+          </button>
         </div>
 
       </div>
@@ -214,7 +224,8 @@ InsertToolbar.propTypes = {
   addImage: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
   addQuestionEditor: PropTypes.func.isRequired,
-  addVideo: PropTypes.func.isRequired
+  addVideo: PropTypes.func.isRequired,
+  showPageVersion: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -223,7 +234,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   addImage,
   addTextEditor,
   addQuestionEditor,
-  addVideo
+  addVideo,
+  showPageVersion
 }, dispatch);
 
 export default connect(null, mapDispatchToProps)(InsertToolbar);
