@@ -18,7 +18,7 @@ import {
   addQuestionEditor,
   addVideo
 } from '../../../../action/editors.js';
-import { showPageVersion } from '../../../../action/pageVersion.js';
+import { togglePageVersion } from '../../../../action/pageVersion.js';
 
 require('./insertToolbar.scss');
 
@@ -203,8 +203,8 @@ class InsertToolbar extends React.Component {
         </div>
         <div className="insert-toolbar__container-right">
           <button
-            onMouseDown={this.props.showPageVersion}
-            onKeyDown={this.props.showPageVersion}
+            onMouseDown={this.props.togglePageVersion}
+            onKeyDown={this.props.togglePageVersion}
             id="elementButton"
             className="insert-toolbar__button"
             data-test="insert-toolbar__show-page-version"
@@ -225,7 +225,7 @@ InsertToolbar.propTypes = {
   addTextEditor: PropTypes.func.isRequired,
   addQuestionEditor: PropTypes.func.isRequired,
   addVideo: PropTypes.func.isRequired,
-  showPageVersion: PropTypes.func.isRequired,
+  togglePageVersion: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -235,7 +235,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   addTextEditor,
   addQuestionEditor,
   addVideo,
-  showPageVersion
+  togglePageVersion
 }, dispatch);
 
 export default connect(null, mapDispatchToProps)(InsertToolbar);

@@ -128,18 +128,10 @@ export function hideOldPageVersion() {
   };
 }
 
-export function showPageVersion() {
+export function togglePageVersion() {
   return (dispatch) => {
     dispatch({
-      type: ActionTypes.SHOW_PAGE_VERSION
-    });
-  };
-}
-
-export function hidePageVersion() {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.HIDE_PAGE_VERSION
+      type: ActionTypes.TOGGLE_PAGE_VERSION
     });
   };
 }

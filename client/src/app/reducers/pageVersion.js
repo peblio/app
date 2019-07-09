@@ -26,14 +26,9 @@ const pageVersion = (state = initialState, action) => {
         selectedPageVersion: ''
       });
 
-    case ActionTypes.SHOW_PAGE_VERSION:
+    case ActionTypes.TOGGLE_PAGE_VERSION:
       return Object.assign({}, state, {
-        isPageVersionOpen: true
-      });
-
-    case ActionTypes.HIDE_PAGE_VERSION:
-      return Object.assign({}, state, {
-        isPageVersionOpen: false
+        isPageVersionOpen: !state.isPageVersionOpen
       });
 
     case ActionTypes.LOGOUT_USER:
