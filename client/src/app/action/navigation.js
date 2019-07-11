@@ -50,3 +50,12 @@ export function setYNavigation(value) {
     });
   };
 }
+
+export function setYPosition(value) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_Y_POSITION,
+      value
+    });
+  };
+}

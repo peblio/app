@@ -47,6 +47,9 @@ class Canvas extends React.Component {
     if (this.props.editorIndex > prevProps.editorIndex && document.getElementById(id)) {
       document.getElementById(id).focus({ preventScroll: false });
     }
+    if (this.props.isFullScreenMode !== prevProps.isFullScreenMode && prevProps.isFullScreenMode) {
+      window.scrollTo(0, this.props.yPosition);
+    }
   }
 
 
@@ -443,7 +446,8 @@ Canvas.propTypes = {
   textHeights: PropTypes.shape({}).isRequired,
   updateTextHeight: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired,
-  viewAddDescriptionModal: PropTypes.func.isRequired
+  viewAddDescriptionModal: PropTypes.func.isRequired,
+  yPosition: PropTypes.number.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -461,7 +465,8 @@ function mapStateToProps(state) {
     preview: state.page.preview,
     rgl: state.page.rgl,
     textHeights: state.page.textHeights,
-    userType: state.user.type
+    userType: state.user.type,
+    yPosition: state.navigation.yPosition
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
