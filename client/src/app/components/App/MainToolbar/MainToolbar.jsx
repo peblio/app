@@ -24,6 +24,10 @@ import {
   savePageSnapshot } from '../../../action/page.js';
 import * as mainToolbarActions from '../../../action/mainToolbar.js';
 
+export const ONE_SEC = 1000;
+export const TEN_SEC = 10 * ONE_SEC;
+export const TWO_MIN = 120 * ONE_SEC;
+
 require('./mainToolbar.scss');
 
 class MainToolbar extends React.Component {
@@ -31,22 +35,32 @@ class MainToolbar extends React.Component {
     this.autoSaveTimeout = setInterval(() => {
       if (
         this.props.name && this.props.canEdit && this.props.unsavedChanges &&
-        this.props.editorAutoSave && this.props.projectID()
+        this.props.editorAutoSave && this.props.projectID() && !this.props.isOldVersionShowing
       ) {
         this.props.autoSaveUnsavedChanges();
         this.props.createNavigationContent(this.props.layout);
         this.props.savePage();
       }
-    }, 10000);
+    }, TEN_SEC);
+    this.autoSavePageVersion = setInterval(() => {
+      if (
+        this.props.name && this.props.canEdit && !this.props.isPageVersionSaved &&
+        this.props.projectID() && !this.props.isOldVersionShowing
+      ) {
+        this.savePageVersion();
+      }
+    }, TWO_MIN);
     // window.addEventListener('beforeunload', this.saveSnapshot);
   }
 
   componentWillUnmount() {
     clearTimeout(this.autoSaveTimeout);
+    clearTimeout(this.autoSavePageVersion);
     // window.removeEventListener('beforeunload', this.saveSnapshot);
   }
 
   savePageVersion = () => {
+    console.log(this.props.editors);
     this.props.savePageVersion(
       this.props.parentId,
       this.props.id,
@@ -236,12 +250,6 @@ class MainToolbar extends React.Component {
               <div className="main-toolbar__spacer"></div>
               <button
                 className="main-toolbar__button"
-                onClick={this.savePageVersion}
-              >
-                Save Version
-              </button>
-              <button
-                className="main-toolbar__button"
                 onClick={this.sharePebl}
                 data-test="main-toolbar__share-button"
               >
@@ -287,6 +295,7 @@ MainToolbar.propTypes = {
   editorAutoSave: PropTypes.bool.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isHelpDropdownOpen: PropTypes.bool.isRequired,
+  isPageVersionSaved: PropTypes.bool.isRequired,
   isPreferencesPanelOpen: PropTypes.bool.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   location: PropTypes.shape({
@@ -335,6 +344,8 @@ function mapStateToProps(state) {
     preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,
     editorAutoSave: state.preferences.editorAutoSave,
+
+    isPageVersionSaved: state.pageVersion.isPageVersionSaved,
 
     parentId: state.page.parentId,
     id: state.page.id,

@@ -403,7 +403,9 @@ class App extends React.Component {
           </Modal>
         )}
         <Navigation />
-        <PageVersion />
+        <PageVersion
+          savePage={this.savePage}
+        />
         <Workspace />
 
       </div>

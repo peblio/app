@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { saveCurrentToVersion, savePageVersion } from '../../../action/pageVersion.js';
+import { saveCurrentToVersion } from '../../../action/pageVersion.js';
 import { setPreviewMode } from '../../../action/page.js';
 
 class CanvasOverlay extends React.Component {
@@ -67,7 +67,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   saveCurrentToVersion,
-  savePageVersion,
   setPreviewMode
 }, dispatch);
 

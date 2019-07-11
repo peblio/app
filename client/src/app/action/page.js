@@ -11,6 +11,7 @@ import { viewForkPrompt } from './mainToolbar.js';
 import { loadEditors } from './editors.js';
 import { loadWorkspace } from './workspace.js';
 import { createNavigationContent } from './navigation.js';
+import { setUnsavedPageVersion } from './pageVersion.js';
 
 export function loadCurrentPage(projectID) {
   return (dispatch) => {
@@ -32,8 +33,10 @@ export function loadCurrentPage(projectID) {
       });
   };
 }
+
 export function setUnsavedChanges(value) {
   return (dispatch) => {
+    dispatch(setUnsavedPageVersion());
     dispatch({
       type: ActionTypes.SET_UNSAVED_CHANGES,
       value
@@ -144,9 +147,11 @@ export function convertEditorsToRaw(editors) {
   Object.keys(editors).forEach((id) => {
     if (editors[id].type === 'text') {
       const { editorState, ...rawEditor } = editors[id];
-      rawEditor.rawContentState = JSON.stringify(
-        convertToRaw(editorState.getCurrentContent())
-      );
+      if (editorState) {
+        rawEditor.rawContentState = JSON.stringify(
+          convertToRaw(editorState.getCurrentContent())
+        );
+      }
       rawEditors[id] = rawEditor;
     } else rawEditors[id] = editors[id];
   });
@@ -189,7 +194,6 @@ export function submitPage(parentId, title, heading, description, editors, edito
     });
   };
 }
-
 
 export function savePageSnapshot(id, firstSave) {
   const canvasElement = document.getElementById('content-canvas');

@@ -4,7 +4,8 @@ export const initialState = {
   pageVersion: [],
   isOldVersionShowing: false,
   isPageVersionOpen: false,
-  selectedPageVersion: ''
+  selectedPageVersion: '',
+  isPageVersionSaved: true
 };
 
 const pageVersion = (state = initialState, action) => {
@@ -29,6 +30,16 @@ const pageVersion = (state = initialState, action) => {
     case ActionTypes.TOGGLE_PAGE_VERSION:
       return Object.assign({}, state, {
         isPageVersionOpen: !state.isPageVersionOpen
+      });
+
+    case ActionTypes.SAVE_PAGE_VERSION:
+      return Object.assign({}, state, {
+        isPageVersionSaved: true
+      });
+
+    case ActionTypes.SET_UNSAVED_PAGE_VERSION:
+      return Object.assign({}, state, {
+        isPageVersionSaved: false
       });
 
     case ActionTypes.LOGOUT_USER:

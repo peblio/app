@@ -17,6 +17,12 @@ class PageVersion extends React.Component {
     }
   }
 
+  componentWillUpdate(nextProps) {
+    if (this.props.isOldVersionShowing !== nextProps.isOldVersionShowing && nextProps.isOldVersionShowing) {
+      this.props.savePage();
+    }
+  }
+
   displayOldVersion = (id, versionId) => {
     this.props.loadPageVersion(id, versionId);
     this.props.showOldPageVersion(versionId);
@@ -104,6 +110,7 @@ PageVersion.propTypes = {
   loadPageVersion: PropTypes.func.isRequired,
   openNavigationContent: PropTypes.func.isRequired,
   pageVersion: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  savePage: PropTypes.func.isRequired,
   selectedPageVersion: PropTypes.string.isRequired,
   setPreviewMode: PropTypes.func.isRequired,
   showOldPageVersion: PropTypes.func.isRequired,

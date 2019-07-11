@@ -104,6 +104,10 @@ export function savePageVersion(
       .then((res) => {
         newPageVersion = res.data.pageVersion;
         dispatch(loadHistoryForPage(id));
+        dispatch({
+          type: ActionTypes.SAVE_PAGE_VERSION,
+          id
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -111,6 +115,13 @@ export function savePageVersion(
   };
 }
 
+export function setUnsavedPageVersion() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_UNSAVED_PAGE_VERSION
+    });
+  };
+}
 export function showOldPageVersion(id) {
   return (dispatch) => {
     dispatch({
