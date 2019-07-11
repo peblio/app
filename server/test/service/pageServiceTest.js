@@ -931,6 +931,34 @@ describe('pageService', () => {
       assert.notCalled(updatePageSpy);
     });
 
+    it('shall return error when user no pageVersion data available', async () => {
+      response.status = createResponseWithStatusCode(500);
+      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, { ...pageDataWithUser, user: loggedInUser._id });
+      findPageVersionStub = sandbox.stub(PageVersion, 'find').yields(null, null);
+      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageData);
+
+      await updatePageWithVersion(request, response);
+
+      assertFindOnePageWasCalledWithPageId();
+      assertFindPageVersionWasCalledWithPageIdAndVersion();
+      assertSendWasCalledWith({ error: 'Could not retrieve page version!' });
+      assert.notCalled(updatePageSpy);
+    });
+
+    it('shall return error when user no pageVersion data empty', async () => {
+      response.status = createResponseWithStatusCode(500);
+      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, { ...pageDataWithUser, user: loggedInUser._id });
+      findPageVersionStub = sandbox.stub(PageVersion, 'find').yields(null, []);
+      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageData);
+
+      await updatePageWithVersion(request, response);
+
+      assertFindOnePageWasCalledWithPageId();
+      assertFindPageVersionWasCalledWithPageIdAndVersion();
+      assertSendWasCalledWith({ error: 'Could not retrieve page version!' });
+      assert.notCalled(updatePageSpy);
+    });
+
     /* it('shall return error when page to be updated was not found', async () => {
       response.status = createResponseWithStatusCode(500);
       buildPageForUpdateFromRequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromRequest').returns(pageData);
