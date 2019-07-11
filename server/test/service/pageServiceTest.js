@@ -11,6 +11,7 @@ const sinon = require('sinon');
 const sandbox = sinon.sandbox.create();
 const mockAWSSinon = require('mock-aws-sinon');
 const Page = require('../../src/models/page.js');
+const PageVersion = require('../../src/models/pageversion.js');
 const User = require('../../src/models/user.js');
 const Folder = require('../../src/models/folder.js');
 
@@ -45,6 +46,7 @@ let pageDataWithUser = {
 const folderId = 'somefolderId';
 const pageId = 'pageId';
 const error = { error: 'Could not retrieve page' };
+const pageVersion = 'version';
 const guestUser = {
   _id: 1
 };
@@ -100,6 +102,7 @@ let folderCountStub;
 let folderCountExecStub;
 let buildPageForUpdateFromRequestStub;
 let paginateSpy;
+let findPageVersionStub;
 
 describe('pageService', () => {
   beforeEach(() => {
@@ -841,7 +844,7 @@ describe('pageService', () => {
   describe('updatePageWithVersion', () => {
     beforeEach(() => {
       request = {
-        query: { id: pageData.id, version: 'version' },
+        query: { id: pageData.id, version: pageVersion },
         user: loggedInUser
       };
       response = {
@@ -869,7 +872,7 @@ describe('pageService', () => {
     it('shall return error when retrieval of page to be updated threw an error', async () => {
       response.status = createResponseWithStatusCode(500);
       findOnePageStub = sandbox.stub(Page, 'findOne').yields({ message: 'Could not retrieve page' }, null);
-      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageData);
+      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageDataWithUser);
 
       await updatePageWithVersion(request, response);
 
@@ -893,7 +896,7 @@ describe('pageService', () => {
     it('shall return error when retrieved page does not have user', async () => {
       response.status = createResponseWithStatusCode(500);
       findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, {});
-      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageData);
+      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageDataWithUser);
 
       await updatePageWithVersion(request, response);
 
@@ -905,12 +908,26 @@ describe('pageService', () => {
     it('shall return error when user trying to update page does not own page', async () => {
       response.status = createResponseWithStatusCode(403);
       findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, { ...pageData, user: 'holaUser' });
-      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageData);
+      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageDataWithUser);
 
       await updatePageWithVersion(request, response);
 
       assertFindOnePageWasCalledWithPageId();
       assertSendWasCalledWith({ error: 'Missing permission to update page' });
+      assert.notCalled(updatePageSpy);
+    });
+
+    it('shall return error when user pageVersion retrieve error', async () => {
+      response.status = createResponseWithStatusCode(500);
+      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, { ...pageDataWithUser, user: loggedInUser._id });
+      findPageVersionStub = sandbox.stub(PageVersion, 'find').yields({ message: 'Could not retrieve page version!' }, null);
+      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageData);
+
+      await updatePageWithVersion(request, response);
+
+      assertFindOnePageWasCalledWithPageId();
+      assertFindPageVersionWasCalledWithPageIdAndVersion();
+      assertSendWasCalledWith({ error: 'Could not retrieve page version!' });
       assert.notCalled(updatePageSpy);
     });
 
@@ -1248,6 +1265,10 @@ function assertFindOnePageWasCalledWithId() {
 
 function assertFindOnePageWasCalledWithPageId() {
   assertStubWasCalledOnceWith(findOnePageStub, { id: pageData.id });
+}
+
+function assertFindPageVersionWasCalledWithPageIdAndVersion() {
+  assertStubWasCalledOnceWith(findPageVersionStub, { id: pageData.id, version_id: pageVersion });
 }
 
 function assertPageWasUpdatedWithDeletedAtDetails() {
