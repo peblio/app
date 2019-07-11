@@ -60,7 +60,6 @@ class MainToolbar extends React.Component {
   }
 
   savePageVersion = () => {
-    console.log(this.props.editors);
     this.props.savePageVersion(
       this.props.parentId,
       this.props.id,

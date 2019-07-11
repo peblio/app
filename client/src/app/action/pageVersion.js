@@ -36,7 +36,6 @@ export function loadPageVersion(id, versionId) {
         dispatch(createNavigationContent(pageData.layout));
       })
       .catch((e) => {
-        console.log(e);
         if (e.response && e.response.status === 404) {
           history.push('/404');
         } else {
