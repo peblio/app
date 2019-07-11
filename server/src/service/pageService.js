@@ -233,7 +233,10 @@ export async function updatePageWithVersion(req, res) {
     if (retrievedPage.user.toString() !== user._id.toString()) {
       return res.status(403).send({ error: 'Missing permission to update page' });
     }
-    return PageVersion.find({ id, version_id: version}, (pageFindError, pageVerionData) => {
+    return PageVersion.find({ id, version_id: version}, (pageVersionFindError, pageVerionData) => {
+      if (pageVersionFindError || !pageVerionData || pageVerionData.length == 0) {
+        return res.status(500).send({ error: 'Could not retrieve page version!' });
+      }
       return Page.update({ id: req.body.id }, pageVerionData[0], (err, data) => {
         if (pageFindError || err) {
           return res.status(500).send(err);
