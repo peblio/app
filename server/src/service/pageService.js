@@ -237,8 +237,8 @@ export async function updatePageWithVersion(req, res) {
       if (pageVersionFindError || !pageVerionData || pageVerionData.length == 0) {
         return res.status(500).send({ error: 'Could not retrieve page version!' });
       }
-      return Page.update({ id: req.body.id }, pageVerionData[0], (err, data) => {
-        if (pageFindError || err) {
+      return Page.update({ id }, {...pageVerionData[0]}, (err) => {
+        if (err) {
           return res.status(500).send(err);
         } else {
           return res.status(200).send();

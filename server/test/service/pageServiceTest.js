@@ -959,71 +959,35 @@ describe('pageService', () => {
       assert.notCalled(updatePageSpy);
     });
 
-    /* it('shall return error when page to be updated was not found', async () => {
+    it('shall return error when updating pageData', async () => {
       response.status = createResponseWithStatusCode(500);
-      buildPageForUpdateFromRequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromRequest').returns(pageData);
-      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, null);
+      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, { ...pageDataWithUser, user: loggedInUser._id });
+      findPageVersionStub = sandbox.stub(PageVersion, 'find').yields(null, [pageDataWithUser]);
+      updatePageSpy = sandbox.stub(Page, 'update').yields({ message: 'error updating page' }, null);
 
       await updatePageWithVersion(request, response);
 
-      assert.calledOnce(buildPageForUpdateFromRequestStub);
       assertFindOnePageWasCalledWithPageId();
-      assertSendWasCalledWith({ error: 'Could not retrieve page!' });
+      assertFindPageVersionWasCalledWithPageIdAndVersion();
+      assertSendWasCalledWith({ message: 'error updating page' });
+      assert.calledOnce(updatePageSpy);
+      assertUpdatePageWasCalledLatestPageVersionData();
     });
 
-    it('shall return error when page to be updated does not have user', async () => {
-      response.status = createResponseWithStatusCode(500);
-      buildPageForUpdateFromRequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromRequest').returns(pageData);
-      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, pageData);
-
-      await updatePageWithVersion(request, response);
-
-      assert.calledOnce(buildPageForUpdateFromRequestStub);
-      assertFindOnePageWasCalledWithPageId();
-      assertSendWasCalledWith({ error: 'Could not retrieve page!' });
-    });
-
-    it('shall return unauthorized error when page to be updated is not owned by user trying to update it', async () => {
-      pageData.user = ObjectId('507f1f77bcf86cd799439011');
-      response.status = createResponseWithStatusCode(403);
-      buildPageForUpdateFromRequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromRequest').returns(pageData);
-      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, pageData);
-
-      await updatePageWithVersion(request, response);
-
-      assert.calledOnce(buildPageForUpdateFromRequestStub);
-      assertFindOnePageWasCalledWithPageId();
-      assertSendWasCalledWith({ error: 'Missing permission to update page' });
-    });
-
-    it('shall return error if updating page fails', async () => {
-      pageData.user = loggedInUser._id;
-      response.status = createResponseWithStatusCode(500);
-      buildPageForUpdateFromRequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromRequest').returns(pageData);
-      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, pageData);
-      updatePageSpy = sandbox.stub(Page, 'update').yields({ message: 'Could not update page' }, null);
+    it('shall restore page version', async () => {
+      response.status = createResponseWithStatusCode(200);
+      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, { ...pageDataWithUser, user: loggedInUser._id });
+      findPageVersionStub = sandbox.stub(PageVersion, 'find').yields(null, [pageDataWithUser]);
+      updatePageSpy = sandbox.stub(Page, 'update').yields(null, null);
 
       await updatePageWithVersion(request, response);
 
       assertFindOnePageWasCalledWithPageId();
-      assertUpdatePageWasCalledWithLatestPageData();
-      assert.calledOnce(buildPageForUpdateFromRequestStub);
-      assertSendWasCalledWith({ message: 'Could not update page' });
-    });
-
-    it('shall return success after updating page', async () => {
-      pageData.user = loggedInUser._id;
-      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageData);
-      buildPageForUpdateFromRequestStub = sandbox.stub(pageCreator, 'buildPageForUpdateFromRequest').returns(pageData);
-      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, pageData);
-
-      await updatePageWithVersion(request, response);
-
-      assertFindOnePageWasCalledWithPageId();
-      assertUpdatePageWasCalledWithLatestPageData();
-      assert.calledOnce(buildPageForUpdateFromRequestStub);
+      assertFindPageVersionWasCalledWithPageIdAndVersion();
       assert.calledOnce(response.send);
-    }); */
+      assert.calledOnce(updatePageSpy);
+      assertUpdatePageWasCalledLatestPageVersionData();
+    });
   });
 
   describe('movePage', () => {
@@ -1259,6 +1223,14 @@ function assertUpdatePageWasCalledWithLatestPageData() {
       tags: pageData.tags,
       user: loggedInUser._id
     },
+    sinon.match.any);
+}
+
+function assertUpdatePageWasCalledLatestPageVersionData() {
+  assert.calledOnce(updatePageSpy);
+  assert.calledWith(updatePageSpy,
+    { id: pageData.id },
+    pageDataWithUser,
     sinon.match.any);
 }
 
