@@ -70,14 +70,6 @@ class PageVersion extends React.Component {
   render() {
     return (
       <div>
-        <button
-          className="navigation__open-button"
-          onClick={this.props.openNavigationContent}
-        >
-          <Tooltip content="Table of Contents">
-            <i className="fas fa-bars"></i>
-          </Tooltip>
-        </button>
         {this.props.isPageVersionOpen && this.props.pageVersion && (
           <section
             className="navigation__container navigation__container--expanded page-version__container"
