@@ -1,3 +1,3 @@
 <svg className='insert-toolbar__icon' width="15px" height="16px" viewBox="0 0 15 16" version="1.1">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M13.5221 7.64785C14.1606 8.03771 14.1606 8.96497 13.5221 9.35483L0.9984 17.0013L0.9984 0.00134277L13.5221 7.64785Z" fill="#070707"/>
+<path id="Shape" fill-rule="evenodd" clip-rule="evenodd" d="M13.5221 7.64785C14.1606 8.03771 14.1606 8.96497 13.5221 9.35483L0.9984 17.0013L0.9984 0.00134277L13.5221 7.64785Z" fill="#070707"/>
 </svg>

@@ -228,7 +228,10 @@ class MainToolbar extends React.Component {
             <div className="main-toolbar__div-right-inside">
               <span className="main-toolbar__preview-title">Edit Mode</span>
 
-              <label className="main-toolbar__preview" htmlFor="main-toolbar__checkbox">
+              <label
+                className="main-toolbar__preview"
+                htmlFor="main-toolbar__checkbox"
+              >
                 <input
                   id="main-toolbar__checkbox"
                   onChange={this.props.togglePreviewMode}
@@ -237,7 +240,7 @@ class MainToolbar extends React.Component {
                   data-test="main-toolbar__edit-mode-toggle"
                   disabled={this.props.isOldVersionShowing}
                 />
-                <div className="main-toolbar__slider"></div>
+                <div className={`main-toolbar__slider ${this.props.preview}`}></div>
               </label>
               <button
                 className="main-toolbar__save"

@@ -3,6 +3,7 @@
 .profile {
   &__container {
     background: $g8;
+    height: calc(100% - 50px) !important;
   }
   &__documents {
     width: 100%;

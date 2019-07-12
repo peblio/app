@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import axios from '../../../../utils/axios';
-import { setUserName, setNextScreen } from '../../../../action/user.js';
+import { setNextScreen } from '../../../../action/user.js';
 
 class SignUpUsername extends React.Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class SignUpUsername extends React.Component {
     })
       .then(() => {
         if (this.userName.value && this.userName.value !== '') {
-          this.props.setUserName(this.userName.value);
+          this.props.setTempUserName(this.userName.value);
           this.props.setNextScreen('SignupOption');
         }
       })
@@ -76,7 +76,7 @@ class SignUpUsername extends React.Component {
 }
 
 SignUpUsername.propTypes = {
-  setUserName: PropTypes.func.isRequired,
+  setTempUserName: PropTypes.func.isRequired,
   setNextScreen: PropTypes.func.isRequired
 };
 
@@ -85,7 +85,6 @@ function mapStateToProps() {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setUserName,
   setNextScreen
 }, dispatch);
 

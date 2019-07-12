@@ -52,7 +52,7 @@ class SignUpOption extends React.Component {
           userType={this.props.userType}
           requiresGuardianConsent={this.props.requiresGuardianConsent}
           guardianEmail={this.props.guardianEmail}
-          name={this.props.name}
+          name={this.props.tempUsername}
         />
         <div className="signup-modal__or-container">
           <hr className="signup-modal__or-line" />
@@ -86,7 +86,7 @@ SignUpOption.propTypes = {
   guardianEmail: PropTypes.string,
   requiresGuardianConsent: PropTypes.bool,
   userType: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  tempUsername: PropTypes.string.isRequired,
 };
 
 SignUpOption.defaultProps = {
@@ -101,7 +101,6 @@ function mapStateToProps(state) {
     userType: state.user.type,
     studentBirthday: state.user.studentBirthday,
     guardianEmail: state.user.guardianEmail,
-    name: state.user.name
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
