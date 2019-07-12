@@ -33,7 +33,10 @@ class EditorToolbar extends React.Component {
     };
   }
 
-  toggleWidgetFullscreen = () => {
+  toggleWidgetFullscreen = (e) => {
+    if (!this.props.isWidgetFullScreenMode) {
+      this.props.setYPosition(window.pageYOffset);
+    }
     this.props.toggleWidgetFullscreen(this.props.id);
   }
 
@@ -379,6 +382,7 @@ EditorToolbar.propTypes = {
   setCurrentFile: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
   setEditorView: PropTypes.func.isRequired,
+  setYPosition: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   toggleConsole: PropTypes.func.isRequired,
