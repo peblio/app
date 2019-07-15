@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Tooltip from 'react-tooltip-lite';
 import ReactHtmlParser from 'react-html-parser';
 
-const scrolled = false;
 require('./consoleOutput.scss');
 
 class ConsoleOutput extends React.Component {
@@ -16,7 +15,6 @@ class ConsoleOutput extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const out = document.getElementById('console__output-text');
-    const c = 0;
     const isScrolledToBottom = out.scrollHeight - out.clientHeight <= out.scrollTop + 22;
     if (prevState.isScrolledToBottom !== isScrolledToBottom) {
       this.setState({
