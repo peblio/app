@@ -15,6 +15,8 @@ class Navigation extends React.Component {
       const yNavigationLength = this.props.navigationContent.length;
       for (let i = yNavigationLength - 1; i >= 0; i -= 1) {
         if (window.pageYOffset > yNavigationContent[i].y) {
+          this.props.setYPosition(window.pageYOffset);
+          window.scrollTo(0, window.pageYOffset);
           this.props.setYNavigation(i);
           return;
         }
@@ -29,6 +31,7 @@ class Navigation extends React.Component {
   }
 
   scrollTo=(y) => {
+    this.props.setYPosition(y + 10);
     window.scrollTo(0, y + 10);
   }
 
@@ -103,7 +106,8 @@ Navigation.propTypes = {
   openNavigationContent: PropTypes.func.isRequired,
   pageHeading: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
-  setYNavigation: PropTypes.bool.isRequired,
+  setYNavigation: PropTypes.func.isRequired,
+  setYPosition: PropTypes.func.isRequired,
   yNavigation: PropTypes.number.isRequired
 };
 
@@ -113,7 +117,8 @@ const mapStateToProps = state => ({
   navigationContent: state.navigation.navigationContent,
   pageHeading: state.page.pageHeading,
   preview: state.page.preview,
-  yNavigation: state.navigation.yNavigation
+  yNavigation: state.navigation.yNavigation,
+  yPosition: state.navigation.yPosition
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
