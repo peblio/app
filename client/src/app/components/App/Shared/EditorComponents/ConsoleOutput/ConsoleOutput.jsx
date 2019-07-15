@@ -6,6 +6,26 @@ import ReactHtmlParser from 'react-html-parser';
 require('./consoleOutput.scss');
 
 class ConsoleOutput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isScrolledToBottom: true
+    };
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const out = document.getElementById('console__output-text');
+    if (out) {
+      const isScrolledToBottom = out.scrollHeight - out.clientHeight <= out.scrollTop + 22;
+      if (prevState.isScrolledToBottom !== isScrolledToBottom) {
+        this.setState({
+          isScrolledToBottom
+        });
+      }
+      if (this.state.isScrolledToBottom) out.scrollTop = out.scrollHeight - out.clientHeight;
+    }
+  }
+
   render() {
     const toggleButton = this.props.isConsoleOpen ? '&or;' : '&and;';
     return (
@@ -25,10 +45,15 @@ class ConsoleOutput extends React.Component {
           </Tooltip>
         </nav>
         {this.props.isConsoleOpen && (
-          <p className="console__output-text">
-            {' '}
-            {this.props.consoleOutputText.join('\n')}
-            {' '}
+          <p
+            id="console__output-text"
+            className="console__output-text"
+          >
+            {this.props.consoleOutputText.map(output => (
+              <div>
+                {output}
+              </div>
+            ))}
           </p>
         )}
       </div>
