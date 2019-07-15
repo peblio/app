@@ -15,13 +15,15 @@ class ConsoleOutput extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const out = document.getElementById('console__output-text');
-    const isScrolledToBottom = out.scrollHeight - out.clientHeight <= out.scrollTop + 22;
-    if (prevState.isScrolledToBottom !== isScrolledToBottom) {
-      this.setState({
-        isScrolledToBottom
-      });
+    if (out) {
+      const isScrolledToBottom = out.scrollHeight - out.clientHeight <= out.scrollTop + 22;
+      if (prevState.isScrolledToBottom !== isScrolledToBottom) {
+        this.setState({
+          isScrolledToBottom
+        });
+      }
+      if (this.state.isScrolledToBottom) out.scrollTop = out.scrollHeight - out.clientHeight;
     }
-    if (this.state.isScrolledToBottom) out.scrollTop = out.scrollHeight - out.clientHeight;
   }
 
   render() {
