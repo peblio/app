@@ -2,8 +2,8 @@ const expect = require('chai').expect;
 const server = require('../src/server');
 const request = require('supertest')(server);
 
-describe('Product creation API', () => {
-  it('should create product', (done) => {
+describe('HealthCheck API', () => {
+  it('should check health', (done) => {
     request
       .get('/healthcheck')
       .set('Accept', 'application/json')
