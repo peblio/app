@@ -1,6 +1,5 @@
 const PageVersion = require('../models/pageversion.js');
 
-
 export async function savePageVersion(req, res) {
   const user = req.user;
   if (!user) {
@@ -21,7 +20,6 @@ export async function savePageVersion(req, res) {
     return res.status(500).send({ error: err.message });
   }
 }
-
 
 export async function get(req, res) {
   const user = req.user;
