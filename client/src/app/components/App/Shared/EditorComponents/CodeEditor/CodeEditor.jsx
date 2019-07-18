@@ -19,6 +19,7 @@ import 'codemirror/mode/clike/clike';
 import 'codemirror/addon/selection/active-line';
 
 import * as constants from '../../../../../constants/widgetConstants.js';
+import EditorOpenFiles from '../EditorOpenFiles/EditorOpenFiles';
 
 require('../../../../../styles/codemirror.css');
 require('../../../../../styles/base16-dark.css');
@@ -92,6 +93,11 @@ class CodeEditor extends React.Component {
   render() {
     return (
       <div>
+        <EditorOpenFiles
+          id={this.props.id}
+          closeFileView={this.props.closeFileView}
+          files={this.props.files}
+        />
         <div ref={(element) => { this.codemirrorContainer = element; }}>
         </div>
       </div>
@@ -108,6 +114,7 @@ CodeEditor.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
+  id: PropTypes.string.isRequired,
   updateFile: PropTypes.func.isRequired
 };
 

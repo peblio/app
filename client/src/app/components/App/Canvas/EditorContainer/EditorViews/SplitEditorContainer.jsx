@@ -19,6 +19,8 @@ class SplitEditorContainer extends React.Component {
           <div className="editor__input editor__input-split">
 
             <CodeEditor
+              id={this.props.id}
+              closeFileView={this.props.closeFileView}
               currentFile={this.props.currentFile}
               files={this.props.files}
               updateFile={this.props.updateFile}

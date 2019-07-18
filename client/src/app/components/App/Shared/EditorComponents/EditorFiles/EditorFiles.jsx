@@ -87,84 +87,65 @@ class EditorFiles extends React.Component {
     }
   }
 
+  renderFileName=(file, index, isImage) => (
+    <li
+      key={file.id}
+      className={`editor-toolbar__file
+          ${(this.props.currentFile === index) ? 'editor-toolbar__file--selected' : ''}`}
+    >
+      <Tooltip content={file.name}>
+        <button
+          onClick={() => {
+            this.props.openFileView(this.props.id, index);
+            this.props.setCurrentFile(index);
+          }}
+          disabled={isImage}
+          className={
+            `editor-toolbar__file-button
+               ${(this.props.currentFile === index) ? 'editor-toolbar__file-button--selected' : ''}
+          ${(isImage) ? 'editor-toolbar__file-button-static' : ''}`
+          }
+          data-test="editor-toolbar__file-name"
+        >
+          {file.name}
+        </button>
+      </Tooltip>
+      {!file.name.match(HTML_FILE_REGEX) && (
+        <button
+          className="editor-toolbar__file-button"
+          onClick={(e) => { this.deleteFile(e, index); }}
+          data-test="widget__delete"
+        >
+          <CloseSVG alt="close element" />
+        </button>
+      )}
+    </li>
+  )
+
   render() {
     return (
-      <div className='editor-toolbar__container'>
+      <div className='editor-toolbar__files-container'>
         <ul className='editor-toolbar__files'>
-          {this.props.editorView === 'tabbed' && (
-            <li
-              key='preview'
-              className='editor-toolbar__file'
-            >
-              <button
-                onClick={() => {
-                  this.props.viewEditorPreview();
-                }}
-                className={
-                  `editor-toolbar__file-button
-                  ${(this.props.currentFile === -1) ? 'editor-toolbar__file-button--selected' : ''}`
-                }
-                data-test="editor-toolbar__file-name"
-              >
-              Preview
-              </button>
-            </li>
-          )}
           {
             this.props.files.map((file, index) => {
+              console.log(file);
               const isImage = 'externalLink' in file;
-              return (
-                <li
-                  key={file.id}
-                  className={`editor-toolbar__file
-                    ${(this.props.currentFile === index) ? 'editor-toolbar__file--selected' : ''}`}
-                >
-                  <Tooltip content={file.name}>
-                    <button
-                      onClick={() => {
-                        this.props.setCurrentFile(index);
-                      }}
-                      disabled={isImage}
-                      className={
-                        `editor-toolbar__file-button
-                         ${(this.props.currentFile === index) ? 'editor-toolbar__file-button--selected' : ''}
-                    ${(isImage) ? 'editor-toolbar__file-button-static' : ''}`
-                      }
-                      data-test="editor-toolbar__file-name"
-                    >
-                      {file.name}
-                    </button>
-                  </Tooltip>
-                  {!file.name.match(HTML_FILE_REGEX) && (
-                    <button
-                      className="editor-toolbar__file-button"
-                      onClick={(e) => { this.deleteFile(e, index); }}
-                      data-test="widget__delete"
-                    >
-                      <CloseSVG alt="close element" />
-                    </button>
-                  )}
-                </li>
-              );
+              return this.renderFileName(file, index, isImage);
             })
           }
-          {
-            (this.props.editorMode === 'p5' || this.props.editorMode === 'webdev') &&
-          (
-            <li key='add-media' className='editor-toolbar__file'>
-              <Tooltip content="Add Image">
-                <button
-                  className="editor-toolbar__file-button"
-                  onClick={this.openFileUpload}
-                  data-test='editor-toolbar__add-file-button'
-                >
-                  <i className="fas fa-plus"></i>
-                </button>
-              </Tooltip>
-            </li>
-          )
-          }
         </ul>
+        {
+          (this.props.editorMode === 'p5' || this.props.editorMode === 'webdev') &&
+          (
+            <button
+              className="editor-toolbar__file-button"
+              onClick={this.openFileUpload}
+              data-test='editor-toolbar__add-file-button'
+            >
+            Add File
+            </button>
+          )
+        }
         {this.state.isFileUploadOpen && (
           <div
             tabIndex="0" //eslint-disable-line

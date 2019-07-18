@@ -126,7 +126,8 @@ const editorsReducer = (state = initialState, action) => {
     case ActionTypes.ADD_FILE_TO_EDITOR: {
       editors[action.id].files.push({
         name: action.name,
-        content: action.content
+        content: action.content,
+        isFileInView: true
       });
       return Object.assign({}, state, {
         editors
@@ -182,6 +183,20 @@ const editorsReducer = (state = initialState, action) => {
 
     case ActionTypes.SET_CURRENT_FILE: {
       editors[action.id].currentFile = action.index;
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
+    case ActionTypes.OPEN_FILE_VIEW: {
+      editors[action.id].files[action.index].isFileInView = true;
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
+    case ActionTypes.CLOSE_FILE_VIEW: {
+      editors[action.id].files[action.index].isFileInView = false;
       return Object.assign({}, state, {
         editors
       });

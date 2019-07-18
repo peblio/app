@@ -12,6 +12,8 @@ class TabbedContainer extends React.Component {
         {this.props.currentFile === -1 || (
           <div className="editor__input editor__input-tabbed">
             <CodeEditor
+              id={this.props.id}
+              closeFileView={this.props.closeFileView}
               currentFile={this.props.currentFile}
               files={this.props.files}
               updateFile={this.props.updateFile}

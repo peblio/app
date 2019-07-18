@@ -105,6 +105,7 @@ class EditorContainer extends React.Component {
               isPlaying={this.props.isPlaying}
               isWidgetFullScreenMode={this.props.isWidgetFullScreenMode}
               name={this.props.name}
+              openFileView={this.props.openFileView}
               playCode={this.playCode}
               setCurrentFile={this.setCurrentFile}
               setEditorView={this.setEditorView}
@@ -117,46 +118,48 @@ class EditorContainer extends React.Component {
             />
             {this.editorView() === 'split' && (
               <SplitEditorContainer
-                innerWidth={this.props.innerWidth}
-                startResize={this.startResize}
-                finishResize={this.finishResize}
-                setInnerWidth={this.setInnerWidth}
-                currentFile={this.props.currentFile}
-                files={this.props.files}
-                updateFile={this.updateFile}
-                isConsoleOpen={this.state.isConsoleOpen}
-                isResizing={this.state.isResizing}
                 id={this.props.id}
                 clearConsoleOutput={this.clearConsoleOutput}
+                closeFileView={this.props.closeFileView}
+                consoleOutputText={this.props.consoleOutputText}
+                currentFile={this.props.currentFile}
                 editorMode={this.props.editorMode}
+                files={this.props.files}
+                finishResize={this.finishResize}
+                innerWidth={this.props.innerWidth}
+                isConsoleOpen={this.state.isConsoleOpen}
+                isResizing={this.state.isResizing}
                 isPlaying={this.props.isPlaying}
                 isRefreshing={this.props.isRefreshing}
+                setInnerWidth={this.setInnerWidth}
+                startResize={this.startResize}
                 stopCodeRefresh={this.stopCodeRefresh}
-                updateConsoleOutput={this.updateConsoleOutput}
-                consoleOutputText={this.props.consoleOutputText}
                 toggleConsole={this.toggleConsole}
+                updateConsoleOutput={this.updateConsoleOutput}
+                updateFile={this.updateFile}
               />
             )}
             {this.editorView() === 'tabbed' && (
               <TabbedEditorContainer
-                innerWidth={this.props.innerWidth}
-                startResize={this.startResize}
-                finishResize={this.finishResize}
-                setInnerWidth={this.setInnerWidth}
-                currentFile={this.props.currentFile}
-                files={this.props.files}
-                updateFile={this.updateFile}
-                isConsoleOpen={this.state.isConsoleOpen}
-                isResizing={this.state.isResizing}
                 id={this.props.id}
                 clearConsoleOutput={this.clearConsoleOutput}
-                editorMode={this.props.editorMode}
-                isPlaying={this.props.isPlaying}
-                isRefreshing={this.props.isRefreshing}
-                stopCodeRefresh={this.stopCodeRefresh}
-                updateConsoleOutput={this.updateConsoleOutput}
+                closeFileView={this.props.closeFileView}
                 consoleOutputText={this.props.consoleOutputText}
+                currentFile={this.props.currentFile}
+                editorMode={this.props.editorMode}
+                files={this.props.files}
+                finishResize={this.finishResize}
+                isConsoleOpen={this.state.isConsoleOpen}
+                isPlaying={this.props.isPlaying}
+                isResizing={this.state.isResizing}
+                isRefreshing={this.props.isRefreshing}
+                innerWidth={this.props.innerWidth}
+                startResize={this.startResize}
+                setInnerWidth={this.setInnerWidth}
+                stopCodeRefresh={this.stopCodeRefresh}
                 toggleConsole={this.toggleConsole}
+                updateFile={this.updateFile}
+                updateConsoleOutput={this.updateConsoleOutput}
               />
             )}
           </div>

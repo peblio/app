@@ -8,7 +8,7 @@
 
 .editor__dark {
   .editor-toolbar {
-    &__container {
+    &__files-container {
       background-color: $light-gray;
       background: $dark-gray; /* For browsers that do not support gradients */
       .editor-toolbar__files {
@@ -43,7 +43,7 @@
 
 .editor__light {
   .editor-toolbar {
-    &__container {
+    &__files-container {
       .editor-toolbar__files {
         background-color: $g5;
         .editor-toolbar__file {
@@ -81,6 +81,11 @@
 }
 
 .editor-toolbar {
+  &__files-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between
+  }
   &__image-upload {
     position: absolute;
     background: $lighter-gray;
@@ -112,7 +117,8 @@
     text-transform: capitalize;
   }
 
-  &__container {
+  &__files-container {
+    height: 100%;
     .editor-toolbar__files {
       overflow-y: scroll;
       display: flex;
