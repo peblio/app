@@ -5,13 +5,14 @@ class EditorOpenFiles extends React.Component {
     return (
       <ul>
         {this.props.files.map((file, index) => {
-          console.log(file.isFileInView);
           if (typeof file.isFileInView === 'undefined' || file.isFileInView) {
             return (
               <li>
-                <p>
+                <button
+                  onClick={() => this.props.setCurrentFile(this.props.id, index)}
+                >
                   {file.name}
-                </p>
+                </button>
                 <button
                   onClick={() => this.props.closeFileView(this.props.id, index)}
                 >
@@ -22,7 +23,6 @@ class EditorOpenFiles extends React.Component {
           }
         })
         }
-        I am a potato
       </ul>
     );
   }

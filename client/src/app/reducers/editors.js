@@ -196,6 +196,17 @@ const editorsReducer = (state = initialState, action) => {
     }
 
     case ActionTypes.CLOSE_FILE_VIEW: {
+      let isPrevFileDisplayed = false;
+      let fileIndexToBeDisplayed = action.index - 1;
+      // debugger;
+      while (!isPrevFileDisplayed && fileIndexToBeDisplayed > -1) {
+        if (editors[action.id].files[fileIndexToBeDisplayed].isFileInView) {
+          isPrevFileDisplayed = true;
+          editors[action.id].currentFile = fileIndexToBeDisplayed;
+        } else {
+          fileIndexToBeDisplayed -= 1;
+        }
+      }
       editors[action.id].files[action.index].isFileInView = false;
       return Object.assign({}, state, {
         editors

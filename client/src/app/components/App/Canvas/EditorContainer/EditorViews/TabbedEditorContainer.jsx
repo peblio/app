@@ -16,6 +16,8 @@ class TabbedContainer extends React.Component {
               closeFileView={this.props.closeFileView}
               currentFile={this.props.currentFile}
               files={this.props.files}
+              openFileView={this.props.openFileView}
+              setCurrentFile={this.props.setCurrentFile}
               updateFile={this.props.updateFile}
             />
           </div>

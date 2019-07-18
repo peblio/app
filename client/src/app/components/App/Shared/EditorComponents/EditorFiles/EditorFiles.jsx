@@ -128,7 +128,6 @@ class EditorFiles extends React.Component {
         <ul className='editor-toolbar__files'>
           {
             this.props.files.map((file, index) => {
-              console.log(file);
               const isImage = 'externalLink' in file;
               return this.renderFileName(file, index, isImage);
             })

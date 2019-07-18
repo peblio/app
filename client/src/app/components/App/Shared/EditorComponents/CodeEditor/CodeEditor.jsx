@@ -97,6 +97,8 @@ class CodeEditor extends React.Component {
           id={this.props.id}
           closeFileView={this.props.closeFileView}
           files={this.props.files}
+          openFileView={this.props.openFileView}
+          setCurrentFile={this.props.setCurrentFile}
         />
         <div ref={(element) => { this.codemirrorContainer = element; }}>
         </div>

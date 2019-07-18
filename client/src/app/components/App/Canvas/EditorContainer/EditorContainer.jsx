@@ -81,7 +81,6 @@ class EditorContainer extends React.Component {
             isWidgetFullScreenMode={this.props.isWidgetFullScreenMode}
             name={this.props.name}
             playCode={this.playCode}
-            setCurrentFile={this.setCurrentFile}
             setEditorView={this.setEditorView}
             setYPosition={this.props.setYPosition}
             startCodeRefresh={this.startCodeRefresh}
@@ -131,6 +130,8 @@ class EditorContainer extends React.Component {
                 isResizing={this.state.isResizing}
                 isPlaying={this.props.isPlaying}
                 isRefreshing={this.props.isRefreshing}
+                openFileView={this.props.openFileView}
+                setCurrentFile={this.props.setCurrentFile}
                 setInnerWidth={this.setInnerWidth}
                 startResize={this.startResize}
                 stopCodeRefresh={this.stopCodeRefresh}
@@ -154,7 +155,9 @@ class EditorContainer extends React.Component {
                 isResizing={this.state.isResizing}
                 isRefreshing={this.props.isRefreshing}
                 innerWidth={this.props.innerWidth}
+                openFileView={this.props.openFileView}
                 startResize={this.startResize}
+                setCurrentFile={this.props.setCurrentFile}
                 setInnerWidth={this.setInnerWidth}
                 stopCodeRefresh={this.stopCodeRefresh}
                 toggleConsole={this.toggleConsole}
