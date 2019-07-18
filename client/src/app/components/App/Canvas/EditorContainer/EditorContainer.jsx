@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import EditorToolbar from '../../Shared/EditorComponents/EditorToolbar/EditorToolbar.jsx';
+import EditorFiles from '../../Shared/EditorComponents/EditorFiles/EditorFiles.jsx';
 import * as editorActions from '../../../../action/editors.js';
 import { setYPosition } from '../../../../action/navigation.js';
 import SplitEditorContainer from './EditorViews/SplitEditorContainer.jsx';
@@ -89,50 +90,76 @@ class EditorContainer extends React.Component {
             toggleWidgetFullscreen={this.props.toggleWidgetFullscreen}
             viewEditorPreview={this.viewEditorPreview}
           />
-          {this.editorView() === 'split' && (
-            <SplitEditorContainer
-              innerWidth={this.props.innerWidth}
-              startResize={this.startResize}
-              finishResize={this.finishResize}
-              setInnerWidth={this.setInnerWidth}
-              currentFile={this.props.currentFile}
-              files={this.props.files}
-              updateFile={this.updateFile}
-              isConsoleOpen={this.state.isConsoleOpen}
-              isResizing={this.state.isResizing}
+          <div className='editor__vertical-container'>
+            <EditorFiles
               id={this.props.id}
-              clearConsoleOutput={this.clearConsoleOutput}
-              editorMode={this.props.editorMode}
-              isPlaying={this.props.isPlaying}
-              isRefreshing={this.props.isRefreshing}
-              stopCodeRefresh={this.stopCodeRefresh}
-              updateConsoleOutput={this.updateConsoleOutput}
-              consoleOutputText={this.props.consoleOutputText}
-              toggleConsole={this.toggleConsole}
-            />
-          )}
-          {this.editorView() === 'tabbed' && (
-            <TabbedEditorContainer
-              innerWidth={this.props.innerWidth}
-              startResize={this.startResize}
-              finishResize={this.finishResize}
-              setInnerWidth={this.setInnerWidth}
+              addMediaFile={this.addMediaFile}
+              addFileToEditor={this.addFileToEditor}
+              container="canvas"
               currentFile={this.props.currentFile}
-              files={this.props.files}
-              updateFile={this.updateFile}
-              isConsoleOpen={this.state.isConsoleOpen}
-              isResizing={this.state.isResizing}
-              id={this.props.id}
-              clearConsoleOutput={this.clearConsoleOutput}
+              deleteFileFromEditor={this.deleteFileFromEditor}
               editorMode={this.props.editorMode}
+              editorView={this.props.editorView}
+              files={this.props.files}
+              isConsoleOpen={this.state.isConsoleOpen}
               isPlaying={this.props.isPlaying}
-              isRefreshing={this.props.isRefreshing}
-              stopCodeRefresh={this.stopCodeRefresh}
-              updateConsoleOutput={this.updateConsoleOutput}
-              consoleOutputText={this.props.consoleOutputText}
+              isWidgetFullScreenMode={this.props.isWidgetFullScreenMode}
+              name={this.props.name}
+              playCode={this.playCode}
+              setCurrentFile={this.setCurrentFile}
+              setEditorView={this.setEditorView}
+              setYPosition={this.props.setYPosition}
+              startCodeRefresh={this.startCodeRefresh}
+              stopCode={this.stopCode}
               toggleConsole={this.toggleConsole}
+              toggleWidgetFullscreen={this.props.toggleWidgetFullscreen}
+              viewEditorPreview={this.viewEditorPreview}
             />
-          )}
+            {this.editorView() === 'split' && (
+              <SplitEditorContainer
+                innerWidth={this.props.innerWidth}
+                startResize={this.startResize}
+                finishResize={this.finishResize}
+                setInnerWidth={this.setInnerWidth}
+                currentFile={this.props.currentFile}
+                files={this.props.files}
+                updateFile={this.updateFile}
+                isConsoleOpen={this.state.isConsoleOpen}
+                isResizing={this.state.isResizing}
+                id={this.props.id}
+                clearConsoleOutput={this.clearConsoleOutput}
+                editorMode={this.props.editorMode}
+                isPlaying={this.props.isPlaying}
+                isRefreshing={this.props.isRefreshing}
+                stopCodeRefresh={this.stopCodeRefresh}
+                updateConsoleOutput={this.updateConsoleOutput}
+                consoleOutputText={this.props.consoleOutputText}
+                toggleConsole={this.toggleConsole}
+              />
+            )}
+            {this.editorView() === 'tabbed' && (
+              <TabbedEditorContainer
+                innerWidth={this.props.innerWidth}
+                startResize={this.startResize}
+                finishResize={this.finishResize}
+                setInnerWidth={this.setInnerWidth}
+                currentFile={this.props.currentFile}
+                files={this.props.files}
+                updateFile={this.updateFile}
+                isConsoleOpen={this.state.isConsoleOpen}
+                isResizing={this.state.isResizing}
+                id={this.props.id}
+                clearConsoleOutput={this.clearConsoleOutput}
+                editorMode={this.props.editorMode}
+                isPlaying={this.props.isPlaying}
+                isRefreshing={this.props.isRefreshing}
+                stopCodeRefresh={this.stopCodeRefresh}
+                updateConsoleOutput={this.updateConsoleOutput}
+                consoleOutputText={this.props.consoleOutputText}
+                toggleConsole={this.toggleConsole}
+              />
+            )}
+          </div>
         </div>
 
       </div>
