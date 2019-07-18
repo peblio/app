@@ -19,7 +19,8 @@ class EditorContainer extends React.Component {
     super(props);
     this.state = {
       isResizing: false,
-      isConsoleOpen: true
+      isConsoleOpen: true,
+      isEditorFilesOpen: false
     };
     this.startResize = this.startResize.bind(this);
     this.finishResize = this.finishResize.bind(this);
@@ -45,6 +46,10 @@ class EditorContainer extends React.Component {
 
   toggleConsole = () => {
     this.setState(prevState => ({ isConsoleOpen: !prevState.isConsoleOpen }));
+  }
+
+  toggleEditorFilesView = () => {
+    this.setState(prevState => ({ isEditorFilesOpen: !prevState.isEditorFilesOpen }));
   }
 
   editorView = () => this.props.editorView || 'split'
@@ -90,31 +95,33 @@ class EditorContainer extends React.Component {
             viewEditorPreview={this.viewEditorPreview}
           />
           <div className='editor__vertical-container'>
-            <EditorFiles
-              id={this.props.id}
-              addMediaFile={this.addMediaFile}
-              addFileToEditor={this.addFileToEditor}
-              container="canvas"
-              currentFile={this.props.currentFile}
-              deleteFileFromEditor={this.deleteFileFromEditor}
-              editorMode={this.props.editorMode}
-              editorView={this.props.editorView}
-              files={this.props.files}
-              isConsoleOpen={this.state.isConsoleOpen}
-              isPlaying={this.props.isPlaying}
-              isWidgetFullScreenMode={this.props.isWidgetFullScreenMode}
-              name={this.props.name}
-              openFileView={this.props.openFileView}
-              playCode={this.playCode}
-              setCurrentFile={this.setCurrentFile}
-              setEditorView={this.setEditorView}
-              setYPosition={this.props.setYPosition}
-              startCodeRefresh={this.startCodeRefresh}
-              stopCode={this.stopCode}
-              toggleConsole={this.toggleConsole}
-              toggleWidgetFullscreen={this.props.toggleWidgetFullscreen}
-              viewEditorPreview={this.viewEditorPreview}
-            />
+            {this.state.isEditorFilesOpen && (
+              <EditorFiles
+                id={this.props.id}
+                addMediaFile={this.addMediaFile}
+                addFileToEditor={this.addFileToEditor}
+                container="canvas"
+                currentFile={this.props.currentFile}
+                deleteFileFromEditor={this.deleteFileFromEditor}
+                editorMode={this.props.editorMode}
+                editorView={this.props.editorView}
+                files={this.props.files}
+                isConsoleOpen={this.state.isConsoleOpen}
+                isPlaying={this.props.isPlaying}
+                isWidgetFullScreenMode={this.props.isWidgetFullScreenMode}
+                name={this.props.name}
+                openFileView={this.props.openFileView}
+                playCode={this.playCode}
+                setCurrentFile={this.setCurrentFile}
+                setEditorView={this.setEditorView}
+                setYPosition={this.props.setYPosition}
+                startCodeRefresh={this.startCodeRefresh}
+                stopCode={this.stopCode}
+                toggleConsole={this.toggleConsole}
+                toggleWidgetFullscreen={this.props.toggleWidgetFullscreen}
+                viewEditorPreview={this.viewEditorPreview}
+              />
+            )}
             {this.editorView() === 'split' && (
               <SplitEditorContainer
                 id={this.props.id}
@@ -127,6 +134,7 @@ class EditorContainer extends React.Component {
                 finishResize={this.finishResize}
                 innerWidth={this.props.innerWidth}
                 isConsoleOpen={this.state.isConsoleOpen}
+                isEditorFilesOpen={this.state.isEditorFilesOpen}
                 isResizing={this.state.isResizing}
                 isPlaying={this.props.isPlaying}
                 isRefreshing={this.props.isRefreshing}
@@ -136,6 +144,7 @@ class EditorContainer extends React.Component {
                 startResize={this.startResize}
                 stopCodeRefresh={this.stopCodeRefresh}
                 toggleConsole={this.toggleConsole}
+                toggleEditorFilesView={this.toggleEditorFilesView}
                 updateConsoleOutput={this.updateConsoleOutput}
                 updateFile={this.updateFile}
               />
@@ -151,6 +160,7 @@ class EditorContainer extends React.Component {
                 files={this.props.files}
                 finishResize={this.finishResize}
                 isConsoleOpen={this.state.isConsoleOpen}
+                isEditorFilesOpen={this.state.isEditorFilesOpen}
                 isPlaying={this.props.isPlaying}
                 isResizing={this.state.isResizing}
                 isRefreshing={this.props.isRefreshing}
@@ -161,6 +171,7 @@ class EditorContainer extends React.Component {
                 setInnerWidth={this.setInnerWidth}
                 stopCodeRefresh={this.stopCodeRefresh}
                 toggleConsole={this.toggleConsole}
+                toggleEditorFilesView={this.props.toggleEditorFilesView}
                 updateFile={this.updateFile}
                 updateConsoleOutput={this.updateConsoleOutput}
               />
