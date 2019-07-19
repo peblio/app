@@ -54,6 +54,15 @@
 
 .editor__light {
   .editor-toolbar {
+    &__add-file-button {
+      background: $g6;
+      border: $small-border solid $g5;
+      color:$g3;
+      &:hover {
+        border: $small-border solid $g4;
+        color:$g2;
+      }
+    }
     &__container {
       .editor-toolbar__button-container {
         background-color: $white;
@@ -104,6 +113,11 @@
 }
 
 .editor-toolbar {
+  &__add-file-button {
+    padding: $small-padding;
+    margin: $small-margin/2;
+    margin-bottom: $medium-margin;
+  }
   &__title {
     color: $white;
     display: inline;

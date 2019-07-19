@@ -175,6 +175,7 @@ class EditorToolbar extends React.Component {
                     editorView={this.props.editorView}
                     isConsoleOpen={this.props.isConsoleOpen}
                     isEditorViewOpen={this.state.isEditorViewOpen}
+                    setCurrentFile={this.props.setCurrentFile}
                     setEditorView={this.props.setEditorView}
                     toggleConsole={this.props.toggleConsole}
                     toggleEditorView={this.toggleEditorView}
@@ -201,6 +202,7 @@ EditorToolbar.propTypes = {
   isWidgetFullScreenMode: PropTypes.bool.isRequired,
   openShareWorkspace: PropTypes.func.isRequired,
   playCode: PropTypes.func.isRequired,
+  setCurrentFile: PropTypes.func.isRequired,
   setEditorMode: PropTypes.func.isRequired,
   setEditorView: PropTypes.func.isRequired,
   setYPosition: PropTypes.func.isRequired,

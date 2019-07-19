@@ -1,0 +1,60 @@
+@import 'variables';
+@import 'mixins';
+@import 'base';
+
+.open-files {
+  &__container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  &__files {
+    width: 100%;
+    overflow: scroll;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+  }
+  &__file {
+    display: flex;
+    flex-direction: row;
+    padding: $small-padding 0;
+    border-bottom: $small-border solid $g5;
+    border-right: $small-border solid $g5;
+  }
+  &__file-button, &__toggle-button {
+    background: none;
+    color: $g4;
+    border: 0;
+    &:hover {
+      background: none;
+      color: $g4;
+      border: 0;
+    }
+  }
+  &__toggle-button {
+    border-radius: 0;
+    border-bottom: $small-border solid $g5;
+    border-right: $small-border solid $g5;
+    &:hover {
+      border-bottom: $small-border solid $g5;
+      border-right: $small-border solid $g5;
+    }
+  }
+
+  &__close-button {
+    background: none;
+    border: 0;
+    &:hover {
+      background: none;
+      border: 0;
+      & #ShapeCNTRL {
+        fill: $g2;
+      }
+    }
+    & #ShapeCNTRL {
+      fill: $g4;
+    }
+  }
+}

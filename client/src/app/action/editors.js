@@ -194,6 +194,7 @@ export function updateFile(id, index, content) {
 }
 
 export function setCurrentFile(id, index) {
+  console.log(id, index);
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_CURRENT_FILE,

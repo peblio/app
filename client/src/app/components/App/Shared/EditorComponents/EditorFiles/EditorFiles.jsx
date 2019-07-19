@@ -1,16 +1,14 @@
 import React from 'react';
-import Tooltip from 'react-tooltip-lite';
 import PropTypes from 'prop-types';
 import axiosOrg from 'axios';
 import URL from 'url';
 
-import CloseSVG from '../../../../../images/close.svg';
 import axios from '../../../../../utils/axios';
+import EditorFile from './EditorFile.jsx';
 import FileUpload from '../../FileUpload/FileUpload.jsx';
 
 const MEDIA_FILE_REGEX = /.+\.(gif|jpg|jpeg|png|bmp)$/i;
 const CODE_FILE_REGEX = /.+\.(csv|txt|json|js|css)$/i;
-const HTML_FILE_REGEX = /.+\.(html)$/i;
 
 require('./editorFiles.scss');
 
@@ -29,13 +27,6 @@ class EditorFiles extends React.Component {
 
   closeFileUpload = () => {
     this.setState({ isFileUploadOpen: false });
-  }
-
-  deleteFile = (e, index) => {
-    e.stopPropagation();
-    if (confirm('Are you sure you want to delete this file?')) { // eslint-disable-line no-restricted-globals
-      this.props.deleteFileFromEditor(index);
-    }
   }
 
   startFileUpload = () => {
@@ -87,49 +78,44 @@ class EditorFiles extends React.Component {
     }
   }
 
-  renderFileName=(file, index, isImage) => (
-    <li
-      key={file.id}
-      className={`editor-toolbar__file
-          ${(this.props.currentFile === index) ? 'editor-toolbar__file--selected' : ''}`}
-    >
-      <Tooltip content={file.name}>
-        <button
-          onClick={() => {
-            this.props.openFileView(this.props.id, index);
-            this.props.setCurrentFile(index);
-          }}
-          disabled={isImage}
-          className={
-            `editor-toolbar__file-button
-               ${(this.props.currentFile === index) ? 'editor-toolbar__file-button--selected' : ''}
-          ${(isImage) ? 'editor-toolbar__file-button-static' : ''}`
-          }
-          data-test="editor-toolbar__file-name"
-        >
-          {file.name}
-        </button>
-      </Tooltip>
-      {!file.name.match(HTML_FILE_REGEX) && (
-        <button
-          className="editor-toolbar__file-button"
-          onClick={(e) => { this.deleteFile(e, index); }}
-          data-test="widget__delete"
-        >
-          <CloseSVG alt="close element" />
-        </button>
-      )}
-    </li>
-  )
-
   render() {
     return (
       <div className='editor-toolbar__files-container'>
         <ul className='editor-toolbar__files'>
+          {this.props.editorView === 'tabbed' && (
+            <li
+              key='preview'
+              className='editor-toolbar__file'
+            >
+              <button
+                onClick={() => {
+                  this.props.viewEditorPreview();
+                }}
+                className={
+                  `editor-toolbar__file-button
+                  ${(this.props.currentFile === -1) ? 'editor-toolbar__file-button--selected' : ''}`
+                }
+                data-test="editor-toolbar__file-name"
+              >
+              Preview
+              </button>
+            </li>
+          )}
           {
             this.props.files.map((file, index) => {
               const isImage = 'externalLink' in file;
-              return this.renderFileName(file, index, isImage);
+              return (
+                <EditorFile
+                  currentFile={this.props.currentFile}
+                  deleteFileFromEditor={this.props.deleteFileFromEditor}
+                  file={file}
+                  id={this.props.id}
+                  index={index}
+                  isImage={isImage}
+                  openFileView={this.props.openFileView}
+                  setCurrentFile={this.props.setCurrentFile}
+                />
+              );
             })
           }
         </ul>
@@ -137,7 +123,7 @@ class EditorFiles extends React.Component {
           (this.props.editorMode === 'p5' || this.props.editorMode === 'webdev') &&
           (
             <button
-              className="editor-toolbar__file-button"
+              className="editor-toolbar__add-file-button"
               onClick={this.openFileUpload}
               data-test='editor-toolbar__add-file-button'
             >
@@ -187,8 +173,10 @@ EditorFiles.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
+  id: PropTypes.string.isRequired,
   imageURL: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  openFileView: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
   viewEditorPreview: PropTypes.func.isRequired
 };

@@ -12,10 +12,8 @@
       background-color: $light-gray;
       background: $dark-gray; /* For browsers that do not support gradients */
       .editor-toolbar__files {
-        background-color: $g2;
         .editor-toolbar__file {
-          background-color: $g4;
-          border: $small-border solid $g2;
+          background-color: transparent;
           &:hover, &--selected { // sass-lint:disable-line class-name-format
             background-color: $g2;
           }
@@ -45,13 +43,10 @@
   .editor-toolbar {
     &__files-container {
       .editor-toolbar__files {
-        background-color: $g5;
         .editor-toolbar__file {
-          background-color: $g8;
-          border: $small-border solid $g5;
+          background-color: transparent;
           &:hover, &--selected { // sass-lint:disable-line class-name-format
-            background-color: $g4;
-            color: $g8;
+            background-color: $g6;
           }
           &-button {
             color: $g3;
@@ -60,7 +55,6 @@
               fill: $g3;
             }
             &:hover, &--selected { // sass-lint:disable-line class-name-format
-              color: $g8;
               & #ShapeCNTRL {
                 fill: $g8;
               }
@@ -123,16 +117,34 @@
       overflow-y: scroll;
       display: flex;
       width: fit-content;
+      height: 100%;
       flex-direction: column;
       margin: 0;
       padding: 0 !important;
       .editor-toolbar__file {
-        padding: 0px 3px !important;
+        display: flex;
+        justify-content: space-between;
+        border: none;
+        padding: $small-padding/2;
         text-decoration: none;
         list-style: none;
         width: auto;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        position: relative;
+        height: auto;
+        .editor-toolbar__file-option {
+          box-shadow: 0px 0px $border-shadow $g4;
+          border: $small-border solid $g4;
+          position: absolute;
+          top: 100%;
+          width: 100%;
+          background: $g5;
+          z-index: $z-index-layer-1;
+          left: -0.05rem;
+          background: $g5;
+          padding: 0.25rem 0;
+        }
         &-button {
           border-radius: 0;
           border: none;
@@ -144,6 +156,11 @@
             background: transparent;
           }
         }
+      }
+      .editor-toolbar__file-name {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
       }
     }
   }

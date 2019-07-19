@@ -27,7 +27,6 @@ require('../../../../../styles/base16-light.css');
 
 class CodeEditor extends React.Component {
   componentDidMount() {
-    console.log(this.props.isEditorFilesOpen);
     const file = this.props.files[this.props.currentFile];
     this.cm = CodeMirror(this.codemirrorContainer, {
       theme: constants.EDITOR_THEME[this.props.editorTheme],
@@ -94,14 +93,6 @@ class CodeEditor extends React.Component {
   render() {
     return (
       <div>
-        <EditorOpenFiles
-          id={this.props.id}
-          closeFileView={this.props.closeFileView}
-          files={this.props.files}
-          openFileView={this.props.openFileView}
-          setCurrentFile={this.props.setCurrentFile}
-          toggleEditorFilesView={this.props.toggleEditorFilesView}
-        />
         <div ref={(element) => { this.codemirrorContainer = element; }}>
         </div>
       </div>
