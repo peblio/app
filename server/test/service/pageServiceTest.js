@@ -18,6 +18,11 @@ const Folder = require('../../src/models/folder.js');
 const tag = 'Java';
 
 const pageData = {
+  deletedAt: undefined,
+  folder: undefined,
+  isPublished: undefined,
+  snapshotPath: undefined,
+  trashedAt: undefined,
   heading: 'Some heading',
   title: 'Some title',
   editors: 'Some editors',
@@ -26,10 +31,15 @@ const pageData = {
   layout: 'A perfect layout',
   workspace: 'No workspace',
   tags: ['tag1', 'tag2'],
-  id: '9NL7Svh1D',
+  id: '9NL7Svh1D'
 };
 
 let pageDataWithUser = {
+  deletedAt: undefined,
+  folder: undefined,
+  isPublished: undefined,
+  snapshotPath: undefined,
+  trashedAt: undefined,
   heading: 'Some heading',
   title: 'Some title',
   editors: 'Some editors',
@@ -1221,17 +1231,30 @@ function assertUpdatePageWasCalledWithLatestPageData() {
       layout: pageData.layout,
       workspace: pageData.workspace,
       tags: pageData.tags,
-      user: loggedInUser._id
+      user: loggedInUser._id,
+      deletedAt: undefined,
+      folder: undefined,
+      isPublished: undefined,
+      snapshotPath: undefined,
+      trashedAt: undefined,
     },
     sinon.match.any);
 }
 
 function assertUpdatePageWasCalledLatestPageVersionData() {
   assert.calledOnce(updatePageSpy);
-  assert.calledWith(updatePageSpy,
-    { id: pageData.id },
-    pageDataWithUser,
-    sinon.match.any);
+  expect(updatePageSpy.getCall(0).args[0]).to.deep.equal({ id: pageData.id });
+  expect(JSON.stringify(updatePageSpy.getCall(0).args[1])).to.equal(JSON.stringify({
+    user: pageDataWithUser.user,
+    title: pageDataWithUser.title,
+    heading: pageDataWithUser.heading,
+    description: pageDataWithUser.description,
+    editors: pageDataWithUser.editors,
+    editorIndex: pageDataWithUser.editorIndex,
+    layout: pageDataWithUser.layout,
+    workspace: pageDataWithUser.workspace,
+    tags: pageDataWithUser.tags,
+  }));
 }
 
 function assertUpdatePageWasCalledWithNewPageTitle(stub) {

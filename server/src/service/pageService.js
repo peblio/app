@@ -237,7 +237,24 @@ export async function updatePageWithVersion(req, res) {
       if (pageVersionFindError || !pageVerionData || pageVerionData.length == 0) {
         return res.status(500).send({ error: 'Could not retrieve page version!' });
       }
-      return Page.update({ id }, {...pageVerionData[0]}, (err) => {
+      const updatedPageData = {
+        user: pageVerionData[0].user,
+        parentId: pageVerionData[0].parentId,
+        title: pageVerionData[0].title,
+        heading: pageVerionData[0].heading,
+        snapshotPath: pageVerionData[0].snapshotPath,
+        description: pageVerionData[0].description,
+        editors: pageVerionData[0].editors,
+        editorIndex: pageVerionData[0].editorIndex,
+        layout: pageVerionData[0].layout,
+        folder: pageVerionData[0].folder,
+        workspace: pageVerionData[0].workspace,
+        isPublished: pageVerionData[0].isPublished,
+        deletedAt: pageVerionData[0].deletedAt,
+        trashedAt: pageVerionData[0].trashedAt,
+        tags: pageVerionData[0].tags
+      };
+      return Page.update({ id }, updatedPageData, (err) => {
         if (err) {
           return res.status(500).send(err);
         } else {
