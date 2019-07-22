@@ -1245,7 +1245,6 @@ function assertUpdatePageWasCalledLatestPageVersionData() {
   assert.calledOnce(updatePageSpy);
   expect(updatePageSpy.getCall(0).args[0]).to.deep.equal({ id: pageData.id });
   expect(JSON.stringify(updatePageSpy.getCall(0).args[1])).to.equal(JSON.stringify({
-    user: pageDataWithUser.user,
     title: pageDataWithUser.title,
     heading: pageDataWithUser.heading,
     description: pageDataWithUser.description,

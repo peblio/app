@@ -238,8 +238,6 @@ export async function updatePageWithVersion(req, res) {
         return res.status(500).send({ error: 'Could not retrieve page version!' });
       }
       const updatedPageData = {
-        user: pageVerionData[0].user,
-        parentId: pageVerionData[0].parentId,
         title: pageVerionData[0].title,
         heading: pageVerionData[0].heading,
         snapshotPath: pageVerionData[0].snapshotPath,
