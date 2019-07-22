@@ -33,11 +33,12 @@
   }
 
   &__input {
-    height: calc(100% - #{$editor-toolbar-files-height});
+    height: 100%;
     border-right: $small-border solid $gray;
     overflow:scroll;
     &-tabbed {
       width: 100%;
+      height: calc(100% - #{$editor-toolbar-files-height});
     }
   }
 

@@ -19,7 +19,6 @@ import 'codemirror/mode/clike/clike';
 import 'codemirror/addon/selection/active-line';
 
 import * as constants from '../../../../../constants/widgetConstants.js';
-import EditorOpenFiles from '../EditorOpenFiles/EditorOpenFiles';
 
 require('../../../../../styles/codemirror.css');
 require('../../../../../styles/base16-dark.css');
@@ -109,7 +108,6 @@ CodeEditor.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   })).isRequired,
-  id: PropTypes.string.isRequired,
   updateFile: PropTypes.func.isRequired
 };
 

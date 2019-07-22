@@ -36,6 +36,7 @@ class EditorContainer extends React.Component {
     this.updateFile = (index, file) => this.props.updateFile(this.props.id, index, file);
     this.setCurrentFile = index => this.props.setCurrentFile(this.props.id, index);
     this.closeFileView = index => this.props.closeFileView(this.props.id, index);
+    this.openFileView = index => this.props.openFileView(this.props.id, index);
     this.clearConsoleOutput = () => this.props.clearConsoleOutput(this.props.id);
     this.updateConsoleOutput = (e) => {
       // UPDATE: 29-Oct-18 : Not using Javascript editor now, but keep in mind if added
@@ -102,7 +103,7 @@ class EditorContainer extends React.Component {
                 editorView={this.props.editorView}
                 files={this.props.files}
                 name={this.props.name}
-                openFileView={this.props.openFileView}
+                openFileView={this.openFileView}
                 setCurrentFile={this.setCurrentFile}
                 viewEditorPreview={this.viewEditorPreview}
               />
@@ -123,7 +124,7 @@ class EditorContainer extends React.Component {
                 isResizing={this.state.isResizing}
                 isPlaying={this.props.isPlaying}
                 isRefreshing={this.props.isRefreshing}
-                openFileView={this.props.openFileView}
+                openFileView={this.openFileView}
                 setCurrentFile={this.setCurrentFile}
                 setInnerWidth={this.setInnerWidth}
                 startResize={this.startResize}
@@ -151,7 +152,7 @@ class EditorContainer extends React.Component {
                 isResizing={this.state.isResizing}
                 isRefreshing={this.props.isRefreshing}
                 innerWidth={this.props.innerWidth}
-                openFileView={this.props.openFileView}
+                openFileView={this.openFileView}
                 startResize={this.startResize}
                 setCurrentFile={this.setCurrentFile}
                 setInnerWidth={this.setInnerWidth}
@@ -176,6 +177,7 @@ EditorContainer.propTypes = {
   addMediaFile: PropTypes.func.isRequired,
   addFileToEditor: PropTypes.func.isRequired,
   clearConsoleOutput: PropTypes.func.isRequired,
+  closeFileView: PropTypes.func.isRequired,
   consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired,
   currentFile: PropTypes.number.isRequired,
   deleteFileFromEditor: PropTypes.func.isRequired,
@@ -190,6 +192,7 @@ EditorContainer.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   isRefreshing: PropTypes.bool.isRequired,
   isWidgetFullScreenMode: PropTypes.bool.isRequired,
+  openFileView: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   playCode: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,

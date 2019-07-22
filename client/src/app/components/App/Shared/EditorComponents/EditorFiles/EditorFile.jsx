@@ -2,8 +2,6 @@ import React from 'react';
 import Tooltip from 'react-tooltip-lite';
 import PropTypes from 'prop-types';
 
-import CloseSVG from '../../../../../images/close.svg';
-
 const HTML_FILE_REGEX = /.+\.(html)$/i;
 
 require('./editorFiles.scss');
@@ -29,12 +27,6 @@ class EditorFile extends React.Component {
     }
   }
 
-  openFileOption=() => {
-    this.setState({
-      isFileUploadOpen: true
-    });
-  }
-
   toggleFileOption=() => {
     this.setState(prevState => ({ isFileOptionOpen: !prevState.isFileOptionOpen }));
   }
@@ -54,7 +46,7 @@ class EditorFile extends React.Component {
           <Tooltip content={this.props.file.name}>
             <button
               onClick={() => {
-                this.props.openFileView(this.props.id, this.props.index);
+                this.props.openFileView(this.props.index);
                 this.props.setCurrentFile(this.props.index);
               }}
               disabled={this.props.isImage}
@@ -68,7 +60,7 @@ class EditorFile extends React.Component {
               {this.props.file.name}
             </button>
           </Tooltip>
-          {!this.props.file.name.match(HTML_FILE_REGEX) && (
+          {!this.props.file.name.match(HTML_FILE_REGEX) && ( //eslint-disable-line
             <button
               className="editor-toolbar__file-button"
               onClick={(e) => {

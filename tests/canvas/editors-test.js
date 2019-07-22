@@ -69,6 +69,7 @@ test('upload image in p5 editor', async(t) => {
   await t
     .click(Selector('[data-test=add-code-editor]'))
     .click(Selector('[data-test=add-p5-editor]'))
+    .click(Selector('[data-test=open-files__view-all-files]'))
     .click(Selector('[data-test=editor-toolbar__add-file-button]'))
     .setFilesToUpload('.file-upload__dropzone input', [
       '../assets/cat.jpeg'

@@ -29,7 +29,6 @@ class TabbedContainer extends React.Component {
               currentFile={this.props.currentFile}
               files={this.props.files}
               isEditorFilesOpen={this.props.isEditorFilesOpen}
-              openFileView={this.props.openFileView}
               setCurrentFile={this.props.setCurrentFile}
               toggleEditorFilesView={this.props.toggleEditorFilesView}
               updateFile={this.props.updateFile}
@@ -91,7 +90,8 @@ TabbedContainer.propTypes = {
   toggleConsole: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   toggleEditorFilesView: PropTypes.func.isRequired,
-  updateFile: PropTypes.func.isRequired
+  updateFile: PropTypes.func.isRequired,
+  viewEditorPreview: PropTypes.func.isRequired
 };
 
 

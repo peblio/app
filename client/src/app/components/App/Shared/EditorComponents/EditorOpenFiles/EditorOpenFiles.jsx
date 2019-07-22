@@ -13,6 +13,7 @@ class EditorOpenFiles extends React.Component {
         <button
           className="open-files__toggle-button"
           onClick={this.props.toggleEditorFilesView}
+          data-test="open-files__view-all-files"
         >
           {'<'}
         </button>
@@ -79,8 +80,8 @@ EditorOpenFiles.propTypes = {
     content: PropTypes.string.isRequired,
     isFileInView: PropTypes.bool.isRequired
   })).isRequired,
-  id: PropTypes.string.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
-  toggleEditorFilesView: PropTypes.func.isRequired
+  toggleEditorFilesView: PropTypes.func.isRequired,
+  viewEditorPreview: PropTypes.func.isRequired
 };
 export default EditorOpenFiles;
