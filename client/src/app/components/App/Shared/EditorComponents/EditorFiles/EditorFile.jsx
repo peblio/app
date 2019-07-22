@@ -78,8 +78,7 @@ class EditorFile extends React.Component {
                 this.toggleFileOption();
               }}
               onBlur={() => {
-                // console.log('blur');
-                // this.closeFileOption();
+                this.closeFileOption();
               }}
               data-test="widget__delete"
             >

@@ -2,6 +2,34 @@
 @import 'mixins';
 @import 'base';
 
+
+.editor__dark {
+  .open-files {
+    &__files {
+      background: $black;
+    }
+    &__file {
+      background: $dark-gray;
+      color: $g7;
+      border-bottom: $small-border solid $g7;
+      border-right: $small-border solid $g7;
+    }
+    &__toggle-button {
+      background: $dark-gray;
+      color: $g7;
+    }
+    &__close-button {
+      color: $g7;
+    }
+    &__file-button {
+      color: $g7;
+    }
+    &__add-file-button {
+      color: $g2;
+    }
+  }
+}
+
 .open-files {
   &__container {
     display: flex;
