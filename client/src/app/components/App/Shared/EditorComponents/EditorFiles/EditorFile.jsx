@@ -17,7 +17,6 @@ class EditorFile extends React.Component {
   }
 
   closeFileOption=() => {
-    console.log('close');
     this.setState({
       isFileOptionOpen: false
     });
@@ -73,7 +72,6 @@ class EditorFile extends React.Component {
             <button
               className="editor-toolbar__file-button"
               onClick={(e) => {
-                console.log('click');
                 this.focusOnButton(e);
                 this.toggleFileOption();
               }}

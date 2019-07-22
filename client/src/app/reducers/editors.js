@@ -206,6 +206,9 @@ const editorsReducer = (state = initialState, action) => {
           fileIndexToBeDisplayed -= 1;
         }
       }
+      if (fileIndexToBeDisplayed === -1) {
+        editors[action.id].currentFile = fileIndexToBeDisplayed;
+      }
       editors[action.id].files[action.index].isFileInView = false;
       return Object.assign({}, state, {
         editors

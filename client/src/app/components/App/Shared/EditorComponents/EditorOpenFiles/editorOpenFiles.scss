@@ -13,10 +13,17 @@
       color: $g7;
       border-bottom: $small-border solid $g7;
       border-right: $small-border solid $g7;
+      &--selected {
+        background: $g2;
+      }
     }
     &__toggle-button {
       background: $dark-gray;
       color: $g7;
+      &:hover {
+        background: $dark-gray;
+        color: $g5;
+      }
     }
     &__close-button {
       color: $g7;
@@ -35,6 +42,7 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    position: sticky;
   }
   &__files {
     width: 100%;
@@ -50,6 +58,9 @@
     padding: $small-padding 0;
     border-bottom: $small-border solid $g5;
     border-right: $small-border solid $g5;
+    &--selected {
+      background: $g7;
+    }
   }
   &__file-button, &__toggle-button {
     background: none;

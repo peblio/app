@@ -20,7 +20,7 @@ class EditorContainer extends React.Component {
     this.state = {
       isResizing: false,
       isConsoleOpen: true,
-      isEditorFilesOpen: true
+      isEditorFilesOpen: false
     };
     this.startResize = this.startResize.bind(this);
     this.finishResize = this.finishResize.bind(this);
@@ -88,7 +88,6 @@ class EditorContainer extends React.Component {
             stopCode={this.stopCode}
             toggleConsole={this.toggleConsole}
             toggleWidgetFullscreen={this.props.toggleWidgetFullscreen}
-            viewEditorPreview={this.viewEditorPreview}
           />
           <div className='editor__vertical-container'>
             {this.state.isEditorFilesOpen && (
@@ -104,6 +103,7 @@ class EditorContainer extends React.Component {
                 name={this.props.name}
                 openFileView={this.props.openFileView}
                 setCurrentFile={this.setCurrentFile}
+                viewEditorPreview={this.viewEditorPreview}
               />
             )}
             {this.editorView() === 'split' && (
@@ -131,6 +131,7 @@ class EditorContainer extends React.Component {
                 toggleEditorFilesView={this.toggleEditorFilesView}
                 updateConsoleOutput={this.updateConsoleOutput}
                 updateFile={this.updateFile}
+                viewEditorPreview={this.viewEditorPreview}
               />
             )}
             {this.editorView() === 'tabbed' && (
@@ -155,9 +156,10 @@ class EditorContainer extends React.Component {
                 setInnerWidth={this.setInnerWidth}
                 stopCodeRefresh={this.stopCodeRefresh}
                 toggleConsole={this.toggleConsole}
-                toggleEditorFilesView={this.props.toggleEditorFilesView}
+                toggleEditorFilesView={this.toggleEditorFilesView}
                 updateFile={this.updateFile}
                 updateConsoleOutput={this.updateConsoleOutput}
+                viewEditorPreview={this.viewEditorPreview}
               />
             )}
           </div>

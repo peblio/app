@@ -15,10 +15,31 @@ class EditorOpenFiles extends React.Component {
           {'<'}
         </button>
         <ul className="open-files__files">
+          {(this.props.container === 'tabbed-editor') && (
+
+            <li
+              className={
+                `open-files__file
+                ${(this.props.currentFile === -1) ? 'open-files__file--selected' : ''}`
+              }
+            >
+              <button
+                className="open-files__file-button"
+                onClick={this.props.viewEditorPreview}
+              >
+                Preview
+              </button>
+            </li>
+          )}
           {this.props.files.map((file, index) => {
             if (typeof file.isFileInView === 'undefined' || file.isFileInView) {
               return (
-                <li className="open-files__file">
+                <li
+                  className={
+                    `open-files__file
+                    ${(this.props.currentFile === index) ? 'open-files__file--selected' : ''}`
+                  }
+                >
                   <button
                     className="open-files__file-button"
                     onClick={() => {
@@ -48,6 +69,8 @@ class EditorOpenFiles extends React.Component {
 
 EditorOpenFiles.propTypes = {
   closeFileView: PropTypes.func.isRequired,
+  container: PropTypes.string.isRequired,
+  currentFile: PropTypes.number.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,

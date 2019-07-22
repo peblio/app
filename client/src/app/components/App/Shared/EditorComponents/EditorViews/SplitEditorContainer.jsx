@@ -21,24 +21,27 @@ class SplitEditorContainer extends React.Component {
             <EditorOpenFiles
               id={this.props.id}
               closeFileView={this.props.closeFileView}
-              files={this.props.files}
-              openFileView={this.props.openFileView}
-              setCurrentFile={this.props.setCurrentFile}
-              toggleEditorFilesView={this.props.toggleEditorFilesView}
-            />
-
-            <CodeEditor
-              id={this.props.id}
-              closeFileView={this.props.closeFileView}
+              container="split-editor"
               currentFile={this.props.currentFile}
               files={this.props.files}
-              isEditorFilesOpen={this.props.isEditorFilesOpen}
               openFileView={this.props.openFileView}
               setCurrentFile={this.props.setCurrentFile}
               toggleEditorFilesView={this.props.toggleEditorFilesView}
-              updateFile={this.props.updateFile}
+              viewEditorPreview={this.props.viewEditorPreview}
             />
-
+            {this.props.currentFile >= 0 && (
+              <CodeEditor
+                id={this.props.id}
+                closeFileView={this.props.closeFileView}
+                currentFile={this.props.currentFile}
+                files={this.props.files}
+                isEditorFilesOpen={this.props.isEditorFilesOpen}
+                openFileView={this.props.openFileView}
+                setCurrentFile={this.props.setCurrentFile}
+                toggleEditorFilesView={this.props.toggleEditorFilesView}
+                updateFile={this.props.updateFile}
+              />
+            )}
           </div>
           <div className={`editor__output ${this.props.isConsoleOpen ? 'editor__output--short' : ''}`}>
             <div
