@@ -35,6 +35,7 @@ class EditorContainer extends React.Component {
     this.stopCodeRefresh = () => this.props.stopCodeRefresh(this.props.id);
     this.updateFile = (index, file) => this.props.updateFile(this.props.id, index, file);
     this.setCurrentFile = index => this.props.setCurrentFile(this.props.id, index);
+    this.closeFileView = index => this.props.closeFileView(this.props.id, index);
     this.clearConsoleOutput = () => this.props.clearConsoleOutput(this.props.id);
     this.updateConsoleOutput = (e) => {
       // UPDATE: 29-Oct-18 : Not using Javascript editor now, but keep in mind if added
@@ -110,7 +111,7 @@ class EditorContainer extends React.Component {
               <SplitEditorContainer
                 id={this.props.id}
                 clearConsoleOutput={this.clearConsoleOutput}
-                closeFileView={this.props.closeFileView}
+                closeFileView={this.closeFileView}
                 consoleOutputText={this.props.consoleOutputText}
                 currentFile={this.props.currentFile}
                 editorMode={this.props.editorMode}
@@ -138,7 +139,7 @@ class EditorContainer extends React.Component {
               <TabbedEditorContainer
                 id={this.props.id}
                 clearConsoleOutput={this.clearConsoleOutput}
-                closeFileView={this.props.closeFileView}
+                closeFileView={this.closeFileView}
                 consoleOutputText={this.props.consoleOutputText}
                 currentFile={this.props.currentFile}
                 editorMode={this.props.editorMode}

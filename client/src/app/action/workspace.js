@@ -153,3 +153,23 @@ export function deleteFileFromEditor(index) {
     });
   };
 }
+
+export function openFileView(index) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.WP_OPEN_FILE_VIEW,
+      index
+    });
+  };
+}
+
+export function closeFileView(index) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.WP_CLOSE_FILE_VIEW,
+      index
+    });
+  };
+}

@@ -10,6 +10,8 @@ import { submitPage } from '../../../action/page.js';
 import CodeEditor from '../Shared/EditorComponents/CodeEditor/CodeEditor.jsx';
 import CodeOutput from '../Shared/EditorComponents/CodeOutput/CodeOutput.jsx';
 import EditorToolbar from '../Shared/EditorComponents/EditorToolbar/EditorToolbar.jsx';
+import EditorOpenFiles from '../Shared/EditorComponents/EditorOpenFiles/EditorOpenFiles.jsx';
+import EditorFiles from '../Shared/EditorComponents/EditorFiles/EditorFiles.jsx';
 import ConsoleOutput from '../Shared/EditorComponents/ConsoleOutput/ConsoleOutput.jsx';
 import ShareWorkspace from '../Modal/ShareWorkspace/ShareWorkspace.jsx';
 import Modal from '../Modal/Modal.jsx';
@@ -21,7 +23,8 @@ class Workspace extends React.Component {
     super(props);
     this.state = {
       isResizing: false,
-      isConsoleOpen: true
+      isConsoleOpen: true,
+      isEditorFilesOpen: false
     };
   }
 
@@ -33,6 +36,10 @@ class Workspace extends React.Component {
 
   toggleConsole = () => {
     this.setState(prevState => ({ isConsoleOpen: !prevState.isConsoleOpen }));
+  }
+
+  toggleEditorFilesView = () => {
+    this.setState(prevState => ({ isEditorFilesOpen: !prevState.isEditorFilesOpen }));
   }
 
   startResize= () => {
@@ -81,8 +88,6 @@ class Workspace extends React.Component {
             {this.props.isWorkspaceOpen && (
               <div>
                 <EditorToolbar
-                  addMediaFile={this.props.addMediaFile}
-                  addFileToEditor={this.props.addFileToEditor}
                   deleteFileFromEditor={this.props.deleteFileFromEditor}
                   currentFile={this.props.currentFile}
                   editorMode={this.props.editorMode}
@@ -98,8 +103,22 @@ class Workspace extends React.Component {
                   openShareWorkspace={this.props.openShareWorkspace}
                 />
                 <div className='workspace__container'>
+                  {this.state.isEditorFilesOpen && (
+                    <EditorFiles
+                      addMediaFile={this.props.addMediaFile}
+                      addFileToEditor={this.props.addFileToEditor}
+                      deleteFileFromEditor={this.props.deleteFileFromEditor}
+                      currentFile={this.props.currentFile}
+                      editorMode={this.props.editorMode}
+                      files={this.props.files}
+                      name={this.props.name}
+                      openFileView={this.props.openFileView}
+                      setCurrentFile={this.props.setCurrentFile}
+                    />
+                  )}
 
                   <div className='workspace__sub-container'>
+
                     <SplitPane
                       split='vertical'
                       defaultSize={this.props.innerWidth}
@@ -107,6 +126,15 @@ class Workspace extends React.Component {
                       onDragFinished={(size) => { this.finishResize(); this.props.setInnerWidth(size); }}
                     >
                       <div className='workspace__input'>
+                        <EditorOpenFiles
+                          closeFileView={this.props.closeFileView}
+                          container="split-editor"
+                          currentFile={this.props.currentFile}
+                          files={this.props.files}
+                          openFileView={this.props.openFileView}
+                          setCurrentFile={this.props.setCurrentFile}
+                          toggleEditorFilesView={this.toggleEditorFilesView}
+                        />
 
                         <CodeEditor
                           currentFile={this.props.currentFile}

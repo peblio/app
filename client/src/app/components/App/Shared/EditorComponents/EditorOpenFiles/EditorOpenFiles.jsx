@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import CloseSVG from '../../../../../images/close.svg';
 
+const MEDIA_FILE_REGEX = /.+\.(gif|jpg|jpeg|png|bmp)$/i;
+
 require('./editorOpenFiles.scss');
 
 class EditorOpenFiles extends React.Component {
@@ -41,17 +43,18 @@ class EditorOpenFiles extends React.Component {
                   }
                 >
                   <button
-                    className="open-files__file-button"
+                    className={`open-files__file-button
+                      ${(file.name.match(MEDIA_FILE_REGEX)) ? 'open-files__file-button-static' : ''}`}
+                    disabled={file.name.match(MEDIA_FILE_REGEX)}
                     onClick={() => {
                       this.props.setCurrentFile(index);
-                    }
-                    }
+                    }}
                   >
                     {file.name}
                   </button>
                   <button
                     className="open-files__close-button"
-                    onClick={() => this.props.closeFileView(this.props.id, index)}
+                    onClick={() => this.props.closeFileView(index)}
                   >
                     <CloseSVG alt="close element" />
                   </button>

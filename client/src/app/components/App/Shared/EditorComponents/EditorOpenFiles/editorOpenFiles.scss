@@ -30,6 +30,13 @@
     }
     &__file-button {
       color: $g7;
+      &-static {
+        color: $g3;
+        &:hover {
+          color: $g3;
+          cursor: auto;
+        }
+      }
     }
     &__add-file-button {
       color: $g2;
@@ -70,6 +77,13 @@
       background: none;
       color: $g4;
       border: 0;
+    }
+    &-static {
+      color: $g5;
+      &:hover {
+        color: $g5;
+        cursor: auto;
+      }
     }
   }
   &__toggle-button {

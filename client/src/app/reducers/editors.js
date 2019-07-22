@@ -232,7 +232,8 @@ const editorsReducer = (state = initialState, action) => {
     case ActionTypes.ADD_MEDIA_FILE: {
       editors[action.id].files.push({
         name: action.name,
-        externalLink: action.link
+        externalLink: action.link,
+        isFileInView: false
       });
       return Object.assign({}, state, {
         editors
