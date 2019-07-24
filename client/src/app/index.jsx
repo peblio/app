@@ -12,8 +12,9 @@ import { saveErrorLog } from './utils/log';
 import rootReducer from './reducers/rootReducer.js';
 import App from './components/App/App.jsx';
 import Dashboard from './components/Dashboard/Dashboard.jsx';
+import FullScreen from './pages/FullScreen/FullScreen.jsx';
 import Profile from './components/Profile/Profile.jsx';
-import Page404 from './components/Page404/Page404.jsx';
+import Page404 from './pages/Page404/Page404.jsx';
 import withTracker from './withTracker.jsx';
 import history from './utils/history';
 
@@ -45,6 +46,7 @@ class Main extends React.Component {
           <div>
             <Switch>
               <Route exact path="/" component={withTracker(App)} />
+              <Route path="/fullscreen/:id" component={withTracker(FullScreen)} />
               <Route path="/pebl/:id" component={withTracker(App)} />
               <Route path="/reset" component={withTracker(App)} />
               <Route path="/confirmation" component={withTracker(App)} />
