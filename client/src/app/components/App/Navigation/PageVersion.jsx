@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Tooltip from 'react-tooltip-lite';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -100,7 +99,6 @@ PageVersion.propTypes = {
   loadCurrentPage: PropTypes.func.isRequired,
   loadHistoryForPage: PropTypes.func.isRequired,
   loadPageVersion: PropTypes.func.isRequired,
-  openNavigationContent: PropTypes.func.isRequired,
   pageVersion: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   savePage: PropTypes.func.isRequired,
   selectedPageVersion: PropTypes.string.isRequired,

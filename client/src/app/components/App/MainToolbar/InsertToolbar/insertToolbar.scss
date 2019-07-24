@@ -50,6 +50,11 @@
       transition-duration: 0.2s;
       fill:$green;
     }
+    &--highlighted #Shape {
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.2s;
+      fill:$green;
+    }
   }
 
   &__icon{

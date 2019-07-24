@@ -206,7 +206,8 @@ class InsertToolbar extends React.Component {
             onMouseDown={this.props.togglePageVersion}
             onKeyDown={this.props.togglePageVersion}
             id="elementButton"
-            className="insert-toolbar__button"
+            className={`insert-toolbar__button
+              ${(this.props.isPageVersionOpen) ? 'insert-toolbar__button--highlighted' : ''}`}
             data-test="insert-toolbar__show-page-version"
           >
             <HistorySVG alt="show page version" />
@@ -225,8 +226,13 @@ InsertToolbar.propTypes = {
   addTextEditor: PropTypes.func.isRequired,
   addQuestionEditor: PropTypes.func.isRequired,
   addVideo: PropTypes.func.isRequired,
+  isPageVersionOpen: PropTypes.bool.isRequired,
   togglePageVersion: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = state => ({
+  isPageVersionOpen: state.pageVersion.isPageVersionOpen
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   addCodeEditor,
@@ -238,4 +244,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   togglePageVersion
 }, dispatch);
 
-export default connect(null, mapDispatchToProps)(InsertToolbar);
+export default connect(mapStateToProps, mapDispatchToProps)(InsertToolbar);
