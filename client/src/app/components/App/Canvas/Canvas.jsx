@@ -42,6 +42,10 @@ class Canvas extends React.Component {
     this.timeout = null;
   }
 
+  componentDidMount() {
+    console.log('canvas mounted');
+  }
+
   componentDidUpdate(prevProps) {
     const id = this.props.currentWidget;
     if (this.props.editorIndex > prevProps.editorIndex && document.getElementById(id)) {

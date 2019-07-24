@@ -64,7 +64,6 @@ class App extends React.Component {
     }
   }
 
-
   onKeyPressed(e) {
     if (e.metaKey || e.ctrlKey) {
       switch (e.keyCode) {
@@ -85,7 +84,6 @@ class App extends React.Component {
     }
   }
 
-
   onUserVisit =() => {
     const isUserFirstVisit = localStorage.getItem(process.env.LOCALSTORAGE_VARIABLE);
     // check if it is the first visit
@@ -95,7 +93,6 @@ class App extends React.Component {
       this.props.viewWelcomeModal();
     }
   }
-
 
   resetPage = () => {
     const location = this.props.location.pathname;
