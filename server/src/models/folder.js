@@ -23,13 +23,6 @@ folderSchema.virtual('children', {
   autopopulate: { maxDepth: 10 } // maxDepth is the limit for folder nesting
 });
 
-folderSchema.virtual('numFiles', {
-  ref: 'Page',
-  localField: '_id',
-  foreignField: 'folder',
-  count: true // And only get the number of docs
-});
-
 folderSchema.plugin(autopopulate);
 
 folderSchema.pre('find', function() {

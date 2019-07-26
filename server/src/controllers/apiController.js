@@ -78,7 +78,6 @@ export function getSketches(req, res) {
 
           Folder
           .find({ user: user._id})
-          .populate('numFiles')
           .sort("_id")
           .exec()
         ])
@@ -98,7 +97,6 @@ export function getSketches(req, res) {
 
       Folder
       .find({ user: user._id})
-      .populate('numFiles')
       .sort(folderSortBy)
       .exec()
     ])
