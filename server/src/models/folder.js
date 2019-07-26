@@ -23,13 +23,6 @@ folderSchema.virtual('children', {
   autopopulate: { maxDepth: 10 } // maxDepth is the limit for folder nesting
 });
 
-folderSchema.virtual('files', {
-  ref: 'Page',
-  localField: '_id',
-  foreignField: 'folder',
-  autopopulate: true
-});
-
 folderSchema.plugin(autopopulate);
 
 folderSchema.pre('find', function() {

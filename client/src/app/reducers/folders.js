@@ -162,7 +162,6 @@ const foldersReducer = (state = { ...initialState }, action) => {
         return state;
       }
       const folder = folders.byId[folderId];
-      folder.files = folder.files.filter(pId => pId !== pageId);
 
       delete pageToMove.folder;
 
@@ -194,14 +193,12 @@ const foldersReducer = (state = { ...initialState }, action) => {
       const prevFolderById = {};
       if (pageToMove.folder) {
         const prevFolder = folders.byId[pageToMove.folder];
-        prevFolder.files = (prevFolder.files || []).filter(pId => pId !== pageId);
         prevFolderById[pageToMove.folder] = { ...prevFolder };
       }
 
       pageToMove.folder = folderId;
 
       const folder = folders.byId[folderId];
-      folder.files = (folder.files || []).concat(pageId);
       return {
         ...state,
         folders: {
@@ -312,7 +309,6 @@ const foldersReducer = (state = { ...initialState }, action) => {
     }
 
     case ActionTypes.JUMP_TO_FOLDER: {
-
       const { folderShortId } = action;
       const { folders } = state;
       const folder = Object.values(folders.byId).find(f => f.shortId === folderShortId);
