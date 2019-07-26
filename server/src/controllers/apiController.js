@@ -65,8 +65,10 @@ export function getSketches(req, res) {
     User.findOne({ name: req.params.user }, (userFindError, data) => {
       if (userFindError || !data) {
         res.status(404).send({ error: userFindError });
+        return;
       } else if (data.type === 'student') {
         res.status(403).send({ error: 'This users data cannot be accessed' });
+        return;
       } else {
         user = data;
         Promise.all([
@@ -84,7 +86,8 @@ export function getSketches(req, res) {
           .then(([pages, folders]) => {
             res.status(200).send({pages,folders});
           })
-          .catch(err => res.send(err));
+          .catch(err => res.status(500).send(err));
+          return;
       }
     });
   } else {
@@ -103,6 +106,7 @@ export function getSketches(req, res) {
       .then(([pages, folders]) => {
         res.send({ pages, folders });
       })
-      .catch(err => res.send(err));
+      .catch(err => res.status(500).send(err));
+      return;
   }
 }
