@@ -69,21 +69,38 @@ export function getSketches(req, res) {
         res.status(403).send({ error: 'This users data cannot be accessed' });
       } else {
         user = data;
-
         Promise.all([
-          Page.find({ user: user._id, trashedAt: null, deletedAt:null }).sort(fileSortBy).exec(),
-          Folder.find({ user: user._id }).sort(folderSortBy).exec()
+          Page
+          .find({ user: user._id, trashedAt: null, deletedAt:null })
+          .select({ editors:0, layout:0, workspace:0})
+          .sort(fileSortBy)
+          .exec(),
+
+          Folder
+          .find({ user: user._id})
+          .populate('numFiles')
+          .sort("_id")
+          .exec()
         ])
           .then(([pages, folders]) => {
-            res.status(200).send({ pages, folders });
+            res.status(200).send({pages,folders});
           })
           .catch(err => res.send(err));
       }
     });
   } else {
     Promise.all([
-      Page.find({ user: user._id, trashedAt: null, deletedAt:null }).sort(fileSortBy).exec(),
-      Folder.find({ user: user._id }).sort(folderSortBy).exec()
+      Page
+      .find({ user: user._id, trashedAt: null, deletedAt:null })
+      .select({ editors:0, layout:0, workspace:0})
+      .sort(fileSortBy)
+      .exec(),
+
+      Folder
+      .find({ user: user._id})
+      .populate('numFiles')
+      .sort(folderSortBy)
+      .exec()
     ])
       .then(([pages, folders]) => {
         res.send({ pages, folders });
