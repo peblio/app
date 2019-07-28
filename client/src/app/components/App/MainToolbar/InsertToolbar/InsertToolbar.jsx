@@ -22,8 +22,7 @@ import { togglePageVersion } from '../../../../action/pageVersion.js';
 
 require('./insertToolbar.scss');
 
-
-class InsertToolbar extends React.Component {
+export class InsertToolbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -213,7 +212,6 @@ class InsertToolbar extends React.Component {
             <HistorySVG alt="show page version" />
           </button>
         </div>
-
       </div>
     );
   }
