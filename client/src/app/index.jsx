@@ -54,7 +54,6 @@ class Main extends React.Component {
               <Route path="/dashboard/" component={withTracker(Dashboard)} />
               <Route path="/profile/:userName/folder/:folderShortId" component={withTracker(Profile)} />
               <Route path="/profile/:userName" component={withTracker(Profile)} />
-              <Route path="*" component={withTracker(Page404)} />
             </Switch>
           </div>
         </Router>

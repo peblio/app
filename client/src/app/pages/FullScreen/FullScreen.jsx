@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Canvas from '../../components/App/Canvas/Canvas.jsx';
+
+
 import {
   loadPage,
   setPageId,
@@ -55,11 +57,50 @@ class FullScreen extends React.Component {
       });
   }
 
+  saveHTML = () => {
+    const downloadDoc = document.cloneNode(true);
+    const head = downloadDoc.head;
+
+    // remove scripts
+    const scripts = head.getElementsByTagName('script');
+    let noScripts = scripts.length;
+    while (noScripts) {
+      noScripts--;
+      scripts[noScripts].parentNode.removeChild(scripts[noScripts]);
+    }
+
+    // remove links
+    const links = head.getElementsByTagName('link');
+    let noLinks = links.length;
+    while (noLinks) {
+      noLinks--;
+      links[noLinks].parentNode.removeChild(links[noLinks]);
+    }
+
+    // add main.js
+    const mainScript = downloadDoc.createElement('script');
+    mainScript.setAttribute('src', 'https://s3.amazonaws.com/staging.peblio.co/main.min.js');
+    downloadDoc.head.appendChild(mainScript);
+
+
+    const pageHTML = downloadDoc.documentElement.outerHTML;
+    const tempEl = document.createElement('a');
+    tempEl.href = `data:attachment/text,${encodeURI(pageHTML)}`;
+    tempEl.target = '_blank';
+    tempEl.download = 'thispage.html';
+    tempEl.click();
+  }
+
   render() {
     return (
       <section
         className="fullscreen__container"
       >
+        <button
+          onClick={this.saveHTML}
+        >
+        SAVE HTML
+        </button>
         <Canvas />
       </section>
     );

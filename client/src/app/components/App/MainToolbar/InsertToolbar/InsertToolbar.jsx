@@ -10,7 +10,6 @@ import QuestionSVG from '../../../../images/question.svg';
 import TextSVG from '../../../../images/text.svg';
 import VideoSVG from '../../../../images/video.svg';
 import {
-  addCodeEditor,
   addIframe,
   addImage,
   addTextEditor,
@@ -43,113 +42,6 @@ class InsertToolbar extends React.Component {
           className="insert-toolbar__container-left"
           data-test="insert-toolbar__container"
         >
-          <button
-            className="insert-toolbar__button "
-            onMouseDown={this.toggleEditorOptions}
-            onKeyDown={this.toggleEditorOptions}
-            onBlur={() => {
-              setTimeout(() => {
-                if (this.state.editorExpanded) {
-                  this.toggleEditorOptions();
-                }
-              }, 50);
-            }}
-            data-test="add-code-editor"
-          >
-            <EditorSVG alt="add code editor" />
-            Editor
-          </button>
-          {this.state.editorExpanded && (
-            <div className="insert-toolbar__sub-menu">
-              <ul className="insert-toolbar__list">
-                <li className="insert-toolbar__list-item">
-                  <button
-                    className="insert-toolbar__list-button"
-                    onMouseDown={() => {
-                      this.toggleEditorOptions();
-                      this.props.addCodeEditor('html');
-                    }}
-                    onKeyDown={() => {
-                      this.toggleEditorOptions();
-                      this.props.addCodeEditor('html');
-                    }}
-                    data-test="add-html-editor"
-                  >
-                 HTML
-                  </button>
-                </li>
-                <li className="insert-toolbar__list-item">
-                  <button
-                    className="insert-toolbar__list-button"
-                    onMouseDown={() => {
-                      this.toggleEditorOptions();
-                      this.props.addCodeEditor('webdev');
-                    }}
-                    onKeyDown={() => {
-                      this.toggleEditorOptions();
-                      this.props.addCodeEditor('webdev');
-                    }}
-                    data-test="add-webdev-editor"
-                  >
-                 HTML/JS/CSS
-                  </button>
-                </li>
-                <li className="insert-toolbar__list-item">
-                  <button
-                    className="insert-toolbar__list-button"
-                    onMouseDown={() => {
-                      this.toggleEditorOptions();
-                      this.props.addCodeEditor('p5');
-                    }}
-                    onKeyDown={() => {
-                      this.toggleEditorOptions();
-                      this.props.addCodeEditor('p5');
-                    }}
-                    data-test="add-p5-editor"
-                  >
-                 P5
-                  </button>
-                </li>
-                <li className="insert-toolbar__list-item">
-                  <button
-                    className="insert-toolbar__list-button"
-                    onMouseDown={() => {
-                      this.toggleEditorOptions();
-                      this.props.addCodeEditor('processing');
-                    }}
-                    onKeyDown={() => {
-                      this.toggleEditorOptions();
-                      this.props.addCodeEditor('processing');
-                    }}
-                    data-test="add-processing-editor"
-                  >
-                 Processing
-                  </button>
-                </li>
-                <li className="insert-toolbar__list-item">
-                  <button
-                    className="insert-toolbar__list-button"
-                    onMouseDown={() => {
-                      this.toggleEditorOptions();
-                      this.props.addCodeEditor('python');
-                    }}
-                    onKeyDown={() => {
-                      this.toggleEditorOptions();
-                      this.props.addCodeEditor('python');
-                    }}
-                    data-test="add-python-editor"
-                  >
-                 Python
-                    <span
-                      className="beta-tag"
-                    >
-                   beta
-                    </span>
-                  </button>
-                </li>
-              </ul>
-            </div>
-          )}
           <button
             onMouseDown={this.props.addTextEditor}
             onKeyDown={this.props.addTextEditor}
