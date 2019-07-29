@@ -71,7 +71,7 @@ const editorsReducer = (state = initialState, action) => {
       return { ...state, widgetForDeleteWidgetWarning: action.id, isDeleteWarningModalOpen: true };
     }
 
-    case ActionTypes.REMOVE_EDITOR:
+    case ActionTypes.REMOVE_WIDGET:
       stack.splice(stack.indexOf(action.id), 1);
       delete editors[action.id];
       return { ...state, editors: updateIndices(editors) };
@@ -85,7 +85,7 @@ const editorsReducer = (state = initialState, action) => {
         isFullScreenMode: !state.isFullScreenMode
       };
 
-    case ActionTypes.DUPLICATE_EDITOR: {
+    case ActionTypes.DUPLICATE_WIDGET: {
       const originalEditor = state.editors[action.originalEditorId];
       let newEditor;
       if (originalEditor.type === 'text') {
@@ -93,7 +93,7 @@ const editorsReducer = (state = initialState, action) => {
       } else {
         newEditor = JSON.parse(JSON.stringify(originalEditor)); // Quicker than spread.
       }
-      newEditor.id = action.duplicateEditorId;
+      newEditor.id = action.duplicateWidgetId;
       const editorIndex = state.editorIndex + 1;
       stack.push(newEditor.id);
       editors[newEditor.id] = newEditor;

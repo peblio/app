@@ -9,7 +9,7 @@ import DragSVG from '../../../../images/drag.svg';
 import Modal from '../../Modal/Modal.jsx';
 import DeleteWidgetWarning from '../../Modal/DeleteWidgetWarning/DeleteWidgetWarning.jsx';
 
-import { duplicateEditor, removeEditor,
+import { duplicateWidget, removeWidget,
   closeDeleteWidgetWarning, openDeleteWidgetWarning } from '../../../../action/editors.js';
 
 require('./widgetNav.scss');
@@ -17,9 +17,9 @@ require('./widgetNav.scss');
 class WidgetNav extends React.Component {
   constructor(props) {
     super(props);
-    this.removeEditor = () => { this.props.removeEditor(this.props.id); };
-    this.duplicateEditor = () => {
-      this.props.duplicateEditor(this.props.id);
+    this.removeWidget = () => { this.props.removeWidget(this.props.id); };
+    this.duplicateWidget = () => {
+      this.props.duplicateWidget(this.props.id);
     };
   }
 
@@ -37,7 +37,7 @@ class WidgetNav extends React.Component {
         <Tooltip content="Duplicate">
           <button
             className="widget__delete"
-            onClick={this.duplicateEditor.bind(this)}
+            onClick={this.duplicateWidget.bind(this)}
             data-test="widget__duplicate"
           >
             <CopySVG alt="duplicate widget" />
@@ -65,7 +65,7 @@ class WidgetNav extends React.Component {
           closeModal={this.closeDeleteWidgetWarning}
         >
           <DeleteWidgetWarning
-            deleteWidget={this.removeEditor.bind(this)}
+            deleteWidget={this.removeWidget.bind(this)}
             closeModal={this.closeDeleteWidgetWarning}
           />
         </Modal>
@@ -75,17 +75,17 @@ class WidgetNav extends React.Component {
 }
 
 WidgetNav.propTypes = {
-  duplicateEditor: PropTypes.func.isRequired,
+  duplicateWidget: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   showDeleteWidgetWarning: PropTypes.bool.isRequired,
-  removeEditor: PropTypes.func.isRequired,
+  removeWidget: PropTypes.func.isRequired,
   closeDeleteWidgetWarning: PropTypes.func.isRequired,
   openDeleteWidgetWarning: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  duplicateEditor,
-  removeEditor,
+  duplicateWidget,
+  removeWidget,
   closeDeleteWidgetWarning,
   openDeleteWidgetWarning
 }, dispatch);
