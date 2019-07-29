@@ -3,7 +3,7 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 import history from '../utils/history';
 
 import { loadPage, convertEditorsToRaw } from './page.js';
-import { loadEditors } from './editors.js';
+import { loadWidgets } from './editors.js';
 import { loadWorkspace } from './workspace.js';
 import { createNavigationContent } from './navigation.js';
 
@@ -27,7 +27,7 @@ export function loadPageVersion(id, versionId) {
     axios.get(`/pagesversion?id=${id}&version=${versionId}`)
       .then(({ data }) => {
         const pageData = data.data[0];
-        dispatch(loadEditors(pageData.editors, pageData.editorIndex));
+        dispatch(loadWidgets(pageData.editors, pageData.editorIndex));
         dispatch(loadPage(pageData.id, pageData.parentId, pageData.title, pageData.heading,
           pageData.description, pageData.layout, pageData.tags, pageData.isPublished));
         if (pageData.workspace) {
