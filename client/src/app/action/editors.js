@@ -13,11 +13,11 @@ export function setCurrentWidget(id) {
 }
 
 
-export function removeEditor(id) {
+export function removeWidget(id) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
     dispatch({
-      type: ActionTypes.REMOVE_EDITOR,
+      type: ActionTypes.REMOVE_WIDGET,
       id
     });
   };
@@ -41,20 +41,20 @@ export function openDeleteWidgetWarning(id) {
   };
 }
 
-export function duplicateEditor(id) {
+export function duplicateWidget(id) {
   return (dispatch, getState) => {
     const { editorsReducer } = getState();
-    const duplicateEditorId = `editor-${editorsReducer.editorIndex}`;
+    const duplicateWidgetId = `editor-${editorsReducer.editorIndex}`;
     dispatch(setUnsavedChanges(true));
     dispatch({
-      type: ActionTypes.DUPLICATE_EDITOR,
+      type: ActionTypes.DUPLICATE_WIDGET,
       originalEditorId: id,
-      duplicateEditorId
+      duplicateWidgetId
     });
   };
 }
 
-export function loadEditors(editors, editorIndex) {
+export function loadWidgets(editors, editorIndex) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_DB_EDITORS,
@@ -95,7 +95,7 @@ export function addCodeEditor(mode) {
       mode
     });
     dispatch({
-      type: ActionTypes.ADD_EDITOR,
+      type: ActionTypes.ADD_WIDGET,
       currentId,
       newEditorId
     });
@@ -235,7 +235,7 @@ export function addTextEditor() {
       type: ActionTypes.ADD_TEXT_EDITOR
     });
     dispatch({
-      type: ActionTypes.ADD_EDITOR,
+      type: ActionTypes.ADD_WIDGET,
       currentId,
       newEditorId
     });
@@ -286,7 +286,7 @@ export function addQuestionEditor() {
       type: ActionTypes.ADD_QUESTION_EDITOR
     });
     dispatch({
-      type: ActionTypes.ADD_EDITOR,
+      type: ActionTypes.ADD_WIDGET,
       currentId,
       newEditorId
     });
@@ -337,7 +337,7 @@ export function addIframe() {
       type: ActionTypes.ADD_IFRAME
     });
     dispatch({
-      type: ActionTypes.ADD_EDITOR,
+      type: ActionTypes.ADD_WIDGET,
       currentId,
       newEditorId
     });
@@ -366,7 +366,7 @@ export function addVideo() {
       type: ActionTypes.ADD_VIDEO
     });
     dispatch({
-      type: ActionTypes.ADD_EDITOR,
+      type: ActionTypes.ADD_WIDGET,
       currentId,
       newEditorId
     });
@@ -395,7 +395,7 @@ export function addImage() {
       type: ActionTypes.ADD_IMAGE
     });
     dispatch({
-      type: ActionTypes.ADD_EDITOR,
+      type: ActionTypes.ADD_WIDGET,
       currentId,
       newEditorId
     });
