@@ -3,7 +3,6 @@ import { configure, shallow } from 'enzyme';
 import { assert } from 'sinon';
 import { expect } from 'chai';
 import Adapter from 'enzyme-adapter-react-16';
-import configureMockStore from 'redux-mock-store';
 import * as dispatchFunction from '../../../../../../src/app/action/pageVersion';
 import { InsertToolbar } from '../../../../../../src/app/components/App/MainToolbar/InsertToolbar/InsertToolbar';
 
