@@ -2,7 +2,6 @@ import axios from '../utils/axios';
 import dynamicSort from '../utils/sort-function';
 import * as ActionTypes from '../constants/reduxConstants.js';
 import * as PageDefaults from '../constants/pageConstants.js';
-import history from '../utils/history';
 
 export function createNavigationContent(layout) {
   const navContent = [];

@@ -223,10 +223,6 @@ class App extends React.Component {
     return !(getForkPromptPreference === 'suppress');
   }
 
-  // loadNavigation = () => {
-  //   this.props.createNavigationContent(this.props.layout);
-  // }
-
   clearValuesAndCloseSignUpModal = () => {
     this.props.clearSignupSelectedValues();
     this.props.closeSignUpModal();
