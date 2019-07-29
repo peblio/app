@@ -1,4 +1,6 @@
 require('babel-register')({
-    plugins: ['babel-plugin-rewire']
-  })
-  require.extensions['.svg'] = () => null;
+  plugins: ['babel-plugin-rewire']
+});
+
+require.extensions['.svg'] = () => null;
+require.extensions['.scss'] = () => null;

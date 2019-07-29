@@ -14,9 +14,19 @@ import ToolbarLogo from '../../../images/logo.svg';
 import CheckSVG from '../../../images/check.svg';
 import PreferencesSVG from '../../../images/preferences.svg';
 
+import { savePageVersion } from '../../../action/pageVersion.js';
 import { createNavigationContent } from '../../../action/navigation.js';
-import { setPageTitle, togglePreviewMode, autoSaveUnsavedChanges, savePageSnapshot } from '../../../action/page.js';
+import {
+  convertEditorsToRaw,
+  setPageTitle,
+  togglePreviewMode,
+  autoSaveUnsavedChanges,
+  savePageSnapshot } from '../../../action/page.js';
 import * as mainToolbarActions from '../../../action/mainToolbar.js';
+
+export const ONE_SEC = 1000;
+export const TEN_SEC = 10 * ONE_SEC;
+export const TWO_MIN = 120 * ONE_SEC;
 
 require('./mainToolbar.scss');
 
@@ -25,19 +35,45 @@ class MainToolbar extends React.Component {
     this.autoSaveTimeout = setInterval(() => {
       if (
         this.props.name && this.props.canEdit && this.props.unsavedChanges &&
-        this.props.editorAutoSave && this.props.projectID()
+        this.props.editorAutoSave && this.props.projectID() && !this.props.isOldVersionShowing
       ) {
         this.props.autoSaveUnsavedChanges();
         this.props.createNavigationContent(this.props.layout);
         this.props.savePage();
       }
-    }, 10000);
+    }, TEN_SEC);
+    this.autoSavePageVersion = setInterval(() => {
+      if (
+        this.props.name && this.props.canEdit && !this.props.isPageVersionSaved &&
+        this.props.projectID() && !this.props.isOldVersionShowing
+      ) {
+        this.savePageVersion();
+      }
+    }, TWO_MIN);
     // window.addEventListener('beforeunload', this.saveSnapshot);
   }
 
   componentWillUnmount() {
     clearTimeout(this.autoSaveTimeout);
+    clearTimeout(this.autoSavePageVersion);
     // window.removeEventListener('beforeunload', this.saveSnapshot);
+  }
+
+  savePageVersion = () => {
+    this.props.savePageVersion(
+      this.props.parentId,
+      this.props.id,
+      this.props.title,
+      this.props.heading,
+      this.props.snapshotPath,
+      this.props.description,
+      this.props.editors,
+      this.props.editorIndex,
+      this.props.layout,
+      this.props.workspace,
+      this.props.isPublished,
+      this.props.tags,
+    );
   }
 
   saveSnapshotWithPage = () => {
@@ -202,6 +238,7 @@ class MainToolbar extends React.Component {
                   type="checkbox"
                   checked={this.props.preview}
                   data-test="main-toolbar__edit-mode-toggle"
+                  disabled={this.props.isOldVersionShowing}
                 />
                 <div className={`main-toolbar__slider ${this.props.preview}`}></div>
               </label>
@@ -254,12 +291,18 @@ class MainToolbar extends React.Component {
 }
 
 MainToolbar.propTypes = {
+  autoSaveUnsavedChanges: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
   createNavigationContent: PropTypes.func.isRequired,
+  editorAutoSave: PropTypes.bool.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isHelpDropdownOpen: PropTypes.bool.isRequired,
+  isPageVersionSaved: PropTypes.bool.isRequired,
   isPreferencesPanelOpen: PropTypes.bool.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
   preview: PropTypes.bool.isRequired,
@@ -272,12 +315,21 @@ MainToolbar.propTypes = {
   togglePreviewMode: PropTypes.func.isRequired,
   togglePreferencesPanel: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
-  autoSaveUnsavedChanges: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
-  editorAutoSave: PropTypes.bool.isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired
+
+  parentId: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  heading: PropTypes.string.isRequired,
+  snapshotPath: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  editors: PropTypes.shape({}).isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  editorIndex: PropTypes.number.isRequired,
+  workspace: PropTypes.shape({}).isRequired,
+  isPublished: PropTypes.bool.isRequired,
+  savePageVersion: PropTypes.func.isRequired,
+  isOldVersionShowing: PropTypes.bool.isRequired,
 };
 
 
@@ -286,6 +338,7 @@ function mapStateToProps(state) {
     canEdit: state.user.canEdit,
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isHelpDropdownOpen: state.mainToolbar.isHelpDropdownOpen,
+    isOldVersionShowing: state.pageVersion.isOldVersionShowing,
     isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,
     layout: state.page.layout,
     name: state.user.name,
@@ -294,6 +347,19 @@ function mapStateToProps(state) {
     unsavedChanges: state.page.unsavedChanges,
     editorAutoSave: state.preferences.editorAutoSave,
 
+    isPageVersionSaved: state.pageVersion.isPageVersionSaved,
+
+    parentId: state.page.parentId,
+    id: state.page.id,
+    title: state.page.pageTitle,
+    heading: state.page.pageHeading,
+    snapshotPath: '',
+    description: state.page.description,
+    editors: state.editorsReducer.editors,
+    editorIndex: state.editorsReducer.editorIndex,
+    workspace: state.workspace.workspace,
+    isPublished: state.page.isPublished,
+    tags: state.page.tags,
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -301,6 +367,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setPageTitle,
   togglePreviewMode,
   autoSaveUnsavedChanges,
+  convertEditorsToRaw,
+  savePageVersion,
   ...mainToolbarActions
 }, dispatch);
 

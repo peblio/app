@@ -5,7 +5,7 @@
   "main": "build/bundle.min.js",
   "scripts": {
     "start": "webpack-dev-server",
-    "test": "./node_modules/mocha/bin/mocha test/jestsetup.js test --recursive --require ignore-styles --require babel-register",
+    "test": "./node_modules/mocha/bin/mocha test/jestsetup.js test --require test/test-setup.js --recursive --require ignore-styles --require babel-register",
     "build": "NODE_ENV=development ENVIRONMENT=local webpack -p --config ./webpack.config.js --progress",
     "build:staging": "NODE_ENV=production ENVIRONMENT=staging webpack -p --config ./webpack.config.js --progress",
     "build:production": "NODE_ENV=production ENVIRONMENT=production webpack -p --config ./webpack.config.js --progress",

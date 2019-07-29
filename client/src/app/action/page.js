@@ -8,9 +8,35 @@ import history from '../utils/history';
 import { namespaceActionCreators } from '../utils/namespace-redux';
 import * as folderActions from './folders';
 import { viewForkPrompt } from './mainToolbar.js';
+import { loadEditors } from './editors.js';
+import { loadWorkspace } from './workspace.js';
+import { createNavigationContent } from './navigation.js';
+import { setUnsavedPageVersion } from './pageVersion.js';
+
+export function loadCurrentPage(projectID) {
+  return (dispatch) => {
+    axios.get(`/pages/${projectID}`)
+      .then((res) => {
+        dispatch(loadPage(res.data[0].id, res.data[0].parentId, res.data[0].title, res.data[0].heading,
+          res.data[0].description, res.data[0].layout, res.data[0].tags, res.data[0].isPublished));
+        dispatch(loadEditors(res.data[0].editors, res.data[0].editorIndex));
+        if (Object.keys(res.data[0].workspace).length > 0) {
+          dispatch(loadWorkspace(res.data[0].workspace));
+        }
+        dispatch(createNavigationContent(res.data[0].layout));
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response && err.response.status === 404) {
+          history.push('/404');
+        }
+      });
+  };
+}
 
 export function setUnsavedChanges(value) {
   return (dispatch) => {
+    dispatch(setUnsavedPageVersion());
     dispatch({
       type: ActionTypes.SET_UNSAVED_CHANGES,
       value
@@ -116,14 +142,16 @@ export function duplicatePage(title, heading, description, folder, editors, edit
   };
 }
 
-function convertEditorsToRaw(editors) {
+export function convertEditorsToRaw(editors) {
   const rawEditors = {};
   Object.keys(editors).forEach((id) => {
     if (editors[id].type === 'text') {
       const { editorState, ...rawEditor } = editors[id];
-      rawEditor.rawContentState = JSON.stringify(
-        convertToRaw(editorState.getCurrentContent())
-      );
+      if (editorState) {
+        rawEditor.rawContentState = JSON.stringify(
+          convertToRaw(editorState.getCurrentContent())
+        );
+      }
       rawEditors[id] = rawEditor;
     } else rawEditors[id] = editors[id];
   });
@@ -166,7 +194,6 @@ export function submitPage(parentId, title, heading, description, editors, edito
     });
   };
 }
-
 
 export function savePageSnapshot(id, firstSave) {
   const canvasElement = document.getElementById('content-canvas');

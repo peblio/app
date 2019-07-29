@@ -7,9 +7,11 @@ import { pageSchema } from '../schema.js';
 import { convertPixelHeightToGridHeight } from '../utils/pixel-to-grid';
 import { namespaceReducer } from '../utils/namespace-redux';
 import foldersReducer, { initialState as foldersInitialState } from './folders';
+import { initialState as pageVersionState } from './pageVersion';
 
 const initialState = {
   ...foldersInitialState,
+  ...pageVersionState,
   id: '',
   parentId: '',
   rgl: {
