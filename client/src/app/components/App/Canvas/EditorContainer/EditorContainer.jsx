@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 
 import EditorToolbar from '../../Shared/EditorComponents/EditorToolbar/EditorToolbar.jsx';
 import * as editorActions from '../../../../action/editors.js';
+import { setYPosition } from '../../../../action/navigation.js';
 import SplitEditorContainer from './EditorViews/SplitEditorContainer.jsx';
 import TabbedEditorContainer from './EditorViews/TabbedEditorContainer.jsx';
 
@@ -81,6 +82,7 @@ class EditorContainer extends React.Component {
             playCode={this.playCode}
             setCurrentFile={this.setCurrentFile}
             setEditorView={this.setEditorView}
+            setYPosition={this.props.setYPosition}
             startCodeRefresh={this.startCodeRefresh}
             stopCode={this.stopCode}
             toggleConsole={this.toggleConsole}
@@ -162,6 +164,7 @@ EditorContainer.propTypes = {
   setCurrentFile: PropTypes.func.isRequired,
   setEditorView: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
+  setYPosition: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
@@ -178,7 +181,8 @@ function mapStateToProps(state) {
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
-  ...editorActions
+  ...editorActions,
+  setYPosition
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditorContainer);
