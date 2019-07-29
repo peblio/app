@@ -8,7 +8,7 @@ import history from '../utils/history';
 import { namespaceActionCreators } from '../utils/namespace-redux';
 import * as folderActions from './folders';
 import { viewForkPrompt } from './mainToolbar.js';
-import { loadEditors } from './editors.js';
+import { loadWidgets } from './editors.js';
 import { loadWorkspace } from './workspace.js';
 import { createNavigationContent } from './navigation.js';
 import { setUnsavedPageVersion } from './pageVersion.js';
@@ -19,7 +19,7 @@ export function loadCurrentPage(projectID) {
       .then((res) => {
         dispatch(loadPage(res.data[0].id, res.data[0].parentId, res.data[0].title, res.data[0].heading,
           res.data[0].description, res.data[0].layout, res.data[0].tags, res.data[0].isPublished));
-        dispatch(loadEditors(res.data[0].editors, res.data[0].editorIndex));
+        dispatch(loadWidgets(res.data[0].editors, res.data[0].editorIndex));
         if (Object.keys(res.data[0].workspace).length > 0) {
           dispatch(loadWorkspace(res.data[0].workspace));
         }
