@@ -101,7 +101,6 @@ class InsertToolbar extends React.Component {
 }
 
 InsertToolbar.propTypes = {
-  addCodeEditor: PropTypes.func.isRequired,
   addIframe: PropTypes.func.isRequired,
   addImage: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
@@ -110,7 +109,6 @@ InsertToolbar.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  addCodeEditor,
   addIframe,
   addImage,
   addTextEditor,
