@@ -363,6 +363,18 @@ class Canvas extends React.Component {
             </div>
           ))}
         </ReactGridLayout>
+        <p className="canvas__powered-by">
+          Powered by
+          {' '}
+          <a
+            className="canvas__powered-by-link"
+            href="https://www.peblio.co/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Peblio
+          </a>
+        </p>
       </section>
     );
   }

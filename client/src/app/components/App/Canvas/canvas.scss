@@ -23,12 +23,20 @@
   }
 }
 
+.canvas__powered-by {
+  color: $g4;
+  margin-top: 5rem;
+  &-link {
+    color: $green;
+    text-decoration: none;
+  }
+}
 
 .canvas{
   background-color: $whitish;
   width: $total-width;
   min-height:80vh;
-  padding: $canvas-padding;
+  padding: 0 $canvas-padding;
   padding-top: $canvas-padding/2;
   margin: 0 auto;
   margin-top: 20px;
