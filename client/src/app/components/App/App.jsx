@@ -23,7 +23,6 @@ import LiveRefreshPage from './Modal/LiveRefreshPage/LiveRefreshPage.jsx';
 import Canvas from './Canvas/Canvas.jsx';
 import MainToolbar from './MainToolbar/MainToolbar.jsx';
 import Navigation from './Navigation/Navigation.jsx';
-import Workspace from './Workspace/Workspace.jsx';
 
 import * as editorActions from '../../action/editors.js';
 import * as mainToolbarActions from '../../action/mainToolbar.js';
@@ -31,7 +30,6 @@ import * as navigationActions from '../../action/navigation.js';
 import * as pageActions from '../../action/page.js';
 import * as preferencesActions from '../../action/preferences.js';
 import * as userActions from '../../action/user.js';
-import { loadWorkspace } from '../../action/workspace.js';
 
 import axios from '../../utils/axios';
 import { saveLog } from '../../utils/log';
@@ -259,9 +257,6 @@ class App extends React.Component {
         this.props.loadPage(res.data[0].id, res.data[0].parentId, res.data[0].title, res.data[0].heading,
           res.data[0].description, res.data[0].layout, res.data[0].tags, res.data[0].isPublished);
         this.props.loadEditors(res.data[0].editors, res.data[0].editorIndex);
-        if (Object.keys(res.data[0].workspace).length > 0) {
-          this.props.loadWorkspace(res.data[0].workspace);
-        }
         this.props.setPreviewMode(true);
         this.loadNavigation();
         axios.get(`/authenticate/${projectID}`)
@@ -417,7 +412,6 @@ class App extends React.Component {
           </Modal>
         )}
         <Navigation />
-        <Workspace />
       </div>
     );
   }
@@ -465,7 +459,6 @@ App.propTypes = {
   closeExamplesModal: PropTypes.func.isRequired,
 
   loadEditors: PropTypes.func.isRequired,
-  loadWorkspace: PropTypes.func.isRequired,
 
   setPreviewMode: PropTypes.func.isRequired,
   submitPage: PropTypes.func.isRequired,
@@ -557,8 +550,7 @@ function mapDispatchToProps(dispatch) {
     ...navigationActions,
     ...pageActions,
     ...preferencesActions,
-    ...userActions,
-    loadWorkspace
+    ...userActions
   }, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);

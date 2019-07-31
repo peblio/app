@@ -81,15 +81,6 @@ export function setInnerWidth(value) {
   };
 }
 
-export function loadWorkspace(workspace) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.LOAD_WORKSPACE,
-      workspace
-    });
-  };
-}
-
 export function toggleWorkspace() {
   return (dispatch) => {
     dispatch({

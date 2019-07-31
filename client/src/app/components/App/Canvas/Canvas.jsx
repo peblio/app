@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import VisibilitySensor from 'react-visibility-sensor';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import EditorContainer from './EditorContainer/EditorContainer.jsx';
 import Heading from './Heading/Heading.jsx';
 import Tags from './Tags/Tags.jsx';
 import Questions from './Question/Question.jsx';
@@ -119,30 +118,6 @@ class Canvas extends React.Component {
     if (!this.state.didResizeGridItems.has(id) || newHeight > gridItem.h) {
       this.props.resizeTextEditor(id, height);
     }
-  }
-
-  renderCodeEditor(editor) {
-    return (
-      <VisibilitySensor
-        partialVisibility
-      >
-        {({ isVisible }) => (
-          <EditorContainer
-            id={editor.id}
-            currentFile={editor.currentFile}
-            code={editor.code}
-            consoleOutputText={editor.consoleOutputText}
-            editorMode={editor.editorMode}
-            files={editor.files}
-            innerWidth={editor.innerWidth}
-            isPlaying={editor.isPlaying && isVisible}
-            isRefreshing={editor.isRefreshing}
-            isWidgetFullScreenMode={editor.isWidgetFullScreenMode}
-            editorView={editor.editorView}
-          />
-        )}
-      </VisibilitySensor>
-    );
   }
 
   renderTextEditor(editor) {
@@ -402,7 +377,6 @@ class Canvas extends React.Component {
                 )}
                 {(() => {
                   switch (this.props.editors[id].type) {
-                    case 'code': return this.renderCodeEditor(this.props.editors[id]);
                     case 'question': return this.renderQuestion(this.props.editors[id]);
                     case 'iframe': return this.renderIframe(this.props.editors[id]);
                     case 'video': return this.renderVideo(this.props.editors[id]);
