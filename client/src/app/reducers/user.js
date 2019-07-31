@@ -10,9 +10,10 @@ const initialState = {
   requiresGuardianConsent: false,
   guardianConsentedAt: '',
   guardianEmail: null,
+  isAdmin: false,
   isBrowsingPebl: false,
   studentBirthday: null,
-  nextScreen: null
+  nextScreen: null,
 };
 
 const user = (state = initialState, action) => {
@@ -31,7 +32,8 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         name: action.data.name,
-        type: action.data.type
+        type: action.data.type,
+        isAdmin: action.data.isAdmin
       };
     }
 

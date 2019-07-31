@@ -5,11 +5,13 @@ const currentUserRoutes = express.Router();
 function getCurrentUser(req, res) {
   let name = null;
   let type = null;
+  let isAdmin = null;
   if (req.user) {
     name = req.user.name;
     type = req.user.type;
+    isAdmin = req.user.isAdmin;
   }
-  res.send({ name, type });
+  res.send({ name, type, isAdmin });
 }
 
 async function updateCurrentUserProfile(req, res) {

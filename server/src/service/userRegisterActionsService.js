@@ -31,6 +31,7 @@ export function createUser(req, res) {
     const guardianEmail = req.body.guardianEmail;
     const studentBirthday = req.body.studentBirthday;
     const guardianConsentedAt = (requiresGuardianConsent === true) ? new Date() : '';
+    const isAdmin = false;
     const isVerified = (type === 'student');
     return User.findOne({ name }, (userFindViaNameError, userByName) => {
         if (userFindViaNameError) {
@@ -53,6 +54,7 @@ export function createUser(req, res) {
             requiresGuardianConsent,
             guardianEmail,
             guardianConsentedAt,
+            isAdmin,
             isVerified,
             studentBirthday
         });

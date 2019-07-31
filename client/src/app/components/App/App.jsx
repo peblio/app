@@ -522,6 +522,7 @@ function mapStateToProps(state) {
     canEdit: state.user.canEdit,
     name: state.user.name,
     userType: state.user.type,
+    isAdmin: state.user.isAdmin,
     isBrowsingPebl: state.user.isBrowsingPebl,
 
     isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,

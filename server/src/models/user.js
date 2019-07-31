@@ -38,6 +38,7 @@ const userSchema = new Schema({
     sparse: true,
     required() { return this.loginType === 'password'; },
   },
+  isAdmin: { type: Boolean, default: false },
   isVerified: { type: Boolean, default: false },
   requiresGuardianConsent: { type: Boolean, default: false },
   guardianEmail: {
