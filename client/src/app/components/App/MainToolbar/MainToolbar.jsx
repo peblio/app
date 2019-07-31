@@ -97,14 +97,11 @@ class MainToolbar extends React.Component {
       <div className="main-toolbar__container">
         <div className="main-toolbar">
           <div className="main-toolbar__div-left">
-            <a
+            <div
               className="logo_toolbar"
-              href="https://www.peblio.co/"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               <ToolbarLogo alt="logo in toolbar" />
-            </a>
+            </div>
             <div
               className="file-modal__container"
               role="presentation"
