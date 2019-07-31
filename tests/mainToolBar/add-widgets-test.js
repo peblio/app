@@ -22,41 +22,6 @@ fixture('Adding widgets to a Pebl')
     await t.eval(() => window.location.reload(true));
   });
 
-test('adding an HTML editor widget', async (t) => {
-  await t
-    .click(Selector('[data-test=add-code-editor]'))
-    .click(Selector('[data-test=add-html-editor]'))
-    .expect(Selector('[data-test=code-editor-html]').exists).ok();
-});
-
-test('adding an HTML/CSS/JS editor widget', async (t) => {
-  await t
-    .click(Selector('[data-test=add-code-editor]'))
-    .click(Selector('[data-test=add-webdev-editor]'))
-    .expect(Selector('[data-test=code-editor-webdev]').exists).ok();
-});
-
-test('adding a p5 editor widget', async (t) => {
-  await t
-    .click(Selector('[data-test=add-code-editor]'))
-    .click(Selector('[data-test=add-p5-editor]'))
-    .expect(Selector('[data-test=code-editor-p5]').exists).ok();
-});
-
-test('adding a processing editor widget', async (t) => {
-  await t
-    .click(Selector('[data-test=add-code-editor]'))
-    .click(Selector('[data-test=add-processing-editor]'))
-    .expect(Selector('[data-test=code-editor-processing]').exists).ok();
-});
-
-test('adding a python editor widget', async (t) => {
-  await t
-    .click(Selector('[data-test=add-code-editor]'))
-    .click(Selector('[data-test=add-python-editor]'))
-    .expect(Selector('[data-test=code-editor-python]').exists).ok();
-});
-
 test('adding an image widget', async (t) => {
   await t
     .click(Selector('[data-test=insert-toolbar__add-image]'))
