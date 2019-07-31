@@ -10,6 +10,7 @@ import Image from './Image/Image.jsx';
 import TextEditor from './TextEditor/TextEditor.jsx';
 import WidgetNav from './WidgetNav/WidgetNav.jsx';
 import { convertPixelHeightToGridHeight } from '../../../utils/pixel-to-grid.js';
+import { COLORFULL_LOGO } from '../../../constants/pageConstants.js';
 import {
   changePageLayout,
   resizeTextEditor,
@@ -291,6 +292,13 @@ class Canvas extends React.Component {
           ${this.props.isNavigationOpen ? 'canvas-right' : ''}`
         }
       >
+        <div className='canvas__logo'>
+          <img
+            alt='colorfull media logo'
+            className='canvas__logo-img'
+            src={COLORFULL_LOGO}
+          />
+        </div>
         <Heading />
         <ReactGridLayout
           className={`react-grid-layout ${this.props.isFullScreenMode ? 'react-grid__fullscreen' : ''}`}

@@ -41,6 +41,13 @@
   &__add-desc-button {
     @extend %peblio-button;
   }
+  &__logo {
+    width: 10%;
+    margin-left: 90%;
+  }
+  &__logo-img {
+    width: 100%;
+  }
 }
 
 .canvas::after{

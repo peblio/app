@@ -1,5 +1,6 @@
 import * as Code from './codeConstants.js';
 
+export const COLORFULL_LOGO = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1017836/ColorFULL.png';
 export const DEFAULT_PAGE_TITLE = 'Untitled';
 export const Y_NAVIGATION_OFFSET = 150;
 export const DEFAULT_WORKSPACE_MODE = {
