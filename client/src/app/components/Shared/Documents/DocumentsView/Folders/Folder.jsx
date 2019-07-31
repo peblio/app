@@ -134,11 +134,6 @@ class Folder extends Component {
           {moment(folder.updatedAt).format('DD/MMM/YYYY')}
         </h3>
         <div className="profile-folders__info">
-          <p className="profile-folders__sub-info">
-            {folder.files && folder.files.length}
-            {' '}
-            files
-          </p>
           {this.props.container === 'dashboard' && (
             <div className="profile-folders__sub-info">
               <button

@@ -40,7 +40,7 @@ class MainToolbar extends React.Component {
 
   saveSnapshotWithPage = () => {
     this.props.savePage();
-    this.saveSnapshot();
+    // this.saveSnapshot();
   }
 
   saveSnapshot = () => {

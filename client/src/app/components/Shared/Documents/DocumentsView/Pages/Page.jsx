@@ -110,12 +110,6 @@ class Page extends Component {
               {page.userName}
             </p>
           </a>
-
-          <img
-            src={page.snapshotPath ? page.snapshotPath : SNAPSHOT_DEFAULT_IMG}
-            className="profile-pebl__image"
-            alt="snapshot of the pebl"
-          />
           <h1
             className="profile-pebl__title"
           >
