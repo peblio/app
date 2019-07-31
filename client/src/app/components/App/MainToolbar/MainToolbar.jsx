@@ -8,11 +8,9 @@ import { bindActionCreators } from 'redux';
 import UserAccount from '../../Shared/UserAccount/UserAccount.jsx';
 import FileMenu from './FileMenu/FileMenu.jsx';
 import HelpMenu from './HelpMenu/HelpMenu.jsx';
-import Preferences from '../Preferences/Preferences.jsx';
 import InsertToolbar from './InsertToolbar/InsertToolbar.jsx';
 import ToolbarLogo from '../../../images/logo.svg';
 import CheckSVG from '../../../images/check.svg';
-import PreferencesSVG from '../../../images/preferences.svg';
 
 import { createNavigationContent } from '../../../action/navigation.js';
 import { setPageTitle, togglePreviewMode, autoSaveUnsavedChanges, savePageSnapshot } from '../../../action/page.js';
@@ -61,9 +59,6 @@ class MainToolbar extends React.Component {
   }
 
   render() {
-    const prefButtonClassName = classNames('main-toolbar__pref', {
-      'main-toolbar__pref--open': this.props.isPreferencesPanelOpen
-    });
     let saveButtonText = 'Remix';
     if (this.props.name) { // user is logged in
       if (this.props.canEdit) { // it is users sketch
@@ -221,22 +216,6 @@ class MainToolbar extends React.Component {
               Share
               </button>
               <div className="main-toolbar__spacer"></div>
-              <div className="main-toolbar__pref-container">
-                <Tooltip content="Settings">
-                  <button
-                    className="main-toolbar__button "
-                    onMouseDown={this.props.togglePreferencesPanel}
-                    data-test="main-toolbar__preferences-button"
-                  >
-                    <PreferencesSVG
-                      className={classNames(prefButtonClassName)}
-                      alt="open preferences"
-                    />
-                  </button>
-                </Tooltip>
-                {this.props.isPreferencesPanelOpen && <Preferences />}
-              </div>
-              <div className="main-toolbar__spacer"></div>
               <UserAccount
                 container='app'
                 location={this.props.location}
@@ -258,7 +237,6 @@ MainToolbar.propTypes = {
   createNavigationContent: PropTypes.func.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
   isHelpDropdownOpen: PropTypes.bool.isRequired,
-  isPreferencesPanelOpen: PropTypes.bool.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   name: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
@@ -270,7 +248,6 @@ MainToolbar.propTypes = {
   toggleHelpDropdown: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
   togglePreviewMode: PropTypes.func.isRequired,
-  togglePreferencesPanel: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   autoSaveUnsavedChanges: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
@@ -286,13 +263,11 @@ function mapStateToProps(state) {
     canEdit: state.user.canEdit,
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isHelpDropdownOpen: state.mainToolbar.isHelpDropdownOpen,
-    isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,
     layout: state.page.layout,
     name: state.user.name,
     pageTitle: state.page.pageTitle,
     preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,
-    editorAutoSave: state.preferences.editorAutoSave,
 
   };
 }
