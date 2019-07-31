@@ -123,7 +123,6 @@ render() {
       <div className="dashboard-nav__lower-container dashboard-nav__top-nav">
         <ul className="dashboard-nav__list">
           {this.renderListItem('Documents', 'documents')}
-          {this.renderListItem('Account', 'account')}
           {this.renderListItem('Trash', 'trash')}
         </ul>
         {(this.props.dashboardView === 'documents' || this.props.dashboardView === 'trash') && (
