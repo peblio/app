@@ -112,11 +112,7 @@ class App extends React.Component {
     } else if (this.projectID()) {
       this.getPage();
     }
-    this.props.fetchCurrentUser()
-      .then(() => {
-        this.props.fetchUserPreferences();
-        this.props.fetchAllPages();
-      });
+    this.props.fetchCurrentUser();
   }
 
   authLoadedPage = () => {
@@ -490,11 +486,6 @@ App.propTypes = {
   isLiveRefreshPageModalOpen: PropTypes.bool.isRequired,
   closeForkPrompt: PropTypes.func.isRequired,
   closeAddDescriptionModal: PropTypes.func.isRequired,
-
-  // preferences
-  fetchUserPreferences: PropTypes.func.isRequired,
-
-  fetchAllPages: PropTypes.func.isRequired,
 
   // navigation
   pageHeading: PropTypes.string.isRequired,
