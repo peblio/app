@@ -117,7 +117,6 @@ class App extends React.Component {
     this.props.fetchCurrentUser()
       .then(() => {
         this.props.fetchUserPreferences();
-        this.props.fetchAllPages();
       });
   }
 
@@ -481,8 +480,6 @@ App.propTypes = {
 
   // preferences
   fetchUserPreferences: PropTypes.func.isRequired,
-
-  fetchAllPages: PropTypes.func.isRequired,
   loadCurrentPage: PropTypes.func.isRequired,
 
   // navigation
