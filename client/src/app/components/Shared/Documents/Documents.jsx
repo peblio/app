@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import DocumentsView from './DocumentsView/DocumentsView';
+import history from '../../../utils/history';
 
 import './documents.scss';
 
@@ -20,6 +21,10 @@ class Documents extends React.Component {
           }
         })
         .catch((err) => {
+          console.log(err);
+          if (err.response.status === 404) {
+            history.push('/404');
+          }
         });
     }
   }
@@ -33,6 +38,9 @@ class Documents extends React.Component {
           }
         })
         .catch((err) => {
+          if (err.response.status === 404) {
+            history.push('/404');
+          }
         });
     }
     if (this.containerEl && this.props.selectedFolderIds.length >= 2) {

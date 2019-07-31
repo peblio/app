@@ -123,7 +123,9 @@ class UserAccount extends React.Component {
                     </p>
                   </li>
                   {this.props.container === 'app' || this.renderListItem('workspace', '/') }
-                  {this.props.container === 'dashboard' || this.renderListItem('dashboard', '/dashboard') }
+                  {this.props.container === 'dashboard' ||
+                    (this.props.isAdmin && this.renderListItem('dashboard', '/dashboard'))
+                  }
                   <li className="user-account__list-item">
                     <button
                       className="user-account__link"
@@ -186,6 +188,7 @@ UserAccount.propTypes = {
   container: PropTypes.string.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
   isAccountDropdownOpen: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   isLoginModalOpen: PropTypes.bool.isRequired,
   isSignUpModalOpen: PropTypes.bool.isRequired,
   location: PropTypes.shape({
@@ -203,11 +206,12 @@ UserAccount.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    isAdmin: state.user.isAdmin,
     isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
-    name: state.user.name,
-    userType: state.user.type,
     isLoginModalOpen: state.mainToolbar.isLoginModalOpen,
     isSignUpModalOpen: state.mainToolbar.isSignUpModalOpen,
+    name: state.user.name,
+    userType: state.user.type,
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
