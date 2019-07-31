@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import EditorSVG from '../../../../images/editor.svg';
 import EmbedSVG from '../../../../images/embed.svg';
 import ImageSVG from '../../../../images/image.svg';
 import QuestionSVG from '../../../../images/question.svg';

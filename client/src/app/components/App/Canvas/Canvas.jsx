@@ -363,14 +363,12 @@ class Canvas extends React.Component {
 Canvas.propTypes = {
   currentWidget: PropTypes.string.isRequired,
   changePageLayout: PropTypes.func.isRequired,
-  description: PropTypes.string.isRequired,
   editorIndex: PropTypes.number.isRequired,
   widgetForDeleteWidgetWarning: PropTypes.string.isRequired,
   editors: PropTypes.shape({}).isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
   isFullScreenMode: PropTypes.bool.isRequired,
   isNavigationOpen: PropTypes.bool.isRequired,
-  isPeblPublished: PropTypes.bool.isRequired,
   isDeleteWarningModalOpen: PropTypes.bool.isRequired,
   preview: PropTypes.bool.isRequired,
   resizeTextEditor: PropTypes.func.isRequired,
@@ -385,26 +383,22 @@ Canvas.propTypes = {
   setPageLayout: PropTypes.func.isRequired,
   textHeights: PropTypes.shape({}).isRequired,
   updateTextHeight: PropTypes.func.isRequired,
-  userType: PropTypes.string.isRequired,
   yPosition: PropTypes.number.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     currentWidget: state.editorsReducer.currentWidget,
-    description: state.page.description,
     editorIndex: state.editorsReducer.editorIndex,
     isDeleteWarningModalOpen: state.editorsReducer.isDeleteWarningModalOpen,
     widgetForDeleteWidgetWarning: state.editorsReducer.widgetForDeleteWidgetWarning,
     editors: state.editorsReducer.editors,
     isFullScreenMode: state.editorsReducer.isFullScreenMode,
     isNavigationOpen: state.navigation.isNavigationOpen,
-    isPeblPublished: state.page.isPublished,
     layout: state.page.layout,
     preview: state.page.preview,
     rgl: state.page.rgl,
     textHeights: state.page.textHeights,
-    userType: state.user.type,
     yPosition: state.navigation.yPosition
   };
 }
