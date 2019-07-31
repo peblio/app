@@ -25,7 +25,13 @@
 
 .canvas__powered-by {
   color: $g4;
-  margin-top: 5rem;
+  margin-top: $large-margin;
+  width: $total-width;
+  margin: $large-margin auto;
+  &-right {
+    margin-left: $navigation-width !important;
+    padding-left: 100px;
+  }
   &-link {
     color: $green;
     text-decoration: none;
@@ -36,8 +42,7 @@
   background-color: $whitish;
   width: $total-width;
   min-height:80vh;
-  padding: 0 $canvas-padding;
-  padding-top: $canvas-padding/2;
+  padding: $canvas-padding/2 $canvas-padding;
   margin: 0 auto;
   margin-top: 20px;
   height: fit-content;
@@ -62,7 +67,7 @@
   content: '';
   position: absolute;
   width: 100%;
-  height: 200px;
+  height: 100px;
   z-index: -1;
   right: 0;
 }

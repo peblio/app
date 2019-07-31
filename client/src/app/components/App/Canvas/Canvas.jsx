@@ -284,86 +284,95 @@ class Canvas extends React.Component {
       }
     });
     return (
-      <section
-        id="content-canvas"
-        className={
-          `canvas
+      <div
+        className="canvas__complete"
+      >
+        <section
+          id="content-canvas"
+          className={
+            `canvas
           ${this.props.preview ? 'canvas-preview-mode' : 'canvas-edit-mode'}
           ${this.props.isNavigationOpen ? 'canvas-right' : ''}`
-        }
-      >
-        <div className='canvas__logo'>
-          <img
-            alt='colorfull media logo'
-            className='canvas__logo-img'
-            src={COLORFULL_LOGO}
-          />
-        </div>
-        <Heading />
-        <ReactGridLayout
-          className={`react-grid-layout ${this.props.isFullScreenMode ? 'react-grid__fullscreen' : ''}`}
-          cols={this.props.rgl.cols}
-          width={this.props.rgl.width}
-          rowHeight={this.props.rgl.rowHeight}
-          layout={localLayout}
-          onLayoutChange={this.props.setPageLayout}
-          onDragStop={this.props.changePageLayout}
-          compactType="vertical"
-          margin={this.props.rgl.margin}
-          draggableHandle=".widget__drag"
-          containerPadding={this.props.rgl.padding}
-          onResizeStart={this.handleGridItemResizeStart}
-          onResize={this.handleGridItemResize}
-          onResizeStop={(gridItems) => {
-            this.props.changePageLayout(gridItems);
-            this.handleGridItemResizeStop(gridItems);
           }
-          }
-          autoSize
         >
-          {ids.map(id => (
-            <div
-              key={id}
-              data-grid={localLayout[id]}
-              className={`
+          <div className='canvas__logo'>
+            <img
+              alt='colorfull media logo'
+              className='canvas__logo-img'
+              src={COLORFULL_LOGO}
+            />
+          </div>
+          <Heading />
+          <ReactGridLayout
+            className={`react-grid-layout ${this.props.isFullScreenMode ? 'react-grid__fullscreen' : ''}`}
+            cols={this.props.rgl.cols}
+            width={this.props.rgl.width}
+            rowHeight={this.props.rgl.rowHeight}
+            layout={localLayout}
+            onLayoutChange={this.props.setPageLayout}
+            onDragStop={this.props.changePageLayout}
+            compactType="vertical"
+            margin={this.props.rgl.margin}
+            draggableHandle=".widget__drag"
+            containerPadding={this.props.rgl.padding}
+            onResizeStart={this.handleGridItemResizeStart}
+            onResize={this.handleGridItemResize}
+            onResizeStop={(gridItems) => {
+              this.props.changePageLayout(gridItems);
+              this.handleGridItemResizeStop(gridItems);
+            }
+            }
+            autoSize
+          >
+            {ids.map(id => (
+              <div
+                key={id}
+                data-grid={localLayout[id]}
+                className={`
                 ${this.props.editors[id].isWidgetFullScreenMode ? 'editor__fullscreen' : 'editor__non-fullscreen'}
                 ${this.props.currentWidget === id ? 'canvas-high' : ''}`
-              }
-            >
-              <div
-                className={`widget__container
-                  ${this.props.editors[id].type === 'text'
-              ? 'no-outline'
-              : 'element__iframe-container'}
-                `}
-                id={id}
-                tabIndex="0" // eslint-disable-line
-                onFocus={() => this.props.setCurrentWidget(id)}
+                }
               >
-                {(this.props.preview) || (
-                  <div className={`widget-nav__container${(this.props.currentWidget === id) ? '_highlighted' : ''}`}>
-                    <WidgetNav
-                      id={id}
-                      showDeleteWidgetWarning={this.props.isDeleteWarningModalOpen &&
+                <div
+                  className={`widget__container
+                  ${this.props.editors[id].type === 'text'
+                ? 'no-outline'
+                : 'element__iframe-container'}
+                `}
+                  id={id}
+                tabIndex="0" // eslint-disable-line
+                  onFocus={() => this.props.setCurrentWidget(id)}
+                >
+                  {(this.props.preview) || (
+                    <div className={`widget-nav__container${(this.props.currentWidget === id) ? '_highlighted' : ''}`}>
+                      <WidgetNav
+                        id={id}
+                        showDeleteWidgetWarning={this.props.isDeleteWarningModalOpen &&
                         this.props.widgetForDeleteWidgetWarning === id}
-                    />
-                  </div>
-                )}
-                {(() => {
-                  switch (this.props.editors[id].type) {
-                    case 'question': return this.renderQuestion(this.props.editors[id]);
-                    case 'iframe': return this.renderIframe(this.props.editors[id]);
-                    case 'video': return this.renderVideo(this.props.editors[id]);
-                    case 'image': return this.renderImage(this.props.editors[id]);
-                    case 'text': return this.renderTextEditor(this.props.editors[id]);
-                    default: return null;
-                  }
-                })()}
+                      />
+                    </div>
+                  )}
+                  {(() => {
+                    switch (this.props.editors[id].type) {
+                      case 'question': return this.renderQuestion(this.props.editors[id]);
+                      case 'iframe': return this.renderIframe(this.props.editors[id]);
+                      case 'video': return this.renderVideo(this.props.editors[id]);
+                      case 'image': return this.renderImage(this.props.editors[id]);
+                      case 'text': return this.renderTextEditor(this.props.editors[id]);
+                      default: return null;
+                    }
+                  })()}
+                </div>
               </div>
-            </div>
-          ))}
-        </ReactGridLayout>
-        <p className="canvas__powered-by">
+            ))}
+          </ReactGridLayout>
+        </section>
+        <p
+          className={
+            `canvas__powered-by
+            ${this.props.isNavigationOpen ? 'canvas__powered-by-right' : ''}`
+          }
+        >
           Powered by
           {' '}
           <a
@@ -375,7 +384,8 @@ class Canvas extends React.Component {
             Peblio
           </a>
         </p>
-      </section>
+      </div>
+
     );
   }
 }
