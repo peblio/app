@@ -4,7 +4,6 @@ import VisibilitySensor from 'react-visibility-sensor';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Heading from './Heading/Heading.jsx';
-import Tags from './Tags/Tags.jsx';
 import Questions from './Question/Question.jsx';
 import Iframe from './Iframe/Iframe.jsx';
 import Image from './Image/Image.jsx';
@@ -17,9 +16,6 @@ import {
   setPageLayout,
   updateTextHeight
 } from '../../../action/page.js';
-import {
-  viewAddDescriptionModal
-} from '../../../action/mainToolbar.js';
 
 import { setCurrentWidget } from '../../../action/editors.js';
 
@@ -50,7 +46,6 @@ class Canvas extends React.Component {
       window.scrollTo(0, this.props.yPosition);
     }
   }
-
 
   componentWillUnmount() {
     if (this.timeout) {
@@ -194,15 +189,6 @@ class Canvas extends React.Component {
     );
   }
 
-  renderDescriptionButton() {
-    if (this.props.description && this.props.isPeblPublished) {
-      return 'Edit Description';
-    } if (this.props.userType === 'student') {
-      return 'Publish';
-    }
-    return 'Add Description';
-  }
-
   render() {
     const ids = Object.keys(this.props.editors);
     // need to create copy of the layout because ReactGridLayout tests
@@ -305,26 +291,6 @@ class Canvas extends React.Component {
           ${this.props.isNavigationOpen ? 'canvas-right' : ''}`
         }
       >
-        {
-          <div
-            className="canvas__tag-container"
-          >
-            <Tags
-              preview={this.props.preview}
-              container="canvas"
-            />
-            {!this.props.preview && (
-              <button
-                className="canvas__add-desc-button"
-                onClick={() => {
-                  this.props.viewAddDescriptionModal();
-                }}
-              >
-                {this.renderDescriptionButton()}
-              </button>
-            )}
-          </div>
-        }
         <Heading />
         <ReactGridLayout
           className={`react-grid-layout ${this.props.isFullScreenMode ? 'react-grid__fullscreen' : ''}`}
@@ -420,7 +386,6 @@ Canvas.propTypes = {
   textHeights: PropTypes.shape({}).isRequired,
   updateTextHeight: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired,
-  viewAddDescriptionModal: PropTypes.func.isRequired,
   yPosition: PropTypes.number.isRequired,
 };
 
@@ -449,7 +414,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setPageLayout,
   setCurrentWidget,
   updateTextHeight,
-  viewAddDescriptionModal
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Canvas);
