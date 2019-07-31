@@ -30,12 +30,6 @@ class Nav extends React.Component {
     this.titleSearch = {};
   }
 
-  componentWillMount() {
-    if (window.location.pathname.includes('profile')) {
-      this.props.setDashboardView('profile');
-    }
-  }
-
   renderListItem=(displayText, viewName) => {
     const isCurrentDashboardView = this.props.dashboardView === viewName;
     return (
@@ -125,33 +119,20 @@ render() {
   });
   return (
     <div className={classNames(navClass)}>
-      {this.props.container !== 'profile' &&
-      (
-        <div className="dashboard-nav__lower-container dashboard-nav__top-nav">
-          <ul className="dashboard-nav__list">
-            {this.renderListItem('Documents', 'documents')}
-            {this.renderListItem('Account', 'account')}
-            {this.renderListItem('Trash', 'trash')}
-            {this.props.userType === 'student' || this.renderListItem('Profile', 'profile')}
-          </ul>
-          {(this.props.dashboardView === 'documents' || this.props.dashboardView === 'trash') && (
-            <div className="dashboard-nav__list">
-              {this.renderDocumentViewList(PeblioLogo, 'block')}
-              {this.renderDocumentViewList(PeblioLogo, 'line')}
-            </div>
-          )}
-          {(this.props.dashboardView === 'profile') && (
-            <a
-              className="dashboard-nav__profile-link"
-              target="_blank"
-              rel="noopener noreferrer"
-              href={`/profile/${this.props.name}`}
-            >
-              View Profile
-            </a>
-          )}
-        </div>
-      )}
+
+      <div className="dashboard-nav__lower-container dashboard-nav__top-nav">
+        <ul className="dashboard-nav__list">
+          {this.renderListItem('Documents', 'documents')}
+          {this.renderListItem('Account', 'account')}
+          {this.renderListItem('Trash', 'trash')}
+        </ul>
+        {(this.props.dashboardView === 'documents' || this.props.dashboardView === 'trash') && (
+          <div className="dashboard-nav__list">
+            {this.renderDocumentViewList(PeblioLogo, 'block')}
+            {this.renderDocumentViewList(PeblioLogo, 'line')}
+          </div>
+        )}
+      </div>
 
       {this.props.dashboardView === 'documents' && (
         <div className="dashboard-nav__lower-container">

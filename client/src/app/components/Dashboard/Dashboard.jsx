@@ -75,17 +75,6 @@ class Dashboard extends React.Component {
           name={this.props.name}
         />
       );
-      case 'profile': {
-        const url = `${window.location.origin}/profile/${this.props.name}`;
-        return (
-          <div className="dashboard__profile">
-            <iframe
-              title="preview user profile"
-              className="dashboard__iframe"
-              src={url}
-            />
-          </div>
-        ); }
       default:
         return null;
     }

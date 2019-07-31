@@ -8,7 +8,6 @@ import Dashboard from '../../../../src/app/components/Dashboard/Dashboard.jsx';
 import Account from '../../../../src/app/components/Dashboard/Account/Account.jsx';
 import Nav from '../../../../src/app/components/Shared/Nav/Nav';
 import Trash from '../../../../src/app/components/Dashboard/Trash/Trash.jsx';
-import Profile from '../../../../src/app/components/Profile/Profile.jsx';
 import Documents from '../../../../src/app/components/Shared/Documents/Documents.jsx';
 
 import history from '../../../../src/app/utils/history';
