@@ -103,6 +103,11 @@ const config = {
     proxy: {
       '/api': { target: `http://localhost:${process.env.SERVER_PORT || 8081}` }
     }
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
   }
 };
 
