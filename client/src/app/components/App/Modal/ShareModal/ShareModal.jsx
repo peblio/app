@@ -23,6 +23,41 @@ class Share extends React.Component {
     }
   }
 
+  downloadPebl() {
+    const downloadDoc = document.cloneNode(true);
+    const head = downloadDoc.head;
+
+    // remove scripts
+    const scripts = head.getElementsByTagName('script');
+    let noScripts = scripts.length;
+    while (noScripts) {
+      noScripts--;
+      scripts[noScripts].parentNode.removeChild(scripts[noScripts]);
+    }
+
+    // remove links
+    const links = head.getElementsByTagName('link');
+    let noLinks = links.length;
+    while (noLinks) {
+      noLinks--;
+      links[noLinks].parentNode.removeChild(links[noLinks]);
+    }
+
+    // add main.js
+    const mainScript = downloadDoc.createElement('script');
+    mainScript.setAttribute('src', 'https://s3.amazonaws.com/staging.peblio.co/main.js');
+    downloadDoc.head.appendChild(mainScript);
+    debugger;
+
+
+    const pageHTML = downloadDoc.documentElement.outerHTML;
+    const tempEl = document.createElement('a');
+    tempEl.href = `data:attachment/text,${encodeURI(pageHTML)}`;
+    tempEl.target = '_blank';
+    tempEl.download = 'thispage.html';
+    tempEl.click();
+  }
+
   renderClassroomWidget() {
     gapi.sharetoclassroom.render(this.widget, //eslint-disable-line
       { size: 64,
@@ -54,15 +89,12 @@ class Share extends React.Component {
             copy to clipboard
           </button>
         </div>
-        <p className="share__text-secondary">or</p>
-        <div className="share__option">
-          <h2 className="share__text-primary"> share to Google Classroom </h2>
-          <div
-            id="widget-div"
-            ref={(element) => { this.widget = element; }}
-          >
-          </div>
-        </div>
+        <button
+          className="share__button"
+          onClick={this.downloadPebl}
+        >
+          Download
+        </button>
       </section>
     );
   }

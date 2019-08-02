@@ -11,7 +11,7 @@ const initialState = {
   isLoginModalOpen: false,
   isPagesModalOpen: false,
   isResetModalOpen: false,
-  isShareModalOpen: false,
+  isShareModalOpen: true,
   isSignUpModalOpen: false,
   isWelcomeModalOpen: false,
   isPreferencesPanelOpen: false,

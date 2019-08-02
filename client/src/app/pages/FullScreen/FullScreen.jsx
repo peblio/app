@@ -79,7 +79,7 @@ class FullScreen extends React.Component {
 
     // add main.js
     const mainScript = downloadDoc.createElement('script');
-    mainScript.setAttribute('src', 'https://s3.amazonaws.com/staging.peblio.co/main.min.js');
+    mainScript.setAttribute('src', 'https://s3.amazonaws.com/staging.peblio.co/main.js');
     downloadDoc.head.appendChild(mainScript);
 
 
