@@ -115,30 +115,37 @@ export function loadPage(id, parentId, title, heading, description, layout, tags
   };
 }
 
-export function duplicatePage(title, heading, description, folder, editors, editorIndex, layout, tags, snapshotPath) {
+export function duplicatePage(id, folder) {
   return (dispatch) => {
-    const id = shortid.generate();
-    const data = {
-      id,
-      title: `${title}-Copy`,
-      heading,
-      description,
-      editors,
-      editorIndex,
-      layout,
-      tags,
-      snapshotPath
-    };
-    if (folder) {
-      data.folder = folder;
-    }
+    axios.get(`/pages/${id}`)
+      .then((res) => {
+        const pebl = res.data[0];
+        const id = shortid.generate();
+        const data = {
+          id,
+          title: `${pebl.title}-Copy`,
+          heading: pebl.heading,
+          description: pebl.description,
+          editors: pebl.editors,
+          editorIndex: pebl.editorIndex,
+          layout: pebl.layout,
+          tags: pebl.tags,
+          snapshotPath: pebl.snapshotPath
+        };
+        if (pebl.folder) {
+          data.folder = pebl.folder;
+        }
 
-    axios.post('/pages/save', data).then((response) => {
-      dispatch({
-        type: ActionTypes.DUPLICATE_PAGE,
-        page: response.data.page
+        axios.post('/pages/save', data).then((response) => {
+          dispatch({
+            type: ActionTypes.DUPLICATE_PAGE,
+            page: response.data.page
+          });
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    });
   };
 }
 
