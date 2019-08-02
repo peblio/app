@@ -203,6 +203,28 @@ export function setCurrentFile(id, index) {
   };
 }
 
+export function openFileView(id, index) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.OPEN_FILE_VIEW,
+      id,
+      index
+    });
+  };
+}
+
+export function closeFileView(id, index) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.CLOSE_FILE_VIEW,
+      id,
+      index
+    });
+  };
+}
+
 export function setInnerWidth(id, value) {
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));

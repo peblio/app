@@ -126,7 +126,8 @@ const editorsReducer = (state = initialState, action) => {
     case ActionTypes.ADD_FILE_TO_EDITOR: {
       editors[action.id].files.push({
         name: action.name,
-        content: action.content
+        content: action.content,
+        isFileInView: true
       });
       return Object.assign({}, state, {
         editors
@@ -187,6 +188,33 @@ const editorsReducer = (state = initialState, action) => {
       });
     }
 
+    case ActionTypes.OPEN_FILE_VIEW: {
+      editors[action.id].files[action.index].isFileInView = true;
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
+    case ActionTypes.CLOSE_FILE_VIEW: {
+      let isPrevFileDisplayed = false;
+      let fileIndexToBeDisplayed = action.index - 1;
+      while (!isPrevFileDisplayed && fileIndexToBeDisplayed > -1) {
+        if (editors[action.id].files[fileIndexToBeDisplayed].isFileInView) {
+          isPrevFileDisplayed = true;
+          editors[action.id].currentFile = fileIndexToBeDisplayed;
+        } else {
+          fileIndexToBeDisplayed -= 1;
+        }
+      }
+      if (fileIndexToBeDisplayed === -1) {
+        editors[action.id].currentFile = fileIndexToBeDisplayed;
+      }
+      editors[action.id].files[action.index].isFileInView = false;
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
     case ActionTypes.VIEW_EDITOR_PREVIEW: {
       editors[action.id].currentFile = -1;
       return Object.assign({}, state, {
@@ -204,7 +232,8 @@ const editorsReducer = (state = initialState, action) => {
     case ActionTypes.ADD_MEDIA_FILE: {
       editors[action.id].files.push({
         name: action.name,
-        externalLink: action.link
+        externalLink: action.link,
+        isFileInView: false
       });
       return Object.assign({}, state, {
         editors

@@ -5,10 +5,18 @@
   &__container {
     height: calc(70vh - #{$editor-toolbar-height} - #{$editor-toolbar-files-height} - #{$h2-line-height});
     position: relative;
+    display: flex;
+    flex-direction: row;
+    background: $g4;
+    & .SplitPane {
+      position: inherit !important;
+    }
   }
   &__sub-container {
     height: 100%;
+    width: 100%;
     display: flex;
+    flex-direction: row;
   }
   &__total-container {
     position: fixed;

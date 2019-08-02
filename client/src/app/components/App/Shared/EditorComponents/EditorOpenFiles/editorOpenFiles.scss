@@ -1,0 +1,131 @@
+@import 'variables';
+@import 'mixins';
+@import 'base';
+
+
+.editor__dark {
+  .open-files {
+    &__files {
+      background: $g3;
+    }
+    &__file {
+      background: $g3;
+      color: $g7;
+      border-right: $small-border solid $g7;
+      &:hover {
+        background: $g2;
+      }
+      &--selected {
+        background: $g2;
+      }
+    }
+    &__toggle-button {
+      background: $g3;
+      color: $g7;
+      &:hover {
+        background: $g2;
+        color: $g7;
+      }
+    }
+    &__close-button {
+      color: $g7;
+    }
+    &__file-button {
+      color: $g7;
+      &-static {
+        color: $g3;
+        &:hover {
+          color: $g3;
+          cursor: auto;
+        }
+      }
+    }
+  }
+}
+
+.open-files {
+  &__container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    position: sticky;
+  }
+  &__files {
+    background-color: $g8;
+    border-bottom: $small-border solid $g5;
+    width: 100%;
+    overflow: scroll;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+  }
+  &__file {
+    display: flex;
+    flex-direction: row;
+    padding: $small-padding 0;
+    border-right: $small-border solid $g5;
+    background: $g8;
+    color: $g4;
+    &:hover {
+      background: $g4;
+    }
+    &--selected {
+      background: $g4;
+      color: $g8;
+    }
+  }
+  &__file-button {
+    background: none;
+    color: $g4;
+    border: 0;
+    &:hover {
+      background: none;
+      color: $g8;
+      border: 0;
+    }
+    &--selected {
+      background: none;
+      color: $g8;
+      border: 0;
+    }
+    &-static {
+      color: $g5;
+      &:hover {
+        color: $g5;
+        cursor: auto;
+      }
+    }
+  }
+  &__toggle-button {
+    background: $g8;
+    color: $g4;
+    border-radius: 0;
+    border: none;
+    border-bottom: $small-border solid $g5;
+    border-right: $small-border solid $g5;
+    &:hover {
+      background: $g4;
+      color: $g8;
+      border: none;
+      border-bottom: $small-border solid $g5;
+      border-right: $small-border solid $g5;
+    }
+  }
+
+  &__close-button {
+    background: none;
+    border: 0;
+    & #ShapeCNTRL {
+      fill: $g6;
+    }
+    &:hover {
+      background: none;
+      border: 0;
+      & #ShapeCNTRL {
+        fill: $g8;
+      }
+    }
+
+  }
+}

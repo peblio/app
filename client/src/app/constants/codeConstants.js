@@ -110,47 +110,56 @@ export const FILES = {
   p5: [
     {
       name: 'index.html',
-      content: defaultP5HTML
+      content: defaultP5HTML,
+      isFileInView: true
     },
     {
       name: 'sketch.js',
-      content: defaultP5JS
+      content: defaultP5JS,
+      isFileInView: true
     },
     {
       name: 'style.css',
-      content: defaultP5CSS
+      content: defaultP5CSS,
+      isFileInView: true
     }
   ],
   html: [
     {
       name: 'index.html',
-      content: defaultHTML
+      content: defaultHTML,
+      isFileInView: true
     }
   ],
   webdev: [
     {
       name: 'index.html',
-      content: defaultWebDevHTML
+      content: defaultWebDevHTML,
+      isFileInView: true
     },
     {
       name: 'app.js',
-      content: defaultWebDevJS
+      content: defaultWebDevJS,
+      isFileInView: true
     },
     {
       name: 'style.css',
-      content: defaultWebDevCSS
+      content: defaultWebDevCSS,
+      isFileInView: true
     }
   ],
   processing: [
     {
       name: 'sketch.pde',
-      content: defaultProcessingPDE
+      content: defaultProcessingPDE,
+      isFileInView: true
     }
   ],
   python: [
     {
       name: 'main.py',
-      content: defaultPythonPy
+      content: defaultPythonPy,
+      isFileInView: true
     }
   ]
 };
