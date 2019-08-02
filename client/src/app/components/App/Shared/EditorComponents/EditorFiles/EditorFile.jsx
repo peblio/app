@@ -42,6 +42,7 @@ class EditorFile extends React.Component {
         className={`editor-toolbar__file
             ${(this.props.currentFile === this.props.index) ? 'editor-toolbar__file--selected' : ''}`}
       >
+
         <div className="editor-toolbar__file-name">
           <Tooltip content={this.props.file.name}>
             <button
@@ -57,6 +58,7 @@ class EditorFile extends React.Component {
               }
               data-test="editor-toolbar__file-name"
             >
+              <i className="fa fa-file-text-o"></i>
               {this.props.file.name}
             </button>
           </Tooltip>

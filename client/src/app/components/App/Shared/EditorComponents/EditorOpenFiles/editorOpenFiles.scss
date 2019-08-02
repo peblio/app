@@ -6,23 +6,25 @@
 .editor__dark {
   .open-files {
     &__files {
-      background: $black;
+      background: $g3;
     }
     &__file {
-      background: $dark-gray;
+      background: $g3;
       color: $g7;
-      border-bottom: $small-border solid $g7;
       border-right: $small-border solid $g7;
+      &:hover {
+        background: $g2;
+      }
       &--selected {
         background: $g2;
       }
     }
     &__toggle-button {
-      background: $dark-gray;
+      background: $g3;
       color: $g7;
       &:hover {
-        background: $dark-gray;
-        color: $g5;
+        background: $g2;
+        color: $g7;
       }
     }
     &__close-button {
@@ -38,9 +40,6 @@
         }
       }
     }
-    &__add-file-button {
-      color: $g2;
-    }
   }
 }
 
@@ -52,6 +51,8 @@
     position: sticky;
   }
   &__files {
+    background-color: $g8;
+    border-bottom: $small-border solid $g5;
     width: 100%;
     overflow: scroll;
     margin: 0;
@@ -63,19 +64,29 @@
     display: flex;
     flex-direction: row;
     padding: $small-padding 0;
-    border-bottom: $small-border solid $g5;
     border-right: $small-border solid $g5;
+    background: $g8;
+    color: $g4;
+    &:hover {
+      background: $g4;
+    }
     &--selected {
-      background: $g7;
+      background: $g4;
+      color: $g8;
     }
   }
-  &__file-button, &__toggle-button {
+  &__file-button {
     background: none;
     color: $g4;
     border: 0;
     &:hover {
       background: none;
-      color: $g4;
+      color: $g8;
+      border: 0;
+    }
+    &--selected {
+      background: none;
+      color: $g8;
       border: 0;
     }
     &-static {
@@ -87,10 +98,16 @@
     }
   }
   &__toggle-button {
+    background: $g8;
+    color: $g4;
     border-radius: 0;
+    border: none;
     border-bottom: $small-border solid $g5;
     border-right: $small-border solid $g5;
     &:hover {
+      background: $g4;
+      color: $g8;
+      border: none;
       border-bottom: $small-border solid $g5;
       border-right: $small-border solid $g5;
     }
@@ -99,15 +116,16 @@
   &__close-button {
     background: none;
     border: 0;
+    & #ShapeCNTRL {
+      fill: $g6;
+    }
     &:hover {
       background: none;
       border: 0;
       & #ShapeCNTRL {
-        fill: $g2;
+        fill: $g8;
       }
     }
-    & #ShapeCNTRL {
-      fill: $g4;
-    }
+
   }
 }

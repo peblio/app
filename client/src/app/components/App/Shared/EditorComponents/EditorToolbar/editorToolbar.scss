@@ -55,12 +55,13 @@
 .editor__light {
   .editor-toolbar {
     &__add-file-button {
-      background: $g6;
-      border: $small-border solid $g5;
-      color:$g3;
+      border: $small-border solid $g6;
+      background: none;
+      color:$g4;
       &:hover {
-        border: $small-border solid $g4;
-        color:$g2;
+        border: $small-border solid $green;
+        background: none;
+        color:$green;
       }
     }
     &__container {
@@ -115,8 +116,15 @@
 .editor-toolbar {
   &__add-file-button {
     padding: $small-padding;
-    margin: $small-margin/2;
+    margin: $small-margin;
     margin-bottom: $medium-margin;
+    background: transparent;
+    border: $small-border solid $g6;
+    &:hover {
+      background: transparent;
+      color: $green;
+      border: $small-border solid $green;
+    }
   }
   &__title {
     color: $white;
@@ -163,7 +171,7 @@
         font-family: $roboto;
         padding: 2px 4px;
         margin-left: 10px;
-        border-radius: $medium-border-radius;
+        border-radius: $small-border-radius;
         min-width: 57px;
         text-align: center;
         margin-right: 0.0rem;
@@ -234,7 +242,7 @@
 // used for editor toolbar
 %small-button {
   border: $small-border  $black;
-  border-radius: $medium-border-radius;
+  border-radius: $small-border-radius;
   color: $black;
   background-color: $white;
   height: 1.5rem;

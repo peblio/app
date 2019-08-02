@@ -27,7 +27,10 @@ class EditorOpenFiles extends React.Component {
               }
             >
               <button
-                className="open-files__file-button"
+                className={
+                  `open-files__file-button
+                  ${(this.props.currentFile === -1) ? 'open-files__file-button--selected' : ''}`
+                }
                 onClick={this.props.viewEditorPreview}
               >
                 Preview
@@ -45,7 +48,9 @@ class EditorOpenFiles extends React.Component {
                 >
                   <button
                     className={`open-files__file-button
-                      ${(file.name.match(MEDIA_FILE_REGEX)) ? 'open-files__file-button-static' : ''}`}
+                      ${(file.name.match(MEDIA_FILE_REGEX)) ? 'open-files__file-button-static' : ''}
+                      ${(this.props.currentFile === index) ? 'open-files__file-button--selected' : ''}
+                      `}
                     disabled={file.name.match(MEDIA_FILE_REGEX)}
                     onClick={() => {
                       this.props.setCurrentFile(index);
