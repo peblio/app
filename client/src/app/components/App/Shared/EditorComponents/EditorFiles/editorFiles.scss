@@ -151,12 +151,16 @@
           background: $g5;
           padding: 0.25rem 0;
         }
+        &-icon {
+          margin-right: 0.25rem;
+        }
         &-button {
           border-radius: 0;
           border: none;
           box-shadow: none;
           height: 100%;
           background: transparent;
+          display: flex;
           &:hover, &--selected { // sass-lint:disable-line class-name-format
             border: none;
             background: transparent;

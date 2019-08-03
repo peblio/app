@@ -58,7 +58,7 @@ class EditorFile extends React.Component {
               }
               data-test="editor-toolbar__file-name"
             >
-              <i className="fa fa-file-text-o"></i>
+              <i className="far fa-file-alt editor-toolbar__file-icon"></i>
               {this.props.file.name}
             </button>
           </Tooltip>
