@@ -14,6 +14,9 @@
       border-right: $small-border solid $g7;
       &:hover {
         background: $g2;
+        & .open-files__close-button {
+          display: flex;
+        }
       }
       &--selected {
         background: $g2;
@@ -28,6 +31,7 @@
       }
     }
     &__close-button {
+      display: none;
       color: $g7;
     }
     &__file-button {

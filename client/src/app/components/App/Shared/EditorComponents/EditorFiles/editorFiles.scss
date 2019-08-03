@@ -19,7 +19,7 @@
       .editor-toolbar__files {
         .editor-toolbar__file {
           background-color: transparent;
-          &:hover, &--selected { // sass-lint:disable-line class-name-format
+          &:hover { // sass-lint:disable-line class-name-format
             background-color: $g2;
           }
           &-button {
@@ -47,10 +47,11 @@
 .editor__light {
   .editor-toolbar {
     &__files-container {
+      background-color: $lighter-gray;
       .editor-toolbar__files {
         .editor-toolbar__file {
           background-color: transparent;
-          &:hover, &--selected { // sass-lint:disable-line class-name-format
+          &:hover { // sass-lint:disable-line class-name-format
             background-color: $g6;
           }
           &-button {

@@ -245,7 +245,7 @@ class MainToolbar extends React.Component {
             </div>
           </div>
         </div>
-        {this.props.preview || (
+        {(this.props.preview || this.props.isFullScreenMode) || (
           <InsertToolbar />
         )}
       </div>
@@ -257,6 +257,7 @@ MainToolbar.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   createNavigationContent: PropTypes.func.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
+  isFullScreenMode: PropTypes.bool.isRequired,
   isHelpDropdownOpen: PropTypes.bool.isRequired,
   isPreferencesPanelOpen: PropTypes.bool.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
@@ -285,6 +286,7 @@ function mapStateToProps(state) {
   return {
     canEdit: state.user.canEdit,
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
+    isFullScreenMode: state.editorsReducer.isFullScreenMode,
     isHelpDropdownOpen: state.mainToolbar.isHelpDropdownOpen,
     isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,
     layout: state.page.layout,
@@ -293,7 +295,6 @@ function mapStateToProps(state) {
     preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,
     editorAutoSave: state.preferences.editorAutoSave,
-
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
