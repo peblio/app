@@ -44,24 +44,22 @@ class EditorFile extends React.Component {
       >
 
         <div className="editor-toolbar__file-name">
-          <Tooltip content={this.props.file.name}>
-            <button
-              onClick={() => {
-                this.props.openFileView(this.props.index);
-                this.props.setCurrentFile(this.props.index);
-              }}
-              disabled={this.props.isImage}
-              className={
-                `editor-toolbar__file-button
+          <button
+            onClick={() => {
+              this.props.openFileView(this.props.index);
+              this.props.setCurrentFile(this.props.index);
+            }}
+            disabled={this.props.isImage}
+            className={
+              `editor-toolbar__file-button
                  ${(this.props.currentFile === this.props.index) ? 'editor-toolbar__file-button--selected' : ''}
             ${(this.props.isImage) ? 'editor-toolbar__file-button-static' : ''}`
-              }
-              data-test="editor-toolbar__file-name"
-            >
-              <i className="far fa-file-alt editor-toolbar__file-icon"></i>
-              {this.props.file.name}
-            </button>
-          </Tooltip>
+            }
+            data-test="editor-toolbar__file-name"
+          >
+            <i className="far fa-file-alt editor-toolbar__file-icon"></i>
+            {this.props.file.name}
+          </button>
           {!this.props.file.name.match(HTML_FILE_REGEX) && ( //eslint-disable-line
             <button
               className="editor-toolbar__file-button"
