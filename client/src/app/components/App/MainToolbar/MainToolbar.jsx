@@ -282,7 +282,7 @@ class MainToolbar extends React.Component {
             </div>
           </div>
         </div>
-        {this.props.preview || (
+        {(this.props.preview || this.props.isFullScreenMode) || (
           <InsertToolbar />
         )}
       </div>
@@ -296,6 +296,7 @@ MainToolbar.propTypes = {
   createNavigationContent: PropTypes.func.isRequired,
   editorAutoSave: PropTypes.bool.isRequired,
   isFileDropdownOpen: PropTypes.bool.isRequired,
+  isFullScreenMode: PropTypes.bool.isRequired,
   isHelpDropdownOpen: PropTypes.bool.isRequired,
   isPageVersionSaved: PropTypes.bool.isRequired,
   isPreferencesPanelOpen: PropTypes.bool.isRequired,
@@ -337,6 +338,7 @@ function mapStateToProps(state) {
   return {
     canEdit: state.user.canEdit,
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
+    isFullScreenMode: state.editorsReducer.isFullScreenMode,
     isHelpDropdownOpen: state.mainToolbar.isHelpDropdownOpen,
     isOldVersionShowing: state.pageVersion.isOldVersionShowing,
     isPreferencesPanelOpen: state.mainToolbar.isPreferencesPanelOpen,

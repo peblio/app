@@ -50,7 +50,7 @@
   position: fixed;
   left: 0;
   top: $main-toolbar-height;
-  z-index: $z-index-layer-4;
+  z-index: $z-index-layer-2-5;
   height: 100vh !important;
   width: 100vw;
   overflow: hidden;
