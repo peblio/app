@@ -9,6 +9,7 @@ import ImageSVG from '../../../../images/image.svg';
 import QuestionSVG from '../../../../images/question.svg';
 import TextSVG from '../../../../images/text.svg';
 import VideoSVG from '../../../../images/video.svg';
+import HistorySVG from '../../../../images/history.svg';
 import {
   addCodeEditor,
   addIframe,
@@ -17,11 +18,11 @@ import {
   addQuestionEditor,
   addVideo
 } from '../../../../action/editors.js';
+import { togglePageVersion } from '../../../../action/pageVersion.js';
 
 require('./insertToolbar.scss');
 
-
-class InsertToolbar extends React.Component {
+export class InsertToolbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -200,9 +201,17 @@ class InsertToolbar extends React.Component {
           </button>
         </div>
         <div className="insert-toolbar__container-right">
-
+          <button
+            onMouseDown={this.props.togglePageVersion}
+            onKeyDown={this.props.togglePageVersion}
+            id="elementButton"
+            className={`insert-toolbar__button
+              ${(this.props.isPageVersionOpen) ? 'insert-toolbar__button--highlighted' : ''}`}
+            data-test="insert-toolbar__show-page-version"
+          >
+            <HistorySVG alt="show page version" />
+          </button>
         </div>
-
       </div>
     );
   }
@@ -214,8 +223,14 @@ InsertToolbar.propTypes = {
   addImage: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
   addQuestionEditor: PropTypes.func.isRequired,
-  addVideo: PropTypes.func.isRequired
+  addVideo: PropTypes.func.isRequired,
+  isPageVersionOpen: PropTypes.bool.isRequired,
+  togglePageVersion: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = state => ({
+  isPageVersionOpen: state.pageVersion.isPageVersionOpen
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   addCodeEditor,
@@ -223,7 +238,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   addImage,
   addTextEditor,
   addQuestionEditor,
-  addVideo
+  addVideo,
+  togglePageVersion
 }, dispatch);
 
-export default connect(null, mapDispatchToProps)(InsertToolbar);
+export default connect(mapStateToProps, mapDispatchToProps)(InsertToolbar);

@@ -43,6 +43,40 @@
   }
 }
 
+.canvas-overlay {
+  &__container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: $black-trans;
+    z-index: $z-index-layer-1-5;
+    top: 0;
+    left: 0;
+  }
+  &__button-container {
+    top: 2*$main-toolbar-height;
+    width: 100%;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__button {
+    line-height: $p-line-height;
+    color: $green;
+    border: $small-border solid $green;
+    background: $white;
+    margin: 1rem;
+    width: 150px;
+    font-weight: 800;
+    &:hover {
+      color: $white;
+      background: $green;
+      border: $small-border solid $green;
+    }
+  }
+}
+
 .canvas::after{
   content: '';
   position: absolute;

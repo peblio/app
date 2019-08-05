@@ -3,7 +3,7 @@ import axios from './axios';
 export function saveLog(log) {
   axios.post('/logs', log)
     .then(res => console.log('Saved Log'))
-    .catch(err => console.log('Error saving log'));
+    .catch(err => console.log(err));
 }
 
 export function saveErrorLog(error, getState, lastAction) {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import VisibilitySensor from 'react-visibility-sensor';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import CanvasOverlay from './CanvasOverlay.jsx';
 import EditorContainer from './EditorContainer/EditorContainer.jsx';
 import Heading from './Heading/Heading.jsx';
 import Tags from './Tags/Tags.jsx';
@@ -15,9 +16,11 @@ import { convertPixelHeightToGridHeight } from '../../../utils/pixel-to-grid.js'
 import {
   changePageLayout,
   resizeTextEditor,
+  loadCurrentPage,
   setPageLayout,
   updateTextHeight
 } from '../../../action/page.js';
+import { hideOldPageVersion } from '../../../action/pageVersion.js';
 import {
   viewAddDescriptionModal
 } from '../../../action/mainToolbar.js';
@@ -51,7 +54,6 @@ class Canvas extends React.Component {
       window.scrollTo(0, this.props.yPosition);
     }
   }
-
 
   componentWillUnmount() {
     if (this.timeout) {
@@ -228,6 +230,21 @@ class Canvas extends React.Component {
     return 'Add Description';
   }
 
+
+  renderCanvasPreview() {
+    if (this.props.isOldVersionShowing) {
+      return (
+        <CanvasOverlay
+          loadCurrentPage={this.props.loadCurrentPage}
+          hideOldPageVersion={this.props.hideOldPageVersion}
+          id={this.props.id}
+          savePage={this.props.savePage}
+        />
+      );
+    }
+    return null;
+  }
+
   render() {
     const ids = Object.keys(this.props.editors);
     // need to create copy of the layout because ReactGridLayout tests
@@ -330,6 +347,7 @@ class Canvas extends React.Component {
           ${this.props.isNavigationOpen ? 'canvas-right' : ''}`
         }
       >
+        {this.renderCanvasPreview()}
         {
           <div
             className="canvas__tag-container"
@@ -425,13 +443,16 @@ Canvas.propTypes = {
   changePageLayout: PropTypes.func.isRequired,
   description: PropTypes.string.isRequired,
   editorIndex: PropTypes.number.isRequired,
-  widgetForDeleteWidgetWarning: PropTypes.string.isRequired,
   editors: PropTypes.shape({}).isRequired,
+  hideOldPageVersion: PropTypes.func.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  id: PropTypes.string.isRequired,
   isFullScreenMode: PropTypes.bool.isRequired,
   isNavigationOpen: PropTypes.bool.isRequired,
+  isOldVersionShowing: PropTypes.bool.isRequired,
   isPeblPublished: PropTypes.bool.isRequired,
   isDeleteWarningModalOpen: PropTypes.bool.isRequired,
+  loadCurrentPage: PropTypes.func.isRequired,
   preview: PropTypes.bool.isRequired,
   resizeTextEditor: PropTypes.func.isRequired,
   rgl: PropTypes.shape({
@@ -441,12 +462,14 @@ Canvas.propTypes = {
     rowHeight: PropTypes.number,
     width: PropTypes.number
   }).isRequired,
+  savePage: PropTypes.func.isRequired,
   setCurrentWidget: PropTypes.func.isRequired,
   setPageLayout: PropTypes.func.isRequired,
   textHeights: PropTypes.shape({}).isRequired,
   updateTextHeight: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired,
   viewAddDescriptionModal: PropTypes.func.isRequired,
+  widgetForDeleteWidgetWarning: PropTypes.string.isRequired,
   yPosition: PropTypes.number.isRequired,
 };
 
@@ -455,10 +478,12 @@ function mapStateToProps(state) {
     currentWidget: state.editorsReducer.currentWidget,
     description: state.page.description,
     editorIndex: state.editorsReducer.editorIndex,
+    id: state.page.id,
     isDeleteWarningModalOpen: state.editorsReducer.isDeleteWarningModalOpen,
     widgetForDeleteWidgetWarning: state.editorsReducer.widgetForDeleteWidgetWarning,
     editors: state.editorsReducer.editors,
     isFullScreenMode: state.editorsReducer.isFullScreenMode,
+    isOldVersionShowing: state.pageVersion.isOldVersionShowing,
     isNavigationOpen: state.navigation.isNavigationOpen,
     isPeblPublished: state.page.isPublished,
     layout: state.page.layout,
@@ -471,6 +496,8 @@ function mapStateToProps(state) {
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   changePageLayout,
+  hideOldPageVersion,
+  loadCurrentPage,
   resizeTextEditor,
   setPageLayout,
   setCurrentWidget,

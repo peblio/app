@@ -1,5 +1,5 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
-
+import history from '../utils/history';
 import axios from '../utils/axios';
 import { saveLog } from '../utils/log';
 

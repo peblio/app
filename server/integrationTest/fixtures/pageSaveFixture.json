@@ -1,0 +1,42 @@
+{
+    "parentId": "",
+    "title": "Hola",
+    "heading": "Hola",
+    "description": "",
+    "editors": {
+      
+    },
+    "editorIndex": 0,
+    "layout": [
+      
+    ],
+    "workspace": {
+      "consoleOutputText": [
+        
+      ],
+      "currentFile": 1,
+      "files": [
+        {
+          "name": "index.html",
+          "content": "<!DOCTYPE html>\n<html>\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.min.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.sound.min.js\"></script>\n    <meta charset=\"utf-8\" />\n      <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n\n"
+        },
+        {
+          "name": "sketch.js",
+          "content": "function setup() {\n  createCanvas(400, 400);\n}\nfunction draw() {\n  background(220);\n}"
+        },
+        {
+          "name": "style.css",
+          "content": "\nhtml,body{\n  background: white;\n  margin: 0;\n  padding: 0;\n}\n"
+        }
+      ],
+      "isPlaying": false,
+      "isRefreshing": false,
+      "editorMode": "p5",
+      "innerWidth": 500
+    },
+    "tags": [
+      
+    ],
+    "isPublished": true,
+    "snapshotPath": "https://s3.amazonaws.com/peblio-files/_Pebl_Snapshots/default.png"
+  }

@@ -1,4 +1,5 @@
 const Page = require('../models/page.js');
+const PageVersion = require('../models/pageversion.js');
 const User = require('../models/user.js');
 const Folder = require('../models/folder.js');
 const AWS = require('aws-sdk');
@@ -217,6 +218,49 @@ export async function updatePage(req, res) {
   }
   const pageWithUpdatedData = buildPageForUpdateFromRequest(req);
   return findPageAndUpdate(req, res, user, pageWithUpdatedData);
+}
+
+export async function updatePageWithVersion(req, res) {
+  const user = req.user;
+  if (!user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  }
+  const {version, id} = req.query;
+  return Page.findOne({ id }, (pageFindError, retrievedPage) => {
+    if (pageFindError || !retrievedPage || !retrievedPage.user) {
+      return res.status(500).send({ error: 'Could not retrieve page!' });
+    }
+    if (retrievedPage.user.toString() !== user._id.toString()) {
+      return res.status(403).send({ error: 'Missing permission to update page' });
+    }
+    return PageVersion.find({ id, version_id: version}, (pageVersionFindError, pageVerionData) => {
+      if (pageVersionFindError || !pageVerionData || pageVerionData.length == 0) {
+        return res.status(500).send({ error: 'Could not retrieve page version!' });
+      }
+      const updatedPageData = {
+        title: pageVerionData[0].title,
+        heading: pageVerionData[0].heading,
+        snapshotPath: pageVerionData[0].snapshotPath,
+        description: pageVerionData[0].description,
+        editors: pageVerionData[0].editors,
+        editorIndex: pageVerionData[0].editorIndex,
+        layout: pageVerionData[0].layout,
+        folder: pageVerionData[0].folder,
+        workspace: pageVerionData[0].workspace,
+        isPublished: pageVerionData[0].isPublished,
+        deletedAt: pageVerionData[0].deletedAt,
+        trashedAt: pageVerionData[0].trashedAt,
+        tags: pageVerionData[0].tags
+      };
+      return Page.update({ id }, updatedPageData, (err) => {
+        if (err) {
+          return res.status(500).send(err);
+        } else {
+          return res.status(200).send();
+        }
+      });
+    })
+  });
 }
 
 export function uploadPageSnapshotToS3(req, res) {

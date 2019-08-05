@@ -17,6 +17,7 @@ $red: #D73E2C;
 
 $gray: #888888;
 $black: #00151E;
+$black-trans: #00151E11;
 $dark-gray:#242424;
 $pref-gray:rgba(255, 255, 255, 0.09);
 
@@ -152,6 +153,7 @@ $workspace-navbar-height: 32px;
 //z-indexes
 $z-index-layer-0: 0;
 $z-index-layer-1: 100;
+$z-index-layer-1-5: 150;
 $z-index-layer-2: 200;
 $z-index-layer-2-5: 250;
 $z-index-layer-3: 300;

@@ -1,4 +1,4 @@
-import { EditorState, convertFromRaw } from 'draft-js';
+import { EditorState } from 'draft-js';
 import * as ActionTypes from '../constants/reduxConstants.js';
 import * as Code from '../constants/codeConstants.js';
 import * as Page from '../constants/pageConstants.js';

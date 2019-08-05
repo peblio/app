@@ -100,6 +100,16 @@ cd client
 npm test
 ```
 
+### Integaration Tests For Server
+
+We have used supertest to write integration tests along with chai, mocha, sinon.
+The framework brings up the server and uses ENVIRONMENT local configuration
+You can run the from root folder by running
+```
+cd server 
+npm run integrationTest
+```
+
 
 
 ## Git Workflow
