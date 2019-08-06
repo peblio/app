@@ -29,7 +29,8 @@ const userSchema = new Schema({
   },
   type: {
     type: String,
-    enum: ['student', 'teacher', 'other'],
+    default: 'teacher',
+    enum: ['teacher'],
     required: true
   },
   password: {

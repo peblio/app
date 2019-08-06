@@ -8,7 +8,6 @@ import Websocket from 'react-websocket';
 import WEBSOCKET_HOST from '../../utils/webSockets';
 import * as pageDefaults from '../../constants/pageConstants';
 
-import AddDescription from './Modal/AddDescription/AddDescription.jsx';
 import ConfirmUser from './Modal/ConfirmUser/ConfirmUser.jsx';
 import ExamplesModal from './Modal/ExamplesModal/ExamplesModal.jsx';
 import ForkPrompt from './Modal/ForkPrompt/ForkPrompt.jsx';
@@ -379,17 +378,6 @@ class App extends React.Component {
         </Modal>
 
         <Modal
-          size="small"
-          isOpen={this.props.isAddDescriptionModalOpen}
-          closeModal={this.props.closeAddDescriptionModal}
-        >
-          <AddDescription
-            savePage={this.savePage}
-            closeModal={this.props.closeAddDescriptionModal}
-          />
-        </Modal>
-
-        <Modal
           size="auto"
           isOpen={this.props.isWelcomeModalOpen}
           closeModal={this.props.closeWelcomeModal}
@@ -446,7 +434,6 @@ App.propTypes = {
   isBrowsingPebl: PropTypes.bool.isRequired,
   userType: PropTypes.string.isRequired,
 
-  isAddDescriptionModalOpen: PropTypes.bool.isRequired,
   isPagesModalOpen: PropTypes.bool.isRequired,
   isForgotModalOpen: PropTypes.bool.isRequired,
   isResetModalOpen: PropTypes.bool.isRequired,
@@ -485,8 +472,6 @@ App.propTypes = {
   isForkPromptOpen: PropTypes.bool.isRequired,
   isLiveRefreshPageModalOpen: PropTypes.bool.isRequired,
   closeForkPrompt: PropTypes.func.isRequired,
-  closeAddDescriptionModal: PropTypes.func.isRequired,
-
   // navigation
   pageHeading: PropTypes.string.isRequired,
   createNavigationContent: PropTypes.func.isRequired
@@ -517,7 +502,6 @@ function mapStateToProps(state) {
     isBrowsingPebl: state.user.isBrowsingPebl,
 
     isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
-    isAddDescriptionModalOpen: state.mainToolbar.isAddDescriptionModalOpen,
     isExamplesModalOpen: state.mainToolbar.isExamplesModalOpen,
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isHelpDropdownOpen: state.mainToolbar.isHelpDropdownOpen,

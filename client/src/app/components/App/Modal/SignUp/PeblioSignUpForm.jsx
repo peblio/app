@@ -58,7 +58,7 @@ class PeblioSignUpForm extends React.Component {
     const loginData = {
       mail: this.userMail ? this.userMail.value : this.props.guardianEmail,
       name: this.props.tempUsername,
-      userType: this.props.userType,
+      userType: 'teacher',
       password: this.password.value,
       requiresGuardianConsent: this.props.requiresGuardianConsent,
       guardianEmail: this.props.guardianEmail,

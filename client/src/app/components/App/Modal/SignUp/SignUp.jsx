@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import axios from '../../../../utils/axios';
 import StudentBirthDateDetails from './StudentDetails/StudentBirthDateDetails.jsx';
 import SignUpOption from './SignUpOption.jsx';
 import { setUserName, setUserType, setNextScreen } from '../../../../action/user.js';
@@ -37,22 +38,6 @@ class SignUp extends React.Component {
   setTempUserName = (name) => {
     this.setState({
       tempUsername: name
-    });
-  }
-
-  onNextButtonClick = () => {
-    if (this.state.isUserTypeSelected && this.state.termsAgreed) {
-      if (this.props.userType === 'student') {
-        this.props.setNextScreen('StudentBirthdayScreen');
-      } else {
-        this.props.setNextScreen('SignupUsernameScreen');
-      }
-    }
-  }
-
-  setTermsAgreed = () => {
-    this.setState({
-      termsAgreed: this.termsAgreed.checked
     });
   }
 
@@ -150,68 +135,6 @@ class SignUp extends React.Component {
     );
   }
 
-  renderSignupTypes() {
-    return (
-      <div>
-        <h1 className="signup-modal__title">Sign Up</h1>
-        <div className="signup-modal__radio-holder">
-          <h2 className="signup-modal__subtitle"> I am signing up as a...</h2>
-          <ul className="signup-modal__list">
-            {this.renderSignupType('Student', 'student')}
-            {this.renderSignupType('Teacher', 'teacher')}
-            {this.renderSignupType('Other', 'other')}
-          </ul>
-        </div>
-        <input
-          required
-          type="checkbox"
-          className="signup-modal__checkbox"
-          data-test="signup-modal__checkbox"
-          name="checkbox"
-          ref={(termsAgreed) => { this.termsAgreed = termsAgreed; }}
-          onChange={this.setTermsAgreed}
-          id="agree"
-        />
-        <label
-          className="signup-modal__terms-label"
-          htmlFor="agree"
-        >
-          {' '}
-          I have read and agree to the
-          {' '}
-          <a
-            href="https://www.peblio.co/terms-of-use"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="signup-modal__link"
-          >
-            Terms of Use
-          </a>
-          {' '}
-          and
-          {' '}
-          <a
-            href="https://www.peblio.co/privacy-policy"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="signup-modal__link"
-          >
-          Privacy Policy
-          </a>
-        </label>
-        <div className="signup-modal__buttonholder">
-          <button
-            className="signup-modal__button"
-            data-test="signup-modal__button-next"
-            value="Submit"
-            onClick={this.onNextButtonClick}
-          >
-          Next
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   render() {
     if (this.props.nextScreen) {
@@ -225,12 +148,12 @@ class SignUp extends React.Component {
         case 'PeblioSignUpForm':
           return this.renderPeblioSignUpForm();
         default:
-          return this.renderSignupTypes();
+          return this.renderSignupUsernameComponent();
       }
     }
     return (
-      <div className="signup-modal__content">
-        {this.renderSignupTypes() }
+      <div>
+        {this.renderSignupUsernameComponent() }
       </div>
     );
   }

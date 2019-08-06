@@ -22,7 +22,7 @@ class GoogleSignupButton extends React.Component {
       .then((googleUser) => {
         const idToken = googleUser.getAuthResponse().id_token;
         return axios.post('/auth/signin/google', {
-          userType: this.props.userType,
+          userType: 'teacher',
           requiresGuardianConsent: this.props.requiresGuardianConsent,
           guardianEmail: this.props.guardianEmail,
           google_id_token: idToken,
