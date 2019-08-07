@@ -62,44 +62,45 @@ class SignUpUsername extends React.Component {
             type="text"
           />
         </div>
-
-        <input
-          required
-          type="checkbox"
-          className="signup-modal__checkbox"
-          data-test="signup-modal__checkbox"
-          name="checkbox"
-          ref={(termsAgreed) => { this.termsAgreed = termsAgreed; }}
-          onChange={this.setTermsAgreed}
-          id="agree"
-        />
-        <label
-          className="signup-modal__terms-label"
-          htmlFor="agree"
-        >
-          {' '}
-          I have read and agree to the
-          {' '}
-          <a
-            href="https://www.peblio.co/terms-of-use"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="signup-modal__link"
+        <div>
+          <input
+            required
+            type="checkbox"
+            className="signup-modal__checkbox"
+            data-test="signup-modal__checkbox"
+            name="checkbox"
+            ref={(termsAgreed) => { this.termsAgreed = termsAgreed; }}
+            onChange={this.setTermsAgreed}
+            id="agree"
+          />
+          <label
+            className="signup-modal__terms-label"
+            htmlFor="agree"
           >
-            Terms of Use
-          </a>
-          {' '}
-          and
-          {' '}
-          <a
-            href="https://www.peblio.co/privacy-policy"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="signup-modal__link"
-          >
-          Privacy Policy
-          </a>
-        </label>
+            {' '}
+            I have read and agree to the
+            {' '}
+            <a
+              href="https://www.peblio.co/terms-of-use"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="signup-modal__link"
+            >
+              Terms of Use
+            </a>
+            {' '}
+            and
+            {' '}
+            <a
+              href="https://www.peblio.co/privacy-policy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="signup-modal__link"
+            >
+            Privacy Policy
+            </a>
+          </label>
+        </div>
 
         <div className="signup-modal__buttonholder">
           <button

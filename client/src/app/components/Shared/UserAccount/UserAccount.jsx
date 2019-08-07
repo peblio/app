@@ -169,7 +169,7 @@ class UserAccount extends React.Component {
           />
         </Modal>
         <Modal
-          size="auto"
+          size="small"
           isOpen={this.props.isSignUpModalOpen}
           closeModal={this.props.closeSignUpModal}
         >
