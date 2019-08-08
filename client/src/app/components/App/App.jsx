@@ -250,6 +250,7 @@ class App extends React.Component {
     this.props.setEditAccess(false);
     const projectID = this.projectID();
     this.props.loadCurrentPage(projectID);
+    this.props.setPreviewMode(true);
     axios.get(`/authenticate/${projectID}`)
       .then((res1) => {
         this.props.setEditAccess(res1.data);
@@ -454,6 +455,7 @@ App.propTypes = {
   setPageId: PropTypes.func.isRequired,
 
   setEditAccess: PropTypes.func.isRequired,
+  setPreviewMode: PropTypes.func.isRequired,
 
   viewPagesModal: PropTypes.func.isRequired,
   closePagesModal: PropTypes.func.isRequired,
