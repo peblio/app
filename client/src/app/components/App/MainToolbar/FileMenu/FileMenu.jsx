@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 
 import {
   toggleFileDropdown,
-  viewExamplesModal,
   viewPagesModal } from '../../../../action/mainToolbar.js';
 
 require('./fileMenu.scss');
@@ -68,24 +67,6 @@ class FileMenu extends React.Component {
             </li>
           </div>
         )}
-        <li className="file-modal__item">
-          <button
-            className="file-modal__link"
-            onMouseDown={() => {
-              this.props.viewExamplesModal();
-              this.props.toggleFileDropdown();
-            }}
-            onKeyDown={() => {
-              this.props.viewExamplesModal();
-              this.props.toggleFileDropdown();
-            }}
-            data-test="file-menu__examples-button"
-          >
-            <i className="fas fa-folder"></i>
-            {' '}
-            Examples
-          </button>
-        </li>
       </ul>
     );
   }
@@ -95,7 +76,6 @@ FileMenu.propTypes = {
   name: PropTypes.string.isRequired,
   savePage: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
-  viewExamplesModal: PropTypes.func.isRequired,
   viewPagesModal: PropTypes.func.isRequired
 };
 
@@ -106,7 +86,6 @@ function mapStateToProps(state) {
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   toggleFileDropdown,
-  viewExamplesModal,
   viewPagesModal
 }, dispatch);
 
