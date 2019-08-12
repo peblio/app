@@ -1,5 +1,9 @@
 @import 'variables';
 
+#app {
+  display: none;
+}
+
 .app__container{
   min-width: calc(#{$total-width} + #{$navigation-width} + #{$canvas-padding*2});
 }

@@ -12,6 +12,9 @@ export async function getPage(req, res) {
   return Page.find({
     id: req.params.pageId
   }, (err, data) => {
+    let pageUser = JSON.stringify(data[0].user);
+    let reqUser = req.user && JSON.stringify(req.user._id);
+    let reqUserIsAdmin = req.user && req.user.isAdmin;
     if (err) {
       return res.status(500).send(err);
     }
@@ -21,7 +24,10 @@ export async function getPage(req, res) {
     if(data[0].deletedAt || data[0].trashedAt){
       return res.status(404).send();
     }
-    return res.status(200).send(data);
+    if(reqUserIsAdmin || reqUser == pageUser) {
+      return res.status(200).send(data);
+    }
+    return res.status(403).send();
   });
 }
 
