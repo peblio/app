@@ -18,15 +18,12 @@
             "name": "Mocha Current File",
             "program": "${workspaceFolder}/server/node_modules/mocha/bin/_mocha",
             "args": [
-                "${workspaceFolder}/client/test/jestsetup.js",
                 "--exit",
                 "--compilers",
                 "js:babel-core/register",
                 "--require",
                 "babel-polyfill",
-                "${file}",
-                "--require", 
-                "${workspaceFolder}/client/test/test-setup.js"
+                "${file}"
             ],
             "console": "internalConsole",
             "internalConsoleOptions": "neverOpen",
