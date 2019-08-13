@@ -6,5 +6,5 @@ apiRoutes.route('/authenticate/:id').get(apiController.authenticatePage);
 apiRoutes.route('/upload/:user/:type').get(apiController.uploadFiles);
 apiRoutes.route('/sketches').get(apiController.getSketches);
 apiRoutes.route('/sketches/:user').get(apiController.getSketches);
-apiRoutes.route('/files/size').get(apiController.listFiles);
+apiRoutes.route('/files/size').get(apiController.getFileInfo);
 module.exports = apiRoutes;

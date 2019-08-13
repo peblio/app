@@ -50,7 +50,7 @@ export function uploadFiles(req, res) {
   });
 }
 
-export function listFiles(req, res) {
+export function getFileInfo(req, res) {
   let user = req.user;
   if(!user){
     res.status(403).send({err: 'Please Login First'});
