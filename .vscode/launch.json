@@ -67,11 +67,8 @@
             "console": "internalConsole",
             "internalConsoleOptions": "neverOpen",
             "sourceMaps": true,
-            "preLaunchTask": "decryptCredsForLocalRun",
+            "preLaunchTask": "decryptCredsForTestRun",
             "envFile": "${workspaceFolder}/.env",
-            "env": {
-                "ENVIRONMENT": "local"
-            }
         }
     ]
 }
