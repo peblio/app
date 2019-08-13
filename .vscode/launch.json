@@ -15,7 +15,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Mocha Current File",
+            "name": "Server Mocha Current File",
             "program": "${workspaceFolder}/server/node_modules/mocha/bin/_mocha",
             "args": [
                 "--exit",
@@ -24,6 +24,26 @@
                 "--require",
                 "babel-polyfill",
                 "${file}"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "neverOpen",
+            "sourceMaps": true
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Client Mocha Current File",
+            "program": "${workspaceFolder}/server/node_modules/mocha/bin/_mocha",
+            "args": [
+                "${workspaceFolder}/client/test/jestsetup.js",
+                "--exit",
+                "--compilers",
+                "js:babel-core/register",
+                "--require",
+                "babel-polyfill",
+                "${file}",
+                "--require", 
+                "${workspaceFolder}/client/test/test-setup.js"
             ],
             "console": "internalConsole",
             "internalConsoleOptions": "neverOpen",
