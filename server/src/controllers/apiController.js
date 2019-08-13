@@ -50,6 +50,31 @@ export function uploadFiles(req, res) {
   });
 }
 
+export function listFiles(req, res) {
+  let user = req.user;
+  if(!user){
+    res.status(403).send({err: 'Please Login First'});
+    return;
+  }
+  const params = {
+    Bucket: myBucket,
+    Delimiter: '/',
+    Prefix: `${user.name}/images/`
+  };
+  s3.listObjectsV2(params, (err, data) => {
+    if (err) {
+      res.send(err);
+    }
+    const sizeArray = data.Contents.map( content => content.Size);
+    const totalSize = sizeArray.reduce((sum, n) => sum + n, 0);
+    res.status(200).send({
+      data,
+      size: totalSize,
+      unit: 'bytes'
+    });
+  });
+}
+
 export function getSketches(req, res) {
   // TODO: make the request async
   if (!req.params.user) {
