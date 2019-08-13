@@ -42,13 +42,16 @@
                 "1000000",
                 "--require",
                 "babel-polyfill",
-                "${file}"
+                "${file}",
             ],
             "console": "internalConsole",
             "internalConsoleOptions": "neverOpen",
             "sourceMaps": true,
             "preLaunchTask": "decryptCredsForLocalRun",
             "envFile": "${workspaceFolder}/.env",
+            "env": {
+                "ENVIRONMENT": "local"
+            }
         }
     ]
 }
