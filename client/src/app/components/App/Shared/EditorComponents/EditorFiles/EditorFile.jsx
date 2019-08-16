@@ -1,5 +1,4 @@
 import React from 'react';
-import Tooltip from 'react-tooltip-lite';
 import PropTypes from 'prop-types';
 
 const HTML_FILE_REGEX = /.+\.(html)$/i;
