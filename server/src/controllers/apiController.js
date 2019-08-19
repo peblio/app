@@ -82,9 +82,9 @@ export function getSketches(req, res) {
     });
   } else {
     User.findOne({ name:user.name }, (userFindError, data) => {
-      if (data.isAdmin === false) {
-        res.status(404).send({ error: 'dashboard not available!' });
-      } else {
+      // if (data.isAdmin === false) {
+      //   res.status(404).send({ error: 'dashboard not available!' });
+      // } else {
         Promise.all([
           Page.find({ user: user._id, trashedAt: null, deletedAt:null }).sort(fileSortBy).exec(),
           Folder.find({ user: user._id }).sort(folderSortBy).exec()
@@ -93,7 +93,7 @@ export function getSketches(req, res) {
             res.send({ pages, folders });
           })
           .catch(err => res.send(err));
-      }
+      // }
     })
   }
 }

@@ -85,10 +85,27 @@ class FullScreen extends React.Component {
 
     const pageHTML = downloadDoc.documentElement.outerHTML;
     const tempEl = document.createElement('a');
-    tempEl.href = `data:attachment/text,${encodeURI(pageHTML)}`;
-    tempEl.target = '_blank';
-    tempEl.download = 'thispage.html';
-    tempEl.click();
+    // tempEl.href = `data:attachment/text,${encodeURI(pageHTML)}`;
+    // tempEl.target = '_blank';
+    // tempEl.download = 'thispage.html';
+    // tempEl.click();
+
+    const file = new Blob([(pageHTML)], { type: 'text/html;charset=utf-8;' });
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+    { window.navigator.msSaveOrOpenBlob(file, 'new.html'); } else { // Others
+      const a = document.createElement('a');
+
+
+      const url = URL.createObjectURL(file);
+      a.href = url;
+      a.download = 'new.html';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 0);
+    }
   }
 
   render() {
