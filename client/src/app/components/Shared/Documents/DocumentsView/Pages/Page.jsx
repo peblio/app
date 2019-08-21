@@ -10,7 +10,6 @@ import DeleteIcon from '../../../../../images/trash.svg';
 import DuplicateIcon from '../../../../../images/duplicate.svg';
 import ShareIcon from '../../../../../images/share.svg';
 import RenameIcon from '../../../../../images/rename.svg';
-import { SNAPSHOT_DEFAULT_IMG } from '../../../../../constants/pageConstants.js';
 
 import {
   movePageToFolder,

@@ -368,6 +368,7 @@ class Canvas extends React.Component {
           </ReactGridLayout>
         </section>
         <p
+          id="canvas__powered-by"
           className={
             `canvas__powered-by
             ${this.props.isNavigationOpen ? 'canvas__powered-by-right' : ''}`

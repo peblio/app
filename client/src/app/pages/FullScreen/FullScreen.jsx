@@ -57,6 +57,7 @@ class FullScreen extends React.Component {
       });
   }
 
+  /*
   saveHTML = () => {
     const downloadDoc = document.cloneNode(true);
     const head = downloadDoc.head;
@@ -85,17 +86,13 @@ class FullScreen extends React.Component {
 
     const pageHTML = downloadDoc.documentElement.outerHTML;
     const tempEl = document.createElement('a');
-    // tempEl.href = `data:attachment/text,${encodeURI(pageHTML)}`;
-    // tempEl.target = '_blank';
-    // tempEl.download = 'thispage.html';
-    // tempEl.click();
 
     const file = new Blob([(pageHTML)], { type: 'text/html;charset=utf-8;' });
     if (window.navigator.msSaveOrOpenBlob) // IE10+
-    { window.navigator.msSaveOrOpenBlob(file, 'new.html'); } else { // Others
+    {
+      window.navigator.msSaveOrOpenBlob(file, 'new.html');
+    } else { // Others
       const a = document.createElement('a');
-
-
       const url = URL.createObjectURL(file);
       a.href = url;
       a.download = 'new.html';
@@ -107,17 +104,12 @@ class FullScreen extends React.Component {
       }, 0);
     }
   }
-
+*/
   render() {
     return (
       <section
         className="fullscreen__container"
       >
-        <button
-          onClick={this.saveHTML}
-        >
-        SAVE HTML
-        </button>
         <Canvas />
       </section>
     );
