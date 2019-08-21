@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import axios from '../../../../utils/axios';
 import StudentBirthDateDetails from './StudentDetails/StudentBirthDateDetails.jsx';
 import SignUpOption from './SignUpOption.jsx';
 import { setUserName, setUserType, setNextScreen } from '../../../../action/user.js';

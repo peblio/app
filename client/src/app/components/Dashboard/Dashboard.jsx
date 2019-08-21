@@ -96,7 +96,6 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-  blurb: PropTypes.string.isRequired,
   clearSelectedFolders: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   dashboardView: PropTypes.string.isRequired,
@@ -106,7 +105,6 @@ Dashboard.propTypes = {
   fetchUserProfile: PropTypes.func.isRequired,
   folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   jumpToFolderByShortId: PropTypes.func.isRequired,
-  image: PropTypes.string.isRequired,
   isShareModalOpen: PropTypes.bool.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
@@ -122,18 +120,13 @@ Dashboard.propTypes = {
   renamePage: PropTypes.func.isRequired,
   selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   setShareURL: PropTypes.func.isRequired,
-  setUserBlurb: PropTypes.func.isRequired,
-  updateProfileBlurb: PropTypes.func.isRequired,
-  updateUserProfileImage: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    image: state.user.image,
     isShareModalOpen: state.mainToolbar.isShareModalOpen,
     name: state.user.name,
-    blurb: state.user.blurb,
     dashboardView: state.dashboard.dashboardView,
     folders: state.page.folders,
     pages: state.page.pages,

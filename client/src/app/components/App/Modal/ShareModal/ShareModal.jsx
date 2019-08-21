@@ -31,7 +31,7 @@ class Share extends React.Component {
     const scripts = head.getElementsByTagName('script');
     let noScripts = scripts.length;
     while (noScripts) {
-      noScripts--;
+      noScripts -= 1;
       scripts[noScripts].parentNode.removeChild(scripts[noScripts]);
     }
 
@@ -39,7 +39,7 @@ class Share extends React.Component {
     const links = head.getElementsByTagName('link');
     let noLinks = links.length;
     while (noLinks) {
-      noLinks--;
+      noLinks -= 1;
       links[noLinks].parentNode.removeChild(links[noLinks]);
     }
 
@@ -60,8 +60,7 @@ class Share extends React.Component {
     const pageHTML = downloadDoc.documentElement.outerHTML;
 
     const file = new Blob([(pageHTML)], { type: 'text/html;charset=utf-8;' });
-    if (window.navigator.msSaveOrOpenBlob) // IE10+
-    {
+    if (window.navigator.msSaveOrOpenBlob) {
       window.navigator.msSaveOrOpenBlob(file, `${fileName}.html`);
     } else { // Others
       const a = document.createElement('a');
@@ -118,7 +117,6 @@ class Share extends React.Component {
 
 Share.propTypes = {
   id: PropTypes.string.isRequired,
-  pageTitle: PropTypes.string.isRequired,
   shareURL: PropTypes.string.isRequired,
 };
 

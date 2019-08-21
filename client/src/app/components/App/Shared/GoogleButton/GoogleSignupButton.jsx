@@ -49,7 +49,6 @@ GoogleSignupButton.propTypes = {
   onLoginSuccess: PropTypes.func.isRequired,
   onLoginFailure: PropTypes.func.isRequired,
   requiresGuardianConsent: PropTypes.bool.isRequired,
-  userType: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired
 };
 
