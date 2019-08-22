@@ -46,11 +46,15 @@ const config = {
       {
         test: /\.(scss|css)$/,
         use: [
-          { loader: 'style-loader' },
+          { loader: 'style-loader',
+            options: {
+              sourceMap: false
+            }
+          },
           {
             loader: 'css-loader',
             options: {
-              sourceMap: true
+              sourceMap: false
             }
           },
           {
@@ -59,7 +63,7 @@ const config = {
               includePaths: [
                 path.resolve(APP_DIR, 'styles/sass'),
               ],
-              sourceMap: true
+              sourceMap: false
             }
           }
         ]
