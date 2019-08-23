@@ -26,6 +26,47 @@ require('../../../../../styles/base16-light.css');
 
 class CodeEditor extends React.Component {
   componentDidMount() {
+    CodeMirror.defineExtension('autoFormatRange', function (from, to) {
+      const cm = this;
+      const outer = cm.getMode(); const
+        text = cm.getRange(from, to).split('\n');
+      const state = CodeMirror.copyState(outer, cm.getTokenAt(from).state);
+      const tabSize = cm.getOption('tabSize');
+      let out = '';
+      let lines = 0;
+      let atSol = from.ch == 0;
+      function newline() {
+        out += '\n';
+        atSol = true;
+        ++lines;
+      }
+
+      for (let i = 0; i < text.length; ++i) {
+        const stream = new CodeMirror.StringStream(text[i], tabSize);
+        while (!stream.eol()) {
+          const inner = CodeMirror.innerMode(outer, state);
+          const style = outer.token(stream, state); const
+            cur = stream.current();
+          stream.start = stream.pos;
+          if (!atSol || /\S/.test(cur)) {
+            out += cur;
+            atSol = false;
+          }
+
+          if (!atSol && inner.mode.newlineAfterToken &&
+                inner.mode.newlineAfterToken(style, cur, stream.string.slice(stream.pos) || text[i + 1] || '', inner.state)) newline();
+        }
+        if (!stream.pos && outer.blankLine) outer.blankLine(state);
+        if (!atSol)newline();
+      }
+
+      cm.operation(() => {
+        cm.replaceRange(out, from, to);
+        for (let cur = from.line + 1, end = from.line + lines; cur <= end; ++cur) cm.indentLine(cur, 'smart');
+        cm.setSelection(from, cm.getCursor(false));
+      });
+    });
+
     const file = this.props.files[this.props.currentFile];
     this.cm = CodeMirror(this.codemirrorContainer, {
       theme: constants.EDITOR_THEME[this.props.editorTheme],
@@ -49,6 +90,7 @@ class CodeEditor extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
+    // debugger;
     // check if files have changed
     if (this.props.currentFile !== nextProps.currentFile) {
       const file = nextProps.files[nextProps.currentFile];
@@ -67,6 +109,14 @@ class CodeEditor extends React.Component {
     ) {
       this.cm.setValue(nextProps.files[nextProps.currentFile].content);
     }
+  }
+
+  autoformat=() => {
+    const temp = this.cm;
+    const tempcm = this.props;
+    console.log('autoformat');
+    this.cm.autoFormatRange(this.cm.getCursor('start'), this.cm.getCursor('end'));
+    this.props.updateFile(this.props.currentFile, this.cm.getValue());
   }
 
   getFileMode(fileName) {
@@ -92,6 +142,9 @@ class CodeEditor extends React.Component {
   render() {
     return (
       <div>
+        <button onClick={this.autoformat}>
+          Auto Format
+        </button>
         <div ref={(element) => { this.codemirrorContainer = element; }}>
         </div>
       </div>
@@ -119,3 +172,9 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, null)(CodeEditor);
+/*
+function autoFormatSelection() {
+  var range = getSelectedRange();
+  editor.autoFormatRange(range.from, range.to);
+}
+*/
