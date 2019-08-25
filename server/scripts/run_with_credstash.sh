@@ -12,8 +12,8 @@ function get_secret () {
   echo `credstash -r us-east-1 get $1.$ENVIRONMENT environment=$ENVIRONMENT`
 }
 
-if [[ "$ENVIRONMENT" != "local" && "$ENVIRONMENT" != "test" && "$ENVIRONMENT" != "staging" && "$ENVIRONMENT" != "production" ]]; then
-  echo "$ENVIRONMENT is not a valid environment. Please specify local, test, staging, or production as the second argument to this script."
+if [[ "$ENVIRONMENT" != "local" && "$ENVIRONMENT" != "colorfull" && "$ENVIRONMENT" != "test" && "$ENVIRONMENT" != "staging" && "$ENVIRONMENT" != "production" ]]; then
+  echo "$ENVIRONMENT is not a valid environment. Please specify local, colorfull, test, staging, or production as the second argument to this script."
   exit 1
 fi
 

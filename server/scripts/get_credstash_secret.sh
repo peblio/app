@@ -9,8 +9,8 @@ fi
 SECRET_NAME=$1
 ENVIRONMENT=$2
 
-if [[ "$ENVIRONMENT" != "local" && "$ENVIRONMENT" != "test" && "$ENVIRONMENT" != "staging" && "$ENVIRONMENT" != "production" ]]; then
-  echo "Usage: ./get_credstash_secret.sh <name> <local|test|staging|production>"
+if [[ "$ENVIRONMENT" != "local" && "$ENVIRONMENT" != "colorfull" && "$ENVIRONMENT" != "test" && "$ENVIRONMENT" != "staging" && "$ENVIRONMENT" != "production" ]]; then
+  echo "Usage: ./get_credstash_secret.sh <name> <local|colorfull|test|staging|production>"
   echo "$ENVIRONMENT is not a valid environment. Please specify local, test, staging, or production as the third argument to this script."
   exit 1
 fi
