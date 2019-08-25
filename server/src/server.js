@@ -41,7 +41,7 @@ app.use(session({
     secure: false,
   },
   store: new MongoStore({
-    url: 'mongodb://localhost:27017/peblio-colorfull',
+    url: process.env.MONGO_DB_PEBLIO,
     autoReconnect: true
   })
 }));
@@ -81,7 +81,7 @@ function startServer() {
   });
 }
 
-mongoose.connect('mongodb://localhost:27017/peblio-colorfull');
+mongoose.connect(process.env.MONGO_DB_PEBLIO);
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
