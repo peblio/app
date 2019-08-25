@@ -18,6 +18,10 @@ elif [ "$ENVIRONMENT" = "production" ]; then
   BUILD_COMMAND='npm run build:production'
   S3_BUCKET="s3://demo.peblio.co"
   DIST_ID="E5Q4ZYELRS6K6"
+elif [ "$ENVIRONMENT" = "colorfull" ]; then
+  BUILD_COMMAND='npm run build:colorfull'
+  S3_BUCKET="s3://colorfull-media.peblio.co"
+  DIST_ID="E3RDCV7TTBR7CX"
 else
   echo "$ENVIRONMENT is not a valid deployment environment."
   exit 1

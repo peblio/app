@@ -17,7 +17,8 @@ const envFiles = {
   local: '.env',
   test: '.env',
   staging: '.env.staging',
-  production: '.env.production'
+  production: '.env.production',
+  colorfull: '.env.colorfull',
 };
 
 const config = {
