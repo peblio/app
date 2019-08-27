@@ -21,7 +21,7 @@ module.exports = {
     env_colorfull: {
       SERVER_PORT: 8080,
       NODE_ENV: 'production',
-      ENVIRONMENT: 'production'
+      ENVIRONMENT: 'colorfull'
     }
   }]
 };
