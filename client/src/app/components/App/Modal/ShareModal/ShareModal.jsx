@@ -1,6 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {
+  setPreviewMode
+} from '../../../../action/page.js';
 
 require('./shareModal.scss');
 
@@ -12,6 +16,7 @@ class Share extends React.Component {
 
   componentDidMount() {
     this.renderClassroomWidget();
+    this.props.setPreviewMode(true);
   }
 
   copyShareLink() {
@@ -47,7 +52,6 @@ class Share extends React.Component {
     const mainScript = downloadDoc.createElement('script');
     mainScript.setAttribute('src', 'https://s3.amazonaws.com/staging.peblio.co/main.min.js');
     downloadDoc.head.appendChild(mainScript);
-    // debugger;
 
     downloadDoc.body.innerHTML = '';
     const orgC = document.getElementById('content-canvas');
@@ -117,6 +121,7 @@ class Share extends React.Component {
 
 Share.propTypes = {
   id: PropTypes.string.isRequired,
+  setPreviewMode: PropTypes.func.isRequired,
   shareURL: PropTypes.string.isRequired,
 };
 
@@ -125,4 +130,8 @@ const mapStateToProps = state => ({
   id: state.page.id
 });
 
-export default connect(mapStateToProps, null)(Share);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setPreviewMode
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Share);

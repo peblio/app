@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Canvas from '../../components/App/Canvas/Canvas.jsx';
-
-
 import {
   loadPage,
   setPageId,
