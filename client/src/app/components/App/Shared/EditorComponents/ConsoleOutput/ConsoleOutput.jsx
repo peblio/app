@@ -14,7 +14,7 @@ class ConsoleOutput extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const out = document.getElementById('console__output-text');
+    const out = this.output;
     if (out) {
       const isScrolledToBottom = out.scrollHeight - out.clientHeight <= out.scrollTop + 22;
       if (prevState.isScrolledToBottom !== isScrolledToBottom) {
@@ -46,8 +46,8 @@ class ConsoleOutput extends React.Component {
         </nav>
         {this.props.isConsoleOpen && (
           <p
-            id="console__output-text"
             className="console__output-text"
+            ref={(output) => { this.output = output; }}
           >
             {this.props.consoleOutputText.map(output => (
               <div>
