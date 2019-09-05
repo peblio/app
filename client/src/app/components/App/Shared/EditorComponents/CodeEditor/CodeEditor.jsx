@@ -70,13 +70,6 @@ class CodeEditor extends React.Component {
     }
   }
 
-  autoformat=() => {
-    const temp = this.cm;
-    const tempcm = this.props;
-    this.cm.autoFormatRange(this.cm.getCursor('start'), this.cm.getCursor('end'));
-    this.props.updateFile(this.props.currentFile, this.cm.getValue());
-  }
-
   getFileMode(fileName) {
     let mode;
     if (fileName.match(/.+\.js$/i)) {
@@ -95,6 +88,11 @@ class CodeEditor extends React.Component {
       mode = 'text/plain';
     }
     return mode;
+  }
+
+  autoformat=() => {
+    this.cm.autoFormatRange(this.cm.getCursor('start'), this.cm.getCursor('end'));
+    this.props.updateFile(this.props.currentFile, this.cm.getValue());
   }
 
   render() {
@@ -134,26 +132,23 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, null)(CodeEditor);
 
-CodeMirror.defineExtension('autoFormatRange', function (from, to) {
+CodeMirror.defineExtension('autoFormatRange', function (from, to) { // eslint-disable-line
   const cm = this;
   const outer = cm.getMode();
   const text = cm.getValue().split('\n');
   const state = CodeMirror.copyState(outer, cm.getTokenAt(from).state);
   const tabSize = cm.getOption('tabSize');
   let out = '';
-  let lines = 0;
-  let atSol = from.ch == 0;
-  const lines_to = cm.lineCount();
-  const lines_from = 0;
+  let atSol = from.ch === 0;
+  const linesTo = cm.lineCount();
+  const linesFrom = 0;
 
-  console.log(from);
   function newline() {
     out += '\n';
     atSol = true;
-    ++lines;
   }
 
-  for (let i = 0; i < text.length; ++i) {
+  for (let i = 0; i < text.length; i += 1) {
     const stream = new CodeMirror.StringStream(text[i], tabSize);
     while (!stream.eol()) {
       const inner = CodeMirror.innerMode(outer, state);
@@ -166,7 +161,9 @@ CodeMirror.defineExtension('autoFormatRange', function (from, to) {
       }
 
       if (!atSol && inner.mode.newlineAfterToken &&
-            inner.mode.newlineAfterToken(style, cur, stream.string.slice(stream.pos) || text[i + 1] || '', inner.state)) newline();
+            inner.mode.newlineAfterToken(style, cur, stream.string.slice(stream.pos) ||
+            text[i + 1] ||
+            '', inner.state)) newline();
     }
     if (!stream.pos && outer.blankLine) outer.blankLine(state);
     if (!atSol)newline();
@@ -174,7 +171,7 @@ CodeMirror.defineExtension('autoFormatRange', function (from, to) {
 
   cm.operation(() => {
     cm.setValue(out);
-    for (let cur = lines_from + 1, end = lines_to; cur <= end; ++cur) {
+    for (let cur = linesFrom + 1, end = linesTo; cur <= end; cur += 1) {
       cm.indentLine(cur, 'smart');
     }
   });
