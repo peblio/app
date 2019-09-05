@@ -12,6 +12,7 @@ import { saveErrorLog } from './utils/log';
 import rootReducer from './reducers/rootReducer.js';
 import App from './components/App/App.jsx';
 import Dashboard from './components/Dashboard/Dashboard.jsx';
+import PaymentPage from './components/Dashboard/PaymentPage.jsx';
 import Profile from './components/Profile/Profile.jsx';
 import Page404 from './components/Page404/Page404.jsx';
 import withTracker from './withTracker.jsx';
@@ -50,6 +51,7 @@ class Main extends React.Component {
               <Route path="/confirmation" component={withTracker(App)} />
               <Route path="/dashboard/:userName/folder/:folderShortId" component={withTracker(Dashboard)} />
               <Route path="/dashboard/" component={withTracker(Dashboard)} />
+              <Route path="/payment/" component={withTracker(PaymentPage)} />
               <Route path="/profile/:userName/folder/:folderShortId" component={withTracker(Profile)} />
               <Route path="/profile/:userName" component={withTracker(Profile)} />
               <Route path="*" component={withTracker(Page404)} />

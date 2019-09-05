@@ -37,6 +37,10 @@ class UserAccount extends React.Component {
     });
   }
 
+  payment = () => {
+    history.push('/payment');
+  }
+
   projectID = () => {
     const location = this.props.location ? this.props.location.pathname : '';
     const projectID = location.match(/\/pebl\/([\w-].*)/);
@@ -136,6 +140,16 @@ class UserAccount extends React.Component {
                       data-test="user-account__logout-button"
                     >
                     Logout
+                    </button>
+                  </li>
+                  <li className="user-account__list-item">
+                    <button
+                      className="user-account__link"
+                      onMouseDown={this.payment}
+                      onKeyDown={this.payment}
+                      data-test="user-account__payment-button"
+                    >
+                    Payment
                     </button>
                   </li>
                 </ul>

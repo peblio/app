@@ -1,6 +1,7 @@
 require("babel-core/register");
 require("babel-polyfill");
 const mongoose = require('mongoose');
+const stripe = require("stripe")("sk_test_3na5tj3yVy0tO0BsOUj1wM4e00wQHONkBg");
 // use the native Promise object for Mongoose's promises
 mongoose.Promise = Promise;
 const bodyParser = require('body-parser');
@@ -83,6 +84,56 @@ function startServer() {
   });
 }
 
+/* app.post("/charge", function (req, res) {
+  stripe.tokens.create({
+    // card: {
+    //   number: req.body.number,
+    //   exp_month: req.body.exp_month,
+    //   exp_year: req.body.exp_year,
+    //   cvc: req.body.cvc
+    // }
+    card: {
+      number: '4242424242424242',
+      exp_month: 12,
+      exp_year: 2020,
+      cvc: '123'
+    }
+  }).then(token => {
+    let amount = 5 * 100; // 500 cents means $5 
+    // create a customer 
+    stripe.customers.create({
+      email: 'komalahluwalia06@gmail.com', // customer email, which user need to enter while making payment
+      source: token.id // token for the given card 
+    })
+      .then(customer =>
+        stripe.charges.create({ // charge the customer
+          amount,
+          description: "Sample Charge",
+          currency: "usd",
+          customer: customer.id
+        }))
+      .then(charge => res.status(200).send(charge));
+  });
+}); */
+
+app.post("/api/charge", function (req, res) {
+    let amount = 5 * 100; // 500 cents means $5 
+    // create a customer 
+    stripe.customers.create({
+      email: req.body.email, // customer email, which user need to enter while making payment
+      source: req.body.id // token for the given card 
+    })
+      .then(customer =>
+        stripe.charges.create({ // charge the customer
+          amount,
+          description: "Sample Charge",
+          currency: "usd",
+          customer: customer.id
+        }))
+      .then(charge => res.status(200).send(charge));
+});
+
+
 mongoose.connect(process.env.MONGO_DB_PEBLIO);
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
@@ -93,7 +144,7 @@ mongoose.connection.on('open', () => {
   startServer();
 });
 
-expressWs.getWss().on('connection', function(ws, req) {
+expressWs.getWss().on('connection', function (ws, req) {
   ws.request = req;
   ws.uniqueId = req.headers['sec-websocket-key'];
 });
