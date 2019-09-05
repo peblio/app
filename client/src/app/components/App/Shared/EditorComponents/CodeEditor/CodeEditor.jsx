@@ -19,14 +19,11 @@ import 'codemirror/mode/clike/clike';
 import 'codemirror/addon/selection/active-line';
 
 import * as constants from '../../../../../constants/widgetConstants.js';
-import PlaySVG from '../../../../../images/play.svg';
 
 require('../../../../../styles/codemirror.css');
 require('../../../../../styles/base16-dark.css');
 require('../../../../../styles/base16-light.css');
-require('../EditorToolbar/editorToolbar.scss');
 require('./codeEditor.scss');
-
 
 class CodeEditor extends React.Component {
   componentDidMount() {
@@ -136,7 +133,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, null)(CodeEditor);
-
 
 CodeMirror.defineExtension('autoFormatRange', function (from, to) {
   const cm = this;
