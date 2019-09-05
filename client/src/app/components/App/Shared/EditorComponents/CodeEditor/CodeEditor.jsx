@@ -23,6 +23,7 @@ import * as constants from '../../../../../constants/widgetConstants.js';
 require('../../../../../styles/codemirror.css');
 require('../../../../../styles/base16-dark.css');
 require('../../../../../styles/base16-light.css');
+require('./codeEditor.scss');
 
 class CodeEditor extends React.Component {
   componentDidMount() {
@@ -89,9 +90,20 @@ class CodeEditor extends React.Component {
     return mode;
   }
 
+  autoformat=() => {
+    this.cm.autoFormatRange(this.cm.getCursor('start'), this.cm.getCursor('end'));
+    this.props.updateFile(this.props.currentFile, this.cm.getValue());
+  }
+
   render() {
     return (
-      <div>
+      <div className="codeEditor__container">
+        <button
+          className="codeEditor__auto-format editor-toolbar__svg"
+          onClick={this.autoformat}
+        >
+          <i className="fa fa-indent" aria-hidden="true"></i>
+        </button>
         <div ref={(element) => { this.codemirrorContainer = element; }}>
         </div>
       </div>
@@ -119,3 +131,48 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, null)(CodeEditor);
+
+CodeMirror.defineExtension('autoFormatRange', function (from, to) { // eslint-disable-line
+  const cm = this;
+  const outer = cm.getMode();
+  const text = cm.getValue().split('\n');
+  const state = CodeMirror.copyState(outer, cm.getTokenAt(from).state);
+  const tabSize = cm.getOption('tabSize');
+  let out = '';
+  let atSol = from.ch === 0;
+  const linesTo = cm.lineCount();
+  const linesFrom = 0;
+
+  function newline() {
+    out += '\n';
+    atSol = true;
+  }
+
+  for (let i = 0; i < text.length; i += 1) {
+    const stream = new CodeMirror.StringStream(text[i], tabSize);
+    while (!stream.eol()) {
+      const inner = CodeMirror.innerMode(outer, state);
+      const style = outer.token(stream, state); const
+        cur = stream.current();
+      stream.start = stream.pos;
+      if (!atSol || /\S/.test(cur)) {
+        out += cur;
+        atSol = false;
+      }
+
+      if (!atSol && inner.mode.newlineAfterToken &&
+            inner.mode.newlineAfterToken(style, cur, stream.string.slice(stream.pos) ||
+            text[i + 1] ||
+            '', inner.state)) newline();
+    }
+    if (!stream.pos && outer.blankLine) outer.blankLine(state);
+    if (!atSol)newline();
+  }
+
+  cm.operation(() => {
+    cm.setValue(out);
+    for (let cur = linesFrom + 1, end = linesTo; cur <= end; cur += 1) {
+      cm.indentLine(cur, 'smart');
+    }
+  });
+});

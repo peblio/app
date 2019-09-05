@@ -1,0 +1,51 @@
+@import 'variables';
+
+.codeEditor {
+  &__container {
+    position: relative;
+  }
+  &__auto-format {
+    position: absolute;
+    right: 10;
+    bottom: 40;
+    z-index: $z-index-layer-1;
+    border: none;
+    padding: $small-padding;
+  }
+}
+
+.fa-indent {
+  font-size: 20px;
+}
+
+
+.editor__dark{
+  .codeEditor__auto-format {
+    background-color: $g2;
+
+    &:hover {
+      border: none;
+      background-color: $g5;
+    }
+  }
+  .codeEditor__auto-format:hover #playPause {
+    fill: $g2;
+    stroke: none;
+  }
+}
+
+.editor__light{
+  .codeEditor__auto-format {
+    background-color: $g6;
+    .fa-indent {
+      color: $b2;
+    }
+    &:hover {
+      border: none;
+      background-color: $b2;
+      .fa-indent {
+        color: $g6;
+      }
+    }
+  }
+}
