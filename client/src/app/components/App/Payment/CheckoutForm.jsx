@@ -12,7 +12,7 @@ class CheckoutForm extends Component {
   }
 
   async submit() {
-    this.props.makePayment('PRO', this.props.stripe);
+    this.props.makePayment('pro', this.props.stripe);
   }
 
   render() {

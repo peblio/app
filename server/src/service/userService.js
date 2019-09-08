@@ -33,7 +33,7 @@ export function makePayment(req, res) {
       customer: customer.id
     }).then(charge => {
       var expiryDate = new Date();
-      expiryDate.setDate(expiryDate.getDate() + planDefaults.validityDays);
+      expiryDate.setDate(expiryDate.getDate() + parseInt(planDefaults.validityDays));
       User.update({ name: req.body.name },
         {
           paymentPlan: req.body.planName,

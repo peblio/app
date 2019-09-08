@@ -12,7 +12,7 @@
     "prestart": "npm run build",
     "start": "AWS_PROFILE=peblio ./scripts/run_with_credstash.sh nodemon .build/server.js",
     "test": "./node_modules/mocha/bin/mocha --recursive --exit --compilers js:babel-core/register --require babel-polyfill test",
-    "integrationTest": "AWS_PROFILE=peblio ENVIRONMENT=local ./scripts/run_with_credstash.sh ./node_modules/mocha/bin/mocha --recursive --exit --compilers js:babel-core/register --require babel-polyfill integrationTest",
+    "integrationTest": "AWS_PROFILE=peblio ENVIRONMENT=test ./scripts/run_with_credstash.sh ./node_modules/mocha/bin/mocha --recursive --exit --compilers js:babel-core/register --require babel-polyfill integrationTest",
     "allTest": "npm test && npm run integrationTest"
   },
   "author": "",

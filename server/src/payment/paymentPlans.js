@@ -1,5 +1,5 @@
 export default {
-    "PRO": {
+    "pro": {
         price: 500,
         priceUnit: 'cents',
         currency: 'usd',
