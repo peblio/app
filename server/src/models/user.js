@@ -32,6 +32,11 @@ const userSchema = new Schema({
     enum: ['student', 'teacher', 'other'],
     required: true
   },
+  paymentPlan: {
+    type: String,
+    enum: ['FREE', 'PRO'],
+  },
+  expiresAt: { type: Date },
   password: {
     type: String,
     index: true,

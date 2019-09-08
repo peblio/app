@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import PropTypes from 'prop-types';
-import axios from '../../../utils/axios';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { makePayment } from '../../../action/profile';
 
 class CheckoutForm extends Component {
   constructor(props) {
@@ -9,18 +11,8 @@ class CheckoutForm extends Component {
     this.submit = this.submit.bind(this);
   }
 
-  async submit(ev) {
-    const tokenResponse = await this.props.stripe.createToken({ name: 'Name' });
-    console.log('Token', tokenResponse);
-    const data = {
-      email: 'komalahluwalia06@gmail.com',
-      id: tokenResponse.token.id
-    };
-    axios.post('/charge', data)
-      .then((response) => {
-        console.log('Purchase Complete!');
-        console.log(response);
-      });
+  async submit() {
+    this.props.makePayment('PRO', this.props.stripe);
   }
 
   render() {
@@ -34,8 +26,16 @@ class CheckoutForm extends Component {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    makePayment
+  }, dispatch);
+}
+
 CheckoutForm.propTypes = {
-  stripe: PropTypes.func.isRequired,
+  stripe: PropTypes.object.isRequired,
+  makePayment: PropTypes.func.isRequired,
 };
 
-export default injectStripe(CheckoutForm);
+
+export default (connect(null, mapDispatchToProps)(injectStripe(CheckoutForm)));

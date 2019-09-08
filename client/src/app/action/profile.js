@@ -3,7 +3,6 @@ import axios from '../utils/axios';
 import history from '../utils/history';
 import { namespaceActionCreators } from '../utils/namespace-redux';
 import * as folderActions from './folders';
-import * as pageActions from './page';
 
 export function setIsOwner(value) {
   return (dispatch) => {
@@ -25,6 +24,25 @@ export function fetchProfile(userName) {
         history.push('/404');
       }
     });
+}
+
+export function makePayment(planName, stripe) {
+  return (dispatch, getState) => {
+    const { user } = getState();
+    return stripe.createToken({ name: user.name }).then((tokenResponse) => {
+      console.log('Token', tokenResponse);
+      const data = {
+        name: user.name,
+        id: tokenResponse.token.id,
+        planName
+      };
+      axios.post('/users/payment', data)
+        .then((response) => {
+          console.log('Purchase Complete!');
+          console.log(response);
+        });
+    });
+  };
 }
 
 const profileFolderActions = namespaceActionCreators(folderActions, 'PROFILE_FOLDERS');

@@ -1,5 +1,7 @@
 const User = require('../models/user.js');
 const Page = require('../models/page.js');
+const stripe = require("stripe")("sk_test_3na5tj3yVy0tO0BsOUj1wM4e00wQHONkBg");
+import paymentPlans from '../payment/paymentPlans';
 
 export function getUserProfile(req, res) {
   User.findOne({ name: req.params.userName }, (err, user) => {
@@ -15,6 +17,37 @@ export function getUserProfile(req, res) {
         isOwner: !!(req.user && req.user.name && req.user.name === user.name)
       });
     }
+  });
+}
+
+export function makePayment(req, res) {
+  const planDefaults = paymentPlans[req.body.planName];
+  stripe.customers.create({
+    name: req.body.name,
+    source: req.body.id
+  }).then(customer => {
+    stripe.charges.create({ 
+      amount: planDefaults.price,
+      description: `Charge for ${req.body.planName} for customer ${req.body.name}`,
+      currency: planDefaults.currency,
+      customer: customer.id
+    }).then(charge => {
+      var expiryDate = new Date();
+      expiryDate.setDate(expiryDate.getDate() + planDefaults.validityDays);
+      User.update({ name: req.body.name },
+        {
+          paymentPlan: req.body.planName,
+          expiresAt: expiryDate
+        },
+        (err, data) => {
+          if (err) {
+            return res.status(500).send(err);
+          }
+          else {
+            return res.status(200).send(charge);
+          }
+        });
+    });
   });
 }
 
