@@ -42,7 +42,7 @@ describe('Shared component Documents', () => {
     expect(wrapper.find('.editor-toolbar__file-button').first().text()).to.equal('test.js');
   });
 
-  it.only('check that deleteFile is called on clicking delete', () => {
+  it('check that deleteFile is called on clicking delete', () => {
     const jsdomConfirm = window.confirm; // remember the jsdom alert
     window.confirm = () => true;
     wrapper = shallow(<EditorFile {...props} />);
