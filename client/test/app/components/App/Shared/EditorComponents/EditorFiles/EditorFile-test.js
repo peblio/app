@@ -42,15 +42,17 @@ describe('Shared component Documents', () => {
     expect(wrapper.find('.editor-toolbar__file-button').first().text()).to.equal('test.js');
   });
 
-  it('check that deleteFile is called on clicking delete', () => {
+  it.only('check that deleteFile is called on clicking delete', () => {
     const jsdomConfirm = window.confirm; // remember the jsdom alert
     window.confirm = () => true;
     wrapper = shallow(<EditorFile {...props} />);
-    const instance = wrapper.instance();
     const e = {
       stopPropagation: () => undefined
     };
-    instance.deleteFile(e, props.index);
+    expect(wrapper.find('.editor-toolbar__file-button-option')).to.have.lengthOf(1);
+    wrapper.find('.editor-toolbar__file-button-option').first().simulate('mousedown');
+    expect(wrapper.find('.editor-toolbar__file-button-delete')).to.have.lengthOf(1);
+    wrapper.find('.editor-toolbar__file-button-delete').first().simulate('mousedown', e);
     expect(props.deleteFileFromEditor.mock.calls.length).to.equal(1);
     window.confirm = jsdomConfirm;
   });

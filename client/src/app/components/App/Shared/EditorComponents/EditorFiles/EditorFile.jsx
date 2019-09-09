@@ -88,7 +88,7 @@ class EditorFile extends React.Component {
                   role="presentation"
                 >
                   <button
-                    className="editor-toolbar__file-button"
+                    className="editor-toolbar__file-button editor-toolbar__file-button-delete"
                     onMouseDown={(e) => { this.deleteFile(e, this.props.index); }}
                     onKeyDown={(e) => { this.deleteFile(e, this.props.index); }}
                     data-test="widget__delete"
