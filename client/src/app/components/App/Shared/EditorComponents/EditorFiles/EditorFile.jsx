@@ -61,6 +61,7 @@ class EditorFile extends React.Component {
           </button>
           {!this.props.file.name.match(HTML_FILE_REGEX) && ( //eslint-disable-line
             <div
+              role="presentation"
               onClick={(e) => {
                 this.focusOnButton(e);
               }}
