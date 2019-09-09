@@ -21,7 +21,7 @@ class EditorFile extends React.Component {
 
   deleteFile = (e, index) => {
     e.stopPropagation();
-    if (confirm('Are you sure you want to delete this file?')) { // eslint-disable-line no-restricted-globals
+    if (window.confirm('Are you sure you want to delete this file?')) { // eslint-disable-line no-restricted-globals
       this.props.deleteFileFromEditor(index);
     }
   }
@@ -31,7 +31,7 @@ class EditorFile extends React.Component {
   }
 
   focusOnButton(event) {
-    document.getElementById('test').focus();
+    event.target.focus();
   }
 
   render() {
@@ -61,7 +61,6 @@ class EditorFile extends React.Component {
           </button>
           {!this.props.file.name.match(HTML_FILE_REGEX) && ( //eslint-disable-line
             <div
-              id="test"
               onClick={(e) => {
                 this.focusOnButton(e);
               }}
@@ -72,7 +71,7 @@ class EditorFile extends React.Component {
               }}
             >
               <button
-                className="editor-toolbar__file-button"
+                className="editor-toolbar__file-button editor-toolbar__file-button-option"
                 onMouseDown={(e) => {
                   this.toggleFileOption();
                 }}
@@ -93,7 +92,6 @@ class EditorFile extends React.Component {
                     onMouseDown={(e) => { this.deleteFile(e, this.props.index); }}
                     onKeyDown={(e) => { this.deleteFile(e, this.props.index); }}
                     data-test="widget__delete"
-
                   >
                     Delete
                   </button>
@@ -112,10 +110,10 @@ class EditorFile extends React.Component {
 EditorFile.propTypes = {
   currentFile: PropTypes.number.isRequired,
   deleteFileFromEditor: PropTypes.func.isRequired,
-  file: PropTypes.arrayOf(PropTypes.shape({
+  file: PropTypes.shape({
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired
-  })).isRequired,
+  }).isRequired,
   id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   isImage: PropTypes.bool.isRequired,
