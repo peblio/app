@@ -206,18 +206,20 @@ export class InsertToolbar extends React.Component {
             Image
           </button>
         </div>
-        <div className="insert-toolbar__container-right">
-          <button
-            onMouseDown={this.props.togglePageVersion}
-            onKeyDown={this.props.togglePageVersion}
-            id="elementButton"
-            className={`insert-toolbar__button
+        {this.props.canEdit && (
+          <div className="insert-toolbar__container-right">
+            <button
+              onMouseDown={this.props.togglePageVersion}
+              onKeyDown={this.props.togglePageVersion}
+              id="elementButton"
+              className={`insert-toolbar__button
               ${(this.props.isPageVersionOpen) ? 'insert-toolbar__button--highlighted' : ''}`}
-            data-test="insert-toolbar__show-page-version"
-          >
-            <HistorySVG alt="show page version" />
-          </button>
-        </div>
+              data-test="insert-toolbar__show-page-version"
+            >
+              <HistorySVG alt="show page version" />
+            </button>
+          </div>
+        )}
       </div>
     );
   }
@@ -230,11 +232,13 @@ InsertToolbar.propTypes = {
   addTextEditor: PropTypes.func.isRequired,
   addQuestionEditor: PropTypes.func.isRequired,
   addVideo: PropTypes.func.isRequired,
+  canEdit: PropTypes.bool.isRequired,
   isPageVersionOpen: PropTypes.bool.isRequired,
   togglePageVersion: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
+  canEdit: state.user.canEdit,
   isPageVersionOpen: state.pageVersion.isPageVersionOpen
 });
 

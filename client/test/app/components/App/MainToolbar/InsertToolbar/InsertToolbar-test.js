@@ -21,6 +21,7 @@ describe('InsertToolbar', () => {
     togglePageVersionMock = sandbox.mock();
     props = {
       togglePageVersion: togglePageVersionMock,
+      canEdit: true
     };
   });
 
