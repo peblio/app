@@ -10,7 +10,8 @@ import {
   setDocumentView,
   searchByTitle,
   clearSearchByTitle,
-  toggleAddNewMenu
+  toggleAddNewMenu,
+  loadMemoryConsumed
 } from '../../../action/dashboard.js';
 import {
   createFolder,
@@ -31,6 +32,7 @@ class Nav extends React.Component {
   }
 
   componentWillMount() {
+    this.props.loadMemoryConsumed();
     if (window.location.pathname.includes('profile')) {
       this.props.setDashboardView('profile');
     }
@@ -119,6 +121,19 @@ renderDocumentViewList = (displaySVG, documentView) => {
   );
 }
 
+getMemoryConsumedMessage = () => {
+  console.log('this.props.memoryConsumed', this.props.memoryConsumed);
+  return (
+    <span>
+      Memory Consumed
+      {' '}
+      {this.props.memoryConsumed}
+      {' '}
+      Bytes
+    </span>
+  );
+}
+
 render() {
   const navClass = classNames('dashboard-nav__container ', {
     'dashboard-nav__white-back': (this.props.dashboardView === 'documents')
@@ -150,6 +165,7 @@ render() {
               View Profile
             </a>
           )}
+          {this.getMemoryConsumedMessage()}
         </div>
       )}
 
@@ -245,7 +261,9 @@ Nav.propTypes = {
   toggleAddNewMenu: PropTypes.func.isRequired,
   searchByTitle: PropTypes.func.isRequired,
   clearSearchByTitle: PropTypes.func.isRequired,
-  userType: PropTypes.string.isRequired
+  userType: PropTypes.string.isRequired,
+  loadMemoryConsumed: PropTypes.func.isRequired,
+  memoryConsumed: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -256,7 +274,8 @@ function mapStateToProps(state) {
     parentFolderId: state.dashboard.parentFolderId,
     isAddNewMenuOpen: state.dashboard.isAddNewMenuOpen,
     selectedFolderIds: state.page.selectedFolderIds,
-    userType: state.user.type
+    userType: state.user.type,
+    memoryConsumed: state.dashboard.memoryConsumed,
   };
 }
 
@@ -268,7 +287,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setDocumentSort,
   searchByTitle,
   clearSearchByTitle,
-  toggleAddNewMenu
+  toggleAddNewMenu,
+  loadMemoryConsumed
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav);
