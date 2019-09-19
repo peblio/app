@@ -3,8 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Progress } from 'reactstrap';
-
+import Progress from 'react-progressbar';
 import {
   setDashboardView,
   setDocumentSort,
@@ -131,7 +130,7 @@ getMemoryConsumedMessage = () => {
       {memoryConsumedInMegaBytes}
       {' '}
       {'MB out of 1024 MB'}
-      <Progress value={memoryConsumedInMegaBytes * 100 / 1024} color="success" />
+      <Progress completed={memoryConsumedInMegaBytes * 100 / 1024} />
     </span>
   );
 };
