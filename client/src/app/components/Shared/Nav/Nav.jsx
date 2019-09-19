@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Progress } from 'reactstrap';
 
 import {
   setDashboardView,
@@ -122,17 +123,18 @@ renderDocumentViewList = (displaySVG, documentView) => {
 }
 
 getMemoryConsumedMessage = () => {
-  console.log('this.props.memoryConsumed', this.props.memoryConsumed);
+  const memoryConsumedInMegaBytes = (this.props.memoryConsumed / 1000000).toFixed(2);
   return (
     <span>
       Memory Consumed
       {' '}
-      {this.props.memoryConsumed}
+      {memoryConsumedInMegaBytes}
       {' '}
-      Bytes
+      {'MB out of 1024 MB'}
+      <Progress value={memoryConsumedInMegaBytes * 100 / 1024} color="success" />
     </span>
   );
-}
+};
 
 render() {
   const navClass = classNames('dashboard-nav__container ', {
