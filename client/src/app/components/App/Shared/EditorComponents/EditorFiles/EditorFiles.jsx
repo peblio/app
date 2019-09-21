@@ -7,7 +7,8 @@ import axios from '../../../../../utils/axios';
 import EditorFile from './EditorFile.jsx';
 import FileUpload from '../../FileUpload/FileUpload.jsx';
 
-const MEDIA_FILE_REGEX = /.+\.(gif|jpg|jpeg|png|bmp)$/i;
+import { MEDIA_FILE_REGEX } from '../../../../../constants/widgetConstants.js';
+
 const CODE_FILE_REGEX = /.+\.(csv|txt|json|js|css)$/i;
 
 require('./editorFiles.scss');
