@@ -1,7 +1,8 @@
 const User = require('../models/user.js');
+const Contribution = require('../models/contribution.js');
 const Page = require('../models/page.js');
 const stripe = require("stripe")("sk_test_3na5tj3yVy0tO0BsOUj1wM4e00wQHONkBg");
-import paymentPlans from '../payment/paymentPlans';
+import contributionConstants from '../payment/contributionConstants';
 
 export function getUserProfile(req, res) {
   User.findOne({ name: req.params.userName }, (err, user) => {
@@ -21,32 +22,30 @@ export function getUserProfile(req, res) {
 }
 
 export function makePayment(req, res) {
-  const planDefaults = paymentPlans[req.body.planName];
+  var planDefaults;
+  if(req.body.contributeConstant){
+    planDefaults = contributionConstants[req.body.contributeConstant];
+  }else {
+    planDefaults = contributionConstants['non-predefined-contribute'];
+    planDefaults.price = req.body.amountInCents;
+  }
   stripe.customers.create({
     name: req.body.name,
     source: req.body.id
   }).then(customer => {
     stripe.charges.create({ 
       amount: planDefaults.price,
-      description: `Charge for ${req.body.planName} for customer ${req.body.name}`,
+      description: `Charge for ${req.body.contributeConstant} for customer ${req.body.name}`,
       currency: planDefaults.currency,
       customer: customer.id
     }).then(charge => {
-      var expiryDate = new Date();
-      expiryDate.setDate(expiryDate.getDate() + parseInt(planDefaults.validityDays));
-      User.update({ name: req.body.name },
-        {
-          paymentPlan: req.body.planName,
-          expiresAt: expiryDate
-        },
-        (err, data) => {
-          if (err) {
-            return res.status(500).send(err);
-          }
-          else {
-            return res.status(200).send(charge);
-          }
-        });
+      const contribution = new Contribution({ name: req.body.name , amountInCents: planDefaults.price, contributionId: planDefaults.name, stripeResponseId:  charge.id });
+      return contribution.save((contributionSaveError) => {
+        if (contributionSaveError) {
+          return res.status(500).send(contributionSaveError);
+        }
+        return res.status(200).send(charge);
+      });
     });
   });
 }

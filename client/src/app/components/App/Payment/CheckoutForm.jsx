@@ -12,7 +12,8 @@ class CheckoutForm extends Component {
   }
 
   async submit() {
-    this.props.makePayment('pro', this.props.stripe);
+    this.props.makePayment('contribute10', this.props.stripe);
+    // this.props.makePayment('non-predefined-contribute', this.props.stripe, 35000);
   }
 
   render() {

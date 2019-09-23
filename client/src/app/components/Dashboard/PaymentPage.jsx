@@ -13,9 +13,9 @@ class PaymentPage extends React.Component {
   }
 
   render() {
-    console.log('rendered');
+    console.log('rendered', process.env.STRIPE_PUBLISHABLE_KEY);
     return (
-      <StripeProvider apiKey="pk_test_9tSHnj3NTrLMsz2qOWYy4fn700dtmhzIa2">
+      <StripeProvider apiKey={process.env.STRIPE_PUBLISHABLE_KEY}>
         <div className="example">
           <h1>React Stripe Elements Example</h1>
           <Elements>

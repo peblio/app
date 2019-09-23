@@ -26,19 +26,18 @@ export function fetchProfile(userName) {
     });
 }
 
-export function makePayment(planName, stripe) {
+export function makePayment(contributeConstant, stripe, amountInCents) {
   return (dispatch, getState) => {
     const { user } = getState();
     return stripe.createToken({ name: user.name }).then((tokenResponse) => {
-      console.log('Token', tokenResponse);
       const data = {
         name: user.name,
         id: tokenResponse.token.id,
-        planName
+        contributeConstant,
+        amountInCents
       };
       axios.post('/users/payment', data)
         .then((response) => {
-          console.log('Purchase Complete!');
           console.log(response);
         });
     });
