@@ -30,6 +30,7 @@ PEBLIO_DOMAIN_NAME=`get_secret domain.name`$'\n'\
 PEBLIO_COOKIE_DOMAIN=`get_secret cookie.domain`$'\n'\
 PEBLIO_COOKIE_NAME=`get_secret cookie.name`$'\n'\
 AWS_PROFILE=peblio$'\n'\
+STRIPE_KEY=`get_secret stripe.key`$'\n'\
 PEBLIO_SESSION_SECRET=`get_secret session.secret`\
 > .env
 

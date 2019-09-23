@@ -1,7 +1,7 @@
 const User = require('../models/user.js');
 const Contribution = require('../models/contribution.js');
 const Page = require('../models/page.js');
-const stripe = require("stripe")("sk_test_3na5tj3yVy0tO0BsOUj1wM4e00wQHONkBg");
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 import contributionConstants from '../payment/contributionConstants';
 
 export function getUserProfile(req, res) {
