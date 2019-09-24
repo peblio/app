@@ -12,7 +12,7 @@ import { saveErrorLog } from './utils/log';
 import rootReducer from './reducers/rootReducer.js';
 import App from './components/App/App.jsx';
 import Dashboard from './components/Dashboard/Dashboard.jsx';
-import PaymentPage from './components/Dashboard/PaymentPage.jsx';
+import PaymentPage from './components/Payment/PaymentPage.jsx';
 import Profile from './components/Profile/Profile.jsx';
 import Page404 from './components/Page404/Page404.jsx';
 import withTracker from './withTracker.jsx';
