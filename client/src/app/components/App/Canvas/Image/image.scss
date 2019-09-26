@@ -189,4 +189,24 @@
     box-sizing: border-box;
     box-shadow: 0 -5px 20px -10px $black;
   }
+  &__upload-button {
+    position: absolute;
+    background: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    opacity: 0.5;
+    & #grayShape {
+      fill: $white;
+    }
+    &:hover {
+      background: transparent;
+      border: none;
+      display: block;
+      opacity: 1;
+    }
+  }
 }
