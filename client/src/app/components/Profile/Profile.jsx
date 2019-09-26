@@ -27,9 +27,6 @@ class Profile extends React.Component {
         <TopNav
           container="profile"
         />
-        <Nav
-          container="profile"
-        />
         <div className="profile__container">
           <div className="profile__user-container">
             <div className="profile__image-container">

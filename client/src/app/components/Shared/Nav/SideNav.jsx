@@ -21,12 +21,11 @@ import PeblioLogo from '../../../images/logo.svg';
 import Block from '../../../images/block.svg';
 import Line from '../../../images/stack.svg';
 import PlusIcon from '../../../images/plus.svg';
-import SideNav from './SideNav.jsx';
 
 import './nav.scss';
 
 
-class Nav extends React.Component {
+class SideNav extends React.Component {
   constructor(props) {
     super(props);
     this.titleSearch = {};
@@ -137,89 +136,42 @@ getMemoryConsumedMessage = () => {
 };
 
 render() {
-  const navClass = classNames('dashboard-nav__container ', {
+  const navClass = classNames('dashboard-side-nav__container ', {
     'dashboard-nav__white-back': (this.props.dashboardView === 'documents')
   });
   return (
-    <div className={classNames(navClass)}>
-      <SideNav />
-
-      {this.props.dashboardView === 'documents' && (
-        <div className="dashboard-nav__lower-container">
-          <div className="dashboard-nav__dropdown-container">
-            <div className="dashboard-nav__dropdown-sub-container">
-              <input
-                type="text"
-                className="dashboard-nav__title-search"
-                placeholder="Search"
-                onChange={this.searchByTitle}
-                ref={(ts) => { this.titleSearch = ts; }}
-              />
-              <div className="dashboard-nav__sub-container">
-                <p className="dashboard-nav__dropdown-label">
-              Arrange By
-                </p>
-                <select
-                  className="dashboard-nav__dropdown"
-                  id="dashboard-sort"
-                  name="dashboard-sort"
-                  onChange={this.setDocumentSort}
-                  ref={(dashboardSort) => { this.dashboardSort = dashboardSort; }}
-                  value={this.props.documentSort}
-                >
-                  <option value="title">Title</option>
-                  <option value="-updatedAt">Updated At</option>
-                </select>
-              </div>
-              <button className="dashboard-nav__clear-link" onClick={this.clearSearchText}>
-                Clear Filter
-              </button>
-            </div>
-            <div className="dashboard-nav__new-container">
-              <button
-                className="dashboard-nav__add-button"
-                onMouseDown={this.props.toggleAddNewMenu}
-                onKeyDown={this.props.toggleAddNewMenu}
-                onBlur={() => {
-                  setTimeout(() => {
-                    if (this.props.isAddNewMenuOpen) {
-                      this.props.toggleAddNewMenu();
-                    }
-                  }, 50);
-                }}
-              >
-                <PlusIcon />
-                {' '}
-                Add New
-              </button>
-              {this.props.isAddNewMenuOpen && (
-                <ul className="dashboard-nav__sub-button-container">
-                  <button
-                    className="dashboard-nav__add-sub-button"
-                    onMouseDown={this.createPage}
-                    onKeyDown={this.createPage}
-                  >
-                  File
-                  </button>
-                  <button
-                    className="dashboard-nav__add-sub-button"
-                    onMouseDown={this.createFolder}
-                    onKeyDown={this.createFolder}
-                  >
-                    Folder
-                  </button>
-                </ul>
-              )}
-            </div>
+    <div className="dashboard-side-nav__container">
+      <div className="dashboard-nav__lower-container dashboard-nav__top-nav">
+        <ul className="dashboard-nav__list">
+          {this.renderListItem('Documents', 'documents')}
+          {this.renderListItem('Account', 'account')}
+          {this.renderListItem('Trash', 'trash')}
+          {this.props.userType === 'student' || this.renderListItem('Profile', 'profile')}
+        </ul>
+        {(this.props.dashboardView === 'documents' || this.props.dashboardView === 'trash') && (
+          <div className="dashboard-nav__list">
+            {this.renderDocumentViewList(PeblioLogo, 'block')}
+            {this.renderDocumentViewList(PeblioLogo, 'line')}
           </div>
-        </div>
-      )}
+        )}
+        {(this.props.dashboardView === 'profile') && (
+          <a
+            className="dashboard-nav__profile-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            href={`/profile/${this.props.name}`}
+          >
+              View Profile
+          </a>
+        )}
+        {this.getMemoryConsumedMessage()}
+      </div>
     </div>
   );
 }
 }
 
-Nav.propTypes = {
+SideNav.propTypes = {
   container: PropTypes.string.isRequired,
   createFolder: PropTypes.func.isRequired,
   createPage: PropTypes.func.isRequired,
@@ -266,4 +218,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   loadMemoryConsumed
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Nav);
+export default connect(mapStateToProps, mapDispatchToProps)(SideNav);
