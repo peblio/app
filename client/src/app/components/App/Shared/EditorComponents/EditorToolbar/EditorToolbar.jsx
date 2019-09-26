@@ -35,13 +35,6 @@ class EditorToolbar extends React.Component {
       { isEditorViewOpen: !prevState.isEditorViewOpen }));
   }
 
-  deleteFile = (e, index) => {
-    e.stopPropagation();
-    if (confirm('Are you sure you want to delete this file?')) { // eslint-disable-line no-restricted-globals
-      this.props.deleteFileFromEditor(index);
-    }
-  }
-
   renderEditorSizeIcon = () => {
     if (this.props.isWidgetFullScreenMode) {
       return (
@@ -193,7 +186,6 @@ class EditorToolbar extends React.Component {
 
 EditorToolbar.propTypes = {
   container: PropTypes.string.isRequired,
-  deleteFileFromEditor: PropTypes.func.isRequired,
   editorMode: PropTypes.string.isRequired,
   editorView: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
