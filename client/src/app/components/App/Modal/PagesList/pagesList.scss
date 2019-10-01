@@ -227,6 +227,9 @@
   background: none;
   float: right;
   fill: $medium-gray;
+  & path {
+    fill: $medium-gray;
+  }
 
   &:hover {
     border: none;

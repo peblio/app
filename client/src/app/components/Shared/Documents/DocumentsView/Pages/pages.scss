@@ -15,6 +15,10 @@
       box-shadow:0 0px 7px rgba(0, 0, 0, 0.8);
     }
     &:hover .profile-pebl__overlay{
+      background: none;
+      border-top: none;
+    }
+    &:hover .profile-pebl__overlay-title {
       display: none;
     }
   }
