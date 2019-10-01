@@ -144,9 +144,9 @@
   }
   &__add-button {
     @extend %peblio-button;
-    padding: 0 $small-padding;
+    padding: $small-padding/2 $small-padding;
     margin: 0;
-    border-radius: 0;
+    border-radius: $small-border-radius;
     display: flex;
     align-items: baseline;
     &:hover {
@@ -203,6 +203,12 @@
     padding: 0;
     margin: $large-margin 0;
     border-bottom: solid $g5 $small-border;
+  }
+  &__list-item {
+    padding: 0 $small-padding;
+  }
+  &__list-item--selected {
+    background-color: $g6;
   }
   &__memory-heading {
     font-size: $medium-font-size;

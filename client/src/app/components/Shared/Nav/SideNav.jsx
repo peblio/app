@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -17,9 +16,6 @@ import {
   createFolder,
   createPage
 } from '../../../action/page.js';
-import PeblioLogo from '../../../images/logo.svg';
-import Block from '../../../images/block.svg';
-import Line from '../../../images/stack.svg';
 import PlusIcon from '../../../images/plus.svg';
 
 import './nav.scss';
@@ -41,9 +37,9 @@ class SideNav extends React.Component {
   renderListItem=(displayText, viewName) => {
     const isCurrentDashboardView = this.props.dashboardView === viewName;
     return (
-      <li className="dashboard-side-nav__list-item">
+      <li className={`dashboard-side-nav__list-item ${(isCurrentDashboardView) ? 'dashboard-side-nav__list-item--selected' : ''}`}>
         <button
-          className={`dashboard-side-nav__button ${(isCurrentDashboardView) ? 'dashboard-nav__button--selected' : ''}`}
+          className="dashboard-side-nav__button"
           onClick={() => { this.props.setDashboardView(viewName); }}
         >
           {displayText}
@@ -164,18 +160,14 @@ class SideNav extends React.Component {
 }
 
 SideNav.propTypes = {
-  container: PropTypes.string.isRequired,
   createFolder: PropTypes.func.isRequired,
   createPage: PropTypes.func.isRequired,
   dashboardView: PropTypes.string.isRequired,
-  documentSort: PropTypes.string.isRequired,
-  documentView: PropTypes.string.isRequired,
   isAddNewMenuOpen: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   name: PropTypes.string.isRequired,
   setDocumentSort: PropTypes.func.isRequired,
   setDashboardView: PropTypes.func.isRequired,
-  setDocumentView: PropTypes.func.isRequired,
   selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   toggleAddNewMenu: PropTypes.func.isRequired,
   searchByTitle: PropTypes.func.isRequired,
@@ -189,7 +181,6 @@ function mapStateToProps(state) {
   return {
     name: state.user.name,
     dashboardView: state.dashboard.dashboardView,
-    documentView: state.dashboard.documentView,
     parentFolderId: state.dashboard.parentFolderId,
     isAddNewMenuOpen: state.dashboard.isAddNewMenuOpen,
     selectedFolderIds: state.page.selectedFolderIds,
