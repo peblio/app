@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Progress from 'react-progressbar';
 import {
   setDashboardView,
   setDocumentSort,
@@ -122,31 +121,13 @@ renderDocumentViewList = (displaySVG, documentView) => {
   );
 }
 
-getMemoryConsumedMessage = () => {
-  const memoryConsumedInMegaBytes = (this.props.memoryConsumed / 1000000).toFixed(2);
-  return (
-    <span>
-      Memory Consumed
-      {' '}
-      {memoryConsumedInMegaBytes}
-      {' '}
-      {'MB out of 1024 MB'}
-      <Progress completed={memoryConsumedInMegaBytes * 100 / 1024} />
-    </span>
-  );
-};
-
 render() {
-  const navClass = classNames('dashboard-nav__container ', {
-    'dashboard-nav__white-back': (this.props.dashboardView === 'documents')
-  });
   return (
-    <div className={classNames(navClass)}>
-      <SideNav />
+    <div className="dashboard-nav__container">
 
-      {this.props.dashboardView === 'documents' && (
-        <div className="dashboard-nav__lower-container">
-          <div className="dashboard-nav__dropdown-container">
+      <div className="dashboard-nav__lower-container">
+        <div className="dashboard-nav__dropdown-container">
+          {this.props.dashboardView === 'documents' && (
             <div className="dashboard-nav__dropdown-sub-container">
               <input
                 type="text"
@@ -175,45 +156,17 @@ render() {
                 Clear Filter
               </button>
             </div>
-            <div className="dashboard-nav__new-container">
-              <button
-                className="dashboard-nav__add-button"
-                onMouseDown={this.props.toggleAddNewMenu}
-                onKeyDown={this.props.toggleAddNewMenu}
-                onBlur={() => {
-                  setTimeout(() => {
-                    if (this.props.isAddNewMenuOpen) {
-                      this.props.toggleAddNewMenu();
-                    }
-                  }, 50);
-                }}
-              >
-                <PlusIcon />
-                {' '}
-                Add New
-              </button>
-              {this.props.isAddNewMenuOpen && (
-                <ul className="dashboard-nav__sub-button-container">
-                  <button
-                    className="dashboard-nav__add-sub-button"
-                    onMouseDown={this.createPage}
-                    onKeyDown={this.createPage}
-                  >
-                  File
-                  </button>
-                  <button
-                    className="dashboard-nav__add-sub-button"
-                    onMouseDown={this.createFolder}
-                    onKeyDown={this.createFolder}
-                  >
-                    Folder
-                  </button>
-                </ul>
-              )}
+          )}
+          {(this.props.dashboardView === 'documents' || this.props.dashboardView === 'trash') && (
+            <div className="dashboard-nav__list">
+              {this.renderDocumentViewList(PeblioLogo, 'block')}
+              {this.renderDocumentViewList(PeblioLogo, 'line')}
             </div>
-          </div>
+          )}
+
         </div>
-      )}
+      </div>
+
     </div>
   );
 }

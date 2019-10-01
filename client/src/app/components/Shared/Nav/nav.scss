@@ -5,15 +5,41 @@
   &__new-container {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    position: relative;
+    width: fit-content;
+  }
+  &__sub-button-container {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    z-index: $z-index-layer-4;
+    background: $g7;
+    box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+    -moz-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+    -webkit-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
+    width: 100%;
+    bottom: -80px;
+  }
+  &__add-sub-button {
+    padding: $small-padding;
+    background: transparent;
+    color: $g2;
+    border: 0;
+    font-size: $toolbar-font-size;
+    line-height: $p-line-height;
+    text-align: left;
+    &:hover {
+      border: 0;
+      background: transparent;
+      color: $green;
+    }
   }
   &__container {
     display: flex;
     flex-direction: column;
     width: 100%;
-  }
-  &__white-back {
-    background: $white;
   }
   &__upper-container {
     display: flex;
@@ -107,9 +133,10 @@
   &__dropdown-container {
     display: flex;
     flex-direction: row;
-    padding: $medium-padding 0;
+    padding: $large-padding 0;
     width: 100%;
     justify-content: space-between;
+    align-items: center;
   }
   &__dropdown-sub-container {
     display: flex;
@@ -133,31 +160,6 @@
     margin: 0;
     margin-right: $medium-margin;
   }
-  &__sub-button-container {
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    margin: 0;
-    z-index: $z-index-layer-4;
-    background: $g7;
-    box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
-    -moz-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
-    -webkit-box-shadow: 0px $shadow-v-offset $shadow-blur $boxShadow-gray;
-  }
-  &__add-sub-button {
-    padding: 0 $small-padding;
-    background: transparent;
-    color: $g2;
-    border: 0;
-    font-size: $toolbar-font-size;
-    line-height: $p-line-height;
-    text-align: left;
-    &:hover {
-      border: 0;
-      background: transparent;
-      color: $green;
-    }
-  }
   &__profile-link {
     @extend %peblio-button;
     margin: $medium-margin 0;
@@ -165,7 +167,7 @@
     border-radius: $small-border-radius;
   }
   &__label {
-    padding-left: $large-padding;
+    padding-right: $large-padding;
   }
   &__radio {
     & svg path {
@@ -179,6 +181,64 @@
   }
   &__hide {
     display: none;
+  }
+}
+
+.dashboard-side-nav {
+  &__container {
+    position: absolute;
+    left: 0;
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    padding: $large-padding;
+    height: calc(100% - #{$main-toolbar-height});
+    box-sizing: border-box;
+    background: $g8;
+  }
+  &__list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    margin: $large-margin 0;
+    border-bottom: solid $g5 $small-border;
+  }
+  &__memory-heading {
+    font-size: $medium-font-size;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: $g3;
+  }
+  &__memory-details {
+    font-size: $small-font-size;
+    font-weight: normal;
+    color: $g4;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+  }
+  &__button {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    border-bottom: solid $small-border transparent;
+    font-size: $small-font-size;
+    color: $g4;
+    font-weight: 500;
+    padding: $small-padding 0;
+    height: 100%;
+    &:hover {
+      border: none;
+      border-radius: 0;
+      border-bottom: solid $small-border $b2;
+      background: transparent;
+      color: $b2;
+    }
+    &--selected {
+      color: $b2;
+      border-bottom: solid $small-border $b2;
+    }
   }
 }
 

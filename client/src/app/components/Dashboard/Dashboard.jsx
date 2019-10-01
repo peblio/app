@@ -7,6 +7,7 @@ import Account from './Account/Account';
 import Trash from './Trash/Trash';
 import Documents from '../Shared/Documents/Documents';
 import Nav from '../Shared/Nav/Nav';
+import SideNav from '../Shared/Nav/SideNav';
 import TopNav from '../Shared/Nav/TopNav';
 import Modal from '../App/Modal/Modal';
 import ShareModal from '../App/Modal/ShareModal/ShareModal';
@@ -97,6 +98,8 @@ class Dashboard extends React.Component {
         <TopNav
           container="dashboard"
         />
+        <SideNav />
+        <div className="dashboard__side-seperator" />
         {this.props.name && (
           <div className="dashboard__container">
             <Nav

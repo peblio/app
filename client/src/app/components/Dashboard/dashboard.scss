@@ -4,6 +4,8 @@
   &__container {
     background: $g8;
     min-height: 100%;
+    width: 85%;
+    margin-left: 15%;
   }
   &__profile {
     width: 100%;
@@ -20,5 +22,12 @@
     padding: $large-padding 0;
     position: relative;
     top: -70px;
+  }
+  &__side-seperator {
+    border-right: $g5 solid $small-border;
+    height: calc(100% - #{2*$large-padding} - #{$main-toolbar-height});
+    position: fixed;
+    margin-left: 15%;
+    bottom: $large-padding
   }
 }

@@ -41,9 +41,9 @@ class SideNav extends React.Component {
   renderListItem=(displayText, viewName) => {
     const isCurrentDashboardView = this.props.dashboardView === viewName;
     return (
-      <li className="dashboard-nav__list-item">
+      <li className="dashboard-side-nav__list-item">
         <button
-          className={`dashboard-nav__button ${(isCurrentDashboardView) ? 'dashboard-nav__button--selected' : ''}`}
+          className={`dashboard-side-nav__button ${(isCurrentDashboardView) ? 'dashboard-nav__button--selected' : ''}`}
           onClick={() => { this.props.setDashboardView(viewName); }}
         >
           {displayText}
@@ -86,74 +86,67 @@ class SideNav extends React.Component {
     this.props.clearSearchByTitle();
   }
 
-renderDocumentViewList = (displaySVG, documentView) => {
-  const svgIcon = [];
-  const isCurrentDocumentView = this.props.documentView === documentView;
-  if (documentView === 'line') {
-    svgIcon.push(<Line alt="line view" />);
-  } else {
-    svgIcon.push(<Block alt="block view" />);
-  }
-  return (
-    <div className={
-      `dashboard-nav__button dashboard-nav__radio ${(isCurrentDocumentView)
-        ? 'dashboard-nav__radio--selected' : ''
-      }`}
-    >
-      <label
-        className="dashboard-nav__label"
-        htmlFor={`dashboard-nav${documentView}`}
-      >
-        <input
-          required
-          type="radio"
-          className="dashboard-nav__hide"
-          name="documentView"
-          value={documentView}
-          id={`dashboard-nav${documentView}`}
-          onChange={(e) => {
-            this.props.setDocumentView(documentView);
-          }}
-        />
-        {svgIcon}
-      </label>
-    </div>
-  );
-}
+  getMemoryConsumedMessage = () => {
+    const memoryConsumedInMegaBytes = Math.ceil(this.props.memoryConsumed / 1000000);
+    return (
+      <div className="dashboard-side-nav__memory">
+        <h1 className="dashboard-side-nav__memory-heading">
+          Storage
+        </h1>
+        <Progress completed={memoryConsumedInMegaBytes * 100 / 1024} />
+        <h2 className="dashboard-side-nav__memory-details">
+          {memoryConsumedInMegaBytes}
+          {'MB out of 1024 MB'}
+        </h2>
+      </div>
+    );
+  };
 
-getMemoryConsumedMessage = () => {
-  const memoryConsumedInMegaBytes = (this.props.memoryConsumed / 1000000).toFixed(2);
-  return (
-    <span>
-      Memory Consumed
-      {' '}
-      {memoryConsumedInMegaBytes}
-      {' '}
-      {'MB out of 1024 MB'}
-      <Progress completed={memoryConsumedInMegaBytes * 100 / 1024} />
-    </span>
-  );
-};
-
-render() {
-  const navClass = classNames('dashboard-side-nav__container ', {
-    'dashboard-nav__white-back': (this.props.dashboardView === 'documents')
-  });
-  return (
-    <div className="dashboard-side-nav__container">
-      <div className="dashboard-nav__lower-container dashboard-nav__top-nav">
-        <ul className="dashboard-nav__list">
+  render() {
+    return (
+      <div className="dashboard-side-nav__container">
+        <div className="dashboard-nav__new-container">
+          <button
+            className="dashboard-nav__add-button"
+            onMouseDown={this.props.toggleAddNewMenu}
+            onKeyDown={this.props.toggleAddNewMenu}
+            onBlur={() => {
+              setTimeout(() => {
+                if (this.props.isAddNewMenuOpen) {
+                  this.props.toggleAddNewMenu();
+                }
+              }, 50);
+            }}
+          >
+            <PlusIcon />
+            {' '}
+            Add New
+          </button>
+          {this.props.isAddNewMenuOpen && (
+            <ul className="dashboard-nav__sub-button-container">
+              <button
+                className="dashboard-nav__add-sub-button"
+                onMouseDown={this.createPage}
+                onKeyDown={this.createPage}
+              >
+              File
+              </button>
+              <button
+                className="dashboard-nav__add-sub-button"
+                onMouseDown={this.createFolder}
+                onKeyDown={this.createFolder}
+              >
+                Folder
+              </button>
+            </ul>
+          )}
+        </div>
+        <ul className="dashboard-side-nav__list">
           {this.renderListItem('Documents', 'documents')}
           {this.renderListItem('Account', 'account')}
           {this.renderListItem('Trash', 'trash')}
           {this.props.userType === 'student' || this.renderListItem('Profile', 'profile')}
         </ul>
-        {(this.props.dashboardView === 'documents' || this.props.dashboardView === 'trash') && (
-          <div className="dashboard-nav__list">
-            {this.renderDocumentViewList(PeblioLogo, 'block')}
-            {this.renderDocumentViewList(PeblioLogo, 'line')}
-          </div>
-        )}
         {(this.props.dashboardView === 'profile') && (
           <a
             className="dashboard-nav__profile-link"
@@ -161,14 +154,13 @@ render() {
             rel="noopener noreferrer"
             href={`/profile/${this.props.name}`}
           >
-              View Profile
+                View Profile
           </a>
         )}
         {this.getMemoryConsumedMessage()}
       </div>
-    </div>
-  );
-}
+    );
+  }
 }
 
 SideNav.propTypes = {
