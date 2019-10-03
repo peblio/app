@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Documents from '../Shared/Documents/Documents';
-import Nav from '../Shared/Nav/Nav';
 import TopNav from '../Shared/Nav/TopNav';
 
 import {
@@ -25,9 +24,6 @@ class Profile extends React.Component {
     return (
       <div>
         <TopNav
-          container="profile"
-        />
-        <Nav
           container="profile"
         />
         <div className="profile__container">
