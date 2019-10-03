@@ -34,9 +34,12 @@
     @extend %modal__buttonholder;
   }
 
-  &__link {
+  &__forgot-link {
     @extend %modal__link;
-    margin-bottom: $large-margin;
+    margin: $large-margin 0;
+    &:hover {
+      background: transparent;
+    }
   }
 
   &__notice {

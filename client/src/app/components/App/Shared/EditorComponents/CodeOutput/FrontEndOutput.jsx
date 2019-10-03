@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import srcDoc from 'srcdoc-polyfill';
+import { MEDIA_FILE_REGEX } from '../../../../../constants/widgetConstants.js';
 
 const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
 const STRING_REGEX = /(['"])((\\\1|.)*?)\1/gm;
 const ANCHOR_LINK_REGEX = /^(#)/;
-const MEDIA_FILE_REGEX = /.+\.(gif|jpg|jpeg|png|bmp)$/i;
 
 class FrontEndOutput extends React.Component {
   constructor(props) {

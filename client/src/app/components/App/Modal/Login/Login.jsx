@@ -96,7 +96,7 @@ class Login extends React.Component {
               Submit
             </button>
             <button
-              className="login-modal__link"
+              className="login-modal__forgot-link"
               onClick={() => {
                 this.props.viewForgotModal();
                 this.props.closeLoginModal();

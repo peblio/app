@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { assert } from 'sinon';
-import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, getTrashPages, trashPage, emptyTrash, restoreFromTrash, uploadPageSnapshotToS3, renamePage, getMyPagesWithTag } from '../../src/controllers/pageController';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, updatePageWithVersion, movePage, getTrashPages, trashPage, emptyTrash, restoreFromTrash, uploadPageSnapshotToS3, renamePage, getMyPagesWithTag } from '../../src/controllers/pageController';
 import * as pageService from '../../src/service/pageService';
 
 const sinon = require('sinon');
@@ -22,6 +22,7 @@ let getTrashPagesServiceStub;
 let restoreFromTrashServiceStub;
 let emptyTrashServiceStub;
 let renamePageServiceStub;
+let updatePageVersionServiceStub;
 
 describe('pageController', () => {
   describe('getPage', () => {
@@ -191,6 +192,23 @@ describe('pageController', () => {
       expect(actualReturnValue).to.be.eql(returnValue);
       assert.calledOnce(updatePageServiceStub);
       assert.calledWith(updatePageServiceStub, request, response);
+    });
+  });
+
+  describe('updatePageWithVersion', () => {
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall call updatePageWithVersion from service', async () => {
+      const returnValue = 'updatePageWithVersionResponse';
+      updatePageVersionServiceStub = sandbox.stub(pageService, 'updatePageWithVersion').returns(returnValue);
+
+      const actualReturnValue = await updatePageWithVersion(request, response);
+
+      expect(actualReturnValue).to.be.eql(returnValue);
+      assert.calledOnce(updatePageVersionServiceStub);
+      assert.calledWith(updatePageVersionServiceStub, request, response);
     });
   });
 

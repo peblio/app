@@ -8,6 +8,8 @@ import {
   setDashboardView,
   setDocumentSort,
   setDocumentView,
+  searchByTitle,
+  clearSearchByTitle,
   toggleAddNewMenu
 } from '../../../action/dashboard.js';
 import {
@@ -21,7 +23,13 @@ import PlusIcon from '../../../images/plus.svg';
 
 import './nav.scss';
 
+
 class Nav extends React.Component {
+  constructor(props) {
+    super(props);
+    this.titleSearch = {};
+  }
+
   componentWillMount() {
     if (window.location.pathname.includes('profile')) {
       this.props.setDashboardView('profile');
@@ -61,6 +69,19 @@ class Nav extends React.Component {
 
   setDocumentSort = (e) => {
     this.props.setDocumentSort(e.target.value);
+  }
+
+  searchByTitle = (e) => {
+    if (e.target.value === '') {
+      this.props.clearSearchByTitle();
+      return;
+    }
+    this.props.searchByTitle(e.target.value);
+  }
+
+  clearSearchText = () => {
+    this.titleSearch.value = '';
+    this.props.clearSearchByTitle();
   }
 
 renderDocumentViewList = (displaySVG, documentView) => {
@@ -135,21 +156,33 @@ render() {
       {this.props.dashboardView === 'documents' && (
         <div className="dashboard-nav__lower-container">
           <div className="dashboard-nav__dropdown-container">
-            <div className="dashboard-nav__sub-container">
-              <p className="dashboard-nav__dropdown-label">
+            <div className="dashboard-nav__dropdown-sub-container">
+              <input
+                type="text"
+                className="dashboard-nav__title-search"
+                placeholder="Search"
+                onChange={this.searchByTitle}
+                ref={(ts) => { this.titleSearch = ts; }}
+              />
+              <div className="dashboard-nav__sub-container">
+                <p className="dashboard-nav__dropdown-label">
               Arrange By
-              </p>
-              <select
-                className="dashboard-nav__dropdown"
-                id="dashboard-sort"
-                name="dashboard-sort"
-                onChange={this.setDocumentSort}
-                ref={(dashboardSort) => { this.dashboardSort = dashboardSort; }}
-                value={this.props.documentSort}
-              >
-                <option value="-updatedAt">Updated At</option>
-                <option value="title">Title</option>
-              </select>
+                </p>
+                <select
+                  className="dashboard-nav__dropdown"
+                  id="dashboard-sort"
+                  name="dashboard-sort"
+                  onChange={this.setDocumentSort}
+                  ref={(dashboardSort) => { this.dashboardSort = dashboardSort; }}
+                  value={this.props.documentSort}
+                >
+                  <option value="title">Title</option>
+                  <option value="-updatedAt">Updated At</option>
+                </select>
+              </div>
+              <button className="dashboard-nav__clear-link" onClick={this.clearSearchText}>
+                Clear Filter
+              </button>
             </div>
             <div className="dashboard-nav__new-container">
               <button
@@ -210,6 +243,8 @@ Nav.propTypes = {
   setDocumentView: PropTypes.func.isRequired,
   selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   toggleAddNewMenu: PropTypes.func.isRequired,
+  searchByTitle: PropTypes.func.isRequired,
+  clearSearchByTitle: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired
 };
 
@@ -231,6 +266,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setDashboardView,
   setDocumentView,
   setDocumentSort,
+  searchByTitle,
+  clearSearchByTitle,
   toggleAddNewMenu
 }, dispatch);
 

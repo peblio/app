@@ -5,6 +5,7 @@
   &__new-container {
     display: flex;
     flex-direction: column;
+    height: 100%;
   }
   &__container {
     display: flex;
@@ -76,6 +77,26 @@
     color: $g3;
     font-size: $small-font-size;
   }
+  &__clear-link {
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+    font-weight: 400;
+    color: $green;
+    border-radius: 0;
+    text-decoration: underline;
+    font-size: $small-font-size;
+  }
+  &__title-search {
+    height: $large-height;
+    width: fit-content;
+    border-radius: $small-border-radius/2;
+    border: solid $small-border $g5;
+    background: transparent;
+    color: $g3;
+    font-size: $small-font-size;
+    margin-right: $medium-margin;
+  }
   &__dropdown-label {
     font-size: $small-font-size;
     color: $g3;
@@ -89,6 +110,10 @@
     padding: $medium-padding 0;
     width: 100%;
     justify-content: space-between;
+  }
+  &__dropdown-sub-container {
+    display: flex;
+    flex-direction: row;
   }
   &__add-button {
     @extend %peblio-button;
@@ -106,6 +131,7 @@
     display: flex;
     padding: 0;
     margin: 0;
+    margin-right: $medium-margin;
   }
   &__sub-button-container {
     display: flex;

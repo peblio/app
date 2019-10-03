@@ -3,7 +3,8 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 const initialState = {
   navigationContent: [],
   isNavigationOpen: true,
-  yNavigation: 0
+  yNavigation: 0,
+  yPosition: 0
 };
 const navigation = (state = initialState, action) => {
   switch (action.type) {
@@ -22,6 +23,11 @@ const navigation = (state = initialState, action) => {
     case ActionTypes.SET_Y_NAVIGATION:
       return Object.assign({}, state, {
         yNavigation: action.value
+      });
+
+    case ActionTypes.SET_Y_POSITION:
+      return Object.assign({}, state, {
+        yPosition: action.value
       });
 
     case ActionTypes.LOGOUT_USER:

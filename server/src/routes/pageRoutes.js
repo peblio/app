@@ -1,4 +1,4 @@
-const express = require('express');
+  const express = require('express');
 const pageRoutes = express.Router();
 import * as pageController from '../controllers/pageController';
 
@@ -17,4 +17,5 @@ pageRoutes.route('/update').post(pageController.updatePage);
 pageRoutes.route('/:pageId').delete(pageController.deletePage);
 pageRoutes.route('/:pageId/rename/:pageName').patch(pageController.renamePage);
 pageRoutes.route('/').patch(pageController.uploadPageSnapshotToS3);
+pageRoutes.route('/restoreVersion').patch(pageController.updatePageWithVersion);
 module.exports = pageRoutes;

@@ -11,10 +11,15 @@
     "prebuild": "rm -rf .build/*",
     "prestart": "npm run build",
     "start": "AWS_PROFILE=peblio ./scripts/run_with_credstash.sh nodemon .build/server.js",
-    "test": "./node_modules/mocha/bin/mocha --recursive --exit --compilers js:babel-core/register --require babel-polyfill test"
+    "test": "./node_modules/mocha/bin/mocha --recursive --exit --compilers js:babel-core/register --require babel-polyfill test",
+    "integrationTest": "AWS_PROFILE=peblio ENVIRONMENT=local ./scripts/run_with_credstash.sh ./node_modules/mocha/bin/mocha --recursive --exit --compilers js:babel-core/register --require babel-polyfill integrationTest",
+    "allTest": "npm test && npm run integrationTest"
   },
   "author": "",
   "license": "ISC",
+  "engines" : { 
+    "node" : ">=8.7.0" 
+  },
   "dependencies": {
     "aws-sdk": "^2.224.1",
     "babel-cli": "^6.26.0",
@@ -61,6 +66,7 @@
     "mocha": "^5.2.0",
     "nodemailer-stub-transport": "^1.1.0",
     "sinon": "^7.2.2",
-    "sinon-chai": "^3.3.0"
+    "sinon-chai": "^3.3.0",
+    "supertest": "^4.0.2"
   }
 }

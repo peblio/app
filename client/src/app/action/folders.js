@@ -9,7 +9,7 @@ export function trashPage(pageId) {
   return (dispatch) => {
     axios.patch(`/pages/trash/${pageId}`).then(() => {
       dispatch({
-        type: ActionTypes.DELETE_PAGE,
+        type: ActionTypes.TRASH_PAGE,
         pageId
       });
       const log = {
@@ -41,16 +41,15 @@ export function createPage(title, folder) {
 }
 
 export function fetchAllPages(profileName, sortType, container) {
-  const sortTypeUrl = sortType || 'title';
-  const sortOrder = (sortType === 'title') ? 1 : -1;
+  const sortTypeUrl = (container === 'profile' || !sortType) ? 'title' : sortType;
   // do not send in profile name if container is dashboard
   profileName = (container === 'dashboard') ? null : profileName;
   return (dispatch, getState) => {
     let url = '/sketches';
     if (profileName) {
-      url = `${url}/${profileName}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}&sortOrder=${sortOrder}`;
+      url = `${url}/${profileName}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}`;
     } else {
-      url = `${url}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}&sortOrder=${sortOrder}`;
+      url = `${url}?folderSortBy=${sortTypeUrl}&fileSortBy=${sortTypeUrl}`;
       const { user } = getState();
       if (!user.name) {
         return false;
@@ -176,6 +175,19 @@ export function viewFolder(folderId, depth) {
   });
 }
 
+export function filterPagesByTitle(searchText) {
+  return dispatch => dispatch({
+    type: ActionTypes.SEARCH_BY_TITLE,
+    searchText
+  });
+}
+
+export function clearFilterPagesByTitle() {
+  return dispatch => dispatch({
+    type: ActionTypes.CLEAR_SEARCH_BY_TITLE
+  });
+}
+
 export function viewPage(pageId) {
   return dispatch => dispatch({
     type: ActionTypes.VIEW_PAGE,
@@ -184,6 +196,7 @@ export function viewPage(pageId) {
 }
 
 export function jumpToFolderByShortId(folderShortId) {
+
   return dispatch => dispatch({
     type: ActionTypes.JUMP_TO_FOLDER,
     folderShortId

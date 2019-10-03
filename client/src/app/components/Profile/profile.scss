@@ -3,8 +3,10 @@
 .profile {
   &__container {
     background: $g8;
+    height: calc(100% - 50px) !important;
   }
   &__documents {
+    background: $g8;
     width: 100%;
     display: flex;
   }
@@ -28,6 +30,7 @@
     width: $account-image-width;
     height: $account-image-width;
     cursor: pointer;
+    background: $white;
   }
   &__image-container {
     width: 100%;

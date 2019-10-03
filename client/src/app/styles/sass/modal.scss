@@ -117,7 +117,7 @@
 
 %modal__notice {
   font-size: $small-font-size;
-  color: $blue;
+  color: $green;
   justify-content: center;
   display: flex;
 }
@@ -161,6 +161,7 @@
   @extend %modal;
   width: $image-notice-width;
   height: fit-content;
+  padding: $medium-padding;
 }
 
 .modal__close-button{

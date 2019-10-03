@@ -1,3 +1,6 @@
+@import 'variables';
+@import 'mixins';
+
 .react-grid-layout {
   position: relative;
   transition: height 200ms ease;
@@ -41,4 +44,14 @@
   bottom: -10px;
   right: -7.5px;
   cursor: se-resize;
+}
+
+.react-grid__fullscreen {
+  position: fixed;
+  left: 0;
+  top: $main-toolbar-height;
+  z-index: $z-index-layer-2-5;
+  height: 100vh !important;
+  width: 100vw;
+  overflow: hidden;
 }

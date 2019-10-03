@@ -18,6 +18,7 @@ const MongoStore = require('connect-mongo')(session);
 const currentUserRoutes = require('./controllers/currentUserController');
 const webSocketRoutes = require('./routes/webSocketRoutes.js')(expressWs);
 const pageRoutes = require('./routes/pageRoutes.js');
+const pageVersionRoutes = require('./routes/pageVersionRoutes.js');
 const logRoutes = require('./routes/logRoutes.js');
 const authRoutes = require('./controllers/authController.js');
 const folderRoutes = require('./controllers/folderController');
@@ -58,6 +59,7 @@ router.use('/current_user', currentUserRoutes);
 router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
 router.use('/pages', pageRoutes);
+router.use('/pagesversion', pageVersionRoutes);
 router.use('/logs', logRoutes);
 router.use('/folders', folderRoutes);
 router.use('/examples', examplesRoutes);
@@ -95,3 +97,5 @@ expressWs.getWss().on('connection', function(ws, req) {
   ws.request = req;
   ws.uniqueId = req.headers['sec-websocket-key'];
 });
+
+module.exports = app;

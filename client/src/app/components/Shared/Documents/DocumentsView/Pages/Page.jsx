@@ -55,18 +55,11 @@ class Page extends Component {
   duplicatePage = (e, page) => {
     e.stopPropagation();
     const {
-      title,
-      heading,
-      description,
-      folder,
-      editors,
-      editorIndex,
-      layout,
-      tags,
-      snapshotPath
+      id,
+      folder
     } = page;
 
-    this.props.duplicatePage(title, heading, description, folder, editors, editorIndex, layout, tags, snapshotPath);
+    this.props.duplicatePage(id, folder);
   }
 
   renamePage = (e, id) => {

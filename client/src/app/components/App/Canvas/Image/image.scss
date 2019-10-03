@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'base';
 @import 'mixins';
 @import 'modal';
 
@@ -21,13 +22,13 @@
   overflow: hidden;
   box-sizing: border-box;
   &--small .image__login {
-    .image__title, .image__url {
+    .file-upload__title, .file-upload__url {
       display: none;
     }
-    .image__drop {
+    .file-upload__drop {
       border: none;
     }
-    .image__svg--text {
+    .file-upload__svg--text {
       display: none;
     }
   }
@@ -38,7 +39,7 @@
       left: 0;
       right: 0;
     }
-    .image__drop {
+    .file-upload__drop {
       margin: 0 auto;
     }
   }
@@ -49,7 +50,7 @@
       .image__content.image__replace-content {
         opacity: 1;
       }
-      .image__title {
+      .file-upload__title {
         display: none;
       }
       .image-edit-toolbar__container {
@@ -77,7 +78,7 @@
     padding: $large-padding;
     border-radius: $small-border-radius;
     box-shadow: 0px 0px $border-shadow $g4;
-    & .image__title {
+    & .file-upload__title {
       display: none;
     }
   }
@@ -98,26 +99,6 @@
   height: 50%;
   margin: 0;
   position: relative;
-}
-
-.image__popup {
-  border: 1px solid #dedede;
-  position: absolute;
-  bottom: -100px;
-  right: -100px;
-  height: 200px;
-  width: 180px;
-  opacity: 0;
-  transition: all 0.25s ease;
-  visibility: hidden;
-  z-index: 1;
-
-  &.visible {
-    // box-shadow: 1px 1px 1px 0px #ccc;
-    box-shadow: 1px 2px 4px -1px rgba(0, 0, 0, 0.3);
-    opacity: 1;
-    visibility: visible;
-  }
 }
 
 .image__holder {
@@ -154,88 +135,15 @@
   }
 }
 
-.image__title {
-  width:90%;
-  text-align: center;
-  font-family: $roboto;
-  font-size: $medium-font-size;
-  padding: $small-padding;
-  color:$black;
-}
-
-.image__svg {
-  width: 100%;
-  text-align: center;
-}
-.image__svg--text {
-  text-align: center;
-}
-
-.image__drop {
-  padding: $small-padding;
-  margin: 0 $medium-margin;
-  border-radius: $medium-border-radius;
-  border: 1px dashed $light-gray;
-  color: $gray;
-
-  &.popup {
-    max-width: 110px;
-  }
-}
-
-.image__url {
-  width: 100%;
-  margin: 0 auto;
-}
-
 .image{
   &__upload-container {
     padding: $medium-padding;
   }
-  &__upload-notice {
-    width: 100%;
-    display: flex;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-  }
+
 }
 
-.element-image__input {
+.file-upload__dropzone input {
   width: 100%;
-  border: none;
-  border-radius: $small-border-radius;
-  box-shadow: 0 1px #dedede;
-  margin: auto;
-  padding: 5px;
-}
-
-.element-image__add-url {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  padding: 0 $medium-padding;
-  text-align: center;
-  width: 100%;
-  z-index: 1;
-
-  .element-image__label {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-  }
-}
-
-.element-image input {
-  width: 100%;
-}
-
-.element__button {
-  @extend %modal__canvas-button;
 }
 
 .image-resizer__container {
@@ -268,22 +176,7 @@
       background: $g6;
     }
   }
-  &__upload-button {
-    position: absolute;
-    background: transparent;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    opacity: 0.8;
-    &:hover {
-      background: transparent;
-      border: none;
-      opacity: 1;
-    }
-  }
+
   &__pop-up {
     position: absolute;
     top: 50%;
@@ -295,5 +188,25 @@
     width: $image-upload-toolbar-width;
     box-sizing: border-box;
     box-shadow: 0 -5px 20px -10px $black;
+  }
+  &__upload-button {
+    position: absolute;
+    background: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    opacity: 0.5;
+    & #grayShape {
+      fill: $white;
+    }
+    &:hover {
+      background: transparent;
+      border: none;
+      display: block;
+      opacity: 1;
+    }
   }
 }

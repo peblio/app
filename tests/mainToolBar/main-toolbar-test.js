@@ -49,7 +49,7 @@ test('are menu items displayed', async (t) => {
 test('account man contents', async(t) => {
   await t
     .click(Selector('[data-test=account-button]'))
-    .expect(Selector('[data-test=user-account__Profile-link]').exists).notOk()
+    .expect(Selector('[data-test=user-account__profile-link]').exists).notOk()
     .expect(Selector('[data-test=user-account__logout-button]').exists).ok();
 });
 
@@ -80,7 +80,7 @@ fixture('Main Menu when teacher logged in')
 test('account man contents', async(t) => {
   await t
     .click(Selector('[data-test=account-button]'))
-    .expect(Selector('[data-test=user-account__Profile-link]').exists).ok()
+    .expect(Selector('[data-test=user-account__profile-link]').exists).ok()
     .expect(Selector('[data-test=user-account__logout-button]').exists).ok();
 });
 
@@ -88,7 +88,7 @@ test('navigate to profile', async(t) => {
   const getLocation = ClientFunction(() => document.location.href);
   await t
     .click(Selector('[data-test=account-button]'))
-    .click(Selector('[data-test=user-account__Profile-link]'))
+    .click(Selector('[data-test=user-account__profile-link]'))
     .expect(getLocation()).contains(`${config.baseUrl}/profile/${teacherUser.name}`);
 });
 

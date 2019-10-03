@@ -7,13 +7,13 @@
     fill: $white;
   }
   &:hover path, &:hover circle {
-    fill: $blue;
+    fill: $green;
   }
 }
 
 .account-man__clicked {
   & path, & circle {
-    fill: $blue;
+    fill: $green;
     margin-left: $micro-margin;
   }
   &:hover path, &:hover circle{
@@ -30,6 +30,7 @@
     text-decoration: none;
     font-size: $medium-font-size;
     padding-left: $small-padding;
+    text-transform: capitalize;
     &:hover {
       color: $gray;
       background-color: $transparent;
@@ -127,7 +128,7 @@
         fill: $gray;
       }
       &:hover path, &:hover circle {
-        fill: $blue;
+        fill: $green;
       }
     }
   }

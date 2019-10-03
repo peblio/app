@@ -9,6 +9,7 @@ import ImageSVG from '../../../../images/image.svg';
 import QuestionSVG from '../../../../images/question.svg';
 import TextSVG from '../../../../images/text.svg';
 import VideoSVG from '../../../../images/video.svg';
+import HistorySVG from '../../../../images/history.svg';
 import {
   addCodeEditor,
   addIframe,
@@ -17,11 +18,11 @@ import {
   addQuestionEditor,
   addVideo
 } from '../../../../action/editors.js';
+import { togglePageVersion } from '../../../../action/pageVersion.js';
 
 require('./insertToolbar.scss');
 
-
-class InsertToolbar extends React.Component {
+export class InsertToolbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,6 +56,7 @@ class InsertToolbar extends React.Component {
               }, 50);
             }}
             data-test="add-code-editor"
+            id="insert-toolbar__add-code-editor"
           >
             <EditorSVG alt="add code editor" />
             Editor
@@ -156,6 +158,7 @@ class InsertToolbar extends React.Component {
             id="elementButton"
             className="insert-toolbar__button"
             data-test="insert-toolbar__add-text-editor"
+            id="insert-toolbar__add-text-editor"
           >
             <TextSVG alt="add text" />
             Textbox
@@ -165,6 +168,7 @@ class InsertToolbar extends React.Component {
             onKeyDown={this.props.addIframe}
             className="insert-toolbar__button"
             data-test="insert-toolbar__add-iframe"
+            id="insert-toolbar__add-iframe"
           >
             <EmbedSVG alt="add embed" />
             Embed
@@ -174,6 +178,7 @@ class InsertToolbar extends React.Component {
             onKeyDown={this.props.addVideo}
             className="insert-toolbar__button"
             data-test="insert-toolbar__add-video"
+            id="insert-toolbar__add-video"
           >
             <VideoSVG alt="add video" />
             Video
@@ -184,6 +189,7 @@ class InsertToolbar extends React.Component {
             id="elementButton"
             className="insert-toolbar__button"
             data-test="insert-toolbar__add-question"
+            id="insert-toolbar__add-question"
           >
             <QuestionSVG alt="add question" />
             Question
@@ -194,15 +200,26 @@ class InsertToolbar extends React.Component {
             id="elementButton"
             className="insert-toolbar__button"
             data-test="insert-toolbar__add-image"
+            id="insert-toolbar__add-image"
           >
             <ImageSVG alt="add image" />
             Image
           </button>
         </div>
-        <div className="insert-toolbar__container-right">
-
-        </div>
-
+        {this.props.canEdit && (
+          <div className="insert-toolbar__container-right">
+            <button
+              onMouseDown={this.props.togglePageVersion}
+              onKeyDown={this.props.togglePageVersion}
+              id="elementButton"
+              className={`insert-toolbar__button
+              ${(this.props.isPageVersionOpen) ? 'insert-toolbar__button--highlighted' : ''}`}
+              data-test="insert-toolbar__show-page-version"
+            >
+              <HistorySVG alt="show page version" />
+            </button>
+          </div>
+        )}
       </div>
     );
   }
@@ -214,8 +231,16 @@ InsertToolbar.propTypes = {
   addImage: PropTypes.func.isRequired,
   addTextEditor: PropTypes.func.isRequired,
   addQuestionEditor: PropTypes.func.isRequired,
-  addVideo: PropTypes.func.isRequired
+  addVideo: PropTypes.func.isRequired,
+  canEdit: PropTypes.bool.isRequired,
+  isPageVersionOpen: PropTypes.bool.isRequired,
+  togglePageVersion: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = state => ({
+  canEdit: state.user.canEdit,
+  isPageVersionOpen: state.pageVersion.isPageVersionOpen
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   addCodeEditor,
@@ -223,7 +248,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   addImage,
   addTextEditor,
   addQuestionEditor,
-  addVideo
+  addVideo,
+  togglePageVersion
 }, dispatch);
 
-export default connect(null, mapDispatchToProps)(InsertToolbar);
+export default connect(mapStateToProps, mapDispatchToProps)(InsertToolbar);

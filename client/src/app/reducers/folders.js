@@ -8,12 +8,18 @@ export const initialState = {
     byId: {},
     allIds: [] // keeps track of display order
   },
+  filteredPages: {
+    byId: {},
+    allIds: [] // keeps track of display order
+  },
   folders: {
     byId: {},
     allIds: []
   },
   selectedFolderIds: [],
   selectedPageId: null,
+  searchText: null,
+  isSearchByTitle: false
 };
 
 function findChildFolderIds(foldersById = {}, folderId = '') {
@@ -29,7 +35,7 @@ function findChildFolderIds(foldersById = {}, folderId = '') {
 
 const foldersReducer = (state = { ...initialState }, action) => {
   switch (action.type) {
-    case ActionTypes.DELETE_PAGE: {
+    case ActionTypes.TRASH_PAGE: {
       const { pages, selectedPageId } = state;
       delete pages.byId[action.pageId];
       return {
@@ -58,6 +64,28 @@ const foldersReducer = (state = { ...initialState }, action) => {
         folders: {
           byId: (normalizedFolderData.entities.folders || {}),
           allIds: (normalizedFolderData.result || [])
+        }
+      });
+    }
+
+    case ActionTypes.SEARCH_BY_TITLE: {
+      return Object.assign({}, state, {
+        searchText: action.searchText,
+        isSearchByTitle: true,
+        filteredPages: {
+          byId: Object.values(state.pages.byId)
+            .filter(page => page.title && page.title.toLowerCase().includes(action.searchText.toLowerCase()))
+        }
+      });
+    }
+
+    case ActionTypes.CLEAR_SEARCH_BY_TITLE: {
+      return Object.assign({}, state, {
+        searchText: null,
+        isSearchByTitle: false,
+        filteredPages: {
+          byId: {},
+          allIds: []
         }
       });
     }
@@ -134,7 +162,6 @@ const foldersReducer = (state = { ...initialState }, action) => {
         return state;
       }
       const folder = folders.byId[folderId];
-      folder.files = folder.files.filter(pId => pId !== pageId);
 
       delete pageToMove.folder;
 
@@ -166,14 +193,12 @@ const foldersReducer = (state = { ...initialState }, action) => {
       const prevFolderById = {};
       if (pageToMove.folder) {
         const prevFolder = folders.byId[pageToMove.folder];
-        prevFolder.files = (prevFolder.files || []).filter(pId => pId !== pageId);
         prevFolderById[pageToMove.folder] = { ...prevFolder };
       }
 
       pageToMove.folder = folderId;
 
       const folder = folders.byId[folderId];
-      folder.files = (folder.files || []).concat(pageId);
       return {
         ...state,
         folders: {

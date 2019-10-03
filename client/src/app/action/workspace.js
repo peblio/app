@@ -124,10 +124,52 @@ export function closeShareWorkspace() {
 
 export function addMediaFile(name, link) {
   return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
     dispatch({
       type: ActionTypes.WP_ADD_MEDIA_FILE,
       name,
       link
+    });
+  };
+}
+
+export function addFileToEditor(name, content) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.WP_ADD_FILE_TO_EDITOR,
+      name,
+      content
+    });
+  };
+}
+
+export function deleteFileFromEditor(index) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.WP_DELETE_FILE_FROM_EDITOR,
+      index
+    });
+  };
+}
+
+export function openFileView(index) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.WP_OPEN_FILE_VIEW,
+      index
+    });
+  };
+}
+
+export function closeFileView(index) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.WP_CLOSE_FILE_VIEW,
+      index
     });
   };
 }

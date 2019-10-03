@@ -12,7 +12,8 @@ const initialState = {
   editorIndex: 0,
   currentWidget: '',
   isDeleteWarningModalOpen: false,
-  widgetForDeleteWidgetWarning: ''
+  widgetForDeleteWidgetWarning: '',
+  isFullScreenMode: false
 };
 
 let stack = [];
@@ -47,7 +48,12 @@ const editorsReducer = (state = initialState, action) => {
             convertFromRaw(JSON.parse(rawContentState))
           );
           newEditors[id] = newEditor;
-        } else newEditors[id] = action.editors[id];
+        } else {
+          if (action.editors[id].type === 'code') {
+            action.editors[id].isWidgetFullScreenMode = false;
+          }
+          newEditors[id] = action.editors[id];
+        }
       });
       stack.sort((e1, e2) => newEditors[e1].index - newEditors[e2].index);
       return { editors: newEditors, editorIndex: action.editorIndex };
@@ -65,12 +71,21 @@ const editorsReducer = (state = initialState, action) => {
       return { ...state, widgetForDeleteWidgetWarning: action.id, isDeleteWarningModalOpen: true };
     }
 
-    case ActionTypes.REMOVE_EDITOR:
+    case ActionTypes.REMOVE_WIDGET:
       stack.splice(stack.indexOf(action.id), 1);
       delete editors[action.id];
       return { ...state, editors: updateIndices(editors) };
 
-    case ActionTypes.DUPLICATE_EDITOR: {
+    case ActionTypes.TOGGLE_WIDGET_FULLSCREEN:
+      const isWidgetFullScreenMode = state.editors[action.id].isWidgetFullScreenMode;
+      editors[action.id].isWidgetFullScreenMode = !isWidgetFullScreenMode;
+      return {
+        ...state,
+        editors,
+        isFullScreenMode: !state.isFullScreenMode
+      };
+
+    case ActionTypes.DUPLICATE_WIDGET: {
       const originalEditor = state.editors[action.originalEditorId];
       let newEditor;
       if (originalEditor.type === 'text') {
@@ -78,7 +93,7 @@ const editorsReducer = (state = initialState, action) => {
       } else {
         newEditor = JSON.parse(JSON.stringify(originalEditor)); // Quicker than spread.
       }
-      newEditor.id = action.duplicateEditorId;
+      newEditor.id = action.duplicateWidgetId;
       const editorIndex = state.editorIndex + 1;
       stack.push(newEditor.id);
       editors[newEditor.id] = newEditor;
@@ -99,12 +114,32 @@ const editorsReducer = (state = initialState, action) => {
         isRefreshing: false,
         editorMode: action.mode,
         innerWidth: CODE_DEFAULT_INSIDE_WIDTH,
-        editorView: 'split'
+        editorView: 'split',
+        isWidgetFullScreenMode: false
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
       const currentWidget = id;
       return { editors, editorIndex, currentWidget };
+    }
+
+    case ActionTypes.ADD_FILE_TO_EDITOR: {
+      editors[action.id].files.push({
+        name: action.name,
+        content: action.content,
+        isFileInView: true
+      });
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
+    case ActionTypes.DELETE_FILE_FROM_EDITOR: {
+      editors[action.id].currentFile = action.index - 1;
+      editors[action.id].files.splice(action.index, 1);
+      return Object.assign({}, state, {
+        editors
+      });
     }
 
     case ActionTypes.PLAY_CODE:
@@ -153,6 +188,33 @@ const editorsReducer = (state = initialState, action) => {
       });
     }
 
+    case ActionTypes.OPEN_FILE_VIEW: {
+      editors[action.id].files[action.index].isFileInView = true;
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
+    case ActionTypes.CLOSE_FILE_VIEW: {
+      let isPrevFileDisplayed = false;
+      let fileIndexToBeDisplayed = action.index - 1;
+      while (!isPrevFileDisplayed && fileIndexToBeDisplayed > -1) {
+        if (editors[action.id].files[fileIndexToBeDisplayed].isFileInView) {
+          isPrevFileDisplayed = true;
+          editors[action.id].currentFile = fileIndexToBeDisplayed;
+        } else {
+          fileIndexToBeDisplayed -= 1;
+        }
+      }
+      if (fileIndexToBeDisplayed === -1) {
+        editors[action.id].currentFile = fileIndexToBeDisplayed;
+      }
+      editors[action.id].files[action.index].isFileInView = false;
+      return Object.assign({}, state, {
+        editors
+      });
+    }
+
     case ActionTypes.VIEW_EDITOR_PREVIEW: {
       editors[action.id].currentFile = -1;
       return Object.assign({}, state, {
@@ -170,7 +232,8 @@ const editorsReducer = (state = initialState, action) => {
     case ActionTypes.ADD_MEDIA_FILE: {
       editors[action.id].files.push({
         name: action.name,
-        externalLink: action.link
+        externalLink: action.link,
+        isFileInView: false
       });
       return Object.assign({}, state, {
         editors
@@ -192,7 +255,7 @@ const editorsReducer = (state = initialState, action) => {
         id,
         index: stack.length,
         editorState: EditorState.createEmpty(),
-        backColor: 'transparent'
+        backColor: 'transparent',
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -219,7 +282,7 @@ const editorsReducer = (state = initialState, action) => {
         question: 'Enter question here ',
         answer: 'Enter answer here..',
         minHeight: QUESION_MIN_INNER_HEIGHT,
-        innerHeight: QUESION_DEFAULT_INNER_HEIGHT
+        innerHeight: QUESION_DEFAULT_INNER_HEIGHT,
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -249,7 +312,7 @@ const editorsReducer = (state = initialState, action) => {
         type: 'iframe',
         id,
         index: stack.length,
-        url: 'https://peblio.github.io/instructions/embed.html'
+        url: 'https://peblio.github.io/instructions/embed.html',
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -268,7 +331,7 @@ const editorsReducer = (state = initialState, action) => {
         type: 'video',
         id,
         index: stack.length,
-        url: 'https://peblio.github.io/instructions/video.html'
+        url: 'https://peblio.github.io/instructions/video.html',
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -293,7 +356,7 @@ const editorsReducer = (state = initialState, action) => {
           y: 0,
           height: 100,
           width: 100
-        }
+        },
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;

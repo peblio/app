@@ -29,11 +29,18 @@
 }
 
 .rdw-image-modal-btn{
-  color:black;
+  color: $black ;
+}
+
+.rdw-link-modal-btn{
+  color: $black !important; 
+  &:disabled {
+    cursor: auto;
+  }
 }
 
 .rdw-embedded-modal-btn{
-  color:black;
+  color: $black;
 }
 
 %text-h1{
@@ -114,6 +121,6 @@
   text-align: justify;
 }
 
-.public-DraftStyleDefault-listLTR {
+ol .public-DraftStyleDefault-listLTR {
     margin-left: 2.5em !important;
 }

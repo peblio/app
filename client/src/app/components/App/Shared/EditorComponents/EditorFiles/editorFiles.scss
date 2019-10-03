@@ -1,0 +1,177 @@
+@import 'variables';
+@import 'mixins';
+@import 'base';
+
+.beta-tag {
+  @extend %beta-tag;
+}
+
+.editor__dark {
+  .editor-toolbar__file-option {
+    box-shadow: 0px 0px $border-shadow $g1 !important;
+    border: $small-border solid $g1 !important;
+    background: $g2 !important;
+  }
+  .editor-toolbar {
+    &__files-container {
+      background-color: $light-gray;
+      background: $dark-gray; /* For browsers that do not support gradients */
+      .editor-toolbar__files {
+        .editor-toolbar__file {
+          background-color: transparent;
+          &:hover, &--selected { // sass-lint:disable-line class-name-format
+            background-color: $g2;
+          }
+          &-button {
+            white-space: nowrap;
+            color: $white;
+            box-sizing: border-box;
+            &:hover, &--selected { // sass-lint:disable-line class-name-format
+              color: $white;
+            }
+            &-static {
+              overflow: hidden;
+              color: $g5;
+              &:hover {
+                color: $g5;
+                cursor: default;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.editor__light {
+  .editor-toolbar {
+    &__files-container {
+      background-color: $lighter-gray;
+      .editor-toolbar__files {
+        .editor-toolbar__file {
+          background-color: transparent;
+          &:hover, &--selected { // sass-lint:disable-line class-name-format
+            background-color: $g6;
+          }
+          &-button {
+            color: $g3;
+            box-sizing: border-box;
+            & #ShapeCNTRL {
+              fill: $g3;
+            }
+            &:hover, &--selected { // sass-lint:disable-line class-name-format
+              & #ShapeCNTRL {
+                fill: $g8;
+              }
+            }
+            &-static {
+              overflow: hidden;
+              color: $g5;
+              &:hover {
+                color: $g5;
+                cursor: default;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.editor-toolbar {
+  &__files-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between
+  }
+  &__image-upload {
+    position: absolute;
+    background: $lighter-gray;
+    z-index: $z-index-layer-4;
+    left: calc(50% - #{$image-notice-width/2});
+    top: 30%;
+    width: $image-notice-width;
+    padding: $large-padding;
+    border-radius: $small-border-radius;
+    box-shadow: 0px 0px $border-shadow $g4;
+  }
+  &__image-close {
+    font-size: $medium-font-size;
+    border: 0;
+    position: absolute;
+    right: $medium-padding;
+    top: $medium-padding;
+    background: transparent;
+    color: $g4;
+    border: none;
+    &:hover {
+      background: transparent;
+      color: $g2;
+      border: none;
+    }
+  }
+  &__image-notice {
+    text-align: center;
+    text-transform: capitalize;
+  }
+
+  &__files-container {
+    height: 100%;
+    .editor-toolbar__files {
+      overflow-y: scroll;
+      display: flex;
+      width: fit-content;
+      height: 100%;
+      flex-direction: column;
+      margin: 0;
+      padding: 0 !important;
+      .editor-toolbar__file {
+        display: flex;
+        justify-content: space-between;
+        border: none;
+        padding: $small-padding/2;
+        text-decoration: none;
+        list-style: none;
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        height: auto;
+        .editor-toolbar__file-option {
+          box-shadow: 0px 0px $border-shadow $g4;
+          border: $small-border solid $g4;
+          position: absolute;
+          top: 100%;
+          width: 100%;
+          background: $g5;
+          z-index: $z-index-layer-1;
+          left: -0.05rem;
+          background: $g5;
+          padding: 0.25rem 0;
+        }
+        &-icon {
+          margin-right: 0.25rem;
+        }
+        &-button {
+          border-radius: 0;
+          border: none;
+          box-shadow: none;
+          height: 100%;
+          background: transparent;
+          display: flex;
+          &:hover, &--selected { // sass-lint:disable-line class-name-format
+            border: none;
+            background: transparent;
+          }
+        }
+      }
+      .editor-toolbar__file-name {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+  }
+}

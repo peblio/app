@@ -1,5 +1,6 @@
 import * as ActionTypes from '../constants/reduxConstants.js';
 import axios from '../utils/axios';
+import { filterPagesByTitle, clearFilterPagesByTitle } from './page.js';
 
 export function toggleAddNewMenu() {
   return (dispatch) => {
@@ -76,6 +77,18 @@ export function setDocumentSort(sortType) {
       type: ActionTypes.SET_DOCUMENT_SORT,
       sortType
     });
+  };
+}
+
+export function searchByTitle(searchText) {
+  return (dispatch) => {
+    dispatch(filterPagesByTitle(searchText));
+  };
+}
+
+export function clearSearchByTitle(searchText) {
+  return (dispatch) => {
+    dispatch(clearFilterPagesByTitle(searchText));
   };
 }
 

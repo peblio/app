@@ -20,10 +20,8 @@
         background-color: $g4;
       }
       .editor-toolbar__button {
-        background-color: $g2;
         color: $g5;
         &:hover {
-          background-color: $g5;
           color: $g2;
         }
       }
@@ -39,7 +37,7 @@
 
         &.editor-toolbar--isPlaying,
         &.editor-toolbar--isPaused {
-          background-color: $blue;
+          background-color: $green;
         }
       }
       .editor-toolbar__svg:hover #playPause {
@@ -50,156 +48,83 @@
         fill: $g5;
       }
     }
-
-    .editor-toolbar__files {
-      background-color: $g2;
-      .editor-toolbar__file {
-        &-button {
-          white-space: nowrap;
-          background-color: $g4;
-          color: $white;
-          border: $small-border solid $g2;
-          box-sizing: border-box;
-          &:hover, &--selected { // sass-lint:disable-line class-name-format
-            background-color: $g2;
-            color: $white;
-          }
-          &-static {
-            overflow: hidden;
-            background-color: $g3;
-            color: $g5;
-            border: $small-border solid $g2;
-            &:hover {
-              background-color: $g3;
-              color: $g5;
-              cursor: default;
-              border: $small-border solid $g2;
-            }
-          }
-        }
-      }
-
-    }
   }
   }
 }
 
 .editor__light {
   .editor-toolbar {
-    &__container {
-    .editor-toolbar__button-container {
-      background-color: $white;
-      border: $small-border solid $g5;
-      box-sizing: border-box;
-      .editor-toolbar__title {
-        color: $g1;
-        background-color: $g6;
-      }
-      .editor-toolbar__button {
-        background-color: $g6;
-        color: $b2;
-        &:hover {
-          background-color: $b2;
-          color: $g6;
-        }
-      }
-      .editor-toolbar__dropdown{
-        background-color: $g6;
-        color: $b2;
-      }
-      .editor-toolbar__svg {
-        background-color: $g6;
-        &:hover {
-          background-color: $b2;
-
-          #playPause {
-            fill: $g6;
-          }
-        }
-
-        &.editor-toolbar--isPlaying,
-        &.editor-toolbar--isPaused {
-          background-color: $b2;
-
-          #playPause {
-            fill: $g6;
-          }
-        }
-      }
-      .editor-toolbar__svg:hover #playPause {
-        stroke: none;
-      }
-      #playPause {
-        fill: $b2;
+    &__add-file-button {
+      border: $small-border solid $g6;
+      background: none;
+      color:$g4;
+      &:hover {
+        border: $small-border solid $green;
+        background: none;
+        color:$green;
       }
     }
-
-    .editor-toolbar__files {
-      background-color: $g5;
-      .editor-toolbar__file {
-        &-button {
-          background-color: $g8;
-          color: $g3;
-          border: $small-border solid $g5;
-          box-sizing: border-box;
-          &:hover, &--selected { // sass-lint:disable-line class-name-format
-            background-color: $g4;
-            color: $g8;
+    &__container {
+      .editor-toolbar__button-container {
+        background-color: $white;
+        border: $small-border solid $g5;
+        box-sizing: border-box;
+        .editor-toolbar__title {
+          color: $g1;
+          background-color: $g6;
+        }
+        .editor-toolbar__button {
+          color: $b2;
+          &:hover {
+            color: $g6;
           }
-          &-static {
-            overflow: hidden;
-            background-color: $g6;
-            color: $g3;
-            border: $small-border solid $g7;
-            &:hover {
-              background-color: $g6;
-              color: $g3;
-              border: $small-border solid $g7;
-              cursor: default;
+        }
+        .editor-toolbar__dropdown{
+          background-color: $g6;
+          color: $b2;
+        }
+        .editor-toolbar__svg {
+          background-color: $g6;
+          &:hover {
+            background-color: $b2;
+
+            #playPause {
+              fill: $g6;
+            }
+          }
+
+          &.editor-toolbar--isPlaying,
+          &.editor-toolbar--isPaused {
+            background-color: $b2;
+
+            #playPause {
+              fill: $g6;
             }
           }
         }
+        .editor-toolbar__svg:hover #playPause {
+          stroke: none;
+        }
+        #playPause {
+          fill: $b2;
+        }
       }
-
     }
-  }
   }
 }
 
-
 .editor-toolbar {
-  &__image-upload-gif {
-    margin: 0 auto;
-  }
-  &__image-upload {
-    position: absolute;
-    background: $lighter-gray;
-    z-index: $z-index-layer-4;
-    left: calc(50% - #{$image-notice-width/2});
-    top: 30%;
-    width: $image-notice-width;
-    padding: $large-padding;
-    border-radius: $small-border-radius;
-    box-shadow: 0px 0px $border-shadow $g4;
-  }
-  &__image-close {
-    font-size: $medium-font-size;
-    border: 0;
-    position: absolute;
-    right: $medium-padding;
-    top: $medium-padding;
+  &__add-file-button {
+    padding: $small-padding;
+    margin: $small-margin;
+    margin-bottom: 2rem;
     background: transparent;
-    color: $g4;
-    border: none;
+    border: $small-border solid $g6;
     &:hover {
       background: transparent;
-      color: $g2;
-      border: none;
+      color: $green;
+      border: $small-border solid $green;
     }
-  }
-  &__image-notice {
-    text-align: center;
-    text-transform: capitalize;
   }
   &__title {
     color: $white;
@@ -227,7 +152,6 @@
   &__container {
   display: flex;
   flex-direction: column;
-  width: 100%;
   z-index: $z-index-layer-2;
 
     .editor-toolbar__button-container {
@@ -247,7 +171,10 @@
         font-family: $roboto;
         padding: 2px 4px;
         margin-left: 10px;
-        border-radius: $medium-border-radius;
+        border-radius: $small-border-radius;
+        min-width: 57px;
+        text-align: center;
+        margin-right: 0.0rem;
       }
       .editor-toolbar__dropdown{
         height: $editor-toolbar-content-height;
@@ -283,30 +210,6 @@
         transition-duration: 0.4s;
       }
     }
-
-    .editor-toolbar__files {
-      display: flex;
-      margin: 0;
-      padding: 0 !important;
-      height: $editor-toolbar-files-height;
-      .editor-toolbar__file {
-        text-decoration: none;
-        list-style: none;
-        width: $editor-toolbar-file-width;
-        &-button {
-          border-radius: 0;
-          box-shadow: none;
-          padding: 0px 3px !important;
-          width: 65px;
-          height: 100%;
-          &:hover, &--selected { // sass-lint:disable-line class-name-format
-            border: none;
-          }
-        }
-      
-      }
-
-    }
   }
   &__svg-info {
     display: inline-block;
@@ -332,16 +235,14 @@
   }
 }
 
-
 .editor-toolbar__item {
   @extend %small-button;
 }
 
-
 // used for editor toolbar
 %small-button {
   border: $small-border  $black;
-  border-radius: $medium-border-radius;
+  border-radius: $small-border-radius;
   color: $black;
   background-color: $white;
   height: 1.5rem;

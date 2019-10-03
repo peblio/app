@@ -17,7 +17,7 @@ class DocumentsView extends Component {
   }
 
   render() {
-    const { childFolders, childPages, documentView, folderId, folder, profileName } = this.props;
+    const { childFolders, childPages, documentView, folderId, folder, profileName, isSearchByTitle } = this.props;
     const title = folderId ? folder.title : '';
     return (
       /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -30,14 +30,18 @@ class DocumentsView extends Component {
               container={this.props.container}
               profileName={profileName}
               folderDepth={this.props.folderDepth}
+              jumpToFolderByShortId={this.props.jumpToFolderByShortId}
+              clearSelectedFolders={this.props.clearSelectedFolders}
             />
           </div>
         )}
         <h1 className="profile-pebls__heading">
           {title}
         </h1>
-        <h2 className="profile-pebls__sub-heading">folders</h2>
-        {childFolders && childFolders.length > 0 && (
+        {!isSearchByTitle && (
+          <h2 className="profile-pebls__sub-heading">folders</h2>
+        )}
+        {!isSearchByTitle && childFolders && childFolders.length > 0 && (
           <Folders
             deleteFolder={this.props.deleteFolder}
             documentView={documentView}
@@ -51,9 +55,11 @@ class DocumentsView extends Component {
             renameFolder={this.props.renameFolder}
           />
         )}
+
         <h2 className="profile-pebls__sub-heading">files</h2>
         <Pages
           pages={childPages}
+          isSearchByTitle={isSearchByTitle}
           folderId={folderId}
           container={this.props.container}
           setShareURL={this.props.setShareURL}
@@ -69,9 +75,11 @@ class DocumentsView extends Component {
 DocumentsView.propTypes = {
   childFolders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   childPages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  clearSelectedFolders: PropTypes.func.isRequired,
   container: PropTypes.string.isRequired,
   deleteFolder: PropTypes.func.isRequired,
   documentView: PropTypes.string.isRequired,
+  isSearchByTitle: PropTypes.bool.isRequired,
   folderDepth: PropTypes.number,
   folderId: PropTypes.string,
   folder: PropTypes.shape({ parent: PropTypes.string }),
@@ -92,9 +100,12 @@ const mapStateToProps = (state, ownProps) => {
   if (folder && folder.parent) {
     parentFolderShortId = ownProps.folders.byId[folder.parent].shortId;
   }
-  const pagesById = (ownProps.container === 'profile')
+  const pagesById = (ownProps.container === 'profile') //eslint-disable-line
     ? state.profile.pages
-    : state.page.pages;
+    : (state.page.isSearchByTitle
+      ? state.page.filteredPages
+      : state.page.pages);
+  const isSearchByTitle = state.page.isSearchByTitle;
   return {
     childFolders: Object.values(ownProps.folders.byId)
       .filter(f => f.parent === ownProps.folderId),
@@ -103,10 +114,14 @@ const mapStateToProps = (state, ownProps) => {
         // this is to make sure that folderId is null, and not undefined
         const folderId = ownProps.folderId ? ownProps.folderId : null;
         const pageFolderId = page.folder ? page.folder : null;
+        if (state.page.isSearchByTitle) {
+          return true;
+        }
         return (pageFolderId === folderId);
       }),
     parentFolderShortId,
-    folder
+    folder,
+    isSearchByTitle
   };
 };
 

@@ -1,4 +1,4 @@
-import { EditorState, convertFromRaw } from 'draft-js';
+import { EditorState } from 'draft-js';
 import * as ActionTypes from '../constants/reduxConstants.js';
 import * as Code from '../constants/codeConstants.js';
 import * as Page from '../constants/pageConstants.js';
@@ -61,8 +61,28 @@ const workspaceReducer = (state = initialState, action) => {
     case ActionTypes.WP_ADD_MEDIA_FILE: {
       workspace.files.push({
         name: action.name,
-        externalLink: action.link
+        externalLink: action.link,
+        isFileInView: false
       });
+      return Object.assign({}, state, {
+        workspace
+      });
+    }
+
+    case ActionTypes.WP_ADD_FILE_TO_EDITOR: {
+      workspace.files.push({
+        name: action.name,
+        content: action.content,
+        isFileInView: true
+      });
+      return Object.assign({}, state, {
+        workspace
+      });
+    }
+
+    case ActionTypes.WP_DELETE_FILE_FROM_EDITOR: {
+      workspace.currentFile = action.index - 1;
+      workspace.files.splice(action.index, 1);
       return Object.assign({}, state, {
         workspace
       });
@@ -75,6 +95,30 @@ const workspaceReducer = (state = initialState, action) => {
 
     case ActionTypes.WP_SET_INNER_WIDTH: {
       workspace.innerWidth = action.value;
+      return { ...state, workspace };
+    }
+
+    case ActionTypes.WP_OPEN_FILE_VIEW: {
+      workspace.files[action.index].isFileInView = true;
+      return { ...state, workspace };
+    }
+
+    case ActionTypes.WP_CLOSE_FILE_VIEW: {
+      let isPrevFileDisplayed = false;
+      let fileIndexToBeDisplayed = action.index - 1;
+      while (!isPrevFileDisplayed && fileIndexToBeDisplayed > -1) {
+        if (workspace.files[fileIndexToBeDisplayed].isFileInView ||
+        typeof workspace.files[fileIndexToBeDisplayed].isFileInView === 'undefined') {
+          isPrevFileDisplayed = true;
+          workspace.currentFile = fileIndexToBeDisplayed;
+        } else {
+          fileIndexToBeDisplayed -= 1;
+        }
+      }
+      if (fileIndexToBeDisplayed === -1) {
+        workspace.currentFile = fileIndexToBeDisplayed;
+      }
+      workspace.files[action.index].isFileInView = false;
       return { ...state, workspace };
     }
 

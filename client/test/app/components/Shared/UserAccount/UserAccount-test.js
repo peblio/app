@@ -52,13 +52,13 @@ describe('UserAccount component when logged in as teacher', () => {
   it('renders "Profile" when container is app', () => {
     props.container = 'app';
     wrapper = shallow(<UserAccount store={store} {...props} />).dive();
-    expect(wrapper.find('.user-account__link').at(0).text()).to.equal('Dashboard');
-    expect(wrapper.find('.user-account__link').at(1).text()).to.equal('Profile');
+    expect(wrapper.find('.user-account__link').at(0).text()).to.equal('dashboard');
+    expect(wrapper.find('.user-account__link').at(1).text()).to.equal('profile');
   });
 
   it('renders "Workspace" when container is profile', () => {
     wrapper = shallow(<UserAccount store={store} {...props} />).dive();
-    expect(wrapper.find('.user-account__link').first().text()).to.equal('Workspace');
+    expect(wrapper.find('.user-account__link').first().text()).to.equal('workspace');
   });
 });
 

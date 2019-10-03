@@ -3,7 +3,7 @@ import { ObjectId } from 'mongodb';
 import { expect } from 'chai';
 
 import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils.js';
-import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, trashPage, getTrashPages, emptyTrash, restoreFromTrash, renamePage, getMyPagesWithTag } from '../../src/service/pageService';
+import { getPage, getPagesWithTag, savePageAsGuest, savePage, deletePage, updatePage, movePage, trashPage, getTrashPages, emptyTrash, restoreFromTrash, renamePage, getMyPagesWithTag, updatePageWithVersion } from '../../src/service/pageService';
 import * as pageCreator from '../../src/models/creator/pageCreator';
 
 const sinon = require('sinon');
@@ -11,12 +11,18 @@ const sinon = require('sinon');
 const sandbox = sinon.sandbox.create();
 const mockAWSSinon = require('mock-aws-sinon');
 const Page = require('../../src/models/page.js');
+const PageVersion = require('../../src/models/pageversion.js');
 const User = require('../../src/models/user.js');
 const Folder = require('../../src/models/folder.js');
 
 const tag = 'Java';
 
 const pageData = {
+  deletedAt: undefined,
+  folder: undefined,
+  isPublished: undefined,
+  snapshotPath: undefined,
+  trashedAt: undefined,
   heading: 'Some heading',
   title: 'Some title',
   editors: 'Some editors',
@@ -25,10 +31,15 @@ const pageData = {
   layout: 'A perfect layout',
   workspace: 'No workspace',
   tags: ['tag1', 'tag2'],
-  id: '9NL7Svh1D',
+  id: '9NL7Svh1D'
 };
 
 let pageDataWithUser = {
+  deletedAt: undefined,
+  folder: undefined,
+  isPublished: undefined,
+  snapshotPath: undefined,
+  trashedAt: undefined,
   heading: 'Some heading',
   title: 'Some title',
   editors: 'Some editors',
@@ -45,6 +56,7 @@ let pageDataWithUser = {
 const folderId = 'somefolderId';
 const pageId = 'pageId';
 const error = { error: 'Could not retrieve page' };
+const pageVersion = 'version';
 const guestUser = {
   _id: 1
 };
@@ -100,6 +112,7 @@ let folderCountStub;
 let folderCountExecStub;
 let buildPageForUpdateFromRequestStub;
 let paginateSpy;
+let findPageVersionStub;
 
 describe('pageService', () => {
   beforeEach(() => {
@@ -838,6 +851,155 @@ describe('pageService', () => {
     });
   });
 
+  describe('updatePageWithVersion', () => {
+    beforeEach(() => {
+      request = {
+        query: { id: pageData.id, version: pageVersion },
+        user: loggedInUser
+      };
+      response = {
+        send: spy(),
+        json: spy(),
+        status: createResponseWithStatusCode(200),
+      };
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall return 403 error when request is unauthrorized', async () => {
+      request.user = null;
+      response.status = createResponseWithStatusCode(403);
+      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageData);
+
+      await updatePageWithVersion(request, response);
+
+      assertSendWasCalledWith({ error: 'Please log in first' });
+      assert.notCalled(updatePageSpy);
+    });
+
+    it('shall return error when retrieval of page to be updated threw an error', async () => {
+      response.status = createResponseWithStatusCode(500);
+      findOnePageStub = sandbox.stub(Page, 'findOne').yields({ message: 'Could not retrieve page' }, null);
+      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageDataWithUser);
+
+      await updatePageWithVersion(request, response);
+
+      assertFindOnePageWasCalledWithPageId();
+      assertSendWasCalledWith({ error: 'Could not retrieve page!' });
+      assert.notCalled(updatePageSpy);
+    });
+
+    it('shall return error when no page could be retrieved', async () => {
+      response.status = createResponseWithStatusCode(500);
+      findOnePageStub = sandbox.stub(Page, 'findOne').yields({ message: 'Could not retrieve page' }, null);
+      updatePageSpy = sandbox.stub(Page, 'update').yields(null, null);
+
+      await updatePageWithVersion(request, response);
+
+      assertFindOnePageWasCalledWithPageId();
+      assertSendWasCalledWith({ error: 'Could not retrieve page!' });
+      assert.notCalled(updatePageSpy);
+    });
+
+    it('shall return error when retrieved page does not have user', async () => {
+      response.status = createResponseWithStatusCode(500);
+      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, {});
+      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageDataWithUser);
+
+      await updatePageWithVersion(request, response);
+
+      assertFindOnePageWasCalledWithPageId();
+      assertSendWasCalledWith({ error: 'Could not retrieve page!' });
+      assert.notCalled(updatePageSpy);
+    });
+
+    it('shall return error when user trying to update page does not own page', async () => {
+      response.status = createResponseWithStatusCode(403);
+      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, { ...pageData, user: 'holaUser' });
+      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageDataWithUser);
+
+      await updatePageWithVersion(request, response);
+
+      assertFindOnePageWasCalledWithPageId();
+      assertSendWasCalledWith({ error: 'Missing permission to update page' });
+      assert.notCalled(updatePageSpy);
+    });
+
+    it('shall return error when user pageVersion retrieve error', async () => {
+      response.status = createResponseWithStatusCode(500);
+      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, { ...pageDataWithUser, user: loggedInUser._id });
+      findPageVersionStub = sandbox.stub(PageVersion, 'find').yields({ message: 'Could not retrieve page version!' }, null);
+      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageData);
+
+      await updatePageWithVersion(request, response);
+
+      assertFindOnePageWasCalledWithPageId();
+      assertFindPageVersionWasCalledWithPageIdAndVersion();
+      assertSendWasCalledWith({ error: 'Could not retrieve page version!' });
+      assert.notCalled(updatePageSpy);
+    });
+
+    it('shall return error when user no pageVersion data available', async () => {
+      response.status = createResponseWithStatusCode(500);
+      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, { ...pageDataWithUser, user: loggedInUser._id });
+      findPageVersionStub = sandbox.stub(PageVersion, 'find').yields(null, null);
+      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageData);
+
+      await updatePageWithVersion(request, response);
+
+      assertFindOnePageWasCalledWithPageId();
+      assertFindPageVersionWasCalledWithPageIdAndVersion();
+      assertSendWasCalledWith({ error: 'Could not retrieve page version!' });
+      assert.notCalled(updatePageSpy);
+    });
+
+    it('shall return error when user no pageVersion data empty', async () => {
+      response.status = createResponseWithStatusCode(500);
+      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, { ...pageDataWithUser, user: loggedInUser._id });
+      findPageVersionStub = sandbox.stub(PageVersion, 'find').yields(null, []);
+      updatePageSpy = sandbox.stub(Page, 'update').yields(null, pageData);
+
+      await updatePageWithVersion(request, response);
+
+      assertFindOnePageWasCalledWithPageId();
+      assertFindPageVersionWasCalledWithPageIdAndVersion();
+      assertSendWasCalledWith({ error: 'Could not retrieve page version!' });
+      assert.notCalled(updatePageSpy);
+    });
+
+    it('shall return error when updating pageData', async () => {
+      response.status = createResponseWithStatusCode(500);
+      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, { ...pageDataWithUser, user: loggedInUser._id });
+      findPageVersionStub = sandbox.stub(PageVersion, 'find').yields(null, [pageDataWithUser]);
+      updatePageSpy = sandbox.stub(Page, 'update').yields({ message: 'error updating page' }, null);
+
+      await updatePageWithVersion(request, response);
+
+      assertFindOnePageWasCalledWithPageId();
+      assertFindPageVersionWasCalledWithPageIdAndVersion();
+      assertSendWasCalledWith({ message: 'error updating page' });
+      assert.calledOnce(updatePageSpy);
+      assertUpdatePageWasCalledLatestPageVersionData();
+    });
+
+    it('shall restore page version', async () => {
+      response.status = createResponseWithStatusCode(200);
+      findOnePageStub = sandbox.stub(Page, 'findOne').yields(null, { ...pageDataWithUser, user: loggedInUser._id });
+      findPageVersionStub = sandbox.stub(PageVersion, 'find').yields(null, [pageDataWithUser]);
+      updatePageSpy = sandbox.stub(Page, 'update').yields(null, null);
+
+      await updatePageWithVersion(request, response);
+
+      assertFindOnePageWasCalledWithPageId();
+      assertFindPageVersionWasCalledWithPageIdAndVersion();
+      assert.calledOnce(response.send);
+      assert.calledOnce(updatePageSpy);
+      assertUpdatePageWasCalledLatestPageVersionData();
+    });
+  });
+
   describe('movePage', () => {
     beforeEach(() => {
       request = {
@@ -1069,9 +1231,29 @@ function assertUpdatePageWasCalledWithLatestPageData() {
       layout: pageData.layout,
       workspace: pageData.workspace,
       tags: pageData.tags,
-      user: loggedInUser._id
+      user: loggedInUser._id,
+      deletedAt: undefined,
+      folder: undefined,
+      isPublished: undefined,
+      snapshotPath: undefined,
+      trashedAt: undefined,
     },
     sinon.match.any);
+}
+
+function assertUpdatePageWasCalledLatestPageVersionData() {
+  assert.calledOnce(updatePageSpy);
+  expect(updatePageSpy.getCall(0).args[0]).to.deep.equal({ id: pageData.id });
+  expect(JSON.stringify(updatePageSpy.getCall(0).args[1])).to.equal(JSON.stringify({
+    title: pageDataWithUser.title,
+    heading: pageDataWithUser.heading,
+    description: pageDataWithUser.description,
+    editors: pageDataWithUser.editors,
+    editorIndex: pageDataWithUser.editorIndex,
+    layout: pageDataWithUser.layout,
+    workspace: pageDataWithUser.workspace,
+    tags: pageDataWithUser.tags,
+  }));
 }
 
 function assertUpdatePageWasCalledWithNewPageTitle(stub) {
@@ -1105,6 +1287,10 @@ function assertFindOnePageWasCalledWithId() {
 
 function assertFindOnePageWasCalledWithPageId() {
   assertStubWasCalledOnceWith(findOnePageStub, { id: pageData.id });
+}
+
+function assertFindPageVersionWasCalledWithPageIdAndVersion() {
+  assertStubWasCalledOnceWith(findPageVersionStub, { id: pageData.id, version_id: pageVersion });
 }
 
 function assertPageWasUpdatedWithDeletedAtDetails() {
