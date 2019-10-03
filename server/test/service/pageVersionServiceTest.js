@@ -1,6 +1,5 @@
 import { assert, spy } from 'sinon';
 import { ObjectId } from 'mongodb';
-import { expect } from 'chai';
 import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils.js';
 import { savePageVersion, get } from '../../src/service/pageVersionService';
 
@@ -8,20 +7,7 @@ const sinon = require('sinon');
 
 const sandbox = sinon.sandbox.create();
 const PageVersion = require('../../src/models/pageversion.js');
-
-const tag = 'Java';
-
-const pageData = {
-  heading: 'Some heading',
-  title: 'Some title',
-  editors: 'Some editors',
-  description: 'Some description',
-  editorIndex: ' Some editorIndex',
-  layout: 'A perfect layout',
-  workspace: 'No workspace',
-  tags: ['tag1', 'tag2'],
-  id: '9NL7Svh1D',
-};
+const Page = require('../../src/models/page.js');
 
 let pageDataWithUser = {
   heading: 'Some heading',
@@ -37,38 +23,19 @@ let pageDataWithUser = {
     _id: new ObjectId('506f1f77bcf86cd799439011')
   }
 };
-const folderId = 'somefolderId';
-const pageId = 'pageId';
-const error = { error: 'Could not retrieve page' };
 const pageVersion = 'version';
-const guestUser = {
-  _id: 1
-};
 const loggedInUser = {
   _id: 2,
   pages: []
 };
 const pageUpdateUserObjectId = new ObjectId('506f1f77bcf86cd799439011');
-const pageUpdateUser = {
-  _id: pageUpdateUserObjectId
-};
-const newPageId = 3;
-let findSpy;
+let trashedAndDeletedPageDataWithUser;
+let findPageSpy;
 let savePageVerionSpy;
-let findOneUserSpy;
+let findPageExecSpy;
+let findPageVerionSpy;
 let request;
 let response;
-let findOneExecStub;
-let findOnePageExecStub;
-let findOnePageStub;
-let updateUserSpy;
-let updatePageSpy;
-let updatePageExecStub;
-let updatePageStub;
-let folderCountStub;
-let folderCountExecStub;
-let buildPageForUpdateFromRequestStub;
-let paginateSpy;
 let findPageVerionStub;
 
 describe('pageVersionService', () => {
@@ -87,6 +54,9 @@ describe('pageVersionService', () => {
         _id: pageUpdateUserObjectId
       }
     };
+    trashedAndDeletedPageDataWithUser = Object.assign({}, pageDataWithUser);
+    trashedAndDeletedPageDataWithUser.trashedAt = new Date();
+    trashedAndDeletedPageDataWithUser.deletedAt = new Date();
   });
   describe('savePageVersion', () => {
     beforeEach(() => {
@@ -158,6 +128,101 @@ describe('pageVersionService', () => {
       assert.calledOnce(response.send);
       assert.calledOnce(savePageVerionSpy);
       assert.calledOnce(deletePageVerionStub);
+    });
+  });
+
+  describe('get', () => {
+    beforeEach(() => {
+      request = {
+        user: loggedInUser,
+        query: {
+          id: pageDataWithUser.id
+        }
+      };
+      response = {
+        send: spy(),
+        json: spy(),
+        status: createResponseWithStatusCode(200)
+      };
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall return unauthorized if user not present in request', async () => {
+      response.status = createResponseWithStatusCode(403);
+      findPageVerionSpy = sandbox.stub(PageVersion, 'find');
+
+      await get({}, response);
+
+      assert.notCalled(findPageVerionSpy);
+      assertSendWasCalledWith({ error: 'Please log in first' });
+    });
+
+    it('shall not get page version if page does not exist', async () => {
+      response.status = createResponseWithStatusCode(404);
+      findPageExecSpy = sandbox.stub().returns(null);
+      findPageSpy = sandbox.stub(Page, 'findOne').returns({ exec: findPageExecSpy });
+      findPageVerionSpy = sandbox.stub(PageVersion, 'find');
+
+      await get(request, response);
+
+      assert.calledOnce(response.send);
+      assertStubWasCalledOnceWith(findPageSpy, { id: pageDataWithUser.id });
+      assert.notCalled(findPageVerionSpy);
+    });
+
+    it('shall not get page version if page is trashed and deleted', async () => {
+      response.status = createResponseWithStatusCode(404);
+      findPageExecSpy = sandbox.stub().returns(trashedAndDeletedPageDataWithUser);
+      findPageSpy = sandbox.stub(Page, 'findOne').returns({ exec: findPageExecSpy });
+      findPageVerionSpy = sandbox.stub(PageVersion, 'find');
+
+      await get(request, response);
+
+      assert.calledOnce(response.send);
+      assertStubWasCalledOnceWith(findPageSpy, { id: pageDataWithUser.id });
+      assert.notCalled(findPageVerionSpy);
+    });
+
+    it('shall get all pageVersions for page', async () => {
+      response.status = createResponseWithStatusCode(200);
+      findPageExecSpy = sandbox.stub().returns(pageDataWithUser);
+      findPageSpy = sandbox.stub(Page, 'findOne').returns({ exec: findPageExecSpy });
+      const pageVersionDataArray = [];
+      for (let i = 0; i < 16; i++) {
+        pageVersionDataArray.push(pageDataWithUser);
+      }
+      const execSpy = sandbox.stub().returns(pageVersionDataArray);
+      const sortSpy = sandbox.stub().returns({ exec: execSpy });
+      findPageVerionStub = sandbox.stub(PageVersion, 'find').returns({ sort: sortSpy });
+
+      await get(request, response);
+
+      assert.calledOnce(response.send);
+      assertStubWasCalledOnceWith(findPageSpy, { id: pageDataWithUser.id });
+      assertStubWasCalledOnceWith(findPageVerionStub, { id: pageDataWithUser.id });
+      assert.calledOnce(findPageExecSpy);
+      assert.calledOnce(execSpy);
+      assertStubWasCalledOnceWith(sortSpy, [['createdAt']]);
+    });
+
+    it('shall get only required version of page', async () => {
+      response.status = createResponseWithStatusCode(200);
+      request.query.version = pageVersion;
+      findPageExecSpy = sandbox.stub().returns(pageDataWithUser);
+      findPageSpy = sandbox.stub(Page, 'findOne').returns({ exec: findPageExecSpy });
+      const execSpy = sandbox.stub().returns(pageDataWithUser);
+      findPageVerionStub = sandbox.stub(PageVersion, 'find').returns({ exec: execSpy });
+
+      await get(request, response);
+
+      assert.calledOnce(response.send);
+      assertStubWasCalledOnceWith(findPageSpy, { id: pageDataWithUser.id });
+      assertStubWasCalledOnceWith(findPageVerionStub, { id: pageDataWithUser.id, version_id: pageVersion });
+      assert.calledOnce(findPageExecSpy);
+      assert.calledOnce(execSpy);
     });
   });
 });
