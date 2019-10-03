@@ -17,6 +17,9 @@
   },
   "author": "",
   "license": "ISC",
+  "engines" : { 
+    "node" : ">=8.7.0" 
+  },
   "dependencies": {
     "aws-sdk": "^2.224.1",
     "babel-cli": "^6.26.0",
