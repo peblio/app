@@ -3,7 +3,7 @@ import { CardElement, injectStripe } from 'react-stripe-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { makePayment } from '../../../action/profile';
+import { makePayment } from '../../action/profile';
 
 class CheckoutForm extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class CheckoutForm extends Component {
 
   render() {
     return (
-      <div className="checkout">
+      <div className="checkout-form__container">
         <p>Would you like to complete the purchase?</p>
         <CardElement />
         <button onClick={this.submit}>Send</button>
@@ -38,5 +38,6 @@ CheckoutForm.propTypes = {
   makePayment: PropTypes.func.isRequired,
 };
 
+export const PureCheckoutForm = CheckoutForm;
 
 export default (connect(null, mapDispatchToProps)(injectStripe(CheckoutForm)));
