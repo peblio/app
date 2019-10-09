@@ -29,7 +29,8 @@ const loggedInUser = {
   pages: []
 };
 const pageUpdateUserObjectId = new ObjectId('506f1f77bcf86cd799439011');
-let trashedAndDeletedPageDataWithUser;
+let trashedPageDataWithUser;
+let deletedPageDataWithUser;
 let findPageSpy;
 let savePageVerionSpy;
 let findPageExecSpy;
@@ -54,9 +55,10 @@ describe('pageVersionService', () => {
         _id: pageUpdateUserObjectId
       }
     };
-    trashedAndDeletedPageDataWithUser = Object.assign({}, pageDataWithUser);
-    trashedAndDeletedPageDataWithUser.trashedAt = new Date();
-    trashedAndDeletedPageDataWithUser.deletedAt = new Date();
+    trashedPageDataWithUser = Object.assign({}, pageDataWithUser);
+    trashedPageDataWithUser.trashedAt = new Date();
+    deletedPageDataWithUser = Object.assign({}, pageDataWithUser);
+    deletedPageDataWithUser.deletedAt = new Date();
   });
   describe('savePageVersion', () => {
     beforeEach(() => {
@@ -173,9 +175,22 @@ describe('pageVersionService', () => {
       assert.notCalled(findPageVerionSpy);
     });
 
-    it('shall not get page version if page is trashed and deleted', async () => {
+    it('shall not get page version if page is trashed', async () => {
       response.status = createResponseWithStatusCode(404);
-      findPageExecSpy = sandbox.stub().returns(trashedAndDeletedPageDataWithUser);
+      findPageExecSpy = sandbox.stub().returns(trashedPageDataWithUser);
+      findPageSpy = sandbox.stub(Page, 'findOne').returns({ exec: findPageExecSpy });
+      findPageVerionSpy = sandbox.stub(PageVersion, 'find');
+
+      await get(request, response);
+
+      assert.calledOnce(response.send);
+      assertStubWasCalledOnceWith(findPageSpy, { id: pageDataWithUser.id });
+      assert.notCalled(findPageVerionSpy);
+    });
+
+    it('shall not get page version if page is deleted', async () => {
+      response.status = createResponseWithStatusCode(404);
+      findPageExecSpy = sandbox.stub().returns(deletedPageDataWithUser);
       findPageSpy = sandbox.stub(Page, 'findOne').returns({ exec: findPageExecSpy });
       findPageVerionSpy = sandbox.stub(PageVersion, 'find');
 

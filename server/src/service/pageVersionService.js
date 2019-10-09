@@ -30,7 +30,7 @@ export async function get(req, res) {
   try {
     const { version, id } = req.query;
     const page = await Page.findOne({ id }).exec();
-    if(!page || (page.trashedAt && page.deletedAt)){
+    if(!page || page.trashedAt || page.deletedAt){
       return res.status(404).send();
     }
     if(!version){
