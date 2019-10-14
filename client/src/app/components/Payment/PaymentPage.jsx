@@ -5,10 +5,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CheckoutForm from './CheckoutForm';
 import { fetchProfile } from '../../action/profile';
+import { fetchCurrentUser } from '../../action/user';
 
 class PaymentPage extends React.Component {
   componentWillMount() {
-    this.props.fetchProfile(this.props.userName);
+    this.props.fetchCurrentUser()
+      .then(() => {
+        this.props.fetchProfile(this.props.userName);
+      });
   }
 
   render() {
@@ -31,6 +35,7 @@ class PaymentPage extends React.Component {
 PaymentPage.propTypes = {
   userName: PropTypes.string.isRequired,
   fetchProfile: PropTypes.func.isRequired,
+  fetchCurrentUser: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -41,7 +46,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    fetchProfile
+    fetchProfile,
+    fetchCurrentUser
   }, dispatch);
 }
 export default (connect(mapStateToProps, mapDispatchToProps)(PaymentPage));
