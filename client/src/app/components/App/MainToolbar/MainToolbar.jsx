@@ -21,7 +21,8 @@ import {
   setPageTitle,
   togglePreviewMode,
   autoSaveUnsavedChanges,
-  savePageSnapshot } from '../../../action/page.js';
+  savePageSnapshot,
+  setPreviewMode } from '../../../action/page.js';
 import * as mainToolbarActions from '../../../action/mainToolbar.js';
 
 export const ONE_SEC = 1000;
@@ -31,6 +32,13 @@ export const TWO_MIN = 120 * ONE_SEC;
 require('./mainToolbar.scss');
 
 class MainToolbar extends React.Component {
+  constructor(props) {
+    super(props);
+    if (window.screen.width <= 786 && this.props.preview === false) {
+      this.props.setPreviewMode(true);
+    }
+  }
+
   componentDidMount() {
     this.autoSaveTimeout = setInterval(() => {
       if (
@@ -331,6 +339,7 @@ MainToolbar.propTypes = {
   isPublished: PropTypes.bool.isRequired,
   savePageVersion: PropTypes.func.isRequired,
   isOldVersionShowing: PropTypes.bool.isRequired,
+  setPreviewMode: PropTypes.func.isRequired,
 };
 
 
@@ -371,6 +380,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   autoSaveUnsavedChanges,
   convertEditorsToRaw,
   savePageVersion,
+  setPreviewMode,
   ...mainToolbarActions
 }, dispatch);
 

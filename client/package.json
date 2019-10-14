@@ -28,6 +28,7 @@
     "prop-types": "^15.6.0",
     "react": "^16.4.1",
     "react-autocomplete": "^1.8.1",
+    "react-burger-menu": "^2.6.11",
     "react-color": "^2.14.1",
     "react-dnd": "^5.0.0",
     "react-dnd-html5-backend": "^5.0.1",
