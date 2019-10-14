@@ -64,6 +64,21 @@ class EditorContainer extends React.Component {
     this.setState({ isResizing: false });
   }
 
+  onKeyPressed(e) {
+    if (e.metaKey || e.ctrlKey) {
+      switch (e.keyCode) {
+        case 69: // e,E
+          // save
+          console.log('hi');
+          this.playCode();
+          if (this.props.isPlaying) { this.startCodeRefresh(); }
+          e.preventDefault();
+          break;
+        default:
+          break;
+      }
+    }
+  }
 
   render() {
     const themeClass = classNames('editor__total-container', {
@@ -72,7 +87,11 @@ class EditorContainer extends React.Component {
     });
     return (
       <div>
-        <div className={classNames(themeClass)} data-test={`code-editor-${this.props.editorMode}`}>
+        <div
+          onKeyDown={e => this.onKeyPressed(e)}
+          className={classNames(themeClass)}
+          data-test={`code-editor-${this.props.editorMode}`}
+        >
           <EditorToolbar
             id={this.props.id}
             container="canvas"
@@ -134,6 +153,8 @@ class EditorContainer extends React.Component {
                 updateConsoleOutput={this.updateConsoleOutput}
                 updateFile={this.updateFile}
                 viewEditorPreview={this.viewEditorPreview}
+                playCode={this.playCode}
+                startCodeRefresh={this.startCodeRefresh}
               />
             )}
             {this.editorView() === 'tabbed' && (
@@ -162,6 +183,8 @@ class EditorContainer extends React.Component {
                 updateFile={this.updateFile}
                 updateConsoleOutput={this.updateConsoleOutput}
                 viewEditorPreview={this.viewEditorPreview}
+                playCode={this.playCode}
+                startCodeRefresh={this.startCodeRefresh}
               />
             )}
           </div>

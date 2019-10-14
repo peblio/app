@@ -39,6 +39,9 @@ class SplitEditorContainer extends React.Component {
                 setCurrentFile={this.props.setCurrentFile}
                 toggleEditorFilesView={this.props.toggleEditorFilesView}
                 updateFile={this.props.updateFile}
+                isPlaying={this.props.isPlaying}
+                playCode={this.props.playCode}
+                startCodeRefresh={this.props.startCodeRefresh}
               />
             )}
           </div>
