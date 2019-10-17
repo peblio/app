@@ -80,6 +80,20 @@ export function setDocumentSort(sortType) {
   };
 }
 
+export function loadMemoryConsumed() {
+  return dispatch => axios.get('files/size')
+    .then((memoryInfo) => {
+      const size = memoryInfo.data.size;
+      dispatch({
+        type: ActionTypes.LOAD_MEMORY_CONSUMED,
+        memoryConsumed: size
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 export function searchByTitle(searchText) {
   return (dispatch) => {
     dispatch(filterPagesByTitle(searchText));

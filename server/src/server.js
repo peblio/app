@@ -93,7 +93,7 @@ mongoose.connection.on('open', () => {
   startServer();
 });
 
-expressWs.getWss().on('connection', function(ws, req) {
+expressWs.getWss().on('connection', function (ws, req) {
   ws.request = req;
   ws.uniqueId = req.headers['sec-websocket-key'];
 });

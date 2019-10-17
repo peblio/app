@@ -15,7 +15,7 @@ describe('History Of Page Journey', () => {
       .set('Accept', 'application/json')
       .send(loginCreds);
 
-    expect(loginResponse.header['set-cookie'][0]).contains('peblioSession-local');
+    expect(loginResponse.header['set-cookie'][0]).contains('peblioSession-test');
     expect(loginResponse.statusCode).to.equal(200);
 
     pageData.id = shortid.generate();
