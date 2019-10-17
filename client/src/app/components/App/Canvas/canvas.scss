@@ -23,6 +23,7 @@
   }
 }
 
+
 .canvas{
   background-color: $whitish;
   width: $total-width;
@@ -86,7 +87,7 @@
 }
 
 .canvas-right {
-  margin-left: $navigation-width;
+  margin-left: $navigation-width !important;
 }
 
 .canvas-edit-mode {
@@ -94,7 +95,6 @@
     display: block;
   }
 }
-
 
 .canvas-high {
   z-index: $z-index-layer-2;
@@ -125,10 +125,3 @@
   top: -($widget-nav-height);
   z-index: -1;
 }
-
-@media screen and (max-width: 786px) {
-  .canvas-right{
-    margin: 0 1rem;
-  }
-}
-
