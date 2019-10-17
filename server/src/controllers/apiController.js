@@ -22,7 +22,7 @@ export function authenticatePage(req, res) {
     res.send(false);
   } else {
     Page.find({ id: req.params.id }, (err, data) => {
-      if (err) {
+    if (err || !data || data.length === 0){
         res.send(false);
       } else {
         res.send(data[0].user.toString() === req.user._id.toString());
