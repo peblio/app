@@ -46,3 +46,5 @@ export const DEFAULT_IMAGE_CROP = {
   w: 100,
   h: 100
 };
+
+export const MEDIA_FILE_REGEX = /.+\.(gif|jpg|jpeg|png|bmp|wav|mp3|ttf|otf)$/i;

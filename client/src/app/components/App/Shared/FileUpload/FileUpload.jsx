@@ -11,7 +11,7 @@ import UploadSVG from '../../../../images/upload.svg';
 require('./fileUpload.scss');
 
 const VALID_FILE_EXT = ['.js', '.css'];
-const VALID_UPLOAD_FILE_EXT = ['.js', '.css', '.gif', '.png', '.jpg', '.jpeg', '.svg'];
+const VALID_UPLOAD_FILE_EXT = ['.js', '.css', '.gif', '.png', '.jpg', '.jpeg', '.svg', '.wav', '.mp3', '.ttf', '.otf'];
 const VALID_IMG_UPLOAD_FILE_EXT = ['.gif', '.png', '.jpg', '.jpeg', '.svg'];
 
 class FileUpload extends React.Component {
@@ -59,7 +59,7 @@ class FileUpload extends React.Component {
       this.validateFile(
         files,
         VALID_UPLOAD_FILE_EXT,
-        'File must have extension .js .css .svg .png .jpg or .jpeg',
+        'File must have extension .js .css .svg .png .jpg .jpeg .wav .mp3 .ttf or .otf',
       );
     }
   }

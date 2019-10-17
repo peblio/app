@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import CloseSVG from '../../../../../images/close.svg';
-
-const MEDIA_FILE_REGEX = /.+\.(gif|jpg|jpeg|png|bmp)$/i;
+import { MEDIA_FILE_REGEX } from '../../../../../constants/widgetConstants.js';
 
 require('./editorOpenFiles.scss');
 

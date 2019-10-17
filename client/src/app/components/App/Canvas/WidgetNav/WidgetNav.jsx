@@ -39,6 +39,7 @@ class WidgetNav extends React.Component {
             className="widget__delete"
             onClick={this.duplicateWidget.bind(this)}
             data-test="widget__duplicate"
+            id="widget__duplicate"
           >
             <CopySVG alt="duplicate widget" />
           </button>
@@ -46,6 +47,7 @@ class WidgetNav extends React.Component {
         <Tooltip content="Drag and Drop">
           <button
             className={`widget__delete widget__drag drag__${this.props.id}`}
+            id="widget__drag"
           >
             <DragSVG alt="drag widget" />
           </button>
@@ -55,6 +57,7 @@ class WidgetNav extends React.Component {
             className="widget__delete"
             onClick={this.showDeleteWidgetWarning}
             data-test="widget__delete"
+            id="widget__delete"
           >
             <CloseSVG alt="close element" />
           </button>

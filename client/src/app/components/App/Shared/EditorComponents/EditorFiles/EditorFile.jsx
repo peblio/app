@@ -1,5 +1,4 @@
 import React from 'react';
-import Tooltip from 'react-tooltip-lite';
 import PropTypes from 'prop-types';
 
 const HTML_FILE_REGEX = /.+\.(html)$/i;
@@ -22,7 +21,7 @@ class EditorFile extends React.Component {
 
   deleteFile = (e, index) => {
     e.stopPropagation();
-    if (confirm('Are you sure you want to delete this file?')) { // eslint-disable-line no-restricted-globals
+    if (window.confirm('Are you sure you want to delete this file?')) { // eslint-disable-line no-restricted-globals
       this.props.deleteFileFromEditor(index);
     }
   }
@@ -61,35 +60,49 @@ class EditorFile extends React.Component {
             {this.props.file.name}
           </button>
           {!this.props.file.name.match(HTML_FILE_REGEX) && ( //eslint-disable-line
-            <button
-              className="editor-toolbar__file-button"
+            <div
+              role="presentation"
               onClick={(e) => {
                 this.focusOnButton(e);
-                this.toggleFileOption();
               }}
               onBlur={() => {
-                this.closeFileOption();
+                setTimeout(() => {
+                  this.closeFileOption();
+                }, 50);
               }}
-              data-test="widget__delete"
             >
-              {'>'}
-            </button>
+              <button
+                className="editor-toolbar__file-button editor-toolbar__file-button-option"
+                onMouseDown={(e) => {
+                  this.toggleFileOption();
+                }}
+                onKeyDown={(e) => {
+                  this.toggleFileOption();
+                }}
+                data-test="widget__delete"
+              >
+                {'>'}
+              </button>
+              {this.state.isFileOptionOpen && (
+                <div
+                  className="editor-toolbar__file-option"
+                  role="presentation"
+                >
+                  <button
+                    className="editor-toolbar__file-button editor-toolbar__file-button-delete"
+                    onMouseDown={(e) => { this.deleteFile(e, this.props.index); }}
+                    onKeyDown={(e) => { this.deleteFile(e, this.props.index); }}
+                    data-test="widget__delete"
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+            </div>
+
           )}
         </div>
-        {this.state.isFileOptionOpen && (
-          <div
-            className="editor-toolbar__file-option"
-            role="presentation"
-          >
-            <button
-              className="editor-toolbar__file-button"
-              onClick={(e) => { this.deleteFile(e, this.props.index); }}
-              data-test="widget__delete"
-            >
-              Delete
-            </button>
-          </div>
-        )}
+
       </li>
     );
   }
@@ -98,10 +111,10 @@ class EditorFile extends React.Component {
 EditorFile.propTypes = {
   currentFile: PropTypes.number.isRequired,
   deleteFileFromEditor: PropTypes.func.isRequired,
-  file: PropTypes.arrayOf(PropTypes.shape({
+  file: PropTypes.shape({
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired
-  })).isRequired,
+  }).isRequired,
   id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   isImage: PropTypes.bool.isRequired,

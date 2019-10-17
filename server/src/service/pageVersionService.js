@@ -1,4 +1,5 @@
 const PageVersion = require('../models/pageversion.js');
+const Page = require('../models/page.js');
 
 export async function savePageVersion(req, res) {
   const user = req.user;
@@ -28,9 +29,13 @@ export async function get(req, res) {
   }
   try {
     const { version, id } = req.query;
+    const page = await Page.findOne({ id }).exec();
+    if(!page || page.trashedAt || page.deletedAt){
+      return res.status(404).send();
+    }
     if(!version){
       const pageVersions = await PageVersion.find({ id}).sort([['createdAt']]).exec();
-      return res.send({ data: pageVersions });
+      return res.status(200).send({ data: pageVersions });
     }
     const pageVersions = await PageVersion.find({ id, version_id: version} ).exec();
     return res.send({ data: pageVersions });

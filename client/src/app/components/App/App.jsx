@@ -241,8 +241,7 @@ class App extends React.Component {
 
   sendMessage = (message) => {
     if (this.props.id && hasSocketBeenConnected) {
-      console.log('Sending message');
-      this.refWebSocket.sendMessage(message);
+      // this.refWebSocket.sendMessage(message);
     }
   }
 

@@ -56,6 +56,7 @@ export class InsertToolbar extends React.Component {
               }, 50);
             }}
             data-test="add-code-editor"
+            id="insert-toolbar__add-code-editor"
           >
             <EditorSVG alt="add code editor" />
             Editor
@@ -157,6 +158,7 @@ export class InsertToolbar extends React.Component {
             id="elementButton"
             className="insert-toolbar__button"
             data-test="insert-toolbar__add-text-editor"
+            id="insert-toolbar__add-text-editor"
           >
             <TextSVG alt="add text" />
             Textbox
@@ -166,6 +168,7 @@ export class InsertToolbar extends React.Component {
             onKeyDown={this.props.addIframe}
             className="insert-toolbar__button"
             data-test="insert-toolbar__add-iframe"
+            id="insert-toolbar__add-iframe"
           >
             <EmbedSVG alt="add embed" />
             Embed
@@ -175,6 +178,7 @@ export class InsertToolbar extends React.Component {
             onKeyDown={this.props.addVideo}
             className="insert-toolbar__button"
             data-test="insert-toolbar__add-video"
+            id="insert-toolbar__add-video"
           >
             <VideoSVG alt="add video" />
             Video
@@ -185,6 +189,7 @@ export class InsertToolbar extends React.Component {
             id="elementButton"
             className="insert-toolbar__button"
             data-test="insert-toolbar__add-question"
+            id="insert-toolbar__add-question"
           >
             <QuestionSVG alt="add question" />
             Question
@@ -195,23 +200,26 @@ export class InsertToolbar extends React.Component {
             id="elementButton"
             className="insert-toolbar__button"
             data-test="insert-toolbar__add-image"
+            id="insert-toolbar__add-image"
           >
             <ImageSVG alt="add image" />
             Image
           </button>
         </div>
-        <div className="insert-toolbar__container-right">
-          <button
-            onMouseDown={this.props.togglePageVersion}
-            onKeyDown={this.props.togglePageVersion}
-            id="elementButton"
-            className={`insert-toolbar__button
+        {this.props.canEdit && (
+          <div className="insert-toolbar__container-right">
+            <button
+              onMouseDown={this.props.togglePageVersion}
+              onKeyDown={this.props.togglePageVersion}
+              id="elementButton"
+              className={`insert-toolbar__button
               ${(this.props.isPageVersionOpen) ? 'insert-toolbar__button--highlighted' : ''}`}
-            data-test="insert-toolbar__show-page-version"
-          >
-            <HistorySVG alt="show page version" />
-          </button>
-        </div>
+              data-test="insert-toolbar__show-page-version"
+            >
+              <HistorySVG alt="show page version" />
+            </button>
+          </div>
+        )}
       </div>
     );
   }
@@ -224,11 +232,13 @@ InsertToolbar.propTypes = {
   addTextEditor: PropTypes.func.isRequired,
   addQuestionEditor: PropTypes.func.isRequired,
   addVideo: PropTypes.func.isRequired,
+  canEdit: PropTypes.bool.isRequired,
   isPageVersionOpen: PropTypes.bool.isRequired,
   togglePageVersion: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
+  canEdit: state.user.canEdit,
   isPageVersionOpen: state.pageVersion.isPageVersionOpen
 });
 
