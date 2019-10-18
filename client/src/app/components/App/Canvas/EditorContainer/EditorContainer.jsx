@@ -69,7 +69,6 @@ class EditorContainer extends React.Component {
       switch (e.keyCode) {
         case 69: // e,E
           // save
-          console.log('hi');
           this.playCode();
           if (this.props.isPlaying) { this.startCodeRefresh(); }
           e.preventDefault();
