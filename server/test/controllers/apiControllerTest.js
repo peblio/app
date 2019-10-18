@@ -1,12 +1,9 @@
-import { expect } from 'chai';
-import { assert, spy } from 'sinon';
-import { getSketches } from '../../src/controllers/apiController';
+import { spy } from 'sinon';
+import { getSketches, getFileInfo } from '../../src/controllers/apiController';
 import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils.js';
 
 const sinon = require('sinon');
 const User = require('../../src/models/user.js');
-const Folder = require('../../src/models/folder.js');
-const Page = require('../../src/models/page.js');
 
 const sandbox = sinon.sandbox.create();
 const user = 'user';
@@ -14,17 +11,9 @@ const error = 'error';
 const studentUser = {
   type: 'student'
 };
-const teacherUser = {
-  type: 'teacher',
-  _id: user
-};
-const pages = 'pages';
-const folders = 'folders';
 let request = {};
 let response = {};
 let userRetrieveStub;
-let pageRetrieveStub;
-let folderRetrieveStub;
 
 function assertSendWasCalledWith(object) {
   assertStubWasCalledOnceWith(response.send, object);
@@ -32,65 +21,64 @@ function assertSendWasCalledWith(object) {
 
 describe('apiController', () => {
   describe('getSketches', () => {
+    beforeEach(() => {
+      request = {
+        params: {
+          user
+        },
+        query: {}
+      };
+      response = {
+        send: spy(),
+        json: spy(),
+        status: createResponseWithStatusCode(200)
+      };
+    });
 
-        beforeEach(function () {
-            request = {
-                params: {
-                    user
-                },
-                query: {}
-            };
-            response = {
-                send: spy(),
-                json: spy(),
-                status: createResponseWithStatusCode(200)
-            };
-        });
+    afterEach(() => {
+      sandbox.restore();
+    });
 
-        afterEach(function () {
-            sandbox.restore();
-        });
+    it('shall return unauthorized when user missing', async () => {
+      response.status = createResponseWithStatusCode(403);
+      request.params = {};
 
-        it('shall return unauthorized when user missing', async function () {
-            response.status = createResponseWithStatusCode(403);
-            request.params = {};
+      getSketches(request, response);
 
-            getSketches(request, response);
+      assertSendWasCalledWith({ error: 'Please log in first or specify a user' });
+    });
 
-            assertSendWasCalledWith({ error: 'Please log in first or specify a user' });
-        });
+    it('shall return 404 when user retrieve returns found', async () => {
+      response.status = createResponseWithStatusCode(404);
+      userRetrieveStub = sandbox.stub(User, 'findOne').yields(error, null);
 
-        it('shall return 404 when user retrieve returns found', async function () {
-            response.status = createResponseWithStatusCode(404);
-            userRetrieveStub = sandbox.stub(User, 'findOne').yields(error, null);
+      getSketches(request, response);
 
-            getSketches(request, response);
+      assertSendWasCalledWith({ error });
+      assertStubWasCalledOnceWith(userRetrieveStub, { name: request.params.user });
+    });
 
-            assertSendWasCalledWith({error});
-            assertStubWasCalledOnceWith(userRetrieveStub, { name: request.params.user })
-        });
+    it('shall return 404 when user not found', async () => {
+      response.status = createResponseWithStatusCode(404);
+      userRetrieveStub = sandbox.stub(User, 'findOne').yields(null, null);
 
-        it('shall return 404 when user not found', async function () {
-            response.status = createResponseWithStatusCode(404);
-            userRetrieveStub = sandbox.stub(User, 'findOne').yields(null, null);
+      getSketches(request, response);
 
-            getSketches(request, response);
+      assertSendWasCalledWith({ error: null });
+      assertStubWasCalledOnceWith(userRetrieveStub, { name: request.params.user });
+    });
 
-            assertSendWasCalledWith({error: null});
-            assertStubWasCalledOnceWith(userRetrieveStub, { name: request.params.user })
-        });
+    it('shall return 403 when data belongs to student', async () => {
+      response.status = createResponseWithStatusCode(403);
+      userRetrieveStub = sandbox.stub(User, 'findOne').yields(null, studentUser);
 
-        it('shall return 403 when data belongs to student', async function () {
-            response.status = createResponseWithStatusCode(403);
-            userRetrieveStub = sandbox.stub(User, 'findOne').yields(null, studentUser);
+      getSketches(request, response);
 
-            getSketches(request, response);
+      assertSendWasCalledWith({ error: 'This users data cannot be accessed' });
+      assertStubWasCalledOnceWith(userRetrieveStub, { name: request.params.user });
+    });
 
-            assertSendWasCalledWith({ error: 'This users data cannot be accessed' });
-            assertStubWasCalledOnceWith(userRetrieveStub, { name: request.params.user })
-        });
-
-        /*it('shall return page and folder data for user', async function () {
+    /* it('shall return page and folder data for user', async function () {
             response.status = createResponseWithStatusCode(200);
             userRetrieveStub = sandbox.stub(User, 'findOne').yields(null, teacherUser);
             const pageRetrieveExecStub = sandbox.stub().returns(pages);
@@ -108,5 +96,27 @@ describe('apiController', () => {
             // assertSendWasCalledWith({pages, folders});
         });
         */
+  });
+
+  describe('getFileInfo', () => {
+    beforeEach(() => {
+      response = {
+        send: spy(),
+        json: spy(),
+        status: createResponseWithStatusCode(200)
+      };
     });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('shall return unauthorized when user missing', async () => {
+      response.status = createResponseWithStatusCode(403);
+
+      getFileInfo(request, response);
+
+      assertSendWasCalledWith({ err: 'Please log in first' });
+    });
+  });
 });

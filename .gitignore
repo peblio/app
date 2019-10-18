@@ -6,3 +6,6 @@ client/src/.sass-cache/
 .python-version
 *.retry
 .env
+server/package-lock.json
+client/package-lock.json
+package-lock.json

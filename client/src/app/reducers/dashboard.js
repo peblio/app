@@ -6,7 +6,8 @@ const initialState = {
   documentView: 'block',
   documentSort: 'title',
   parentFolderId: '',
-  isAddNewMenuOpen: false
+  isAddNewMenuOpen: false,
+  memoryConsumed: 0,
 };
 const dashboard = (state = initialState, action) => {
   switch (action.type) {
@@ -14,11 +15,6 @@ const dashboard = (state = initialState, action) => {
       return Object.assign({}, state, {
         dashboardView: action.viewName
       });
-    case ActionTypes.SET_DASHBOARD_VIEW:
-      return Object.assign({}, state, {
-        dashboardView: action.viewName
-      });
-
     case ActionTypes.SET_TRASH_PAGES:
       return Object.assign({}, state, {
         trashPages: action.data.data
@@ -27,22 +23,22 @@ const dashboard = (state = initialState, action) => {
       return Object.assign({}, state, {
         documentView: action.viewType
       });
-
     case ActionTypes.SET_DOCUMENT_SORT:
       return Object.assign({}, state, {
         documentSort: action.sortType
       });
-
+    case ActionTypes.LOAD_MEMORY_CONSUMED:
+      return Object.assign({}, state, {
+        memoryConsumed: action.memoryConsumed
+      });
     case ActionTypes.SET_PARENT_FOLDER:
       return Object.assign({}, state, {
         parentFolderId: action.folderId
       });
-
     case ActionTypes.TOGGLE_ADD_NEW_MENU:
       return Object.assign({}, state, {
         isAddNewMenuOpen: !state.isAddNewMenuOpen
       });
-
     default:
       return state;
   }

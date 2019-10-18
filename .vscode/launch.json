@@ -15,7 +15,24 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Mocha Current File",
+            "name": "Server Mocha Current File",
+            "program": "${workspaceFolder}/server/node_modules/mocha/bin/_mocha",
+            "args": [
+                "--exit",
+                "--compilers",
+                "js:babel-core/register",
+                "--require",
+                "babel-polyfill",
+                "${file}"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "neverOpen",
+            "sourceMaps": true
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Client Mocha Current File",
             "program": "${workspaceFolder}/server/node_modules/mocha/bin/_mocha",
             "args": [
                 "${workspaceFolder}/client/test/jestsetup.js",
@@ -45,12 +62,12 @@
                 "1000000",
                 "--require",
                 "babel-polyfill",
-                "${file}"
+                "${file}",
             ],
             "console": "internalConsole",
             "internalConsoleOptions": "neverOpen",
             "sourceMaps": true,
-            "preLaunchTask": "decryptCredsForLocalRun",
+            "preLaunchTask": "decryptCredsForTestRun",
             "envFile": "${workspaceFolder}/.env",
         }
     ]
