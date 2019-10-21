@@ -10,6 +10,7 @@ import * as editorActions from '../../../../action/editors.js';
 import { setYPosition } from '../../../../action/navigation.js';
 import SplitEditorContainer from '../../Shared/EditorComponents/EditorViews/SplitEditorContainer.jsx';
 import TabbedEditorContainer from '../../Shared/EditorComponents/EditorViews/TabbedEditorContainer.jsx';
+import { loadMemoryConsumed } from '../../../../action/dashboard.js';
 
 require('./editorContainer.scss');
 require('./resizer.scss');
@@ -106,6 +107,8 @@ class EditorContainer extends React.Component {
                 openFileView={this.openFileView}
                 setCurrentFile={this.setCurrentFile}
                 viewEditorPreview={this.viewEditorPreview}
+                loadMemoryConsumed={this.props.loadMemoryConsumed}
+                memoryConsumed={this.props.memoryConsumed}
               />
             )}
             {this.editorView() === 'split' && (
@@ -206,17 +209,21 @@ EditorContainer.propTypes = {
   updateConsoleOutput: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
   viewEditorPreview: PropTypes.func.isRequired,
+  loadMemoryConsumed: PropTypes.func.isRequired,
+  memoryConsumed: PropTypes.number.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     name: state.user.name,
-    editorTheme: state.preferences.editorTheme
+    editorTheme: state.preferences.editorTheme,
+    memoryConsumed: state.dashboard.memoryConsumed
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   ...editorActions,
-  setYPosition
+  setYPosition,
+  loadMemoryConsumed,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditorContainer);
