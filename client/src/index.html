@@ -43,7 +43,17 @@
     <div id="app" />
     <script>
       window.onbeforeunload = function() {
-        return true;
+        let pathName = window.location.pathname;
+        if(pathName.includes('pebl')){
+          const pageId = pathName.replace('/pebl/', '');
+          const peblState = sessionStorage.getItem(pageId);
+          sessionStorage.removeItem(pageId);
+            if(!peblState){
+              return
+            }
+            return true;
+        };
+        return
       };
     </script>
     <!-- <script type="text/javascript"> window._mfq = window._mfq || []; (function() { var mf = document.createElement("script"); mf.type = "text/javascript"; mf.async = true; mf.src = "//cdn.mouseflow.com/projects/2339372f-3436-47ea-bc13-5b7872ef06fa.js"; document.getElementsByTagName("head")[0].appendChild(mf); })(); </script> -->
