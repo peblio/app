@@ -7,4 +7,5 @@ apiRoutes.route('/upload/:user/:type').get(apiController.uploadFiles);
 apiRoutes.route('/sketches').get(apiController.getSketches);
 apiRoutes.route('/sketches/:user').get(apiController.getSketches);
 apiRoutes.route('/files/size').get(apiController.getFileInfo);
+apiRoutes.route('/newsletters/:id').get(apiController.getNewsletters);
 module.exports = apiRoutes;

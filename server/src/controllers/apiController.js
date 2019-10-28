@@ -8,6 +8,8 @@ const s3 = new AWS.S3();
 const credentials = new AWS.SharedIniFileCredentials();
 AWS.config.credentials = credentials;
 const myBucket = process.env.S3_BUCKET;
+
+const axios =require('axios');
 // Multer config
 // memory storage keeps file data in a buffer
 const upload = multer({
@@ -134,4 +136,15 @@ export function getSketches(req, res) {
       .catch(err => res.status(500).send(err));
       return;
   }
+}
+
+export function getNewsletters(req, res) {
+  let data ;
+  axios.get('https://raw.githubusercontent.com/peblio/Newsletters/master/newsletters.json')
+    .then((result) => {
+      data = result.data;
+      res.status(200).send(result.data)
+    })
+    .catch(err => res.status(500).send(err));
+  return data;
 }
