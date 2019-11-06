@@ -259,7 +259,7 @@ class MainToolbar extends React.Component {
               </button>
               <div className="main-toolbar__spacer"></div>
               <button
-                className="main-toolbar__button"
+                className="main-toolbar__button main-toolbar__save_button"
                 onClick={this.sharePebl}
                 data-test="main-toolbar__share-button"
               >

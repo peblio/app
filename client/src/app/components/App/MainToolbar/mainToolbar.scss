@@ -206,3 +206,10 @@ input[type="checkbox"] ~ .main-toolbar__preview-off {
 .main-toolbar__spacer{
   @extend %vertical-spacer;
 }
+
+@media screen and (max-width: 786px) {
+  .main-toolbar__save, .file-modal__container, .main-toolbar__save_button{
+    display: none;
+  }
+}
+
