@@ -12,20 +12,38 @@ class NavigationHamburger extends React.Component {
     };
   }
 
+  handleStateChange(state) {
+    this.setState({ isOpen: state.isOpen });
+  }
+
+  closeMenu() {
+    this.setState({ isOpen: false });
+  }
+
+  toggleMenu() {
+    this.setState(state => ({ isOpen: !state.isOpen }));
+  }
+
   render() {
     return (
       <div id="mobile-navigation-hamburger">
-        <Menu pageWrapId="content-canvas" outerContainerId="app" isOpen={this.state.isOpen}>
+        <Menu
+          pageWrapId="content-canvas"
+          outerContainerId="app"
+          isOpen={this.state.isOpen}
+          onStateChange={state => this.handleStateChange(state)}
+        >
           <button
             className="file-modal__link menu-item"
             onMouseDown={() => {
               this.props.viewPagesModal();
               this.props.toggleFileDropdown();
-              this.setState({ isOpen: false });
+              this.closeMenu();
             }}
             onKeyDown={() => {
               this.props.viewPagesModal();
               this.props.toggleFileDropdown();
+              this.closeMenu();
             }}
             data-test="file-menu__pages-button"
           >
@@ -36,10 +54,12 @@ class NavigationHamburger extends React.Component {
             onMouseDown={() => {
               this.props.viewExamplesModal();
               this.props.toggleFileDropdown();
+              this.closeMenu();
             }}
             onKeyDown={() => {
               this.props.viewExamplesModal();
               this.props.toggleFileDropdown();
+              this.closeMenu();
             }}
             data-test="file-menu__examples-button"
           >
@@ -49,7 +69,10 @@ class NavigationHamburger extends React.Component {
           </button>
           <button
             className="file-modal__link menu-item"
-            onClick={this.props.sharePebl}
+            onClick={() => {
+              this.closeMenu();
+              this.props.sharePebl();
+            }}
             data-test="main-toolbar__share-button"
           >
               Share
