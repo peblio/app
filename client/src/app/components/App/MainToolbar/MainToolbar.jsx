@@ -301,6 +301,7 @@ class MainToolbar extends React.Component {
               toggleFileDropdown={this.props.toggleFileDropdown}
               viewExamplesModal={this.props.viewExamplesModal}
               sharePebl={this.sharePebl}
+              isUserLoggedIn={this.props.name}
             />
           </div>
         )

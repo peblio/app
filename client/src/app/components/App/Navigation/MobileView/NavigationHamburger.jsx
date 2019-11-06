@@ -33,22 +33,26 @@ class NavigationHamburger extends React.Component {
           isOpen={this.state.isOpen}
           onStateChange={state => this.handleStateChange(state)}
         >
-          <button
-            className="file-modal__link menu-item"
-            onMouseDown={() => {
-              this.props.viewPagesModal();
-              this.props.toggleFileDropdown();
-              this.closeMenu();
-            }}
-            onKeyDown={() => {
-              this.props.viewPagesModal();
-              this.props.toggleFileDropdown();
-              this.closeMenu();
-            }}
-            data-test="file-menu__pages-button"
-          >
+          {this.props.isUserLoggedIn && (
+            <button
+              className="file-modal__link menu-item"
+              onMouseDown={() => {
+                this.props.viewPagesModal();
+                this.props.toggleFileDropdown();
+                this.closeMenu();
+              }}
+              onKeyDown={() => {
+                this.props.viewPagesModal();
+                this.props.toggleFileDropdown();
+                this.closeMenu();
+              }}
+              data-test="file-menu__pages-button"
+            >
+              <i className="fas fa-bars"></i>
+              {' '}
                 Open
-          </button>
+            </button>
+          )}
           <button
             className="file-modal__link menu-item"
             onMouseDown={() => {
@@ -88,6 +92,7 @@ NavigationHamburger.propTypes = {
   toggleFileDropdown: PropTypes.func.isRequired,
   viewExamplesModal: PropTypes.func.isRequired,
   sharePebl: PropTypes.func.isRequired,
+  isUserLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default NavigationHamburger;
