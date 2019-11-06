@@ -32,9 +32,6 @@ class TabbedContainer extends React.Component {
               setCurrentFile={this.props.setCurrentFile}
               toggleEditorFilesView={this.props.toggleEditorFilesView}
               updateFile={this.props.updateFile}
-              isPlaying={this.props.isPlaying}
-              playCode={this.props.playCode}
-              startCodeRefresh={this.props.startCodeRefresh}
             />
           </div>
         )}
@@ -88,8 +85,6 @@ TabbedContainer.propTypes = {
   isRefreshing: PropTypes.bool.isRequired,
   isResizing: PropTypes.bool.isRequired,
   openFileView: PropTypes.func.isRequired,
-  playCode: PropTypes.func.isRequired,
-  startCodeRefresh: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
   toggleConsole: PropTypes.func.isRequired,

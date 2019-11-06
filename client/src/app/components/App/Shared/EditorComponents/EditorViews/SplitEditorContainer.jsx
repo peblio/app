@@ -39,9 +39,6 @@ class SplitEditorContainer extends React.Component {
                 setCurrentFile={this.props.setCurrentFile}
                 toggleEditorFilesView={this.props.toggleEditorFilesView}
                 updateFile={this.props.updateFile}
-                isPlaying={this.props.isPlaying}
-                playCode={this.props.playCode}
-                startCodeRefresh={this.props.startCodeRefresh}
               />
             )}
           </div>
@@ -97,10 +94,8 @@ SplitEditorContainer.propTypes = {
   isRefreshing: PropTypes.bool.isRequired,
   isResizing: PropTypes.bool.isRequired,
   openFileView: PropTypes.func.isRequired,
-  playCode: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
   setInnerWidth: PropTypes.func.isRequired,
-  startCodeRefresh: PropTypes.func.isRequired,
   startResize: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
   toggleEditorFilesView: PropTypes.func.isRequired,

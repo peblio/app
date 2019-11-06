@@ -54,16 +54,6 @@ class EditorContainer extends React.Component {
     this.setState(prevState => ({ isEditorFilesOpen: !prevState.isEditorFilesOpen }));
   }
 
-  editorView = () => this.props.editorView || 'split'
-
-  startResize() {
-    this.setState({ isResizing: true });
-  }
-
-  finishResize() {
-    this.setState({ isResizing: false });
-  }
-
   onKeyPressed(e) {
     if (e.metaKey || e.ctrlKey) {
       switch (e.keyCode) {
@@ -79,6 +69,16 @@ class EditorContainer extends React.Component {
     }
   }
 
+  editorView = () => this.props.editorView || 'split'
+
+  startResize() {
+    this.setState({ isResizing: true });
+  }
+
+  finishResize() {
+    this.setState({ isResizing: false });
+  }
+
   render() {
     const themeClass = classNames('editor__total-container', {
       editor__dark: (this.props.editorTheme === 'dark'),
@@ -87,9 +87,10 @@ class EditorContainer extends React.Component {
     return (
       <div>
         <div
-          onKeyDown={e => this.onKeyPressed(e)}
           className={classNames(themeClass)}
           data-test={`code-editor-${this.props.editorMode}`}
+          onKeyDown={e => this.onKeyPressed(e)}
+          role="navigation"
         >
           <EditorToolbar
             id={this.props.id}
@@ -152,8 +153,6 @@ class EditorContainer extends React.Component {
                 updateConsoleOutput={this.updateConsoleOutput}
                 updateFile={this.updateFile}
                 viewEditorPreview={this.viewEditorPreview}
-                playCode={this.playCode}
-                startCodeRefresh={this.startCodeRefresh}
               />
             )}
             {this.editorView() === 'tabbed' && (
@@ -182,8 +181,6 @@ class EditorContainer extends React.Component {
                 updateFile={this.updateFile}
                 updateConsoleOutput={this.updateConsoleOutput}
                 viewEditorPreview={this.viewEditorPreview}
-                playCode={this.playCode}
-                startCodeRefresh={this.startCodeRefresh}
               />
             )}
           </div>
