@@ -10,6 +10,7 @@ import FileMenu from './FileMenu/FileMenu.jsx';
 import HelpMenu from './HelpMenu/HelpMenu.jsx';
 import Preferences from '../Preferences/Preferences.jsx';
 import InsertToolbar from './InsertToolbar/InsertToolbar.jsx';
+import NavigationHamburger from '../Navigation/MobileView/NavigationHamburger.jsx';
 import ToolbarLogo from '../../../images/logo.svg';
 import CheckSVG from '../../../images/check.svg';
 import PreferencesSVG from '../../../images/preferences.svg';
@@ -293,6 +294,17 @@ class MainToolbar extends React.Component {
         {(this.props.preview || this.props.isFullScreenMode) || (
           <InsertToolbar />
         )}
+        {window.screen.width <= 786 && (
+          <div id="mobile-navigation">
+            <NavigationHamburger
+              viewPagesModal={this.props.viewPagesModal}
+              toggleFileDropdown={this.props.toggleFileDropdown}
+              viewExamplesModal={this.props.viewExamplesModal}
+              sharePebl={this.sharePebl}
+            />
+          </div>
+        )
+        }
       </div>
     );
   }
@@ -325,6 +337,7 @@ MainToolbar.propTypes = {
   togglePreferencesPanel: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   viewShareModal: PropTypes.func.isRequired,
+  viewExamplesModal: PropTypes.func.isRequired,
 
   parentId: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
@@ -340,6 +353,7 @@ MainToolbar.propTypes = {
   savePageVersion: PropTypes.func.isRequired,
   isOldVersionShowing: PropTypes.bool.isRequired,
   setPreviewMode: PropTypes.func.isRequired,
+  viewPagesModal: PropTypes.func.isRequired,
 };
 
 
@@ -381,7 +395,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   convertEditorsToRaw,
   savePageVersion,
   setPreviewMode,
-  ...mainToolbarActions
+  ...mainToolbarActions,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainToolbar);
