@@ -97,7 +97,10 @@ class CodeEditor extends React.Component {
 
   render() {
     return (
-      <div className="codeEditor__container">
+      <div
+        className="codeEditor__container"
+        data-test="codeEditor__container"
+      >
         <button
           className="codeEditor__auto-format editor-toolbar__svg"
           onClick={this.autoformat}

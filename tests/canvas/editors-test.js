@@ -32,6 +32,15 @@ test('p5 sketch runs and stops', async (t) => {
     .expect(Selector('[data-test=code-output]').exists).notOk();
 });
 
+test('p5 test Cmd+E shortcut', async (t) => {
+  await t
+    .click(Selector('[data-test=add-code-editor]'))
+    .click(Selector('[data-test=add-p5-editor]'))
+    .click(Selector('[data-test=codeEditor__container]'))
+    .pressKey('meta+e')
+    .expect(Selector('[data-test=code-output]').exists).ok();
+});
+
 test('html code runs and stops', async (t) => {
   await t
     .click(Selector('[data-test=add-code-editor]'))
