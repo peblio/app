@@ -258,6 +258,7 @@ MainToolbar.propTypes = {
 function mapStateToProps(state) {
   return {
     canEdit: state.user.canEdit,
+    editorAutoSave: state.preferences.editorAutoSave,
     isFileDropdownOpen: state.mainToolbar.isFileDropdownOpen,
     isHelpDropdownOpen: state.mainToolbar.isHelpDropdownOpen,
     layout: state.page.layout,
@@ -265,7 +266,6 @@ function mapStateToProps(state) {
     pageTitle: state.page.pageTitle,
     preview: state.page.preview,
     unsavedChanges: state.page.unsavedChanges,
-
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
