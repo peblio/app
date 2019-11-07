@@ -147,6 +147,8 @@ class MainToolbar extends React.Component {
       <div className="main-toolbar__container">
         <div className="main-toolbar">
           <div className="main-toolbar__div-left">
+
+
             <a
               className="logo_toolbar"
               href="https://www.peblio.co/"
@@ -155,6 +157,15 @@ class MainToolbar extends React.Component {
             >
               <ToolbarLogo alt="logo in toolbar" />
             </a>
+            <div id="mobile-navigation">
+              <NavigationHamburger
+                viewPagesModal={this.props.viewPagesModal}
+                toggleFileDropdown={this.props.toggleFileDropdown}
+                viewExamplesModal={this.props.viewExamplesModal}
+                sharePebl={this.sharePebl}
+                isUserLoggedIn={this.props.name}
+              />
+            </div>
             <div
               className="file-modal__container"
               role="presentation"
@@ -294,18 +305,7 @@ class MainToolbar extends React.Component {
         {(this.props.preview || this.props.isFullScreenMode) || (
           <InsertToolbar />
         )}
-        {window.screen.width <= 786 && (
-          <div id="mobile-navigation">
-            <NavigationHamburger
-              viewPagesModal={this.props.viewPagesModal}
-              toggleFileDropdown={this.props.toggleFileDropdown}
-              viewExamplesModal={this.props.viewExamplesModal}
-              sharePebl={this.sharePebl}
-              isUserLoggedIn={this.props.name}
-            />
-          </div>
-        )
-        }
+
       </div>
     );
   }

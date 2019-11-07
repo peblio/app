@@ -3,3 +3,9 @@
 .app__container{
   min-width: calc(#{$total-width} + #{$navigation-width} + #{$canvas-padding*2});
 }
+
+@media screen and (max-width: 786px) {
+  .app__container{
+    min-width: calc(#{$total-width} + 200px) !important;
+  }
+}

@@ -20,54 +20,61 @@
     position: fixed;
     width: 36px;
     height: 30px;
-    left: 36px;
-    top: 60px;
+    // left: 36px;
+    // top: 60px;
   }
-  
+
   .bm-burger-bars {
     background: #373a47;
   }
-  
+
   .bm-burger-bars-hover {
     background: #a90000;
   }
-  
+
   .bm-cross-button {
     height: 24px;
     width: 24px;
   }
-  
+
   .bm-cross {
     background: #bdc3c7;
   }
-  
+
   .bm-menu-wrap {
     position: fixed;
-    height: 100%;
+    right: 0 !important;
+    z-index: $z-index-layer-4;
+    width: 100% !important;
+    height: fit-content !important;
+    transition: all 0.5s ease 0s;
   }
-  
+  .hamburger--open .bm-menu-wrap {
+    top: $main-toolbar-height;
+  }
+
   .bm-menu {
     background:#00151E;
     padding: 2.5em 1.5em 0;
     font-size: 1.15em;
   }
-  
+
   .bm-morph-shape {
     fill: #373a47;
   }
-  
+
   .bm-item-list {
     color: #b8b7ad;
     padding: 0.8em;
   }
-  
+
   .bm-item {
     display: inline-block;
   }
-  
+
   .bm-overlay {
+    display: none;
     background: rgba(0, 0, 0, 0.3);
   }
 
 }
-

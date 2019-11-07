@@ -207,9 +207,15 @@ input[type="checkbox"] ~ .main-toolbar__preview-off {
   @extend %vertical-spacer;
 }
 
+#mobile-navigation {
+  display: none;
+}
+
 @media screen and (max-width: 786px) {
+  #mobile-navigation {
+    display: flex;
+  }
   .main-toolbar__save, .file-modal__container, .main-toolbar__save_button{
     display: none;
   }
 }
-

@@ -1,5 +1,5 @@
 import React from 'react';
-import { slide as Menu } from 'react-burger-menu';
+import { fallDown as Menu } from 'react-burger-menu';
 import PropTypes from 'prop-types';
 
 require('./navigationHamburger.scss');
@@ -26,7 +26,10 @@ class NavigationHamburger extends React.Component {
 
   render() {
     return (
-      <div id="mobile-navigation-hamburger">
+      <div
+        id="mobile-navigation-hamburger"
+        className={`${this.state.isOpen ? 'hamburger--open' : 'hamburger--closed'}`}
+      >
         <Menu
           pageWrapId="content-canvas"
           outerContainerId="app"
