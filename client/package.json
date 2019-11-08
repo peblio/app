@@ -5,7 +5,7 @@
   "main": "build/bundle.min.js",
   "scripts": {
     "start": "webpack-dev-server",
-    "test": "./node_modules/mocha/bin/mocha test/jestsetup.js test --require test/test-setup.js --recursive --require ignore-styles --require babel-register",
+    "test": "./node_modules/mocha/bin/mocha test/jestsetup.js test --require test/test-setup.js --recursive --require ignore-styles --require babel-register --require babel-polyfill",
     "build": "NODE_ENV=development ENVIRONMENT=local webpack -p --config ./webpack.config.js --progress",
     "build:staging": "NODE_ENV=production ENVIRONMENT=staging webpack -p --config ./webpack.config.js --progress",
     "build:production": "NODE_ENV=production ENVIRONMENT=production webpack -p --config ./webpack.config.js --progress",
@@ -51,6 +51,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.1.1",
     "react-split-pane": "^0.1.74",
+    "react-stripe-elements": "^5.0.0",
     "react-tooltip-lite": "^1.9.1",
     "react-visibility-sensor": "^4.0.0",
     "react-websocket": "^2.0.1",
