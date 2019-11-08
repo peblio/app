@@ -35,7 +35,11 @@ export function loadCurrentPage(projectID) {
 }
 
 export function setUnsavedChanges(value) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { id } = getState().page;
+    if (id) {
+      sessionStorage.setItem(id, value);
+    }
     dispatch(setUnsavedPageVersion());
     dispatch({
       type: ActionTypes.SET_UNSAVED_CHANGES,

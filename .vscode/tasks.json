@@ -1,8 +1,15 @@
 {
     "version": "2.0.0",
-    "tasks": [{
+    "tasks": [
+        {
         "label": "decryptCredsForLocalRun",
         "command": "AWS_PROFILE=peblio ./server/scripts/export_creds.sh",
         "type": "shell"
-    }]
+    },
+    {
+        "label": "decryptCredsForTestRun",
+        "command": "AWS_PROFILE=peblio ENVIRONMENT=test ./server/scripts/export_creds.sh",
+        "type": "shell"
+    }
+]
 }

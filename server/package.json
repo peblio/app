@@ -12,7 +12,7 @@
     "prestart": "npm run build",
     "start": "AWS_PROFILE=peblio ./scripts/run_with_credstash.sh nodemon .build/server.js",
     "test": "./node_modules/mocha/bin/mocha --recursive --exit --compilers js:babel-core/register --require babel-polyfill test",
-    "integrationTest": "AWS_PROFILE=peblio ENVIRONMENT=local ./scripts/run_with_credstash.sh ./node_modules/mocha/bin/mocha --recursive --exit --compilers js:babel-core/register --require babel-polyfill integrationTest",
+    "integrationTest": "AWS_PROFILE=peblio ENVIRONMENT=test ./scripts/run_with_credstash.sh ./node_modules/mocha/bin/mocha --recursive --exit --compilers js:babel-core/register --require babel-polyfill integrationTest",
     "allTest": "npm test && npm run integrationTest"
   },
   "author": "",
@@ -55,7 +55,8 @@
     "passport-local": "^1.0.0",
     "prop-types": "^15.6.0",
     "python-js": "^0.9.8",
-    "shortid": "^2.2.8"
+    "shortid": "^2.2.8",
+    "stripe": "^7.8.0"
   },
   "devDependencies": {
     "babel-preset-react": "^6.24.1",

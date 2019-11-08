@@ -22,7 +22,7 @@ export function authenticatePage(req, res) {
     res.send(false);
   } else {
     Page.find({ id: req.params.id }, (err, data) => {
-      if (err) {
+    if (err || !data || data.length === 0){
         res.send(false);
       } else {
         res.send(data[0].user.toString() === req.user._id.toString());
@@ -47,6 +47,31 @@ export function uploadFiles(req, res) {
       res.send(err);
     }
     res.send(data);
+  });
+}
+
+export function getFileInfo(req, res) {
+  let user = req.user;
+  if(!user){
+    res.status(403).send({err: 'Please log in first'});
+    return;
+  }
+  const params = {
+    Bucket: myBucket,
+    Delimiter: '/',
+    Prefix: `${user.name}/images/`
+  };
+  s3.listObjectsV2(params, (err, data) => {
+    if (err) {
+      res.send(err);
+    }
+    const sizeArray = data.Contents.map( content => content.Size);
+    const totalSize = sizeArray.reduce((sum, n) => sum + n, 0);
+    res.status(200).send({
+      data,
+      size: totalSize,
+      unit: 'bytes'
+    });
   });
 }
 

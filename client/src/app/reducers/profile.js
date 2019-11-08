@@ -3,7 +3,6 @@ import reduceReducers from 'reduce-reducers';
 import * as ActionTypes from '../constants/reduxConstants.js';
 import { namespaceReducer } from '../utils/namespace-redux';
 import foldersReducer, { initialState as foldersInitialState } from './folders';
-import userReducer, { initialState as userInitialState } from './user';
 
 const initialState = {
   ...foldersInitialState,

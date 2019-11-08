@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import VisibilitySensor from 'react-visibility-sensor';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import CanvasOverlay from './CanvasOverlay.jsx';
 import EditorContainer from './EditorContainer/EditorContainer.jsx';
 import Heading from './Heading/Heading.jsx';
@@ -12,6 +13,7 @@ import Iframe from './Iframe/Iframe.jsx';
 import Image from './Image/Image.jsx';
 import TextEditor from './TextEditor/TextEditor.jsx';
 import WidgetNav from './WidgetNav/WidgetNav.jsx';
+
 import { convertPixelHeightToGridHeight } from '../../../utils/pixel-to-grid.js';
 import {
   changePageLayout,
@@ -30,7 +32,6 @@ import { setCurrentWidget } from '../../../action/editors.js';
 import * as WidgetSize from '../../../constants/widgetConstants.js';
 
 const ReactGridLayout = require('react-grid-layout');
-
 require('./canvas.scss');
 
 class Canvas extends React.Component {
