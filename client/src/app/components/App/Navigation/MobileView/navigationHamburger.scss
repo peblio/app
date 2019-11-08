@@ -28,7 +28,7 @@
   }
 
   .bm-burger-bars-hover {
-    background: #a90000;
+    display: none;
   }
 
   .bm-cross-button {
@@ -56,6 +56,10 @@
     background:#00151E;
     padding: 2.5em 1.5em 0;
     font-size: 1.15em;
+  }
+
+  .hamburger--open .bm-menu {
+    padding: 0.5em 1.5em 0;
   }
 
   .bm-morph-shape {
