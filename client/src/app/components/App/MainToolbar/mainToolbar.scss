@@ -215,6 +215,10 @@ input[type="checkbox"] ~ .main-toolbar__preview-off {
   #mobile-navigation {
     display: flex;
   }
+  .main-toolbar {
+    display: flex;
+    justify-content: space-between;
+  }
   .main-toolbar__save, .file-modal__container, .main-toolbar__save_button{
     display: none;
   }

@@ -235,7 +235,7 @@ class MainToolbar extends React.Component {
 
           </div>
           <input
-            className="main-toolbar__title"
+            className="main-toolbar__title main-toolbar__div-center"
             placeholder="Title"
             type="text"
             value={this.props.pageTitle}
