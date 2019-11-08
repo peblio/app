@@ -10,6 +10,8 @@ import FileMenu from './FileMenu/FileMenu.jsx';
 import HelpMenu from './HelpMenu/HelpMenu.jsx';
 import Preferences from '../Preferences/Preferences.jsx';
 import InsertToolbar from './InsertToolbar/InsertToolbar.jsx';
+import Modal from '../Modal/Modal.jsx';
+import EditAccessDisabledOnMobile from '../Modal/EditAccessDisabledOnMobile/EditAccessDisabledOnMobile.jsx';
 import NavigationHamburger from '../Navigation/MobileView/NavigationHamburger.jsx';
 import ToolbarLogo from '../../../images/logo.svg';
 import CheckSVG from '../../../images/check.svg';
@@ -35,6 +37,7 @@ require('./mainToolbar.scss');
 class MainToolbar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { showWarningForNotAllowingEditOnMobileView: false };
     if (window.screen.width <= 786 && this.props.preview === false) {
       this.props.setPreviewMode(true);
     }
@@ -66,6 +69,14 @@ class MainToolbar extends React.Component {
     clearTimeout(this.autoSaveTimeout);
     clearTimeout(this.autoSavePageVersion);
     // window.removeEventListener('beforeunload', this.saveSnapshot);
+  }
+
+  togglePreviewMode = () => {
+    if (window.screen.width > 786) {
+      this.props.togglePreviewMode();
+    } else {
+      this.setState({ showWarningForNotAllowingEditOnMobileView: true });
+    }
   }
 
   savePageVersion = () => {
@@ -246,6 +257,13 @@ class MainToolbar extends React.Component {
           )}
           <div className="main-toolbar__div-right">
             <div className="main-toolbar__div-right-inside">
+              <Modal
+                size="large"
+                isOpen={this.state.showWarningForNotAllowingEditOnMobileView}
+                closeModal={() => this.setState({ showWarningForNotAllowingEditOnMobileView: false })}
+              >
+                <EditAccessDisabledOnMobile closeEditAccessWarningPageModal={() => this.setState({ showWarningForNotAllowingEditOnMobileView: false })} />
+              </Modal>
               <span className="main-toolbar__preview-title">Edit Mode</span>
 
               <label
@@ -254,7 +272,7 @@ class MainToolbar extends React.Component {
               >
                 <input
                   id="main-toolbar__checkbox"
-                  onChange={this.props.togglePreviewMode}
+                  onChange={this.togglePreviewMode}
                   type="checkbox"
                   checked={this.props.preview}
                   data-test="main-toolbar__edit-mode-toggle"
