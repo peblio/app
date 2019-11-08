@@ -139,12 +139,9 @@ export function getSketches(req, res) {
 }
 
 export function getNewsletters(req, res) {
-  let data ;
-  axios.get('https://raw.githubusercontent.com/peblio/Newsletters/master/newsletters.json')
+  return axios.get('https://raw.githubusercontent.com/peblio/Newsletters/master/newsletters.json')
     .then((result) => {
-      data = result.data;
-      res.status(200).send(result.data)
+      res.status(200).send(result.data);
     })
     .catch(err => res.status(500).send(err));
-  return data;
 }
