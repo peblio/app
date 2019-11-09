@@ -16,6 +16,7 @@ require('./editorFiles.scss');
 class EditorFiles extends React.Component {
   constructor(props) {
     super(props);
+    this.props.loadMemoryConsumed();
     this.state = {
       isFileUploadOpen: false,
       isFileUploading: false
@@ -50,32 +51,38 @@ class EditorFiles extends React.Component {
         });
     }
     if (file.name.match(MEDIA_FILE_REGEX)) {
-      this.startFileUpload();
-      axios.get(`/upload/${this.props.name}/images`, {
-        params: {
-          filename: file.name,
-          filetype: file.type
-        }
-      })
-        .then((result) => {
-          const signedUrl = result.data;
-          const options = {
-            headers: {
-              'Content-Type': file.type
-            }
-          };
+      const memoryConsumedInMegaBytes = Math.ceil(this.props.memoryConsumed / 1000000);
+      const memoryOfNewFile = Math.ceil(file.size / 1000000);
+      if ((memoryConsumedInMegaBytes + memoryOfNewFile) < 1024) {
+        this.startFileUpload();
+        axios.get(`/upload/${this.props.name}/images`, {
+          params: {
+            filename: file.name,
+            filetype: file.type
+          }
+        })
+          .then((result) => {
+            const signedUrl = result.data;
+            const options = {
+              headers: {
+                'Content-Type': file.type
+              }
+            };
 
-          return axiosOrg.put(signedUrl, file, options);
-        })
-        .then((result) => {
-          const url = URL.parse(result.request.responseURL);
-          this.props.addMediaFile(file.name, `https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
-          this.stopFileUpload();
-          this.closeFileUpload();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+            return axiosOrg.put(signedUrl, file, options);
+          })
+          .then((result) => {
+            const url = URL.parse(result.request.responseURL);
+            this.props.addMediaFile(file.name, `https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
+            this.stopFileUpload();
+            this.closeFileUpload();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    } else {
+      alert('Cannot upload file as max memory consumed');
     }
   }
 
@@ -179,7 +186,9 @@ EditorFiles.propTypes = {
   name: PropTypes.string.isRequired,
   openFileView: PropTypes.func.isRequired,
   setCurrentFile: PropTypes.func.isRequired,
-  viewEditorPreview: PropTypes.func.isRequired
+  viewEditorPreview: PropTypes.func.isRequired,
+  loadMemoryConsumed: PropTypes.func.isRequired,
+  memoryConsumed: PropTypes.number.isRequired,
 };
 
 export default EditorFiles;

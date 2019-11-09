@@ -13,6 +13,7 @@ import * as WidgetSize from '../../../../constants/widgetConstants.js';
 import styles from '../../../../styles/sass/variables.scss';
 import FileUpload from '../../Shared/FileUpload/FileUpload.jsx';
 import Modal from '../../Modal/Modal.jsx';
+import { loadMemoryConsumed } from '../../../../action/dashboard.js';
 
 const MEDIA_FILE_REGEX = /.+\.(gif|jpg|jpeg|png|bmp)$/i;
 const VIDEO_FILE_REGEX = /.+\.(mp4|avi|mov|mpg|wmv)$/i;
@@ -22,6 +23,7 @@ require('./image.scss');
 class Image extends React.Component {
   constructor(props) {
     super(props);
+    this.props.loadMemoryConsumed();
     this.state = {
       url: '',
       isFileUploadOpen: false,
@@ -66,33 +68,39 @@ class Image extends React.Component {
     this.props.resetImageCrop(this.props.id);
     const file = files[0];
     if (file.name.match(MEDIA_FILE_REGEX)) {
-      this.startFileUpload();
-      axios.get(`/upload/${this.props.name}/images`, {
-        params: {
-          filename: file.name,
-          filetype: file.type
-        }
-      })
-        .then((result) => {
-          const signedUrl = result.data;
-          const options = {
-            headers: {
-              'Content-Type': file.type
-            }
-          };
+      const memoryConsumedInMegaBytes = Math.ceil(this.props.memoryConsumed / 1000000);
+      const memoryOfNewFile = Math.ceil(file.size / 1000000);
+      if ((memoryConsumedInMegaBytes + memoryOfNewFile) < 1024) {
+        this.startFileUpload();
+        axios.get(`/upload/${this.props.name}/images`, {
+          params: {
+            filename: file.name,
+            filetype: file.type
+          }
+        })
+          .then((result) => {
+            const signedUrl = result.data;
+            const options = {
+              headers: {
+                'Content-Type': file.type
+              }
+            };
 
-          return axiosOrg.put(signedUrl, file, options);
-        })
-        .then((result) => {
-          const url = URL.parse(result.request.responseURL);
-          this.setUploadPopupVisibility(false);
-          this.props.setImageURL(this.props.id, `https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
-          this.stopFileUpload();
-          this.renderUploadPopup(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+            return axiosOrg.put(signedUrl, file, options);
+          })
+          .then((result) => {
+            const url = URL.parse(result.request.responseURL);
+            this.setUploadPopupVisibility(false);
+            this.props.setImageURL(this.props.id, `https://s3.amazonaws.com/${process.env.S3_BUCKET}${url.pathname}`);
+            this.stopFileUpload();
+            this.renderUploadPopup(false);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        alert('Cannot upload file as max memory consumed');
+      }
     }
   }
 
@@ -276,18 +284,22 @@ Image.propTypes = {
   resetImageCrop: PropTypes.func.isRequired,
   setImageCrop: PropTypes.func.isRequired,
   setImageURL: PropTypes.func.isRequired,
+  loadMemoryConsumed: PropTypes.func.isRequired,
+  memoryConsumed: PropTypes.number.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     name: state.user.name,
-    preview: state.page.preview
+    preview: state.page.preview,
+    memoryConsumed: state.dashboard.memoryConsumed
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   resetImageCrop,
   setImageCrop,
-  setImageURL
+  setImageURL,
+  loadMemoryConsumed,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Image);
