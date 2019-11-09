@@ -55,6 +55,21 @@ class EditorContainer extends React.Component {
     this.setState(prevState => ({ isEditorFilesOpen: !prevState.isEditorFilesOpen }));
   }
 
+  onKeyPressed(e) {
+    if (e.metaKey || e.ctrlKey) {
+      switch (e.keyCode) {
+        case 69: // e,E
+          // play code
+          this.playCode();
+          if (this.props.isPlaying) { this.startCodeRefresh(); }
+          e.preventDefault();
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
   editorView = () => this.props.editorView || 'split'
 
   startResize() {
@@ -65,7 +80,6 @@ class EditorContainer extends React.Component {
     this.setState({ isResizing: false });
   }
 
-
   render() {
     const themeClass = classNames('editor__total-container', {
       editor__dark: (this.props.editorTheme === 'dark'),
@@ -73,7 +87,12 @@ class EditorContainer extends React.Component {
     });
     return (
       <div>
-        <div className={classNames(themeClass)} data-test={`code-editor-${this.props.editorMode}`}>
+        <div
+          className={classNames(themeClass)}
+          data-test={`code-editor-${this.props.editorMode}`}
+          onKeyDown={e => this.onKeyPressed(e)}
+          role="navigation"
+        >
           <EditorToolbar
             id={this.props.id}
             container="canvas"
