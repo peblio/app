@@ -181,13 +181,6 @@ render() {
               </button>
             </div>
           )}
-          {(this.props.dashboardView === 'documents' || this.props.dashboardView === 'trash') && (
-            <div className="dashboard-nav__list">
-              {this.renderDocumentViewList(PeblioLogo, 'block')}
-              {this.renderDocumentViewList(PeblioLogo, 'line')}
-            </div>
-          )}
-
         </div>
       </div>
 
