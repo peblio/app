@@ -52,7 +52,7 @@ class PagesTable extends Component {
             <tbody ref={measureRef}>
               <tr className="pages__headrow">
                 <th className="pages__header pages__header_uppercase">Files</th>
-                {window.screen.width > 786 && (
+                {width > 350 && (
                   <React.Fragment>
                     <th className="pages__header pages__header_uppercase">Date Created</th>
                     <th className="pages__header pages__header_uppercase">Last Update</th>

@@ -22,7 +22,7 @@ class Tags extends React.Component {
     };
   }
 
-  /* componentDidMount() {
+  componentDidMount() {
     this.input.handleKeyDown = (e) => {
       this.handleEnter(e);
     };
@@ -34,7 +34,7 @@ class Tags extends React.Component {
         this.handleEnter(e);
       };
     }
-  } */
+  }
 
   handleInputChange=(e) => {
     this.setState({ value: e.target.value });
