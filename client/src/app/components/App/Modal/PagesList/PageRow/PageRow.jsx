@@ -73,7 +73,7 @@ class PageRow extends Component {
         <td className={classNames(colClassName, 'pages__col_title')} data-test="page-title">
           {page.title}
         </td>
-        {window.screen.width > 786 && (
+        {width > 350 && (
           <React.Fragment>
             <td className={colClassName}>{formatDate(page.createdAt)}</td>
             <td className={colClassName}>{formatDate(page.updatedAt)}</td>

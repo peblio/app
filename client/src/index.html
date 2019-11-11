@@ -1,65 +1,68 @@
 <html>
-    <head>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120820157-1"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag() {
-            dataLayer.push(arguments);
-          }
-          gtag('js', new Date());
-          gtag('config', 'UA-120820157-1');
-        </script>
-        <!-- Google Tag Manager -->
-        <script>
-          (function(w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-              'gtm.start': new Date().getTime(),
-              event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-              j = d.createElement(s),
-              dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-              'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-          })(window, document, 'script', 'dataLayer', 'GTM-MRMFHTD');
-        </script>
-        <!-- End Google Tag Manager -->
-        <meta charset="utf-8">
-        <title>Peblio</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Montserrat" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-        <script src="https://apis.google.com/js/platform.js"></script>
-        <!--IMAGE META TAG -->
-        <!--FACEBOOK-->
-        <meta property="og:image" content="https://s3.amazonaws.com/peblio-files/CT-CSTA/images/S1L2mm9qQ_Group%2030%20%281%29.png">
-        <meta property="og:image:type" content="image/png">
-        <meta property="og:image:width" content="1024">
-        <meta property="og:image:height" content="1024">
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Peblio" />
-        <meta property="og:description" content="The easiest way to write about code" />
-      </head>
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120820157-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRMFHTD" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-  <div id="app" />
-  <script>
-    window.onbeforeunload = function() {
-      return true;
-    };
-  </script>
-  <!-- <script type="text/javascript"> window._mfq = window._mfq || []; (function() { var mf = document.createElement("script"); mf.type = "text/javascript"; mf.async = true; mf.src = "//cdn.mouseflow.com/projects/2339372f-3436-47ea-bc13-5b7872ef06fa.js"; document.getElementsByTagName("head")[0].appendChild(mf); })(); </script> -->
+      gtag('config', 'UA-120820157-1');
+    </script>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MRMFHTD');</script>
+    <!-- End Google Tag Manager -->
+    <meta charset="utf-8">
+    <title>Peblio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script src="https://apis.google.com/js/platform.js"></script>
+    <!--IMAGE META TAG -->
+    <!--FACEBOOK-->
+   <meta property="og:image" content="https://s3.amazonaws.com/peblio-files/CT-CSTA/images/S1L2mm9qQ_Group%2030%20%281%29.png">
+   <meta property="og:image:type" content="image/png">
+   <meta property="og:image:width" content="1024">
+   <meta property="og:image:height" content="1024">
+   <meta property="og:type" content="website" />
+   <meta property="og:title" content="Peblio" />
+   <meta property="og:description" content="The easiest way to write about code" />
+   <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRMFHTD"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="app" />
+    <script>
+      window.onbeforeunload = function(event) {
+        let pathName = window.location.pathname;
+        if(pathName === "/"){
+          event.returnValue = "You may have some unsaved changes";
+          return true;
+        }
+        if(pathName.includes('pebl')){
+          const pageId = pathName.replace('/pebl/', '');
+          const peblState = sessionStorage.getItem(pageId);
+          sessionStorage.removeItem(pageId);
+            if(!peblState){
+              return;
+            }
+            event.returnValue = "You may have some unsaved changes";
+            return true;
+        };
+        return;
+      };
+    </script>
+    <!-- <script type="text/javascript"> window._mfq = window._mfq || []; (function() { var mf = document.createElement("script"); mf.type = "text/javascript"; mf.async = true; mf.src = "//cdn.mouseflow.com/projects/2339372f-3436-47ea-bc13-5b7872ef06fa.js"; document.getElementsByTagName("head")[0].appendChild(mf); })(); </script> -->
 
 
-</body>
-
+  </body>
 </html>
