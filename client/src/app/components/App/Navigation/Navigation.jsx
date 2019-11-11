@@ -5,10 +5,22 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as navigationAction from '../../../action/navigation.js';
+import TableOfContentsSVG from '../../../images/table-of-conent-icon.svg';
 
 require('./navigation.scss');
 
 class Navigation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { isNavigationOpen: this.props.isNavigationOpen };
+    if (window.screen.width <= 786) {
+      this.state = { isNavigationOpen: false };
+      this.props.closeNavigationContent();
+    } else {
+      this.state = { isNavigationOpen: this.props.isNavigationOpen };
+    }
+  }
+
   componentDidMount() {
     window.addEventListener('scroll', () => {
       const yNavigationContent = this.props.navigationContent;
@@ -30,6 +42,16 @@ class Navigation extends React.Component {
     }
   }
 
+  openNavigationContent = () => {
+    this.setState({ isNavigationOpen: true });
+    this.props.openNavigationContent();
+  }
+
+  closeNavigationContent = () => {
+    this.setState({ isNavigationOpen: false });
+    this.props.closeNavigationContent();
+  }
+
   scrollTo=(y) => {
     this.props.setYPosition(y + 10);
     window.scrollTo(0, y + 10);
@@ -40,13 +62,13 @@ class Navigation extends React.Component {
       <div>
         <button
           className="navigation__open-button"
-          onClick={this.props.openNavigationContent}
+          onClick={this.openNavigationContent}
         >
           <Tooltip content="Table of Contents">
-            <i className="fas fa-bars"></i>
+            <TableOfContentsSVG alt="Table of Contents" />
           </Tooltip>
         </button>
-        {this.props.isNavigationOpen && (
+        {this.state.isNavigationOpen && (
           <section
             className={`navigation__container ${this.props.preview ? 'navigation__container--expanded' : ''}`}
           >
@@ -64,7 +86,7 @@ class Navigation extends React.Component {
               <Tooltip content="Close">
                 <button
                   className="navigation__option-button"
-                  onClick={this.props.closeNavigationContent}
+                  onClick={this.closeNavigationContent}
                 >
                   <i className="fas fa-times"></i>
                 </button>
