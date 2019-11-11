@@ -37,7 +37,10 @@ class SideNav extends React.Component {
   renderListItem=(displayText, viewName) => {
     const isCurrentDashboardView = this.props.dashboardView === viewName;
     return (
-      <li className={`dashboard-side-nav__list-item ${(isCurrentDashboardView) ? 'dashboard-side-nav__list-item--selected' : ''}`}>
+      <li
+        className={`dashboard-side-nav__list-item
+          ${(isCurrentDashboardView) ? 'dashboard-side-nav__list-item--selected' : ''}`}
+      >
         <button
           className="dashboard-side-nav__button"
           onClick={() => { this.props.setDashboardView(viewName); }}

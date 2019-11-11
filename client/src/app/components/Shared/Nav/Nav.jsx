@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Progress from 'react-progressbar';
 import {
   setDashboardView,
   setDocumentSort,
@@ -212,7 +211,6 @@ Nav.propTypes = {
   clearSearchByTitle: PropTypes.func.isRequired,
   loadMemoryConsumed: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired,
-  memoryConsumed: PropTypes.string.isRequired,
   container: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
 };
