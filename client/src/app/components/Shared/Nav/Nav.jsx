@@ -119,20 +119,6 @@ renderDocumentViewList = (displaySVG, documentView) => {
   );
 }
 
-getMemoryConsumedMessage = () => {
-  const memoryConsumedInMegaBytes = (this.props.memoryConsumed / 1000000).toFixed(2);
-  return (
-    <span>
-      Memory Consumed
-      {' '}
-      {memoryConsumedInMegaBytes}
-      {' '}
-      {'MB out of 1024 MB'}
-      <Progress completed={memoryConsumedInMegaBytes * 100 / 1024} />
-    </span>
-  );
-};
-
 render() {
   return (
     <div className="dashboard-nav__container">
@@ -161,7 +147,6 @@ render() {
               View Profile
             </a>
           )}
-          {this.getMemoryConsumedMessage()}
         </div>
       )}
 
