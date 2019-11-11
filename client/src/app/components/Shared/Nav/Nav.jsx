@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Progress from 'react-progressbar';
 import {
   setDashboardView,
   setDocumentSort,
@@ -119,20 +118,6 @@ renderDocumentViewList = (displaySVG, documentView) => {
   );
 }
 
-getMemoryConsumedMessage = () => {
-  const memoryConsumedInMegaBytes = (this.props.memoryConsumed / 1000000).toFixed(2);
-  return (
-    <span>
-      Memory Consumed
-      {' '}
-      {memoryConsumedInMegaBytes}
-      {' '}
-      {'MB out of 1024 MB'}
-      <Progress completed={memoryConsumedInMegaBytes * 100 / 1024} />
-    </span>
-  );
-};
-
 render() {
   return (
     <div className="dashboard-nav__container">
@@ -161,7 +146,6 @@ render() {
               View Profile
             </a>
           )}
-          {this.getMemoryConsumedMessage()}
         </div>
       )}
 
@@ -197,13 +181,6 @@ render() {
               </button>
             </div>
           )}
-          {(this.props.dashboardView === 'documents' || this.props.dashboardView === 'trash') && (
-            <div className="dashboard-nav__list">
-              {this.renderDocumentViewList(PeblioLogo, 'block')}
-              {this.renderDocumentViewList(PeblioLogo, 'line')}
-            </div>
-          )}
-
         </div>
       </div>
 
@@ -227,7 +204,6 @@ Nav.propTypes = {
   clearSearchByTitle: PropTypes.func.isRequired,
   loadMemoryConsumed: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired,
-  memoryConsumed: PropTypes.string.isRequired,
   container: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
 };
