@@ -1,5 +1,7 @@
 import { spy } from 'sinon';
-import { getSketches, getFileInfo } from '../../src/controllers/apiController';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import { getSketches, getFileInfo, getNewsletters } from '../../src/controllers/apiController';
 import { createResponseWithStatusCode, assertStubWasCalledOnceWith } from '../utils.js';
 
 const sinon = require('sinon');
@@ -20,6 +22,45 @@ function assertSendWasCalledWith(object) {
 }
 
 describe('apiController', () => {
+  describe('getNewsletters', () => {
+    const mock = new MockAdapter(axios);
+    const data = { response: true };
+
+    beforeEach(() => {
+      request = {
+        params: {
+          user
+        },
+        query: {}
+      };
+      response = {
+        send: spy(),
+        json: spy(),
+        status: createResponseWithStatusCode(200)
+      };
+    });
+
+    afterEach(() => {
+      mock.reset();
+      sandbox.restore();
+    });
+
+    it('shall return data for newsletter', async () => {
+      mock.onGet('https://raw.githubusercontent.com/peblio/Newsletters/master/newsletters.json').reply(200, data);
+
+      await getNewsletters(request, response);
+
+      assertSendWasCalledWith(data);
+    });
+
+    it('shall return error when error fetching data for newsletter', async () => {
+      response.status = createResponseWithStatusCode(500);
+      mock.onGet('https://raw.githubusercontent.com/peblio/Newsletters/master/newsletters.json').reply(500);
+
+      await getNewsletters(request, response);
+    });
+  });
+
   describe('getSketches', () => {
     beforeEach(() => {
       request = {
