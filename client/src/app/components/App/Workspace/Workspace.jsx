@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import SplitPane from 'react-split-pane';
 
 import * as workspaceAction from '../../../action/workspace.js';
+import { loadMemoryConsumed } from '../../../action/dashboard.js';
 import { submitPage } from '../../../action/page.js';
 import CodeEditor from '../Shared/EditorComponents/CodeEditor/CodeEditor.jsx';
 import CodeOutput from '../Shared/EditorComponents/CodeOutput/CodeOutput.jsx';
@@ -67,6 +68,7 @@ class Workspace extends React.Component {
           <div className={classNames(themeClass)}>
             <div //eslint-disable-line
               className='workspace__header-container'
+              data-test='workspace__header-container'
               tabIndex='0' //eslint-disable-line
               onClick={e => this.toggleWorkspace(e)}
             >
@@ -114,6 +116,8 @@ class Workspace extends React.Component {
                       name={this.props.name}
                       openFileView={this.props.openFileView}
                       setCurrentFile={this.props.setCurrentFile}
+                      loadMemoryConsumed={this.props.loadMemoryConsumed}
+                      memoryConsumed={this.props.memoryConsumed}
                     />
                   )}
 
@@ -218,6 +222,7 @@ Workspace.propTypes = {
   innerWidth: PropTypes.number.isRequired,
   isShareWorkspaceOpen: PropTypes.bool.isRequired,
   isWorkspaceOpen: PropTypes.bool.isRequired,
+  loadMemoryConsumed: PropTypes.func.isRequired,
   openFileView: PropTypes.func.isRequired,
   openShareWorkspace: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
@@ -247,13 +252,15 @@ const mapStateToProps = state => ({
   isRefreshing: state.workspace.workspace.isRefreshing,
   isShareWorkspaceOpen: state.workspace.isShareWorkspaceOpen,
   isWorkspaceOpen: state.workspace.isWorkspaceOpen,
+  memoryConsumed: state.dashboard.memoryConsumed,
   name: state.user.name,
   workspace: state.workspace.workspace
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   ...workspaceAction,
-  submitPage
+  submitPage,
+  loadMemoryConsumed
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Workspace);
