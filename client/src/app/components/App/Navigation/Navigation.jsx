@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 
 import * as navigationAction from '../../../action/navigation.js';
 import TableOfContentsSVG from '../../../images/table-of-conent-icon.svg';
+import { SCREEN_SIZE_786 } from '../../../constants/screenSizeConstants';
 
 require('./navigation.scss');
 
@@ -13,7 +14,7 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props);
     this.state = { isNavigationOpen: this.props.isNavigationOpen };
-    if (window.screen.width <= 786) {
+    if (window.screen.width <= SCREEN_SIZE_786) {
       this.state = { isNavigationOpen: false };
       this.props.closeNavigationContent();
     } else {

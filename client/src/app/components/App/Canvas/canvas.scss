@@ -65,7 +65,7 @@
     color: $green;
     border: $small-border solid $green;
     background: $white;
-    margin: 1rem;
+    margin: $medium-margin;
     width: 150px;
     font-weight: 800;
     &:hover {
@@ -128,7 +128,7 @@
 
 @media screen and (max-width: 786px) {
   .canvas-right{
-    margin: 0 1rem;
+    margin: 0 $medium-margin;
   }
 }
 
