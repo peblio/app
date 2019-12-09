@@ -64,6 +64,19 @@ class PeblioSignUpForm extends React.Component {
       });
   }
 
+  loginFailed = (error) => {
+    this.setState({
+      showNotice: true,
+      notice: error.response.data.msg
+    });
+  }
+
+  loginSuccessful = (response) => {
+    this.props.setUserName(response.data.user.name);
+    this.props.setUserType(response.data.user.type);
+    this.props.closeSignUpModal();
+  }
+
   submitSignUpUser = (event) => {
     const loginData = {
       mail: this.userMail ? this.userMail.value : this.props.guardianEmail,
@@ -77,6 +90,28 @@ class PeblioSignUpForm extends React.Component {
     if (this.passwordMatch(this.password.value, this.passwordConfirm.value)) {
       axios.post('/auth/signup', { ...loginData })
         .then(res => this.signUpSuccessful(res.data.msg))
+        .then(() => {
+          if (this.props.userType === 'student') {
+            axios.post('/auth/login', {
+              name: this.props.tempUsername,
+              password: this.password.value
+            })
+              .then(this.loginSuccessful)
+              .then(() => {
+                const log = {
+                  message: 'User Logged In',
+                  path: '/auth/login',
+                  action: 'LoginUser',
+                  module: 'ui',
+                  level: 'INFO',
+                  user: this.props.tempUsername
+                };
+                saveLog(log);
+              })
+              .catch(this.loginFailed);
+            event.preventDefault();
+          }
+        })
         .then(() => {
           const log = {
             message: 'User Signed up',
