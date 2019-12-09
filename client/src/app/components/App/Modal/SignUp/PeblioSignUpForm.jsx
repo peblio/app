@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import axios from '../../../../utils/axios';
 import { saveLog } from '../../../../utils/log';
 import { closeSignUpModal } from '../../../../action/mainToolbar.js';
+import { setUserName, setUserType } from '../../../../action/user.js';
 import GoogleSignupButton from '../../Shared/GoogleButton/GoogleSignupButton.jsx';
 
 require('./signup.scss');
@@ -28,6 +29,7 @@ class PeblioSignUpForm extends React.Component {
   }
 
   signUpFailed = (error) => {
+    console.log('In google signup failed');
     this.setState({
       showNotice: true,
       notice: error.response.data.msg
@@ -42,16 +44,24 @@ class PeblioSignUpForm extends React.Component {
   }
 
   googleLoginSuccessful = (response) => {
-    this.props.closeSignUpModal();
-    const log = {
-      message: 'User Logged In using Google',
-      path: '/auth/login',
-      action: 'LoginUserWithGoogle',
-      module: 'ui',
-      level: 'INFO',
-      user: response.data.user.name
-    };
-    saveLog(log);
+    console.log('In googleLoginSuccessful');
+    axios.post('/auth/login/google', {
+      google_id_token: response.data.google_id_token,
+    })
+      .then(() => {
+        this.props.closeSignUpModal();
+        const log = {
+          message: 'User Logged In using Google',
+          path: '/auth/login',
+          action: 'LoginUserWithGoogle',
+          module: 'ui',
+          level: 'INFO',
+          user: response.data.user.name
+        };
+        saveLog(log);
+        this.props.setUserName(response.data.user.name);
+        this.props.setUserType(response.data.user.type);
+      });
   }
 
   submitSignUpUser = (event) => {
@@ -92,11 +102,13 @@ class PeblioSignUpForm extends React.Component {
           Almost signed up!
         </h2>
         <GoogleSignupButton
-          onLoginSuccess={this.googleLoginSuccessful}
           onLoginFailure={this.signUpFailed}
           userType={this.props.userType}
           requiresGuardianConsent={this.props.requiresGuardianConsent}
           guardianEmail={this.props.guardianEmail}
+          closeSignUpModal={this.props.closeSignUpModal}
+          setUserName={this.props.setUserName}
+          setUserType={this.props.setUserType}
           name={this.props.tempUsername}
         />
         <div className="signup-modal__or-container">
@@ -167,7 +179,9 @@ PeblioSignUpForm.propTypes = {
   requiresGuardianConsent: PropTypes.bool,
   userType: PropTypes.string.isRequired,
   tempUsername: PropTypes.string.isRequired,
-  studentBirthday: PropTypes.string
+  studentBirthday: PropTypes.string,
+  setUserName: PropTypes.func.isRequired,
+  setUserType: PropTypes.func.isRequired,
 };
 
 PeblioSignUpForm.defaultProps = {
@@ -187,7 +201,9 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  closeSignUpModal
+  closeSignUpModal,
+  setUserName,
+  setUserType,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PeblioSignUpForm);

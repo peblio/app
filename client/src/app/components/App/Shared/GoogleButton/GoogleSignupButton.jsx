@@ -17,7 +17,21 @@ class GoogleSignupButton extends React.Component {
     });
   }
 
-  handleClick() {
+  signIn = (response) => {
+    const closeSignUpModal = this.props.closeSignUpModal;
+    const setUserName = this.props.setUserName;
+    const setUserType = this.props.setUserType;
+    return axios.post('/auth/login/google', {
+      google_id_token: response.data.google_id_token,
+    })
+      .then(() => {
+        closeSignUpModal();
+        setUserName(response.data.user.name);
+        setUserType(response.data.user.type);
+      });
+  }
+
+  handleClick = () => {
     this.auth2.signIn()
       .then((googleUser) => {
         const idToken = googleUser.getAuthResponse().id_token;
@@ -29,8 +43,17 @@ class GoogleSignupButton extends React.Component {
           name: this.props.name
         });
       })
-      .then(this.props.onLoginSuccess)
-      .catch(this.props.onLoginFailure);
+      .then((response) => {
+        console.log('In success signin google');
+        if (this.props.userType === 'student') {
+          return this.props.onLoginSuccess(response);
+        }
+        return this.signIn(response);
+      })
+      .catch((error) => {
+        console.log('In failure signin google', error);
+        this.props.onLoginFailure();
+      });
   }
 
   render() {
@@ -50,7 +73,10 @@ GoogleSignupButton.propTypes = {
   onLoginFailure: PropTypes.func.isRequired,
   requiresGuardianConsent: PropTypes.bool.isRequired,
   userType: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  setUserName: PropTypes.func.isRequired,
+  setUserType: PropTypes.func.isRequired,
+  closeSignUpModal: PropTypes.func.isRequired,
 };
 
 GoogleSignupButton.defaultProps = {
