@@ -43,17 +43,8 @@ class GoogleSignupButton extends React.Component {
           name: this.props.name
         });
       })
-      .then((response) => {
-        console.log('In success signin google');
-        if (this.props.userType !== 'student') {
-          return this.props.onLoginSuccess(response);
-        }
-        return this.signIn(response);
-      })
-      .catch((error) => {
-        console.log('In failure signin google', error);
-        this.props.onLoginFailure();
-      });
+      .then(this.signIn)
+      .catch(this.props.onLoginFailure);
   }
 
   render() {
