@@ -79,6 +79,10 @@ const editorsReducer = (state = initialState, action) => {
     case ActionTypes.TOGGLE_WIDGET_FULLSCREEN:
       const isWidgetFullScreenMode = state.editors[action.id].isWidgetFullScreenMode;
       editors[action.id].isWidgetFullScreenMode = !isWidgetFullScreenMode;
+      if (!editors[action.id].isWidgetFullScreenMode) {
+        console.log('Setting inner width');
+        editors[action.id].innerWidth = CODE_DEFAULT_INSIDE_WIDTH;
+      }
       return {
         ...state,
         editors,
@@ -102,6 +106,7 @@ const editorsReducer = (state = initialState, action) => {
 
     /** CODE EDITOR */
     case ActionTypes.ADD_CODE_EDITOR: {
+      console.log('Adding a code editor');
       const id = `editor-${state.editorIndex}`;
       editors[id] = {
         type: 'code',
