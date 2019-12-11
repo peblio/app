@@ -45,7 +45,7 @@ class GoogleSignupButton extends React.Component {
       })
       .then((response) => {
         console.log('In success signin google');
-        if (this.props.userType === 'student') {
+        if (this.props.userType !== 'student') {
           return this.props.onLoginSuccess(response);
         }
         return this.signIn(response);
