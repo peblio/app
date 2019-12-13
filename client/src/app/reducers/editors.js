@@ -76,14 +76,18 @@ const editorsReducer = (state = initialState, action) => {
       delete editors[action.id];
       return { ...state, editors: updateIndices(editors) };
 
-    case ActionTypes.TOGGLE_WIDGET_FULLSCREEN:
+    case ActionTypes.TOGGLE_WIDGET_FULLSCREEN: {
       const isWidgetFullScreenMode = state.editors[action.id].isWidgetFullScreenMode;
       editors[action.id].isWidgetFullScreenMode = !isWidgetFullScreenMode;
+      if (!editors[action.id].isWidgetFullScreenMode) {
+        editors[action.id].innerWidth = CODE_DEFAULT_INSIDE_WIDTH;
+      }
       return {
         ...state,
         editors,
         isFullScreenMode: !state.isFullScreenMode
       };
+    }
 
     case ActionTypes.DUPLICATE_WIDGET: {
       const originalEditor = state.editors[action.originalEditorId];

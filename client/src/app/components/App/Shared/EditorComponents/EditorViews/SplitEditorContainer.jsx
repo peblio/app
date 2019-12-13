@@ -8,6 +8,23 @@ import ConsoleOutput from '../ConsoleOutput/ConsoleOutput.jsx';
 import EditorOpenFiles from '../EditorOpenFiles/EditorOpenFiles.jsx';
 
 class SplitEditorContainer extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      splitPaneRef: React.createRef()
+    };
+  }
+
+  componentDidUpdate(previousProps) {
+    if (this.props.innerWidth !== previousProps.innerWidth) {
+      this.props.startResize();
+      this.props.setInnerWidth(this.props.innerWidth);
+      this.state.splitPaneRef.current.setState({ draggedSize: this.props.innerWidth });
+      this.state.splitPaneRef.current.setState({ pane1Size: this.props.innerWidth });
+      this.props.finishResize();
+    }
+  }
+
   render() {
     return (
       <div className="editor__container">
@@ -16,6 +33,7 @@ class SplitEditorContainer extends React.Component {
           defaultSize={this.props.innerWidth}
           onDragStarted={this.props.startResize}
           onDragFinished={(size) => { this.props.finishResize(); this.props.setInnerWidth(size); }}
+          ref={this.state.splitPaneRef}
         >
           <div className="editor__input editor__input-split">
             <EditorOpenFiles
