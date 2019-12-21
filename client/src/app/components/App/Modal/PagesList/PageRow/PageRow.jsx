@@ -118,7 +118,9 @@ PageRow.propTypes = {
     heading: PropTypes.string,
     description: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string),
-    snapshotPath: PropTypes.string
+    snapshotPath: PropTypes.string,
+    createdAt: PropTypes.instanceOf(Date),
+    updatedAt: PropTypes.instanceOf(Date)
   }).isRequired,
   viewPage: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired
