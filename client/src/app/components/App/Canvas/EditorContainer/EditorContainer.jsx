@@ -47,14 +47,6 @@ class EditorContainer extends React.Component {
     this.viewEditorPreview = () => this.props.viewEditorPreview(this.props.id);
   }
 
-  toggleConsole = () => {
-    this.setState(prevState => ({ isConsoleOpen: !prevState.isConsoleOpen }));
-  }
-
-  toggleEditorFilesView = () => {
-    this.setState(prevState => ({ isEditorFilesOpen: !prevState.isEditorFilesOpen }));
-  }
-
   onKeyPressed(e) {
     if (e.metaKey || e.ctrlKey) {
       switch (e.keyCode) {
@@ -68,6 +60,14 @@ class EditorContainer extends React.Component {
           break;
       }
     }
+  }
+
+  toggleConsole = () => {
+    this.setState(prevState => ({ isConsoleOpen: !prevState.isConsoleOpen }));
+  }
+
+  toggleEditorFilesView = () => {
+    this.setState(prevState => ({ isEditorFilesOpen: !prevState.isEditorFilesOpen }));
   }
 
   editorView = () => this.props.editorView || 'split'

@@ -238,6 +238,7 @@ Workspace.propTypes = {
   updateConsoleOutput: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
   workspace: PropTypes.shape({}).isRequired,
+  memoryConsumed: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => ({
