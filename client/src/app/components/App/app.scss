@@ -1,5 +1,12 @@
 @import 'variables';
+@import '~rfs/scss';
 
 .app__container{
   min-width: calc(#{$total-width} + #{$navigation-width} + #{$canvas-padding*2});
+}
+
+@media screen and (max-width: 786px) {
+  body{
+    @include font-size(14px);
+  }
 }

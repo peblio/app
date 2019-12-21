@@ -61,6 +61,7 @@
     "redux-form": "^7.1.1",
     "redux-thunk": "^2.2.0",
     "regex": "^0.1.1",
+    "rfs": "^9.0.2",
     "sass-lint": "^1.12.1",
     "sasslint-webpack-plugin": "^1.0.4",
     "shortid": "^2.2.8",
