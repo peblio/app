@@ -51,7 +51,8 @@ function signupWithGoogle(req, res) {
           }
           return res.send({
             msg: UserConst.LOGIN_SUCCESS,
-            user: { name: newRegisteredUser.name, type: newRegisteredUser.type }
+            user: { name: newRegisteredUser.name, type: newRegisteredUser.type },
+            google_id_token: req.body.google_id_token
           });
         });
       });

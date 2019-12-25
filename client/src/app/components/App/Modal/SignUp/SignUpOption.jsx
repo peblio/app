@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { saveLog } from '../../../../utils/log';
 import { closeSignUpModal } from '../../../../action/mainToolbar.js';
 import GoogleSignupButton from '../../Shared/GoogleButton/GoogleSignupButton.jsx';
+import { setUserName, setUserType } from '../../../../action/user.js';
 import { setNextScreen } from '../../../../action/user.js';
 
 class SignUpOption extends React.Component {
@@ -53,6 +54,9 @@ class SignUpOption extends React.Component {
           requiresGuardianConsent={this.props.requiresGuardianConsent}
           guardianEmail={this.props.guardianEmail}
           name={this.props.tempUsername}
+          setUserName={this.props.setUserName}
+          setUserType={this.props.setUserType}
+          closeSignUpModal={this.props.closeSignUpModal}
         />
         <div className="signup-modal__or-container">
           <hr className="signup-modal__or-line" />
@@ -87,6 +91,8 @@ SignUpOption.propTypes = {
   requiresGuardianConsent: PropTypes.bool,
   userType: PropTypes.string.isRequired,
   tempUsername: PropTypes.string.isRequired,
+  setUserName: PropTypes.func.isRequired,
+  setUserType: PropTypes.func.isRequired,
 };
 
 SignUpOption.defaultProps = {
@@ -105,7 +111,9 @@ function mapStateToProps(state) {
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   closeSignUpModal,
-  setNextScreen
+  setNextScreen,
+  setUserName,
+  setUserType,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpOption);
