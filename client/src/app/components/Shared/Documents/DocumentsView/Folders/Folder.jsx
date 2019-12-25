@@ -173,7 +173,12 @@ Folder.propTypes = {
   connectDropTarget: PropTypes.func.isRequired,
   container: PropTypes.string.isRequired,
   deleteFolder: PropTypes.func.isRequired,
-  folder: PropTypes.shape({}).isRequired,
+  folder: PropTypes.shape({
+    _id: PropTypes.string,
+    title: PropTypes.string,
+    shortId: PropTypes.string,
+    updatedAt: PropTypes.instanceOf(Date)
+  }).isRequired,
   keyId: PropTypes.number.isRequired,
   isDragging: PropTypes.bool.isRequired,
   isOver: PropTypes.bool.isRequired,

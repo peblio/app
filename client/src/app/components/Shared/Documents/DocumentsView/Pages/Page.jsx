@@ -179,7 +179,15 @@ Page.propTypes = {
   container: PropTypes.string.isRequired,
   duplicatePage: PropTypes.func.isRequired,
   keyId: PropTypes.number.isRequired,
-  page: PropTypes.shape({}).isRequired,
+  page: PropTypes.shape({
+    _id: PropTypes.string,
+    id: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    userName: PropTypes.string,
+    snapshotPath: PropTypes.string,
+    updatedAt: PropTypes.instanceOf(Date)
+  }).isRequired,
   trashPage: PropTypes.func.isRequired,
   renamePage: PropTypes.func.isRequired,
   setShareURL: PropTypes.func.isRequired,

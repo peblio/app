@@ -34,7 +34,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 CheckoutForm.propTypes = {
-  stripe: PropTypes.object.isRequired,
+  stripe: PropTypes.shape({}).isRequired,
   makePayment: PropTypes.func.isRequired,
 };
 

@@ -100,7 +100,9 @@ FolderContainer.propTypes = {
   createPage: PropTypes.func.isRequired,
   folderDepth: PropTypes.number,
   folderId: PropTypes.string,
-  folder: PropTypes.shape({})
+  folder: PropTypes.shape({
+    title: PropTypes.string
+  })
 };
 
 const mapStateToProps = (state, ownProps) => ({

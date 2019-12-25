@@ -14,6 +14,7 @@ class ConsoleOutput extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    /* eslint-disable react/no-did-update-set-state */
     const out = this.output;
     if (out) {
       const isScrolledToBottom = out.scrollHeight - out.clientHeight <= out.scrollTop + 22;
@@ -24,6 +25,7 @@ class ConsoleOutput extends React.Component {
       }
       if (this.state.isScrolledToBottom) out.scrollTop = out.scrollHeight - out.clientHeight;
     }
+    /* eslint-enable react/no-did-update-set-state */
   }
 
   render() {

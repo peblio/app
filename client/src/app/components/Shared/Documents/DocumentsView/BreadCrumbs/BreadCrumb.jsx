@@ -79,7 +79,10 @@ BreadCrumb.propTypes = {
   clearSelectedFolders: PropTypes.func.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
   container: PropTypes.string.isRequired,
-  folder: PropTypes.shape({}).isRequired,
+  folder: PropTypes.shape({
+    shortId: PropTypes.string,
+    title: PropTypes.string,
+  }).isRequired,
   folderDepth: PropTypes.number.isRequired,
   isOver: PropTypes.bool.isRequired,
   profileName: PropTypes.string.isRequired,

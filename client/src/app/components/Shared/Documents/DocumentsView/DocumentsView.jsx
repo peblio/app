@@ -82,7 +82,7 @@ DocumentsView.propTypes = {
   isSearchByTitle: PropTypes.bool.isRequired,
   folderDepth: PropTypes.number,
   folderId: PropTypes.string,
-  folder: PropTypes.shape({ parent: PropTypes.string }),
+  folder: PropTypes.shape({ parent: PropTypes.string, title: PropTypes.string }),
   folders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   jumpToFolderByShortId: PropTypes.func.isRequired,
   parentFolderShortId: PropTypes.string, //eslint-disable-line

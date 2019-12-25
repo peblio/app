@@ -129,7 +129,12 @@ FolderRow.propTypes = {
   connectDragSource: PropTypes.func.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
   deleteFolder: PropTypes.func.isRequired,
-  folder: PropTypes.shape({ _id: PropTypes.string, title: PropTypes.string }).isRequired,
+  folder: PropTypes.shape({
+    _id: PropTypes.string,
+    title: PropTypes.string,
+    createdAt: PropTypes.instanceOf(Date),
+    updatedAt: PropTypes.instanceOf(Date)
+  }).isRequired,
   folderDepth: PropTypes.number.isRequired,
   isDragging: PropTypes.bool.isRequired,
   isSelected: PropTypes.bool.isRequired,
