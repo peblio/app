@@ -5,14 +5,16 @@
   display: none;
 }
 
-@media screen and (max-width: 786px) {
-  .app__container &.navigation__open-button {
-    background: $black;
-
-    &:hover {
-      background: $green;
+.app__container {
+  & .navigation__open-button {
+      &:hover #Shape{
+        fill: $green;
+      }
     }
   }
+
+@media screen and (max-width: 786px) {
+  
 
   .mobile-navigation {
     display: flex;
