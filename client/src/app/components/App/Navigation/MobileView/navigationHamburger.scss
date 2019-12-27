@@ -54,12 +54,12 @@
 
   .bm-menu {
     background: $black;
-    padding: 2.5em 1.5em 0;
+    padding: $xlarge-padding-em $large-padding-em 0;
     font-size: 1.15em;
   }
 
   .hamburger--open .bm-menu {
-    padding: 0.5em 1.5em 0;
+    padding: $small-padding-em $large-padding-em 0;
   }
 
   .bm-morph-shape {
