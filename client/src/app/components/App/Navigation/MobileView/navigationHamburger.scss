@@ -6,6 +6,14 @@
 }
 
 @media screen and (max-width: 786px) {
+  .app__container &.navigation__open-button {
+    background: $black;
+
+    &:hover {
+      background: $green;
+    }
+  }
+
   .mobile-navigation {
     display: flex;
   }
