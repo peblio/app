@@ -10,6 +10,7 @@ import formatDate from '../../../../../utils/format-date';
 import { trashPage, duplicatePage, viewPage } from '../../../../../action/page';
 import DeleteIcon from '../../../../../images/trash.svg';
 import DuplicateIcon from '../../../../../images/duplicate.svg';
+import { SCREEN_SIZE_786 } from '../../../../../constants/screenSizeConstants';
 
 const pageSource = {
   beginDrag(props) {
@@ -73,7 +74,7 @@ class PageRow extends Component {
         <td className={classNames(colClassName, 'pages__col_title')} data-test="page-title">
           {page.title}
         </td>
-        {width > 350 && (
+        {window.screen.width > SCREEN_SIZE_786 && (
           <React.Fragment>
             <td className={colClassName}>{formatDate(page.createdAt)}</td>
             <td className={colClassName}>{formatDate(page.updatedAt)}</td>

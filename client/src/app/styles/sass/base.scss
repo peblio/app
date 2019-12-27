@@ -102,3 +102,10 @@ button {
 .google-tm-hidden {
   display: none;
 }
+
+@media screen and (max-width: 786px) {
+  body{
+    font-size: $pebl-profile-details !important;
+  }
+
+}

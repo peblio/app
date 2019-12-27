@@ -1,0 +1,93 @@
+@import 'variables';
+@import 'mixins';
+
+.mobile-navigation {
+  display: none;
+}
+
+.app__container {
+  & .navigation__open-button {
+      &:hover #Shape{
+        fill: $green;
+      }
+    }
+  }
+
+@media screen and (max-width: 786px) {
+  
+
+  .mobile-navigation {
+    display: flex;
+  }
+
+  .menu-item {
+    color: $white;
+    padding: 10px 0;
+    text-decoration: none;
+  }
+
+  .bm-burger-button {
+    position: fixed;
+    width: 25px;
+    height: 20px;
+    margin-top: 15px;
+  }
+
+  .bm-burger-bars {
+    background: $white;
+  }
+
+  .bm-burger-bars-hover {
+    display: none;
+  }
+
+  .bm-cross-button {
+    height: 24px;
+    width: 24px;
+  }
+
+  .bm-cross {
+    background: $heather;
+  }
+
+  .bm-menu-wrap {
+    position: fixed;
+    right: 0 !important;
+    z-index: $z-index-layer-4;
+    width: 100% !important;
+    height: fit-content !important;
+    transition: all 0.5s ease 0s;
+  }
+  .hamburger--open .bm-menu-wrap {
+    top: $main-toolbar-height;
+  }
+
+  .bm-menu {
+    background: $black;
+    padding: $xlarge-padding-em $large-padding-em 0;
+    font-size: 1.15em;
+  }
+
+  .hamburger--open .bm-menu {
+    padding: $small-padding-em $large-padding-em 0;
+  }
+
+  .bm-morph-shape {
+    fill: $licorice;
+  }
+
+  .bm-item-list {
+    color: $mistgrey;
+    padding: 0.8em;
+  }
+
+  .bm-item {
+    display: inline-block;
+  }
+
+  .bm-overlay {
+    display: none;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+}

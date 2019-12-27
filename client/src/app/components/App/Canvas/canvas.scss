@@ -23,7 +23,6 @@
   }
 }
 
-
 .canvas{
   background-color: $whitish;
   width: $total-width;
@@ -66,7 +65,7 @@
     color: $green;
     border: $small-border solid $green;
     background: $white;
-    margin: 1rem;
+    margin: $medium-margin;
     width: 150px;
     font-weight: 800;
     &:hover {
@@ -87,7 +86,7 @@
 }
 
 .canvas-right {
-  margin-left: $navigation-width !important;
+  margin-left: $navigation-width;
 }
 
 .canvas-edit-mode {
@@ -95,6 +94,7 @@
     display: block;
   }
 }
+
 
 .canvas-high {
   z-index: $z-index-layer-2;
@@ -125,3 +125,10 @@
   top: -($widget-nav-height);
   z-index: -1;
 }
+
+@media screen and (max-width: 786px) {
+  .canvas-right{
+    margin: 0 $medium-margin;
+  }
+}
+

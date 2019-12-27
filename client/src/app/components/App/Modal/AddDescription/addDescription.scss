@@ -29,7 +29,7 @@
   &__button{
     @extend %modal__button;
     margin: 0 auto;
-    margin-bottom: 1rem;
+    margin-bottom: $medium-margin;
     display: flex;
     justify-content: center;
   }

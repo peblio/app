@@ -10,6 +10,9 @@ import FileMenu from './FileMenu/FileMenu.jsx';
 import HelpMenu from './HelpMenu/HelpMenu.jsx';
 import Preferences from '../Preferences/Preferences.jsx';
 import InsertToolbar from './InsertToolbar/InsertToolbar.jsx';
+import Modal from '../Modal/Modal.jsx';
+import EditAccessDisabledOnMobile from '../Modal/EditAccessDisabledOnMobile/EditAccessDisabledOnMobile.jsx';
+import NavigationHamburger from '../Navigation/MobileView/NavigationHamburger.jsx';
 import ToolbarLogo from '../../../images/logo.svg';
 import CheckSVG from '../../../images/check.svg';
 import PreferencesSVG from '../../../images/preferences.svg';
@@ -21,7 +24,8 @@ import {
   setPageTitle,
   togglePreviewMode,
   autoSaveUnsavedChanges,
-  savePageSnapshot } from '../../../action/page.js';
+  savePageSnapshot,
+  setPreviewMode } from '../../../action/page.js';
 import * as mainToolbarActions from '../../../action/mainToolbar.js';
 
 export const ONE_SEC = 1000;
@@ -31,6 +35,14 @@ export const TWO_MIN = 120 * ONE_SEC;
 require('./mainToolbar.scss');
 
 class MainToolbar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { showWarningForNotAllowingEditOnMobileView: false };
+    if (window.screen.width <= 786 && this.props.preview === false) {
+      this.props.setPreviewMode(true);
+    }
+  }
+
   componentDidMount() {
     this.autoSaveTimeout = setInterval(() => {
       if (
@@ -57,6 +69,14 @@ class MainToolbar extends React.Component {
     clearTimeout(this.autoSaveTimeout);
     clearTimeout(this.autoSavePageVersion);
     // window.removeEventListener('beforeunload', this.saveSnapshot);
+  }
+
+  togglePreviewMode = () => {
+    if (window.screen.width > 786) {
+      this.props.togglePreviewMode();
+    } else {
+      this.setState({ showWarningForNotAllowingEditOnMobileView: true });
+    }
   }
 
   savePageVersion = () => {
@@ -138,6 +158,8 @@ class MainToolbar extends React.Component {
       <div className="main-toolbar__container">
         <div className="main-toolbar">
           <div className="main-toolbar__div-left">
+
+
             <a
               className="logo_toolbar"
               href="https://www.peblio.co/"
@@ -146,6 +168,15 @@ class MainToolbar extends React.Component {
             >
               <ToolbarLogo alt="logo in toolbar" />
             </a>
+            <div id="mobile-navigation">
+              <NavigationHamburger
+                viewPagesModal={this.props.viewPagesModal}
+                toggleFileDropdown={this.props.toggleFileDropdown}
+                viewExamplesModal={this.props.viewExamplesModal}
+                sharePebl={this.sharePebl}
+                isUserLoggedIn={this.props.name}
+              />
+            </div>
             <div
               className="file-modal__container"
               role="presentation"
@@ -204,7 +235,7 @@ class MainToolbar extends React.Component {
 
           </div>
           <input
-            className="main-toolbar__title"
+            className="main-toolbar__title main-toolbar__div-center"
             placeholder="Title"
             type="text"
             value={this.props.pageTitle}
@@ -226,6 +257,13 @@ class MainToolbar extends React.Component {
           )}
           <div className="main-toolbar__div-right">
             <div className="main-toolbar__div-right-inside">
+              <Modal
+                size="large"
+                isOpen={this.state.showWarningForNotAllowingEditOnMobileView}
+                closeModal={() => this.setState({ showWarningForNotAllowingEditOnMobileView: false })}
+              >
+                <EditAccessDisabledOnMobile closeEditAccessWarningPageModal={() => this.setState({ showWarningForNotAllowingEditOnMobileView: false })} />
+              </Modal>
               <span className="main-toolbar__preview-title">Edit Mode</span>
 
               <label
@@ -234,7 +272,7 @@ class MainToolbar extends React.Component {
               >
                 <input
                   id="main-toolbar__checkbox"
-                  onChange={this.props.togglePreviewMode}
+                  onChange={this.togglePreviewMode}
                   type="checkbox"
                   checked={this.props.preview}
                   data-test="main-toolbar__edit-mode-toggle"
@@ -251,7 +289,7 @@ class MainToolbar extends React.Component {
               </button>
               <div className="main-toolbar__spacer"></div>
               <button
-                className="main-toolbar__button"
+                className="main-toolbar__button main-toolbar__save_button"
                 onClick={this.sharePebl}
                 data-test="main-toolbar__share-button"
               >
@@ -285,6 +323,7 @@ class MainToolbar extends React.Component {
         {(this.props.preview || this.props.isFullScreenMode) || (
           <InsertToolbar />
         )}
+
       </div>
     );
   }
@@ -317,6 +356,7 @@ MainToolbar.propTypes = {
   togglePreferencesPanel: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   viewShareModal: PropTypes.func.isRequired,
+  viewExamplesModal: PropTypes.func.isRequired,
 
   parentId: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
@@ -331,6 +371,8 @@ MainToolbar.propTypes = {
   isPublished: PropTypes.bool.isRequired,
   savePageVersion: PropTypes.func.isRequired,
   isOldVersionShowing: PropTypes.bool.isRequired,
+  setPreviewMode: PropTypes.func.isRequired,
+  viewPagesModal: PropTypes.func.isRequired,
 };
 
 
@@ -371,7 +413,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   autoSaveUnsavedChanges,
   convertEditorsToRaw,
   savePageVersion,
-  ...mainToolbarActions
+  setPreviewMode,
+  ...mainToolbarActions,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainToolbar);
