@@ -23,9 +23,11 @@ class Tags extends React.Component {
   }
 
   componentDidMount() {
-    this.input.handleKeyDown = (e) => {
-      this.handleEnter(e);
-    };
+    if(this.input) {
+      this.input.handleKeyDown = (e) => {
+        this.handleEnter(e);
+      };
+    }
   }
 
   componentDidUpdate(prevProps) {
