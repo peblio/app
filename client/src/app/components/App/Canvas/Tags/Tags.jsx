@@ -22,18 +22,18 @@ class Tags extends React.Component {
     };
   }
 
-  componentDidMount() {  
-    this.input.handleKeyDown = (e) => { 
-      this.handleEnter(e);  
-    };  
-  } 
+  componentDidMount() {
+    this.input.handleKeyDown = (e) => {
+      this.handleEnter(e);
+    };
+  }
 
-  componentDidUpdate(prevProps) { 
-    if (!this.props.preview && prevProps.preview) { 
-      this.input.handleKeyDown = (e) => { 
-        this.handleEnter(e);  
-      };  
-    } 
+  componentDidUpdate(prevProps) {
+    if (!this.props.preview && prevProps.preview) {
+      this.input.handleKeyDown = (e) => {
+        this.handleEnter(e);
+      };
+    }
   }
 
   handleInputChange=(e) => {

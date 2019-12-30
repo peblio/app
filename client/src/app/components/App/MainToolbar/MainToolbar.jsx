@@ -262,7 +262,9 @@ class MainToolbar extends React.Component {
                 isOpen={this.state.showWarningForNotAllowingEditOnMobileView}
                 closeModal={() => this.setState({ showWarningForNotAllowingEditOnMobileView: false })}
               >
-                <EditAccessDisabledOnMobile closeEditAccessWarningPageModal={() => this.setState({ showWarningForNotAllowingEditOnMobileView: false })} />
+                <EditAccessDisabledOnMobile closeEditAccessWarningPageModal={
+                  () => this.setState({ showWarningForNotAllowingEditOnMobileView: false })}
+                />
               </Modal>
               <span className="main-toolbar__preview-title">Edit Mode</span>
 
