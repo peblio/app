@@ -22,6 +22,20 @@ class Tags extends React.Component {
     };
   }
 
+  componentDidMount() {  
+    this.input.handleKeyDown = (e) => { 
+      this.handleEnter(e);  
+    };  
+  } 
+
+  componentDidUpdate(prevProps) { 
+    if (!this.props.preview && prevProps.preview) { 
+      this.input.handleKeyDown = (e) => { 
+        this.handleEnter(e);  
+      };  
+    } 
+  }
+
   handleInputChange=(e) => {
     this.setState({ value: e.target.value });
     const enteredText = e.target.value.toLowerCase().trim();

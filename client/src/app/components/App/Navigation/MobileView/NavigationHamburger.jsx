@@ -49,7 +49,7 @@ class NavigationHamburger extends React.Component {
                 this.props.toggleFileDropdown();
                 this.closeMenu();
               }}
-              data-test="file-menu__pages-button"
+              data-test="file-menu__mobile-pages-button"
             >
               <i className="fas fa-bars"></i>
               {' '}
@@ -68,7 +68,7 @@ class NavigationHamburger extends React.Component {
               this.props.toggleFileDropdown();
               this.closeMenu();
             }}
-            data-test="file-menu__examples-button"
+            data-test="file-menu__mobile-examples-button"
           >
             <i className="fas fa-folder"></i>
             {' '}
@@ -80,7 +80,7 @@ class NavigationHamburger extends React.Component {
               this.closeMenu();
               this.props.sharePebl();
             }}
-            data-test="main-toolbar__share-button"
+            data-test="main-toolbar__mobile-share-button"
           >
               Share
           </button>
