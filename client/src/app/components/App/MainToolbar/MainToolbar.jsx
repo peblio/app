@@ -96,6 +96,11 @@ class MainToolbar extends React.Component {
     );
   }
 
+  setPageTitle = (event) => {
+    document.title = event.target.value;
+    this.props.setPageTitle(event);
+  }
+
   saveSnapshotWithPage = () => {
     this.props.savePage();
     this.saveSnapshot();
@@ -239,7 +244,7 @@ class MainToolbar extends React.Component {
             placeholder="Title"
             type="text"
             value={this.props.pageTitle}
-            onChange={this.props.setPageTitle}
+            onChange={this.setPageTitle}
             readOnly={this.props.preview}
             data-test="main-toolbar__title"
           />
