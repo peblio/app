@@ -92,7 +92,7 @@ test('navigate to profile', async(t) => {
     .expect(getLocation()).contains(`${config.baseUrl}/profile/${teacherUser.name}`);
 });
 
-test.only('save pebl', async(t) => {
+test('save pebl', async(t) => {
   const getLocation = ClientFunction(() => document.location.href);
   const peblTitle = ClientFunction(() => document.title);
   await t
