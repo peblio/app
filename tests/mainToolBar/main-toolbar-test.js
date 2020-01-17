@@ -92,16 +92,20 @@ test('navigate to profile', async(t) => {
     .expect(getLocation()).contains(`${config.baseUrl}/profile/${teacherUser.name}`);
 });
 
-test('save pebl', async(t) => {
+test.only('save pebl', async(t) => {
   const getLocation = ClientFunction(() => document.location.href);
+  const peblTitle = ClientFunction(() => document.title);
   await t
+    .selectText(Selector('[data-test=main-toolbar__title]'))
+    .pressKey('delete')
+    .typeText(Selector('[data-test=main-toolbar__title]'), 'My Title')
     .click(Selector('[data-test=main-toolbar__save-button]'))
-    .expect(getLocation()).contains(`${config.baseUrl}/pebl`);
+    .expect(getLocation()).contains(`${config.baseUrl}/pebl`)
+    .expect(peblTitle()).eql('My Title');
 });
 
 test('share modal', async(t) => {
   const examplesTitles = Selector('[data-test=share-modal__input]').value;
-  const getLocation = ClientFunction(() => document.location.href);
   await t
     .click(Selector('[data-test=main-toolbar__save-button]'))
     .click(Selector('[data-test=main-toolbar__share-button]'))
