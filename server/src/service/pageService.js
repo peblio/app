@@ -27,7 +27,7 @@ export async function getPage(req, res) {
 }
 
 export async function getPagesWithTag(req, res) {
-  const offset = req.query.offset ? parseInt(req.query.offset) : 0;
+  const page = req.query.page ? parseInt(req.query.page) : 1;
   const limit = req.query.limit ? parseInt(req.query.limit) : 10;
   const sort = req.query.sort ? req.query.sort : 'title';
 
@@ -57,7 +57,7 @@ export async function getPagesWithTag(req, res) {
   }
 
   const options = {
-    offset,
+    page,
     limit,
     sort
   };

@@ -318,7 +318,7 @@ describe('pageService', () => {
       request = {
         query: {
           tag,
-          offset: 7,
+          page: 7,
           limit: 13,
           sort: 'heading'
         }
@@ -327,7 +327,7 @@ describe('pageService', () => {
 
       getPagesWithTag(request, response);
 
-      assertPaginateWasCalledWithTagOffsetLimit(aggregateWithStudentFilter, request.query.offset, request.query.limit, request.query.sort);
+      assertPaginateWasCalledWithTagPageLimit(aggregateWithStudentFilter, request.query.page, request.query.limit, request.query.sort);
       assertSendWasCalledWith(pageData);
     });
 
@@ -335,7 +335,7 @@ describe('pageService', () => {
       request = {
         query: {
           tag,
-          offset: 7,
+          page: 7,
           limit: 13,
           sort: 'heading',
           showStudentPages: true
@@ -345,7 +345,7 @@ describe('pageService', () => {
 
       getPagesWithTag(request, response);
 
-      assertPaginateWasCalledWithTagOffsetLimit(aggregateWithoutStudentFilter, request.query.offset, request.query.limit, request.query.sort);
+      assertPaginateWasCalledWithTagPageLimit(aggregateWithoutStudentFilter, request.query.page, request.query.limit, request.query.sort);
       assertSendWasCalledWith(pageData);
     });
 
@@ -353,7 +353,7 @@ describe('pageService', () => {
       request = {
         query: {
           tag,
-          offset: 7,
+          page: 7,
           limit: 13,
           sort: 'heading',
           showStudentPages: 'true'
@@ -363,7 +363,7 @@ describe('pageService', () => {
 
       getPagesWithTag(request, response);
 
-      assertPaginateWasCalledWithTagOffsetLimit(aggregateWithoutStudentFilter, request.query.offset, request.query.limit, request.query.sort);
+      assertPaginateWasCalledWithTagPageLimit(aggregateWithoutStudentFilter, request.query.page, request.query.limit, request.query.sort);
       assertSendWasCalledWith(pageData);
     });
 
@@ -1313,8 +1313,8 @@ function assertPaginateWasCalledWithTag() {
   assertStubWasCalledOnceWith(paginateSpy, aggregateWithStudentFilter, { offset: 0, limit: 10, sort: 'title' });
 }
 
-function assertPaginateWasCalledWithTagOffsetLimit(aggregate, offset, limit, sort) {
-  assertStubWasCalledOnceWith(paginateSpy, aggregate, { $or: [{ isPublished: true }, { isPublished: null }], tags: tag }, { offset, limit, sort });
+function assertPaginateWasCalledWithTagPageLimit(aggregate, page, limit, sort) {
+  assertStubWasCalledOnceWith(paginateSpy, aggregate, { $or: [{ isPublished: true }, { isPublished: null }], tags: tag }, { page, limit, sort });
 }
 
 function assertSendWasCalledWith(msg) {
