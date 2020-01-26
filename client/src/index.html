@@ -63,7 +63,7 @@
           const pageId = pathName.replace('/pebl/', '');
           const peblState = sessionStorage.getItem(pageId);
           sessionStorage.removeItem(pageId);
-            if(!peblState){
+            if(!peblState || peblState === "false"){
               return;
             }
             event.returnValue = "You may have some unsaved changes";

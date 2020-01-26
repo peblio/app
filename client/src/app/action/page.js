@@ -261,7 +261,7 @@ export function remixPage(parentId, title, heading, description, editors, editor
 
 
 export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, isPublished) {
-  axios.post('/pages/update', {
+  return dispatch => axios.post('/pages/update', {
     id,
     title,
     heading,
@@ -273,14 +273,13 @@ export function updatePage(id, title, heading, description, editors, editorIndex
     tags,
     isPublished
   })
-    .then(() => (dispatch) => {
+    .then(() => {
       dispatch(setUnsavedChanges(false));
       dispatch({
         type: ActionTypes.UPDATE_PAGE,
         id
       });
     }).catch(error => console.error('Page update error', error));
-  return () => {};
 }
 
 function saveAs(uri, filename) {
