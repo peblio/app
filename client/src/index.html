@@ -53,8 +53,8 @@
   <!-- End Google Tag Manager (noscript) -->
   <div id="app" />
   <script>
-      window.onbeforeunload = function(event) {
-        return true;	        let pathName = window.location.pathname;
+    window.onbeforeunload = function(event) {
+        let pathName = window.location.pathname;
         if(pathName === "/"){
           event.returnValue = "You may have some unsaved changes";
           return true;
@@ -70,7 +70,7 @@
             return true;
         };
         return;
-      };	      };
+      };	      
   </script>
   <!-- <script type="text/javascript"> window._mfq = window._mfq || []; (function() { var mf = document.createElement("script"); mf.type = "text/javascript"; mf.async = true; mf.src = "//cdn.mouseflow.com/projects/2339372f-3436-47ea-bc13-5b7872ef06fa.js"; document.getElementsByTagName("head")[0].appendChild(mf); })(); </script> -->
 

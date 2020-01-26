@@ -205,7 +205,7 @@ export function savePageSnapshot(id, firstSave) {
   });
 }
 
-function savePage(id, parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished) {
+function postSavePageData(id, parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished) {
   const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
   const pageData = {
     parentId,
@@ -237,7 +237,7 @@ function savePage(id, parentId, title, heading, description, editors, editorInde
 export function submitPage(parentId, title, heading, description, editors, editorIndex, layout,
   type, workspace, tags, isLoggedIn, isPublished) {
   const id = shortid.generate();
-  savePage(id, parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished);
+  postSavePageData(id, parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished);
   return (dispatch) => {
     dispatch(setUnsavedChanges(false));
     dispatch({
@@ -250,7 +250,7 @@ export function submitPage(parentId, title, heading, description, editors, edito
 export function remixPage(parentId, title, heading, description, editors, editorIndex,
   layout, type, workspace, tags, isLoggedIn, isPublished) {
   const id = shortid.generate();
-  savePage(id, parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished);
+  postSavePageData(id, parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished);
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SET_PAGE_ID,
@@ -272,13 +272,14 @@ export function updatePage(id, title, heading, description, editors, editorIndex
     workspace,
     tags,
     isPublished
-  }).then(() => (dispatch) => {
-    dispatch(setUnsavedChanges(false));
-    dispatch({
-      type: ActionTypes.UPDATE_PAGE,
-      id
-    });
-  }).catch(error => console.error('Page update error', error));
+  })
+    .then(() => (dispatch) => {
+      dispatch(setUnsavedChanges(false));
+      dispatch({
+        type: ActionTypes.UPDATE_PAGE,
+        id
+      });
+    }).catch(error => console.error('Page update error', error));
   return () => {};
 }
 
