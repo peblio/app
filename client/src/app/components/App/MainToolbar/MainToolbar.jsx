@@ -101,6 +101,11 @@ class MainToolbar extends React.Component {
     this.saveSnapshot();
   }
 
+
+  remixPage = () => {
+    this.props.remixPage();
+  }
+
   saveSnapshot = () => {
     if (this.props.projectID()) {
       savePageSnapshot(this.props.projectID(), false);
@@ -116,35 +121,59 @@ class MainToolbar extends React.Component {
     event.target.focus();
   }
 
+  shouldRemixButtonBeRendered = () => {
+    if (this.props.name) { // user is logged in
+      if (this.props.canEdit) { // it is users sketch
+        if (this.props.unsavedChanges) { // there are some unsaved changes
+          return false;
+        } // there are no unsaved changes
+          if (this.props.projectID()) { // eslint-disable-line
+          // it is not a new sketch
+          return false;
+        } // it is a new sketch
+        return false;
+      } // it is not users sketch
+      return true;
+    } // user is not logged in
+      if (this.props.projectID()) { // eslint-disable-line
+      // it is not a new sketch
+      return true;
+    } // it is a new sketch
+    return false;
+  }
+
+
+  renderActionButton = () => {
+    if (this.shouldRemixButtonBeRendered()) {
+      return (
+        <button
+          className="main-toolbar__save"
+          onClick={this.remixPage}
+          data-test="main-toolbar__save-button"
+        >
+          Remix
+        </button>
+      );
+    }
+    let saveButtonText = 'Save';
+    if (this.props.projectID()) {
+      saveButtonText = <CheckSVG alt="check svg" />;
+    }
+    return (
+      <button
+        className="main-toolbar__save"
+        onClick={this.saveSnapshotWithPage}
+        data-test="main-toolbar__save-button"
+      >
+        {saveButtonText}
+      </button>
+    );
+  }
+
   render() {
     const prefButtonClassName = classNames('main-toolbar__pref', {
       'main-toolbar__pref--open': this.props.isPreferencesPanelOpen
     });
-    let saveButtonText = 'Remix';
-    if (this.props.name) { // user is logged in
-      if (this.props.canEdit) { // it is users sketch
-        if (this.props.unsavedChanges) { // there are some unsaved changes
-          saveButtonText = 'Save';
-        } else { // there are no unsaved changes
-          if (this.props.projectID()) { // eslint-disable-line
-            // it is not a new sketch
-            saveButtonText = <CheckSVG alt="check svg" />;
-          } else { // it is a new sketch
-            saveButtonText = 'Save';
-          }
-        }
-      } else { // it is not users sketch
-        saveButtonText = 'Remix';
-      }
-    } else { // user is not logged in
-      if (this.props.projectID()) { // eslint-disable-line
-        // it is not a new sketch
-        saveButtonText = 'Remix';
-      } else { // it is a new sketch
-        saveButtonText = 'Save';
-      }
-    }
-
     const fileDropDownButtonClassName = classNames({
       'upper-toolbar__dropdown': !this.props.isFileDropdownOpen,
       'upper-toolbar__dropdown upper-toolbar__dropdown-open': this.props.isFileDropdownOpen
@@ -158,8 +187,6 @@ class MainToolbar extends React.Component {
       <div className="main-toolbar__container">
         <div className="main-toolbar">
           <div className="main-toolbar__div-left">
-
-
             <a
               className="logo_toolbar"
               href="https://www.peblio.co/"
@@ -282,13 +309,7 @@ class MainToolbar extends React.Component {
                 />
                 <div className={`main-toolbar__slider ${this.props.preview}`}></div>
               </label>
-              <button
-                className="main-toolbar__save"
-                onClick={this.saveSnapshotWithPage}
-                data-test="main-toolbar__save-button"
-              >
-                {saveButtonText}
-              </button>
+              {this.renderActionButton()}
               <div className="main-toolbar__spacer"></div>
               <button
                 className="main-toolbar__button main-toolbar__save_button"
@@ -351,6 +372,7 @@ MainToolbar.propTypes = {
   projectID: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   savePage: PropTypes.func.isRequired,
+  remixPage: PropTypes.func.isRequired,
   setShareURL: PropTypes.func.isRequired,
   toggleHelpDropdown: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
