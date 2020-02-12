@@ -10,10 +10,6 @@ import reduxCatch from 'redux-catch';
 import { saveErrorLog } from './utils/log';
 
 import rootReducer from './reducers/rootReducer.js';
-import Dashboard from './components/Dashboard/Dashboard.jsx';
-import PaymentPage from './components/Payment/PaymentPage.jsx';
-import Profile from './components/Profile/Profile.jsx';
-import Page404 from './components/Page404/Page404.jsx';
 import withTracker from './withTracker.jsx';
 import LoadingMessage from './LoadingMessage.jsx';
 import history from './utils/history';
@@ -41,6 +37,22 @@ const LazyLoadedApp = lazy(() => (
   import('./components/App/App.jsx')
 ));
 
+const LazyLoadedDashboard = lazy(() => (
+  import('./components/Dashboard/Dashboard.jsx')
+));
+
+const LazyLoadedPaymentPage = lazy(() => (
+  import('./components/Payment/PaymentPage.jsx')
+));
+
+const LazyLoadedPaymentProfile = lazy(() => (
+  import('./components/Profile/Profile.jsx')
+));
+
+const LazyLoadedPage404 = lazy(() => (
+  import('./components/Page404/Page404.jsx')
+));
+
 
 class Main extends React.Component {
   render() {
@@ -49,16 +61,16 @@ class Main extends React.Component {
         <Router history={history}>
           <Suspense fallback={<LoadingMessage />}>
             <Switch>
-              <Route exact path="/" component={LazyLoadedApp} />
-              <Route path="/pebl/:id" component={LazyLoadedApp} />
-              <Route path="/reset" component={LazyLoadedApp} />
-              <Route path="/confirmation" component={LazyLoadedApp} />
-              <Route path="/dashboard/:userName/folder/:folderShortId" component={withTracker(Dashboard)} />
-              <Route path="/dashboard/" component={withTracker(Dashboard)} />
-              <Route path="/payment/" component={withTracker(PaymentPage)} />
-              <Route path="/profile/:userName/folder/:folderShortId" component={withTracker(Profile)} />
-              <Route path="/profile/:userName" component={withTracker(Profile)} />
-              <Route path="*" component={withTracker(Page404)} />
+              <Route exact path="/" component={withTracker(LazyLoadedApp)} />
+              <Route path="/pebl/:id" component={withTracker(LazyLoadedApp)} />
+              <Route path="/reset" component={withTracker(LazyLoadedApp)} />
+              <Route path="/confirmation" component={withTracker(LazyLoadedApp)} />
+              <Route path="/dashboard/:userName/folder/:folderShortId" component={withTracker(LazyLoadedDashboard)} />
+              <Route path="/dashboard/" component={withTracker(LazyLoadedDashboard)} />
+              <Route path="/payment/" component={withTracker(LazyLoadedPaymentPage)} />
+              <Route path="/profile/:userName/folder/:folderShortId" component={withTracker(LazyLoadedPaymentProfile)} />
+              <Route path="/profile/:userName" component={withTracker(LazyLoadedPaymentProfile)} />
+              <Route path="*" component={withTracker(LazyLoadedPage404)} />
             </Switch>
           </Suspense>
         </Router>
