@@ -1,8 +1,6 @@
 import React from 'react';
+import GenericLoaderSVG from './images/generic-loader.svg';
 
-const LoadingMessage = () => {
-  console.log('I am in LoadingMessage');
-  return (<div>I am loading...</div>);
-};
+const LoadingMessage = () => <GenericLoaderSVG />;
 
 export default LoadingMessage;
