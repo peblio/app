@@ -1,0 +1,66 @@
+body {
+  background-color: #f9f9f9;
+}
+
+svg {
+  width: 20%;
+  max-height: 60%;
+  margin: 0 auto;
+  display: block;
+/*   visibility: hidden; */
+}
+
+.loader__container {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    height: 100%;
+}
+
+/* #square,
+#star {
+  visibility: hidden;
+} */
+
+/* #sq1,
+#sq2 {
+  visibility: hidden;
+} */
+#sq1 {
+  animation: stretch 2s infinite;
+ 
+}
+#sq2 {
+  animation: stretch 2s infinite;
+  animation-delay: 1s;
+}
+#reg {
+  transform: translate(410px, 380px);
+}
+
+
+@keyframes stretch {
+  0% {
+    transform:translate(0px, 0px);
+  }
+  25% {
+    transform: translate(-400px, 0);
+  }
+  50% {
+/*      transform-origin: 800px 400px; */
+    transform:scaleY(2) translate(-400px, -370px);
+  }
+  70% {
+    transform:scaleY(1) translate(0px, -400px);
+/*     transform-origin: 100% 100%; */
+  }
+  75% {
+    transform: translate(0px, -360px);
+  }
+  100% {
+    transform:scaleX(1) translate(0px, -360px);
+  }
+}
+
+
+

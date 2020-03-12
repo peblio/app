@@ -11,7 +11,7 @@ import { saveErrorLog } from './utils/log';
 
 import rootReducer from './reducers/rootReducer.js';
 import withTracker from './withTracker.jsx';
-import LoadingMessage from './LoadingMessage.jsx';
+import LoadingMessage from './components/GenericLoader/LoadingMessage.jsx';
 import history from './utils/history';
 
 import './styles/Draft.css';
