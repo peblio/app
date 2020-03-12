@@ -18,7 +18,7 @@
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.6",
     "codemirror": "^5.27.4",
-    "draft-js": "^0.10.1",
+    "draft-js": "0.10.1",
     "helphero": "^0.4.2",
     "history": "4.7.2",
     "html2canvas": "v1.0.0-rc.1",
