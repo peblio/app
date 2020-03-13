@@ -2,7 +2,7 @@ body {
   background-color: #f9f9f9;
 }
 
-svg {
+#generic-loader-svg {
   width: 20%;
   max-height: 60%;
   margin: 0 auto;
@@ -54,7 +54,7 @@ svg {
 }
 
 @media screen and (max-width: 786px) {
-  svg {
+  #generic-loader-svg {
     width: 20%;
     max-height: 40%;
     display: block;
