@@ -17,15 +17,6 @@ svg {
     height: 100%;
 }
 
-/* #square,
-#star {
-  visibility: hidden;
-} */
-
-/* #sq1,
-#sq2 {
-  visibility: hidden;
-} */
 #sq1 {
   animation: stretch 2s infinite;
  
@@ -61,6 +52,19 @@ svg {
     transform:scaleX(1) translate(0px, -360px);
   }
 }
+
+@media screen and (max-width: 786px) {
+  svg {
+    width: 20%;
+    max-height: 40%;
+    display: block;
+  }
+
+  .loader__container {
+    display: block;
+  }
+}
+
 
 
 
