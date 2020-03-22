@@ -56,9 +56,11 @@ class App extends React.Component {
       hlp.anonymous();
     }
     this.props.createNavigationContent(this.props.layout);
+    document.title = this.props.pageTitle;
   }
 
   componentDidUpdate(prevProps) {
+    document.title = this.props.pageTitle;
     if (prevProps.match.params.id !== this.props.match.params.id) {
       window.location.reload(true);
     }
