@@ -169,43 +169,6 @@ export function convertEditorsToRaw(editors) {
   return rawEditors;
 }
 
-export function submitPage(parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished) {
-  const id = shortid.generate();
-  const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
-  const pageData = {
-    parentId,
-    id,
-    title,
-    heading,
-    description,
-    editors: convertEditorsToRaw(editors),
-    editorIndex,
-    layout,
-    workspace,
-    tags,
-    isPublished,
-    snapshotPath: SNAPSHOT_DEFAULT_IMG
-  };
-  axios.post(axiosURL, pageData).then(() => {
-    savePageSnapshot(id, true);
-    if (type === 'fromWP') {
-      window.open(`/pebl/${id}`, '_blank');
-    } else {
-      history.push(`/pebl/${id}`);
-    }
-    if (type === 'remix') {
-      window.location.reload(true);
-    }
-  }).catch(error => console.error('Error', error));
-  return (dispatch) => {
-    dispatch(setUnsavedChanges(false));
-    dispatch({
-      type: ActionTypes.SET_PAGE_ID,
-      id
-    });
-  };
-}
-
 export function savePageSnapshot(id, firstSave) {
   const canvasElement = document.getElementById('content-canvas');
   firstSave && document.getElementsByTagName('BODY')[0].append(canvasElement);
@@ -242,8 +205,63 @@ export function savePageSnapshot(id, firstSave) {
   });
 }
 
+function postSavePageData(id, parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished) {
+  const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
+  const pageData = {
+    parentId,
+    id,
+    title,
+    heading,
+    description,
+    editors: convertEditorsToRaw(editors),
+    editorIndex,
+    layout,
+    workspace,
+    tags,
+    isPublished,
+    snapshotPath: SNAPSHOT_DEFAULT_IMG
+  };
+  axios.post(axiosURL, pageData).then(() => {
+    savePageSnapshot(id, true);
+    if (type === 'fromWP') {
+      window.open(`/pebl/${id}`, '_blank');
+    } else {
+      history.push(`/pebl/${id}`);
+    }
+    if (type === 'remix') {
+      window.location.reload(true);
+    }
+  }).catch(error => console.error('Error', error));
+}
+
+export function submitPage(parentId, title, heading, description, editors, editorIndex, layout,
+  type, workspace, tags, isLoggedIn, isPublished) {
+  const id = shortid.generate();
+  postSavePageData(id, parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished);
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(false));
+    dispatch({
+      type: ActionTypes.SET_PAGE_ID,
+      id
+    });
+  };
+}
+
+export function remixPage(parentId, title, heading, description, editors, editorIndex,
+  layout, type, workspace, tags, isLoggedIn, isPublished) {
+  const id = shortid.generate();
+  postSavePageData(id, parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished);
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_PAGE_ID,
+      id
+    });
+  };
+}
+
+
 export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, isPublished) {
-  axios.post('/pages/update', {
+  return dispatch => axios.post('/pages/update', {
     id,
     title,
     heading,
@@ -254,14 +272,14 @@ export function updatePage(id, title, heading, description, editors, editorIndex
     workspace,
     tags,
     isPublished
-  }).then(() => (dispatch) => {
-    dispatch(setUnsavedChanges(false));
-    dispatch({
-      type: ActionTypes.UPDATE_PAGE,
-      id
-    });
-  }).catch(error => console.error('Page update error', error));
-  return () => {};
+  })
+    .then(() => {
+      dispatch(setUnsavedChanges(false));
+      dispatch({
+        type: ActionTypes.UPDATE_PAGE,
+        id
+      });
+    }).catch(error => console.error('Page update error', error));
 }
 
 function saveAs(uri, filename) {
