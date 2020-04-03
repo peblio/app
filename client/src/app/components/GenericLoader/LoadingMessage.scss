@@ -18,35 +18,67 @@ body {
 }
 
 #sq1 {
-  animation: stretch 2s infinite;
- 
+  animation: stretch1 2s infinite;
 }
 #sq2 {
-  animation: stretch 2s infinite;
-  animation-delay: 1s;
+  animation: stretch2 2s infinite;
 }
 #reg {
   transform: translate(410px, 380px);
 }
-
-
-@keyframes stretch {
+@keyframes stretch2 {
   0% {
-    transform:translate(0px, 0px);
-  }
-  25% {
-    transform: translate(-400px, 0);
-  }
-  50% {
-/*      transform-origin: 800px 400px; */
     transform:scaleY(2) translate(-400px, -370px);
   }
-  70% {
+  10% {
+    transform:scaleY(2) translate(-400px, -370px);
+  }
+  30% {
     transform:scaleY(1) translate(0px, -400px);
-/*     transform-origin: 100% 100%; */
+  }
+  40% {
+    transform: translate(0px, -360px);
+  }
+  60% {
+    transform:scaleX(1) translate(0px, -360px);
   }
   75% {
-    transform: translate(0px, -360px);
+    transform:translate(0px, 0px);
+  }
+  80% {
+    transform: translate(-400px, 0);
+  }
+  90% {
+    transform:scaleY(2) translate(-400px, -370px);
+  }
+  100% {
+    transform:scaleY(2) translate(-400px, -370px);
+  }
+}
+@keyframes stretch1 {
+  0% {
+    transform:scaleX(1) translate(0px, -360px);
+  }
+  10% {
+    transform:scaleX(1) translate(0px, -360px);
+  }
+  25% {
+    transform:translate(0px, 0px);
+  }
+  30% {
+    transform: translate(-400px, 0);
+  }
+  40% {
+    transform:scaleY(2) translate(-400px, -370px);
+  }
+  60% {
+    transform:scaleY(2) translate(-400px, -370px);
+  }
+  80% {
+    transform:scaleY(1) translate(0px, -400px);
+  }
+  90% {
+    transform: scaleX(1) translate(0px, -360px);
   }
   100% {
     transform:scaleX(1) translate(0px, -360px);
