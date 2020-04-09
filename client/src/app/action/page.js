@@ -237,14 +237,38 @@ function postSavePageData(id, parentId, title, heading, description, editors, ed
 export function submitPage(parentId, title, heading, description, editors, editorIndex, layout,
   type, workspace, tags, isLoggedIn, isPublished) {
   const id = shortid.generate();
-  postSavePageData(id, parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished);
-  return (dispatch) => {
-    dispatch(setUnsavedChanges(false));
-    dispatch({
-      type: ActionTypes.SET_PAGE_ID,
-      id
-    });
+  const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
+  const pageData = {
+    parentId,
+    id,
+    title,
+    heading,
+    description,
+    editors: convertEditorsToRaw(editors),
+    editorIndex,
+    layout,
+    workspace,
+    tags,
+    isPublished,
+    snapshotPath: SNAPSHOT_DEFAULT_IMG
   };
+  return dispatch => axios.post(axiosURL, pageData)
+    .then(() => {
+      savePageSnapshot(id, true);
+      if (type === 'fromWP') {
+        window.open(`/pebl/${id}`, '_blank');
+      } else {
+        history.push(`/pebl/${id}`);
+      }
+      if (type === 'remix') {
+        window.location.reload(true);
+      }
+      dispatch(setUnsavedChanges(false));
+      dispatch({
+        type: ActionTypes.SET_PAGE_ID,
+        id
+      });
+    }).catch(error => console.error('Error', error));
 }
 
 export function remixPage(parentId, title, heading, description, editors, editorIndex,
