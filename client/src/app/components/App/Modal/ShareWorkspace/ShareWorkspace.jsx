@@ -78,7 +78,7 @@ class ShareWorkspace extends React.Component {
       [],
       this.isLoggedIn(),
       !(this.props.userType === 'student'),
-      document.getElementById('content-canvas')
+      this.props.name
     );
     this.props.closeModal();
   }

@@ -235,7 +235,7 @@ function postSavePageData(id, parentId, title, heading, description, editors, ed
 }
 
 export function submitPage(parentId, title, heading, description, editors, editorIndex, layout,
-  type, workspace, tags, isLoggedIn, isPublished) {
+  type, workspace, tags, isLoggedIn, isPublished, name) {
   const id = shortid.generate();
   const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
   const pageData = {
@@ -260,15 +260,24 @@ export function submitPage(parentId, title, heading, description, editors, edito
       } else {
         history.push(`/pebl/${id}`);
       }
-      if (type === 'remix') {
-        window.location.reload(true);
-      }
       dispatch(setUnsavedChanges(false));
       dispatch({
         type: ActionTypes.SET_PAGE_ID,
         id
       });
-    }).catch(error => console.error('Error', error));
+    })
+    .then(() => {
+      const log = {
+        message: 'Saving Page',
+        path: '/pages/save',
+        action: 'Saving Page',
+        module: 'ui',
+        level: 'INFO',
+        user: name
+      };
+      this.saveLog(log);
+    })
+    .catch(error => console.error('Error', error));
 }
 
 export function remixPage(parentId, title, heading, description, editors, editorIndex,
@@ -284,7 +293,7 @@ export function remixPage(parentId, title, heading, description, editors, editor
 }
 
 
-export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, isPublished) {
+export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, isPublished, canEdit, name) {
   return dispatch => axios.post('/pages/update', {
     id,
     title,
@@ -303,7 +312,19 @@ export function updatePage(id, title, heading, description, editors, editorIndex
         type: ActionTypes.UPDATE_PAGE,
         id
       });
-    }).catch(error => console.error('Page update error', error));
+    })
+    .then(() => {
+      const log = {
+        message: `Updating Page with canEdit as ${canEdit}`,
+        path: `/pages/update/${id}`,
+        action: 'Updating Page',
+        module: 'ui',
+        level: 'INFO',
+        user: name
+      };
+      this.saveLog(log);
+    })
+    .catch(error => console.error('Page update error', error));
 }
 
 function saveAs(uri, filename) {

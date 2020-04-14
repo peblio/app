@@ -33,7 +33,6 @@ import * as preferencesActions from '../../action/preferences.js';
 import * as userActions from '../../action/user.js';
 
 import axios from '../../utils/axios';
-import { saveLog } from '../../utils/log';
 import PageVersion from './Navigation/PageVersion';
 
 require('./app.scss');
@@ -154,17 +153,9 @@ class App extends React.Component {
           this.props.workspace,
           this.props.tags,
           true,
-          !(this.props.userType === 'student') || this.props.isPeblPublished
+          !(this.props.userType === 'student') || this.props.isPeblPublished,
+          this.props.name
         );
-        const log = {
-          message: 'Saving Page',
-          path: '/pages/save',
-          action: 'Saving Page',
-          module: 'ui',
-          level: 'INFO',
-          user: this.props.name
-        };
-        saveLog(log);
       } else if (this.props.canEdit) {
         this.props.updatePage(
           this.props.id,
@@ -176,17 +167,11 @@ class App extends React.Component {
           this.props.layout,
           this.props.workspace,
           this.props.tags,
-          !(this.props.userType === 'student') || this.props.isPeblPublished
+          !(this.props.userType === 'student') || this.props.isPeblPublished,
+          this.props.canEdit,
+          this.props.name
         );
-        const log = {
-          message: `Updating Page with canEdit as ${this.props.canEdit}`,
-          path: `/pages/update/${this.props.id}`,
-          action: 'Updating Page',
-          module: 'ui',
-          level: 'INFO',
-          user: this.props.name
-        };
-        saveLog(log);
+
         this.sendMessage('SendingUpdate');
       }
     } else {
