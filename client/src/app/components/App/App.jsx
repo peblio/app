@@ -188,31 +188,6 @@ class App extends React.Component {
         };
         saveLog(log);
         this.sendMessage('SendingUpdate');
-      } else {
-        // this is for remix and save
-        this.props.submitPage(
-          this.props.id,
-          `${this.props.pageTitle}-copy`,
-          this.props.pageHeading,
-          this.props.description,
-          this.props.editors,
-          this.props.editorIndex,
-          this.props.layout,
-          'remix',
-          this.props.workspace,
-          this.props.tags,
-          true,
-          !(this.props.userType === 'student')
-        );
-        const log = {
-          message: `Remixing Page with id ${this.props.id}`,
-          path: '/pages/save',
-          action: 'Remixing Page',
-          module: 'ui',
-          level: 'INFO',
-          user: this.props.name
-        };
-        saveLog(log);
       }
     } else {
       this.props.viewLoginModal();
