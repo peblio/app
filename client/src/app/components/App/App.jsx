@@ -221,44 +221,20 @@ class App extends React.Component {
 
   remixPage = () => {
     if (this.props.name) {
-      let title = this.props.pageTitle;
-      if (this.props.pageHeading !== '') {
-        title =
-        (this.props.pageTitle === pageDefaults.DEFAULT_PAGE_TITLE)
-          ? this.props.pageHeading : this.props.pageTitle;
-      }
-      if (this.props.id.length === 0) {
-        this.props.remixPage(
-          '',
-          title,
-          this.props.pageHeading,
-          this.props.description,
-          this.props.editors,
-          this.props.editorIndex,
-          this.props.layout,
-          'save',
-          this.props.workspace,
-          this.props.tags,
-          true,
-          !(this.props.userType === 'student') || this.props.isPeblPublished
-        );
-      } else {
-        // this is for remix and save
-        this.props.remixPage(
-          this.props.id,
-          `${this.props.pageTitle}-copy`,
-          this.props.pageHeading,
-          this.props.description,
-          this.props.editors,
-          this.props.editorIndex,
-          this.props.layout,
-          'remix',
-          this.props.workspace,
-          this.props.tags,
-          true,
-          !(this.props.userType === 'student')
-        );
-      }
+      this.props.remixPage(
+        this.props.id,
+        `${this.props.pageTitle}-copy`,
+        this.props.pageHeading,
+        this.props.description,
+        this.props.editors,
+        this.props.editorIndex,
+        this.props.layout,
+        'remix',
+        this.props.workspace,
+        this.props.tags,
+        true,
+        !(this.props.userType === 'student')
+      );
     } else {
       this.props.viewLoginModal();
     }
