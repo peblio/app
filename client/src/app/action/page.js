@@ -139,13 +139,13 @@ export function duplicatePage(id, folder) {
         if (pebl.folder) {
           data.folder = pebl.folder;
         }
-
-        axios.post('/pages/save', data).then((response) => {
-          dispatch({
-            type: ActionTypes.DUPLICATE_PAGE,
-            page: response.data.page
+        axios.post('/pages/save', data)
+          .then((response) => {
+            dispatch({
+              type: ActionTypes.DUPLICATE_PAGE,
+              page: response.data.page
+            });
           });
-        });
       })
       .catch((err) => {
         console.log(err);
