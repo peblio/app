@@ -132,6 +132,34 @@ class App extends React.Component {
     }
   }
 
+  buildRawPageDataForSave = title => ({
+    parentId: '',
+    title,
+    heading: this.props.pageHeading,
+    description: this.props.description,
+    editors: this.props.editors,
+    editorIndex: this.props.editorIndex,
+    layout: this.props.layout,
+    workspace: this.props.workspace,
+    tags: this.props.tags,
+    isPublished: !(this.props.userType === 'student') || this.props.isPeblPublished,
+    snapshotPath: pageDefaults.SNAPSHOT_DEFAULT_IMG
+  });
+
+  buildRawPageDataForUpdate = title => (
+    {
+      id: this.props.id,
+      title,
+      heading: this.props.pageHeading,
+      description: this.props.description,
+      editors: this.props.editors,
+      editorIndex: this.props.editorIndex,
+      layout: this.props.layout,
+      workspace: this.props.workspace,
+      tags: this.props.tags,
+      isPublished: !(this.props.userType === 'student') || this.props.isPeblPublished,
+    });
+
   buildPageDataAndSavePage = () => {
     if (this.props.name) {
       let title = this.props.pageTitle;
@@ -141,36 +169,9 @@ class App extends React.Component {
           ? this.props.pageHeading : this.props.pageTitle;
       }
       if (this.props.id.length === 0) {
-        this.props.submitPage(
-          '',
-          title,
-          this.props.pageHeading,
-          this.props.description,
-          this.props.editors,
-          this.props.editorIndex,
-          this.props.layout,
-          'save',
-          this.props.workspace,
-          this.props.tags,
-          true,
-          !(this.props.userType === 'student') || this.props.isPeblPublished,
-          this.props.name
-        );
+        this.props.submitPage(this.buildRawPageDataForSave(title), true, this.props.name, 'save');
       } else if (this.props.canEdit) {
-        this.props.updatePage(
-          this.props.id,
-          title,
-          this.props.pageHeading,
-          this.props.description,
-          this.props.editors,
-          this.props.editorIndex,
-          this.props.layout,
-          this.props.workspace,
-          this.props.tags,
-          !(this.props.userType === 'student') || this.props.isPeblPublished,
-          this.props.canEdit,
-          this.props.name
-        );
+        this.props.updatePage(this.buildRawPageDataForUpdate(title), this.props.canEdit, this.props.name);
         this.sendMessage('SendingUpdate');
       }
     } else {
@@ -292,6 +293,7 @@ class App extends React.Component {
       )}
     </React.Fragment>
   )
+
 
   render() {
     const webSocketUrl = `${WEBSOCKET_HOST}/api/live/page/${this.props.id}`;

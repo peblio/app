@@ -8,6 +8,7 @@ import history from '../utils/history';
 import { namespaceActionCreators } from '../utils/namespace-redux';
 import * as folderActions from './folders';
 import { viewForkPrompt } from './mainToolbar.js';
+import { saveLog } from '../utils/log';
 import { loadWidgets } from './editors.js';
 import { loadWorkspace } from './workspace.js';
 import { createNavigationContent } from './navigation.js';
@@ -216,24 +217,10 @@ function getLogObjectForSavePage(name) {
   };
 }
 
-export function submitPage(parentId, title, heading, description, editors, editorIndex, layout,
-  type, workspace, tags, isLoggedIn, isPublished, name) {
+export function submitPage(rawPageData, isLoggedIn, name, type) {
   const id = shortid.generate();
   const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
-  const pageData = {
-    parentId,
-    id,
-    title,
-    heading,
-    description,
-    editors: convertEditorsToRaw(editors),
-    editorIndex,
-    layout,
-    workspace,
-    tags,
-    isPublished,
-    snapshotPath: SNAPSHOT_DEFAULT_IMG
-  };
+  const pageData = { ...rawPageData, id, editors: convertEditorsToRaw(rawPageData.editors) };
   return dispatch => axios.post(axiosURL, pageData)
     .then(() => {
       savePageSnapshot(id, true);
@@ -249,7 +236,7 @@ export function submitPage(parentId, title, heading, description, editors, edito
       });
     })
     .then(() => {
-      this.saveLog(getLogObjectForSavePage(name));
+      saveLog(getLogObjectForSavePage(name));
     })
     .catch(error => console.error('Error', error));
 }
@@ -269,7 +256,7 @@ export function remixPage(page) {
     }).catch(error => console.error('Error', error));
 }
 
-function getLofForUpdatePage(canEdit, id, name) {
+function getLogForUpdatePage(canEdit, id, name) {
   return {
     message: `Updating Page with canEdit as ${canEdit}`,
     path: `/pages/update/${id}`,
@@ -280,28 +267,17 @@ function getLofForUpdatePage(canEdit, id, name) {
   };
 }
 
-export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, isPublished, canEdit, name) {
-  return dispatch => axios.post('/pages/update', {
-    id,
-    title,
-    heading,
-    description,
-    editors: convertEditorsToRaw(editors),
-    editorIndex,
-    layout,
-    workspace,
-    tags,
-    isPublished
-  })
+export function updatePage(pageData, canEdit, name) {
+  return dispatch => axios.post('/pages/update', { ...pageData, editors: convertEditorsToRaw(pageData.editors) })
     .then(() => {
       dispatch(setUnsavedChanges(false));
       dispatch({
         type: ActionTypes.UPDATE_PAGE,
-        id
+        id: pageData.id
       });
     })
     .then(() => {
-      this.saveLog(getLofForUpdatePage(canEdit, id, name));
+      saveLog(getLogForUpdatePage(canEdit, pageData.id, name));
     })
     .catch(error => console.error('Page update error', error));
 }
