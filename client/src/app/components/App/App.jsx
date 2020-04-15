@@ -132,9 +132,7 @@ class App extends React.Component {
     }
   }
 
-  buildRawPageDataForSave = title => ({
-    parentId: '',
-    title,
+  buildCommonPageData = () => ({
     heading: this.props.pageHeading,
     description: this.props.description,
     editors: this.props.editors,
@@ -142,34 +140,28 @@ class App extends React.Component {
     layout: this.props.layout,
     workspace: this.props.workspace,
     tags: this.props.tags,
+  })
+
+  buildRawPageDataForSave = title => ({
+    ...this.buildCommonPageData(),
+    parentId: '',
+    title,
     isPublished: !(this.props.userType === 'student') || this.props.isPeblPublished,
     snapshotPath: pageDefaults.SNAPSHOT_DEFAULT_IMG
   });
 
   buildRawPageDataForUpdate = title => (
     {
+      ...this.buildCommonPageData(),
       id: this.props.id,
       title,
-      heading: this.props.pageHeading,
-      description: this.props.description,
-      editors: this.props.editors,
-      editorIndex: this.props.editorIndex,
-      layout: this.props.layout,
-      workspace: this.props.workspace,
-      tags: this.props.tags,
       isPublished: !(this.props.userType === 'student') || this.props.isPeblPublished,
     });
 
   buildPageDataForRemixing = () => ({
+    ...this.buildCommonPageData(),
     parentId: this.props.id,
     title: `${this.props.pageTitle}-copy`,
-    heading: this.props.pageHeading,
-    description: this.props.description,
-    editors: this.props.editors,
-    editorIndex: this.props.editorIndex,
-    layout: this.props.layout,
-    workspace: this.props.workspace,
-    tags: this.props.tags,
     isPublished: true,
     snapshotPath: pageDefaults.SNAPSHOT_DEFAULT_IMG
   });
