@@ -132,7 +132,7 @@ class App extends React.Component {
     }
   }
 
-  savePage = () => {
+  buildPageDataAndSavePage = () => {
     if (this.props.name) {
       let title = this.props.pageTitle;
       if (this.props.pageHeading !== '') {
@@ -279,7 +279,7 @@ class App extends React.Component {
       </Modal>
 
       <Modal size="small" isOpen={this.props.isAddDescriptionModalOpen} closeModal={this.props.closeAddDescriptionModal}>
-        <AddDescription savePage={this.savePage} closeModal={this.props.closeAddDescriptionModal} />
+        <AddDescription savePage={this.buildPageDataAndSavePage} closeModal={this.props.closeAddDescriptionModal} />
       </Modal>
 
       <Modal size="auto" isOpen={this.props.isWelcomeModalOpen} closeModal={this.props.closeWelcomeModal}>
@@ -287,7 +287,7 @@ class App extends React.Component {
       </Modal>
       {(this.showForkPromptPreference() && !this.props.isBrowsingPebl && !this.props.canEdit) && (
         <Modal size="auto" isOpen={this.props.isForkPromptOpen} closeModal={this.props.closeForkPrompt}>
-          <ForkPrompt savePage={this.savePage} />
+          <ForkPrompt savePage={this.buildPageDataAndSavePage} />
         </Modal>
       )}
     </React.Fragment>
@@ -318,18 +318,18 @@ class App extends React.Component {
         <nav className="main-nav">
           <MainToolbar
             projectID={this.projectID}
-            savePage={this.savePage}
+            savePage={this.buildPageDataAndSavePage}
             location={this.props.location}
             buildPageDataAndRemixPage={this.buildPageDataAndRemixPage}
           />
         </nav>
         <Canvas
-          savePage={this.savePage}
+          savePage={this.buildPageDataAndSavePage}
         />
         {this.renderNotificationModal()}
         <Navigation />
         <PageVersion
-          savePage={this.savePage}
+          savePage={this.buildPageDataAndSavePage}
         />
         <Workspace />
 
