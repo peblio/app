@@ -132,6 +132,13 @@ class App extends React.Component {
     }
   }
 
+  getPageTitle = () => {
+    if (this.props.pageHeading !== '' && this.props.pageTitle === pageDefaults.DEFAULT_PAGE_TITLE) {
+      return this.props.pageHeading;
+    }
+    return this.props.pageTitle;
+  }
+
   buildCommonPageData = () => ({
     heading: this.props.pageHeading,
     description: this.props.description,
@@ -142,19 +149,19 @@ class App extends React.Component {
     tags: this.props.tags,
   })
 
-  buildRawPageDataForSave = title => ({
+  buildRawPageDataForSave = () => ({
     ...this.buildCommonPageData(),
     parentId: '',
-    title,
+    title: this.getPageTitle(),
     isPublished: !(this.props.userType === 'student') || this.props.isPeblPublished,
     snapshotPath: pageDefaults.SNAPSHOT_DEFAULT_IMG
   });
 
-  buildRawPageDataForUpdate = title => (
+  buildRawPageDataForUpdate = () => (
     {
       ...this.buildCommonPageData(),
       id: this.props.id,
-      title,
+      title: this.getPageTitle(),
       isPublished: !(this.props.userType === 'student') || this.props.isPeblPublished,
     });
 
@@ -168,16 +175,10 @@ class App extends React.Component {
 
   buildPageDataAndSavePage = () => {
     if (this.props.name) {
-      let title = this.props.pageTitle;
-      if (this.props.pageHeading !== '') {
-        title =
-        (this.props.pageTitle === pageDefaults.DEFAULT_PAGE_TITLE)
-          ? this.props.pageHeading : this.props.pageTitle;
-      }
       if (this.props.id.length === 0) {
-        this.props.submitPage(this.buildRawPageDataForSave(title), true, this.props.name, false);
+        this.props.submitPage(this.buildRawPageDataForSave(), true, this.props.name, false);
       } else if (this.props.canEdit) {
-        this.props.updatePage(this.buildRawPageDataForUpdate(title), this.props.canEdit, this.props.name);
+        this.props.updatePage(this.buildRawPageDataForUpdate(), this.props.canEdit, this.props.name);
         this.sendMessage('SendingUpdate');
       }
     } else {
