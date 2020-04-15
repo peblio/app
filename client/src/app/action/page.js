@@ -205,6 +205,17 @@ export function savePageSnapshot(id, firstSave) {
   });
 }
 
+function getLogObjectForSavePage(name) {
+  return {
+    message: 'Saving Page',
+    path: '/pages/save',
+    action: 'Saving Page',
+    module: 'ui',
+    level: 'INFO',
+    user: name
+  };
+}
+
 export function submitPage(parentId, title, heading, description, editors, editorIndex, layout,
   type, workspace, tags, isLoggedIn, isPublished, name) {
   const id = shortid.generate();
@@ -238,15 +249,7 @@ export function submitPage(parentId, title, heading, description, editors, edito
       });
     })
     .then(() => {
-      const log = {
-        message: 'Saving Page',
-        path: '/pages/save',
-        action: 'Saving Page',
-        module: 'ui',
-        level: 'INFO',
-        user: name
-      };
-      this.saveLog(log);
+      this.saveLog(getLogObjectForSavePage(name));
     })
     .catch(error => console.error('Error', error));
 }
@@ -266,6 +269,16 @@ export function remixPage(page) {
     }).catch(error => console.error('Error', error));
 }
 
+function getLofForUpdatePage(canEdit, id, name) {
+  return {
+    message: `Updating Page with canEdit as ${canEdit}`,
+    path: `/pages/update/${id}`,
+    action: 'Updating Page',
+    module: 'ui',
+    level: 'INFO',
+    user: name
+  };
+}
 
 export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, isPublished, canEdit, name) {
   return dispatch => axios.post('/pages/update', {
@@ -288,30 +301,9 @@ export function updatePage(id, title, heading, description, editors, editorIndex
       });
     })
     .then(() => {
-      const log = {
-        message: `Updating Page with canEdit as ${canEdit}`,
-        path: `/pages/update/${id}`,
-        action: 'Updating Page',
-        module: 'ui',
-        level: 'INFO',
-        user: name
-      };
-      this.saveLog(log);
+      this.saveLog(getLofForUpdatePage(canEdit, id, name));
     })
     .catch(error => console.error('Page update error', error));
-}
-
-function saveAs(uri, filename) {
-  const link = document.createElement('a');
-  if (typeof link.download === 'string') {
-    link.href = uri;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  } else {
-    window.open(uri);
-  }
 }
 
 export function setPageId(id) {
