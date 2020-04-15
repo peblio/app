@@ -178,22 +178,22 @@ class App extends React.Component {
     }
   }
 
-  remixPage = () => {
+  buildPageDataAndRemixPage = () => {
     if (this.props.name) {
-      this.props.remixPage(
-        this.props.id,
-        `${this.props.pageTitle}-copy`,
-        this.props.pageHeading,
-        this.props.description,
-        this.props.editors,
-        this.props.editorIndex,
-        this.props.layout,
-        'remix',
-        this.props.workspace,
-        this.props.tags,
-        true,
-        !(this.props.userType === 'student')
-      );
+      const page = {
+        parentId: this.props.id,
+        title: `${this.props.pageTitle}-copy`,
+        heading: this.props.pageHeading,
+        description: this.props.description,
+        editors: this.props.editors,
+        editorIndex: this.props.editorIndex,
+        layout: this.props.layout,
+        workspace: this.props.workspace,
+        tags: this.props.tags,
+        isPublished: true,
+        snapshotPath: pageDefaults.SNAPSHOT_DEFAULT_IMG
+      };
+      this.props.remixPage(page);
     } else {
       this.props.viewLoginModal();
     }
@@ -276,7 +276,7 @@ class App extends React.Component {
             projectID={this.projectID}
             savePage={this.savePage}
             location={this.props.location}
-            remixPage={this.remixPage}
+            buildPageDataAndRemixPage={this.buildPageDataAndRemixPage}
           />
         </nav>
         <Canvas

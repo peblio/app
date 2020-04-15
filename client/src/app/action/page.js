@@ -251,32 +251,19 @@ export function submitPage(parentId, title, heading, description, editors, edito
     .catch(error => console.error('Error', error));
 }
 
-export function remixPage(parentId, title, heading, description, editors, editorIndex,
-  layout, type, workspace, tags, isLoggedIn, isPublished) {
+export function remixPage(page) {
   const id = shortid.generate();
-  const pageData = {
-    parentId,
-    id,
-    title,
-    heading,
-    description,
-    editors: convertEditorsToRaw(editors),
-    editorIndex,
-    layout,
-    workspace,
-    tags,
-    isPublished,
-    snapshotPath: SNAPSHOT_DEFAULT_IMG
-  };
-  return dispatch => axios.post('/pages/save', pageData).then(() => {
-    savePageSnapshot(id, true);
-    history.push(`/pebl/${id}`);
-    window.location.reload(true);
-    dispatch({
-      type: ActionTypes.SET_PAGE_ID,
-      id
-    });
-  }).catch(error => console.error('Error', error));
+  const pageData = { ...page, id, snapshotPath: SNAPSHOT_DEFAULT_IMG, editors: convertEditorsToRaw(page.editors) };
+  return dispatch => axios.post('/pages/save', pageData)
+    .then(() => {
+      savePageSnapshot(id, true);
+      history.push(`/pebl/${id}`);
+      window.location.reload(true);
+      dispatch({
+        type: ActionTypes.SET_PAGE_ID,
+        id
+      });
+    }).catch(error => console.error('Error', error));
 }
 
 
