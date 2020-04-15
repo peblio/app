@@ -160,6 +160,20 @@ class App extends React.Component {
       isPublished: !(this.props.userType === 'student') || this.props.isPeblPublished,
     });
 
+  buildPageDataForRemixing = () => ({
+    parentId: this.props.id,
+    title: `${this.props.pageTitle}-copy`,
+    heading: this.props.pageHeading,
+    description: this.props.description,
+    editors: this.props.editors,
+    editorIndex: this.props.editorIndex,
+    layout: this.props.layout,
+    workspace: this.props.workspace,
+    tags: this.props.tags,
+    isPublished: true,
+    snapshotPath: pageDefaults.SNAPSHOT_DEFAULT_IMG
+  });
+
   buildPageDataAndSavePage = () => {
     if (this.props.name) {
       let title = this.props.pageTitle;
@@ -181,19 +195,7 @@ class App extends React.Component {
 
   buildPageDataAndRemixPage = () => {
     if (this.props.name) {
-      const page = {
-        parentId: this.props.id,
-        title: `${this.props.pageTitle}-copy`,
-        heading: this.props.pageHeading,
-        description: this.props.description,
-        editors: this.props.editors,
-        editorIndex: this.props.editorIndex,
-        layout: this.props.layout,
-        workspace: this.props.workspace,
-        tags: this.props.tags,
-        isPublished: true,
-        snapshotPath: pageDefaults.SNAPSHOT_DEFAULT_IMG
-      };
+      const page = this.buildPageDataForRemixing();
       this.props.remixPage(page);
     } else {
       this.props.viewLoginModal();
@@ -293,7 +295,6 @@ class App extends React.Component {
       )}
     </React.Fragment>
   )
-
 
   render() {
     const webSocketUrl = `${WEBSOCKET_HOST}/api/live/page/${this.props.id}`;
