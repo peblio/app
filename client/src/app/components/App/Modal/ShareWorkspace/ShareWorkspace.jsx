@@ -62,24 +62,23 @@ class ShareWorkspace extends React.Component {
     tempEditor.isPlaying = true;
     tempEditor.innerWidth = 200;
     tempEditor.currentFile = -1;
-    this.props.submitPage(
-      `src-${this.props.id}`,
-      this.title.value,
-      this.title.value,
-      '',
-      {
+    const pageData = {
+      parentId: `src-${this.props.id}`,
+      title: this.title.value,
+      heading: this.title.value,
+      description: '',
+      editors: {
         'editor-0': tempDesc,
         'editor-1': tempEditor,
       },
-      2,
+      editorIndex: 2,
       layout,
-      'fromWP',
-      PageDefaults.DEFAULT_WORKSPACE_MODE,
-      [],
-      this.isLoggedIn(),
-      !(this.props.userType === 'student'),
-      this.props.name
-    );
+      workspace: PageDefaults.DEFAULT_WORKSPACE_MODE,
+      tags: [],
+      isPublished: !(this.props.userType === 'student'),
+      snapshotPath: PageDefaults.SNAPSHOT_DEFAULT_IMG
+    };
+    this.props.submitPage(pageData, this.isLoggedIn(), this.props.name, 'fromWP');
     this.props.closeModal();
   }
 
