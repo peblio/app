@@ -31,27 +31,18 @@ class ShareWorkspace extends React.Component {
     }
   }
 
-  saveAndShareWorkspace=() => {
+  buildRawPageDataForSave = () => {
     const layout = PageDefaults.STARTER_WORKSPACE_LAYOUT;
     const textAreaLineHeight = parseFloat(getComputedStyle(this.desc).fontSize) * 1.2;
-    const yValue = convertWorkspaceDescHeight(
-      this.desc.value.length,
-      textAreaLineHeight,
-      this.props.rgl.margin,
-      this.props.rgl.rowHeight,
-      layout[0].maxH
-    );
+    const yValue = convertWorkspaceDescHeight(this.desc.value.length, textAreaLineHeight, this.props.rgl.margin, this.props.rgl.rowHeight, layout[0].maxH);
     layout[0].h = yValue;
     layout[1].y = yValue + 1;
     const descText = this.desc.value.replace(/[\r\n]+/g, ' ');
-
     const tempDesc = {
       type: 'text',
       id: 'editor-0',
       index: 0,
-      editorState: EditorState.createWithContent(
-        ContentState.createFromText(descText)
-      ),
+      editorState: EditorState.createWithContent(ContentState.createFromText(descText)),
       backColor: 'transparent'
     };
     const tempEditor = JSON.parse(JSON.stringify(this.props.workspace));
@@ -78,7 +69,11 @@ class ShareWorkspace extends React.Component {
       isPublished: !(this.props.userType === 'student'),
       snapshotPath: PageDefaults.SNAPSHOT_DEFAULT_IMG
     };
-    this.props.submitPage(pageData, this.isLoggedIn(), this.props.name, 'fromWP');
+    return pageData;
+  }
+
+  saveAndShareWorkspace = () => {
+    this.props.submitPage(this.buildRawPageDataForSave(), this.isLoggedIn(), this.props.name, 'fromWP');
     this.props.closeModal();
   }
 
