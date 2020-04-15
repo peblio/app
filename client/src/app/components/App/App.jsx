@@ -171,7 +171,6 @@ class App extends React.Component {
           this.props.canEdit,
           this.props.name
         );
-
         this.sendMessage('SendingUpdate');
       }
     } else {

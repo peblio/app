@@ -283,13 +283,29 @@ export function submitPage(parentId, title, heading, description, editors, edito
 export function remixPage(parentId, title, heading, description, editors, editorIndex,
   layout, type, workspace, tags, isLoggedIn, isPublished) {
   const id = shortid.generate();
-  postSavePageData(id, parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished);
-  return (dispatch) => {
+  const pageData = {
+    parentId,
+    id,
+    title,
+    heading,
+    description,
+    editors: convertEditorsToRaw(editors),
+    editorIndex,
+    layout,
+    workspace,
+    tags,
+    isPublished,
+    snapshotPath: SNAPSHOT_DEFAULT_IMG
+  };
+  return dispatch => axios.post('/pages/save', pageData).then(() => {
+    savePageSnapshot(id, true);
+    history.push(`/pebl/${id}`);
+    window.location.reload(true);
     dispatch({
       type: ActionTypes.SET_PAGE_ID,
       id
     });
-  };
+  }).catch(error => console.error('Error', error));
 }
 
 
