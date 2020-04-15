@@ -183,7 +183,7 @@ class App extends React.Component {
           ? this.props.pageHeading : this.props.pageTitle;
       }
       if (this.props.id.length === 0) {
-        this.props.submitPage(this.buildRawPageDataForSave(title), true, this.props.name, 'save');
+        this.props.submitPage(this.buildRawPageDataForSave(title), true, this.props.name, false);
       } else if (this.props.canEdit) {
         this.props.updatePage(this.buildRawPageDataForUpdate(title), this.props.canEdit, this.props.name);
         this.sendMessage('SendingUpdate');

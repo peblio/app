@@ -217,14 +217,14 @@ function getLogObjectForSavePage(name) {
   };
 }
 
-export function submitPage(rawPageData, isLoggedIn, name, type) {
+export function submitPage(rawPageData, isLoggedIn, name, openPageInNewTab) {
   const id = shortid.generate();
   const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
   const pageData = { ...rawPageData, id, editors: convertEditorsToRaw(rawPageData.editors) };
   return dispatch => axios.post(axiosURL, pageData)
     .then(() => {
       savePageSnapshot(id, true);
-      if (type === 'fromWP') {
+      if (openPageInNewTab) {
         window.open(`/pebl/${id}`, '_blank');
       } else {
         history.push(`/pebl/${id}`);

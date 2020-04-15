@@ -73,7 +73,7 @@ class ShareWorkspace extends React.Component {
   }
 
   saveAndShareWorkspace = () => {
-    this.props.submitPage(this.buildRawPageDataForSave(), this.isLoggedIn(), this.props.name, 'fromWP');
+    this.props.submitPage(this.buildRawPageDataForSave(), this.isLoggedIn(), this.props.name, true);
     this.props.closeModal();
   }
 
