@@ -249,6 +249,50 @@ class App extends React.Component {
     return null;
   }
 
+  renderNotificationModal = () => (
+    <React.Fragment>
+      <Modal size="xlarge" isOpen={this.props.isPagesModalOpen} closeModal={this.props.closePagesModal}>
+        <PagesList />
+      </Modal>
+
+      <Modal size="xlarge" isOpen={this.props.isExamplesModalOpen} closeModal={this.props.closeExamplesModal}>
+        <ExamplesModal />
+      </Modal>
+
+      <Modal size="small" isOpen={this.props.isLiveRefreshPageModalOpen} closeModal={this.props.closeLiveRefreshPageModal}>
+        <LiveRefreshPage allowLiveRefresh={this.getPage} closeLiveRefreshPageModal={this.props.closeLiveRefreshPageModal} showMessageForAuthor={this.props.canEdit} />
+      </Modal>
+
+      <Modal size="large" isOpen={this.props.isForgotModalOpen} closeModal={this.props.closeForgotModal}>
+        <PasswordForgot isForgotModalOpen={this.props.isForgotModalOpen} />
+      </Modal>
+
+      <Modal size="large" isOpen={this.props.isResetModalOpen} closeModal={this.props.closeResetModal}>
+        <PasswordReset isResetModalOpen={this.props.isResetModalOpen} location={this.props.location} />
+      </Modal>
+
+      <Modal size="small" isOpen={this.props.isConfirmUserModalOpen} closeModal={this.props.closeConfirmUserModal}>
+        <ConfirmUser location={this.props.location} />
+      </Modal>
+      <Modal size="small" isOpen={this.props.isShareModalOpen} closeModal={this.props.closeShareModal}>
+        <ShareModal pageTitle={this.props.pageTitle} />
+      </Modal>
+
+      <Modal size="small" isOpen={this.props.isAddDescriptionModalOpen} closeModal={this.props.closeAddDescriptionModal}>
+        <AddDescription savePage={this.savePage} closeModal={this.props.closeAddDescriptionModal} />
+      </Modal>
+
+      <Modal size="auto" isOpen={this.props.isWelcomeModalOpen} closeModal={this.props.closeWelcomeModal}>
+        <Welcome />
+      </Modal>
+      {(this.showForkPromptPreference() && !this.props.isBrowsingPebl && !this.props.canEdit) && (
+        <Modal size="auto" isOpen={this.props.isForkPromptOpen} closeModal={this.props.closeForkPrompt}>
+          <ForkPrompt savePage={this.savePage} />
+        </Modal>
+      )}
+    </React.Fragment>
+  )
+
   render() {
     const webSocketUrl = `${WEBSOCKET_HOST}/api/live/page/${this.props.id}`;
     return (
@@ -282,104 +326,7 @@ class App extends React.Component {
         <Canvas
           savePage={this.savePage}
         />
-
-        <Modal
-          size="xlarge"
-          isOpen={this.props.isPagesModalOpen}
-          closeModal={this.props.closePagesModal}
-        >
-          <PagesList />
-        </Modal>
-
-        <Modal
-          size="xlarge"
-          isOpen={this.props.isExamplesModalOpen}
-          closeModal={this.props.closeExamplesModal}
-        >
-          <ExamplesModal />
-        </Modal>
-
-        <Modal
-          size="small"
-          isOpen={this.props.isLiveRefreshPageModalOpen}
-          closeModal={this.props.closeLiveRefreshPageModal}
-        >
-          <LiveRefreshPage
-            allowLiveRefresh={this.getPage}
-            closeLiveRefreshPageModal={this.props.closeLiveRefreshPageModal}
-            showMessageForAuthor={this.props.canEdit}
-          />
-        </Modal>
-
-        <Modal
-          size="large"
-          isOpen={this.props.isForgotModalOpen}
-          closeModal={this.props.closeForgotModal}
-        >
-          <PasswordForgot
-            isForgotModalOpen={this.props.isForgotModalOpen}
-          />
-        </Modal>
-
-        <Modal
-          size="large"
-          isOpen={this.props.isResetModalOpen}
-          closeModal={this.props.closeResetModal}
-        >
-          <PasswordReset
-            isResetModalOpen={this.props.isResetModalOpen}
-            location={this.props.location}
-          />
-        </Modal>
-
-        <Modal
-          size="small"
-          isOpen={this.props.isConfirmUserModalOpen}
-          closeModal={this.props.closeConfirmUserModal}
-        >
-          <ConfirmUser
-            location={this.props.location}
-          />
-        </Modal>
-        <Modal
-          size="small"
-          isOpen={this.props.isShareModalOpen}
-          closeModal={this.props.closeShareModal}
-        >
-          <ShareModal
-            pageTitle={this.props.pageTitle}
-          />
-        </Modal>
-
-        <Modal
-          size="small"
-          isOpen={this.props.isAddDescriptionModalOpen}
-          closeModal={this.props.closeAddDescriptionModal}
-        >
-          <AddDescription
-            savePage={this.savePage}
-            closeModal={this.props.closeAddDescriptionModal}
-          />
-        </Modal>
-
-        <Modal
-          size="auto"
-          isOpen={this.props.isWelcomeModalOpen}
-          closeModal={this.props.closeWelcomeModal}
-        >
-          <Welcome />
-        </Modal>
-        {(this.showForkPromptPreference() && !this.props.isBrowsingPebl && !this.props.canEdit) && (
-          <Modal
-            size="auto"
-            isOpen={this.props.isForkPromptOpen}
-            closeModal={this.props.closeForkPrompt}
-          >
-            <ForkPrompt
-              savePage={this.savePage}
-            />
-          </Modal>
-        )}
+        {this.renderNotificationModal()}
         <Navigation />
         <PageVersion
           savePage={this.savePage}
