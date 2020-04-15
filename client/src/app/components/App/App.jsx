@@ -299,7 +299,7 @@ class App extends React.Component {
       <div
         role="presentation"
         tabIndex="0" // eslint-disable-line
-        onKeyDown={e => this.onKeyPressed(e)} // eslint-disable-line
+        onKeyDown={e => this.onKeyPressed(e)}
         className="app__container"
       >
         {this.props.id && (
