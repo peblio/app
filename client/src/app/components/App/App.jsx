@@ -7,6 +7,7 @@ import initHelpHero from 'helphero';
 import Websocket from 'react-websocket';
 import WEBSOCKET_HOST from '../../utils/webSockets';
 import * as pageDefaults from '../../constants/pageConstants';
+import { buildRawPageDataForSave, buildRawPageDataForUpdate, buildPageDataForRemixing } from '../../utils/page-builder';
 
 import AddDescription from './Modal/AddDescription/AddDescription.jsx';
 import ConfirmUser from './Modal/ConfirmUser/ConfirmUser.jsx';
@@ -139,46 +140,13 @@ class App extends React.Component {
     return this.props.pageTitle;
   }
 
-  buildCommonPageData = () => ({
-    heading: this.props.pageHeading,
-    description: this.props.description,
-    editors: this.props.editors,
-    editorIndex: this.props.editorIndex,
-    layout: this.props.layout,
-    workspace: this.props.workspace,
-    tags: this.props.tags,
-  })
-
-  buildRawPageDataForSave = () => ({
-    ...this.buildCommonPageData(),
-    parentId: '',
-    title: this.getPageTitle(),
-    isPublished: !(this.props.userType === 'student') || this.props.isPeblPublished,
-    snapshotPath: pageDefaults.SNAPSHOT_DEFAULT_IMG
-  });
-
-  buildRawPageDataForUpdate = () => (
-    {
-      ...this.buildCommonPageData(),
-      id: this.props.id,
-      title: this.getPageTitle(),
-      isPublished: !(this.props.userType === 'student') || this.props.isPeblPublished,
-    });
-
-  buildPageDataForRemixing = () => ({
-    ...this.buildCommonPageData(),
-    parentId: this.props.id,
-    title: `${this.props.pageTitle}-copy`,
-    isPublished: true,
-    snapshotPath: pageDefaults.SNAPSHOT_DEFAULT_IMG
-  });
 
   buildPageDataAndSavePage = () => {
     if (this.props.name) {
       if (this.props.id.length === 0) {
-        this.props.submitPage(this.buildRawPageDataForSave(), true, this.props.name, false);
+        this.props.submitPage(buildRawPageDataForSave(this.props), true, this.props.name, false);
       } else if (this.props.canEdit) {
-        this.props.updatePage(this.buildRawPageDataForUpdate(), this.props.canEdit, this.props.name);
+        this.props.updatePage(buildRawPageDataForUpdate(this.props), this.props.canEdit, this.props.name);
         this.sendMessage('SendingUpdate');
       }
     } else {
@@ -188,7 +156,7 @@ class App extends React.Component {
 
   buildPageDataAndRemixPage = () => {
     if (this.props.name) {
-      const page = this.buildPageDataForRemixing();
+      const page = buildPageDataForRemixing(this.props);
       this.props.remixPage(page);
     } else {
       this.props.viewLoginModal();
