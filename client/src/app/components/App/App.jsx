@@ -281,6 +281,7 @@ class App extends React.Component {
       <Modal size="auto" isOpen={this.props.isWelcomeModalOpen} closeModal={this.props.closeWelcomeModal}>
         <Welcome />
       </Modal>
+
       {(this.showForkPromptPreference() && !this.props.isBrowsingPebl && !this.props.canEdit) && (
         <Modal size="auto" isOpen={this.props.isForkPromptOpen} closeModal={this.props.closeForkPrompt}>
           <ForkPrompt savePage={this.buildPageDataAndSavePage} />
@@ -289,8 +290,35 @@ class App extends React.Component {
     </React.Fragment>
   )
 
-  render() {
+  renderToolBar = () => (
+    <nav className="main-nav">
+      <MainToolbar
+        projectID={this.projectID}
+        savePage={this.buildPageDataAndSavePage}
+        location={this.props.location}
+        buildPageDataAndRemixPage={this.buildPageDataAndRemixPage}
+      />
+    </nav>
+  )
+
+  attachWebsocket = () => {
     const webSocketUrl = `${WEBSOCKET_HOST}/api/live/page/${this.props.id}`;
+    return this.props.id && (
+      <Websocket
+        url={webSocketUrl}
+        onMessage={this.handleData}
+        onOpen={this.handleOpen}
+        onClose={this.handleClose}
+        reconnect
+        debug
+        ref={(socket) => {
+          this.refWebSocket = socket;
+        }}
+      />
+    );
+  }
+
+  render() {
     return (
       <div
         role="presentation"
@@ -298,37 +326,13 @@ class App extends React.Component {
         onKeyDown={e => this.onKeyPressed(e)}
         className="app__container"
       >
-        {this.props.id && (
-          <Websocket
-            url={webSocketUrl}
-            onMessage={this.handleData}
-            onOpen={this.handleOpen}
-            onClose={this.handleClose}
-            reconnect
-            debug
-            ref={(socket) => {
-              this.refWebSocket = socket;
-            }}
-          />
-        )}
-        <nav className="main-nav">
-          <MainToolbar
-            projectID={this.projectID}
-            savePage={this.buildPageDataAndSavePage}
-            location={this.props.location}
-            buildPageDataAndRemixPage={this.buildPageDataAndRemixPage}
-          />
-        </nav>
-        <Canvas
-          savePage={this.buildPageDataAndSavePage}
-        />
+        {this.attachWebsocket()}
+        {this.renderToolBar()}
+        <Canvas savePage={this.buildPageDataAndSavePage} />
         {this.renderNotificationModal()}
         <Navigation />
-        <PageVersion
-          savePage={this.buildPageDataAndSavePage}
-        />
+        <PageVersion savePage={this.buildPageDataAndSavePage} />
         <Workspace />
-
       </div>
     );
   }
