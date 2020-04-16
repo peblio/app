@@ -311,6 +311,7 @@ App.propTypes = {
     pathname: PropTypes.string.isRequired,
   }).isRequired,
   editors: PropTypes.shape({}).isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
   editorIndex: PropTypes.number.isRequired,
 
   workspace: PropTypes.shape({}).isRequired,
@@ -323,12 +324,15 @@ App.propTypes = {
 
   // pebl
   pageTitle: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
   description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   rgl: PropTypes.shape({}).isRequired,
   textHeights: PropTypes.shape({}).isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
   isPeblPublished: PropTypes.bool.isRequired,
 
   canEdit: PropTypes.bool.isRequired,
@@ -337,6 +341,7 @@ App.propTypes = {
   name: PropTypes.string.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
   isBrowsingPebl: PropTypes.bool.isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
   userType: PropTypes.string.isRequired,
 
   isAddDescriptionModalOpen: PropTypes.bool.isRequired,
