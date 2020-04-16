@@ -7,7 +7,7 @@ import initHelpHero from 'helphero';
 import Websocket from 'react-websocket';
 import WEBSOCKET_HOST from '../../utils/webSockets';
 import * as pageDefaults from '../../constants/pageConstants';
-import { buildRawPageDataForSave, buildRawPageDataForUpdate, buildPageDataForRemixing } from '../../utils/page-builder';
+import { buildPageDataForSave, buildPageDataForUpdate, buildPageDataForRemixing } from '../../utils/page-builder';
 
 import AddDescription from './Modal/AddDescription/AddDescription.jsx';
 import ConfirmUser from './Modal/ConfirmUser/ConfirmUser.jsx';
@@ -144,9 +144,9 @@ class App extends React.Component {
   buildPageDataAndSavePage = () => {
     if (this.props.name) {
       if (this.props.id.length === 0) {
-        this.props.submitPage(buildRawPageDataForSave(this.props), true, this.props.name, false);
+        this.props.submitPage(buildPageDataForSave(this.props), true, this.props.name, false);
       } else if (this.props.canEdit) {
-        this.props.updatePage(buildRawPageDataForUpdate(this.props), this.props.canEdit, this.props.name);
+        this.props.updatePage(buildPageDataForUpdate(this.props), this.props.canEdit, this.props.name);
         this.sendMessage('SendingUpdate');
       }
     } else {

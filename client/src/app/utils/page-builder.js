@@ -19,7 +19,7 @@ function getPageTitle(props) {
   return props.pageTitle;
 }
 
-export function buildRawPageDataForSave(props) {
+export function buildPageDataForSave(props) {
   return {
     ...buildCommonPageData(props),
     parentId: '',
@@ -29,7 +29,7 @@ export function buildRawPageDataForSave(props) {
   };
 }
 
-export function buildRawPageDataForUpdate(props) {
+export function buildPageDataForUpdate(props) {
   return {
     ...buildCommonPageData(props),
     id: props.id,
