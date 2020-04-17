@@ -34,18 +34,27 @@ Thank you for wanting to contribute to Peblio. In this document, you will find i
 ## Local Development
 
 1. `cd client && npm start`
-2. In another terminal session, `cd server && npm start` 
+2. In another terminal session, `cd server && npm start`
 4. Navigate to [http://localhost:8080](http://localhost:8080) in your browser.
 
 Nodeman has been configured to do life refresh on the server side.
 After any changes to the server, wait for the files to get
 re-interpreted and type `rs` on the console where the server runs
 
+## StoryBook
+We have storybook installed for developing and designing basic components. To start storybook -
+
+1. `cd client && npm start storybook`
+1. Your browser should automatically open the Storybook UI
+
+Currently, the storybook files are present in `client/src/components/**/*/.stories.js`
+We can use this as a template to build further components
+
 ## Local Server Debug
 
 Please note, the debug only works in Visual Studio Code. Also the debug does not work with python being used in virtualenv.
 
-1. Install Visual Studio Code and open project 
+1. Install Visual Studio Code and open project
 2. The launch.json and tasks.json shall create a Debug Launch Confirguration "Server Debug"
 3. Install a breakpoint and start the Debug
 
@@ -57,7 +66,7 @@ It also helps us point that server is ES6 syntax javascript project
 To be able to use ES6 syntax, we use babel on the server side.
 As mentioned in [babel-node docs](https://babeljs.io/docs/en/babel-node), You should not be using babel-node in production. It is unnecessarily heavy, with high memory usage due to the cache being stored in memory. You will also always experience a startup performance penalty as the entire app needs to be compiled on the fly.
 As an option, while launching the server on higher environments we use `npm run startserver`. With this, we first transpile code to backwards compatible version of JavaScript
-and then start server. This is done in the prestartserver script of node. 
+and then start server. This is done in the prestartserver script of node.
 
 While launching locally, we use `npm start` which calls `prestart` script from package.json.
 
@@ -87,7 +96,7 @@ npm run test:all
 
 You can run the from root folder by running
 ```
-cd server 
+cd server
 npm test
 ```
 
@@ -96,7 +105,7 @@ npm test
 We have used enzyme to test react components along with chai, mocha, sinon
 You can run the from root folder by running
 ```
-cd client 
+cd client
 npm test
 ```
 
@@ -106,7 +115,7 @@ We have used supertest to write integration tests along with chai, mocha, sinon.
 The framework brings up the server and uses ENVIRONMENT local configuration
 You can run the from root folder by running
 ```
-cd server 
+cd server
 npm run integrationTest
 ```
 
@@ -249,12 +258,12 @@ We use `peblio` profile for AWS and this is defined in AWS_PROFILE environment v
 
 Let's talk about front end first
 
-1. Create an S3 bucket - this needs to be done manually 
+1. Create an S3 bucket - this needs to be done manually
 1. When creating bucket, you can copy the settings from an existing bucket
 1. Setup static website hosting for the bucket once its created
 1. Create cloudfront - choose web distribution
 1. Make note of the distribution ID
-1. Update distribution ID and S3 bucket name in [deploy.sh](https://github.com/peblio/app/blob/master/client/devops/deploy.sh) 
+1. Update distribution ID and S3 bucket name in [deploy.sh](https://github.com/peblio/app/blob/master/client/devops/deploy.sh)
 1. Post this, you can use the deploy scripts, and it should be up on the S3 link
 1. To map this URL to a domain name, go to DNS provider (godaddy) and update the details
 
@@ -262,9 +271,9 @@ regd Back end
 
 1. Create a new IAM user (this is not necessary, but will make for a clean, new system)
 1. Change the [cross_env_var](https://github.com/peblio/app/blob/master/server/devops/ansible/inventories/cross_env_vars.yml) to include the new github repo and new IAM user
-1. Change the variables inside [group_vars](https://github.com/peblio/app/tree/master/server/devops/ansible/inventories/staging/group_vars) - you will choose machine size here 
+1. Change the variables inside [group_vars](https://github.com/peblio/app/tree/master/server/devops/ansible/inventories/staging/group_vars) - you will choose machine size here
 1. Now you can run the create_webserver script and the deploy_webserver script!
 YAAAY!
 
 
-1. Post this, run the script to spin up the server 
+1. Post this, run the script to spin up the server
