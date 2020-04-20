@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Editor } from 'react-draft-wysiwyg';
 import Measure from 'react-measure';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import 'draft-js/dist/Draft.css';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -79,11 +80,11 @@ class TextEditor extends React.Component {
                 },
                 blockType: {
                   isDropDown: true,
-                  options: ['H1', 'H2', 'Normal']
+                  options: ['H1', 'H2', 'H3', 'Normal']
                 },
                 list: {
-                  inDropdown: true,
-                  options: ['unordered', 'ordered'],
+                  inDropdown: false,
+                  options: ['unordered', 'ordered','indent', 'outdent'],
                 },
                 colorPicker: {
 
