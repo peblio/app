@@ -207,7 +207,9 @@ class App extends React.Component {
     const location = this.props.location.pathname;
     const projectID = location.match(/\/pebl\/([\w-].*)/);
     if (projectID) {
-      this.props.setPageId(projectID[1]);
+      if (projectID[1] !== this.props.id) {
+        this.props.setPageId(projectID[1]);
+      }
       return projectID[1];
     }
     this.props.setPageId('');
