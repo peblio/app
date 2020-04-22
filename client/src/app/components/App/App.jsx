@@ -123,17 +123,6 @@ class App extends React.Component {
       });
   }
 
-  authLoadedPage = () => {
-    if (this.projectID()) {
-      this.props.setEditAccess(false);
-      const projectID = this.projectID();
-      axios.get(`/authenticate/${projectID}`)
-        .then((res1) => {
-          this.props.setEditAccess(res1.data);
-        });
-    }
-  }
-
   getPageTitle = () => {
     if (this.props.pageHeading !== '' && this.props.pageTitle === pageDefaults.DEFAULT_PAGE_TITLE) {
       return this.props.pageHeading;
@@ -193,14 +182,9 @@ class App extends React.Component {
   }
 
   getPage = () => {
-    this.props.setEditAccess(false);
     const projectID = this.projectID();
     this.props.loadCurrentPage(projectID);
     this.props.setPreviewMode(true);
-    axios.get(`/authenticate/${projectID}`)
-      .then((res1) => {
-        this.props.setEditAccess(res1.data);
-      });
   }
 
   projectID = () => {
@@ -365,7 +349,6 @@ App.propTypes = {
   updatePage: PropTypes.func.isRequired,
   setPageId: PropTypes.func.isRequired,
 
-  setEditAccess: PropTypes.func.isRequired,
   setPreviewMode: PropTypes.func.isRequired,
 
   viewPagesModal: PropTypes.func.isRequired,

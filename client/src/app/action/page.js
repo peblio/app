@@ -10,14 +10,19 @@ import * as folderActions from './folders';
 import { viewForkPrompt } from './mainToolbar.js';
 import { saveLog } from '../utils/log';
 import { loadWidgets } from './editors.js';
+import { setEditAccess } from './user.js';
 import { loadWorkspace } from './workspace.js';
 import { createNavigationContent } from './navigation.js';
 import { setUnsavedPageVersion } from './pageVersion.js';
 
 export function loadCurrentPage(projectID) {
   return (dispatch) => {
-    axios.get(`/pages/${projectID}`)
-      .then((res) => {
+    const loadPagePromise = axios.get(`/pages/${projectID}`);
+    const loadPageEditAccessPromise = axios.get(`/authenticate/${projectID}`);
+    Promise.all([loadPagePromise, loadPageEditAccessPromise])
+      .then((allValues) => {
+        const res = allValues[0];
+        const editAccess = allValues[1];
         dispatch(loadPage(res.data[0].id, res.data[0].parentId, res.data[0].title, res.data[0].heading,
           res.data[0].description, res.data[0].layout, res.data[0].tags, res.data[0].isPublished));
         dispatch(loadWidgets(res.data[0].editors, res.data[0].editorIndex));
@@ -25,6 +30,7 @@ export function loadCurrentPage(projectID) {
           dispatch(loadWorkspace(res.data[0].workspace));
         }
         dispatch(createNavigationContent(res.data[0].layout));
+        dispatch(setEditAccess(editAccess.data));
       })
       .catch((err) => {
         console.log(err);

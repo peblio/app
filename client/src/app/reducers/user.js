@@ -4,7 +4,7 @@ const initialState = {
   name: '',
   blurb: 'Hi! I <3 CS',
   canView: true,
-  canEdit: true,
+  canEdit: false,
   image: 'https://placekitten.com/300/300',
   type: '',
   requiresGuardianConsent: false,
