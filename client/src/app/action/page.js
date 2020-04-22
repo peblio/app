@@ -244,20 +244,16 @@ export function submitPage(rawPageData, isLoggedIn, name, openPageInNewTab) {
 export function remixPage(page) {
   const id = shortid.generate();
   const pageData = { ...page, id, snapshotPath: SNAPSHOT_DEFAULT_IMG, editors: convertEditorsToRaw(page.editors) };
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_PAGE_REMIXING_STARTED,
-      id
-    });
-    return axios.post('/pages/save', pageData)
-      .then(() => {
-        savePageSnapshot(id, true);
-        setTimeout(() => {
-          history.push(`/pebl/${id}`);
-          window.location.reload(true);
-        }, 3000);
-      }).catch(error => console.error('Error', error));
-  };
+  return dispatch => axios.post('/pages/save', pageData)
+    .then(() => {
+      savePageSnapshot(id, true);
+      history.push(`/pebl/${id}`);
+      window.location.reload(true);
+      dispatch({
+        type: ActionTypes.SET_PAGE_ID,
+        id
+      });
+    }).catch(error => console.error('Error', error));
 }
 
 function getLogForUpdatePage(canEdit, id, name) {

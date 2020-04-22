@@ -32,8 +32,7 @@ const initialState = {
   tags: [],
   description: '',
   isPublished: false,
-  isLiveRefreshPageModalOpen: false,
-  isRemixInProgress: null,
+  isLiveRefreshPageModalOpen: false
 };
 
 const page = (state = initialState, action) => {
@@ -41,16 +40,6 @@ const page = (state = initialState, action) => {
     case ActionTypes.SET_PAGE_AUTHOR:
       return Object.assign({}, state, {
         pageAuthor: action.value
-      });
-
-    case ActionTypes.SET_PAGE_REMIXING_STARTED:
-      return Object.assign({}, state, {
-        isRemixInProgress: true
-      });
-
-    case ActionTypes.SET_PAGE_REMIXING_COMPLETED:
-      return Object.assign({}, state, {
-        isRemixInProgress: false
       });
 
     case ActionTypes.SET_PARENT_PAGE_AUTHOR:
