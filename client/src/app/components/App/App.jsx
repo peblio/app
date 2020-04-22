@@ -16,6 +16,7 @@ import ForkPrompt from './Modal/ForkPrompt/ForkPrompt.jsx';
 import Modal from './Modal/Modal.jsx';
 import PasswordForgot from './Modal/PasswordForgot/PasswordForgot.jsx';
 import ShareModal from './Modal/ShareModal/ShareModal.jsx';
+import RemixProgress from './Modal/RemixProgress/RemixProgress.jsx';
 import PagesList from './Modal/PagesList/PagesList.jsx';
 import PasswordReset from './Modal/PasswordReset/PasswordReset.jsx';
 import Welcome from './Modal/Welcome/Welcome.jsx';
@@ -235,6 +236,10 @@ class App extends React.Component {
         <PasswordReset isResetModalOpen={this.props.isResetModalOpen} location={this.props.location} />
       </Modal>
 
+      <Modal size="large" isOpen={this.props.isRemixInProgress}>
+        <RemixProgress />
+      </Modal>
+
       <Modal size="small" isOpen={this.props.isConfirmUserModalOpen} closeModal={this.props.closeConfirmUserModal}>
         <ConfirmUser location={this.props.location} />
       </Modal>
@@ -341,6 +346,7 @@ App.propTypes = {
   name: PropTypes.string.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
   isBrowsingPebl: PropTypes.bool.isRequired,
+  isRemixInProgress: PropTypes.bool.isRequired,
   // eslint-disable-next-line react/no-unused-prop-types
   userType: PropTypes.string.isRequired,
 
@@ -400,13 +406,14 @@ function mapStateToProps(state) {
     workspace: state.workspace.workspace,
 
     layout: state.page.layout,
-    rgl: state.page.rgl,
+    rgl: PropTypes.shape({}).isRequired,
     pageHeading: state.page.pageHeading,
     pageTitle: state.page.pageTitle,
     id: state.page.id,
     textHeights: state.page.textHeights,
     tags: state.page.tags,
     description: state.page.description,
+    isRemixInProgress: state.page.isRemixInProgress,
     isPeblPublished: state.page.isPublished,
     isLiveRefreshPageModalOpen: state.page.isLiveRefreshPageModalOpen,
 
