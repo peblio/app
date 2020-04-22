@@ -253,14 +253,6 @@ export function remixPage(page) {
       .then(() => {
         savePageSnapshot(id, true);
         setTimeout(() => {
-          dispatch({
-            type: ActionTypes.SET_PAGE_ID,
-            id
-          });
-          dispatch({
-            type: ActionTypes.SET_PAGE_REMIXING_COMPLETED,
-            id
-          });
           history.push(`/pebl/${id}`);
           window.location.reload(true);
         }, 3000);
