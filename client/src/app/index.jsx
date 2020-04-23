@@ -17,7 +17,7 @@ import history from './utils/history';
 import './styles/Draft.css';
 import './styles/reactGrid.css';
 import './styles/reactResize.css';
-import { fetchCurrentUser } from './action/user';
+import { fetchCurrentUserForAppStartUp } from './action/user';
 
 function errorHandler(error, getState, lastAction, dispatch) {
   saveErrorLog(error, getState, lastAction, 'ERROR');
@@ -81,6 +81,6 @@ class Main extends React.Component {
 }
 
 if (window.location.pathname !== '/404') {
-  store.dispatch(fetchCurrentUser());
+  store.dispatch(fetchCurrentUserForAppStartUp());
 }
 render(<Main />, document.getElementById('app'));

@@ -4,7 +4,7 @@ const initialState = {
   name: '',
   blurb: 'Hi! I <3 CS',
   canView: true,
-  canEdit: false,
+  canEdit: null,
   image: 'https://placekitten.com/300/300',
   type: '',
   requiresGuardianConsent: false,
@@ -12,7 +12,8 @@ const initialState = {
   guardianEmail: null,
   isBrowsingPebl: false,
   studentBirthday: null,
-  nextScreen: null
+  nextScreen: null,
+  loading: null,
 };
 
 const user = (state = initialState, action) => {
@@ -32,6 +33,21 @@ const user = (state = initialState, action) => {
         ...state,
         name: action.data.name,
         type: action.data.type
+      };
+    }
+
+    case ActionTypes.SET_USER_LOADING: {
+      return {
+        ...state,
+        loading: true,
+        canEdit: null,
+      };
+    }
+
+    case ActionTypes.SET_USER_LOADING_COMPLETED: {
+      return {
+        ...state,
+        loading: false,
       };
     }
 

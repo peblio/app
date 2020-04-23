@@ -17,6 +17,7 @@ import { setUnsavedPageVersion } from './pageVersion.js';
 
 export function loadCurrentPage(projectID) {
   return (dispatch) => {
+    dispatch({ type: ActionTypes.LOADING_PAGE_STARTED });
     const loadPagePromise = axios.get(`/pages/${projectID}`);
     const loadPageEditAccessPromise = axios.get(`/authenticate/${projectID}`);
     Promise.all([loadPagePromise, loadPageEditAccessPromise])
@@ -31,6 +32,7 @@ export function loadCurrentPage(projectID) {
         }
         dispatch(createNavigationContent(res.data[0].layout));
         dispatch(setEditAccess(editAccess.data));
+        dispatch({ type: ActionTypes.LOADING_PAGE_COMPLETED });
       })
       .catch((err) => {
         console.log(err);

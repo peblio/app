@@ -2,7 +2,6 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 import history from '../utils/history';
 import axios from '../utils/axios';
 import { saveLog } from '../utils/log';
-import { fetchUserPreferences } from './preferences.js';
 
 export function fetchUserProfile(userName) {
   return dispatch => axios.get(`/users/${userName}/profile`)
@@ -87,6 +86,30 @@ export function logoutUser(name) {
       };
       saveLog(log);
     });
+}
+
+export function fetchCurrentUserForAppStartUp() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_USER_LOADING,
+    });
+    axios.get('/current_user')
+      .then(({ data }) => {
+        dispatch({
+          type: ActionTypes.SET_USER,
+          data
+        });
+        dispatch({
+          type: ActionTypes.SET_USER_LOADING_COMPLETED,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({
+          type: ActionTypes.SET_USER_LOADING_COMPLETED,
+        });
+      });
+  };
 }
 
 export function fetchCurrentUser() {
