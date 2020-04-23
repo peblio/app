@@ -50,6 +50,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    this.props.fetchUserPreferencesWithoutUserCheck();
     this.authAndLoadPage();
     if (this.projectID() === 'QJSEsqTOS') {
       const hlp = initHelpHero('1Dyo05WliMY');
@@ -116,10 +117,6 @@ class App extends React.Component {
     } else if (this.projectID()) {
       this.getPage();
     }
-    this.props.fetchCurrentUser()
-      .then(() => {
-        this.props.fetchUserPreferences();
-      });
   }
 
   getPageTitle = () => {
@@ -329,7 +326,6 @@ App.propTypes = {
 
   // user
   name: PropTypes.string.isRequired,
-  fetchCurrentUser: PropTypes.func.isRequired,
   isBrowsingPebl: PropTypes.bool.isRequired,
   isRemixInProgress: PropTypes.bool.isRequired,
   // eslint-disable-next-line react/no-unused-prop-types
@@ -374,8 +370,8 @@ App.propTypes = {
   closeAddDescriptionModal: PropTypes.func.isRequired,
 
   // preferences
-  fetchUserPreferences: PropTypes.func.isRequired,
   loadCurrentPage: PropTypes.func.isRequired,
+  fetchUserPreferencesWithoutUserCheck: PropTypes.func.isRequired,
 
   // navigation
   pageHeading: PropTypes.string.isRequired,

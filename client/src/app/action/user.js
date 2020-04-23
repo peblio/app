@@ -2,6 +2,7 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 import history from '../utils/history';
 import axios from '../utils/axios';
 import { saveLog } from '../utils/log';
+import { fetchUserPreferences } from './preferences.js';
 
 export function fetchUserProfile(userName) {
   return dispatch => axios.get(`/users/${userName}/profile`)
