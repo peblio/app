@@ -34,7 +34,6 @@ import * as pageActions from '../../action/page.js';
 import * as preferencesActions from '../../action/preferences.js';
 import * as userActions from '../../action/user.js';
 
-import axios from '../../utils/axios';
 import PageVersion from './Navigation/PageVersion';
 
 require('./app.scss');
