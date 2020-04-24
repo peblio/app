@@ -150,7 +150,6 @@ class App extends React.Component {
       const page = buildPageDataForRemixing(this.props);
       this.props.remixPage(page);
     } else {
-      this.setState({ autoRemixingInProgress: false });
       this.props.viewLoginModal();
     }
   }
@@ -283,14 +282,19 @@ class App extends React.Component {
     const url = new URL(window.location.href);
     if (this.props.userLoading === false && this.props.pageLoading === false && url.searchParams.get('autoRemix') === 'true' &&
       this.projectID() && this.props.canEdit === false && this.state.autoRemixingInProgress === false) {
-      console.log('AutoRemixing Page');
-      console.log('userLoading ', this.props.userLoading);
-      console.log('pageLoading ', this.props.pageLoading);
-      console.log('autoRemix', url.searchParams.get('autoRemix') === 'true');
-      console.log('Page Id', this.projectID());
-      console.log('this.props.canEdit: ', this.props.canEdit);
-      this.setState({ autoRemixingInProgress: true });
-      this.buildPageDataAndRemixPage();
+      if (this.props.name) {
+        this.setState({ autoRemixingInProgress: true });
+        this.buildPageDataAndRemixPage();
+        console.log('AutoRemixing Page');
+        console.log('userLoading ', this.props.userLoading);
+        console.log('pageLoading ', this.props.pageLoading);
+        console.log('autoRemix', url.searchParams.get('autoRemix') === 'true');
+        console.log('Page Id', this.projectID());
+        console.log('this.props.canEdit: ', this.props.canEdit);
+      } else {
+        console.log('User not logged in');
+        this.props.viewLoginModal();
+      }
     }
     return (
       <div
