@@ -6,7 +6,10 @@ class RemixProgress extends React.Component {
   render() {
     return (
       <div className="reset-modal__content">
-        <h1 className="reset-modal__title">Please wait. We are remixing Page</h1>
+        <h1 className="reset-modal__title">Remixing…</h1>
+        <div className="forgot-modal__text">
+          We’re saving a copy of this pebl to your account. I’ll only take a second
+        </div>
       </div>
     );
   }
