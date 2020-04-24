@@ -150,6 +150,7 @@ class App extends React.Component {
       const page = buildPageDataForRemixing(this.props);
       this.props.remixPage(page);
     } else {
+      this.setState({ autoRemixingInProgress: false });
       this.props.viewLoginModal();
     }
   }
