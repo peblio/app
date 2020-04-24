@@ -292,7 +292,7 @@ class App extends React.Component {
         console.log('Page Id', this.projectID());
         console.log('this.props.canEdit: ', this.props.canEdit);
       } else {
-        console.log('User not logged in');
+        console.log('User not logged in for autoremixing');
         this.props.viewLoginModal();
       }
     }
