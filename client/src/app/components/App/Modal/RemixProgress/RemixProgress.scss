@@ -37,4 +37,10 @@
   &__buttonholder {
     @extend %modal__buttonholder;
   }
+
+  &__text {
+    @extend %modal__text;
+    text-align: $left-align;
+  }
+  
 }
