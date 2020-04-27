@@ -8,6 +8,7 @@ class Share extends React.Component {
   constructor(props) {
     super(props);
     this.copyShareLink = this.copyShareLink.bind(this);
+    this.state = { linkType: 'autoRemixLink' };
   }
 
   componentDidMount() {
@@ -21,6 +22,11 @@ class Share extends React.Component {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  linkTypeChanged = (e) => {
+    const linkType = e.target.value;
+    this.setState({ linkType });
   }
 
   renderClassroomWidget() {
@@ -40,10 +46,14 @@ class Share extends React.Component {
             {' '}
             via Link
           </h2>
+          <select className="share__link_type" onChange={this.linkTypeChanged}>
+            <option value="autoRemixLink" selected>Share as assignment</option>
+            <option value="link">View only</option>
+          </select>
           <input
             className="share__input"
             ref={(element) => { this.input = element; }}
-            value={this.props.shareURL}
+            value={this.state.linkType === 'link' ? this.props.shareURL : `${this.props.shareURL}?autoRemix=true`}
             data-test="share-modal__input"
             readOnly
           />
