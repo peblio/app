@@ -216,7 +216,8 @@
     position: relative;
     height: 20px !important;
     width: 20px !important;
-    border-radius: $large-border !important;
+    background-color: $b2 !important;
+    border-radius: 10px !important;
     &:hover .editor-toolbar__warning-container {
       display: block;
     }
