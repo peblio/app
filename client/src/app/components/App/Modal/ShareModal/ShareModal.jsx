@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import SimpleSelect from './SimpleSelect/SimpleSelect';
+import Dropdown from './Dropdown/Dropdown';
 
 require('./shareModal.scss');
 
@@ -51,19 +51,11 @@ class Share extends React.Component {
         <div className="share__option">
           <h2 className="share__text-primary">
             Share
-            {' '}
-            {this.props.pageTitle}
-            {' '}
-            via Link
           </h2>
-          <select className="share__link_type" onChange={this.linkTypeChanged}>
-            <option value="autoRemixLink" selected>Share as assignment</option>
-            <option value="link">View only</option>
-          </select>
-          <SimpleSelect
+          <Dropdown
             options={options}
             onChange={this.linkTypeChanged}
-            formLabel={`Share ${this.props.pageTitle} via Link`}
+            formLabel="Share Options"
             formControlClassName="share-modal__select"
           />
           <input

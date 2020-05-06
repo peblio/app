@@ -7,6 +7,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+require('./Dropdown.scss');
+
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
@@ -17,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SimpleSelect({ options, onChange, formLabel, formHelperText, formControlClassName }) {
+export default function Dropdown({ options, onChange, formLabel, formHelperText, formControlClassName }) {
   const classes = useStyles();
 
   const getDefaultValue = (dropDownOptions) => {
@@ -42,14 +44,14 @@ export default function SimpleSelect({ options, onChange, formLabel, formHelperT
   return (
     <FormControl className={`${classes.formControl} ${formControlClassName}`}>
       {formLabel && (
-        <InputLabel shrink id="simple-select-placeholder-label-label">
+        <InputLabel shrink id="dropdown__label">
           {formLabel}
         </InputLabel>
       )
       }
       <Select
-        labelId="simple-select-placeholder-label-label"
-        id="simple-select-placeholder-label"
+        labelId="dropdown__label"
+        id="dropdown-placeholder-label"
         onChange={handleChange}
         value={state.selection}
       >
@@ -60,7 +62,7 @@ export default function SimpleSelect({ options, onChange, formLabel, formHelperT
   );
 }
 
-SimpleSelect.propTypes = {
+Dropdown.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({
     displayKey: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
@@ -71,7 +73,7 @@ SimpleSelect.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-SimpleSelect.defaultProps = {
+Dropdown.defaultProps = {
   formLabel: null,
   formHelperText: null,
 };

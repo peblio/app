@@ -230,7 +230,7 @@ class App extends React.Component {
       <Modal size="small" isOpen={this.props.isConfirmUserModalOpen} closeModal={this.props.closeConfirmUserModal}>
         <ConfirmUser location={this.props.location} />
       </Modal>
-      <Modal size="small" isOpen={this.props.isShareModalOpen} closeModal={this.props.closeShareModal}>
+      <Modal size="small" isOpen closeModal={this.props.closeShareModal}>
         <ShareModal pageTitle={this.props.pageTitle} />
       </Modal>
 
