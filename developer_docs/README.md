@@ -44,7 +44,7 @@ re-interpreted and type `rs` on the console where the server runs
 ## StoryBook
 We have storybook installed for developing and designing basic components. To start storybook -
 
-1. `cd client && npm start storybook`
+1. `cd client && npm run storybook`
 1. Your browser should automatically open the Storybook UI
 
 Currently, the storybook files are present in `client/src/components/**/*/.stories.js`
