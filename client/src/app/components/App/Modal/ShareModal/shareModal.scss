@@ -70,3 +70,16 @@
 #widget-div {
   margin: $small-margin auto !important;
 }
+
+.share-modal__select {
+  align-items: center;
+  width: 50%;
+
+  #simple-select-placeholder-label-label {
+    margin-bottom: 1rem;
+    font-size: 26px;
+    font-weight: 500;
+    color: $green;
+    width: 100%;
+  }
+}
