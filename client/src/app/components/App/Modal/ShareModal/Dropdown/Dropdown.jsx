@@ -13,7 +13,7 @@ require('./Dropdown.scss');
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
-    width: '40%',
+    width: '75%',
     background: variables.white,
     padding: variables.smallPadding,
     borderRadius: variables.smallBorderRadius,

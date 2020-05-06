@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import ReactHtmlParser from 'react-html-parser';
 import Dropdown from './Dropdown/Dropdown';
+import InfoSVG from '../../../../images/info.svg';
+import { ShareTypeInfo } from '../../../../constants/codeConstants.js';
 
 require('./shareModal.scss');
 
@@ -16,6 +19,11 @@ class Share extends React.Component {
     this.renderClassroomWidget();
   }
 
+  linkTypeChanged = (e) => {
+    const linkType = e.target.value;
+    this.setState({ linkType });
+  }
+
   copyShareLink() {
     this.input.select();
     try {
@@ -23,11 +31,6 @@ class Share extends React.Component {
     } catch (err) {
       console.log(err);
     }
-  }
-
-  linkTypeChanged = (e) => {
-    const linkType = e.target.value;
-    this.setState({ linkType });
   }
 
   renderClassroomWidget() {
@@ -52,12 +55,28 @@ class Share extends React.Component {
           <h2 className="share__text-primary">
             Share
           </h2>
-          <Dropdown
-            options={options}
-            onChange={this.linkTypeChanged}
-            formLabel="Share Options"
-            formControlClassName="share-modal__select"
-          />
+          <div className="share__option__container">
+            <Dropdown
+              options={options}
+              onChange={this.linkTypeChanged}
+              formLabel="Share Options"
+              formControlClassName="share-modal__select"
+            />
+            <div
+            tabIndex='0' // eslint-disable-line
+              className='share__container__svg share__container__svg-info'
+            >
+              <InfoSVG alt='More information' />
+              <div
+              tabIndex='0' // eslint-disable-line
+                className='share__container__info-container'
+              >
+                <p className='share__container__info'>
+                  {ReactHtmlParser(ShareTypeInfo)}
+                </p>
+              </div>
+            </div>
+          </div>
           <input
             className="share__input"
             ref={(element) => { this.input = element; }}
