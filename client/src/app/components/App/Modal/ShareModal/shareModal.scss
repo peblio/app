@@ -29,6 +29,11 @@
   &__input {
     @extend %modal__input;
     text-align: center;
+    border-radius: $small-border-radius;
+    border: $g4 solid $small-border;
+    width: 50%;
+    color: $green;
+    height: 40px;
   }
 
   &__input-email {
@@ -47,6 +52,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    &__text-classroom {
+      color: unset;
+      font-weight: $medium-font-weight;
+    }
   }
 
   &__link_type {

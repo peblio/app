@@ -74,7 +74,7 @@ class Share extends React.Component {
         </div>
         <p className="share__text-secondary">or</p>
         <div className="share__option">
-          <h2 className="share__text-primary"> share to Google Classroom </h2>
+          <h2 className="share__text-primary share__option__text-classroom"> Share to Google Classroom </h2>
           <div
             id="widget-div"
             ref={(element) => { this.widget = element; }}
