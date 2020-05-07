@@ -28,6 +28,7 @@
 
   &__input {
     @extend %modal__input;
+    background-color: unset;
     text-align: center;
     border-radius: $small-border-radius;
     border: $g4 solid $small-border;
