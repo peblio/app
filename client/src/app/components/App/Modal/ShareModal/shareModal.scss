@@ -56,14 +56,20 @@
 
   &__container__info-container {
     display: none;
-    background: $white;
+    background: #d8d8d8;
     border-radius: $small-border-radius;
     padding: $small-padding;
-    position: absolute;
+    position: relative;
     
     left: $medium-margin;
-    top: 20px;
+    top: -150px;
+    width: 200px;
     z-index: $z-index-layer-4;
+
+    .share__container__info {
+      margin-top: 1px;
+      margin-bottom: 1px;
+    }
   }
 
   &__container__svg-info {
@@ -92,6 +98,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 20px;
 
     &__text-classroom {
       color: unset;
