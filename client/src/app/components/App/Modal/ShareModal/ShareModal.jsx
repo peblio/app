@@ -47,7 +47,7 @@ class Share extends React.Component {
     },
     {
       value: 'link',
-      displayKey: 'ViewOnly',
+      displayKey: 'View only',
     }];
     return (
       <section className="share__container">
