@@ -31,27 +31,18 @@ class ShareWorkspace extends React.Component {
     }
   }
 
-  saveAndShareWorkspace=() => {
+  buildRawPageDataForSave = () => {
     const layout = PageDefaults.STARTER_WORKSPACE_LAYOUT;
     const textAreaLineHeight = parseFloat(getComputedStyle(this.desc).fontSize) * 1.2;
-    const yValue = convertWorkspaceDescHeight(
-      this.desc.value.length,
-      textAreaLineHeight,
-      this.props.rgl.margin,
-      this.props.rgl.rowHeight,
-      layout[0].maxH
-    );
+    const yValue = convertWorkspaceDescHeight(this.desc.value.length, textAreaLineHeight, this.props.rgl.margin, this.props.rgl.rowHeight, layout[0].maxH);
     layout[0].h = yValue;
     layout[1].y = yValue + 1;
     const descText = this.desc.value.replace(/[\r\n]+/g, ' ');
-
     const tempDesc = {
       type: 'text',
       id: 'editor-0',
       index: 0,
-      editorState: EditorState.createWithContent(
-        ContentState.createFromText(descText)
-      ),
+      editorState: EditorState.createWithContent(ContentState.createFromText(descText)),
       backColor: 'transparent'
     };
     const tempEditor = JSON.parse(JSON.stringify(this.props.workspace));
@@ -62,24 +53,27 @@ class ShareWorkspace extends React.Component {
     tempEditor.isPlaying = true;
     tempEditor.innerWidth = 200;
     tempEditor.currentFile = -1;
-    this.props.submitPage(
-      `src-${this.props.id}`,
-      this.title.value,
-      this.title.value,
-      '',
-      {
+    const pageData = {
+      parentId: `src-${this.props.id}`,
+      title: this.title.value,
+      heading: this.title.value,
+      description: '',
+      editors: {
         'editor-0': tempDesc,
         'editor-1': tempEditor,
       },
-      2,
+      editorIndex: 2,
       layout,
-      'fromWP',
-      PageDefaults.DEFAULT_WORKSPACE_MODE,
-      [],
-      this.isLoggedIn(),
-      !(this.props.userType === 'student'),
-      document.getElementById('content-canvas')
-    );
+      workspace: PageDefaults.DEFAULT_WORKSPACE_MODE,
+      tags: [],
+      isPublished: !(this.props.userType === 'student'),
+      snapshotPath: PageDefaults.SNAPSHOT_DEFAULT_IMG
+    };
+    return pageData;
+  }
+
+  saveAndShareWorkspace = () => {
+    this.props.submitPage(this.buildRawPageDataForSave(), this.isLoggedIn(), this.props.name, true);
     this.props.closeModal();
   }
 

@@ -8,6 +8,7 @@ import history from '../utils/history';
 import { namespaceActionCreators } from '../utils/namespace-redux';
 import * as folderActions from './folders';
 import { viewForkPrompt } from './mainToolbar.js';
+import { saveLog } from '../utils/log';
 import { loadWidgets } from './editors.js';
 import { loadWorkspace } from './workspace.js';
 import { createNavigationContent } from './navigation.js';
@@ -139,13 +140,13 @@ export function duplicatePage(id, folder) {
         if (pebl.folder) {
           data.folder = pebl.folder;
         }
-
-        axios.post('/pages/save', data).then((response) => {
-          dispatch({
-            type: ActionTypes.DUPLICATE_PAGE,
-            page: response.data.page
+        axios.post('/pages/save', data)
+          .then((response) => {
+            dispatch({
+              type: ActionTypes.DUPLICATE_PAGE,
+              page: response.data.page
+            });
           });
-        });
       })
       .catch((err) => {
         console.log(err);
@@ -205,94 +206,80 @@ export function savePageSnapshot(id, firstSave) {
   });
 }
 
-function postSavePageData(id, parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished) {
+function getLogObjectForSavePage(name) {
+  return {
+    message: 'Saving Page',
+    path: '/pages/save',
+    action: 'Saving Page',
+    module: 'ui',
+    level: 'INFO',
+    user: name
+  };
+}
+
+export function submitPage(rawPageData, isLoggedIn, name, openPageInNewTab) {
+  const id = shortid.generate();
   const axiosURL = isLoggedIn ? '/pages/save' : '/pages/saveAsGuest';
-  const pageData = {
-    parentId,
-    id,
-    title,
-    heading,
-    description,
-    editors: convertEditorsToRaw(editors),
-    editorIndex,
-    layout,
-    workspace,
-    tags,
-    isPublished,
-    snapshotPath: SNAPSHOT_DEFAULT_IMG
-  };
-  axios.post(axiosURL, pageData).then(() => {
-    savePageSnapshot(id, true);
-    if (type === 'fromWP') {
-      window.open(`/pebl/${id}`, '_blank');
-    } else {
+  const pageData = { ...rawPageData, id, editors: convertEditorsToRaw(rawPageData.editors) };
+  return dispatch => axios.post(axiosURL, pageData)
+    .then(() => {
+      savePageSnapshot(id, true);
+      if (openPageInNewTab) {
+        window.open(`/pebl/${id}`, '_blank');
+      } else {
+        history.push(`/pebl/${id}`);
+      }
+      dispatch(setUnsavedChanges(false));
+      dispatch({
+        type: ActionTypes.SET_PAGE_ID,
+        id
+      });
+    })
+    .then(() => {
+      saveLog(getLogObjectForSavePage(name));
+    })
+    .catch(error => console.error('Error', error));
+}
+
+export function remixPage(page) {
+  const id = shortid.generate();
+  const pageData = { ...page, id, snapshotPath: SNAPSHOT_DEFAULT_IMG, editors: convertEditorsToRaw(page.editors) };
+  return dispatch => axios.post('/pages/save', pageData)
+    .then(() => {
+      savePageSnapshot(id, true);
       history.push(`/pebl/${id}`);
-    }
-    if (type === 'remix') {
       window.location.reload(true);
-    }
-  }).catch(error => console.error('Error', error));
+      dispatch({
+        type: ActionTypes.SET_PAGE_ID,
+        id
+      });
+    }).catch(error => console.error('Error', error));
 }
 
-export function submitPage(parentId, title, heading, description, editors, editorIndex, layout,
-  type, workspace, tags, isLoggedIn, isPublished) {
-  const id = shortid.generate();
-  postSavePageData(id, parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished);
-  return (dispatch) => {
-    dispatch(setUnsavedChanges(false));
-    dispatch({
-      type: ActionTypes.SET_PAGE_ID,
-      id
-    });
+function getLogForUpdatePage(canEdit, id, name) {
+  return {
+    message: `Updating Page with canEdit as ${canEdit}`,
+    path: `/pages/update/${id}`,
+    action: 'Updating Page',
+    module: 'ui',
+    level: 'INFO',
+    user: name
   };
 }
 
-export function remixPage(parentId, title, heading, description, editors, editorIndex,
-  layout, type, workspace, tags, isLoggedIn, isPublished) {
-  const id = shortid.generate();
-  postSavePageData(id, parentId, title, heading, description, editors, editorIndex, layout, type, workspace, tags, isLoggedIn, isPublished);
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SET_PAGE_ID,
-      id
-    });
-  };
-}
-
-
-export function updatePage(id, title, heading, description, editors, editorIndex, layout, workspace, tags, isPublished) {
-  return dispatch => axios.post('/pages/update', {
-    id,
-    title,
-    heading,
-    description,
-    editors: convertEditorsToRaw(editors),
-    editorIndex,
-    layout,
-    workspace,
-    tags,
-    isPublished
-  })
+export function updatePage(pageData, canEdit, name) {
+  return dispatch => axios.post('/pages/update', { ...pageData, editors: convertEditorsToRaw(pageData.editors) })
     .then(() => {
       dispatch(setUnsavedChanges(false));
       dispatch({
         type: ActionTypes.UPDATE_PAGE,
-        id
+        id: pageData.id
       });
-    }).catch(error => console.error('Page update error', error));
-}
-
-function saveAs(uri, filename) {
-  const link = document.createElement('a');
-  if (typeof link.download === 'string') {
-    link.href = uri;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  } else {
-    window.open(uri);
-  }
+    })
+    .then(() => {
+      saveLog(getLogForUpdatePage(canEdit, pageData.id, name));
+    })
+    .catch(error => console.error('Page update error', error));
 }
 
 export function setPageId(id) {

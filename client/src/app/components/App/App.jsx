@@ -7,6 +7,7 @@ import initHelpHero from 'helphero';
 import Websocket from 'react-websocket';
 import WEBSOCKET_HOST from '../../utils/webSockets';
 import * as pageDefaults from '../../constants/pageConstants';
+import { buildPageDataForSave, buildPageDataForUpdate, buildPageDataForRemixing } from '../../utils/page-builder';
 
 import AddDescription from './Modal/AddDescription/AddDescription.jsx';
 import ConfirmUser from './Modal/ConfirmUser/ConfirmUser.jsx';
@@ -33,7 +34,6 @@ import * as preferencesActions from '../../action/preferences.js';
 import * as userActions from '../../action/user.js';
 
 import axios from '../../utils/axios';
-import { saveLog } from '../../utils/log';
 import PageVersion from './Navigation/PageVersion';
 
 require('./app.scss');
@@ -133,132 +133,31 @@ class App extends React.Component {
     }
   }
 
-  savePage = () => {
+  getPageTitle = () => {
+    if (this.props.pageHeading !== '' && this.props.pageTitle === pageDefaults.DEFAULT_PAGE_TITLE) {
+      return this.props.pageHeading;
+    }
+    return this.props.pageTitle;
+  }
+
+
+  buildPageDataAndSavePage = () => {
     if (this.props.name) {
-      let title = this.props.pageTitle;
-      if (this.props.pageHeading !== '') {
-        title =
-        (this.props.pageTitle === pageDefaults.DEFAULT_PAGE_TITLE)
-          ? this.props.pageHeading : this.props.pageTitle;
-      }
       if (this.props.id.length === 0) {
-        this.props.submitPage(
-          '',
-          title,
-          this.props.pageHeading,
-          this.props.description,
-          this.props.editors,
-          this.props.editorIndex,
-          this.props.layout,
-          'save',
-          this.props.workspace,
-          this.props.tags,
-          true,
-          !(this.props.userType === 'student') || this.props.isPeblPublished
-        );
-        const log = {
-          message: 'Saving Page',
-          path: '/pages/save',
-          action: 'Saving Page',
-          module: 'ui',
-          level: 'INFO',
-          user: this.props.name
-        };
-        saveLog(log);
+        this.props.submitPage(buildPageDataForSave(this.props), true, this.props.name, false);
       } else if (this.props.canEdit) {
-        this.props.updatePage(
-          this.props.id,
-          title,
-          this.props.pageHeading,
-          this.props.description,
-          this.props.editors,
-          this.props.editorIndex,
-          this.props.layout,
-          this.props.workspace,
-          this.props.tags,
-          !(this.props.userType === 'student') || this.props.isPeblPublished
-        );
-        const log = {
-          message: `Updating Page with canEdit as ${this.props.canEdit}`,
-          path: `/pages/update/${this.props.id}`,
-          action: 'Updating Page',
-          module: 'ui',
-          level: 'INFO',
-          user: this.props.name
-        };
-        saveLog(log);
+        this.props.updatePage(buildPageDataForUpdate(this.props), this.props.canEdit, this.props.name);
         this.sendMessage('SendingUpdate');
-      } else {
-        // this is for remix and save
-        this.props.submitPage(
-          this.props.id,
-          `${this.props.pageTitle}-copy`,
-          this.props.pageHeading,
-          this.props.description,
-          this.props.editors,
-          this.props.editorIndex,
-          this.props.layout,
-          'remix',
-          this.props.workspace,
-          this.props.tags,
-          true,
-          !(this.props.userType === 'student')
-        );
-        const log = {
-          message: `Remixing Page with id ${this.props.id}`,
-          path: '/pages/save',
-          action: 'Remixing Page',
-          module: 'ui',
-          level: 'INFO',
-          user: this.props.name
-        };
-        saveLog(log);
       }
     } else {
       this.props.viewLoginModal();
     }
   }
 
-  remixPage = () => {
+  buildPageDataAndRemixPage = () => {
     if (this.props.name) {
-      let title = this.props.pageTitle;
-      if (this.props.pageHeading !== '') {
-        title =
-        (this.props.pageTitle === pageDefaults.DEFAULT_PAGE_TITLE)
-          ? this.props.pageHeading : this.props.pageTitle;
-      }
-      if (this.props.id.length === 0) {
-        this.props.remixPage(
-          '',
-          title,
-          this.props.pageHeading,
-          this.props.description,
-          this.props.editors,
-          this.props.editorIndex,
-          this.props.layout,
-          'save',
-          this.props.workspace,
-          this.props.tags,
-          true,
-          !(this.props.userType === 'student') || this.props.isPeblPublished
-        );
-      } else {
-        // this is for remix and save
-        this.props.remixPage(
-          this.props.id,
-          `${this.props.pageTitle}-copy`,
-          this.props.pageHeading,
-          this.props.description,
-          this.props.editors,
-          this.props.editorIndex,
-          this.props.layout,
-          'remix',
-          this.props.workspace,
-          this.props.tags,
-          true,
-          !(this.props.userType === 'student')
-        );
-      }
+      const page = buildPageDataForRemixing(this.props);
+      this.props.remixPage(page);
     } else {
       this.props.viewLoginModal();
     }
@@ -314,143 +213,94 @@ class App extends React.Component {
     return null;
   }
 
-  render() {
+  renderNotificationModal = () => (
+    <React.Fragment>
+      <Modal size="xlarge" isOpen={this.props.isPagesModalOpen} closeModal={this.props.closePagesModal}>
+        <PagesList />
+      </Modal>
+
+      <Modal size="xlarge" isOpen={this.props.isExamplesModalOpen} closeModal={this.props.closeExamplesModal}>
+        <ExamplesModal />
+      </Modal>
+
+      <Modal size="small" isOpen={this.props.isLiveRefreshPageModalOpen} closeModal={this.props.closeLiveRefreshPageModal}>
+        <LiveRefreshPage allowLiveRefresh={this.getPage} closeLiveRefreshPageModal={this.props.closeLiveRefreshPageModal} showMessageForAuthor={this.props.canEdit} />
+      </Modal>
+
+      <Modal size="large" isOpen={this.props.isForgotModalOpen} closeModal={this.props.closeForgotModal}>
+        <PasswordForgot isForgotModalOpen={this.props.isForgotModalOpen} />
+      </Modal>
+
+      <Modal size="large" isOpen={this.props.isResetModalOpen} closeModal={this.props.closeResetModal}>
+        <PasswordReset isResetModalOpen={this.props.isResetModalOpen} location={this.props.location} />
+      </Modal>
+
+      <Modal size="small" isOpen={this.props.isConfirmUserModalOpen} closeModal={this.props.closeConfirmUserModal}>
+        <ConfirmUser location={this.props.location} />
+      </Modal>
+      <Modal size="small" isOpen={this.props.isShareModalOpen} closeModal={this.props.closeShareModal}>
+        <ShareModal pageTitle={this.props.pageTitle} />
+      </Modal>
+
+      <Modal size="small" isOpen={this.props.isAddDescriptionModalOpen} closeModal={this.props.closeAddDescriptionModal}>
+        <AddDescription savePage={this.buildPageDataAndSavePage} closeModal={this.props.closeAddDescriptionModal} />
+      </Modal>
+
+      <Modal size="auto" isOpen={this.props.isWelcomeModalOpen} closeModal={this.props.closeWelcomeModal}>
+        <Welcome />
+      </Modal>
+
+      {(this.showForkPromptPreference() && !this.props.isBrowsingPebl && !this.props.canEdit) && (
+        <Modal size="auto" isOpen={this.props.isForkPromptOpen} closeModal={this.props.closeForkPrompt}>
+          <ForkPrompt savePage={this.buildPageDataAndSavePage} />
+        </Modal>
+      )}
+    </React.Fragment>
+  )
+
+  renderToolBar = () => (
+    <nav className="main-nav">
+      <MainToolbar
+        projectID={this.projectID}
+        savePage={this.buildPageDataAndSavePage}
+        location={this.props.location}
+        buildPageDataAndRemixPage={this.buildPageDataAndRemixPage}
+      />
+    </nav>
+  )
+
+  attachWebsocket = () => {
     const webSocketUrl = `${WEBSOCKET_HOST}/api/live/page/${this.props.id}`;
+    return this.props.id && (
+      <Websocket
+        url={webSocketUrl}
+        onMessage={this.handleData}
+        onOpen={this.handleOpen}
+        onClose={this.handleClose}
+        reconnect
+        debug
+        ref={(socket) => {
+          this.refWebSocket = socket;
+        }}
+      />
+    );
+  }
+
+  render() {
     return (
       <div
         role="presentation"
         tabIndex="0" // eslint-disable-line
-        onKeyDown={e => this.onKeyPressed(e)} // eslint-disable-line
+        onKeyDown={e => this.onKeyPressed(e)}
         className="app__container"
       >
-        {this.props.id && (
-          <Websocket
-            url={webSocketUrl}
-            onMessage={this.handleData}
-            onOpen={this.handleOpen}
-            onClose={this.handleClose}
-            reconnect
-            debug
-            ref={(socket) => {
-              this.refWebSocket = socket;
-            }}
-          />
-        )}
-        <nav className="main-nav">
-          <MainToolbar
-            projectID={this.projectID}
-            savePage={this.savePage}
-            location={this.props.location}
-            remixPage={this.remixPage}
-          />
-        </nav>
-        <Canvas
-          savePage={this.savePage}
-        />
-
-        <Modal
-          size="xlarge"
-          isOpen={this.props.isPagesModalOpen}
-          closeModal={this.props.closePagesModal}
-        >
-          <PagesList />
-        </Modal>
-
-        <Modal
-          size="xlarge"
-          isOpen={this.props.isExamplesModalOpen}
-          closeModal={this.props.closeExamplesModal}
-        >
-          <ExamplesModal />
-        </Modal>
-
-        <Modal
-          size="small"
-          isOpen={this.props.isLiveRefreshPageModalOpen}
-          closeModal={this.props.closeLiveRefreshPageModal}
-        >
-          <LiveRefreshPage
-            allowLiveRefresh={this.getPage}
-            closeLiveRefreshPageModal={this.props.closeLiveRefreshPageModal}
-            showMessageForAuthor={this.props.canEdit}
-          />
-        </Modal>
-
-        <Modal
-          size="large"
-          isOpen={this.props.isForgotModalOpen}
-          closeModal={this.props.closeForgotModal}
-        >
-          <PasswordForgot
-            isForgotModalOpen={this.props.isForgotModalOpen}
-          />
-        </Modal>
-
-        <Modal
-          size="large"
-          isOpen={this.props.isResetModalOpen}
-          closeModal={this.props.closeResetModal}
-        >
-          <PasswordReset
-            isResetModalOpen={this.props.isResetModalOpen}
-            location={this.props.location}
-          />
-        </Modal>
-
-        <Modal
-          size="small"
-          isOpen={this.props.isConfirmUserModalOpen}
-          closeModal={this.props.closeConfirmUserModal}
-        >
-          <ConfirmUser
-            location={this.props.location}
-          />
-        </Modal>
-        <Modal
-          size="small"
-          isOpen={this.props.isShareModalOpen}
-          closeModal={this.props.closeShareModal}
-        >
-          <ShareModal
-            pageTitle={this.props.pageTitle}
-          />
-        </Modal>
-
-        <Modal
-          size="small"
-          isOpen={this.props.isAddDescriptionModalOpen}
-          closeModal={this.props.closeAddDescriptionModal}
-        >
-          <AddDescription
-            savePage={this.savePage}
-            closeModal={this.props.closeAddDescriptionModal}
-          />
-        </Modal>
-
-        <Modal
-          size="auto"
-          isOpen={this.props.isWelcomeModalOpen}
-          closeModal={this.props.closeWelcomeModal}
-        >
-          <Welcome />
-        </Modal>
-        {(this.showForkPromptPreference() && !this.props.isBrowsingPebl && !this.props.canEdit) && (
-          <Modal
-            size="auto"
-            isOpen={this.props.isForkPromptOpen}
-            closeModal={this.props.closeForkPrompt}
-          >
-            <ForkPrompt
-              savePage={this.savePage}
-            />
-          </Modal>
-        )}
+        {this.attachWebsocket()}
+        {this.renderToolBar()}
+        <Canvas savePage={this.buildPageDataAndSavePage} />
+        {this.renderNotificationModal()}
         <Navigation />
-        <PageVersion
-          savePage={this.savePage}
-        />
+        <PageVersion savePage={this.buildPageDataAndSavePage} />
         <Workspace />
-
       </div>
     );
   }
@@ -461,6 +311,7 @@ App.propTypes = {
     pathname: PropTypes.string.isRequired,
   }).isRequired,
   editors: PropTypes.shape({}).isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
   editorIndex: PropTypes.number.isRequired,
 
   workspace: PropTypes.shape({}).isRequired,
@@ -473,12 +324,15 @@ App.propTypes = {
 
   // pebl
   pageTitle: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
   description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   layout: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   rgl: PropTypes.shape({}).isRequired,
   textHeights: PropTypes.shape({}).isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
   isPeblPublished: PropTypes.bool.isRequired,
 
   canEdit: PropTypes.bool.isRequired,
@@ -487,6 +341,7 @@ App.propTypes = {
   name: PropTypes.string.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
   isBrowsingPebl: PropTypes.bool.isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
   userType: PropTypes.string.isRequired,
 
   isAddDescriptionModalOpen: PropTypes.bool.isRequired,

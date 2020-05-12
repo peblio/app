@@ -289,7 +289,7 @@ class MainToolbar extends React.Component {
               </label>
               <button
                 className="main-toolbar__save"
-                onClick={saveButtonText === 'Remix' ? this.props.remixPage : this.saveSnapshotWithPage}
+                onClick={saveButtonText === 'Remix' ? this.props.buildPageDataAndRemixPage : this.saveSnapshotWithPage}
                 data-test="main-toolbar__save-button"
               >
                 {saveButtonText}
@@ -356,7 +356,7 @@ MainToolbar.propTypes = {
   projectID: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   savePage: PropTypes.func.isRequired,
-  remixPage: PropTypes.func.isRequired,
+  buildPageDataAndRemixPage: PropTypes.func.isRequired,
   setShareURL: PropTypes.func.isRequired,
   toggleHelpDropdown: PropTypes.func.isRequired,
   toggleFileDropdown: PropTypes.func.isRequired,
