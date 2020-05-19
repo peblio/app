@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import srcDoc from 'srcdoc-polyfill';
+import { registerPlugin, transform as babelTransform } from 'babel-standalone';
+import protect from 'loop-protect';
 import { MEDIA_FILE_REGEX } from '../../../../../constants/widgetConstants.js';
 
 const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
@@ -12,6 +14,9 @@ class FrontEndOutput extends React.Component {
     super(props);
     this.startSketch = this.startSketch.bind(this);
     this.stopSketch = this.stopSketch.bind(this);
+    this.errorCallback = (line) => {
+      console.log(`Bad loop on line ${line}`);
+    };
   }
 
   componentDidMount() {
@@ -100,7 +105,16 @@ class FrontEndOutput extends React.Component {
             script.setAttribute('data-tag', `@fs-${file.name}`);
             script.removeAttribute('src');
             const newFileContent = this.resolveLinksInString(file.content, files);
-            script.innerHTML = newFileContent;
+            const timeout = 100; // defaults to 100ms
+            registerPlugin('loopProtection', protect(timeout, this.errorCallback));
+            const transformCode = source => babelTransform(source, {
+              plugins: ['loopProtection'],
+            }).code;
+
+            // rewrite the user's JavaScript to protect loops
+            const processed = transformCode(newFileContent);
+            console.log('newFileContent ', processed);
+            script.innerHTML = processed;
           }
         });
       }
@@ -200,8 +214,6 @@ class FrontEndOutput extends React.Component {
   }
 
   render() {
-    console.log('Files: ', this.props.files);
-    console.log('Props: ', this.props);
     return (
       <div>
         <iframe
