@@ -171,6 +171,7 @@ class FrontEndOutput extends React.Component {
   }
 
   injectLocalFiles(sketchDoc) {
+    // sketchDoc.body.textContent
     const scriptsToInject = [
       '/hijackConsole.js'
     ];
@@ -199,6 +200,8 @@ class FrontEndOutput extends React.Component {
   }
 
   render() {
+    console.log('Files: ', this.props.files);
+    console.log('Props: ', this.props);
     return (
       <div>
         <iframe
