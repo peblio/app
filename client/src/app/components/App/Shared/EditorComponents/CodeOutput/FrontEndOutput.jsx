@@ -106,7 +106,7 @@ class FrontEndOutput extends React.Component {
             script.removeAttribute('src');
             const newFileContent = this.resolveLinksInString(file.content, files);
             const timeout = 100; // defaults to 100ms
-            registerPlugin('loopProtection', protect(timeout, this.errorCallback));
+            registerPlugin('loopProtection', protect(timeout));
             const transformCode = source => babelTransform(source, {
               plugins: ['loopProtection'],
             }).code;
