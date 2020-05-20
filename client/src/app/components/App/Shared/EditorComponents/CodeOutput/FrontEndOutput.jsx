@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import srcDoc from 'srcdoc-polyfill';
-import { registerPlugin, transform as babelTransform } from 'babel-standalone';
-import protect from 'loop-protect';
+import loopProtect from 'loop-protect';
 import { MEDIA_FILE_REGEX } from '../../../../../constants/widgetConstants.js';
 
 const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
@@ -105,16 +104,7 @@ class FrontEndOutput extends React.Component {
             script.setAttribute('data-tag', `@fs-${file.name}`);
             script.removeAttribute('src');
             const newFileContent = this.resolveLinksInString(file.content, files);
-            const timeout = 100; // defaults to 100ms
-            registerPlugin('loopProtection', protect(timeout, this.errorCallback));
-            const transformCode = source => babelTransform(source, {
-              plugins: ['loopProtection'],
-            }).code;
-
-            // rewrite the user's JavaScript to protect loops
-            const processed = transformCode(newFileContent);
-            console.log('newFileContent ', processed);
-            script.innerHTML = processed;
+            script.innerHTML = loopProtect(newFileContent);
           }
         });
       }
@@ -187,7 +177,8 @@ class FrontEndOutput extends React.Component {
   injectLocalFiles(sketchDoc) {
     // sketchDoc.body.textContent
     const scriptsToInject = [
-      '/hijackConsole.js'
+      '/hijackConsole.js',
+      '/test_loop.js'
     ];
     scriptsToInject.forEach((scriptToInject) => {
       const script = sketchDoc.createElement('script');

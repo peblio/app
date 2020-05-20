@@ -24,7 +24,7 @@
     "helphero": "^0.4.2",
     "history": "4.7.2",
     "html2canvas": "v1.0.0-rc.1",
-    "loop-protect": "^2.1.6",
+    "loop-protect": "github:catarak/loop-protect",
     "moment": "^2.24.0",
     "node-sass": "^4.5.3",
     "normalizr": "^3.2.4",
