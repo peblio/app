@@ -17,7 +17,6 @@
   "dependencies": {
     "axios": "^0.18.1",
     "babel-polyfill": "^6.26.0",
-    "babel-standalone": "^6.26.0",
     "classnames": "^2.2.6",
     "codemirror": "^5.27.4",
     "draft-js": "^0.10.1",

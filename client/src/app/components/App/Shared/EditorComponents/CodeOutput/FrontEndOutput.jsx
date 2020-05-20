@@ -13,9 +13,6 @@ class FrontEndOutput extends React.Component {
     super(props);
     this.startSketch = this.startSketch.bind(this);
     this.stopSketch = this.stopSketch.bind(this);
-    this.errorCallback = (line) => {
-      console.log(`Bad loop on line ${line}`);
-    };
   }
 
   componentDidMount() {
@@ -175,10 +172,9 @@ class FrontEndOutput extends React.Component {
   }
 
   injectLocalFiles(sketchDoc) {
-    // sketchDoc.body.textContent
     const scriptsToInject = [
       '/hijackConsole.js',
-      '/test_loop.js'
+      '/infiniteLoopProtect.js'
     ];
     scriptsToInject.forEach((scriptToInject) => {
       const script = sketchDoc.createElement('script');
