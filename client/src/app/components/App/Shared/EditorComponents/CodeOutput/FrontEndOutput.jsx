@@ -25,10 +25,10 @@ class FrontEndOutput extends React.Component {
       this.stopSketch();
       this.startSketch();
     }
-    if(prevProps.consoleOutputText !== this.props.consoleOutputText) {
-      let check = /Exiting potential infinite loop/g;
-      const containsLoop = (element) => {let val = element.match(check);return (val.length>0)};
-      if(this.props.consoleOutputText.some(containsLoop)) {
+    if (prevProps.consoleOutputText !== this.props.consoleOutputText) {
+      const check = /Exiting potential infinite loop/g;
+      const containsLoop = (element) => { const val = element.match(check); return (val.length > 0); };
+      if (this.props.consoleOutputText.some(containsLoop)) {
         this.stopSketch();
       }
     }
@@ -223,7 +223,7 @@ class FrontEndOutput extends React.Component {
 
 FrontEndOutput.propTypes = {
   id: PropTypes.string.isRequired,
-  clearConsoleOutput: PropTypes.func.isRequired,
+  consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
