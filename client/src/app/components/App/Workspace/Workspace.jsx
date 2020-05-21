@@ -168,6 +168,7 @@ class Workspace extends React.Component {
                             isRefreshing={this.props.isRefreshing}
                             stopCodeRefresh={this.props.stopCodeRefresh}
                             updateConsoleOutput={this.updateConsoleOutput}
+                            consoleOutputText={this.props.consoleOutputText}
                           />
                         )}
                         <ConsoleOutput

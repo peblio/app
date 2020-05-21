@@ -53,6 +53,7 @@ class TabbedContainer extends React.Component {
                 isRefreshing={this.props.isRefreshing}
                 stopCodeRefresh={this.props.stopCodeRefresh}
                 updateConsoleOutput={this.props.updateConsoleOutput}
+                consoleOutputText={this.props.consoleOutputText}
               />
             )}
             <ConsoleOutput

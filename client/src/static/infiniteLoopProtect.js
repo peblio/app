@@ -462,7 +462,7 @@ if (typeof DEBUG === 'undefined') { DEBUG = true; } // jshint ignore:line
     }
 
     line.hit++;
-    if ((now - line.time) > 500) { // } && line.hit !== line.last+1) {
+    if ((now - line.time) > 100) { // } &&10line.hit !== line.last+1) {
       // We've spent over 500ms on this loop... smells infinite.
       loopProtect.hit(state.line);
       // Returning true prevents the loop running again
