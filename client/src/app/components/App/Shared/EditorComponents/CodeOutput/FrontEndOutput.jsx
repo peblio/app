@@ -26,11 +26,8 @@ class FrontEndOutput extends React.Component {
       this.startSketch();
     }
     if(prevProps.consoleOutputText !== this.props.consoleOutputText) {
-      // console.log(prevProps.consoleOutputText);
       let check = /Exiting potential infinite loop/g;
-      // debugger;
       const containsLoop = (element) => {let val = element.match(check);return (val.length>0)};
-      // var atLeastOneMatches = this.props.consoleOutputText.includes('Exiting potential infinite loop at line 7');
       if(this.props.consoleOutputText.some(containsLoop)) {
         this.stopSketch();
       }
@@ -96,7 +93,6 @@ class FrontEndOutput extends React.Component {
 
   stopSketch() {
     window.removeEventListener('message', this.props.updateConsoleOutput);
-    // this.props.clearConsoleOutput();
   }
 
 
