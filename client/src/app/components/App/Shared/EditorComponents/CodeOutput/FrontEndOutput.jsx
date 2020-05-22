@@ -27,7 +27,7 @@ class FrontEndOutput extends React.Component {
     }
     if (prevProps.consoleOutputText !== this.props.consoleOutputText) {
       const check = /Exiting potential infinite loop/g;
-      const containsLoop = (element) => { const val = element.match(check); return (val.length > 0); };
+      const containsLoop = (element) => { const val = element.match(check); return (val && val.length > 0); };
       if (this.props.consoleOutputText.some(containsLoop)) {
         this.stopSketch();
       }
