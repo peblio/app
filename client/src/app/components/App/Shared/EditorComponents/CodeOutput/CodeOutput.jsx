@@ -21,6 +21,7 @@ class CodeOutput extends React.Component {
               isRefreshing={this.props.isRefreshing}
               stopCodeRefresh={this.props.stopCodeRefresh}
               updateConsoleOutput={this.props.updateConsoleOutput}
+              consoleOutputText={this.props.consoleOutputText}
             />
           )}
         {
@@ -58,6 +59,7 @@ class CodeOutput extends React.Component {
 CodeOutput.propTypes = {
   id: PropTypes.string.isRequired,
   clearConsoleOutput: PropTypes.func.isRequired,
+  consoleOutputText: PropTypes.string.isRequired,
   editorMode: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,

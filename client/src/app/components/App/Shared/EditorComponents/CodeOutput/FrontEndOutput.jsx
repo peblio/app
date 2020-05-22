@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import srcDoc from 'srcdoc-polyfill';
+import loopProtect from 'loop-protect';
 import { MEDIA_FILE_REGEX } from '../../../../../constants/widgetConstants.js';
 
 const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
@@ -23,6 +24,13 @@ class FrontEndOutput extends React.Component {
       this.props.stopCodeRefresh();
       this.stopSketch();
       this.startSketch();
+    }
+    if (prevProps.consoleOutputText !== this.props.consoleOutputText) {
+      const check = /Exiting potential infinite loop/g;
+      const containsLoop = (element) => { const val = element.match(check); return (val.length > 0); };
+      if (this.props.consoleOutputText.some(containsLoop)) {
+        this.stopSketch();
+      }
     }
   }
 
@@ -85,7 +93,6 @@ class FrontEndOutput extends React.Component {
 
   stopSketch() {
     window.removeEventListener('message', this.props.updateConsoleOutput);
-    this.props.clearConsoleOutput();
   }
 
 
@@ -100,7 +107,7 @@ class FrontEndOutput extends React.Component {
             script.setAttribute('data-tag', `@fs-${file.name}`);
             script.removeAttribute('src');
             const newFileContent = this.resolveLinksInString(file.content, files);
-            script.innerHTML = newFileContent;
+            script.innerHTML = loopProtect(newFileContent);
           }
         });
       }
@@ -172,7 +179,8 @@ class FrontEndOutput extends React.Component {
 
   injectLocalFiles(sketchDoc) {
     const scriptsToInject = [
-      '/hijackConsole.js'
+      '/hijackConsole.js',
+      '/infiniteLoopProtect.js'
     ];
     scriptsToInject.forEach((scriptToInject) => {
       const script = sketchDoc.createElement('script');
@@ -215,7 +223,7 @@ class FrontEndOutput extends React.Component {
 
 FrontEndOutput.propTypes = {
   id: PropTypes.string.isRequired,
-  clearConsoleOutput: PropTypes.func.isRequired,
+  consoleOutputText: PropTypes.arrayOf(PropTypes.string).isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired

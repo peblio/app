@@ -51,11 +51,15 @@ class ConsoleOutput extends React.Component {
             className="console__output-text"
             ref={(output) => { this.output = output; }}
           >
-            {this.props.consoleOutputText.map(output => (
-              <div>
+            {this.props.consoleOutputText.map(output => {
+              console.log(output);
+              return(
+
+                <div>
                 {output}
-              </div>
-            ))}
+                </div>
+              )}
+            )}
           </p>
         )}
       </div>
