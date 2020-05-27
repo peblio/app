@@ -51,6 +51,7 @@ const editorsReducer = (state = initialState, action) => {
         } else {
           if (action.editors[id].type === 'code') {
             action.editors[id].isWidgetFullScreenMode = false;
+            action.editors[id].isPlaying = false;
           }
           newEditors[id] = action.editors[id];
         }
