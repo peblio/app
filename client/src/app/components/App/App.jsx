@@ -286,14 +286,7 @@ class App extends React.Component {
       if (this.props.name) {
         this.setState({ autoRemixingInProgress: true });
         this.buildPageDataAndRemixPage();
-        console.log('AutoRemixing Page');
-        console.log('userLoading ', this.props.userLoading);
-        console.log('pageLoading ', this.props.pageLoading);
-        console.log('autoRemix', url.searchParams.get('autoRemix') === 'true');
-        console.log('Page Id', this.projectID());
-        console.log('this.props.canEdit: ', this.props.canEdit);
       } else {
-        console.log('User not logged in for autoremixing');
         this.props.viewLoginModal();
       }
     }
