@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@storybook/react/demo';
+import InfiniteLoopDetectableCode from '../../app/components/App/Shared/EditorComponents/CodeOutput/InfiniteLoopDetectableCode.js';
 
 export default { title: 'Button' };
 
@@ -19,4 +20,8 @@ export const insertButton = () => (
       Editor
     </span>
   </Button>
+);
+
+export const loopedCode = () => (
+  <InfiniteLoopDetectableCode />
 );
