@@ -28,7 +28,13 @@
 
   &__input {
     @extend %modal__input;
+    background-color: unset;
     text-align: center;
+    border-radius: $small-border-radius;
+    border: $g4 solid $small-border;
+    width: 50%;
+    color: $green;
+    height: 40px;
   }
 
   &__input-email {
@@ -42,10 +48,69 @@
     align-items: center;
   }
 
+  &__option__container {
+    display: flex;
+    justify-content: center;
+    width: 40%;
+  }
+
+  &__container__info-container {
+    display: none;
+    background: #d8d8d8;
+    border-radius: $small-border-radius;
+    padding: $small-padding;
+    position: relative;
+    
+    left: $medium-margin;
+    top: -150px;
+    width: 200px;
+    z-index: $z-index-layer-4;
+
+    .share__container__info {
+      margin-top: 1px;
+      margin-bottom: 1px;
+    }
+  }
+
+  &__container__svg-info {
+    display: inline-block;
+    position: relative;
+    margin: 17px;
+    height: 25px !important;
+    width: 25px !important;
+    background-color: $b2 !important;
+    border-radius: 12px !important;
+    &:hover .share__container__info-container {
+      display: block;
+    }
+    &:focus .share__container__info-container {
+      display: block;
+    }
+
+    #infoSvg {
+      height: 25px;
+      width: 25px;
+    }
+  }
+
   &__option {
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+
+    &__text-classroom {
+      color: unset;
+      font-weight: $medium-font-weight;
+    }
+  }
+
+  &__link_type {
+    width: 50%;
+    height: 40px;
+    margin-bottom: 10px;
+    padding-left: 10px;
   }
 
   &__text-primary {

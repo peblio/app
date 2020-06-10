@@ -127,19 +127,20 @@ class MainToolbar extends React.Component {
     });
     let saveButtonText = 'Remix';
     if (this.props.name) { // user is logged in
-      if (this.props.canEdit) { // it is users sketch
-        if (this.props.unsavedChanges) { // there are some unsaved changes
-          saveButtonText = 'Save';
-        } else { // there are no unsaved changes
-          if (this.props.projectID()) { // eslint-disable-line
+      if (this.props.projectID()) {
+        if (this.props.canEdit) { // it is users sketch
+          if (this.props.unsavedChanges) { // there are some unsaved changes
+            saveButtonText = 'Save';
+          } else { // there are no unsaved changes
             // it is not a new sketch
             saveButtonText = <CheckSVG alt="check svg" />;
-          } else { // it is a new sketch
-            saveButtonText = 'Save';
           }
+        } else { // it is not users sketch
+          saveButtonText = 'Remix';
         }
-      } else { // it is not users sketch
-        saveButtonText = 'Remix';
+      } else {
+        // it is a new sketch
+        saveButtonText = 'Save';
       }
     } else { // user is not logged in
       if (this.props.projectID()) { // eslint-disable-line

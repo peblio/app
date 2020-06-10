@@ -164,7 +164,6 @@ export const FILES = {
   ]
 };
 
-/* eslint-disable */
 export const ProcessingWarning =
   `We currently use the Processing.js library to run Processing in the browser which comes along with certain limitations. Learn more
   <a
@@ -177,7 +176,14 @@ export const ProcessingWarning =
   >
   here.
   </a>`;
-/* eslint-enable */
+
+export const ShareTypeInfo =
+`Sharing an assignment will 
+automatically create a copy 
+for anyone who visits this 
+link. Any changes you make 
+to this page will not be 
+reflected in that copy`;
 
 export const WorkspaceLanguageConfirmation =
 `

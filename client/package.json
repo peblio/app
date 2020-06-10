@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^4.9.13",
     "axios": "^0.18.1",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.6",

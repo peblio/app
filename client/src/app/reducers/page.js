@@ -34,6 +34,7 @@ const initialState = {
   isPublished: false,
   isLiveRefreshPageModalOpen: false,
   isRemixInProgress: null,
+  loading: null,
 };
 
 const page = (state = initialState, action) => {
@@ -46,6 +47,16 @@ const page = (state = initialState, action) => {
     case ActionTypes.SET_PAGE_REMIXING_STARTED:
       return Object.assign({}, state, {
         isRemixInProgress: true
+      });
+
+    case ActionTypes.LOADING_PAGE_COMPLETED:
+      return Object.assign({}, state, {
+        loading: false
+      });
+
+    case ActionTypes.LOADING_PAGE_STARTED:
+      return Object.assign({}, state, {
+        loading: true
       });
 
     case ActionTypes.SET_PAGE_REMIXING_COMPLETED:

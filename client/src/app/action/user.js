@@ -88,6 +88,30 @@ export function logoutUser(name) {
     });
 }
 
+export function fetchCurrentUserForAppStartUp() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_USER_LOADING,
+    });
+    axios.get('/current_user')
+      .then(({ data }) => {
+        dispatch({
+          type: ActionTypes.SET_USER,
+          data
+        });
+        dispatch({
+          type: ActionTypes.SET_USER_LOADING_COMPLETED,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({
+          type: ActionTypes.SET_USER_LOADING_COMPLETED,
+        });
+      });
+  };
+}
+
 export function fetchCurrentUser() {
   return dispatch => axios.get('/current_user')
     .then(({ data }) => dispatch({

@@ -58,3 +58,14 @@ export function fetchUserPreferences() {
       });
   };
 }
+
+export function fetchUserPreferencesWithoutUserCheck() {
+  return dispatch => axios.get('/current_user/preferences')
+    .then(({ data }) => dispatch({
+      type: ActionTypes.SET_USER_PREFERENCES,
+      data
+    }))
+    .catch((err) => {
+      console.log(err);
+    });
+}

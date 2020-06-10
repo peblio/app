@@ -1,0 +1,23 @@
+@import 'variables';
+@import 'base';
+@import 'mixins';
+@import 'modal';
+
+
+#dropdown__label {
+  position: absolute;
+  left: -10000;
+}
+
+label + .MuiInput-formControl {
+  margin-top: 0 !important;
+}
+
+.MuiSelect-icon {
+  color: $green !important;
+}
+
+
+.MuiInput-underline {
+  display: none;
+}

@@ -34,7 +34,6 @@ import * as pageActions from '../../action/page.js';
 import * as preferencesActions from '../../action/preferences.js';
 import * as userActions from '../../action/user.js';
 
-import axios from '../../utils/axios';
 import PageVersion from './Navigation/PageVersion';
 
 require('./app.scss');
@@ -43,6 +42,11 @@ let refWebSocket;
 let hasSocketBeenConnected = false;
 
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state = { autoRemixingInProgress: false };
+  }
+
   componentWillMount() {
     this.onUserVisit();
     if (performance.navigation.type === 2) {
@@ -51,6 +55,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    this.props.fetchUserPreferencesWithoutUserCheck();
     this.authAndLoadPage();
     if (this.projectID() === 'QJSEsqTOS') {
       const hlp = initHelpHero('1Dyo05WliMY');
@@ -117,21 +122,6 @@ class App extends React.Component {
     } else if (this.projectID()) {
       this.getPage();
     }
-    this.props.fetchCurrentUser()
-      .then(() => {
-        this.props.fetchUserPreferences();
-      });
-  }
-
-  authLoadedPage = () => {
-    if (this.projectID()) {
-      this.props.setEditAccess(false);
-      const projectID = this.projectID();
-      axios.get(`/authenticate/${projectID}`)
-        .then((res1) => {
-          this.props.setEditAccess(res1.data);
-        });
-    }
   }
 
   getPageTitle = () => {
@@ -193,14 +183,9 @@ class App extends React.Component {
   }
 
   getPage = () => {
-    this.props.setEditAccess(false);
     const projectID = this.projectID();
     this.props.loadCurrentPage(projectID);
     this.props.setPreviewMode(true);
-    axios.get(`/authenticate/${projectID}`)
-      .then((res1) => {
-        this.props.setEditAccess(res1.data);
-      });
   }
 
   projectID = () => {
@@ -245,6 +230,7 @@ class App extends React.Component {
       <Modal size="small" isOpen={this.props.isConfirmUserModalOpen} closeModal={this.props.closeConfirmUserModal}>
         <ConfirmUser location={this.props.location} />
       </Modal>
+
       <Modal size="small" isOpen={this.props.isShareModalOpen} closeModal={this.props.closeShareModal}>
         <ShareModal pageTitle={this.props.pageTitle} />
       </Modal>
@@ -294,6 +280,16 @@ class App extends React.Component {
   }
 
   render() {
+    const url = new URL(window.location.href);
+    if (this.props.userLoading === false && this.props.pageLoading === false && url.searchParams.get('autoRemix') === 'true' &&
+      this.projectID() && this.props.canEdit === false && this.state.autoRemixingInProgress === false) {
+      if (this.props.name) {
+        this.setState({ autoRemixingInProgress: true });
+        this.buildPageDataAndRemixPage();
+      } else {
+        this.props.viewLoginModal();
+      }
+    }
     return (
       <div
         role="presentation"
@@ -341,12 +337,12 @@ App.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   // eslint-disable-next-line react/no-unused-prop-types
   isPeblPublished: PropTypes.bool.isRequired,
+  pageLoading: PropTypes.bool.isRequired,
 
   canEdit: PropTypes.bool.isRequired,
 
   // user
   name: PropTypes.string.isRequired,
-  fetchCurrentUser: PropTypes.func.isRequired,
   isBrowsingPebl: PropTypes.bool.isRequired,
   isRemixInProgress: PropTypes.bool.isRequired,
   // eslint-disable-next-line react/no-unused-prop-types
@@ -356,6 +352,7 @@ App.propTypes = {
   isPagesModalOpen: PropTypes.bool.isRequired,
   isForgotModalOpen: PropTypes.bool.isRequired,
   isResetModalOpen: PropTypes.bool.isRequired,
+  userLoading: PropTypes.bool.isRequired,
 
   isExamplesModalOpen: PropTypes.bool.isRequired,
   closeExamplesModal: PropTypes.func.isRequired,
@@ -365,7 +362,6 @@ App.propTypes = {
   updatePage: PropTypes.func.isRequired,
   setPageId: PropTypes.func.isRequired,
 
-  setEditAccess: PropTypes.func.isRequired,
   setPreviewMode: PropTypes.func.isRequired,
 
   viewPagesModal: PropTypes.func.isRequired,
@@ -392,8 +388,8 @@ App.propTypes = {
   closeAddDescriptionModal: PropTypes.func.isRequired,
 
   // preferences
-  fetchUserPreferences: PropTypes.func.isRequired,
   loadCurrentPage: PropTypes.func.isRequired,
+  fetchUserPreferencesWithoutUserCheck: PropTypes.func.isRequired,
 
   // navigation
   pageHeading: PropTypes.string.isRequired,
@@ -418,6 +414,7 @@ function mapStateToProps(state) {
     isRemixInProgress: state.page.isRemixInProgress,
     isPeblPublished: state.page.isPublished,
     isLiveRefreshPageModalOpen: state.page.isLiveRefreshPageModalOpen,
+    pageLoading: state.page.loading,
 
     isOldVersionShowing: state.pageVersion.isOldVersionShowing,
 
@@ -425,6 +422,7 @@ function mapStateToProps(state) {
     name: state.user.name,
     userType: state.user.type,
     isBrowsingPebl: state.user.isBrowsingPebl,
+    userLoading: state.user.loading,
 
     isAccountDropdownOpen: state.mainToolbar.isAccountDropdownOpen,
     isAddDescriptionModalOpen: state.mainToolbar.isAddDescriptionModalOpen,
