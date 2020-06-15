@@ -1,6 +1,7 @@
 import { buildClassroomDetailFromRequest, buildClassroomMember } from '../models/creator/classroomDetailCreator';
 import ClassroomDetail from '../models/ClassroomDetail';
 import ClassroomMember from '../models/ClassroomMember';
+import ClassroomGrade from '../models/ClassroomGrade';
 
 export async function createClassroomDetail(req, res) {
   try {
@@ -8,6 +9,24 @@ export async function createClassroomDetail(req, res) {
     const savedClassroomDetail = await classroomDetail.save();
     await buildClassroomMember(req.user._id.toString(), savedClassroomDetail._doc.id, 'teacher' ).save();
     return res.status(200).send({ ...savedClassroomDetail._doc });
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
+export async function getClassroomGrades(req, res) {
+  try {
+    const grades = await ClassroomGrade.find();
+    return res.status(200).json(grades);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
+export async function saveClassroomGrades(req, res) {
+  try {
+    const grade = new ClassroomGrade({name: req.body.name}).save();
+    return res.status(200).send();
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }

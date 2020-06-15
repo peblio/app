@@ -6,4 +6,6 @@ classroomRoutes.route('/classroomDetail').post(classroomController.createClassro
 classroomRoutes.route('/classroomDetail').get(classroomController.getAllMyClassroomDetails);
 classroomRoutes.route('/classroomDetail/:id').patch(classroomController.joinClassroom);
 classroomRoutes.route('/classroomDetail/:id').get(classroomController.getClassroomDetail);
+classroomRoutes.route('/classroomGrade').get(classroomController.getClassroomGrades);
+classroomRoutes.route('/classroomGrade').post(classroomController.saveClassroomGrades);
 module.exports = classroomRoutes;
