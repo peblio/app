@@ -40,10 +40,26 @@ export function getClassroomGrades(req, res) {
   }
 }
 
-export function saveClassroomGrades(req, res) {
+export function getClassroomTopics(req, res) {
   if (!req.user) {
     return res.status(403).send({ error: 'Please log in first' });
   } else {
-    return classroomService.saveClassroomGrades(req, res);
+    return classroomService.getClassroomTopics(req, res);
+  }
+}
+
+export function saveClassroomGrade(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  } else {
+    return classroomService.saveClassroomGrade(req, res);
+  }
+}
+
+export function saveClassroomTopic(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  } else {
+    return classroomService.saveClassroomTopic(req, res);
   }
 }
