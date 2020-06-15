@@ -12,4 +12,7 @@ classroomRoutes.route('/classroomGrade').post(classroomController.saveClassroomG
 
 classroomRoutes.route('/classroomTopic/:id').get(classroomController.getClassroomTopics);
 classroomRoutes.route('/classroomTopic').post(classroomController.saveClassroomTopic);
+
+classroomRoutes.route('/classroomAssignment').post(classroomController.saveClassroomAssignment);
+classroomRoutes.route('/classroomAssignment/:id').get(classroomController.getClassroomAssignment);
 module.exports = classroomRoutes;
