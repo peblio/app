@@ -2,6 +2,7 @@ import { buildClassroomDetailFromRequest, buildClassroomMember } from '../models
 import ClassroomDetail from '../models/ClassroomDetail';
 import ClassroomMember from '../models/ClassroomMember';
 import ClassroomGrade from '../models/ClassroomGrade';
+import ClassroomTopic from '../models/ClassroomTopic';
 
 export async function createClassroomDetail(req, res) {
   try {
@@ -23,10 +24,28 @@ export async function getClassroomGrades(req, res) {
   }
 }
 
-export async function saveClassroomGrades(req, res) {
+export async function getClassroomTopics(req, res) {
   try {
-    const grade = new ClassroomGrade({name: req.body.name}).save();
-    return res.status(200).send();
+    const classroomTopics = await ClassroomTopic.find({classroomId: req.params.id});
+    return res.status(200).json(classroomTopics);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
+export async function saveClassroomGrade(req, res) {
+  try {
+    const grade = await new ClassroomGrade({name: req.body.name}).save();
+    return res.status(200).json(grade);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
+export async function saveClassroomTopic(req, res) {
+  try {
+    const classroomTopic = await new ClassroomTopic({name: req.body.name, classroomId: req.body.classroomId}).save();
+    return res.status(200).json(classroomTopic);
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }
