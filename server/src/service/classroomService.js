@@ -1,8 +1,9 @@
-import { buildClassroomDetailFromRequest, buildClassroomMember } from '../models/creator/classroomDetailCreator';
+import { buildClassroomDetailFromRequest, buildClassroomMember, buildClassroomAssignment } from '../models/creator/classroomDetailCreator';
 import ClassroomDetail from '../models/ClassroomDetail';
 import ClassroomMember from '../models/ClassroomMember';
 import ClassroomGrade from '../models/ClassroomGrade';
 import ClassroomTopic from '../models/ClassroomTopic';
+import ClassroomAssignment from '../models/ClassroomAssignment';
 
 export async function createClassroomDetail(req, res) {
   try {
@@ -46,6 +47,25 @@ export async function saveClassroomTopic(req, res) {
   try {
     const classroomTopic = await new ClassroomTopic({name: req.body.name, classroomId: req.body.classroomId}).save();
     return res.status(200).json(classroomTopic);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
+export async function saveClassroomAssignment(req, res) {
+  try {
+    const classroomAssignment = buildClassroomAssignment(req);
+    const savedClassroomAssignment = await classroomAssignment.save();
+    return res.status(200).json(savedClassroomAssignment);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
+export async function getClassroomAssignment(req, res) {
+  try {
+    const classroomAssignment = await ClassroomAssignment.findOne({id: req.params.id});
+    return res.status(200).json(classroomAssignment);
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }

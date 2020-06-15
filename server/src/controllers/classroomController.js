@@ -63,3 +63,19 @@ export function saveClassroomTopic(req, res) {
     return classroomService.saveClassroomTopic(req, res);
   }
 }
+
+export function saveClassroomAssignment(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  } else {
+    return classroomService.saveClassroomAssignment(req, res);
+  }
+}
+
+export function getClassroomAssignment(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  } else {
+    return classroomService.getClassroomAssignment(req, res);
+  }
+}

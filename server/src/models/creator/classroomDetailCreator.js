@@ -1,5 +1,6 @@
 import ClassroomDetail from "../ClassroomDetail";
 import ClassroomMember from "../ClassroomMember";
+import ClassroomAssignment from "../ClassroomAssignment";
 import shortid from 'shortid';
 
 export function buildClassroomDetailFromRequest(request, userId) {
@@ -13,6 +14,22 @@ export function buildClassroomDetailFromRequest(request, userId) {
     id: shortid.generate()
   });
   return classroomDetail;
+}
+
+export function buildClassroomAssignment(request) {
+  const classroomAssignment = new ClassroomAssignment({
+    user: request.user._id.toString(),
+    title: request.body.title,
+    id: shortid.generate(),
+    classroomId: request.body.classroomId,
+    topicId: request.body.topicId,
+    dueDate: request.body.dueDate , //send ISO date using new Date().toISOString()
+    description: request.body.description,
+    peblUrls: request.body.peblUrls,
+    urls: request.body.urls,
+    isPublished: request.body.isPublished,
+  });
+  return classroomAssignment;
 }
 
 export function buildClassroomMember(userId, classroomId, role) {
