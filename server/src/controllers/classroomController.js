@@ -7,3 +7,19 @@ export function createClassroomDetail(req, res) {
     return classroomService.createClassroomDetail(req, res);
   }
 }
+
+export function getAllMyClassroomDetails(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  } else {
+    return classroomService.getAllMyClassroomDetails(req, res);
+  }
+}
+
+export function getClassroomDetail(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  } else {
+    return classroomService.getClassroomDetail(req, res);
+  }
+}
