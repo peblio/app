@@ -19,7 +19,8 @@ export function buildClassroomMember(userId, classroomId, role) {
   const classroomMember = new ClassroomMember({
     user: userId,
     classroomId: classroomId,
-    role: role
+    role: role,
+    isActive: true
   });
   return classroomMember;
 }
