@@ -38,3 +38,19 @@ export async function getClassroomDetail(req, res) {
     return res.status(500).send({ error: err.message });
   }
 }
+
+export async function joinClassroom(req, res) {
+  try {
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: req.params.id
+    });
+    if(classroomMember) {
+      return res.status(200).send();
+    }
+    await buildClassroomMember(req.user._id.toString(), req.params.id, 'student' ).save();
+    return res.status(200).send();
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}

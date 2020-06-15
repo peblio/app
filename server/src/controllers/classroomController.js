@@ -23,3 +23,11 @@ export function getClassroomDetail(req, res) {
     return classroomService.getClassroomDetail(req, res);
   }
 }
+
+export function joinClassroom(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  } else {
+    return classroomService.joinClassroom(req, res);
+  }
+}
