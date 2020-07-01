@@ -15,4 +15,5 @@ classroomRoutes.route('/classroomTopic').post(classroomController.saveClassroomT
 
 classroomRoutes.route('/classroomAssignment').post(classroomController.saveClassroomAssignment);
 classroomRoutes.route('/classroomAssignment/:id').get(classroomController.getClassroomAssignment);
+classroomRoutes.route('/classroomAllAssignments/:id').get(classroomController.getAllAssignmentsInClassroom);
 module.exports = classroomRoutes;
