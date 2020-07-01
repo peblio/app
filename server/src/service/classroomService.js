@@ -71,6 +71,15 @@ export async function getClassroomAssignment(req, res) {
   }
 }
 
+export async function getAllAssignmentsInClassroom(req, res) {
+  try {
+    const classroomAssignments = await ClassroomAssignment.find({classroomId: req.params.id});
+    return res.status(200).json(classroomAssignments);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
 export async function getAllMyClassroomDetails(req, res) {
   try {
     const myClassroomDetails = await ClassroomDetail.find({
