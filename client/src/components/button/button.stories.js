@@ -6,13 +6,23 @@ export default { title: 'Button' };
 export const closeButton = () => <Button>Close</Button>;
 
 export const primaryButton = () => (
-  <Button className="primary">
-    Create class
-  </Button>
+  <React.Fragment>
+    <Button className="primary">
+      Create class
+    </Button>
+    <Button className="primary" disabled>
+      Disabled Primary
+    </Button>
+  </React.Fragment>
 );
 
 export const secondaryButton = () => (
-  <Button className="secondary">
-    Cancel
-  </Button>
+  <React.Fragment>
+    <Button className="secondary">
+      Create class
+    </Button>
+    <Button className="secondary" disabled>
+      Disabled Secondary
+    </Button>
+  </React.Fragment>
 );

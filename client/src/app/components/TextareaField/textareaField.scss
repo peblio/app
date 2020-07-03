@@ -17,6 +17,7 @@
     border: solid 1px $border-color;
     background-color: #f7f8f8;
     font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
 
     &:focus{
       outline: none;
