@@ -1,0 +1,17 @@
+.button{
+  padding: 10px 16px;
+  border: none;
+  border-radius: 3px;
+  font-family: Roboto;
+  font-size: 16px;
+
+  &.secondary{
+    background: none;
+    border: solid 1px #ccd0d2;
+  }
+
+  &.primary{
+    background: #008575;
+    color: #fff;
+  }
+}

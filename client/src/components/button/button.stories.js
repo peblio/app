@@ -1,22 +1,18 @@
 import React from 'react';
-import { Button } from '@storybook/react/demo';
+import Button from '../../app/components/Button/Button';
 
 export default { title: 'Button' };
 
 export const closeButton = () => <Button>Close</Button>;
 
-export const actionButton = () => (
-  <Button>
-    <span role="img" aria-label="so cool">
-      Get Started
-    </span>
+export const primaryButton = () => (
+  <Button className="primary">
+    Create class
   </Button>
 );
 
-export const insertButton = () => (
-  <Button>
-    <span role="img" aria-label="so cool">
-      Editor
-    </span>
+export const secondaryButton = () => (
+  <Button className="secondary">
+    Cancel
   </Button>
 );
