@@ -11,7 +11,11 @@ const InputField = ({
   ...props
 }) => {
   return (
-    <div className='textarea-field' style={{ width: containerWidth }}>
+    <div
+      className='textarea-field'
+      style={{ width: containerWidth }}
+      {...props}
+    >
       <label htmlFor={label} className='textarea-field__label'>
         {label}
       </label>
@@ -21,8 +25,7 @@ const InputField = ({
         className='textarea-field__text-box'
         onChange={(e) => setState(e.target.value)}
         placeholder={placeholder}
-        style={{height: textareaHeight}}
-        {...props}
+        style={{ height: textareaHeight }}
       />
     </div>
   );

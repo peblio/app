@@ -10,6 +10,7 @@
   display: flex;
   align-items: center;
   position: relative;
+  box-sizing: border-box;
 
   svg{
     margin-left: auto;
@@ -25,6 +26,7 @@
     border-radius: 4px;
     overflow-y: auto;
     border: solid 1px $border-color;
+    background-color: #fff;
 
     #{$root}__option{
       box-sizing: border-box;

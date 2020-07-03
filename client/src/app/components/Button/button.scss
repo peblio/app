@@ -8,10 +8,19 @@
   &.secondary{
     background: none;
     border: solid 1px #ccd0d2;
+    &:disabled{
+      background: #e4e4e4;
+      border: solid 1px #e4e4e4;
+      color: darken($color: #e4e4e4, $amount: 15%);
+    }
   }
 
   &.primary{
     background: #008575;
     color: #fff;
+
+    &:disabled{
+      opacity: 0.5;
+    }
   }
 }

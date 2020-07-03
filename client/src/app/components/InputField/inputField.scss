@@ -16,6 +16,7 @@
     border-radius: 4px;
     border: solid 1px $border-color;
     background-color: #f7f8f8;
+    box-sizing: border-box;
 
     &:focus{
       outline: none;
