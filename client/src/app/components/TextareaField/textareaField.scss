@@ -1,4 +1,4 @@
-.input-field{
+.textarea-field{
   display: flex;
   flex-direction: column;
   font-family: 'Roboto', sans-serif;
@@ -10,9 +10,9 @@
 
   &__text-box{
     $border-color : #ccd0d2;
+    resize: none;
     font-size: 16px;
-    height: 40px;
-    padding-left: 10px;
+    padding: 10px;
     border-radius: 4px;
     border: solid 1px $border-color;
     background-color: #f7f8f8;
