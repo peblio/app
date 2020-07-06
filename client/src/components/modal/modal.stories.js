@@ -48,7 +48,7 @@ export const modal = () => {
               value: 7
             },
             {
-              name: '6th',
+              name: '6th Standard',
               value: 6
             }
           ]}
