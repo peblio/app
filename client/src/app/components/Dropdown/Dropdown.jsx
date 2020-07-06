@@ -43,13 +43,13 @@ const Dropdown = ({
   return (
     <div
       className='dropdown'
-      onMouseEnter={handleOnMouseEnter}
-      onMouseLeave={handleOnMouseExit}
       {...props}
     >
       <button
         ref={textRef}
         className='dropdown__trigger'
+        onMouseEnter={handleOnMouseEnter}
+        onMouseLeave={handleOnMouseExit}
         onClick={
           () => {
             setTriggered(true);
@@ -90,13 +90,20 @@ const Dropdown = ({
       {triggered && (
         <div className='dropdown__options'>
           {options.map(option => (
-            <button
-              className='dropdown__option'
+            <div
+              className="dropdown__option-container"
               key={option.value}
-              onClick={_ => handleSelect(option)}
             >
-              {option.name}
-            </button>
+              <button
+                className='dropdown__option'
+                onClick={_ => handleSelect(option)}
+              >
+                {option.name}
+              </button>
+              <span className="dropdown__tooltip dropdown__tooltip--option">
+                {option.name}
+              </span>
+            </div>
           ))}
         </div>
       )}
