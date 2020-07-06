@@ -6,9 +6,9 @@ export default { title: 'Dropdown' };
 export const clasroom = () => {
   const [value, setValue] = useState('');
   return (
-    <Dropdown 
-      placeholder="Grade"
-      style={{width: '100px'}} 
+    <Dropdown
+      placeholder="Gradessssss"
+      style={{ width: '100px' }}
       state={value}
       setState={setValue}
       options={[
@@ -23,12 +23,13 @@ export const clasroom = () => {
         {
           name: '8th',
           value: 8
-        },{
+        },
+        {
           name: '7th',
           value: 7
         },
         {
-          name: '6th',
+          name: '6th Standard',
           value: 6
         }
       ]}
