@@ -9,8 +9,6 @@
   align-items: center;
   position: relative;
   box-sizing: border-box;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   
   &:focus-within{
     box-shadow: 0px 0px 4px darken($color: $border-color, $amount: 0.1);
@@ -27,7 +25,7 @@
     white-space: nowrap;
     text-align: left;
     text-overflow: ellipsis;
-    overflow: hidden;
+    overflow-x: hidden;
     cursor: pointer;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
@@ -48,19 +46,23 @@
   &__tooltip{
     opacity: 1;
     position: absolute;
-    top: 90%;
-    left: 15%;
+    z-index: 5000;
+    top: 10%;
+    left: 90%;
     padding: 8px 10px;
     background: #333;
     color: white;
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
     border-radius: 4px;
+    text-align: center;
+    opacity: 0;
+    animation: fade-in 300ms ease 500ms 1 forwards;
 
     &::before{
       content: '';
-      top: -5px;
-      left: 10px;
+      top: 10px;
+      left: -5px;
       transform: rotate(45deg);
       position: absolute;
       height: 10px;
@@ -71,46 +73,75 @@
   }
 
   &__options{
-    display: flex;
-    flex-direction: column;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     list-style: none;
     box-sizing: border-box;
     position: absolute;
+    overflow-x: visible;
     top: calc(100% + 8px);
     left: 0;
-    width: 100%;
-    max-height: 120px;
+    max-width: 100%;
     border-radius: 4px;
-    overflow-y: auto;
+    z-index: 5;
     border: solid 1px $border-color;
     background-color: #fff;
     box-shadow: 4px 4px 20px rgba($color: #000000, $alpha: 0.1);
     
-    #{$root}__option{
-      text-align: left;
-      padding: 10px 8px;
-      min-height: 40px;
-      margin: 0;
-      box-sizing: border-box;
-      margin: 0;
-      padding: 8px 10px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: 'Roboto', sans-serif;
-      font-size: 16px;
-      &:focus{
-        outline: none;
+    #{$root}__option-container{
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      width: 100%;
+
+      #{$root}__tooltip{
+        animation: none;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 300ms ease;
+      }
+      
+      &:hover .dropdown__tooltip{
+        opacity: 1;
+        pointer-events: all;
+        transition-delay: 500ms;
       }
 
-      &:hover, &:focus {
-        background: darken($color: #ffffff, $amount: 5%);
+      #{$root}__option{
+        text-align: left;
+        padding: 10px 8px;
+        min-height: 40px;
+        margin: 0;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 8px 10px;
+        overflow-x: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        background: none;
+        border: none;
+        z-index: 0;
+        cursor: pointer;
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        &:focus{
+          outline: none;
+        }
+  
+        &:hover, &:focus {
+          background: darken($color: #ffffff, $amount: 5%);
+        }
       }
     }
+  }
+}
+
+
+@keyframes fade-in{
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
   }
 }
