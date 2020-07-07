@@ -7,7 +7,7 @@ const InputField = ({
   state,
   placeholder,
   containerWidth,
-  setState,
+  onChange,
   ...props
 }) => (
   <div className='input-field' style={{ width: containerWidth }}>
@@ -18,7 +18,7 @@ const InputField = ({
       name={label}
       value={state}
       className='input-field__text-box'
-      onChange={e => setState(e.target.value)}
+      onChange={onChange}
       placeholder={placeholder}
       {...props}
     />
@@ -28,7 +28,7 @@ const InputField = ({
 InputField.propTypes = {
   label: PropTypes.string.isRequired,
   state: PropTypes.node.isRequired,
-  setState: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
   containerWidth: PropTypes.string.isRequired,
 };

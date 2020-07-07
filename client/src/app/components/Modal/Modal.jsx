@@ -13,7 +13,7 @@ const Modal = ({
 }) => (
   <div className="modal">
     <div className="modal__overlay">
-      <div className="modal__box" style={{width: modalWidth}}>
+      <div className="modal__box" style={{ width: modalWidth }}>
         <div className="modal__header">
           {header}
         </div>

@@ -7,7 +7,7 @@ const InputField = ({
   state,
   placeholder,
   containerWidth,
-  setState,
+  onChange,
   textareaHeight,
   ...props
 }) => (
@@ -23,7 +23,7 @@ const InputField = ({
       name={label}
       value={state}
       className='textarea-field__text-box'
-      onChange={e => setState(e.target.value)}
+      onChange={onChange}
       placeholder={placeholder}
       style={{ height: textareaHeight }}
     />
@@ -33,7 +33,7 @@ const InputField = ({
 InputField.propTypes = {
   label: PropTypes.string.isRequired,
   state: PropTypes.node.isRequired,
-  setState: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
   containerWidth: PropTypes.string.isRequired,
   textareaHeight: PropTypes.string.isRequired,

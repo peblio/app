@@ -8,23 +8,23 @@ export const clasroom = () => {
   return (
     <InputField
       state={value}
-      setState={setValue}
+      onChange={(e) => { setValue(e.target.value); }}
       label="*Class Name"
       placeholder="enter class name"
       containerWidth="813px"
     />
-  )
-}
+  );
+};
 
 export const subject = () => {
   const [value, setValue] = useState('');
   return (
     <InputField
       state={value}
-      setState={setValue}
+      onChange={(e) => { setValue(e.target.value); }}
       label="Subject"
       placeholder="enter subject"
       containerWidth="199px"
     />
-  )
-}
+  );
+};

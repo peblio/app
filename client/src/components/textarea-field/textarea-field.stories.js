@@ -8,11 +8,11 @@ export const clasroom = () => {
   return (
     <TextareaField
       state={value}
-      setState={setValue}
+      onChange={(e) => { setValue(e.target.value); }}
       label="Description"
       placeholder="type description..."
       containerWidth="813px"
       textareaHeight="96px"
     />
-  )
-}
+  );
+};
