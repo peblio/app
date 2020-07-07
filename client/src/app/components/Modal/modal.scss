@@ -16,9 +16,9 @@
     box-sizing: border-box;
     position: absolute;
     border-radius: 3px;
-    top: 50%;
+    top: 112px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     width: 500px;
     background: white;
     #{$root}__header{
