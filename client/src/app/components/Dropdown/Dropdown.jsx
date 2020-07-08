@@ -50,6 +50,8 @@ const Dropdown = ({
         className='dropdown__trigger'
         onMouseEnter={handleOnMouseEnter}
         onMouseLeave={handleOnMouseExit}
+        onFocus={handleOnMouseEnter}
+        onBlur={handleOnMouseExit}
         onClick={
           () => {
             setTriggered(true);
@@ -61,6 +63,10 @@ const Dropdown = ({
       </button>
       <button
         className='dropdown__trigger dropdown__trigger--svg'
+        onMouseEnter={handleOnMouseEnter}
+        onMouseLeave={handleOnMouseExit}
+        onFocus={handleOnMouseEnter}
+        onBlur={handleOnMouseExit}
         onClick={
           () => {
             setTriggered(true);
