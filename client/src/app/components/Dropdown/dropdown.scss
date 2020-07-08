@@ -101,7 +101,7 @@
         transition: opacity 300ms ease;
       }
       
-      &:hover .dropdown__tooltip{
+      &:hover #{$root}__tooltip, &:focus-within #{$root}__tooltip{
         opacity: 1;
         pointer-events: all;
         transition-delay: 500ms;
