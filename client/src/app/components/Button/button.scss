@@ -5,12 +5,18 @@
   font-family: Roboto;
   font-size: 16px;
   cursor: pointer;
+  transition: background 300ms ease, border 300ms ease;
 
   &.secondary{
-    background: none;
     border: solid 1px #ccd0d2;
+    background-color: #ffffff;
+
+    &:hover{
+      border: solid 1px #008575;
+    }
+  
     &:disabled{
-      background: #e4e4e4;
+      background: #f7f7f7;
       border: solid 1px #e4e4e4;
       color: darken($color: #e4e4e4, $amount: 15%);
     }
@@ -19,6 +25,10 @@
   &.primary{
     background: #008575;
     color: #fff;
+
+    &:not(:disabled):hover{
+      background: #00564c;
+    }
 
     &:disabled{
       opacity: 0.5;
