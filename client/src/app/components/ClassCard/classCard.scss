@@ -1,0 +1,73 @@
+.class-card{
+  $root: &;
+  width: 200px;
+  height: 215px;
+  padding: 16px;
+  border-radius: 3.9px;
+  box-shadow: 0 7.8px 10.5px 0 rgba(0, 0, 0, 0.05);
+  border: solid 1px #f2f3f4;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  transition: box-shadow 300ms ease, border 300ms ease;
+
+  display: flex;
+  flex-direction: column;
+
+  &:hover, &:focus{
+    box-shadow: 0 7.8px 10.5px 0 rgba(0, 0, 0, 0.22);
+    border: solid 1px #008575;
+    outline: none;
+  }
+
+  &__code{
+    background: none;
+    border: none;
+    margin-left: auto;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: bold;
+    color: #667378;
+    margin-right: -5px;
+    cursor: pointer;
+    box-sizing: border-box;
+    padding: 0;
+
+    &:focus{
+      outline: none;
+    }
+    img{
+      margin-left: 4px;
+    }
+  }
+
+  &__name{
+    margin-top: 28px;
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  &__subject{
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    margin-top: 8px;
+  }
+
+
+  &__card-footer{
+    margin-top: auto;
+    display: flex;
+    font-family: Roboto;
+    font-size: 12px;
+    color: #667378;
+    align-items: center;
+
+    .circle{
+      height: 4px;
+      width: 4px;
+      border-radius: 50%;
+      background: #667378;
+      margin: 0 4px;
+    }
+  }
+}
