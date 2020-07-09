@@ -3,11 +3,9 @@ import Button from '../../app/components/Button/Button';
 
 export default { title: 'Button' };
 
-export const closeButton = () => <Button>Close</Button>;
-
 export const primaryButton = () => (
   <React.Fragment>
-    <Button className="primary">
+    <Button className="primary" style={{ marginRight: '8px' }}>
       Create class
     </Button>
     <Button className="primary" disabled>
@@ -18,7 +16,7 @@ export const primaryButton = () => (
 
 export const secondaryButton = () => (
   <React.Fragment>
-    <Button className="secondary">
+    <Button className="secondary" style={{ marginRight: '8px' }}>
       Create class
     </Button>
     <Button className="secondary" disabled>
