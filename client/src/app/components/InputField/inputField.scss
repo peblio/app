@@ -17,10 +17,14 @@
     border: solid 1px $border-color;
     background-color: #f7f8f8;
     box-sizing: border-box;
+    transition: border 300ms ease;
+
+    &:hover, &:focus{
+      border: solid 1px #009887;
+    }
 
     &:focus{
       outline: none;
-      box-shadow: 0px 0px 4px darken($color: $border-color, $amount: 0.1);
     }
 
     &::placeholder{

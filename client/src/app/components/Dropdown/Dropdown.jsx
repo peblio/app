@@ -10,6 +10,7 @@ const Dropdown = ({
   setState,
   options,
   placeholder,
+  disabled,
   ...props
 }) => {
   const [triggered, setTriggered] = useState(false);
@@ -46,37 +47,26 @@ const Dropdown = ({
       {...props}
     >
       <button
-        ref={textRef}
         className='dropdown__trigger'
         onMouseEnter={handleOnMouseEnter}
         onMouseLeave={handleOnMouseExit}
         onFocus={handleOnMouseEnter}
         onBlur={handleOnMouseExit}
+        disabled={disabled}
         onClick={
           () => {
-            setTriggered(true);
+            setTriggered(value => !value);
           }}
       >
-        <span>
+        <span ref={textRef}>
           {selected}
         </span>
-      </button>
-      <button
-        className='dropdown__trigger dropdown__trigger--svg'
-        onMouseEnter={handleOnMouseEnter}
-        onMouseLeave={handleOnMouseExit}
-        onFocus={handleOnMouseEnter}
-        onBlur={handleOnMouseExit}
-        onClick={
-          () => {
-            setTriggered(true);
-          }}
-      >
         <svg
           width='24'
           height='24'
           viewBox='0 0 32 32'
           fill='none'
+          className={`${triggered && 'triggered'}`}
           xmlns='http://www.w3.org/2000/svg'
         >
           <path
@@ -124,11 +114,16 @@ const clickOutsideConfig = {
 Dropdown.propTypes = {
   state: PropTypes.node.isRequired,
   setState: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(PropTypes.objectOf({
-    name: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.bool]).isRequired,
   })).isRequired,
   placeholder: PropTypes.string.isRequired,
+  disabled: PropTypes.bool
+};
+
+Dropdown.defaultProps = {
+  disabled: false
 };
 
 export default onClickOutside(Dropdown, clickOutsideConfig);
