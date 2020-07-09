@@ -71,3 +71,38 @@ export const disabledDropdown = () => {
     />
   );
 };
+
+export const buttonDropdown = () => {
+  const [value, setValue] = useState('');
+  return (
+    <Dropdown
+      placeholder="Gradessssss"
+      style={{ width: '146px' }}
+      state={value}
+      setState={setValue}
+      className="btn"
+      options={[
+        {
+          name: '10th',
+          value: 10
+        },
+        {
+          name: '9th',
+          value: 9
+        },
+        {
+          name: '8th',
+          value: 8
+        },
+        {
+          name: '7th',
+          value: 7
+        },
+        {
+          name: '6th Standard',
+          value: 6
+        }
+      ]}
+    />
+  );
+};

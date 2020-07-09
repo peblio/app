@@ -4,14 +4,12 @@ import ClassCard from '../../app/components/ClassCard/ClassCard';
 export default { title: 'Class Card' };
 
 export const classCard = () => (
-  <React.Fragment>
-    <ClassCard
-      tabIndex="0"
-      classCode="Qwe123p"
-      classTitle="Class Title"
-      subject="Subject"
-      grade="6th"
-      studentCount="30"
-    />
-  </React.Fragment>
+  <ClassCard
+    tabIndex="0"
+    classCode="Qwe123p"
+    classTitle="Class Title"
+    subject="Subject"
+    grade="6th"
+    studentCount="30"
+  />
 );
