@@ -11,6 +11,7 @@ const Dropdown = ({
   options,
   placeholder,
   disabled,
+  className,
   ...props
 }) => {
   const [triggered, setTriggered] = useState(false);
@@ -43,11 +44,11 @@ const Dropdown = ({
 
   return (
     <div
-      className='dropdown'
+      className={`dropdown ${className || ' '}`}
       {...props}
     >
       <button
-        className='dropdown__trigger'
+        className={`dropdown__trigger ${className || ' '}`}
         onMouseEnter={handleOnMouseEnter}
         onMouseLeave={handleOnMouseExit}
         onFocus={handleOnMouseEnter}
@@ -61,6 +62,11 @@ const Dropdown = ({
         <span ref={textRef}>
           {selected}
         </span>
+        {
+          className && (
+            <span className="dropdown__divider"></span>
+          )
+        }
         <svg
           width='24'
           height='24'
@@ -71,7 +77,6 @@ const Dropdown = ({
         >
           <path
             d='M9.33334 13.3333L16 20L22.6667 13.3333H9.33334Z'
-            fill='black'
           />
         </svg>
       </button>
@@ -119,11 +124,13 @@ Dropdown.propTypes = {
     value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.bool]).isRequired,
   })).isRequired,
   placeholder: PropTypes.string.isRequired,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  className: PropTypes.string
 };
 
 Dropdown.defaultProps = {
-  disabled: false
+  disabled: false,
+  className: ''
 };
 
 export default onClickOutside(Dropdown, clickOutsideConfig);

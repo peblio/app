@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import './classCard.scss';
@@ -14,7 +14,6 @@ const ClassCard = ({
   studentCount,
   ...props
 }) => {
-
   const onCodeCopyClick = () => {
     navigator.clipboard.writeText(classCode)
       .then(() => {
