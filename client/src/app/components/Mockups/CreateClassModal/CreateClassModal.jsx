@@ -28,8 +28,6 @@ export const CreateClassroomModal = () => {
     }
   };
 
-  // could move to utility functions
-
   return (
     <Modal header="Create Class" modalWidth="893px" modalBodyStyle={{ position: 'relative' }}>
       <div style={{

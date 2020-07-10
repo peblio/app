@@ -1,0 +1,30 @@
+.progress-bar{
+  $root: &;
+  font-family: 'Roboto', sans-serif;
+  color: #667378;
+  box-sizing: border-box;
+  
+  &__label{
+    margin-bottom: 13px;
+  }
+
+  &__total{
+    width: 100%;
+    height: 4px;
+    display: flex;
+    background: #f7f7f7;
+    box-sizing: border-box;
+
+    #{$root}__completed{
+      height: 4px;
+      background: #006a98;
+      box-sizing: border-box;
+    }
+  }
+
+  &__details{
+    margin-top: 4px;
+    font-size: 10px;
+    text-align: center;
+  }
+}
