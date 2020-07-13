@@ -22,7 +22,12 @@ const Dropdown = ({
   const handleSelect = (option) => {
     queueMicrotask(() => setSelected(option.name));
     queueMicrotask(() => setTriggered(false));
-    queueMicrotask(() => setState(option.value));
+    if (option.onClick) {
+      option.onClick();
+    }
+    if (setState) {
+      queueMicrotask(() => setState(option.value));
+    }
     if (setShowTooltip) {
       setShowTooltip(false);
     }
@@ -97,7 +102,7 @@ const Dropdown = ({
             >
               <button
                 className='dropdown__option'
-                onClick={_ => handleSelect(option)}
+                onClick={() => handleSelect(option)}
               >
                 {option.name}
               </button>
@@ -122,6 +127,7 @@ Dropdown.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.bool]).isRequired,
+    onClick: PropTypes.func
   })).isRequired,
   placeholder: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
