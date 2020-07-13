@@ -11,9 +11,14 @@ const InputField = ({
   ...props
 }) => (
   <div className='input-field' style={{ width: containerWidth }}>
-    <label htmlFor={label} className='input-field__label'>
-      {label}
-    </label>
+    {
+      label &&
+      (
+        <label htmlFor={label} className='input-field__label'>
+          {label}
+        </label>
+      )
+    }
     <input
       name={label}
       value={state}
@@ -26,11 +31,15 @@ const InputField = ({
 );
 
 InputField.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   state: PropTypes.node.isRequired,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
   containerWidth: PropTypes.string.isRequired,
+};
+
+InputField.defaultProps = {
+  label: ''
 };
 
 export default InputField;
