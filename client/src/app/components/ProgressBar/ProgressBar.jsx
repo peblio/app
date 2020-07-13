@@ -9,12 +9,13 @@ const ProgressBar = ({
   containerWidth,
   label,
   units,
-  showDetails
+  showDetails,
+  style
 }) => {
   const completionWidthCalc = (comp, tot) => (completed / total) * 100;
 
   return (
-    <div className='progress-bar' style={{ width: containerWidth }}>
+    <div className='progress-bar' style={{ width: containerWidth, ...style }}>
       {label && <div className='progress-bar__label'>{label}</div>}
       <div className='progress-bar__total'>
         <span
@@ -40,13 +41,15 @@ ProgressBar.propTypes = {
   containerWidth: PropTypes.string.isRequired,
   label: PropTypes.string,
   units: PropTypes.number,
-  showDetails: PropTypes.bool
+  showDetails: PropTypes.bool,
+  style: PropTypes.node
 };
 
 ProgressBar.defaultProps = {
   label: '',
   units: 'units',
-  showDetails: true
+  showDetails: true,
+  style: {}
 };
 
 export default ProgressBar;

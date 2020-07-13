@@ -29,13 +29,15 @@
     color: #667378;
     margin-right: -5px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
     box-sizing: border-box;
     padding: 0;
 
     &:focus{
       outline: none;
     }
-    img{
+    svg{
       margin-left: 4px;
     }
   }

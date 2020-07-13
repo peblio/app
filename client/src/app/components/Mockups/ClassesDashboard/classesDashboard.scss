@@ -1,0 +1,42 @@
+.dashboard{
+  $root: &;
+  $topbar-height: 60px;
+  position: absolute;
+  left: 0;
+  top: $topbar-height;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  height: calc(100vh - #{$topbar-height});
+  width: 100vw;
+  background: #f7f7f7;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+
+  &__main{
+    flex: 1;
+    padding: 40px;
+    padding-left: 64px;
+    box-sizing: border-box;
+    
+    #{$root}__header-area{
+      display: flex;
+      height: 40px;
+      align-items: center;
+
+      #{$root}__header{
+        font-weight: 500;
+        font-size: 20px;
+        margin-right: auto;
+      }
+    }
+    #{$root}__class-card-container{
+      margin-top: 40px;
+      display: flex;
+
+      .class-card{
+        margin-right: 40px;
+      }
+    }
+  }
+}
