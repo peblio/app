@@ -2,23 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './modal.scss';
 
+import { DEFAULT_MODAL_WIDTH } from '../../constants/modalConstants';
+
 const Modal = ({
   modalWidth,
-  modalHeight,
   modalClose,
   modalClass,
-  modalBodyStyle,
   header,
   children,
   ...props,
 }) => (
   <div className="modal">
     <div className="modal__overlay">
-      <div className={`modal__box ${modalClass || ''}`} style={{ width: modalWidth }}>
+      <div className={`modal__box ${modalClass || ''}`}>
         <div className={`modal__header ${modalClass ? `${modalClass}__header` : ''}`}>
           {header}
         </div>
-        <div className={`modal__body ${modalClass ? `${modalClass}__body` : ''}`} style={modalBodyStyle}>
+        <div className={`modal__body ${modalClass ? `${modalClass}__body` : ''}`}>
           {children}
         </div>
       </div>
@@ -27,17 +27,16 @@ const Modal = ({
 );
 
 Modal.propTypes = {
-  modalWidth: PropTypes.string.isRequired,
-  modalHeight: PropTypes.string.isRequired,
+  modalWidth: PropTypes.string,
   modalClose: PropTypes.func.isRequired,
   modalClass: PropTypes.string,
-  modalBodyStyle: PropTypes.shape({}).isRequired,
   header: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
 
 Modal.defaultProps = {
-  modalClass: ''
+  modalClass: '',
+  modalWidth: DEFAULT_MODAL_WIDTH
 };
 
 export default Modal;
