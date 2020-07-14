@@ -49,7 +49,7 @@ const ClassCard = ({
           />
         </svg>
       </button>
-      <div className='class-card__name'>{classTitle}</div>
+      <div className='class-card__title'>{classTitle}</div>
       <div className='class-card__subject'>{subject}</div>
       <div className='class-card__card-footer'>
         {grade}
