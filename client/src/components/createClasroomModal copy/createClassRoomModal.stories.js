@@ -4,6 +4,6 @@ import JoinClassModal from '../../app/components/Mockups/JoinClassModal/JoinClas
 
 export default { title: 'Join Class Modal' };
 
-export const createClassroomModal = () => (
+export const joinClassModal = () => (
   <JoinClassModal />
 );
