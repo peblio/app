@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
+import onClickOutside from 'react-onclickoutside';
 
 import './dropdown.scss';
-
-import onClickOutside from 'react-onclickoutside';
 
 const Dropdown = ({
   state,
