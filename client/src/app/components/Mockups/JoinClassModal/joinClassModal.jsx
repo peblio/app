@@ -4,7 +4,7 @@ import Modal from '../../Modal/Modal';
 import InputField from '../../InputField/InputField';
 import Button from '../../Button/Button';
 
-import './JoinClassModal.scss';
+import './joinClassModal.scss';
 
 const JoinClassModal = () => {
   const [classCode, setClassCode] = useState('');

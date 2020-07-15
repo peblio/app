@@ -4,6 +4,6 @@ import ClassesDashboard from '../../app/components/Mockups/ClassesDashboard/Clas
 
 export default { title: 'Classes Dashboard' };
 
-export const createClassroomModal = () => (
+export const classesDashboard = () => (
   <ClassesDashboard />
 );

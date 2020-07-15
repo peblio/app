@@ -9,6 +9,7 @@ import TopNav from '../../Shared/Nav/TopNav';
 
 const ClassesDashboard = () => (
   <div className="dashboard">
+    <TopNav />
     <SideBar>
       <ProgressBar
         style={{
