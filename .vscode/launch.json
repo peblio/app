@@ -2,6 +2,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "command": "cd client && npm run storybook",
+            "name": "Run storybook",
+            "request": "launch",
+            "type": "pwa-node-terminal"
+        },
+        {
             "type": "node",
             "request": "launch",
             "name": "Server Debug",

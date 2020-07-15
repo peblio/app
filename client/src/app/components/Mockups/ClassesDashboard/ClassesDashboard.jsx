@@ -5,7 +5,7 @@ import ClassCard from '../../ClassCard/ClassCard';
 import ProgressBar from '../../ProgressBar/ProgressBar';
 
 import './classesDashboard.scss';
-// import TopNav from '../../Shared/Nav/TopNav';
+import TopNav from '../../Shared/Nav/TopNav';
 
 const ClassesDashboard = () => (
   <div className="dashboard">
