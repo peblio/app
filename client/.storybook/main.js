@@ -5,10 +5,17 @@ module.exports = {
     webpackFinal: async (config) => {
         config.module.rules.push({
         test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader', {
+            loader: 'sass-loader',
+            options: {
+              includePaths: [
+                path.resolve(__dirname, '../src/app/styles/sass'),
+              ],
+              sourceMap: true
+            }
+          }],
         include: path.resolve(__dirname, '../'),
         });
-
         return config;
     },
 };
