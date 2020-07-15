@@ -57,6 +57,7 @@ const ClassCard = ({
         GRADE
         <span className='circle'></span>
         {studentCount}
+        {' '}
         STUDENTS
       </div>
     </div>

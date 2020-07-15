@@ -1,6 +1,7 @@
+@import 'variables.scss';
+
 .dropdown{
   $root : &;
-  $border-color:  #ccd0d2;
   border-radius: 3px;
   height: 40px;
   display: flex;
@@ -8,9 +9,9 @@
   position: relative;
   box-sizing: border-box;
   transition: border 300ms ease;
-  border: solid 1px $border-color;
+  border: solid 1px $g5;
   
-  &:focus-within{
+  &:focus-within, &:hover{
     border: solid 1px #008575;
   }
   
@@ -29,6 +30,10 @@
     font-size: 16px;
     box-sizing: border-box;
 
+    &:hover{
+      border: none;
+    }
+
     &:disabled{
       opacity: 0.5;
       background: #f7f7f7;
@@ -40,6 +45,7 @@
       text-overflow: ellipsis;
       overflow-x: hidden;
       width: calc(100% - 32px);
+      color: black;
     }
 
     svg{
@@ -60,14 +66,14 @@
 
     &.btn{
       background: #008575;
-      color: white;
       transition: background 300ms ease;
-
+      
       &:hover, &:focus{
         background: #00564c;
       }
-
+      
       span{
+        color: white;
         width: calc(100% - 56px);
         padding-right: 16px;
       }
@@ -134,7 +140,7 @@
     max-width: 100%;
     border-radius: 3px;
     z-index: 5;
-    border: solid 1px $border-color;
+    border: solid 1px $g5;
     background-color: #fff;  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
     box-sizing: border-box;
     
@@ -145,11 +151,11 @@
       width: 100%;
       transition: background 300ms ease;
       &:not(:last-child){
-        border-bottom: 1px solid #ccd0d2;
+        border-bottom: 1px solid $g4;
       }
 
       &:hover, &:focus-within {
-        background: darken($color: #ffffff, $amount: 5%);
+        background: $g7;
       }
 
       #{$root}__tooltip{
@@ -168,6 +174,7 @@
       }
 
       #{$root}__option{
+        color: black;
         text-align: left;
         min-height: 40px;
         margin: 0;
