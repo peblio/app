@@ -3,7 +3,8 @@ import SideBar from './SideBar/SideBar';
 import Dropdown from '../../Dropdown/Dropdown';
 import ClassCard from '../../ClassCard/ClassCard';
 import ProgressBar from '../../ProgressBar/ProgressBar';
-import TopNav from '../../Shared/Nav/TopNav';
+
+import TopNav from '../../TopNav/TopNav';
 
 import './classesDashboard.scss';
 
