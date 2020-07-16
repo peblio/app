@@ -25,7 +25,7 @@ const Dropdown = ({
       option.onClick();
     }
     if (setState) {
-      queueMicrotask(() => setState(option.value));
+      setState(option.value);
     }
     if (setShowTooltip) {
       setShowTooltip(false);

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PeblioLogo from '../../../images/logo.svg';
 
-// import UserAccount from '../UserAccount/UserAccount.jsx';
+import UserAccount from '../UserAccount/UserAccount.jsx';
 
 import './nav.scss';
 
@@ -19,10 +19,10 @@ class TopNav extends React.Component {
           >
             <PeblioLogo alt="logo in toolbar" />
           </a>
-          {/* <UserAccount
+          <UserAccount
             container={this.props.container}
             location={this.props.location}
-          /> */}
+          />
         </div>
       </div>
     );
