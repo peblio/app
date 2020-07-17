@@ -50,7 +50,7 @@ describe('Dropdown component', () => {
   it('Should render without errors', () => {
     const dropdown = wrapper.find('.dropdown');
     expect(dropdown).to.have.lengthOf(1);
-    const trigger = wrapper.find('.dropdown__trigger'); 
+    const trigger = wrapper.find('.dropdown__trigger');
     expect(trigger).to.have.lengthOf(1);
     expect(trigger.find('span').text()).to.equal(getProps().placeholder);
   });
@@ -80,7 +80,7 @@ describe('Dropdown component', () => {
     const trigger = wrapper.find('.dropdown__trigger');
     trigger.simulate('click');
 
-    // get options
+    // get all the options
     const options = wrapper.find('.dropdown__option');
     expect(options).to.have.lengthOf(getProps().options.length);
 
