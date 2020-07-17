@@ -186,7 +186,7 @@
 
 .dashboard-side-nav {
   &__container {
-    position: absolute;
+    position: fixed;
     left: 0;
     width: 15%;
     display: flex;
