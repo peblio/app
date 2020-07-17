@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './textareaField.scss';
 
-const InputField = ({
+const TextareaField = ({
   label,
   state,
   placeholder,
@@ -16,9 +16,13 @@ const InputField = ({
     style={{ width: containerWidth }}
     {...props}
   >
-    <label htmlFor={label} className='textarea-field__label'>
-      {label}
-    </label>
+    {
+      label && (
+        <label htmlFor={label} className='textarea-field__label'>
+          {label}
+        </label>
+      )
+    }
     <textarea
       name={label}
       value={state}
@@ -30,8 +34,8 @@ const InputField = ({
   </div>
 );
 
-InputField.propTypes = {
-  label: PropTypes.string.isRequired,
+TextareaField.propTypes = {
+  label: PropTypes.string,
   state: PropTypes.node.isRequired,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
@@ -39,4 +43,8 @@ InputField.propTypes = {
   textareaHeight: PropTypes.string.isRequired,
 };
 
-export default InputField;
+TextareaField.defaultProps = {
+  label: ''
+};
+
+export default TextareaField;
