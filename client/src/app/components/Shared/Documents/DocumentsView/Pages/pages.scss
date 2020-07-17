@@ -21,6 +21,12 @@
     &:hover .profile-pebl__overlay-title {
       display: none;
     }
+
+    .profile-pebl__title {
+      .pages__input {
+        width: 100%;
+      }
+    }
   }
   .profile-pebl__image {
     display: none;
@@ -34,6 +40,12 @@
 .document-block {
   .profile-pebl__container {
     width: $pebl-profile-image-size-width;
+
+    .profile-pebl__title {
+      .pages__input {
+        width: 100%;
+      }
+    }
   }
 }
 
