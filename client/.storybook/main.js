@@ -26,7 +26,7 @@ module.exports = {
     config.module.rules.push({
       test: /\.svg$/,
       use: [{ loader: require.resolve('babel-loader') },
-      { loader: require.resolve('react-svg-loader') }]
+      { loader: require.resolve('svg-react-loader') }]
     });
 
     return config;
