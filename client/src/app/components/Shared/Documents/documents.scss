@@ -415,6 +415,9 @@
     }
   }
   .profile-pebl {
+    &__overlay-desc {
+      height:0px;
+    }
     &__container {
       padding: $small-padding;
     }
