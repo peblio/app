@@ -94,7 +94,7 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="dashboard">
         <TopNav
           container="dashboard"
         />
