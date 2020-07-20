@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
 
+import './folder.scss';
 import history from '../../../../../utils/history';
 import DeleteIcon from '../../../../../images/trash.svg';
 import ShareIcon from '../../../../../images/share.svg';
