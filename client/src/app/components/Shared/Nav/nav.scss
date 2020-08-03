@@ -1,6 +1,10 @@
 @import 'variables';
 @import 'base';
 
+.dashboard {
+  background: $g8;
+}
+
 .dashboard-nav {
   &__new-container {
     display: flex;
@@ -186,7 +190,7 @@
 
 .dashboard-side-nav {
   &__container {
-    position: absolute;
+    position: fixed;
     left: 0;
     width: 15%;
     display: flex;
