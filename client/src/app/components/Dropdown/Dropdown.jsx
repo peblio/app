@@ -58,6 +58,7 @@ const Dropdown = ({
         onFocus={handleOnMouseEnter}
         onBlur={handleOnMouseExit}
         disabled={disabled}
+        type="button"
         onClick={
           () => {
             setTriggered(value => !value);

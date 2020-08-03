@@ -95,8 +95,10 @@ export const CreateClassroomModal = () => {
             onChange={(e) => { setDescription(e.target.value.trim()); }}
             label="Description"
             placeholder="type description..."
-            containerWidth="100%"
-            textareaHeight="96px"
+            style={{
+              containerWidth: '100%',
+              textareaHeight: '96px'
+            }}
           />
         </div>
         <div className="create-class-modal__row">
