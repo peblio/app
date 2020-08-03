@@ -20,7 +20,11 @@ describe('TextareaField component', () => {
     const wrapper = mount(
       <TextareaFieldContainer
         label="Label"
-        containerWidth="100px"
+        style={{
+          containerWidth: '100%',
+          textareaHeight: '96px'
+        }}
+        placeholder="placeholder"
       />
     );
     const textarea = wrapper.find('.textarea-field');
@@ -32,8 +36,11 @@ describe('TextareaField component', () => {
   it('Should not render label if not provided', () => {
     const wrapper = mount(
       <TextareaFieldContainer
-        containerWidth="100px"
-        textareaHeight="45px"
+        style={{
+          containerWidth: '100%',
+          textareaHeight: '96px'
+        }}
+        placeholder="placeholder"
       />
     );
     expect(wrapper.find('.textarea-field__label')).to.have.lengthOf(0);
@@ -43,7 +50,11 @@ describe('TextareaField component', () => {
     const wrapper = mount(
       <TextareaFieldContainer
         label="Label"
-        containerWidth="100px"
+        style={{
+          containerWidth: '100%',
+          textareaHeight: '96px'
+        }}
+        placeholder="placeholder"
       />
     );
     const textarea = wrapper.find('.textarea-field__text-box');

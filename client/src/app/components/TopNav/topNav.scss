@@ -1,5 +1,8 @@
+
+@import "variables.scss";
+
 .top-nav{
-  background-color: #00151e;
+  background-color: $g1;
   position: fixed;
   top:0;
   left: 0;
@@ -9,6 +12,7 @@
   display: flex;
   align-items: center;
   box-sizing: border-box;
+  z-index: $z-index-layer-4;
 
   &__nav-links{
     margin-left: auto;

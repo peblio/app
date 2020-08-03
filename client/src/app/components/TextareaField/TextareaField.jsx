@@ -6,9 +6,11 @@ const TextareaField = ({
   label,
   state,
   placeholder,
-  containerWidth,
   onChange,
-  textareaHeight,
+  style: {
+    containerWidth,
+    textareaHeight
+  },
   ...props
 }) => (
   <div
@@ -39,8 +41,10 @@ TextareaField.propTypes = {
   state: PropTypes.node.isRequired,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
-  containerWidth: PropTypes.string.isRequired,
-  textareaHeight: PropTypes.string.isRequired,
+  style: PropTypes.shape({
+    textareaHeight: PropTypes.string.isRequired,
+    containerWidth: PropTypes.string.isRequired
+  }).isRequired
 };
 
 TextareaField.defaultProps = {

@@ -1,22 +1,24 @@
+@import "variables.scss";
+
 .textarea-field{
   display: flex;
   flex-direction: column;
-  font-family: 'Roboto', sans-serif;
+  font-family: $roboto;
 
   &__label{
-    font-size: 16px;
+    font-size: $p-size;
     margin-bottom: 8px;
   }
 
   &__text-box{
-    $border-color : #ccd0d2;
+    $border-color : $g5;
     resize: none;
-    font-size: 16px;
+    font-size: $p-size;
     padding: 10px;
     border-radius: 4px;
     border: solid 1px $border-color;
-    background-color: #f7f8f8;
-    font-family: 'Roboto', sans-serif;
+    background-color: $g8;
+    font-family: $roboto;
     box-sizing: border-box;
     transition: border 300ms ease;
 
@@ -25,7 +27,7 @@
     }
     
     &:hover, &:focus{
-      border: solid 1px #009887;
+      border: solid 1px $b1;
     }
     
     &::placeholder{

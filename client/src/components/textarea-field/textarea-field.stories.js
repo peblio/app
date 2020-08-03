@@ -11,8 +11,10 @@ export const clasroom = () => {
       onChange={(e) => { setValue(e.target.value); }}
       label="Description"
       placeholder="type description..."
-      containerWidth="813px"
-      textareaHeight="96px"
+      style={{
+        containerWidth: '813px',
+        textareaHeight: '96px'
+      }}
     />
   );
 };
