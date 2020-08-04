@@ -30,13 +30,13 @@
     font-size: $p-size;
     box-sizing: border-box;
 
-    &:hover{
-      border: none;
-    }
-
+    
     &:disabled{
       opacity: 0.5;
       background: #f7f7f7;
+      &:hover{
+        border: none;
+      }
     }
 
     span{

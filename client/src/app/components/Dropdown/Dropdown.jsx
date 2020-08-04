@@ -19,8 +19,8 @@ const Dropdown = ({
   Dropdown.handleClickOutside = () => setTriggered(false);
 
   const handleSelect = (option) => {
-    queueMicrotask(() => setSelected(option.name));
-    queueMicrotask(() => setTriggered(false));
+    setTimeout(() => setSelected(option.name), 0);
+    setTimeout(() => setTriggered(false), 0);
     if (option.onClick) {
       option.onClick();
     }
