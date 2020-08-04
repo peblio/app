@@ -29,6 +29,7 @@ describe('TextareaField component', () => {
     );
     const textarea = wrapper.find('.textarea-field');
     expect(textarea).to.have.lengthOf(1);
+    expect(textarea.text()).to.equal('Label');
     expect(textarea.find('.textarea-field__text-box')).to.have.lengthOf(1);
     expect(textarea.find('.textarea-field__label')).to.have.lengthOf(1);
   });
