@@ -1,0 +1,52 @@
+@import "variables.scss";
+
+.icon-button{
+  margin: 0;
+  padding: 4px 0px; 
+  border: none;
+  background: none;
+  background-origin: border-box;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-family: $roboto;
+  color: $black;
+  
+  &:disabled{
+    opacity: 0.5;
+    cursor: unset;
+  }
+  
+  &:not(:disabled){
+    &:focus, &:hover{
+      outline: none;
+      color: $text-green;
+      svg{
+        path{
+          fill: $text-green;
+        }
+      }
+    }
+  }
+  
+  &__icon{
+    height: 24px;
+    width: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg{
+      path{
+        fill: $black;
+        transition: fill 300ms ease;
+      }
+      height: 16px;
+      width: 14px;
+    }
+  }
+  &__text{
+    font-weight: $heavy-font-weight;
+    font-size: $p-size;
+    transition: color 300ms ease;
+  }
+}
