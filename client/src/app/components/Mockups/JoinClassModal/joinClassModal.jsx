@@ -32,6 +32,7 @@ const JoinClassModal = () => {
         state={classCode}
         onChange={handleClassCodeChange}
         placeholder='e.g. X7dhj3'
+        containerWidth="100%"
       />
       <div className="join-class-modal__buttons-container">
         <Button className='secondary' style={{ marginRight: '16px' }}>Cancel</Button>
