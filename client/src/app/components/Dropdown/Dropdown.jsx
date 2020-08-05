@@ -130,10 +130,6 @@ const Dropdown = ({
   );
 };
 
-const clickOutsideConfig = {
-  handleClickOutside: () => Dropdown.handleClickOutside
-};
-
 Dropdown.propTypes = {
   state: PropTypes.node,
   setState: PropTypes.func,
@@ -154,5 +150,4 @@ Dropdown.defaultProps = {
   setState: null
 };
 
-// export default onClickOutside(Dropdown, clickOutsideConfig);
 export default Dropdown;
