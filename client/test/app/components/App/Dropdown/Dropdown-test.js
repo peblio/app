@@ -85,11 +85,17 @@ describe('Dropdown component', () => {
     expect(options).to.have.lengthOf(getProps().options.length);
 
     // get first option and click it
-    const firstOption = options.first();
+    const firstOption = options.last();
     firstOption.simulate('click');
+    console.log(firstOption.debug());
+    // console.log(wrapper.debug());
     setImmediate(async () => {
-      expect(trigger.find('span').text()).to.equal(getProps().options[0].name);
-      expect(getProps().state).to.equal(getProps().options[0].value);
+      try {
+        expect(trigger.find('span').text()).to.equal(getProps().options[options.length - 1].name);
+        expect(getProps().state).to.equal(getProps().options[options.length - 1].value);
+      } catch (err) {
+        console.log(err);
+      }
     });
   });
 });

@@ -30,7 +30,7 @@ Modal.propTypes = {
   modalWidth: PropTypes.string,
   modalClose: PropTypes.func.isRequired,
   modalClass: PropTypes.string,
-  header: PropTypes.string.isRequired,
+  header: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
   children: PropTypes.node.isRequired,
 };
 

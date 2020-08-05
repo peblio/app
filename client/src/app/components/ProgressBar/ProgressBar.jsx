@@ -40,9 +40,9 @@ ProgressBar.propTypes = {
   completed: PropTypes.number.isRequired,
   containerWidth: PropTypes.string.isRequired,
   label: PropTypes.string,
-  units: PropTypes.number,
+  units: PropTypes.string,
   showDetails: PropTypes.bool,
-  style: PropTypes.node
+  style: PropTypes.shape({})
 };
 
 ProgressBar.defaultProps = {

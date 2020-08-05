@@ -21,6 +21,7 @@ describe('InputField component', () => {
       <InputFieldContainer
         label="Label"
         containerWidth="100px"
+        placeholder="Placeholder"
       />
     );
     const input = wrapper.find('.input-field');
@@ -35,6 +36,7 @@ describe('InputField component', () => {
     const wrapper = mount(
       <InputFieldContainer
         containerWidth="100px"
+        placeholder="Placeholder"
       />
     );
     expect(wrapper.find('.input-field__label')).to.have.lengthOf(0);
@@ -45,11 +47,11 @@ describe('InputField component', () => {
       <InputFieldContainer
         label="Label"
         containerWidth="100px"
+        placeholder="Placeholder"
       />
     );
     const input = wrapper.find('.input-field__text-box');
     input.simulate('change', { target: { value: 'Testing' } });
-    console.log(wrapper.find('InputField').debug());
     const { state } = wrapper.find('InputField').props();
     expect(state).to.equal('Testing');
   });

@@ -23,9 +23,14 @@ describe('ProgressBar component', () => {
 
     const progressBar = wrapper.find('.progress-bar');
     expect(progressBar).to.have.lengthOf(1);
-    expect(wrapper.find('.progress-bar__label')).to.have.lengthOf(1);
+
+    const label = wrapper.find('.progress-bar__label');
+    expect(label).to.have.lengthOf(1);
+    expect(label.text()).to.equal('Label');
+
     expect(wrapper.find('.progress-bar__total')).to.have.lengthOf(1);
     expect(wrapper.find('.progress-bar__completed')).to.have.lengthOf(1);
+
     const details = wrapper.find('.progress-bar__details');
     expect(details).to.have.lengthOf(1);
     expect(details.text()).to.equal(`${props.completed}${props.units} out of ${props.total}${props.units}`);

@@ -29,5 +29,8 @@ describe('ClassCard component', () => {
     const classSubject = wrapper.find('.class-card__subject');
     expect(classSubject).to.have.lengthOf(1);
     expect(classSubject.text()).to.equal('Subject');
+
+    const cardFooter = wrapper.find('.class-card__card-footer');
+    expect(cardFooter.text()).to.equal('6th GRADE20 STUDENTS');
   });
 });

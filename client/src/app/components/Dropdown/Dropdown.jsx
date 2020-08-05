@@ -135,8 +135,8 @@ const clickOutsideConfig = {
 };
 
 Dropdown.propTypes = {
-  state: PropTypes.node.isRequired,
-  setState: PropTypes.func.isRequired,
+  state: PropTypes.node,
+  setState: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.bool]).isRequired,
@@ -149,7 +149,9 @@ Dropdown.propTypes = {
 
 Dropdown.defaultProps = {
   disabled: false,
-  className: ''
+  className: '',
+  state: null,
+  setState: null
 };
 
 // export default onClickOutside(Dropdown, clickOutsideConfig);
