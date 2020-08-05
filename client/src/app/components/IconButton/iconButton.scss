@@ -20,10 +20,10 @@
   &:not(:disabled){
     &:focus, &:hover{
       outline: none;
-      color: $text-green;
+      color: $primary-green;
       svg{
         path{
-          fill: $text-green;
+          fill: $primary-green;
         }
       }
     }

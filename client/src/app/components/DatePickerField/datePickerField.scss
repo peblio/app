@@ -1,0 +1,81 @@
+@import 'variables.scss';
+
+.date-picker-field{
+  font-family: $roboto;
+  box-sizing: border-box;
+  color: $black;
+  position: relative;
+
+  &__calender-container{
+    position: absolute;
+    top: 100%;
+    left:0;
+  }
+
+  &__label{
+    font-size: $p-size;
+    margin-bottom: 7px;
+    font-family: $roboto;
+  }
+
+  &__input-container{
+    height: 40px;
+    background: white;
+    border-radius: 4px;
+    border: solid 1px $g5;
+    background-color: $g8;
+    position: relative;
+    box-sizing: border-box;
+
+    &.focused{
+      border: solid 1px $primary-green;
+    }
+
+    &__input{
+      outline: none;
+      border: none;
+      background: none;
+      font-size: 16px;
+      padding: 10px;
+      padding-right: 50px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    &__icon{
+      pointer-events: none;
+      position: absolute;
+      top:0;
+      right:0;
+      box-sizing: border-box;
+      width: 40px;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: $g6;
+      border-radius: 0 4px 4px 0;
+      svg{
+        path{
+          fill: $g3;
+        }
+      }
+    }
+  }
+
+  .react-calendar{
+    border: 1px solid $g5 !important;
+    border-radius: 3px !important;
+    &__tile{
+      border-radius: 3px !important;
+      &--now{
+        background: $g6 !important;
+      }
+      &--active{
+        background: $primary-green !important;
+      }
+    }
+  }
+
+  
+}

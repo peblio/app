@@ -1,0 +1,45 @@
+@import 'variables.scss';
+
+.create-assignment-modal{
+  $root: &;
+  width: 893px;
+
+  &__header{
+    display: flex;
+    align-items: center;
+
+    &__title{
+      margin-right: 16px;
+    }
+
+    &__sub-title{
+      font-size: 14px;
+    }
+  }
+
+  
+  &__body{
+    position: relative;
+    padding-top: 32px;
+
+    #{$root}__required{
+      position: absolute;
+      top: 13px;
+      right: 26px;
+      color: $g3;
+      font-size: 14px;
+    }
+
+    #{$root}__row{
+      display: flex;
+      margin-bottom: 40px;
+    }
+
+    #{$root}__action-area{
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+  }
+}

@@ -29,7 +29,6 @@ export const CreateClassroomModal = () => {
   return (
     <Modal
       header="Create Class"
-      modalBodyStyle={{ position: 'relative' }}
       modalClass="create-class-modal"
     >
       <div className="create-class-modal__required">

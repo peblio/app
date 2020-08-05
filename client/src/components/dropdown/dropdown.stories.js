@@ -84,24 +84,19 @@ export const buttonDropdown = () => {
       options={[
         {
           name: '10th',
-          value: 10
+          value: 10,
+          onClick: () => console.log('10th')
         },
         {
           name: '9th',
-          value: 9
+          value: 9,
+          onClick: () => console.log('9th')
         },
         {
           name: '8th',
-          value: 8
+          value: 8,
+          onClick: () => console.log('8th')
         },
-        {
-          name: '7th',
-          value: 7
-        },
-        {
-          name: '6th Standard',
-          value: 6
-        }
       ]}
     />
   );
