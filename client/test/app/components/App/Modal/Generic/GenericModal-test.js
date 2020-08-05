@@ -7,7 +7,7 @@ import Modal from '../../../../../../src/app/components/Modal/Modal';
 describe('Generic Modal component', () => {
   it('Should render without errors', () => {
     const wrapper = shallow(
-      <Modal header="Header">
+      <Modal header="Header" modalClose={() => {}}>
         Hello
       </Modal>
     );
@@ -26,7 +26,7 @@ describe('Generic Modal component', () => {
 
   it('Should have additional classNames when modalClass prop is provided', () => {
     const wrapper = shallow(
-      <Modal header="Header" modalClass="additional">
+      <Modal header="Header" modalClass="additional" modalClose={() => {}}>
         Hello
       </Modal>
     );
