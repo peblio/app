@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import onClickOutside from 'react-onclickoutside';
 
 import './dropdown.scss';
+import { useEffect } from 'react';
 
 const Dropdown = ({
   state,
@@ -16,23 +16,23 @@ const Dropdown = ({
   const [triggered, setTriggered] = useState(false);
   const [selected, setSelected] = useState(state || placeholder);
   const [showTooltip, setShowTooltip] = useState(false);
-  Dropdown.handleClickOutside = () => setTriggered(false);
+
+  const textRef = useRef();
 
   const handleSelect = (option) => {
-    setTimeout(() => setSelected(option.name), 0);
-    setTimeout(() => setTriggered(false), 0);
     if (option.onClick) {
       option.onClick();
     }
     if (setState) {
-      setState(option.value);
+      setTimeout(() => setState(() => option.value), 0);
     }
     if (setShowTooltip) {
       setShowTooltip(false);
     }
+    setTimeout(() => setSelected(option.name), 0);
+    setTimeout(() => setTriggered(false), 0);
   };
 
-  const textRef = useRef();
 
   const handleOnMouseEnter = () => {
     if (textRef.current && textRef.current.clientWidth < textRef.current.scrollWidth) {
@@ -45,6 +45,15 @@ const Dropdown = ({
       setShowTooltip(false);
     }
   };
+
+  const closeOptionsHandler = () => {
+    setTriggered(false);
+    document.removeEventListener('click', closeOptionsHandler);
+  };
+
+  useEffect(() => () => {
+    document.removeEventListener('click', closeOptionsHandler);
+  }, []);
 
   return (
     <div
@@ -61,6 +70,9 @@ const Dropdown = ({
         type="button"
         onClick={
           () => {
+            if (!triggered) {
+              document.addEventListener('click', closeOptionsHandler);
+            }
             setTriggered(value => !value);
           }}
       >
@@ -101,6 +113,7 @@ const Dropdown = ({
               key={option.value}
             >
               <button
+                type="button"
                 className='dropdown__option'
                 onClick={() => handleSelect(option)}
               >
@@ -139,4 +152,5 @@ Dropdown.defaultProps = {
   className: ''
 };
 
-export default onClickOutside(Dropdown, clickOutsideConfig);
+// export default onClickOutside(Dropdown, clickOutsideConfig);
+export default Dropdown;
