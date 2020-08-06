@@ -4,7 +4,7 @@ import './iconButton.scss';
 import PropTypes from 'prop-types';
 
 const IconButton = ({ children, icon, ...props }) => (
-  <button className="icon-button" {...props}>
+  <button className="icon-button" type="button" {...props}>
     <div className="icon-button__icon">
       {icon}
     </div>

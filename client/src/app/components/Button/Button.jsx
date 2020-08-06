@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './button.scss';
 
 const Button = ({ className, children, ...props }) => (
-  <button className={`button ${className}`} {...props}>
+  <button className={`button ${className}`} type="button" {...props}>
     {children}
   </button>
 );
