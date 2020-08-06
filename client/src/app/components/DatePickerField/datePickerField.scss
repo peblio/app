@@ -4,18 +4,21 @@
   font-family: $roboto;
   box-sizing: border-box;
   color: $black;
+  margin: 0;
+  padding: 0;
   position: relative;
 
   &__calender-container{
     position: absolute;
     top: 100%;
-    left:0;
+    left: 0;
   }
 
   &__label{
     font-size: $p-size;
     margin-bottom: 7px;
     font-family: $roboto;
+    line-height: 19px;
   }
 
   &__input-container{
@@ -26,12 +29,15 @@
     background-color: $g8;
     position: relative;
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 
     &.focused{
       border: solid 1px $primary-green;
     }
 
     &__input{
+      margin: 0;
       outline: none;
       border: none;
       background: none;

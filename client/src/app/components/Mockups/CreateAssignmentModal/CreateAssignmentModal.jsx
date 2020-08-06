@@ -10,13 +10,14 @@ import Button from '../../Button/Button';
 import DatePickerField from '../../DatePickerField/DatePickerField';
 // import LessonListCard from '../../LessonListCard/LessonListCard';
 
-import ForkSVG from '../../../images/fork.svg';
-import FileSVG from '../../../images/file.svg';
+import CreateNewIcon from '../../../images/create_new.svg';
+import PeblIcon from '../../../images/pebl.svg';
+import LinkIcon from '../../../images/link.svg';
 
 const CreateAssignmentModal = () => {
   const [classState, setClassState] = useState('');
   const [topic, setTopic] = useState('');
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState();
   const [assignmentTitle, setAssignmentTitle] = useState('');
   const [instruction, setInscruction] = useState('');
 
@@ -144,9 +145,9 @@ const CreateAssignmentModal = () => {
           />
         </div>
         <div className="create-assignment-modal__action-area">
-          <IconButton icon={<FileSVG />} style={{ marginRight: '16px' }}>Select Pebl</IconButton>
-          <IconButton icon={<ForkSVG />} style={{ marginRight: '16px' }}>Create new Pebl</IconButton>
-          <IconButton icon={<ForkSVG />} style={{ marginRight: 'auto' }}>Add link</IconButton>
+          <IconButton icon={<PeblIcon />} style={{ marginRight: '16px' }}>Select Pebl</IconButton>
+          <IconButton icon={<CreateNewIcon />} style={{ marginRight: '16px' }}>Create new Pebl</IconButton>
+          <IconButton icon={<LinkIcon />} style={{ marginRight: 'auto' }}>Add link</IconButton>
           <Button style={{ marginRight: '16px' }} className="secondary">Cancel</Button>
           <Dropdown
             placeholder="Publish"
