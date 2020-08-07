@@ -17,7 +17,7 @@
     border: solid $small-border #008575;
     color: #fff;
 
-    &:not(:disabled):hover{
+    &:not(:disabled):hover, &:focus{
       background: #00564c;
     }
 

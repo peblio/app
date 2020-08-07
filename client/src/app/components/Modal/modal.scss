@@ -9,14 +9,19 @@
   right: 0;
   bottom: 0;
   z-index: $z-index-layer-4;
-
+  
   &__overlay{
-    width: 100%;
+    position: fixed;
+    top:0;
+    left:0;
     height: 100%;
+    width: 100%;
+    overflow-y: auto;
     background-color: rgba(0, 21, 30, 0.7);
   }
-
+  
   &__box{
+    margin-bottom: 30px;
     box-sizing: border-box;
     position: absolute;
     border-radius: 3px;
