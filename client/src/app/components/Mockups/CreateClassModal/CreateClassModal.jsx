@@ -14,22 +14,17 @@ export const CreateClassroomModal = () => {
   const [room, setRoom] = useState('');
   const [grade, setGrade] = useState('');
   const [description, setDescription] = useState('');
-  const [isCreateEnabled, setIsCreateEnabled] = useState(false);
 
   const onClassNameChange = (e) => {
     const value = e.target.value.trim();
     setClassName(() => value);
-    if (value) {
-      setIsCreateEnabled(() => true);
-    } else {
-      setIsCreateEnabled(() => false);
-    }
   };
 
   return (
     <Modal
       header="Create Class"
       modalClass="create-class-modal"
+      modalClose={() => {}}
     >
       <div className="create-class-modal__required">
         *required
@@ -104,7 +99,7 @@ export const CreateClassroomModal = () => {
           <Button className="secondary" style={{ marginLeft: 'auto', marginRight: '16px' }}>
             Cancel
           </Button>
-          <Button className="primary" disabled={!isCreateEnabled}>
+          <Button className="primary" disabled={!className}>
             Create class
           </Button>
         </div>

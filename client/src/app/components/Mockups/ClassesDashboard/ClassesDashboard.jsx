@@ -22,6 +22,7 @@ const ClassesDashboard = () => (
           total={20}
           completed={10}
           units="GB"
+          containerWidth="100%"
         />
       </SideBar>
       <main className="dashboard__main">
