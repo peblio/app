@@ -38,8 +38,25 @@
     #{$root}__action-area{
       display: flex;
       align-items: center;
-      margin-bottom: 24px;
     }
 
+    #{$root}__link-box{
+      width: 432px;
+      height: 98px;
+      border-radius: 3px;
+      box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.05);
+      border: solid 1px g7;
+      background-color: white;
+      position: absolute;
+      left: 320px;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+  }
+  
+  &__resource{
+    padding-top: 24px
   }
 }
