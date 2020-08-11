@@ -8,17 +8,6 @@ import './joinClassModal.scss';
 
 const JoinClassModal = () => {
   const [classCode, setClassCode] = useState('');
-  const [enableButton, setEnableButton] = useState(false);
-
-  const handleClassCodeChange = (e) => {
-    const val = e.target.value.trim();
-    setClassCode(() => val);
-    if (val) {
-      setEnableButton(() => true);
-    } else {
-      setEnableButton(() => false);
-    }
-  };
 
   return (
     <Modal
@@ -31,13 +20,13 @@ const JoinClassModal = () => {
       </h2>
       <InputField
         state={classCode}
-        onChange={handleClassCodeChange}
+        onChange={(e) => { setClassCode(e.target.value); }}
         placeholder='e.g. X7dhj3'
         containerWidth="100%"
       />
       <div className="join-class-modal__buttons-container">
         <Button className='secondary' style={{ marginRight: '16px' }}>Cancel</Button>
-        <Button className='primary' disabled={!enableButton}>Join Class</Button>
+        <Button className='primary' disabled={!classCode.trim()}>Join Class</Button>
       </div>
     </Modal>
   );
