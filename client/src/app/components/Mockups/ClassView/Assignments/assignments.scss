@@ -1,0 +1,42 @@
+@import 'variables.scss';
+
+.class-view__assignments{
+  color: $black;
+  font-family: $roboto;
+  &__action-area{
+    display: flex;
+  }
+
+  &__unit{
+    margin-top: 38px;
+    padding: 0 10px;
+
+    &__header-area{
+      display: flex;
+      box-sizing: border-box;
+      padding: 8px 10px;
+      border-bottom: 2px solid $g5;
+      &__header{
+        font-size: 28px;
+        font-weight: normal;
+        margin-right: auto;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    &__assignments-table{
+      box-sizing: border-box;
+      margin-top: 24px;
+      &__header{
+        margin-left: 8px;
+        color: $g3;
+        font-size: 12px;
+        margin-bottom: 2px;
+        display: grid;
+        grid-template-columns: 265px 128px 125px 170px 148px ;
+        margin-bottom: 8px;
+      }
+    }
+  }
+}

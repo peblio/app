@@ -1,0 +1,35 @@
+@import 'variables.scss';
+
+.tab-switcher{
+  &__tabs{
+    &__tab{
+      background: none;
+      border: none;
+      padding: 8px 16px;
+      box-sizing: border-box;
+      font-size: 16px;
+      font-weight: 500;
+      font-family: $roboto;
+      border-bottom: 2px solid #f7f7f7;
+      color: $g3;
+      transition: background ease 300ms;
+
+      &:hover{
+        background: $g7;
+      }
+
+      &:focus{
+        outline: none;
+      }
+
+      &--selected{
+        color: $black;
+        border-bottom: 2px solid $primary-green;
+      }
+    }
+  }
+  &__selected-tab{
+    margin: 0;
+    padding: 0;
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ClassesDashboard from '../../app/components/Mockups/ClassesDashboard/ClassesDashboard';
+import ClassView from '../../app/components/Mockups/ClassView/ClassView';
 import JoinClassModal from '../../app/components/Mockups/JoinClassModal/JoinClassModal';
 import CreateClassroomModal from '../../app/components/Mockups/CreateClassModal/CreateClassModal.jsx';
 import CreateAssignmentModal from '../../app/components/Mockups/CreateAssignmentModal/CreateAssignmentModal.jsx';
@@ -15,6 +16,10 @@ export const createClassroomModal = () => (
 
 export const classesDashboard = () => (
   <ClassesDashboard />
+);
+
+export const classView = () => (
+  <ClassView />
 );
 
 export const createTopicModal = () => (
