@@ -13,20 +13,20 @@ const DatePickerField = ({ state, setState, label, containerWidth }) => {
   const outsideClickListener = (e) => {
     if (
       e.target.parentNode.className &&
-      e.target.parentNode.className.split(' ').includes('react-calendar__month-view__days__day') ||
-      e.target.className.split(' ').includes('react-calendar__month-view__days__day')
-    ){
+      (e.target.parentNode.className.split(' ').includes('react-calendar__month-view__days__day') ||
+      e.target.className.split(' ').includes('react-calendar__month-view__days__day'))
+    ) {
       setTimeout(() => {
         document.removeEventListener('click', outsideClickListener);
       }, 0);
-    }
-    else if (!e.target.parentNode.className || !e.target.parentNode.className.split('__').includes('react-calendar')) {
+    } else if (!e.target.parentNode.className ||
+      !e.target.parentNode.className.split('__').includes('react-calendar')) {
       setPickerTriggered(() => false);
       setTimeout(() => {
         document.removeEventListener('click', outsideClickListener);
       }, 0);
     }
-  }
+  };
 
   return (
     <div className="date-picker-field">
@@ -44,10 +44,10 @@ const DatePickerField = ({ state, setState, label, containerWidth }) => {
           className="date-picker-field__input-container__input"
           onChange={() => {}}
           placeholder="mm/dd/yy"
-          onClick={() => { 
+          onClick={() => {
             setPickerTriggered(true);
-            setTimeout(()=>{
-              document.addEventListener('click',outsideClickListener)
+            setTimeout(() => {
+              document.addEventListener('click', outsideClickListener);
             }, 100);
           }}
         />
