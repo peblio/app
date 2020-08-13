@@ -29,7 +29,9 @@ const Dropdown = ({
     if (setShowTooltip) {
       setShowTooltip(false);
     }
-    setTimeout(() => setSelected(option.name), 0);
+    if (className !== 'btn') {
+      setTimeout(() => setSelected(option.name), 0);
+    }
     setTimeout(() => setTriggered(false), 0);
   };
 
@@ -80,7 +82,7 @@ const Dropdown = ({
           {selected}
         </span>
         {
-          className && (
+          className === 'btn' && (
             <span className="dropdown__divider"></span>
           )
         }
