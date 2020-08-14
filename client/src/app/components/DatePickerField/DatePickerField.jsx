@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import './datePickerField.scss';
@@ -12,9 +12,12 @@ const DatePickerField = ({ state, setState, label, containerWidth }) => {
   const [pickerTriggered, setPickerTriggered] = useState(false);
   const outsideClickListener = (e) => {
     if (
-      e.target.parentNode.className &&
-      (e.target.parentNode.className.split(' ').includes('react-calendar__month-view__days__day') ||
-      e.target.className.split(' ').includes('react-calendar__month-view__days__day'))
+      e.target.parentNode.className
+        ? (e.target.parentNode.className.split(' ').includes('react-calendar__month-view__days__day') ||
+      e.target.className.split(' ').includes('react-calendar__month-view__days__day') ||
+      e.target.className.split('__').includes('date-picker-field')
+        )
+        : false
     ) {
       setTimeout(() => {
         document.removeEventListener('click', outsideClickListener);
@@ -27,6 +30,10 @@ const DatePickerField = ({ state, setState, label, containerWidth }) => {
       }, 0);
     }
   };
+
+  useEffect(() => () => {
+    document.removeEventListener('click', outsideClickListener);
+  }, []);
 
   return (
     <div className="date-picker-field">
@@ -43,12 +50,15 @@ const DatePickerField = ({ state, setState, label, containerWidth }) => {
           value={state ? moment(state).format('MM/DD/YYYY') : ''}
           className="date-picker-field__input-container__input"
           onChange={() => {}}
+          onKeyDown={(e) => { if (e.key === 'Backspace') { setState(null); } }}
           placeholder="mm/dd/yy"
           onClick={() => {
-            setPickerTriggered(true);
-            setTimeout(() => {
-              document.addEventListener('click', outsideClickListener);
-            }, 100);
+            if (!pickerTriggered) {
+              setTimeout(() => {
+                document.addEventListener('click', outsideClickListener);
+              }, 100);
+            }
+            setPickerTriggered(val => !val);
           }}
         />
         <span className="date-picker-field__input-container__icon">
@@ -57,7 +67,7 @@ const DatePickerField = ({ state, setState, label, containerWidth }) => {
       </div>
       {
         pickerTriggered && (
-          <div className="date-picker-field__calender-container">
+          <div className="date-picker-field__calendar-container">
             <Calendar
               onChange={(d) => {
                 setState(d);
@@ -76,11 +86,12 @@ DatePickerField.propTypes = {
   state: PropTypes.instanceOf(Date).isRequired,
   setState: PropTypes.func.isRequired,
   label: PropTypes.string,
-  containerWidth: PropTypes.string.isRequired
+  containerWidth: PropTypes.string
 };
 
 DatePickerField.defaultProps = {
-  label: ''
+  label: '',
+  containerWidth: ''
 };
 
 export default DatePickerField;
