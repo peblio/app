@@ -11,7 +11,7 @@ export function fetchUserProfile(userName) {
     }))
     .catch((e) => {
       if (e.response.status === 404) {
-        history.push('/404');
+        // history.push('/404');
       }
     });
 }

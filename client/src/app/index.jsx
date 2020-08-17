@@ -54,6 +54,10 @@ const LazyLoadedPage404 = lazy(() => (
   import('./components/Page404/Page404.jsx')
 ));
 
+const LazyLoadedClassRoom = lazy(() => (
+  import('./components/ClassRoom/ClassesDashboard.jsx')
+));
+
 
 class Main extends React.Component {
   render() {
@@ -71,6 +75,7 @@ class Main extends React.Component {
               <Route path="/payment/" component={withTracker(LazyLoadedPaymentPage)} />
               <Route path="/profile/:userName/folder/:folderShortId" component={withTracker(LazyLoadedPaymentProfile)} />
               <Route path="/profile/:userName" component={withTracker(LazyLoadedPaymentProfile)} />
+              <Route path="/class" component={withTracker(LazyLoadedClassRoom)} />
               <Route path="*" component={withTracker(LazyLoadedPage404)} />
             </Switch>
           </Suspense>
