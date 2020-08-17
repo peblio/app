@@ -59,11 +59,11 @@ describe('DatePickerField component', () => {
         placeholder="Placeholder"
       />
     );
-    const input = wrapper.find('.input-field');
-    expect(input).to.have.lengthOf(1);
-    expect(input.find('.input-field__text-box')).to.have.lengthOf(1);
-    const label = input.find('.input-field__label');
-    expect(label).to.have.lengthOf(1);
-    expect(label.text()).to.equal('Label');
+    expect(wrapper.find('.date-picker-field')).to.have.lengthOf(1);
+    expect(wrapper.find('.date-picker-field__label')).to.have.lengthOf(1);
+    expect(wrapper.find('.date-picker-field__input-container')).to.have.lengthOf(1);
+    expect(wrapper.find('.date-picker-field__input-container__input')).to.have.lengthOf(1);
+    expect(wrapper.find('.date-picker-field__input-container__icon')).to.have.lengthOf(1);
+    expect(wrapper.find('.date-picker-field__calendar-container')).to.have.lengthOf(1);
   });
 });
