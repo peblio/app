@@ -2,6 +2,7 @@ import * as ActionTypes from '../constants/reduxConstants.js';
 
 const initialState = {
   name: '',
+  id: null,
   blurb: 'Hi! I <3 CS',
   canView: true,
   canEdit: null,
@@ -32,7 +33,8 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         name: action.data.name,
-        type: action.data.type
+        type: action.data.type,
+        id: action.data.id
       };
     }
 
