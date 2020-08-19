@@ -32,7 +32,7 @@
     background-color: #ffffff;
     color: black;
 
-    &:hover{
+    &:not(:disabled):hover, &:focus{
       border: solid $small-border #008575;
     }
   

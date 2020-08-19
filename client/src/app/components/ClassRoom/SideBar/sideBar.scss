@@ -1,3 +1,5 @@
+@import 'variables.scss';
+
 .sidebar{
   $root: &;
   width: 202px;
@@ -17,17 +19,30 @@
 
 
     #{$root}__nav-link{
-      height: 36px;
       box-sizing: border-box;
-      padding: 10px 23px;
-      font-family: Roboto;
-      font-size: 14px;
-      font-weight: 500;
       border-left: 6px solid transparent;
-
-      a{
+      
+      &__btn{
+        cursor: pointer;
+        box-sizing: border-box;
+        padding: 10px 23px;
+        height: 36px;
+        text-align: left;
+        background: none;
+        width: 100%;
+        border: none;
         color: #667378;
-        text-decoration: none;
+        margin: 0;
+        font-family: $roboto;
+        font-size: 14px;
+        font-weight: 500;
+        &:focus{
+          outline: none;
+        }
+      }
+
+      &:focus-within{
+        background-color: rgba(225, 227, 228, 0.5);
       }
 
       &.active{

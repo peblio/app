@@ -14,7 +14,6 @@ const EditTopicModal = ({ currentTitle }) => {
     <Modal
       header='Edit Topic'
       modalClass='create-topic-modal'
-      modalClose={() => {}}
     >
       <h2 className="create-topic-modal__body__header">
         Edit topic title

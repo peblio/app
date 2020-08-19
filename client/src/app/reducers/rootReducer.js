@@ -10,6 +10,7 @@ import preferences from './preferences.js';
 import profile from './profile.js';
 import user from './user.js';
 import workspace from './workspace.js';
+import classroom from './classroom';
 
 const rootReducer = combineReducers({
   dashboard,
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   preferences,
   profile,
   user,
-  workspace
+  workspace,
+  classroom
 });
 
 export default rootReducer;

@@ -101,6 +101,7 @@ const config = {
   devServer: {
     historyApiFallback: true,
     port: process.env.CLIENT_PORT || 8080,
+    disableHostCheck: true,
     proxy: {
       '/api': { target: `http://localhost:${process.env.SERVER_PORT || 8081}` }
     }
