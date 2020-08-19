@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { createClassroom, toggleCreateClassroomModal } from '../../../action/classroom';
 
 import Modal from '../../Modal/Modal';
 import InputField from '../../InputField/InputField';
@@ -8,22 +12,35 @@ import Button from '../../Button/Button';
 
 import './createClassModal.scss';
 
-export const CreateClassroomModal = () => {
+export const CreateClassroomModal = ({
+  createClassroom,
+  userId,
+  creatingClassroom,
+  toggleCreateClassroomModal
+}) => {
   const [className, setClassName] = useState('');
   const [subject, setSubject] = useState('');
   const [room, setRoom] = useState('');
   const [grade, setGrade] = useState('');
   const [description, setDescription] = useState('');
 
-  const onClassNameChange = (e) => {
-    const value = e.target.value.trim();
-    setClassName(() => value);
+  const handleSubmit = () => {
+    const classData = {
+      name: className,
+      subject,
+      room,
+      grade,
+      description,
+      user: userId
+    };
+    createClassroom(classData);
   };
 
   return (
     <Modal
       header="Create Class"
       modalClass="create-class-modal"
+      modalClose={() => toggleCreateClassroomModal()}
     >
       <div className="create-class-modal__required">
         *required
@@ -32,7 +49,7 @@ export const CreateClassroomModal = () => {
         <div className="create-class-modal__row">
           <InputField
             state={className}
-            onChange={onClassNameChange}
+            onChange={(e) => { setClassName(e.target.value); }}
             label="*Class Name"
             placeholder="enter class name"
             containerWidth="100%"
@@ -47,28 +64,28 @@ export const CreateClassroomModal = () => {
             options={[
               {
                 name: '10th',
-                value: 10
+                value: '10'
               },
               {
                 name: '9th',
-                value: 9
+                value: '9'
               },
               {
                 name: '8th',
-                value: 8
+                value: '8'
               }, {
                 name: '7th',
-                value: 7
+                value: '7'
               },
               {
                 name: '6th Standard',
-                value: 6
+                value: '6'
               }
             ]}
           />
           <InputField
             state={room}
-            onChange={(e) => { setRoom(e.target.value.trim()); }}
+            onChange={(e) => { setRoom(e.target.value); }}
             label="Room"
             placeholder="enter subject"
             containerWidth="199px"
@@ -76,7 +93,7 @@ export const CreateClassroomModal = () => {
           />
           <InputField
             state={subject}
-            onChange={(e) => { setSubject(e.target.value.trim()); }}
+            onChange={(e) => { setSubject(e.target.value); }}
             label="Subject"
             placeholder="enter subject"
             containerWidth="199px"
@@ -85,7 +102,7 @@ export const CreateClassroomModal = () => {
         <div className="create-class-modal__row">
           <TextareaField
             state={description}
-            onChange={(e) => { setDescription(e.target.value.trim()); }}
+            onChange={(e) => { setDescription(e.target.value); }}
             label="Description"
             placeholder="type description..."
             style={{
@@ -95,10 +112,10 @@ export const CreateClassroomModal = () => {
           />
         </div>
         <div className="create-class-modal__row">
-          <Button className="secondary" style={{ marginLeft: 'auto', marginRight: '16px' }}>
+          <Button className="secondary" onClick={() => { console.log('toggle'); toggleCreateClassroomModal(); }} style={{ marginLeft: 'auto', marginRight: '16px' }}>
             Cancel
           </Button>
-          <Button className="primary" disabled={!className}>
+          <Button className="primary" onClick={handleSubmit} disabled={!className.trim() || creatingClassroom}>
             Create class
           </Button>
         </div>
@@ -107,4 +124,14 @@ export const CreateClassroomModal = () => {
   );
 };
 
-export default CreateClassroomModal;
+const mapStateToProps = state => ({
+  userId: state.user.id,
+  creatingClassroom: state.classroom.creatingClassroom
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  createClassroom,
+  toggleCreateClassroomModal
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateClassroomModal);

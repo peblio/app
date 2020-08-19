@@ -6,7 +6,6 @@ import { DEFAULT_MODAL_WIDTH } from '../../constants/modalConstants';
 
 const Modal = ({
   modalWidth,
-  modalClose,
   modalClass,
   header,
   children,
@@ -28,7 +27,6 @@ const Modal = ({
 
 Modal.propTypes = {
   modalWidth: PropTypes.string,
-  modalClose: PropTypes.func.isRequired,
   modalClass: PropTypes.string,
   header: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
   children: PropTypes.node.isRequired,

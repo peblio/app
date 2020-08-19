@@ -13,7 +13,6 @@ const JoinClassModal = () => {
     <Modal
       header='Join Class'
       modalClass='join-class-modal'
-      modalClose={() => {}}
     >
       <h2 className="join-class-modal__body__header">
         Enter Class Code

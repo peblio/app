@@ -68,7 +68,6 @@ const CreateAssignmentModal = () => {
         </React.Fragment>
       )}
       modalClass="create-assignment-modal"
-      modalClose={() => {}}
     >
       <div className="create-assignment-modal__required">
         *required

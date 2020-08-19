@@ -13,7 +13,6 @@ const CreateTopicModal = () => {
     <Modal
       header='Create Topic'
       modalClass='create-topic-modal'
-      modalClose={() => {}}
     >
       <h2 className="create-topic-modal__body__header">
         Enter topic title
