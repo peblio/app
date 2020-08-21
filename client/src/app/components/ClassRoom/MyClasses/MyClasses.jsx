@@ -10,9 +10,7 @@ import JoinClassModal from './JoinClassModal/JoinClassModal';
 
 import Dropdown from '../../Dropdown/Dropdown';
 import ClassCard from '../../ClassCard/ClassCard';
-import IconButton from '../../IconButton/IconButton';
 
-import googleClassroomIcon from '../../../images/googleClassroom.png';
 import { toggleJoinClassroomModal, toggleCreateClassroomModal, fetchClassrooms } from '../../../action/classroom';
 
 const MyClasses = ({
@@ -32,17 +30,11 @@ const MyClasses = ({
   []);
   return (
     <React.Fragment>
-      <main className="dashboard__main">
-        <div className="dashboard__header-area">
-          <header className="dashboard__header">
+      <main className="classroom">
+        <div className="classroom__header-area">
+          <header className="classroom__header-area__header">
             My Classes
           </header>
-          <IconButton
-            style={{ marginRight: '58px' }}
-            icon={<img src={googleClassroomIcon} alt="google classroom logo" />}
-          >
-            Sync with Google Classroom
-          </IconButton>
           <Dropdown
             className="btn"
             placeholder="New class"
@@ -62,7 +54,7 @@ const MyClasses = ({
             ]}
           />
         </div>
-        <div className="dashboard__class-card-container">
+        <div className="classroom__class-card-container">
           {
             classrooms.map(classroom => (
               <ClassCard

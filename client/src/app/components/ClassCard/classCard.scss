@@ -15,6 +15,17 @@
   display: flex;
   flex-direction: column;
 
+  &__code-input-hidden{
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    border: none;
+    box-sizing: border-box;
+    background: none;
+  }
+
   &:hover, &:focus{
     box-shadow: 0 7.8px 10.5px 0 rgba(0, 0, 0, 0.22);
     border: solid 1px #008575;
@@ -26,21 +37,28 @@
     border: none;
     border-radius: 3px;
     margin-left: auto;
-    font-family: $roboto;
-    font-size: 14px;
-    font-weight: $heavy-font-weight;
-    color: $g3;
-    margin-right: -5px;
     cursor: pointer;
     display: flex;
     align-items: center;
     box-sizing: border-box;
 
-    &:focus, &:hover{
-      outline: none;
-      border: none;
-      background: $lighter-gray;
+    input{
+      cursor: pointer;
+      background: none;
+      border:none;
+      text-align: right;
+      width: 50%;
+      margin-left: auto;
+      font-family: $roboto;
+      font-size: 14px;
+      font-weight: $heavy-font-weight;
+      color: $g3;
+
+      &:focus{
+        outline: none;
+      }
     }
+
     svg{
       margin-left: 4px;
     }
