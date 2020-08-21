@@ -19,39 +19,29 @@
 
 
     #{$root}__nav-link{
+      height: 36px;
       box-sizing: border-box;
-      border-left: 6px solid transparent;
-      
-      &__btn{
-        cursor: pointer;
+      display: flex;
+      a{
         box-sizing: border-box;
-        padding: 10px 23px;
-        height: 36px;
-        text-align: left;
-        background: none;
         width: 100%;
-        border: none;
-        color: #667378;
-        margin: 0;
+        padding: 10px 23px;
         font-family: $roboto;
         font-size: 14px;
         font-weight: 500;
-        &:focus{
-          outline: none;
+        border-left: 6px solid transparent;
+        color: #667378;
+        text-decoration: none;
+
+        &.active{
+          border-left: 6px solid #00bb9d; 
+          background-color: rgba(225, 227, 228, 0.5);
+          a{
+            color: #3e4e54;
+          }
         }
       }
 
-      &:focus-within{
-        background-color: rgba(225, 227, 228, 0.5);
-      }
-
-      &.active{
-        border-left: 6px solid #00bb9d; 
-        background-color: rgba(225, 227, 228, 0.5);
-        a{
-          color: #3e4e54;
-        }
-      }
     }
   }
 }

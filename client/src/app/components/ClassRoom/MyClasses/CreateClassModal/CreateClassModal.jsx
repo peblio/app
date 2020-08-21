@@ -14,9 +14,11 @@ import Button from '../../../Button/Button';
 import './createClassModal.scss';
 
 export const CreateClassroomModal = ({
-  createClassroom,
   userId,
   creatingClassroom,
+  // eslint-disable-next-line no-shadow
+  createClassroom,
+  // eslint-disable-next-line no-shadow
   toggleCreateClassroomModal
 }) => {
   const [className, setClassName] = useState('');

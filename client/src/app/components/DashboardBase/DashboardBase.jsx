@@ -1,35 +1,25 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { loadMemoryConsumed } from '../../action/dashboard';
 
 import TopNav from '../TopNav/TopNav';
 import ProgressBar from '../ProgressBar/ProgressBar';
 
-import SideBar from './SideBar/SideBar';
-import MyClass from './MyClasses/MyClasses';
+import SideBar from '../SideBar/SideBar';
+import './dashboardBase.scss';
 
-
-import './classesDashboard.scss';
+// actions
+import { loadMemoryConsumed } from '../../action/dashboard';
+import { fetchCurrentUser } from '../../action/user';
 
 // eslint-disable-next-line no-shadow
-const ClassesDashboard = ({ memoryConsumed, loadMemoryConsumed, dashboardView }) => {
+const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, fetchCurrentUser, children }) => {
   useEffect(() => {
+    fetchCurrentUser();
     loadMemoryConsumed();
   }, []);
-
-  const memoizedRenderComponent = useCallback(() => {
-    switch (dashboardView) {
-      case 'documents':
-        return <h1>documents</h1>;
-      case 'classes':
-        return <MyClass />;
-      default:
-        return null;
-    }
-  }, [dashboardView]);
 
   return (
     <React.Fragment>
@@ -48,28 +38,32 @@ const ClassesDashboard = ({ memoryConsumed, loadMemoryConsumed, dashboardView })
             containerWidth="100%"
           />
         </SideBar>
-        {memoizedRenderComponent()}
+        <div className="dashboard__children">
+          {children}
+        </div>
       </div>
     </React.Fragment>
   );
 };
 
-ClassesDashboard.propTypes = {
+DashboardBase.propTypes = {
   memoryConsumed: PropTypes.number.isRequired,
   loadMemoryConsumed: PropTypes.func.isRequired,
-  dashboardView: PropTypes.string.isRequired
+  fetchCurrentUser: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     memoryConsumed: state.dashboard.memoryConsumed,
-    dashboardView: state.dashboard.dashboardView,
+    name: PropTypes.string.isRequired,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    loadMemoryConsumed
+    loadMemoryConsumed,
+    fetchCurrentUser
   }, dispatch);
 }
-export default (connect(mapStateToProps, mapDispatchToProps)(ClassesDashboard));
+export default (connect(mapStateToProps, mapDispatchToProps)(DashboardBase));

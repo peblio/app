@@ -1,35 +1,31 @@
-.dashboard{
-  $root: &;
+.classroom{
+  flex: 1;
+  padding: 40px;
+  padding-left: 64px;
+  box-sizing: border-box;
+  height: 100%;
+  overflow: auto;
   
-  &__main{
-    flex: 1;
-    padding: 40px;
-    padding-left: 64px;
-    box-sizing: border-box;
-    height: 100%;
-    overflow: auto;
-    
-    #{$root}__header-area{
-      display: flex;
-      height: 40px;
-      align-items: center;
-  
-      #{$root}__header{
-        font-weight: 500;
-        font-size: 20px;
-        margin-right: auto;
-      }
+  &__header-area{
+    display: flex;
+    height: 40px;
+    align-items: center;
+
+    &__header{
+      font-weight: 500;
+      font-size: 20px;
+      margin-right: auto;
     }
-    #{$root}__class-card-container{
-      margin-top: 40px;
-      display: flex;
-      max-width: 100%;
-      flex-wrap: wrap;
-  
-      .class-card{
-        margin-right: 40px;
-        margin-bottom: 40px;
-      }
+  }
+  &__class-card-container{
+    margin-top: 40px;
+    display: flex;
+    max-width: 100%;
+    flex-wrap: wrap;
+
+    .class-card{
+      margin-right: 40px;
+      margin-bottom: 40px;
     }
   }
 }

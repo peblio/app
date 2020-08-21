@@ -55,9 +55,24 @@ const LazyLoadedPage404 = lazy(() => (
 ));
 
 const LazyLoadedClassRoom = lazy(() => (
-  import('./components/ClassRoom/ClassesDashboard.jsx')
+  import('./components/ClassRoom/ClassroomDashboard.jsx')
 ));
 
+const LazyLoadedDocuments = lazy(() => (
+  import('./components/Documents/Documents.jsx')
+));
+
+const LazyLoadedTrash = lazy(() => (
+  import('./components/Trash/Trash.jsx')
+));
+
+const LazyLoadedAccount = lazy(() => (
+  import('./components/Account/Account.jsx')
+));
+
+const LazyLoadedProfilePreview = lazy(() => (
+  import('./components/ProfilePreview/ProfilePreview.jsx')
+));
 
 class Main extends React.Component {
   render() {
@@ -73,9 +88,13 @@ class Main extends React.Component {
               <Route path="/dashboard/:userName/folder/:folderShortId" component={withTracker(LazyLoadedDashboard)} />
               <Route path="/dashboard/" component={withTracker(LazyLoadedDashboard)} />
               <Route path="/payment/" component={withTracker(LazyLoadedPaymentPage)} />
+              <Route path="/profile" component={withTracker(LazyLoadedProfilePreview)} exact />
               <Route path="/profile/:userName/folder/:folderShortId" component={withTracker(LazyLoadedPaymentProfile)} />
               <Route path="/profile/:userName" component={withTracker(LazyLoadedPaymentProfile)} />
-              <Route path="/class" component={withTracker(LazyLoadedClassRoom)} />
+              <Route path="/classroom" component={withTracker(LazyLoadedClassRoom)} />
+              <Route path="/documents" component={withTracker(LazyLoadedDocuments)} />
+              <Route path="/trash" component={withTracker(LazyLoadedTrash)} />
+              <Route path="/account" component={withTracker(LazyLoadedAccount)} />
               <Route path="*" component={withTracker(LazyLoadedPage404)} />
             </Switch>
           </Suspense>
