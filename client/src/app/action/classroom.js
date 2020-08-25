@@ -14,9 +14,21 @@ export const toggleJoinClassroomModal = () => (dispatch) => {
   });
 };
 
+export const toggleDataLoading = () => (dispatch) => {
+  dispatch({
+    type: ActionTypes.TOGGLE_DATA_LOADING,
+  });
+};
+
 export const fetchClassrooms = () => (dispatch) => {
+  dispatch({
+    type: ActionTypes.TOGGLE_DATA_LOADING,
+  });
   axios.get('/learning/classroomDetail')
     .then(({ data }) => {
+      dispatch({
+        type: ActionTypes.TOGGLE_DATA_LOADING,
+      });
       dispatch({
         type: ActionTypes.FETCH_CLASSROOMS,
         classrooms: data
@@ -26,6 +38,9 @@ export const fetchClassrooms = () => (dispatch) => {
       if (e.response.status === 404) {
         history.push('/404');
       }
+      dispatch({
+        type: ActionTypes.TOGGLE_DATA_LOADING,
+      });
     });
 };
 
@@ -90,4 +105,32 @@ export const joinClassroom = classCode => (dispatch) => {
         value: false
       });
     });
+};
+
+export const fetchCurrentClassroomDetails = id => (dispatch) => {
+  dispatch({
+    type: ActionTypes.TOGGLE_DATA_LOADING,
+  });
+  axios.get(`/learning/classroomDetail/${id}`)
+    .then(({ data }) => {
+      dispatch({
+        type: ActionTypes.TOGGLE_DATA_LOADING,
+      });
+      dispatch({
+        type: ActionTypes.SET_CURRENT_CLASSROOM,
+        data
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: ActionTypes.TOGGLE_DATA_LOADING,
+      });
+    });
+};
+
+export const clearCurrentClassroom = () => (dispatch) => {
+  dispatch({
+    type: ActionTypes.CLEAR_CURRENT_CLASSROOM,
+  });
 };

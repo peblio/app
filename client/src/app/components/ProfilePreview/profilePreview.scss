@@ -1,0 +1,14 @@
+.profile-preview{
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 40px;
+  &__iframe{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: none;
+    overflow-y: hidden;
+    box-shadow: 4px 4px 20px rgba($color: #000000, $alpha: 0.1);
+  }
+}

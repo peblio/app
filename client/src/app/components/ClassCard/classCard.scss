@@ -11,87 +11,118 @@
   background-color: #ffffff;
   box-sizing: border-box;
   transition: box-shadow 300ms ease, border 300ms ease;
-
-  display: flex;
-  flex-direction: column;
-
-  &__code-input-hidden{
-    height: 0;
-    width: 0;
-    overflow: hidden;
-    padding: 0;
-    margin: 0;
-    border: none;
-    box-sizing: border-box;
-    background: none;
-  }
-
-  &:hover, &:focus{
+  position: relative;
+  
+  &:hover, &:focus, &:focus-within{
     box-shadow: 0 7.8px 10.5px 0 rgba(0, 0, 0, 0.22);
     border: solid 1px #008575;
     outline: none;
   }
 
-  &__code{
-    background: none;
+  &__click-area{
+    position: absolute;
+    top:0;
+    left:0;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
     border: none;
-    border-radius: 3px;
-    margin-left: auto;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
+    background: none;
     box-sizing: border-box;
+    &:focus{
+      outline: none;
+    }
+  }
 
-    input{
-      cursor: pointer;
+  &__main{
+    display: flex;
+    pointer-events: none;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2;
+    &__code-input-hidden{
+      height: 0;
+      width: 0;
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+      border: none;
+      box-sizing: border-box;
       background: none;
-      border:none;
-      text-align: right;
-      width: 50%;
+    }
+  
+  
+    &__code{
+      background: none;
+      pointer-events: all;
+      border: none;
+      border-radius: 3px;
       margin-left: auto;
-      font-family: $roboto;
-      font-size: 14px;
-      font-weight: $heavy-font-weight;
-      color: $g3;
-
-      &:focus{
-        outline: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+  
+      input{
+        cursor: pointer;
+        background: none;
+        border:none;
+        text-align: right;
+        width: 50%;
+        margin-left: auto;
+        font-family: $roboto;
+        font-size: 14px;
+        font-weight: $heavy-font-weight;
+        color: $g3;
+  
+        &:focus{
+          outline: none;
+        }
+        
+        &::selection{
+          background: none;
+          color: unset;
+        }
+      }
+  
+      svg{
+        margin-left: 4px;
       }
     }
-
-    svg{
-      margin-left: 4px;
+  
+    &__title{
+      margin-top: 28px;
+      font-size: $h2-size;
+      font-family: $roboto;
+    }
+  
+    &__subject{
+      font-size: 14px;
+      font-family: $roboto;
+      font-weight: 300;
+      margin-top: 8px;
+    }
+  
+  
+    &__card-footer{
+      margin-top: auto;
+      display: flex;
+      font-family: $roboto;
+      font-size: 12px;
+      color: $g3;
+      align-items: center;
+  
+      .circle{
+        height: 4px;
+        width: 4px;
+        border-radius: 50%;
+        background: $g3;
+        margin: 0 4px;
+      }
     }
   }
 
-  &__title{
-    margin-top: 28px;
-    font-size: $h2-size;
-    font-family: $roboto;
-  }
-
-  &__subject{
-    font-size: 14px;
-    font-family: $roboto;
-    font-weight: 300;
-    margin-top: 8px;
-  }
-
-
-  &__card-footer{
-    margin-top: auto;
-    display: flex;
-    font-family: $roboto;
-    font-size: 12px;
-    color: $g3;
-    align-items: center;
-
-    .circle{
-      height: 4px;
-      width: 4px;
-      border-radius: 50%;
-      background: $g3;
-      margin: 0 4px;
-    }
-  }
 }

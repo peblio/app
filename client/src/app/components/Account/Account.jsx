@@ -1,9 +1,10 @@
 import React from 'react';
+import * as AccountComponent from './Account/Account';
 import DashboardView from '../DashboardBase/DashboardBase';
 
 const Trash = () => (
   <DashboardView>
-    Account
+    <AccountComponent />
   </DashboardView>
 );
 

@@ -74,6 +74,10 @@ const LazyLoadedProfilePreview = lazy(() => (
   import('./components/ProfilePreview/ProfilePreview.jsx')
 ));
 
+const LazyLoadedClassView = lazy(() => (
+  import('./components/ClassView/ClassView.jsx')
+));
+
 class Main extends React.Component {
   render() {
     return (
@@ -91,7 +95,8 @@ class Main extends React.Component {
               <Route path="/profile" component={withTracker(LazyLoadedProfilePreview)} exact />
               <Route path="/profile/:userName/folder/:folderShortId" component={withTracker(LazyLoadedPaymentProfile)} />
               <Route path="/profile/:userName" component={withTracker(LazyLoadedPaymentProfile)} />
-              <Route path="/classroom" component={withTracker(LazyLoadedClassRoom)} />
+              <Route path="/classroom" component={withTracker(LazyLoadedClassRoom)} exact />
+              <Route path="/classroom/:classId" component={withTracker(LazyLoadedClassView)} />
               <Route path="/documents" component={withTracker(LazyLoadedDocuments)} />
               <Route path="/trash" component={withTracker(LazyLoadedTrash)} />
               <Route path="/account" component={withTracker(LazyLoadedAccount)} />

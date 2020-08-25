@@ -1,0 +1,98 @@
+@import 'variables.scss';
+
+.class-view{
+  $root: &;
+  $topbar-height: 50px;
+  position: absolute;
+  left: 0;
+  top: $topbar-height;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  height: calc(100vh - #{$topbar-height});
+  width: 100vw;
+  background: #f7f7f7;
+  box-sizing: border-box;
+  font-family: $roboto;
+
+  &__main{
+    flex: 1;
+    padding: 40px;
+    padding-left: 64px;
+    box-sizing: border-box;
+    
+    #{$root}__header-area{
+      display: flex;
+      align-items: center;
+      color: $black;
+
+      &__bread-crumbs{
+        font-weight: $heavy-font-weight;
+        font-size: 20px;
+        margin-right: auto;
+        display: flex;
+        align-items: center;
+        svg{
+          margin: 0 8px;
+        }
+      }
+
+      &__class-code{
+        display: flex;
+        font-weight: $heavy-font-weight;
+        input{
+          border: none;
+          background: none;
+          width: 75px;
+          margin: 0 4px;
+          cursor: pointer;
+          font-family: $roboto;
+          font-size: 14px;
+          font-weight: $heavy-font-weight;
+          color: $g3;
+          &:focus{
+            outline: none;
+          }
+          &::selection{
+            background: none;
+            color: unset;
+          }
+        }
+      }
+    }
+    
+    #{$root}__code{
+      width: 175px;
+      background: none;
+      border: none;
+      border-radius: 3px;
+      margin-left: auto;
+      font-family: $roboto;
+      font-size: 14px;
+      font-weight: $heavy-font-weight;
+      color: $g3;
+      margin-right: -5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+  
+      &:focus, &:hover{
+        outline: none;
+      }
+      svg{
+        margin-left: 4px;
+      }
+    }
+
+    #{$root}__tab-switcher{
+      width: 100%;
+      margin-top: 23px;
+      &__tabs{
+        display: flex;
+        justify-content: center;
+      }
+
+    }
+  }
+}

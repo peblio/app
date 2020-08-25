@@ -4,7 +4,9 @@ const initialState = {
   classrooms: [],
   creatingClassroom: false,
   createClassroomModal: false,
-  joinClassroomModal: false
+  joinClassroomModal: false,
+  currentClassroom: null,
+  dataLoading: false
 };
 
 const classrooms = (state = initialState, action) => {
@@ -38,6 +40,24 @@ const classrooms = (state = initialState, action) => {
       return {
         ...state,
         joinClassroomModal: !state.joinClassroomModal
+      };
+
+    case ActionTypes.SET_CURRENT_CLASSROOM:
+      return {
+        ...state,
+        currentClassroom: action.data
+      };
+
+    case ActionTypes.CLEAR_CURRENT_CLASSROOM:
+      return {
+        ...state,
+        currentClassroom: null
+      };
+
+    case ActionTypes.TOGGLE_DATA_LOADING:
+      return {
+        ...state,
+        dataLoading: !state.dataLoading
       };
 
     default:
