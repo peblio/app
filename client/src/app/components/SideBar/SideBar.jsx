@@ -29,8 +29,6 @@ const SideBar = ({ children, ...props }) => (
 
 SideBar.propTypes = {
   children: PropTypes.element,
-  dashboardView: PropTypes.string.isRequired,
-  setDashboardView: PropTypes.func.isRequired
 };
 
 SideBar.defaultProps = {

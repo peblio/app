@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import history from '../../../utils/history';
 
 import './MyClasses.scss';
 
@@ -10,6 +11,7 @@ import JoinClassModal from './JoinClassModal/JoinClassModal';
 
 import Dropdown from '../../Dropdown/Dropdown';
 import ClassCard from '../../ClassCard/ClassCard';
+import GenericLoader from '../../GenericLoader/LoadingMessage';
 
 import { toggleJoinClassroomModal, toggleCreateClassroomModal, fetchClassrooms } from '../../../action/classroom';
 
@@ -22,12 +24,14 @@ const MyClasses = ({
   // eslint-disable-next-line no-shadow
   toggleJoinClassroomModal,
   // eslint-disable-next-line no-shadow
-  fetchClassrooms
+  fetchClassrooms,
+  dataLoading
 }) => {
   useEffect(() => {
     fetchClassrooms();
   },
   []);
+
   return (
     <React.Fragment>
       <main className="classroom">
@@ -54,17 +58,18 @@ const MyClasses = ({
             ]}
           />
         </div>
+        {dataLoading && <GenericLoader />}
         <div className="classroom__class-card-container">
           {
             classrooms.map(classroom => (
               <ClassCard
+                onClick={() => { history.push(`/classroom/${classroom.id}`); }}
                 key={classroom.id}
                 classCode={classroom.id}
                 classTitle={classroom.name}
                 subject={classroom.subject}
                 grade={classroom.grade}
                 studentCount={classroom.members ? classroom.members.length : 0}
-                tabIndex="0"
               />
             ))
           }
@@ -77,17 +82,19 @@ const MyClasses = ({
 };
 
 MyClasses.propTypes = {
-  classrooms: PropTypes.arrayOf().isRequired,
+  classrooms: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   createClassroomModal: PropTypes.bool.isRequired,
   joinClassroomModal: PropTypes.bool.isRequired,
   toggleCreateClassroomModal: PropTypes.func.isRequired,
   toggleJoinClassroomModal: PropTypes.func.isRequired,
   fetchClassrooms: PropTypes.func.isRequired,
+  dataLoading: PropTypes.bool.isRequired
 };
 
 
 function mapStateToProps(state) {
   return {
+    dataLoading: state.classroom.dataLoading,
     classrooms: state.classroom.classrooms,
     createClassroomModal: state.classroom.createClassroomModal,
     joinClassroomModal: state.classroom.joinClassroomModal,
