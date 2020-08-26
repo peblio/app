@@ -8,7 +8,7 @@ import ImageUploadSVG from '../../../images/imageUpload.svg';
 
 import axios from '../../../utils/axios';
 
-import './account.scss';
+import './accountComponent.scss';
 
 class Account extends React.Component {
   constructor(props) {
