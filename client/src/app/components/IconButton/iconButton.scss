@@ -1,6 +1,7 @@
 @import "variables.scss";
 
 .icon-button{
+  $root: &;
   margin: 0;
   padding: 4px 0px; 
   border: none;
@@ -11,6 +12,21 @@
   align-items: center;
   font-family: $roboto;
   color: $black;
+
+  &--no-label{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    transition: background 300ms ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    
+    &:hover{
+      background: $g7;
+    }
+  }
   
   &:disabled{
     opacity: 0.5;
@@ -52,5 +68,8 @@
     font-weight: $heavy-font-weight;
     font-size: $p-size;
     transition: color 300ms ease;
+  }
+  &__tool-tip{
+    display: none;
   }
 }

@@ -12,7 +12,7 @@ import Button from '../../../Button/Button';
 import './joinClassModal.scss';
 
 // eslint-disable-next-line no-shadow
-const JoinClassroomModal = ({ toggleJoinClassroomModal, creatingClassroom, joinClassroom }) => {
+const JoinClassroomModal = ({ toggleJoinClassroomModal, submittingData, joinClassroom }) => {
   const [classCode, setClassCode] = useState('');
 
   return (
@@ -39,7 +39,7 @@ const JoinClassroomModal = ({ toggleJoinClassroomModal, creatingClassroom, joinC
         </Button>
         <Button
           className='primary'
-          disabled={!classCode.trim() || creatingClassroom}
+          disabled={!classCode.trim() || submittingData}
           onClick={() => { joinClassroom(); }}
         >
           Join Class
@@ -51,12 +51,12 @@ const JoinClassroomModal = ({ toggleJoinClassroomModal, creatingClassroom, joinC
 
 JoinClassroomModal.propTypes = {
   toggleJoinClassroomModal: PropTypes.func.isRequired,
-  creatingClassroom: PropTypes.bool.isRequired,
+  submittingData: PropTypes.bool.isRequired,
   joinClassroom: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  creatingClassroom: state.classroom.creatingClassroom
+  submittingData: state.classroom.submittingData
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

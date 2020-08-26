@@ -15,7 +15,7 @@ import './createClassModal.scss';
 
 export const CreateClassroomModal = ({
   userId,
-  creatingClassroom,
+  submittingData,
   // eslint-disable-next-line no-shadow
   createClassroom,
   // eslint-disable-next-line no-shadow
@@ -125,7 +125,7 @@ export const CreateClassroomModal = ({
           <Button
             className="primary"
             onClick={handleSubmit}
-            disabled={!className.trim() || creatingClassroom}
+            disabled={!className.trim() || submittingData}
           >
             Create class
           </Button>
@@ -138,13 +138,13 @@ export const CreateClassroomModal = ({
 CreateClassroomModal.propTypes = {
   createClassroom: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
-  creatingClassroom: PropTypes.bool.isRequired,
+  submittingData: PropTypes.bool.isRequired,
   toggleCreateClassroomModal: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   userId: state.user.id,
-  creatingClassroom: state.classroom.creatingClassroom
+  submittingData: state.classroom.submittingData
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

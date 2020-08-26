@@ -2,11 +2,13 @@ import * as ActionTypes from '../constants/reduxConstants';
 
 const initialState = {
   classrooms: [],
-  creatingClassroom: false,
+  submittingData: false,
   createClassroomModal: false,
   joinClassroomModal: false,
-  currentClassroom: null,
-  dataLoading: false
+  currentClassroom: '',
+  dataLoading: false,
+  createTopicModal: false,
+  editTpoicModal: false,
 };
 
 const classrooms = (state = initialState, action) => {
@@ -24,10 +26,11 @@ const classrooms = (state = initialState, action) => {
           action.classroom
         ]
       };
-    case ActionTypes.SET_CREATING_CLASSROOM:
+
+    case ActionTypes.SET_SUBMITTING_DATA:
       return {
         ...state,
-        creatingClassroom: action.value
+        submittingData: action.value
       };
 
     case ActionTypes.TOGGLE_CREATE_CLASSROOM_MODAL:
@@ -51,13 +54,25 @@ const classrooms = (state = initialState, action) => {
     case ActionTypes.CLEAR_CURRENT_CLASSROOM:
       return {
         ...state,
-        currentClassroom: null
+        currentClassroom: ''
       };
 
     case ActionTypes.TOGGLE_DATA_LOADING:
       return {
         ...state,
         dataLoading: !state.dataLoading
+      };
+
+    case ActionTypes.TOGGLE_CREATE_TOPIC_MODAL:
+      return {
+        ...state,
+        createTopicModal: !state.createTopicModal
+      };
+
+    case ActionTypes.TOGGLE_EDIT_TOPIC_MODAL:
+      return {
+        ...state,
+        createTopicModal: !state.editTpoicModal
       };
 
     default:

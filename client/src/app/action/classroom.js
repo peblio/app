@@ -14,6 +14,18 @@ export const toggleJoinClassroomModal = () => (dispatch) => {
   });
 };
 
+export const toggleCreateTopicModal = () => (dispatch) => {
+  dispatch({
+    type: ActionTypes.TOGGLE_CREATE_TOPIC_MODAL,
+  });
+};
+
+export const toggleEditTopicModal = () => (dispatch) => {
+  dispatch({
+    type: ActionTypes.TOGGLE_EDIT_TOPIC_MODAL,
+  });
+};
+
 export const toggleDataLoading = () => (dispatch) => {
   dispatch({
     type: ActionTypes.TOGGLE_DATA_LOADING,
@@ -46,7 +58,7 @@ export const fetchClassrooms = () => (dispatch) => {
 
 export const createClassroom = classroom => (dispatch) => {
   dispatch({
-    type: ActionTypes.SET_CREATING_CLASSROOM,
+    type: ActionTypes.SET_SUBMITTING_DATA,
     value: true
   });
   axios.post('/learning/classroomDetail', classroom)
@@ -55,7 +67,7 @@ export const createClassroom = classroom => (dispatch) => {
         type: ActionTypes.TOGGLE_CREATE_CLASSROOM_MODAL,
       });
       dispatch({
-        type: ActionTypes.SET_CREATING_CLASSROOM,
+        type: ActionTypes.SET_SUBMITTING_DATA,
         value: false
       });
       axios.get('/learning/classroomDetail')
@@ -76,7 +88,7 @@ export const createClassroom = classroom => (dispatch) => {
         history.push('/404');
       }
       dispatch({
-        type: ActionTypes.SET_CREATING_CLASSROOM,
+        type: ActionTypes.SET_SUBMITTING_DATA,
         value: false
       });
     });
@@ -84,7 +96,7 @@ export const createClassroom = classroom => (dispatch) => {
 
 export const joinClassroom = classCode => (dispatch) => {
   dispatch({
-    type: ActionTypes.SET_CREATING_CLASSROOM,
+    type: ActionTypes.SET_SUBMITTING_DATA,
     value: true
   });
   axios.patch(`/learning/classroomDetail/${classCode}`)
@@ -94,14 +106,14 @@ export const joinClassroom = classCode => (dispatch) => {
         type: ActionTypes.TOGGLE_JOIN_CLASSROOM_MODAL,
       });
       dispatch({
-        type: ActionTypes.SET_CREATING_CLASSROOM,
+        type: ActionTypes.SET_SUBMITTING_DATA,
         value: false
       });
     })
     .catch((err) => {
       console.log(err);
       dispatch({
-        type: ActionTypes.SET_CREATING_CLASSROOM,
+        type: ActionTypes.SET_SUBMITTING_DATA,
         value: false
       });
     });
@@ -133,4 +145,25 @@ export const clearCurrentClassroom = () => (dispatch) => {
   dispatch({
     type: ActionTypes.CLEAR_CURRENT_CLASSROOM,
   });
+};
+
+export const createClassroomTopic = topicData => (dispatch) => {
+  dispatch({
+    type: ActionTypes.SET_SUBMITTING_DATA,
+    value: true
+  });
+  axios.post('/learning/classroomTopic', topicData)
+    .then(({ data }) => {
+      console.log(data);
+      dispatch({
+        type: ActionTypes.SET_SUBMITTING_DATA,
+        value: false
+      });
+      dispatch({
+        type: ActionTypes.TOGGLE_CREATE_TOPIC_MODAL,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
