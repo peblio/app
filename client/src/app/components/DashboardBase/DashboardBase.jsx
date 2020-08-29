@@ -39,7 +39,9 @@ const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, fetchCurrentUser, c
           />
         </SideBar>
         <div className="dashboard__children">
-          {children}
+          <div className="dashboard__children__container">
+            {children}
+          </div>
         </div>
       </div>
     </React.Fragment>

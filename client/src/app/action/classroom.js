@@ -20,6 +20,12 @@ export const toggleCreateTopicModal = () => (dispatch) => {
   });
 };
 
+export const toggleCreateAssignmentModal = () => (dispatch) => {
+  dispatch({
+    type: ActionTypes.TOGGLE_CREATE_ASSIGNMENT_MODAL,
+  });
+};
+
 export const toggleEditTopicModal = () => (dispatch) => {
   dispatch({
     type: ActionTypes.TOGGLE_EDIT_TOPIC_MODAL,

@@ -1,0 +1,29 @@
+@import 'variables.scss';
+
+.documents__filters{
+  display: flex;
+  padding: 15px 40px;
+  box-sizing: border-box;
+  width: 100%;
+  align-items: center;
+  border-bottom: 1px solid $g5;
+
+  &__label{
+    margin-right: 10px;
+    font-family: $roboto;
+    font-size: $p-size;
+  }
+
+  .input-field{
+    margin-right: 20px;
+  }
+
+  #clear-filter{
+    .icon-button__icon:nth-of-type(1){
+      svg{   
+        height: 16px;
+        width: 16px;
+      }
+    }
+  }
+}

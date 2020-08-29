@@ -2,7 +2,7 @@
 
 .sidebar{
   $root: &;
-  width: 202px;
+  min-width: 202px;
   border-right: 1px solid #CCD0D2;
   height: 100%;
   padding: 16px 0;

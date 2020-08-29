@@ -1,0 +1,16 @@
+@import 'variables.scss';
+
+.dashboard__children{
+  $root: '.profile-pebls';
+  #{$root}__container{
+    width: 100%;
+    padding: 40px;
+    overflow-y: auto;
+
+    #{$root}__sub-heading{
+      font-size: $p-size;
+      font-family: $roboto; 
+      text-decoration: none;
+    }
+  }
+}
