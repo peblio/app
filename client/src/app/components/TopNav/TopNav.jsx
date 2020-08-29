@@ -6,7 +6,7 @@ import './topNav.scss';
 
 const TopNav = ({ className, children, ...props }) => (
   <div className={`top-nav ${className || ''}`}>
-    <a href="https://peblio.com" className={`top-nav__brand ${`${className}__brand` || ''}`}>
+    <a href="https://peblio.co" className={`top-nav__brand ${`${className}__brand` || ''}`}>
       <PeblioLogo />
     </a>
     <ul className={`top-nav__nav-links ${`${className}__nav-links` || ''}`}>

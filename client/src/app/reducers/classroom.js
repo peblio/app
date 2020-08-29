@@ -8,6 +8,7 @@ const initialState = {
   currentClassroom: '',
   dataLoading: false,
   createTopicModal: false,
+  createAssignmentModal: false,
   editTpoicModal: false,
 };
 
@@ -69,10 +70,16 @@ const classrooms = (state = initialState, action) => {
         createTopicModal: !state.createTopicModal
       };
 
+    case ActionTypes.TOGGLE_CREATE_ASSIGNMENT_MODAL:
+      return {
+        ...state,
+        createAssignmentModal: !state.createAssignmentModal
+      };
+
     case ActionTypes.TOGGLE_EDIT_TOPIC_MODAL:
       return {
         ...state,
-        createTopicModal: !state.editTpoicModal
+        editTopicModal: !state.editTopicModal
       };
 
     default:

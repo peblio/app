@@ -36,7 +36,7 @@ const Dropdown = ({
   };
 
 
-  const handleOnMouseEnter = () => {
+  const handleOnMouseEnter = (e) => {
     if (textRef.current && textRef.current.clientWidth < textRef.current.scrollWidth) {
       setShowTooltip(true);
     }
@@ -101,7 +101,9 @@ const Dropdown = ({
       </button>
       {
         showTooltip && (
-          <span className="dropdown__tooltip">
+          <span
+            className="dropdown__tooltip"
+          >
             {selected}
           </span>
         )

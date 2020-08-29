@@ -1,0 +1,62 @@
+@import 'variables.scss';
+
+.create-assignment-modal{
+  $root: &;
+  width: 893px;
+
+  &__header{
+    display: flex;
+    align-items: center;
+
+    &__title{
+      margin-right: 16px;
+    }
+
+    &__sub-title{
+      font-size: 14px;
+    }
+  }
+
+  
+  &__body{
+    position: relative;
+    padding-top: 32px;
+
+    #{$root}__required{
+      position: absolute;
+      top: 13px;
+      right: 26px;
+      color: $g3;
+      font-size: 14px;
+    }
+
+    #{$root}__row{
+      display: flex;
+      margin-bottom: 40px;
+    }
+
+    #{$root}__action-area{
+      display: flex;
+      align-items: center;
+    }
+
+    #{$root}__link-box{
+      width: 432px;
+      height: 98px;
+      border-radius: 3px;
+      box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.05);
+      border: solid 1px g7;
+      background-color: white;
+      position: absolute;
+      left: 320px;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+  }
+  
+  &__resource{
+    padding-top: 24px
+  }
+}

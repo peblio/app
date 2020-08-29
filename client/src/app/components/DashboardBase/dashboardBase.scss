@@ -12,8 +12,14 @@
   background: #f7f7f7;
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
+  overflow: hidden;
 
   &__children{
     flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    &__container{
+      min-width: 910;
+    }
   }
 }
