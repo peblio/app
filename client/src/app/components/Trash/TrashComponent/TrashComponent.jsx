@@ -15,6 +15,7 @@ import {
 } from '../../../action/dashboard.js';
 
 import './trashComponent.scss';
+import '../../Shared/Documents/documents.scss';
 
 class TrashComponent extends React.Component {
   componentWillMount() {

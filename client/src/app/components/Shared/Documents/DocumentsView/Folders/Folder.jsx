@@ -24,7 +24,7 @@ const ItemTypes = {
 
 const folderSource = {
   canDrag(props) {
-    const userCanDrag = (props.container === 'dashboard');
+    const userCanDrag = (props.container === 'dashboard' || props.container === 'documents');
     return userCanDrag;
   },
   beginDrag(props) {
@@ -119,6 +119,9 @@ class Folder extends Component {
           className="profile-folders__title"
         >
           <input
+            style={{
+              border: 'none'
+            }}
             className="pages__input"
             ref={(input) => { this.folderTitle = input; }}
             type="text"
@@ -138,7 +141,7 @@ class Folder extends Component {
           <p className="profile-folders__sub-info">
 
           </p>
-          {this.props.container === 'dashboard' && (
+          {(this.props.container === 'dashboard' || this.props.container === 'documents') && (
             <div className="profile-folders__sub-info">
               <button
                 className="profile-pebl__icon"

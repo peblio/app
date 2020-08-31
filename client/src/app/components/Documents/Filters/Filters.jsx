@@ -10,14 +10,12 @@ import Dropdown from '../../Dropdown/Dropdown';
 
 // actions
 import {
-  setDashboardView,
   setDocumentSort,
   setDocumentView,
   searchByTitle,
   clearSearchByTitle,
-  toggleAddNewMenu,
-  loadMemoryConsumed
 } from '../../../action/dashboard';
+
 import {
   createFolder,
   createPage

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import DocumentsView from './DocumentsView/DocumentsView';
+import DocumentsView from '../../Shared/Documents/DocumentsView/DocumentsView';
 
 import './documentsComponent.scss';
 

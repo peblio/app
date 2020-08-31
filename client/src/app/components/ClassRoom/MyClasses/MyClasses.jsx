@@ -58,22 +58,23 @@ const MyClasses = ({
             ]}
           />
         </div>
-        {dataLoading && <GenericLoader />}
-        <div className="classroom__class-card-container">
-          {
-            classrooms.map(classroom => (
-              <ClassCard
-                onClick={() => { history.push(`/classroom/${classroom.id}`); }}
-                key={classroom.id}
-                classCode={classroom.id}
-                classTitle={classroom.name}
-                subject={classroom.subject}
-                grade={classroom.grade}
-                studentCount={classroom.members ? classroom.members.length : 0}
-              />
-            ))
-          }
-        </div>
+        {dataLoading ? <GenericLoader /> : (
+          <div className="classroom__class-card-container">
+            {
+              classrooms.map(classroom => (
+                <ClassCard
+                  onClick={() => { history.push(`/classroom/${classroom.id}`); }}
+                  key={classroom.id}
+                  classCode={classroom.id}
+                  classTitle={classroom.name}
+                  subject={classroom.subject}
+                  grade={classroom.grade}
+                  studentCount={classroom.members ? classroom.members.length : 0}
+                />
+              ))
+            }
+          </div>
+        )}
       </main>
       {createClassroomModal && <CreateClassModal />}
       {joinClassroomModal && <JoinClassModal />}

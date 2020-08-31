@@ -22,8 +22,6 @@
     }
   }
 
-  &__container {
-  }
   &__list {
     display: flex;
     width: 100%;
@@ -268,9 +266,6 @@
       text-align: left;
       position: inherit;
       border-radius: 0;
-    }
-    &__container {
-
     }
     &__list {
       @extend %file-folder__list;

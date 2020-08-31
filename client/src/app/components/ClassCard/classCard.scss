@@ -33,6 +33,9 @@
     &:focus{
       outline: none;
     }
+    &:hover{
+      border: none;
+    }
   }
 
   &__main{

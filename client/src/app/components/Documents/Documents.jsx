@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -7,6 +7,9 @@ import { bindActionCreators } from 'redux';
 import Filters from './Filters/Filters';
 import DashboardView from '../DashboardBase/DashboardBase';
 import DocumentsComponent from './DocumentsComponent/DocumentsComponent';
+
+import Modal from '../App/Modal/Modal';
+import ShareModal from '../App/Modal/ShareModal/ShareModal';
 
 // actions
 import {
@@ -25,27 +28,39 @@ import {
 
 import './documents.scss';
 
-const Documents = props => (
-  <DashboardView>
-    <Filters />
-    <DocumentsComponent
-      userName={props.name}
-      folders={props.folders}
-      pages={props.pages}
-      deleteFolder={props.deleteFolder}
-      fetchAllPages={props.fetchAllPages}
-      jumpToFolderByShortId={props.jumpToFolderByShortId}
-      clearSelectedFolders={props.clearSelectedFolders}
-      renameFolder={props.renameFolder}
-      renamePage={props.renamePage}
-      folderShortId={props.match.params.folderShortId}
-      selectedFolderIds={props.selectedFolderIds}
-      setShareURL={props.setShareURL}
-      viewShareModal={props.viewShareModal}
-      container="dashboard"
-    />
-  </DashboardView>
-);
+const Documents = (props) => {
+  useEffect(() => {
+    console.log(props.match);
+  }, []);
+  return (
+    <DashboardView>
+      <Filters />
+      <DocumentsComponent
+        userName={props.name}
+        folders={props.folders}
+        pages={props.pages}
+        deleteFolder={props.deleteFolder}
+        fetchAllPages={props.fetchAllPages}
+        jumpToFolderByShortId={props.jumpToFolderByShortId}
+        clearSelectedFolders={props.clearSelectedFolders}
+        renameFolder={props.renameFolder}
+        renamePage={props.renamePage}
+        folderShortId={props.match.params.folderShortId}
+        selectedFolderIds={props.selectedFolderIds}
+        setShareURL={props.setShareURL}
+        viewShareModal={props.viewShareModal}
+        container="documents"
+      />
+      <Modal
+        size="small"
+        isOpen={props.isShareModalOpen}
+        closeModal={props.closeShareModal}
+      >
+        <ShareModal />
+      </Modal>
+    </DashboardView>
+  );
+};
 
 Documents.propTypes = {
   clearSelectedFolders: PropTypes.func.isRequired,
@@ -68,6 +83,8 @@ Documents.propTypes = {
   selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   setShareURL: PropTypes.func.isRequired,
   viewShareModal: PropTypes.func.isRequired,
+  isShareModalOpen: PropTypes.bool.isRequired,
+  closeShareModal: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -75,6 +92,7 @@ const mapStateToProps = state => ({
   folders: state.page.folders,
   pages: state.page.pages,
   selectedFolderIds: state.page.selectedFolderIds,
+  isShareModalOpen: state.mainToolbar.isShareModalOpen,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
