@@ -22,12 +22,19 @@ import LinkIcon from '../../../../images/link.svg';
 import LinkPreviewCard from './LinkPreviewCard/LinkPreviewCard';
 
 // actions
-import { toggleCreateAssignmentModal } from '../../../../action/classroom';
+import { toggleCreateAssignmentModal, createAssignment } from '../../../../action/classroom';
 
 import './createAssignmentModal.scss';
 
-// eslint-disable-next-line no-shadow
-const CreateAssignmentModal = ({ toggleCreateAssignmentModal, resourceType }) => {
+const CreateAssignmentModal = ({
+  // eslint-disable-next-line no-shadow
+  toggleCreateAssignmentModal,
+  // eslint-disable-next-line no-shadow
+  createAssignment,
+  resourceType,
+  classroomId,
+  userId
+}) => {
   // form states
   const [classState, setClassState] = useState('');
   const [topic, setTopic] = useState('');
@@ -43,6 +50,22 @@ const CreateAssignmentModal = ({ toggleCreateAssignmentModal, resourceType }) =>
   const [linkAdded, setLinkAdded] = useState(false);
   // 0 for select pebl, 1 for create new pebl and 2 for link
   const [linkType, setLinkType] = useState(-1);
+
+  const handleSubmit = (publish) => {
+    const assignmentData = {
+      user: userId,
+      classroomId,
+      title: assignmentTitle,
+      dueDate: date,
+      description: instruction,
+      isPublished: publish,
+      peblUrls: [
+        'http://localhost:8080/pebl/N2662b1j'
+      ],
+      urls: []
+    };
+    createAssignment(assignmentData);
+  };
 
   const linkInputClickOutside = (e) => {
     if (e.target.id === 'trigger-link' ||
@@ -216,12 +239,12 @@ const CreateAssignmentModal = ({ toggleCreateAssignmentModal, resourceType }) =>
               {
                 name: 'Publish',
                 value: 'publish',
-                onClick: () => { console.log('Publish'); }
+                onClick: () => { handleSubmit(true); }
               },
               {
                 name: 'Save Draft',
                 value: 'save',
-                onClick: () => { console.log('Save Draft'); }
+                onClick: () => { handleSubmit(false); }
               },
             ]}
           />
@@ -279,15 +302,20 @@ const CreateAssignmentModal = ({ toggleCreateAssignmentModal, resourceType }) =>
 
 CreateAssignmentModal.propTypes = {
   toggleCreateAssignmentModal: PropTypes.func.isRequired,
-  resourceType: PropTypes.number.isRequired
+  createAssignment: PropTypes.func.isRequired,
+  resourceType: PropTypes.number.isRequired,
+  classroomId: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
-
+  classroomId: state.classroom.currentClassroom.id,
+  userId: state.user.id,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toggleCreateAssignmentModal
+  toggleCreateAssignmentModal,
+  createAssignment,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateAssignmentModal);

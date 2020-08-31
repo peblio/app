@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import PeblioLogo from '../../images/logo.svg';
+
+import UserAccount from '../Shared/UserAccount/UserAccount';
+
 import './topNav.scss';
 
 const TopNav = ({ className, children, ...props }) => (
@@ -11,6 +14,7 @@ const TopNav = ({ className, children, ...props }) => (
     </a>
     <ul className={`top-nav__nav-links ${`${className}__nav-links` || ''}`}>
       {children}
+      <UserAccount container="dashboard" />
     </ul>
   </div>
 );

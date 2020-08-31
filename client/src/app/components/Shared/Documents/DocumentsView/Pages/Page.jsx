@@ -23,7 +23,7 @@ const ItemTypes = {
 
 const pageSource = {
   canDrag(props) {
-    const userCanDrag = (props.container === 'dashboard');
+    const userCanDrag = (props.container === 'dashboard' || props.container === 'documents');
     return userCanDrag;
   },
   beginDrag(props) {
@@ -128,7 +128,7 @@ class Page extends Component {
           >
             {moment(page.updatedAt).format('DD/MMM/YYYY')}
           </p>
-          {this.props.container === 'dashboard' && (
+          {(this.props.container === 'dashboard' || this.props.container === 'documents') && (
             <div
               className="profile-pebl__sub-info"
             >

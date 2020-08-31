@@ -117,6 +117,7 @@ export const joinClassroom = classCode => (dispatch) => {
       });
     })
     .catch((err) => {
+      // [TODO]: Add dispatch to show toast notification
       console.log(err);
       dispatch({
         type: ActionTypes.SET_SUBMITTING_DATA,
@@ -140,6 +141,7 @@ export const fetchCurrentClassroomDetails = id => (dispatch) => {
       });
     })
     .catch((err) => {
+      // [TODO]: Add dispatch to show toast notification
       console.log(err);
       dispatch({
         type: ActionTypes.TOGGLE_DATA_LOADING,
@@ -170,6 +172,38 @@ export const createClassroomTopic = topicData => (dispatch) => {
       });
     })
     .catch((err) => {
+      // [TODO]: Add dispatch to show toast notification
+      dispatch({
+        type: ActionTypes.SET_SUBMITTING_DATA,
+        value: false
+      });
+      console.log(err);
+    });
+};
+
+
+export const createAssignment = assignmentData => (dispatch) => {
+  dispatch({
+    type: ActionTypes.SET_SUBMITTING_DATA,
+    value: true
+  });
+  axios.post('/learning/classroomAssignment', assignmentData)
+    .then(({ data }) => {
+      console.log(data);
+      dispatch({
+        type: ActionTypes.SET_SUBMITTING_DATA,
+        value: false
+      });
+      dispatch({
+        type: ActionTypes.TOGGLE_CREATE_ASSIGNMENT_MODAL,
+      });
+    })
+    .catch((err) => {
+      // [TODO]: Add dispatch to show toast notification
+      dispatch({
+        type: ActionTypes.SET_SUBMITTING_DATA,
+        value: false
+      });
       console.log(err);
     });
 };
