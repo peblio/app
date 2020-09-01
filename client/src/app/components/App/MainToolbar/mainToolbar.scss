@@ -148,6 +148,7 @@ input:checked + .main-toolbar__slider:before {
   color: $white;
   font-style: normal;
   font-size: 14;
+  @extend %menu-item ;
   &:hover {
     cursor: pointer;
     color: $gray;

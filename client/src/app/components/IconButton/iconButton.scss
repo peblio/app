@@ -35,6 +35,7 @@
   
   &:not(:disabled){
     &:focus, &:hover{
+      background: none;
       outline: none;
       color: $primary-green;
       svg{
@@ -68,8 +69,6 @@
     font-weight: $heavy-font-weight;
     font-size: $p-size;
     transition: color 300ms ease;
-  }
-  &__tool-tip{
-    display: none;
+    transition-duration: 0ms !important;
   }
 }

@@ -54,8 +54,10 @@ const Filters = (props) => {
 
   return (
     <div className="documents__filters">
-      <div className="documents__filters__label">
-        Search files
+      <div
+        className="documents__filters__label"
+      >
+        Search
       </div>
       <InputField
         state={search}
@@ -69,7 +71,28 @@ const Filters = (props) => {
           background: '#fff',
         }}
       />
-      <div className="documents__filters__label">
+      <Dropdown
+        placeholder="Add New"
+        className="btn"
+        style={{
+          width: '146px',
+        }}
+        options={[
+          {
+            name: 'Folder',
+            value: 'folder',
+            onClick: () => { props.createFolder('New folder'); }
+          }, {
+            name: 'Page',
+            value: 'page',
+            onClick: () => { props.createPage('New Page'); }
+          }
+        ]}
+      />
+      <div
+        className="documents__filters__label"
+        style={{ marginLeft: 'auto' }}
+      >
         Arrange By
       </div>
       <Dropdown
@@ -91,7 +114,6 @@ const Filters = (props) => {
       />
       <IconButton
         icon={<ClearFilter />}
-        style={{ marginLeft: 'auto' }}
         onClick={handleClearFilter}
         id='clear-filter'
       />
@@ -108,6 +130,8 @@ Filters.propTypes = {
   searchByTitle: PropTypes.func.isRequired,
   clearSearchByTitle: PropTypes.func.isRequired,
   setDocumentSort: PropTypes.func.isRequired,
+  createFolder: PropTypes.func.isRequired,
+  createPage: PropTypes.func.isRequired,
   documentView: PropTypes.string.isRequired,
 };
 
@@ -120,6 +144,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   searchByTitle,
   setDocumentSort,
   clearSearchByTitle,
+  createFolder,
+  createPage
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filters);

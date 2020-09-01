@@ -10,10 +10,6 @@ body, html{
   line-height: 20px;
 }
 
-button {
-  @extend %menu-item ;
-}
-
 %peblio-button {
   white-space: nowrap;
   padding: $small-padding/2 $small-padding;

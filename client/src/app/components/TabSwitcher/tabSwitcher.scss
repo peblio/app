@@ -11,14 +11,14 @@
       font-size: 16px;
       font-weight: 500;
       font-family: $roboto;
-      border-bottom: 2px solid #f7f7f7;
+      border-bottom: 3px solid $g5;
       color: $g3;
       transition: background ease 300ms;
 
       &:hover{
         background: $g7;
         border: none;
-        border-bottom: 2px solid #f7f7f7;
+        border-bottom: 3px solid $g5;
       }
 
       &:focus{
@@ -27,9 +27,9 @@
 
       &--selected{
         color: $black;
-        border-bottom: 2px solid $primary-green;
+        border-bottom: 3px solid $primary-green;
         &:hover{
-          border-bottom: 2px solid $primary-green;
+          border-bottom: 3px solid $primary-green;
         }
       }
     }
