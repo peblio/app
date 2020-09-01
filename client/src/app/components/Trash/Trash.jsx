@@ -4,9 +4,13 @@ import { connect } from 'react-redux';
 import DashboardView from '../DashboardBase/DashboardBase';
 import TrashComponent from './TrashComponent/TrashComponent';
 
+import './trash.scss';
+
 const Trash = ({ name }) => (
   <DashboardView>
-    <TrashComponent name={name} />
+    <div className="trash">
+      <TrashComponent name={name} />
+    </div>
   </DashboardView>
 );
 

@@ -25,12 +25,18 @@ const MyClasses = ({
   toggleJoinClassroomModal,
   // eslint-disable-next-line no-shadow
   fetchClassrooms,
-  dataLoading
+  dataLoading,
+  userName
 }) => {
   useEffect(() => {
     fetchClassrooms();
   },
   []);
+
+  useEffect(() => {
+    fetchClassrooms();
+  },
+  [userName]);
 
   return (
     <React.Fragment>
@@ -89,7 +95,8 @@ MyClasses.propTypes = {
   toggleCreateClassroomModal: PropTypes.func.isRequired,
   toggleJoinClassroomModal: PropTypes.func.isRequired,
   fetchClassrooms: PropTypes.func.isRequired,
-  dataLoading: PropTypes.bool.isRequired
+  dataLoading: PropTypes.bool.isRequired,
+  userName: PropTypes.string.isRequired
 };
 
 
@@ -99,6 +106,7 @@ function mapStateToProps(state) {
     classrooms: state.classroom.classrooms,
     createClassroomModal: state.classroom.createClassroomModal,
     joinClassroomModal: state.classroom.joinClassroomModal,
+    userName: state.user.name
   };
 }
 

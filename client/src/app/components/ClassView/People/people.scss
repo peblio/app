@@ -1,0 +1,28 @@
+@import 'variables.scss';
+
+.class-view__people{
+  font-family: $roboto;
+  padding-right: 96px;
+
+  &__section{
+    &__section-header{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      margin-top: 5px;
+      padding: 0  12px 0px 12px;
+      display: flex;
+      border-bottom: 1.5px solid $g5;
+  
+      &__header{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-size: 24px;
+        font-weight: normal;
+        margin-right: auto;
+      }
+    }
+  }
+
+}
