@@ -95,3 +95,11 @@ export function getAllAssignmentsInClassroom(req, res) {
     return classroomService.getAllAssignmentsInClassroom(req, res);
   }
 }
+
+export function getAllAssignmentsInClassroomForStudent(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  } else {
+    return classroomService.getAllAssignmentsInClassroomForStudent(req, res);
+  }
+}
