@@ -15,6 +15,7 @@ classroomRoutes.route('/classroomTopic/:id').get(classroomController.getClassroo
 classroomRoutes.route('/classroomTopic').post(classroomController.saveClassroomTopic);
 
 classroomRoutes.route('/classroomAssignment').post(classroomController.saveClassroomAssignment);
+classroomRoutes.route('/classroomAssignment').patch(classroomController.publishClassroomAssignment);
 classroomRoutes.route('/classroomAssignment/:id').get(classroomController.getClassroomAssignment);
 classroomRoutes.route('/classroomAllAssignments/:id').get(classroomController.getAllAssignmentsInClassroom);
 classroomRoutes.route('/classroomAllAssignmentsForStudent/:id').get(classroomController.getAllAssignmentsInClassroomForStudent);
