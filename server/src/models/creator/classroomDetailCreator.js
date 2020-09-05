@@ -10,7 +10,7 @@ export function buildClassroomDetailFromRequest(request, userId) {
     room: request.body.room,
     description: request.body.description,
     subject: request.body.subject,
-    grade: request.body.grade,
+    section: request.body.section,
     id: shortid.generate()
   });
   return classroomDetail;
@@ -25,9 +25,10 @@ export function buildClassroomAssignment(request) {
     topicId: request.body.topicId,
     dueDate: request.body.dueDate , //send ISO date using new Date().toISOString()
     description: request.body.description,
-    peblUrls: request.body.peblUrls,
-    urls: request.body.urls,
+    peblUrl: request.body.peblUrl,
+    url: request.body.url,
     isPublished: request.body.isPublished,
+    type: request.body.type,
   });
   return classroomAssignment;
 }

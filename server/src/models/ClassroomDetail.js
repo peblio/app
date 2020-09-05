@@ -10,7 +10,7 @@ const classroomDetailSchema = new Schema({
   room: { type: String, default: '' },
   description: { type: String, default: '' },
   subject: { type: String, default: '' },
-  grade: { type: String, default: '' }
+  section: { type: String, default: '' }
 }, {
     minimize: false,
     timestamps: true,

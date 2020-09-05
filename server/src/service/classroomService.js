@@ -45,6 +45,20 @@ export async function saveClassroomGrade(req, res) {
 
 export async function saveClassroomTopic(req, res) {
   try {
+    const classroom = await ClassroomDetail.findOne({id: req.body.classroomId});
+    if (!classroom) {
+      return res.status(404).send();
+    }
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: req.body.classroomId
+    });
+    if(!classroomMember) {
+      return res.status(404).send();
+    }
+    if(classroomMember.role !== "teacher") {
+      return res.status(401).send();
+    }
     const classroomTopic = await new ClassroomTopic({name: req.body.name, classroomId: req.body.classroomId}).save();
     return res.status(200).json(classroomTopic);
   } catch (err) {
@@ -54,6 +68,20 @@ export async function saveClassroomTopic(req, res) {
 
 export async function saveClassroomAssignment(req, res) {
   try {
+    const classroom = await ClassroomDetail.findOne({id: req.body.classroomId});
+    if (!classroom) {
+      return res.status(404).send();
+    }
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: req.body.classroomId
+    });
+    if(!classroomMember) {
+      return res.status(404).send();
+    }
+    if(classroomMember.role !== "teacher") {
+      return res.status(401).send();
+    }
     const classroomAssignment = buildClassroomAssignment(req);
     const savedClassroomAssignment = await classroomAssignment.save();
     return res.status(200).json(savedClassroomAssignment);
@@ -80,12 +108,37 @@ export async function getAllAssignmentsInClassroom(req, res) {
   }
 }
 
+async function populateClassRoomStudentMemberListCount(myClassroom){
+  const studentMembers = await ClassroomMember.find({
+    classroomId: myClassroom.id,
+    role: 'student'
+  });
+  myClassroom.studentMemberCount = studentMembers.length;
+  return myClassroom;
+}
+
+async function populateMyMembershipInClassroomDetail(myClassroom, classroomMemberShipList){
+  myClassroom.mymembership = classroomMemberShipList.filter(classroomMemberShip => classroomMemberShip.classroomId === myClassroom.id).pop();
+  return myClassroom
+}
+
 export async function getAllMyClassroomDetails(req, res) {
   try {
-    const myClassroomDetails = await ClassroomDetail.find({
+    const classroomMemberShipList = await ClassroomMember.find({
       user: req.user._id.toString()
     });
-    return res.status(200).json(myClassroomDetails);
+    if(!classroomMemberShipList) {
+      return res.status(404).send();
+    }
+    const classroomMemberShipIdList = classroomMemberShipList.map(classroomMemberShip => classroomMemberShip.classroomId);
+    const myClassroomDetails = await ClassroomDetail.find().where('id').in(classroomMemberShipIdList).exec();
+    
+    const myClassroomDetailsWithMemberCounts = await Promise.all(myClassroomDetails
+    .map(myClassroom => myClassroom.toJSON())
+    .map(myClassroom => populateMyMembershipInClassroomDetail(myClassroom, classroomMemberShipList))
+    .map(async myClassroom => populateClassRoomStudentMemberListCount(await myClassroom)));
+    
+    return res.status(200).json(myClassroomDetailsWithMemberCounts);
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }
@@ -108,6 +161,13 @@ export async function getClassroomDetail(req, res) {
 
 export async function joinClassroom(req, res) {
   try {
+    const classroom = await ClassroomDetail.findOne({id: req.params.id});
+    if (!classroom) {
+      return res.status(404).send();
+    }
+    if(classroomMember) {
+      return res.status(200).send();
+    }
     const classroomMember = await ClassroomMember.findOne({
       user: req.user._id.toString(),
       classroomId: req.params.id
