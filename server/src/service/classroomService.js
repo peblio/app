@@ -1,7 +1,7 @@
 import { buildClassroomDetailFromRequest, buildClassroomMember, buildClassroomAssignment } from '../models/creator/classroomDetailCreator';
 import ClassroomDetail from '../models/ClassroomDetail';
 import ClassroomMember from '../models/ClassroomMember';
-import ClassroomGrade from '../models/ClassroomGrade';
+import ClassroomStudentAssignmentAttempt from '../models/ClassroomStudentAssignmentAttempt';
 import ClassroomTopic from '../models/ClassroomTopic';
 import ClassroomAssignment from '../models/ClassroomAssignment';
 
@@ -18,7 +18,7 @@ export async function createClassroomDetail(req, res) {
 
 export async function getClassroomGrades(req, res) {
   try {
-    const grades = await ClassroomGrade.find();
+    const grades = await ClassroomStudentAssignmentAttempt.find();
     return res.status(200).json(grades);
   } catch (err) {
     return res.status(500).send({ error: err.message });
@@ -34,10 +34,44 @@ export async function getClassroomTopics(req, res) {
   }
 }
 
-export async function saveClassroomGrade(req, res) {
+export async function saveClassroomAssignmentStudentAttempt(req, res) {
   try {
-    const grade = await new ClassroomGrade({name: req.body.name}).save();
-    return res.status(200).json(grade);
+    const classroom = await ClassroomDetail.findOne({id: req.body.classroomId});
+    if (!classroom) {
+      return res.status(404).send();
+    }
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: req.body.classroomId
+    });
+    if(!classroomMember) {
+      return res.status(404).send();
+    }
+    if(classroomMember.role !== "student") {
+      return res.status(401).send();
+    }
+    const classroomAssignment = await ClassroomAssignment.findOne({id: req.body.assignmentId});
+    if (!classroomAssignment) {
+      return res.status(404).send();
+    }
+    if(classroomAssignment.type !== 'assignment') {
+      return res.status(500).send({ error: 'Material cannot be attempted' });
+    }
+    const existingClassroomAssignmentStudentAttempt = await ClassroomStudentAssignmentAttempt.findOne({
+      user: req.user._id.toString(),
+      classroomId: req.body.classroomId,
+      assignmentId: req.body.assignmentId,
+    });
+    if(existingClassroomAssignmentStudentAttempt) {
+      return res.status(500).send({ error: 'Assignment already attempted' });
+    }
+    const classroomAssignmentStudentAttempt = await new ClassroomStudentAssignmentAttempt({
+      user: req.user._id.toString(),
+      classroomId: req.body.classroomId,
+      assignmentId: req.body.assignmentId,
+      myPeblUrl: req.body.myPeblUrl,
+    }).save();
+    return res.status(200).json(classroomAssignmentStudentAttempt);
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }

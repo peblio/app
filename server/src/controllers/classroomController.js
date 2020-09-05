@@ -48,11 +48,11 @@ export function getClassroomTopics(req, res) {
   }
 }
 
-export function saveClassroomGrade(req, res) {
+export function saveClassroomAssignmentStudentAttempt(req, res) {
   if (!req.user) {
     return res.status(403).send({ error: 'Please log in first' });
   } else {
-    return classroomService.saveClassroomGrade(req, res);
+    return classroomService.saveClassroomAssignmentStudentAttempt(req, res);
   }
 }
 

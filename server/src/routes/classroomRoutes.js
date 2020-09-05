@@ -7,8 +7,8 @@ classroomRoutes.route('/classroomDetail').get(classroomController.getAllMyClassr
 classroomRoutes.route('/classroomDetail/:id').patch(classroomController.joinClassroom);
 classroomRoutes.route('/classroomDetail/:id').get(classroomController.getClassroomDetail);
 
-classroomRoutes.route('/classroomGrade').get(classroomController.getClassroomGrades);
-classroomRoutes.route('/classroomGrade').post(classroomController.saveClassroomGrade);
+classroomRoutes.route('/classroomAssignment').get(classroomController.getClassroomGrades);
+classroomRoutes.route('/classroomAssignmentAttempt').post(classroomController.saveClassroomAssignmentStudentAttempt);
 
 classroomRoutes.route('/classroomTopic/:id').get(classroomController.getClassroomTopics);
 classroomRoutes.route('/classroomTopic').post(classroomController.saveClassroomTopic);
