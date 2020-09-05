@@ -164,7 +164,44 @@ export async function getClassroomAssignment(req, res) {
 
 export async function getAllAssignmentsInClassroom(req, res) {
   try {
+    const classroom = await ClassroomDetail.findOne({id: req.params.id});
+    if (!classroom) {
+      return res.status(404).send();
+    }
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: req.params.id
+    });
+    if(!classroomMember) {
+      return res.status(404).send();
+    }
+    if(classroomMember.role !== "teacher") {
+      return res.status(401).send();
+    }
     const classroomAssignments = await ClassroomAssignment.find({classroomId: req.params.id});
+    return res.status(200).json(classroomAssignments);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
+export async function getAllAssignmentsInClassroomForStudent(req, res) {
+  try {
+    const classroom = await ClassroomDetail.findOne({id: req.params.id});
+    if (!classroom) {
+      return res.status(404).send();
+    }
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: req.params.id
+    });
+    if(!classroomMember) {
+      return res.status(404).send();
+    }
+    if(classroomMember.role !== "student") {
+      return res.status(401).send();
+    }
+    const classroomAssignments = await ClassroomAssignment.find({classroomId: req.params.id, isPublished: true});
     return res.status(200).json(classroomAssignments);
   } catch (err) {
     return res.status(500).send({ error: err.message });
