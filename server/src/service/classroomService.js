@@ -227,6 +227,30 @@ export async function getClassroomAssignment(req, res) {
   }
 }
 
+async function populateTotalStudents(classroomAssignment){
+  if(classroomAssignment.type === 'material'){
+    return classroomAssignment
+  }
+  const studentMembers = await ClassroomMember.find({
+    classroomId: classroomAssignment.classroomId,
+    role: 'student'
+  });
+  classroomAssignment.totalStudentCount = studentMembers.length;
+  return classroomAssignment;
+}
+
+async function populateStudentsWhoHaveTurnedInAssignmentCount(classroomAssignment){
+  if(classroomAssignment.type === 'material'){
+    return classroomAssignment
+  }
+  const studentsWhoHaveTurnedInAssignment = await ClassroomStudentAssignmentAttempt.find({
+    assignmentId: classroomAssignment.id,
+    turnedIn: true
+  });
+  classroomAssignment.assignmentTurnedInStudentCount = studentsWhoHaveTurnedInAssignment.length;
+  return classroomAssignment;
+}
+
 export async function getAllAssignmentsInClassroom(req, res) {
   try {
     const classroom = await ClassroomDetail.findOne({id: req.params.id});
@@ -244,11 +268,13 @@ export async function getAllAssignmentsInClassroom(req, res) {
       return res.status(401).send();
     }
     const classroomAssignments = await ClassroomAssignment.find({classroomId: req.params.id}).populate('topicId');
-    const classroomAssignmentsJson = classroomAssignments
+    const classroomAssignmentsJson = await Promise.all(classroomAssignments
     .map(classroomAssignment => classroomAssignment.toJSON())
     .map(classroomAssignment => {
       return {...classroomAssignment, topicId: classroomAssignment.topicId._id, topicDetail: classroomAssignment.topicId}
-    });
+    })
+    .map(async classroomAssignment => populateTotalStudents(await classroomAssignment))
+    .map(async classroomAssignment => populateStudentsWhoHaveTurnedInAssignmentCount(await classroomAssignment)));
     return res.status(200).json(classroomAssignmentsJson);
   } catch (err) {
     return res.status(500).send({ error: err.message });
