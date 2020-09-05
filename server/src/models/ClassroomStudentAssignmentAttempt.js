@@ -8,6 +8,7 @@ const classroomStudentAssignmentAttemptSchema = new Schema({
     classroomId: { type: String, default: '', required: true },
     assignmentId: { type: String, default: '', required: true },
     myPeblUrl: { type: String, default: '', required: true },
+    turnedIn: { type: Boolean, default: 'false', required: true },
   }, {
     minimize: false,
     timestamps: true,

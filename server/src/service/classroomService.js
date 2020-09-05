@@ -90,6 +90,7 @@ export async function saveClassroomAssignmentStudentAttempt(req, res) {
       user: req.user._id.toString(),
       classroomId: req.body.classroomId,
       assignmentId: req.body.assignmentId,
+      turnedIn: req.body.turnedIn,
     });
     if(existingClassroomAssignmentStudentAttempt) {
       return res.status(500).send({ error: 'Assignment already attempted' });
