@@ -243,8 +243,13 @@ export async function getAllAssignmentsInClassroom(req, res) {
     if(classroomMember.role !== "teacher") {
       return res.status(401).send();
     }
-    const classroomAssignments = await ClassroomAssignment.find({classroomId: req.params.id});
-    return res.status(200).json(classroomAssignments);
+    const classroomAssignments = await ClassroomAssignment.find({classroomId: req.params.id}).populate('topicId');
+    const classroomAssignmentsJson = classroomAssignments
+    .map(classroomAssignment => classroomAssignment.toJSON())
+    .map(classroomAssignment => {
+      return {...classroomAssignment, topicId: classroomAssignment.topicId._id, topicDetail: classroomAssignment.topicId}
+    });
+    return res.status(200).json(classroomAssignmentsJson);
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }
