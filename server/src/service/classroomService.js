@@ -297,8 +297,9 @@ export async function getAllAssignmentsInClassroomForStudent(req, res) {
     if(classroomMember.role !== "student") {
       return res.status(401).send();
     }
-    const classroomAssignments = await ClassroomAssignment.find({classroomId: req.params.id, isPublished: true});
-    return res.status(200).json(classroomAssignments);
+    const assignmentsAttemptedByStudent = await ClassroomStudentAssignmentAttempt.find({classroomId: req.params.id});
+    const classroomAllAssignmentsAndMaterials = await ClassroomAssignment.find({classroomId: req.params.id, isPublished: true});
+    return res.status(200).json({assignmentsAttemptedByStudent, classroomAllAssignmentsAndMaterials});
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }
