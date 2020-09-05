@@ -107,6 +107,43 @@ export async function saveClassroomAssignmentStudentAttempt(req, res) {
   }
 }
 
+export async function changeTurnInStatusOfClassroomAssignment(req, res) {
+  try {
+    const classroomAssignment = await ClassroomAssignment.findOne({id: req.body.assignmentId});
+    if (!classroomAssignment) {
+      return res.status(404).send();
+    }
+    if(classroomAssignment.type !== 'assignment') {
+      return res.status(500).send({ error: 'Material cannot be attempted' });
+    }
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: classroomAssignment.classroomId
+    });
+    if(!classroomMember) {
+      return res.status(404).send();
+    }
+    if(classroomMember.role !== "student") {
+      return res.status(401).send();
+    }
+    const myClassroomAssignmentAttempt = await ClassroomStudentAssignmentAttempt.findOne({
+      assignmentId: req.body.assignmentId,
+      user: req.user._id.toString()
+    });
+    if (!myClassroomAssignmentAttempt) {
+      return res.status(404).send();
+    }
+    await ClassroomStudentAssignmentAttempt.update(
+      { assignmentId: req.body.assignmentId, user: req.user._id.toString() },
+      {
+        turnedIn: req.body.turnedIn
+      });
+    return res.status(200).send();
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
 export async function saveClassroomTopic(req, res) {
   try {
     const classroom = await ClassroomDetail.findOne({id: req.body.classroomId});

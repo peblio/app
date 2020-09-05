@@ -64,6 +64,14 @@ export function saveClassroomAssignmentStudentAttempt(req, res) {
   }
 }
 
+export function changeTurnInStatusOfClassroomAssignment(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  } else {
+    return classroomService.changeTurnInStatusOfClassroomAssignment(req, res);
+  }
+}
+
 export function saveClassroomTopic(req, res) {
   if (!req.user) {
     return res.status(403).send({ error: 'Please log in first' });
