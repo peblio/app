@@ -20,4 +20,6 @@ classroomRoutes.route('/classroomAssignment').patch(classroomController.publishC
 classroomRoutes.route('/classroomAssignment/:id').get(classroomController.getClassroomAssignment);
 classroomRoutes.route('/classroomAllAssignments/:id').get(classroomController.getAllAssignmentsInClassroom);
 classroomRoutes.route('/classroomAllAssignmentsForStudent/:id').get(classroomController.getAllAssignmentsInClassroomForStudent);
+
+classroomRoutes.route('/classroomAllAttemptsForAssignment/:id').get(classroomController.getAllStudentAttemptsForAssignment);
 module.exports = classroomRoutes;
