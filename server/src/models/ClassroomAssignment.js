@@ -11,8 +11,10 @@ const classroomAssignmentSchema = new Schema({
   dueDate: { type: Date},
   description: { type: String},
   isPublished: { type: Boolean, required: true },
-  peblUrls: [String],
-  urls: [String],
+  peblUrl: { type: String},
+  url: { type: String},
+  type: { type: String, enum: ['assignment', 'material'], default: 'assignment', required: true },
+  topicId: { type: Schema.Types.ObjectId, ref: 'ClassroomTopic' },
 }, {
     minimize: false,
     timestamps: true,

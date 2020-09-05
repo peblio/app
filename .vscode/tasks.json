@@ -3,12 +3,12 @@
     "tasks": [
         {
         "label": "decryptCredsForLocalRun",
-        "command": "AWS_PROFILE=peblio ./server/scripts/export_creds.sh",
+        "command": "PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.7/site-packages AWS_PROFILE=peblio ./server/scripts/export_creds.sh",
         "type": "shell"
     },
     {
         "label": "decryptCredsForTestRun",
-        "command": "AWS_PROFILE=peblio ENVIRONMENT=test ./server/scripts/export_creds.sh",
+        "command": "PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.7/site-packages AWS_PROFILE=peblio ENVIRONMENT=test ./server/scripts/export_creds.sh",
         "type": "shell"
     }
 ]
