@@ -119,3 +119,11 @@ export function getAllAssignmentsInClassroomForStudent(req, res) {
     return classroomService.getAllAssignmentsInClassroomForStudent(req, res);
   }
 }
+
+export function getAllStudentAttemptsForAssignment(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  } else {
+    return classroomService.getAllStudentAttemptsForAssignment(req, res);
+  }
+}

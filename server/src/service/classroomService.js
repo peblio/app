@@ -305,6 +305,34 @@ export async function getAllAssignmentsInClassroomForStudent(req, res) {
   }
 }
 
+export async function getAllStudentAttemptsForAssignment(req, res) {
+  try {
+    const classroomAssignment = (await ClassroomAssignment.findOne({id: req.params.id}).populate('topicId')).toJSON();
+    if (!classroomAssignment) {
+      return res.status(404).send();
+    }
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: classroomAssignment.classroomId
+    });
+    if(!classroomMember) {
+      return res.status(404).send();
+    }
+    if(classroomMember.role !== "teacher") {
+      return res.status(401).send();
+    }
+    const allStudentsAttemptForAssignment = await ClassroomStudentAssignmentAttempt
+    .find({assignmentId: classroomAssignment.id, turnedIn: true})
+    .populate({path: 'user', select: 'name'});
+    return res.status(200).json({
+      allStudentsAttemptForAssignment, 
+      classroomAssignment: {...classroomAssignment, topicId: classroomAssignment.topicId._id, topicDetail: classroomAssignment.topicId}
+    });
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
 async function populateClassRoomStudentMemberListCount(myClassroom){
   const studentMembers = await ClassroomMember.find({
     classroomId: myClassroom.id,
