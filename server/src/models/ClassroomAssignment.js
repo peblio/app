@@ -21,5 +21,11 @@ const classroomAssignmentSchema = new Schema({
   });
 
 classroomAssignmentSchema.plugin(mongoosePaginate);
+classroomAssignmentSchema.virtual('classroomDetail', {
+  ref: 'ClassroomDetail',
+  localField: 'id',
+  foreignField: 'classroomId',
+  justOne: false,
+});
 
 module.exports = mongoose.model('ClassroomAssignment', classroomAssignmentSchema);

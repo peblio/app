@@ -34,6 +34,35 @@ export async function getClassroomTopics(req, res) {
   }
 }
 
+export async function getClassroomStudentAttemptForAssignment(req, res) {
+  try {
+    const myAttemptForAssignment = await ClassroomStudentAssignmentAttempt.findOne({assignmentId: req.params.id, user: req.user._id.toString() });
+    if(!myAttemptForAssignment) {
+      return res.status(404).send();
+    }
+    return res.status(200).json(myAttemptForAssignment);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
+export async function getClassroomAllAttemptsForAssignment(req, res) {
+  try {
+    const classroomAssignment = await ClassroomAssignment.findOne({id: req.params.id}).populate('classroomDetail');
+    if(!classroomAssignment) {
+      return res.status(404).send();
+    }
+    const classroomMemberShip = await ClassroomMember.findOne({classroomId: classroomAssignment.classroomId, user: req.user._id.toString()});
+    if(classroomMemberShip.role !== 'teacher') {
+      return res.status(401).send();
+    }
+    const allAttemptsForAssignment = await ClassroomStudentAssignmentAttempt.find({assignmentId: req.params.id});
+    return res.status(200).json(allAttemptsForAssignment);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
 export async function saveClassroomAssignmentStudentAttempt(req, res) {
   try {
     const classroom = await ClassroomDetail.findOne({id: req.body.classroomId});
