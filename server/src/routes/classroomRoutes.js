@@ -20,6 +20,7 @@ classroomRoutes.route('/classroomTopic').patch(classroomController.editClassroom
 
 classroomRoutes.route('/classroomAssignment').post(classroomController.saveClassroomAssignment);
 classroomRoutes.route('/classroomAssignment').patch(classroomController.publishClassroomAssignment);
+classroomRoutes.route('/classroomAssignment/publishGrades').patch(classroomController.publishGradesForClassroomAssignment);
 classroomRoutes.route('/classroomAssignment/:id').get(classroomController.getClassroomAssignment);
 classroomRoutes.route('/classroomAllAssignments/:id').get(classroomController.getAllAssignmentsInClassroom);
 classroomRoutes.route('/classroomAllAssignmentsForStudent/:id').get(classroomController.getAllAssignmentsInClassroomForStudent);
