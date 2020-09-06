@@ -180,6 +180,36 @@ export async function addCommentOnClassroomAssignmentAttempt(req, res) {
   }
 }
 
+export async function gradeClassroomAssignmentAttempt(req, res) {
+  try {
+    const classroomAssignmentAttempt = await ClassroomStudentAssignmentAttempt
+                                            .findById(new ObjectId(req.body.assignmentAttemptId))
+                                            .populate('assignmentDetail');
+    if (!classroomAssignmentAttempt) {
+      return res.status(404).send();
+    }
+    const classroomAssignmentAttemptJson = classroomAssignmentAttempt.toJSON();
+    if(classroomAssignmentAttemptJson.assignmentDetail.type !== 'assignment') {
+      return res.status(500).send({ error: 'Material cannot be attempted' });
+    }
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: classroomAssignmentAttemptJson.assignmentDetail.classroomId
+    });
+    if(!classroomMember) {
+      return res.status(404).send();
+    }
+    if(classroomMember.role !== "teacher") {
+      return res.status(401).send();
+    }
+    classroomAssignmentAttempt.marksScored = req.body.marksScored;
+    await classroomAssignmentAttempt.save();
+    return res.status(200).send(classroomAssignmentAttempt);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
 export async function saveClassroomTopic(req, res) {
   try {
     const classroom = await ClassroomDetail.findOne({id: req.body.classroomId});
