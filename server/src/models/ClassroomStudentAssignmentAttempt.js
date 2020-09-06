@@ -9,6 +9,7 @@ const classroomStudentAssignmentAttemptSchema = new Schema({
     assignmentId: { type: String, default: '', required: true },
     myPeblUrl: { type: String, default: '', required: true },
     turnedIn: { type: Boolean, default: 'false', required: true },
+    marksScored: { type: Number },
     comments: [{
       fromUser: { type: Schema.Types.ObjectId, ref: 'User', required: true },
       text: { type: String, required: true },
