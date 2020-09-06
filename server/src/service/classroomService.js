@@ -40,10 +40,16 @@ export async function getClassroomStudentAttemptForAssignment(req, res) {
     const myAttemptForAssignment = await ClassroomStudentAssignmentAttempt
     .findOne({assignmentId: req.params.id, user: req.user._id.toString() })
     .populate('comments.fromUser', 'name');
+
+    const classroomAssignment = await ClassroomAssignment.findOne({id: myAttemptForAssignment.assignmentId});
     if(!myAttemptForAssignment) {
       return res.status(404).send();
     }
-    return res.status(200).json(myAttemptForAssignment);
+    const myAttemptForAssignmentJSON = myAttemptForAssignment.toJSON();
+    if(!classroomAssignment.areGradesPublished) {
+      delete myAttemptForAssignmentJSON.marksScored;
+    }
+    return res.status(200).json(myAttemptForAssignmentJSON);
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }
