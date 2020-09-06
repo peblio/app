@@ -32,6 +32,14 @@ export function joinClassroom(req, res) {
   }
 }
 
+export function addMemberToClassroom(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  } else {
+    return classroomService.addMemberToClassroom(req, res);
+  }
+}
+
 export function getClassroomStudentAttemptForAssignment(req, res) {
   if (!req.user) {
     return res.status(403).send({ error: 'Please log in first' });

@@ -5,6 +5,8 @@ import ClassroomStudentAssignmentAttempt from '../models/ClassroomStudentAssignm
 import ClassroomTopic from '../models/ClassroomTopic';
 import ClassroomAssignment from '../models/ClassroomAssignment';
 import { ObjectId } from 'mongodb';
+import { request } from 'express';
+const User = require('../models/user.js');
 
 export async function createClassroomDetail(req, res) {
   try {
@@ -527,6 +529,37 @@ export async function joinClassroom(req, res) {
       return res.status(200).send();
     }
     await buildClassroomMember(req.user._id.toString(), req.params.id, 'student' ).save();
+    return res.status(200).send();
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
+export async function addMemberToClassroom(req, res) {
+  try {
+    const classroom = await ClassroomDetail.findOne({id: req.params.id});
+    if (!classroom) {
+      return res.status(404).send();
+    }
+    if(classroomMember) {
+      return res.status(200).send();
+    }
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: req.params.id
+    });
+    if(!classroomMember) {
+      return res.status(404).send();
+    }
+    if(classroomMember.role !== "teacher") {
+      return res.status(401).send();
+    }
+    const user = await User.findOne({name: req.body.name});
+    const isAlreadyAMember = await ClassroomMember.findOne({user: user._id.toString(), classroomId: req.params.id});
+    if(isAlreadyAMember) {
+      return res.status(200).send();
+    }
+    await buildClassroomMember(user._id.toString(), req.params.id, req.body.role ).save();
     return res.status(200).send();
   } catch (err) {
     return res.status(500).send({ error: err.message });
