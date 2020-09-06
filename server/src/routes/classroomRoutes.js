@@ -14,6 +14,7 @@ classroomRoutes.route('/classroomAssignmentAttempt').patch(classroomController.c
 
 classroomRoutes.route('/classroomTopic/:id').get(classroomController.getClassroomTopics);
 classroomRoutes.route('/classroomTopic').post(classroomController.saveClassroomTopic);
+classroomRoutes.route('/classroomTopic').patch(classroomController.editClassroomTopicName);
 
 classroomRoutes.route('/classroomAssignment').post(classroomController.saveClassroomAssignment);
 classroomRoutes.route('/classroomAssignment').patch(classroomController.publishClassroomAssignment);
