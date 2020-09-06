@@ -167,6 +167,33 @@ export async function saveClassroomTopic(req, res) {
   }
 }
 
+export async function editClassroomTopicName(req, res) {
+  try {
+    const classroomTopic = await ClassroomTopic.findById(req.body.id);
+    if (!classroomTopic) {
+      return res.status(404).send();
+    }
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: classroomTopic.classroomId
+    });
+    if(!classroomMember) {
+      return res.status(404).send();
+    }
+    if(classroomMember.role !== "teacher") {
+      return res.status(401).send();
+    }
+    await ClassroomTopic.update(
+      { _id: req.body.id },
+      {
+        name: req.body.name
+      });
+    return res.status(200).send();
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
 export async function saveClassroomAssignment(req, res) {
   try {
     const classroom = await ClassroomDetail.findOne({id: req.body.classroomId});

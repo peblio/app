@@ -80,6 +80,14 @@ export function saveClassroomTopic(req, res) {
   }
 }
 
+export function editClassroomTopicName(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  } else {
+    return classroomService.editClassroomTopicName(req, res);
+  }
+}
+
 export function saveClassroomAssignment(req, res) {
   if (!req.user) {
     return res.status(403).send({ error: 'Please log in first' });
