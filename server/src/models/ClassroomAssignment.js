@@ -11,6 +11,7 @@ const classroomAssignmentSchema = new Schema({
   dueDate: { type: Date},
   description: { type: String},
   isPublished: { type: Boolean, required: true },
+  areGradesPublished: { type: Boolean, required: true, default: false },
   peblUrl: { type: String},
   url: { type: String},
   type: { type: String, enum: ['assignment', 'material'], default: 'assignment', required: true },

@@ -120,6 +120,14 @@ export function publishClassroomAssignment(req, res) {
   }
 }
 
+export function publishGradesForClassroomAssignment(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  } else {
+    return classroomService.publishGradesForClassroomAssignment(req, res);
+  }
+}
+
 export function getClassroomAssignment(req, res) {
   if (!req.user) {
     return res.status(403).send({ error: 'Please log in first' });
