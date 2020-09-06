@@ -4,6 +4,7 @@ import ClassroomMember from '../models/ClassroomMember';
 import ClassroomStudentAssignmentAttempt from '../models/ClassroomStudentAssignmentAttempt';
 import ClassroomTopic from '../models/ClassroomTopic';
 import ClassroomAssignment from '../models/ClassroomAssignment';
+import { ObjectId } from 'mongodb';
 
 export async function createClassroomDetail(req, res) {
   try {
@@ -36,7 +37,9 @@ export async function getClassroomTopics(req, res) {
 
 export async function getClassroomStudentAttemptForAssignment(req, res) {
   try {
-    const myAttemptForAssignment = await ClassroomStudentAssignmentAttempt.findOne({assignmentId: req.params.id, user: req.user._id.toString() });
+    const myAttemptForAssignment = await ClassroomStudentAssignmentAttempt
+    .findOne({assignmentId: req.params.id, user: req.user._id.toString() })
+    .populate('comments.fromUser', 'name');
     if(!myAttemptForAssignment) {
       return res.status(404).send();
     }
@@ -107,7 +110,7 @@ export async function saveClassroomAssignmentStudentAttempt(req, res) {
   }
 }
 
-export async function changeTurnInStatusOfClassroomAssignment(req, res) {
+export async function changeTurnInStatusOfClassroomAssignmentAttempt(req, res) {
   try {
     const classroomAssignment = await ClassroomAssignment.findOne({id: req.body.assignmentId});
     if (!classroomAssignment) {
@@ -139,6 +142,39 @@ export async function changeTurnInStatusOfClassroomAssignment(req, res) {
         turnedIn: req.body.turnedIn
       });
     return res.status(200).send();
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
+export async function addCommentOnClassroomAssignmentAttempt(req, res) {
+  try {
+    const classroomAssignmentAttempt = await ClassroomStudentAssignmentAttempt
+                                            .findById(new ObjectId(req.body.assignmentAttemptId))
+                                            .populate('assignmentDetail');
+    if (!classroomAssignmentAttempt) {
+      return res.status(404).send();
+    }
+    const classroomAssignmentAttemptJson = classroomAssignmentAttempt.toJSON();
+    if(classroomAssignmentAttemptJson.assignmentDetail.type !== 'assignment') {
+      return res.status(500).send({ error: 'Material cannot be attempted' });
+    }
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: classroomAssignmentAttemptJson.assignmentDetail.classroomId
+    });
+    if(!classroomMember) {
+      return res.status(404).send();
+    }
+    if(!(classroomMember.role === "student" || classroomMember.role === "teacher")) {
+      return res.status(401).send();
+    }
+    classroomAssignmentAttempt.comments.push({ 
+      fromUser: req.user._id.toString(),
+      text: req.body.text,
+    })
+    await classroomAssignmentAttempt.save();
+    return res.status(200).send(classroomAssignmentAttempt);
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }

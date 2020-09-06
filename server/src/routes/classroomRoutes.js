@@ -10,7 +10,8 @@ classroomRoutes.route('/classroomDetail/:id').get(classroomController.getClassro
 classroomRoutes.route('/classroomAssignmentAttempt/:id').get(classroomController.getClassroomStudentAttemptForAssignment);
 classroomRoutes.route('/classroomAssignmentAllAttempts/:id').get(classroomController.getClassroomAllAttemptsForAssignment);
 classroomRoutes.route('/classroomAssignmentAttempt').post(classroomController.saveClassroomAssignmentStudentAttempt);
-classroomRoutes.route('/classroomAssignmentAttempt').patch(classroomController.changeTurnInStatusOfClassroomAssignment);
+classroomRoutes.route('/classroomAssignmentAttempt').patch(classroomController.changeTurnInStatusOfClassroomAssignmentAttempt);
+classroomRoutes.route('/classroomAssignmentAttempt/addComment').patch(classroomController.addCommentOnClassroomAssignmentAttempt);
 
 classroomRoutes.route('/classroomTopic/:id').get(classroomController.getClassroomTopics);
 classroomRoutes.route('/classroomTopic').post(classroomController.saveClassroomTopic);
