@@ -354,6 +354,45 @@ export async function publishGradesForClassroomAssignment(req, res) {
   }
 }
 
+export async function reassignTopicToAssignment(req, res) {
+  try {
+    const classroomAssignment = await ClassroomAssignment.findOne({id: req.body.assignmentId});
+    if (!classroomAssignment) {
+      return res.status(404).send();
+    }
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: classroomAssignment.classroomId
+    });
+    if(!classroomMember) {
+      return res.status(404).send();
+    }
+    if(classroomMember.role !== "teacher") {
+      return res.status(401).send();
+    }
+    if(req.body.newTopicId) {
+      const classroomTopic = await ClassroomTopic.findOne({_id : req.body.newTopicId, classroomId: classroomAssignment.classroomId});
+      if (!classroomTopic) {
+        return res.status(404).send();
+      }
+      await ClassroomAssignment.update(
+        { id: req.body.assignmentId },
+        {
+          topicId: classroomTopic._id
+        });
+    } else {
+      await ClassroomAssignment.update(
+        { id: req.body.assignmentId },
+        {
+          topicId: null
+        });
+    }
+    return res.status(200).send();
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
 export async function getClassroomAssignment(req, res) {
   try {
     const classroomAssignment = await ClassroomAssignment.findOne({id: req.params.id}).populate('topicId');
