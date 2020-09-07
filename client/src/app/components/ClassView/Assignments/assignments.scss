@@ -15,8 +15,8 @@
       display: flex;
       align-items: center;
       box-sizing: border-box;
-      padding: 8px 10px;
-      border-bottom: 1.5px solid $g5;
+      padding: 8px 10px 0px 10px;
+      border-bottom: 2px solid $g5;
       &__header{
         font-size: 28px;
         font-weight: normal;
@@ -37,7 +37,8 @@
         font-size: 12px;
         margin-bottom: 2px;
         display: grid;
-        grid-template-columns: 30% 15% 15% 25% 15% 5% ;
+        font-weight: 700;
+        grid-template-columns: 25% 15% 15% 25% 15% 5% ;
         margin-bottom: 8px;
       }
     }

@@ -92,7 +92,7 @@ const ClassView = ({ match, fetchCurrentClassroomDetails, clearCurrentClassroom,
                 tabs={[
                   {
                     label: 'Assignments',
-                    component: <Assignments />
+                    component: <Assignments classroomId={match.params.classId} />
                   },
                   {
                     label: 'People',

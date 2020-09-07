@@ -28,39 +28,34 @@ import {
 
 import './documents.scss';
 
-const Documents = (props) => {
-  useEffect(() => {
-    console.log(props.match);
-  }, []);
-  return (
-    <DashboardView>
-      <Filters />
-      <DocumentsComponent
-        userName={props.name}
-        folders={props.folders}
-        pages={props.pages}
-        deleteFolder={props.deleteFolder}
-        fetchAllPages={props.fetchAllPages}
-        jumpToFolderByShortId={props.jumpToFolderByShortId}
-        clearSelectedFolders={props.clearSelectedFolders}
-        renameFolder={props.renameFolder}
-        renamePage={props.renamePage}
-        folderShortId={props.match.params.folderShortId}
-        selectedFolderIds={props.selectedFolderIds}
-        setShareURL={props.setShareURL}
-        viewShareModal={props.viewShareModal}
-        container="documents"
-      />
-      <Modal
-        size="small"
-        isOpen={props.isShareModalOpen}
-        closeModal={props.closeShareModal}
-      >
-        <ShareModal />
-      </Modal>
-    </DashboardView>
-  );
-};
+const Documents = props => (
+  <DashboardView>
+    <Filters />
+    <DocumentsComponent
+      userName={props.name}
+      folders={props.folders}
+      pages={props.pages}
+      deleteFolder={props.deleteFolder}
+      fetchAllPages={props.fetchAllPages}
+      jumpToFolderByShortId={props.jumpToFolderByShortId}
+      clearSelectedFolders={props.clearSelectedFolders}
+      renameFolder={props.renameFolder}
+      renamePage={props.renamePage}
+      folderShortId={props.match.params.folderShortId}
+      selectedFolderIds={props.selectedFolderIds}
+      setShareURL={props.setShareURL}
+      viewShareModal={props.viewShareModal}
+      container="documents"
+    />
+    <Modal
+      size="small"
+      isOpen={props.isShareModalOpen}
+      closeModal={props.closeShareModal}
+    >
+      <ShareModal />
+    </Modal>
+  </DashboardView>
+);
 
 Documents.propTypes = {
   clearSelectedFolders: PropTypes.func.isRequired,

@@ -8,7 +8,7 @@ import 'react-calendar/dist/Calendar.css';
 
 import CalendarIcon from '../../images/calendar.svg';
 
-const DatePickerField = ({ state, setState, label, containerWidth }) => {
+const DatePickerField = ({ state, setState, label, containerWidth, calendarPosition }) => {
   const [pickerTriggered, setPickerTriggered] = useState(false);
   const outsideClickListener = (e) => {
     if (
@@ -67,7 +67,7 @@ const DatePickerField = ({ state, setState, label, containerWidth }) => {
       </div>
       {
         pickerTriggered && (
-          <div className="date-picker-field__calendar-container">
+          <div className={`date-picker-field__calendar-container ${calendarPosition || ''}`}>
             <Calendar
               onChange={(d) => {
                 setState(d);
@@ -86,12 +86,14 @@ DatePickerField.propTypes = {
   state: PropTypes.instanceOf(Date).isRequired,
   setState: PropTypes.func.isRequired,
   label: PropTypes.string,
-  containerWidth: PropTypes.string
+  containerWidth: PropTypes.string,
+  calendarPosition: PropTypes.string
 };
 
 DatePickerField.defaultProps = {
   label: '',
-  containerWidth: ''
+  containerWidth: '',
+  calendarPosition: 'left'
 };
 
 export default DatePickerField;

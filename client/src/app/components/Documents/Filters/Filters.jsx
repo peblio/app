@@ -52,6 +52,22 @@ const Filters = (props) => {
     props.clearSearchByTitle();
   };
 
+
+  // eslint-disable-next-line no-shadow
+  const createFolder = () => {
+    const folderId = props.selectedFolderIds[props.selectedFolderIds.length - 1];
+    props.createFolder('New Folder', folderId);
+  };
+
+  // eslint-disable-next-line no-shadow
+  const createPage = () => {
+    let folderId = null;
+    if (props.selectedFolderIds.length > 0) {
+      folderId = props.selectedFolderIds[props.selectedFolderIds.length - 1];
+    }
+    props.createPage('New Page', folderId);
+  };
+
   return (
     <div className="documents__filters">
       <div
@@ -81,11 +97,11 @@ const Filters = (props) => {
           {
             name: 'Folder',
             value: 'folder',
-            onClick: () => { props.createFolder('New folder'); }
+            onClick: (e) => { createFolder(e); }
           }, {
             name: 'Page',
             value: 'page',
-            onClick: () => { props.createPage('New Page'); }
+            onClick: (e) => { createPage(e); }
           }
         ]}
       />
@@ -133,10 +149,12 @@ Filters.propTypes = {
   createFolder: PropTypes.func.isRequired,
   createPage: PropTypes.func.isRequired,
   documentView: PropTypes.string.isRequired,
+  selectedFolderIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const mapStateToProps = state => ({
   documentView: state.dashboard.documentView,
+  selectedFolderIds: state.page.selectedFolderIds,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

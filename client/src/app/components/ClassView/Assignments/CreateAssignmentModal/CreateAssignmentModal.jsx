@@ -45,6 +45,7 @@ const CreateAssignmentModal = ({
   // add link states
   const [addLink, setAddLink] = useState('');
   const [addLinkTriggered, setAddLinkTriggered] = useState(false);
+  const [linkTriggeredBy, setLinkTriggeredBy] = useState('');
 
   // resources state
   const [linkAdded, setLinkAdded] = useState(false);
@@ -52,18 +53,33 @@ const CreateAssignmentModal = ({
   const [linkType, setLinkType] = useState(-1);
 
   const handleSubmit = (publish) => {
-    const assignmentData = {
+    console.log('object');
+    let assignmentData = {
       user: userId,
       classroomId,
       title: assignmentTitle,
       dueDate: date,
       description: instruction,
       isPublished: publish,
-      peblUrls: [
-        'http://localhost:8080/pebl/N2662b1j'
-      ],
-      urls: []
     };
+    if (addLink) {
+      if (linkTriggeredBy === 'pebl') {
+        assignmentData = {
+          ...assignmentData,
+          peblUrls: [
+            addLink
+          ]
+        };
+      } else {
+        assignmentData = {
+          ...assignmentData,
+          urls: [
+            addLink
+          ]
+        };
+      }
+    }
+    console.log(assignmentData);
     createAssignment(assignmentData);
   };
 
@@ -195,6 +211,16 @@ const CreateAssignmentModal = ({
           <IconButton
             icon={<PeblIcon />}
             style={{ marginRight: '16px' }}
+            onClick={() => {
+              setLinkTriggeredBy('pebl');
+              setAddLinkTriggered(state => !state);
+              setTimeout(() => {
+                if (document.querySelector('#add-link')) {
+                  document.querySelector('#add-link').focus();
+                }
+              }, 0);
+              document.addEventListener('click', linkInputClickOutside);
+            }}
           >
             Select Pebl
           </IconButton>
@@ -212,6 +238,7 @@ const CreateAssignmentModal = ({
             style={{ marginRight: 'auto' }}
             id="trigger-link"
             onClick={() => {
+              setLinkTriggeredBy('link');
               setAddLinkTriggered(state => !state);
               setTimeout(() => {
                 if (document.querySelector('#add-link')) {
@@ -268,6 +295,9 @@ const CreateAssignmentModal = ({
         addLinkTriggered && (
           <form
             className="create-assignment-modal__link-box"
+            style={{
+              left: linkTriggeredBy === 'pebl' ? '40px' : '320px'
+            }}
             onSubmit={(e) => {
               e.preventDefault();
               setTimeout(() => {
