@@ -207,3 +207,36 @@ export const createAssignment = assignmentData => (dispatch) => {
       console.log(err);
     });
 };
+
+export const fetchAssignments = classroomId => (dispatch) => {
+  axios.get(`/learning/classroomAllAssignments/${classroomId}`)
+    .then(({ data }) => {
+      console.log(data);
+      dispatch({
+        type: ActionTypes.SET_ASSIGNMENTS,
+        assignments: data
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const fetchCurrentAssignmentDetails = assignmentId => (dispatch) => {
+  dispatch({
+    type: ActionTypes.TOGGLE_DATA_LOADING,
+  });
+  axios.get(`learning/classroomAssignment/${assignmentId}`)
+    .then(({ data }) => {
+      dispatch({
+        type: ActionTypes.SET_CURRENT_ASSIGNMENT,
+        currentAssignment: data
+      });
+      dispatch({
+        type: ActionTypes.TOGGLE_DATA_LOADING,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

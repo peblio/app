@@ -5,11 +5,13 @@ const initialState = {
   submittingData: false,
   createClassroomModal: false,
   joinClassroomModal: false,
-  currentClassroom: '',
+  currentClassroom: {},
   dataLoading: false,
   createTopicModal: false,
   createAssignmentModal: false,
   editTpoicModal: false,
+  assignments: [],
+  currentAssignment: {}
 };
 
 const classrooms = (state = initialState, action) => {
@@ -55,7 +57,7 @@ const classrooms = (state = initialState, action) => {
     case ActionTypes.CLEAR_CURRENT_CLASSROOM:
       return {
         ...state,
-        currentClassroom: ''
+        currentClassroom: {}
       };
 
     case ActionTypes.TOGGLE_DATA_LOADING:
@@ -80,6 +82,18 @@ const classrooms = (state = initialState, action) => {
       return {
         ...state,
         editTopicModal: !state.editTopicModal
+      };
+
+    case ActionTypes.SET_ASSIGNMENTS:
+      return {
+        ...state,
+        assignments: action.assignments
+      };
+
+    case ActionTypes.SET_CURRENT_ASSIGNMENT:
+      return {
+        ...state,
+        currentAssignment: action.currentAssignment
       };
 
     default:

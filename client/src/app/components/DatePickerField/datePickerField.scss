@@ -11,7 +11,13 @@
   &__calendar-container{
     position: absolute;
     top: 100%;
-    left: 0;
+    &.left{
+      left: 0;
+    }
+
+    &.right{
+      right: 0;
+    }
   }
 
   &__label{

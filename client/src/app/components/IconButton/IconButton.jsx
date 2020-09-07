@@ -19,7 +19,7 @@ const IconButton = ({ children, icon, ...props }) => (
 );
 
 IconButton.propTypes = {
-  children: PropTypes.string,
+  children: PropTypes.arrayOf(PropTypes.element),
   icon: PropTypes.element.isRequired
 };
 

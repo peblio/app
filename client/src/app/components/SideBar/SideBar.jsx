@@ -8,7 +8,13 @@ const SideBar = ({ children, ...props }) => (
   <div className='sidebar'>
     <ul className="sidebar__nav-links">
       <li className="sidebar__nav-link">
-        <NavLink to='/documents' activeClassName='active'>Documents</NavLink>
+        <NavLink
+          to='/documents'
+          className={window.location.href.split('/')[3] === 'dashboard' ? 'active' : ''}
+          activeClassName='active'
+        >
+          Documents
+        </NavLink>
       </li>
       <li className="sidebar__nav-link">
         <NavLink to='/classroom' activeClassName='active'>My Classes</NavLink>

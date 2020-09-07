@@ -1,0 +1,26 @@
+@import 'variables.scss';
+
+.assignment-page{
+  $root: &;
+  padding: 40px;
+  padding-left: 64px;
+    
+  &__header-area{
+    display: flex;
+    align-items: center;
+    color: $black;
+
+    &__bread-crumbs{
+      font-weight: $heavy-font-weight;
+      font-size: 20px;
+      margin-right: auto;
+      display: flex;
+      align-items: center;
+    }
+
+    &__date-label{
+      margin-right: 16px;
+      color: $black;
+    }
+  }
+}

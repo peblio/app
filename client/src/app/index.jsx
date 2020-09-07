@@ -38,9 +38,9 @@ const LazyLoadedApp = lazy(() => (
   import('./components/App/App.jsx')
 ));
 
-const LazyLoadedDashboard = lazy(() => (
-  import('./components/Dashboard/Dashboard.jsx')
-));
+// const LazyLoadedDashboard = lazy(() => (
+//   import('./components/Dashboard/Dashboard.jsx')
+// ));
 
 const LazyLoadedPaymentPage = lazy(() => (
   import('./components/Payment/PaymentPage.jsx')
@@ -78,6 +78,10 @@ const LazyLoadedClassView = lazy(() => (
   import('./components/ClassView/ClassView.jsx')
 ));
 
+const LazyLoadedAssignmentPage = lazy(() => (
+  import('./components/AssignmentPage/AssignmentPage.jsx')
+));
+
 class Main extends React.Component {
   render() {
     return (
@@ -89,8 +93,8 @@ class Main extends React.Component {
               <Route path="/pebl/:id" component={withTracker(LazyLoadedApp)} />
               <Route path="/reset" component={withTracker(LazyLoadedApp)} />
               <Route path="/confirmation" component={withTracker(LazyLoadedApp)} />
-              <Route path="/dashboard/:userName/folder/:folderShortId" component={withTracker(LazyLoadedDashboard)} />
-              <Route path="/dashboard/" component={withTracker(LazyLoadedDashboard)} />
+              <Route path="/dashboard/:userName/folder/:folderShortId" component={withTracker(LazyLoadedDocuments)} />
+              <Route path="/dashboard/" component={withTracker(LazyLoadedDocuments)} />
               <Route path="/payment/" component={withTracker(LazyLoadedPaymentPage)} />
               <Route path="/profile" component={withTracker(LazyLoadedProfilePreview)} exact />
               <Route
@@ -99,6 +103,7 @@ class Main extends React.Component {
               />
               <Route path="/profile/:userName" component={withTracker(LazyLoadedPaymentProfile)} />
               <Route path="/classroom" component={withTracker(LazyLoadedClassRoom)} exact />
+              <Route path="/classroom/assignment/:assignmentId" component={withTracker(LazyLoadedAssignmentPage)} />
               <Route path="/classroom/:classId" component={withTracker(LazyLoadedClassView)} />
               <Route path="/documents/:userName/folder/:folderShortId" component={withTracker(LazyLoadedDocuments)} />
               <Route path="/documents" component={withTracker(LazyLoadedDocuments)} />

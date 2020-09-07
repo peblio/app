@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import moment from 'moment';
 
 // generic components
-import { useState } from 'react';
 import IconButton from '../../IconButton/IconButton';
 import Dropdown from '../../Dropdown/Dropdown';
-import LessonListCard from '../../LessonListCard/LessonListCard';
 import ShareIcon from '../../../images/link.svg';
 
 // page speecific components
+import AssignmentCard from './AssignmentCard/AssignmentCard';
 import CreateTopicModal from './CreateTopicModal/CreateTopicModal';
 import EditTopicModal from './EditTopicModal/EditTopicModal';
 import CreateAssignmentModal from './CreateAssignmentModal/CreateAssignmentModal';
@@ -20,6 +20,7 @@ import {
   toggleCreateTopicModal,
   toggleCreateAssignmentModal,
   toggleEditTopicModal,
+  fetchAssignments,
 } from '../../../action/classroom';
 
 import RenameIcon from '../../../images/rename.svg';
@@ -29,18 +30,27 @@ import './assignments.scss';
 
 // eslint-disable-next-line no-shadow
 const Assignments = ({
+  classroomId,
   createTopicModal,
   editTopicModal,
   createAssignmentModal,
+  assignments,
   // eslint-disable-next-line no-shadow
   toggleCreateTopicModal,
   // eslint-disable-next-line no-shadow
   toggleCreateAssignmentModal,
   // eslint-disable-next-line no-shadow
   toggleEditTopicModal,
+  // eslint-disable-next-line no-shadow
+  fetchAssignments,
 }) => {
   // 0 for assignment | 1 for resource
   const [resourceType, setResourceType] = useState(0);
+
+  useEffect(() => {
+    fetchAssignments(classroomId);
+  }, []);
+
   return (
     <React.Fragment>
       <div className="class-view__assignments">
@@ -95,7 +105,45 @@ const Assignments = ({
               <div className="">PUBLISHED</div>
             </div>
           </div>
-          <LessonListCard color="yellow">Hello</LessonListCard>
+          {/* AssignmentCard here */}
+          {
+            assignments.map(assignment => (
+              <AssignmentCard
+                key={assignment.id}
+                id={assignment.id}
+                title={assignment.title}
+                turnedIn="..."
+                dueDate={moment(assignment.dueDate).format('MM/DD/YY')}
+                permission="view"
+                type="assignment"
+                isPublished={assignment.isPublished}
+              />
+            ))
+          }
+          <AssignmentCard
+            title="Lesson Plan: System variables in p5"
+            turnedIn="..."
+            dueDate="29/12/20"
+            permission="view"
+            type="assignment"
+            isPublished={false}
+          />
+          <AssignmentCard
+            title="Lesson Plan: System variables in p5"
+            turnedIn="..."
+            dueDate="29/12/20"
+            permission="view"
+            type="assignment"
+            isPublished
+          />
+          <AssignmentCard
+            title="Lesson Plan: System variables in p5"
+            turnedIn="..."
+            dueDate="29/12/20"
+            permission="view"
+            type="Resource"
+            isPublished
+          />
         </div>
       </div>
       { createTopicModal && <CreateTopicModal /> }
@@ -112,18 +160,23 @@ Assignments.propTypes = {
   toggleCreateTopicModal: PropTypes.func.isRequired,
   toggleCreateAssignmentModal: PropTypes.func.isRequired,
   toggleEditTopicModal: PropTypes.func.isRequired,
+  assignments: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  classroomId: PropTypes.string.isRequired,
+  fetchAssignments: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   createTopicModal: state.classroom.createTopicModal,
   editTopicModal: state.classroom.editTopicModal,
   createAssignmentModal: state.classroom.createAssignmentModal,
+  assignments: state.classroom.assignments,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   toggleCreateTopicModal,
   toggleCreateAssignmentModal,
   toggleEditTopicModal,
+  fetchAssignments,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Assignments);
