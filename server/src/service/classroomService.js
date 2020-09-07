@@ -348,8 +348,9 @@ export async function publishGradesForClassroomAssignment(req, res) {
 
 export async function getClassroomAssignment(req, res) {
   try {
-    const classroomAssignment = await ClassroomAssignment.findOne({id: req.params.id});
-    return res.status(200).json(classroomAssignment);
+    const classroomAssignment = await ClassroomAssignment.findOne({id: req.params.id}).populate('topicId');
+    const classroomAssignmentJson = {...classroomAssignment.toJSON(), topicId: classroomAssignment.toJSON().topicId._id, topicDetail: classroomAssignment.toJSON().topicId}
+    return res.status(200).json(classroomAssignmentJson);
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }
