@@ -286,7 +286,7 @@ export async function saveClassroomAssignment(req, res) {
     }
     if(req.body.topicId) {
       const classroomTopic = await ClassroomTopic.findOne({
-        id: req.body.topicId
+        _id: req.body.topicId
       });
       if(!classroomTopic) {
         return res.status(400).send();
