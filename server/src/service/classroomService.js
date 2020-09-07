@@ -5,7 +5,7 @@ import ClassroomStudentAssignmentAttempt from '../models/ClassroomStudentAssignm
 import ClassroomTopic from '../models/ClassroomTopic';
 import ClassroomAssignment from '../models/ClassroomAssignment';
 import { ObjectId } from 'mongodb';
-import { request } from 'express';
+const url = require('url');
 const User = require('../models/user.js');
 
 export async function createClassroomDetail(req, res) {
@@ -426,9 +426,49 @@ export async function getAllAssignmentsInClassroomForStudent(req, res) {
     if(classroomMember.role !== "student") {
       return res.status(401).send();
     }
-    const assignmentsAttemptedByStudent = await ClassroomStudentAssignmentAttempt.find({classroomId: req.params.id});
+    const assignmentsAttemptedByStudent = await ClassroomStudentAssignmentAttempt.find({classroomId: req.params.id, user: req.user._id.toString()});
     const classroomAllAssignmentsAndMaterials = await ClassroomAssignment.find({classroomId: req.params.id, isPublished: true});
     return res.status(200).json({assignmentsAttemptedByStudent, classroomAllAssignmentsAndMaterials});
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
+export async function getAllAssignmentsInClassroomByStudentForTeacher(req, res) {
+  try {
+    const classroom = await ClassroomDetail.findOne({id: req.params.id});
+    if (!classroom) {
+      return res.status(404).send();
+    }
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: req.params.id
+    });
+    if(!classroomMember) {
+      return res.status(404).send();
+    }
+    if(classroomMember.role !== "teacher") {
+      return res.status(401).send();
+    }
+    const studentName = url.parse(req.url, true).query.studentName;
+    const studentDetail = await User.findOne({name: studentName});
+    if(!studentDetail){
+      return res.status(404).send();
+    }
+    const studentMembershipDetails = await ClassroomMember.findOne({
+      user: studentDetail._id.toString(),
+      classroomId: req.params.id
+    });
+    if(!studentMembershipDetails){
+      return res.status(404).send();
+    }
+    if(studentMembershipDetails.role !== "student") {
+      return res.status(401).send();
+    }
+    const allClassroomAssignmentsAttemptedByStudent = await ClassroomStudentAssignmentAttempt
+    .find({classroomId: req.params.id, user: studentDetail._id.toString()})
+    .populate('assignmentDetail');
+    return res.status(200).json(allClassroomAssignmentsAttemptedByStudent);
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }
