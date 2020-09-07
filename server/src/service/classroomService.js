@@ -284,6 +284,12 @@ export async function saveClassroomAssignment(req, res) {
     if(classroomMember.role !== "teacher") {
       return res.status(401).send();
     }
+    const classroomTopic = await ClassroomTopic.findOne({
+      id: request.body.topicId
+    });
+    if(!classroomTopic) {
+      return res.status(400).send();
+    }
     const classroomAssignment = buildClassroomAssignment(req);
     const savedClassroomAssignment = await classroomAssignment.save();
     return res.status(200).json(savedClassroomAssignment);
