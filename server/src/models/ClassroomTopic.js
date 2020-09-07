@@ -4,7 +4,6 @@ const mongoosePaginate = require('mongoose-aggregate-paginate-v2');
 const Schema = mongoose.Schema;
 
 const classroomTopicSchema = new Schema({
-  _id: {type: Schema.Types.ObjectId},
   classroomId: { type: String, default: '', required: true },
   name: { type: String, default: '', required: true },
 }, {
