@@ -25,6 +25,7 @@ classroomRoutes.route('/classroomAssignment/publishGrades').patch(classroomContr
 classroomRoutes.route('/classroomAssignment/:id').get(classroomController.getClassroomAssignment);
 classroomRoutes.route('/classroomAllAssignments/:id').get(classroomController.getAllAssignmentsInClassroom);
 classroomRoutes.route('/classroomAllAssignmentsForStudent/:id').get(classroomController.getAllAssignmentsInClassroomForStudent);
+classroomRoutes.route('/classroomAllAssignmentsByStudentForTeacher/:id').get(classroomController.getAllAssignmentsInClassroomByStudentForTeacher);
 
 classroomRoutes.route('/classroomAllAttemptsForAssignment/:id').get(classroomController.getAllStudentAttemptsForAssignment);
 module.exports = classroomRoutes;
