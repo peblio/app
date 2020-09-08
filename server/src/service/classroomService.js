@@ -234,6 +234,10 @@ export async function saveClassroomTopic(req, res) {
     if(classroomMember.role !== "teacher") {
       return res.status(401).send();
     }
+    const existingClassroomTopic = await ClassroomTopic.findOne({name: req.body.name, classroomId: req.body.classroomId});
+    if(existingClassroomTopic) {
+      return res.status(400).json(classroomTopic);
+    }
     const classroomTopic = await new ClassroomTopic({name: req.body.name, classroomId: req.body.classroomId}).save();
     return res.status(200).json(classroomTopic);
   } catch (err) {
