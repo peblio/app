@@ -24,7 +24,8 @@ export const CreateClassroomModal = ({
   const [className, setClassName] = useState('');
   const [subject, setSubject] = useState('');
   const [room, setRoom] = useState('');
-  const [grade, setGrade] = useState('');
+  const [section, setSection] = useState('');
+  // const [grade, setGrade] = useState('');
   const [description, setDescription] = useState('');
 
   const handleSubmit = () => {
@@ -32,9 +33,10 @@ export const CreateClassroomModal = ({
       name: className,
       subject,
       room,
-      grade,
+      // grade,
       description,
-      user: userId
+      user: userId,
+      section
     };
     createClassroom(classData);
   };
@@ -59,7 +61,7 @@ export const CreateClassroomModal = ({
           />
         </div>
         <div className="create-class-modal__row">
-          <Dropdown
+          {/* <Dropdown
             placeholder="Grade"
             style={{ width: '100px', marginTop: '28px', marginRight: '30px' }}
             state={grade}
@@ -85,6 +87,14 @@ export const CreateClassroomModal = ({
                 value: '6'
               }
             ]}
+          /> */}
+          <InputField
+            state={section}
+            onChange={(e) => { setSection(e.target.value); }}
+            label="Section"
+            placeholder="enter section"
+            containerWidth="199px"
+            style={{ marginRight: '30px' }}
           />
           <InputField
             state={room}

@@ -33,9 +33,9 @@ const ClassView = ({ match, fetchCurrentClassroomDetails, clearCurrentClassroom,
     setImmediate(() => {
       document.execCommand('copy');
     });
-    setImmediate(() => {
+    setTimeout(() => {
       hiddenTextboxRef.current.blur();
-    });
+    }, 300);
   };
 
   return (

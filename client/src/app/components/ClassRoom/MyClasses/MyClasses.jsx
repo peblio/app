@@ -69,13 +69,19 @@ const MyClasses = ({
             {
               classrooms.map(classroom => (
                 <ClassCard
-                  onClick={() => { history.push(`/classroom/${classroom.id}`); }}
+                  onClick={() => {
+                    if (classroom.mymembership.role === 'teacher') {
+                      history.push(`/classroom/teacher/${classroom.id}`);
+                    } else {
+                      history.push(`/classroom/student/${classroom.id}`);
+                    }
+                  }}
                   key={classroom.id}
                   classCode={classroom.id}
                   classTitle={classroom.name}
                   subject={classroom.subject}
-                  grade={classroom.grade}
-                  studentCount={classroom.members ? classroom.members.length : 0}
+                  grade={classroom.section}
+                  studentCount={classroom.studentMemberCount}
                 />
               ))
             }

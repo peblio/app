@@ -11,7 +11,8 @@ const initialState = {
   createAssignmentModal: false,
   editTpoicModal: false,
   assignments: [],
-  currentAssignment: {}
+  currentAssignment: {},
+  topics: []
 };
 
 const classrooms = (state = initialState, action) => {
@@ -94,6 +95,12 @@ const classrooms = (state = initialState, action) => {
       return {
         ...state,
         currentAssignment: action.currentAssignment
+      };
+
+    case ActionTypes.SET_TOPICS:
+      return {
+        ...state,
+        topics: action.topics
       };
 
     default:

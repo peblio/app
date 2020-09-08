@@ -104,7 +104,7 @@ class Main extends React.Component {
               <Route path="/profile/:userName" component={withTracker(LazyLoadedPaymentProfile)} />
               <Route path="/classroom" component={withTracker(LazyLoadedClassRoom)} exact />
               <Route path="/classroom/assignment/:assignmentId" component={withTracker(LazyLoadedAssignmentPage)} />
-              <Route path="/classroom/:classId" component={withTracker(LazyLoadedClassView)} />
+              <Route path="/classroom/teacher/:classId" component={withTracker(LazyLoadedClassView)} />
               <Route path="/documents/:userName/folder/:folderShortId" component={withTracker(LazyLoadedDocuments)} />
               <Route path="/documents" component={withTracker(LazyLoadedDocuments)} />
               <Route path="/trash" component={withTracker(LazyLoadedTrash)} />

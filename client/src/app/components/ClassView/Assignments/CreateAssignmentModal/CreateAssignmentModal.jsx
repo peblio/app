@@ -17,12 +17,16 @@ import CreateNewIcon from '../../../../images/create_new.svg';
 import PeblIcon from '../../../../images/pebl.svg';
 import LinkIcon from '../../../../images/link.svg';
 
-// resource types import
 // import LessonListCard from '../../LessonListCard/LessonListCard';
 import LinkPreviewCard from './LinkPreviewCard/LinkPreviewCard';
 
 // actions
-import { toggleCreateAssignmentModal, createAssignment } from '../../../../action/classroom';
+import {
+  toggleCreateAssignmentModal,
+  createAssignment,
+  fetchClassrooms,
+  fetchTopics
+} from '../../../../action/classroom';
 
 import './createAssignmentModal.scss';
 
@@ -31,9 +35,15 @@ const CreateAssignmentModal = ({
   toggleCreateAssignmentModal,
   // eslint-disable-next-line no-shadow
   createAssignment,
+  // eslint-disable-next-line no-shadow
+  fetchClassrooms,
   resourceType,
   classroomId,
-  userId
+  classrooms,
+  topics,
+  userId,
+  // eslint-disable-next-line no-shadow
+  fetchTopics
 }) => {
   // form states
   const [classState, setClassState] = useState('');
@@ -53,33 +63,29 @@ const CreateAssignmentModal = ({
   const [linkType, setLinkType] = useState(-1);
 
   const handleSubmit = (publish) => {
-    console.log('object');
     let assignmentData = {
       user: userId,
-      classroomId,
+      classroomId: classState,
       title: assignmentTitle,
       dueDate: date,
       description: instruction,
       isPublished: publish,
+      type: resourceType ? 'material' : 'assignment',
+      topicId: topic
     };
     if (addLink) {
       if (linkTriggeredBy === 'pebl') {
         assignmentData = {
           ...assignmentData,
-          peblUrls: [
-            addLink
-          ]
+          peblUrls: addLink
         };
       } else {
         assignmentData = {
           ...assignmentData,
-          urls: [
-            addLink
-          ]
+          url: addLink
         };
       }
     }
-    console.log(assignmentData);
     createAssignment(assignmentData);
   };
 
@@ -99,10 +105,19 @@ const CreateAssignmentModal = ({
     }
   };
 
-  useEffect(() => () => {
+  useEffect(() => {
+    fetchClassrooms();
     // cleanup event listener if active and component is closed
-    document.removeEventListener('click', linkInputClickOutside);
+    return () => {
+      document.removeEventListener('click', linkInputClickOutside);
+    };
   }, []);
+
+  useEffect(() => {
+    if (classState) {
+      fetchTopics(classState);
+    }
+  }, [classState]);
 
   return (
     <Modal
@@ -131,50 +146,38 @@ const CreateAssignmentModal = ({
             style={{ width: '149px', marginTop: '26px', marginRight: '40px' }}
             state={classState}
             setState={setClassState}
-            options={[
-              {
-                name: 'Class 10',
-                value: 10
-              },
-              {
-                name: 'Class 9',
-                value: 9
-              },
-              {
-                name: 'Class 8',
-                value: 8
-              }, {
-                name: 'Class 7',
-                value: 7
-              },
-              {
-                name: 'Class 6',
-                value: 6
-              }
-            ]}
+            options={
+              classrooms ? classrooms.map(classroom => ({
+                name: classroom.name,
+                value: classroom.id
+              }))
+                : [
+                  {
+                    name: 'Loading...',
+                    value: null
+                  }
+                ]
+            }
           />
           <Dropdown
             placeholder="Select topic"
             style={{ width: '149px', marginTop: '26px', marginRight: '40px' }}
             state={topic}
             setState={setTopic}
-            options={[
-              {
-                name: 'Topic 1',
-                value: 10
-              },
-              {
-                name: 'Topic 2',
-                value: 9
-              },
-              {
-                name: 'Topic 3',
-                value: 8
-              }, {
-                name: 'Topic Lorem Ipsum dolar',
-                value: 7
-              },
-            ]}
+            disabled={!classState}
+            options={
+              // eslint-disable-next-line no-shadow
+              topics ? topics.map(topic => ({
+                name: topic.name,
+                value: topic._id
+              }))
+                : [
+                  {
+                    name: 'Loading...',
+                    value: null
+                  }
+                ]
+            }
           />
           {
             !resourceType && (
@@ -333,19 +336,30 @@ const CreateAssignmentModal = ({
 CreateAssignmentModal.propTypes = {
   toggleCreateAssignmentModal: PropTypes.func.isRequired,
   createAssignment: PropTypes.func.isRequired,
+  fetchTopics: PropTypes.func.isRequired,
+  topics: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired
+  })).isRequired,
   resourceType: PropTypes.number.isRequired,
   classroomId: PropTypes.string.isRequired,
-  userId: PropTypes.string.isRequired
+  userId: PropTypes.string.isRequired,
+  classrooms: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  fetchClassrooms: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   classroomId: state.classroom.currentClassroom.id,
+  classrooms: state.classroom.classrooms,
   userId: state.user.id,
+  topics: state.classroom.topics
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   toggleCreateAssignmentModal,
   createAssignment,
+  fetchClassrooms,
+  fetchTopics,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateAssignmentModal);

@@ -19,9 +19,9 @@ const ClassCard = ({
     setImmediate(() => {
       document.execCommand('copy');
     });
-    setImmediate(() => {
+    setTimeout(() => {
       hiddenTextboxRef.current.blur();
-    });
+    }, 300);
   };
 
   return (
@@ -62,7 +62,7 @@ const ClassCard = ({
         <div className='class-card__main__card-footer'>
           {grade}
           {' '}
-          GRADE
+          SECTION
           <span className='circle'></span>
           {studentCount}
           {' '}
