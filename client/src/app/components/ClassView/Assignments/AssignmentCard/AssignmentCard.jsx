@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import { NavLink } from 'react-router-dom';
 
@@ -31,7 +32,7 @@ const AssignmentCard = props => (
         {props.turnedIn}
       </div>
       <div className="">
-        {props.dueDate}
+        {props.dueDate ? moment(props.dueDate).format('MM/DD/YY') : '...'}
       </div>
       <div className="">
         {
@@ -41,7 +42,12 @@ const AssignmentCard = props => (
         }
       </div>
       <div className="">
-        <ToggleButton state={props.isPublished} />
+        <ToggleButton
+          state={props.isPublished}
+          onClick={() => {
+            props.handleChangeAssignmentStatus({ assignmentId: props.id, isPublished: !props.isPublished });
+          }}
+        />
       </div>
       <div className="assignment-card__options">
         <button className="assignment-card__options__options-btn">
@@ -60,7 +66,8 @@ AssignmentCard.propTypes = {
   dueDate: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   turnedIn: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  handleChangeAssignmentStatus: PropTypes.func.isRequired
 };
 
 export default AssignmentCard;

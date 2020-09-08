@@ -82,12 +82,12 @@
         color: $g3;
   
         &:focus{
+          transform: scale(-15px, -15px);
           outline: none;
         }
         
         &::selection{
-          background: none;
-          color: unset;
+          color: $success-green;
         }
       }
   

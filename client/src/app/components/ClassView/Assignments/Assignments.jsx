@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import moment from 'moment';
 
 // generic components
 import IconButton from '../../IconButton/IconButton';
@@ -21,6 +20,8 @@ import {
   toggleCreateAssignmentModal,
   toggleEditTopicModal,
   fetchAssignments,
+  fetchTopics,
+  changePublishStatusOfAssignment
 } from '../../../action/classroom';
 
 import RenameIcon from '../../../images/rename.svg';
@@ -35,6 +36,7 @@ const Assignments = ({
   editTopicModal,
   createAssignmentModal,
   assignments,
+  topics,
   // eslint-disable-next-line no-shadow
   toggleCreateTopicModal,
   // eslint-disable-next-line no-shadow
@@ -43,13 +45,30 @@ const Assignments = ({
   toggleEditTopicModal,
   // eslint-disable-next-line no-shadow
   fetchAssignments,
+  // eslint-disable-next-line no-shadow
+  changePublishStatusOfAssignment,
+  // eslint-disable-next-line no-shadow
+  fetchTopics,
 }) => {
-  // 0 for assignment | 1 for resource
+  // 0 for assignment | 1 for material
   const [resourceType, setResourceType] = useState(0);
+  const [editingTopic, setEditingTopic] = useState(null);
 
   useEffect(() => {
     fetchAssignments(classroomId);
+    fetchTopics(classroomId);
   }, []);
+
+  const handleChangeAssignmentStatus = ({ assignmentId, isPublished }) => {
+    console.log({
+      assignmentId,
+      isPublished
+    });
+    changePublishStatusOfAssignment({ assignmentId, isPublished })
+      .then((data) => {
+        fetchAssignments(classroomId);
+      });
+  };
 
   return (
     <React.Fragment>
@@ -76,8 +95,8 @@ const Assignments = ({
                   toggleCreateAssignmentModal();
                 }
               }, {
-                name: 'Create Resource',
-                value: 'resource',
+                name: 'Create Material',
+                value: 'material',
                 onClick: () => {
                   setResourceType(1);
                   toggleCreateAssignmentModal();
@@ -86,69 +105,58 @@ const Assignments = ({
             ]}
           />
         </div>
-        <div className="class-view__assignments__unit">
-          <div className="class-view__assignments__unit__header-area">
-            <h3 className="class-view__assignments__unit__header-area__header">Unit 1</h3>
-            <IconButton
-              icon={<RenameIcon />}
-              style={{ marginLeft: 'auto' }}
-              onClick={() => { toggleEditTopicModal(); }}
-            />
-            <IconButton icon={<TrashIcon />} />
-          </div>
-          <div className="class-view__assignments__unit__assignments-table">
-            <div className="class-view__assignments__unit__assignments-table__header">
-              <div className="">NAME</div>
-              <div className="">TURNED IN</div>
-              <div className="">DUE</div>
-              <div className="">PERMISSION</div>
-              <div className="">PUBLISHED</div>
+        {
+          topics && topics.map(topic => (
+            <div className="class-view__assignments__unit" key={topic._id}>
+              <div className="class-view__assignments__unit__header-area">
+                <h3 className="class-view__assignments__unit__header-area__header">{topic.name}</h3>
+                <IconButton
+                  icon={<RenameIcon />}
+                  style={{ marginLeft: 'auto' }}
+                  onClick={() => {
+                    setEditingTopic({
+                      title: topic.name,
+                      id: topic._id
+                    });
+                    toggleEditTopicModal();
+                  }}
+                />
+                <IconButton icon={<TrashIcon />} />
+              </div>
+              <div className="class-view__assignments__unit__assignments-table">
+                <div className="class-view__assignments__unit__assignments-table__header">
+                  <div className="">NAME</div>
+                  <div className="">TURNED IN</div>
+                  <div className="">DUE</div>
+                  <div className="">PERMISSION</div>
+                  <div className="">PUBLISHED</div>
+                </div>
+              </div>
+              {/* AssignmentCard here */}
+              {
+                assignments.map(assignment => (
+                  assignment.topicId === topic._id && (
+                    <AssignmentCard
+                      key={assignment.id}
+                      id={assignment.id}
+                      title={assignment.title}
+                      turnedIn="..."
+                      dueDate={assignment.dueDate}
+                      permission="view"
+                      type={assignment.type}
+                      isPublished={assignment.isPublished}
+                      handleChangeAssignmentStatus={handleChangeAssignmentStatus}
+                    />
+                  )
+                ))
+              }
             </div>
-          </div>
-          {/* AssignmentCard here */}
-          {
-            assignments.map(assignment => (
-              <AssignmentCard
-                key={assignment.id}
-                id={assignment.id}
-                title={assignment.title}
-                turnedIn="..."
-                dueDate={moment(assignment.dueDate).format('MM/DD/YY')}
-                permission="view"
-                type="assignment"
-                isPublished={assignment.isPublished}
-              />
-            ))
-          }
-          <AssignmentCard
-            title="Lesson Plan: System variables in p5"
-            turnedIn="..."
-            dueDate="29/12/20"
-            permission="view"
-            type="assignment"
-            isPublished={false}
-          />
-          <AssignmentCard
-            title="Lesson Plan: System variables in p5"
-            turnedIn="..."
-            dueDate="29/12/20"
-            permission="view"
-            type="assignment"
-            isPublished
-          />
-          <AssignmentCard
-            title="Lesson Plan: System variables in p5"
-            turnedIn="..."
-            dueDate="29/12/20"
-            permission="view"
-            type="Resource"
-            isPublished
-          />
-        </div>
+          ))
+        }
       </div>
       { createTopicModal && <CreateTopicModal /> }
       { createAssignmentModal && <CreateAssignmentModal resourceType={resourceType} /> }
-      { editTopicModal && <EditTopicModal currentTitle="Title" /> }
+      { editTopicModal && <EditTopicModal editingTopic={editingTopic} classroomId={classroomId} /> }
     </React.Fragment>
   );
 };
@@ -163,6 +171,12 @@ Assignments.propTypes = {
   assignments: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   classroomId: PropTypes.string.isRequired,
   fetchAssignments: PropTypes.func.isRequired,
+  topics: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired
+  })).isRequired,
+  fetchTopics: PropTypes.func.isRequired,
+  changePublishStatusOfAssignment: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -170,6 +184,7 @@ const mapStateToProps = state => ({
   editTopicModal: state.classroom.editTopicModal,
   createAssignmentModal: state.classroom.createAssignmentModal,
   assignments: state.classroom.assignments,
+  topics: state.classroom.topics
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -177,6 +192,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   toggleCreateAssignmentModal,
   toggleEditTopicModal,
   fetchAssignments,
+  fetchTopics,
+  changePublishStatusOfAssignment
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Assignments);

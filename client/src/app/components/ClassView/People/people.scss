@@ -37,10 +37,20 @@
           border-bottom: solid 1px $g5;
         }
         &__student{
+          width:100%;
+          text-align: left;
+          border: none;
+          font-size: $p-size;
+          background: none;
           padding: 16px 10px;
           color: $black;
           border-bottom: solid 1px $g5;
+          font-family: $roboto;
           transition: background 300ms ease;
+
+          &:focus{
+            outline: none;
+          }
 
           &:hover{
             background: #eceded;

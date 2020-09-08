@@ -9,14 +9,32 @@ import InputField from '../../../InputField/InputField';
 import Button from '../../../Button/Button';
 
 // actions
-import { toggleEditTopicModal } from '../../../../action/classroom';
+import {
+  toggleEditTopicModal,
+  editClassroomTopic
+} from '../../../../action/classroom';
 
 import './editTopicModal.scss';
 
 
-// eslint-disable-next-line no-shadow
-const EditTopicModal = ({ currentTitle, toggleEditTopicModal, submittingData }) => {
-  const [topicTitle, setTopicTitle] = useState(currentTitle || '');
+const EditTopicModal = ({
+  editingTopic,
+  // eslint-disable-next-line no-shadow
+  toggleEditTopicModal,
+  submittingData,
+  // eslint-disable-next-line no-shadow
+  editClassroomTopic,
+  classroomId
+}) => {
+  const [topicTitle, setTopicTitle] = useState(editingTopic.title || '');
+
+  const handleSubmit = () => {
+    const topicData = {
+      name: topicTitle,
+      id: editingTopic.id
+    };
+    editClassroomTopic({ topicData, classroomId });
+  };
 
   return (
     <Modal
@@ -42,7 +60,8 @@ const EditTopicModal = ({ currentTitle, toggleEditTopicModal, submittingData }) 
         </Button>
         <Button
           className='primary'
-          disabled={!topicTitle.trim() || currentTitle === topicTitle || submittingData}
+          disabled={!topicTitle.trim() || editingTopic.title === topicTitle || submittingData}
+          onClick={handleSubmit}
         >
           Save topic
         </Button>
@@ -52,9 +71,14 @@ const EditTopicModal = ({ currentTitle, toggleEditTopicModal, submittingData }) 
 };
 
 EditTopicModal.propTypes = {
-  currentTitle: PropTypes.string.isRequired,
+  editingTopic: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired
+  }).isRequired,
   toggleEditTopicModal: PropTypes.func.isRequired,
-  submittingData: PropTypes.bool.isRequired
+  submittingData: PropTypes.bool.isRequired,
+  editClassroomTopic: PropTypes.func.isRequired,
+  classroomId: PropTypes.string.isRequired
 };
 
 
@@ -65,6 +89,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   toggleEditTopicModal,
+  editClassroomTopic
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditTopicModal);

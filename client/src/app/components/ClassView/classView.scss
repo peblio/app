@@ -53,8 +53,7 @@
             outline: none;
           }
           &::selection{
-            background: none;
-            color: unset;
+            color: $success-green;
           }
         }
       }

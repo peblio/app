@@ -39,14 +39,8 @@ export const toggleDataLoading = () => (dispatch) => {
 };
 
 export const fetchClassrooms = () => (dispatch) => {
-  dispatch({
-    type: ActionTypes.TOGGLE_DATA_LOADING,
-  });
   axios.get('/learning/classroomDetail')
     .then(({ data }) => {
-      dispatch({
-        type: ActionTypes.TOGGLE_DATA_LOADING,
-      });
       dispatch({
         type: ActionTypes.FETCH_CLASSROOMS,
         classrooms: data
@@ -56,9 +50,6 @@ export const fetchClassrooms = () => (dispatch) => {
       if (e.response.status === 404) {
         history.push('/404');
       }
-      dispatch({
-        type: ActionTypes.TOGGLE_DATA_LOADING,
-      });
     });
 };
 
@@ -115,6 +106,18 @@ export const joinClassroom = classCode => (dispatch) => {
         type: ActionTypes.SET_SUBMITTING_DATA,
         value: false
       });
+      axios.get('/learning/classroomDetail')
+        .then(({ data }) => {
+          dispatch({
+            type: ActionTypes.FETCH_CLASSROOMS,
+            classrooms: data
+          });
+        })
+        .catch((e) => {
+          if (e.response.status === 404) {
+            history.push('/404');
+          }
+        });
     })
     .catch((err) => {
       // [TODO]: Add dispatch to show toast notification
@@ -181,6 +184,59 @@ export const createClassroomTopic = topicData => (dispatch) => {
     });
 };
 
+export const editClassroomTopic = ({ topicData, classroomId }) => (dispatch) => {
+  dispatch({
+    type: ActionTypes.SET_SUBMITTING_DATA,
+    value: true
+  });
+  axios.patch('/learning/classroomTopic', topicData)
+    .then(({ data }) => {
+      console.log(data);
+      dispatch({
+        type: ActionTypes.SET_SUBMITTING_DATA,
+        value: false
+      });
+      dispatch({
+        type: ActionTypes.TOGGLE_EDIT_TOPIC_MODAL,
+      });
+      axios.get(`/learning/classroomTopic/${classroomId}`)
+        // eslint-disable-next-line no-shadow
+        .then(({ data }) => {
+          dispatch({
+            type: ActionTypes.SET_TOPICS,
+            topics: data
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      // [TODO]: Add dispatch to show toast notification
+      dispatch({
+        type: ActionTypes.SET_SUBMITTING_DATA,
+        value: false
+      });
+      console.log(err);
+    });
+};
+
+export const fetchTopics = classroomId => (dispatch) => {
+  axios.get(`/learning/classroomTopic/${classroomId}`)
+    .then(({ data }) => {
+      dispatch({
+        type: ActionTypes.SET_TOPICS,
+        topics: data
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const deleteTopic = topicId => (dispatch) => {
+  console.log('delete', topicId);
+};
 
 export const createAssignment = assignmentData => (dispatch) => {
   dispatch({
@@ -197,6 +253,17 @@ export const createAssignment = assignmentData => (dispatch) => {
       dispatch({
         type: ActionTypes.TOGGLE_CREATE_ASSIGNMENT_MODAL,
       });
+      axios.get(`/learning/classroomAllAssignments/${assignmentData.classroomId}`)
+        // eslint-disable-next-line no-shadow
+        .then(({ data }) => {
+          dispatch({
+            type: ActionTypes.SET_ASSIGNMENTS,
+            assignments: data
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       // [TODO]: Add dispatch to show toast notification
@@ -211,7 +278,6 @@ export const createAssignment = assignmentData => (dispatch) => {
 export const fetchAssignments = classroomId => (dispatch) => {
   axios.get(`/learning/classroomAllAssignments/${classroomId}`)
     .then(({ data }) => {
-      console.log(data);
       dispatch({
         type: ActionTypes.SET_ASSIGNMENTS,
         assignments: data
@@ -239,4 +305,26 @@ export const fetchCurrentAssignmentDetails = assignmentId => (dispatch) => {
     .catch((err) => {
       console.log(err);
     });
+};
+
+export const fetchAssignmentsByStudentsForTeacher = ({ studentName, classroomId }) => (dispatch) => {
+  axios.get(`learning/classroomAllAssignmentsByStudentForTeacher/${classroomId}?studentName=${studentName}`)
+    .then(({ data }) => {
+      console.log(data);
+    });
+};
+
+export const changePublishStatusOfAssignment = assignment => (dispatch) => {
+  const reqPromise = () => new Promise((resolve, reject) => {
+    axios.patch('learning/classroomAssignment', assignment)
+      .then(({ data }) => {
+        console.log(data);
+        resolve(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
+  });
+  return reqPromise();
 };
