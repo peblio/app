@@ -100,8 +100,7 @@ export async function saveClassroomAssignmentStudentAttempt(req, res) {
     const existingClassroomAssignmentStudentAttempt = await ClassroomStudentAssignmentAttempt.findOne({
       user: req.user._id.toString(),
       classroomId: req.body.classroomId,
-      assignmentId: req.body.assignmentId,
-      turnedIn: req.body.turnedIn,
+      assignmentId: req.body.assignmentId
     });
     if(existingClassroomAssignmentStudentAttempt) {
       return res.status(500).send({ error: 'Assignment already attempted' });
@@ -144,11 +143,21 @@ export async function changeTurnInStatusOfClassroomAssignmentAttempt(req, res) {
     if (!myClassroomAssignmentAttempt) {
       return res.status(404).send();
     }
-    await ClassroomStudentAssignmentAttempt.update(
-      { assignmentId: req.body.assignmentId, user: req.user._id.toString() },
-      {
-        turnedIn: req.body.turnedIn
-      });
+    if(req.body.turnedIn) {
+      await ClassroomStudentAssignmentAttempt.update(
+        { assignmentId: req.body.assignmentId, user: req.user._id.toString() },
+        {
+          turnedIn: req.body.turnedIn,
+          turnedInTime: Date.now(),
+        });
+    } else {
+        await ClassroomStudentAssignmentAttempt.update(
+        { assignmentId: req.body.assignmentId, user: req.user._id.toString() },
+        {
+          turnedIn: req.body.turnedIn,
+          turnedInTime: null
+        });
+    }
     return res.status(200).send();
   } catch (err) {
     return res.status(500).send({ error: err.message });
