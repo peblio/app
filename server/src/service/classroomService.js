@@ -515,7 +515,13 @@ export async function getAllAssignmentsInClassroomByStudentForTeacher(req, res) 
     const allClassroomAssignmentsAttemptedByStudent = await ClassroomStudentAssignmentAttempt
     .find({classroomId: req.params.id, user: studentDetail._id.toString()})
     .populate('assignmentDetail');
-    return res.status(200).json(allClassroomAssignmentsAttemptedByStudent);
+    const classroomAssignments = await ClassroomAssignment.find({classroomId: req.params.id}).populate('topicId');
+    const classroomAssignmentsJson = classroomAssignments
+    .map(classroomAssignment => classroomAssignment.toJSON())
+    .map(classroomAssignment => {
+      return {...classroomAssignment, topicId: classroomAssignment.topicId._id, topicDetail: classroomAssignment.topicId}
+    })
+    return res.status(200).json({allClassroomAssignmentsAttemptedByStudent, allClassroomAssignmentsInClassroom: classroomAssignmentsJson});
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }
