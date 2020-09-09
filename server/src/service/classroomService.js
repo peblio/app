@@ -435,6 +435,17 @@ async function populateStudentsWhoHaveTurnedInAssignmentCount(classroomAssignmen
   return classroomAssignment;
 }
 
+async function populateStudentsWhoHaveAttemptedAssignmentCount(classroomAssignment){
+  if(classroomAssignment.type === 'material'){
+    return classroomAssignment
+  }
+  const studentsWhoHaveTurnedInAssignment = await ClassroomStudentAssignmentAttempt.find({
+    assignmentId: classroomAssignment.id
+  });
+  classroomAssignment.assignmentAttemptedStudentCount = studentsWhoHaveTurnedInAssignment.length;
+  return classroomAssignment;
+}
+
 export async function getAllAssignmentsInClassroom(req, res) {
   try {
     const classroom = await ClassroomDetail.findOne({id: req.params.id});
@@ -455,10 +466,14 @@ export async function getAllAssignmentsInClassroom(req, res) {
     const classroomAssignmentsJson = await Promise.all(classroomAssignments
     .map(classroomAssignment => classroomAssignment.toJSON())
     .map(classroomAssignment => {
-      return {...classroomAssignment, topicId: classroomAssignment.topicId._id, topicDetail: classroomAssignment.topicId}
+      if(classroomAssignment.topicId) {
+        return {...classroomAssignment, topicId: classroomAssignment.topicId._id, topicDetail: classroomAssignment.topicId };
+      }
+      return classroomAssignment;
     })
     .map(async classroomAssignment => populateTotalStudents(await classroomAssignment))
-    .map(async classroomAssignment => populateStudentsWhoHaveTurnedInAssignmentCount(await classroomAssignment)));
+    .map(async classroomAssignment => populateStudentsWhoHaveTurnedInAssignmentCount(await classroomAssignment))
+    .map(async classroomAssignment => populateStudentsWhoHaveAttemptedAssignmentCount(await classroomAssignment)));
     return res.status(200).json(classroomAssignmentsJson);
   } catch (err) {
     return res.status(500).send({ error: err.message });
