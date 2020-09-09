@@ -117,9 +117,9 @@ export async function saveClassroomAssignmentStudentAttempt(req, res) {
   }
 }
 
-export async function changeTurnInStatusOfClassroomAssignmentAttempt(req, res) {
+export async function turnInClassroomAssignmentAttempt(req, res) {
   try {
-    const classroomAssignment = await ClassroomAssignment.findOne({id: req.body.assignmentId});
+    const classroomAssignment = await ClassroomAssignment.findOne({id: req.params.id});
     if (!classroomAssignment) {
       return res.status(404).send();
     }
@@ -137,27 +137,22 @@ export async function changeTurnInStatusOfClassroomAssignmentAttempt(req, res) {
       return res.status(401).send();
     }
     const myClassroomAssignmentAttempt = await ClassroomStudentAssignmentAttempt.findOne({
-      assignmentId: req.body.assignmentId,
+      assignmentId: req.params.id,
       user: req.user._id.toString()
     });
     if (!myClassroomAssignmentAttempt) {
       return res.status(404).send();
     }
-    if(req.body.turnedIn) {
-      await ClassroomStudentAssignmentAttempt.update(
-        { assignmentId: req.body.assignmentId, user: req.user._id.toString() },
-        {
-          turnedIn: req.body.turnedIn,
-          turnedInTime: Date.now(),
-        });
-    } else {
-        await ClassroomStudentAssignmentAttempt.update(
-        { assignmentId: req.body.assignmentId, user: req.user._id.toString() },
-        {
-          turnedIn: req.body.turnedIn,
-          turnedInTime: null
-        });
+    if(myClassroomAssignmentAttempt.turnedIn) {
+      return res.status(400).send();
     }
+    await ClassroomStudentAssignmentAttempt.update(
+      { assignmentId: req.params.id, user: req.user._id.toString() },
+      {
+        turnedIn: true,
+        turnedInTime: Date.now(),
+      }
+    );
     return res.status(200).send();
   } catch (err) {
     return res.status(500).send({ error: err.message });
