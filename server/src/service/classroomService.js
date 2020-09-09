@@ -404,7 +404,9 @@ export async function reassignTopicToAssignment(req, res) {
 export async function getClassroomAssignment(req, res) {
   try {
     const classroomAssignment = await ClassroomAssignment.findOne({id: req.params.id}).populate('topicId');
-    const classroomAssignmentJson = {...classroomAssignment.toJSON(), topicId: classroomAssignment.toJSON().topicId._id, topicDetail: classroomAssignment.toJSON().topicId}
+    const classroomAssignmentJson = classroomAssignment.topicId
+                                    ? {...classroomAssignment.toJSON(), topicId: classroomAssignment.toJSON().topicId._id, topicDetail: classroomAssignment.toJSON().topicId}
+                                    : classroomAssignment.toJSON()
     return res.status(200).json(classroomAssignmentJson);
   } catch (err) {
     return res.status(500).send({ error: err.message });
@@ -542,7 +544,10 @@ export async function getAllAssignmentsInClassroomByStudentForTeacher(req, res) 
     const classroomAssignmentsJson = classroomAssignments
     .map(classroomAssignment => classroomAssignment.toJSON())
     .map(classroomAssignment => {
-      return {...classroomAssignment, topicId: classroomAssignment.topicId._id, topicDetail: classroomAssignment.topicId}
+      if(classroomAssignment.topicId) {
+        return {...classroomAssignment, topicId: classroomAssignment.topicId._id, topicDetail: classroomAssignment.topicId}
+      }
+      return classroomAssignment;
     })
     return res.status(200).json({allClassroomAssignmentsAttemptedByStudent, allClassroomAssignmentsInClassroom: classroomAssignmentsJson});
   } catch (err) {
@@ -571,7 +576,9 @@ export async function getAllStudentAttemptsForAssignment(req, res) {
     .populate({path: 'user', select: 'name'});
     return res.status(200).json({
       allStudentsAttemptForAssignment, 
-      classroomAssignment: {...classroomAssignment, topicId: classroomAssignment.topicId._id, topicDetail: classroomAssignment.topicId}
+      classroomAssignment: classroomAssignment.topicId 
+      ? {...classroomAssignment, topicId: classroomAssignment.topicId._id, topicDetail: classroomAssignment.topicId}
+      : classroomAssignment
     });
   } catch (err) {
     return res.status(500).send({ error: err.message });
