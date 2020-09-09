@@ -1,0 +1,38 @@
+@import 'variables.scss';
+
+.class-view__assignments__topic{
+  margin-top: 38px;
+  padding: 0 10px;
+
+  &__header-area{
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 8px 10px 0px 10px;
+    border-bottom: 2px solid $g5;
+    &__header{
+      font-size: 28px;
+      font-weight: normal;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  &__assignments-table{
+    box-sizing: border-box;
+    margin-top: 24px;
+    width: 100%;
+    &__header{
+      box-sizing: border-box;
+      width: 100%;
+      padding:0px 16px 0px 24px;
+      color: $g3;
+      font-size: 12px;
+      margin-bottom: 2px;
+      display: grid;
+      font-weight: 700;
+      grid-template-columns: 25% 15% 15% 25% 15% 5% ;
+      margin-bottom: 8px;
+    }
+  }
+}
