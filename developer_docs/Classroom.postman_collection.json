@@ -1953,7 +1953,7 @@
 					"response": []
 				},
 				{
-					"name": "ChangeTurnInStatusOfMyClassroomAssignmentAttempt",
+					"name": "TurnInMyClassroomAssignmentAttempt",
 					"request": {
 						"method": "PATCH",
 						"header": [
@@ -2008,7 +2008,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"turnedIn\": \"false\",\n\t\"assignmentId\": \"rJg5oZW4D\"\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2016,7 +2016,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/learning/classroomAssignmentAttempt",
+							"raw": "http://localhost:8080/api/learning/classroomAssignmentAttempt/rJg5oZW4D",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2025,7 +2025,8 @@
 							"path": [
 								"api",
 								"learning",
-								"classroomAssignmentAttempt"
+								"classroomAssignmentAttempt",
+								"rJg5oZW4D"
 							]
 						}
 					},
