@@ -1,4 +1,7 @@
 import React from 'react';
+import moment from 'moment';
+
+import PropTypes from 'prop-types';
 import LessonListCard from '../../../LessonListCard/LessonListCard';
 
 import './studentAssignmentCard.scss';
@@ -20,7 +23,7 @@ const StudentAssignmentCard = props => (
         {props.status}
       </div>
       <div className="student-assignment-card__due">
-        {props.dueDate}
+        {props.dueDate ? moment(props.dueDate).format('MM/DD/YY') : '...'}
       </div>
       <div className="student-assignment-card__comments">
         {props.comments}
@@ -38,5 +41,18 @@ const StudentAssignmentCard = props => (
     </div>
   </LessonListCard>
 );
+
+StudentAssignmentCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  dueDate: PropTypes.instanceOf(Date).isRequired,
+  comments: PropTypes.string.isRequired,
+  gradeObtained: PropTypes.number,
+  gradeTotal: PropTypes.number.isRequired,
+};
+
+StudentAssignmentCard.defaultProps = {
+  gradeObtained: null
+};
 
 export default StudentAssignmentCard;

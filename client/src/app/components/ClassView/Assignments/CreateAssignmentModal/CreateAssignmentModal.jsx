@@ -71,7 +71,7 @@ const CreateAssignmentModal = ({
       description: instruction,
       isPublished: publish,
       type: resourceType ? 'material' : 'assignment',
-      topicId: topic
+      topicId: topic || null
     };
     if (addLink) {
       if (linkTriggeredBy === 'pebl') {

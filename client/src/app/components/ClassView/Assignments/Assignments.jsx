@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
 // generic components
 import IconButton from '../../IconButton/IconButton';
 import Dropdown from '../../Dropdown/Dropdown';
@@ -13,6 +17,7 @@ import AssignmentCard from './AssignmentCard/AssignmentCard';
 import CreateTopicModal from './CreateTopicModal/CreateTopicModal';
 import EditTopicModal from './EditTopicModal/EditTopicModal';
 import CreateAssignmentModal from './CreateAssignmentModal/CreateAssignmentModal';
+import TopicArea from './TopicArea/TopicArea';
 
 // actions
 import {
@@ -65,7 +70,7 @@ const Assignments = ({
       isPublished
     });
     changePublishStatusOfAssignment({ assignmentId, isPublished })
-      .then((data) => {
+      .then(() => {
         fetchAssignments(classroomId);
       });
   };
@@ -107,50 +112,14 @@ const Assignments = ({
         </div>
         {
           topics && topics.map(topic => (
-            <div className="class-view__assignments__unit" key={topic._id}>
-              <div className="class-view__assignments__unit__header-area">
-                <h3 className="class-view__assignments__unit__header-area__header">{topic.name}</h3>
-                <IconButton
-                  icon={<RenameIcon />}
-                  style={{ marginLeft: 'auto' }}
-                  onClick={() => {
-                    setEditingTopic({
-                      title: topic.name,
-                      id: topic._id
-                    });
-                    toggleEditTopicModal();
-                  }}
-                />
-                <IconButton icon={<TrashIcon />} />
-              </div>
-              <div className="class-view__assignments__unit__assignments-table">
-                <div className="class-view__assignments__unit__assignments-table__header">
-                  <div className="">NAME</div>
-                  <div className="">TURNED IN</div>
-                  <div className="">DUE</div>
-                  <div className="">PERMISSION</div>
-                  <div className="">PUBLISHED</div>
-                </div>
-              </div>
-              {/* AssignmentCard here */}
-              {
-                assignments.map(assignment => (
-                  assignment.topicId === topic._id && (
-                    <AssignmentCard
-                      key={assignment.id}
-                      id={assignment.id}
-                      title={assignment.title}
-                      turnedIn="..."
-                      dueDate={assignment.dueDate}
-                      permission="view"
-                      type={assignment.type}
-                      isPublished={assignment.isPublished}
-                      handleChangeAssignmentStatus={handleChangeAssignmentStatus}
-                    />
-                  )
-                ))
-              }
-            </div>
+            <TopicArea
+              key={topic._id}
+              id={topic._id}
+              assignments={assignments}
+              setEditingTopic={setEditingTopic}
+              classroomId={classroomId}
+              name={topic.name}
+            />
           ))
         }
       </div>
@@ -196,4 +165,5 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   changePublishStatusOfAssignment
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Assignments);
+const DragDropAssignmentsView = DragDropContext(HTML5Backend)(Assignments);
+export default connect(mapStateToProps, mapDispatchToProps)(DragDropAssignmentsView);

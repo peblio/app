@@ -26,11 +26,11 @@ const People = (props) => {
     setStudents(props.members.filter(member => member.role === 'student'));
   }, []);
 
-  const sortByNameAZ = () => {
-    setStudents(() => {
-      [...students].sort((x, y) => (x.name.toUpperCase() < y.name.toUpperCase() ? 1 : -1));
-    });
-  };
+  // const sortByNameAZ = () => {
+  //   setStudents(() => {
+  //     [...students].sort((x, y) => (x.name.toUpperCase() < y.name.toUpperCase() ? 1 : -1));
+  //   });
+  // };
 
   const handleStudentSelect = (studentName) => {
     console.log(studentName);
@@ -68,7 +68,6 @@ const People = (props) => {
           <div className="class-view__people__section__student-details__students">
             <div className="class-view__people__section__student-details__students__header">
               All students
-
             </div>
             {
               students.map(student => (
@@ -102,16 +101,27 @@ const People = (props) => {
             </div>
             {
               selectedStudent ? (
-                <StudentAssignmentCard
-                  title="P5 Introduction"
-                  status="Turned in"
-                  dueDate="12/04/20"
-                  comments="sent"
-                  gradeTotal={100}
-                  gradeObtained={88}
-                />
+                props.assignmentsPeople && props.assignmentsPeople.allClassroomAssignmentsInClassroom.map(
+                  assignment => (
+                    assignment.isPublished && assignment.type === 'assignment' && (
+                      <StudentAssignmentCard
+                        title={assignment.title}
+                        status={
+                          props.assignmentsPeople.allClassroomAssignmentsAttemptedByStudent.includes(assignment)
+                            ? 'Turned in' : 'Missing'
+                        }
+                        dueDate={assignment.dueDate}
+                        comments="sent"
+                        gradeTotal={100}
+                        gradeObtained={assignment.areGradesPublished ? 0 : null}
+                      />
+                    )
+                  )
+                )
               ) : (
-                <p>Select a student to see their assignments here</p>
+                <p className="class-view__people__section__student-details__assignments__no-header">
+                  Select a student to see their assignments here
+                </p>
               )
             }
           </div>
@@ -127,15 +137,20 @@ People.propTypes = {
     id: PropTypes.string.isRequired,
   }).isRequired,
   fetchAssignmentsByStudentsForTeacher: PropTypes.func.isRequired,
+  assignmentsPeople: PropTypes.shape({
+    allClassroomAssignmentsAttemptedByStudent: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    allClassroomAssignmentsInClassroom: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+  }).isRequired
 };
 
-const mapStateToPtops = state => ({
+const mapStateToProps = state => ({
   members: state.classroom.currentClassroom.members,
-  currentClassroom: state.classroom.currentClassroom
+  currentClassroom: state.classroom.currentClassroom,
+  assignmentsPeople: state.classroom.assignmentsPeople,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchAssignmentsByStudentsForTeacher,
 }, dispatch);
 
-export default connect(mapStateToPtops, mapDispatchToProps)(People);
+export default connect(mapStateToProps, mapDispatchToProps)(People);

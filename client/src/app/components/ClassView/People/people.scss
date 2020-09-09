@@ -78,6 +78,13 @@
             text-transform: uppercase;
           }
         }
+
+        &__no-header{
+          font-family: $roboto;
+          text-align: center;
+          color: $g3;
+          font-style: italic;
+        }
       }
     }
   }

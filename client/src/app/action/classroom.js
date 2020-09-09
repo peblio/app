@@ -2,6 +2,7 @@ import * as ActionTypes from '../constants/reduxConstants';
 import axios from '../utils/axios';
 import history from '../utils/history';
 
+// Modals start
 export const toggleCreateClassroomModal = () => (dispatch) => {
   dispatch({
     type: ActionTypes.TOGGLE_CREATE_CLASSROOM_MODAL,
@@ -31,6 +32,8 @@ export const toggleEditTopicModal = () => (dispatch) => {
     type: ActionTypes.TOGGLE_EDIT_TOPIC_MODAL,
   });
 };
+// Modals end
+
 
 export const toggleDataLoading = () => (dispatch) => {
   dispatch({
@@ -38,6 +41,7 @@ export const toggleDataLoading = () => (dispatch) => {
   });
 };
 
+// Classroom start
 export const fetchClassrooms = () => (dispatch) => {
   axios.get('/learning/classroomDetail')
     .then(({ data }) => {
@@ -183,7 +187,9 @@ export const createClassroomTopic = topicData => (dispatch) => {
       console.log(err);
     });
 };
+// Classroom end
 
+// Topic start
 export const editClassroomTopic = ({ topicData, classroomId }) => (dispatch) => {
   dispatch({
     type: ActionTypes.SET_SUBMITTING_DATA,
@@ -238,6 +244,22 @@ export const deleteTopic = topicId => (dispatch) => {
   console.log('delete', topicId);
 };
 
+export const changeTopicOfAssignment = data => (dispatch) => {
+  const reqPromise = () => new Promise((resolve, reject) => {
+    axios.patch('/learning/classroomAssignment/reassignTopic', data)
+      .then(() => {
+        resolve(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
+  });
+  return reqPromise();
+};
+// Topic end
+
+// Assignments start
 export const createAssignment = assignmentData => (dispatch) => {
   dispatch({
     type: ActionTypes.SET_SUBMITTING_DATA,
@@ -292,7 +314,7 @@ export const fetchCurrentAssignmentDetails = assignmentId => (dispatch) => {
   dispatch({
     type: ActionTypes.TOGGLE_DATA_LOADING,
   });
-  axios.get(`learning/classroomAssignment/${assignmentId}`)
+  axios.get(`/learning/classroomAssignment/${assignmentId}`)
     .then(({ data }) => {
       dispatch({
         type: ActionTypes.SET_CURRENT_ASSIGNMENT,
@@ -308,17 +330,20 @@ export const fetchCurrentAssignmentDetails = assignmentId => (dispatch) => {
 };
 
 export const fetchAssignmentsByStudentsForTeacher = ({ studentName, classroomId }) => (dispatch) => {
-  axios.get(`learning/classroomAllAssignmentsByStudentForTeacher/${classroomId}?studentName=${studentName}`)
+  axios.get(`/learning/classroomAllAssignmentsByStudentForTeacher/${classroomId}?studentName=${studentName}`)
     .then(({ data }) => {
-      console.log(data);
-    });
+      dispatch({
+        type: ActionTypes.SET_ASSIGNMENTS_PEOPLE,
+        assignments: data
+      });
+    })
+    .catch(err => console.log(err));
 };
 
 export const changePublishStatusOfAssignment = assignment => (dispatch) => {
   const reqPromise = () => new Promise((resolve, reject) => {
-    axios.patch('learning/classroomAssignment', assignment)
-      .then(({ data }) => {
-        console.log(data);
+    axios.patch('/learning/classroomAssignment', assignment)
+      .then(() => {
         resolve(true);
       })
       .catch((err) => {
@@ -328,3 +353,4 @@ export const changePublishStatusOfAssignment = assignment => (dispatch) => {
   });
   return reqPromise();
 };
+// Assignments end
