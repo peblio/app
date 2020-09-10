@@ -32,6 +32,13 @@ export const toggleEditTopicModal = () => (dispatch) => {
     type: ActionTypes.TOGGLE_EDIT_TOPIC_MODAL,
   });
 };
+
+export const setSubmittinData = value => (dispatch) => {
+  dispatch({
+    type: ActionTypes.SET_SUBMITTING_DATA,
+    value
+  });
+};
 // Modals end
 
 
@@ -261,40 +268,17 @@ export const changeTopicOfAssignment = data => (dispatch) => {
 
 // Assignments start
 export const createAssignment = assignmentData => (dispatch) => {
-  dispatch({
-    type: ActionTypes.SET_SUBMITTING_DATA,
-    value: true
+  const reqPromise = () => new Promise((resolve, reject) => {
+    axios.post('/learning/classroomAssignment', assignmentData)
+      .then(() => {
+        resolve(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
   });
-  axios.post('/learning/classroomAssignment', assignmentData)
-    .then(({ data }) => {
-      console.log(data);
-      dispatch({
-        type: ActionTypes.SET_SUBMITTING_DATA,
-        value: false
-      });
-      dispatch({
-        type: ActionTypes.TOGGLE_CREATE_ASSIGNMENT_MODAL,
-      });
-      axios.get(`/learning/classroomAllAssignments/${assignmentData.classroomId}`)
-        // eslint-disable-next-line no-shadow
-        .then(({ data }) => {
-          dispatch({
-            type: ActionTypes.SET_ASSIGNMENTS,
-            assignments: data
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    })
-    .catch((err) => {
-      // [TODO]: Add dispatch to show toast notification
-      dispatch({
-        type: ActionTypes.SET_SUBMITTING_DATA,
-        value: false
-      });
-      console.log(err);
-    });
+  return reqPromise();
 };
 
 export const fetchAssignments = classroomId => (dispatch) => {
@@ -338,6 +322,13 @@ export const fetchAssignmentsByStudentsForTeacher = ({ studentName, classroomId 
       });
     })
     .catch(err => console.log(err));
+};
+
+export const clearAssignmentPeople = () => (dispatch) => {
+  dispatch({
+    type: ActionTypes.SET_ASSIGNMENTS_PEOPLE,
+    assignments: {}
+  });
 };
 
 export const changePublishStatusOfAssignment = assignment => (dispatch) => {

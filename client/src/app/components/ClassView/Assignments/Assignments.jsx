@@ -3,21 +3,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-
+// dnd
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 // generic components
-import IconButton from '../../IconButton/IconButton';
-import Dropdown from '../../Dropdown/Dropdown';
-import ShareIcon from '../../../images/link.svg';
+import IconDropdownButton from '../../IconButtonDropdown/IconButtonDropdown';
+// import IconButton from '../../IconButton/IconButton';
 
 // page speecific components
-import AssignmentCard from './AssignmentCard/AssignmentCard';
 import CreateTopicModal from './CreateTopicModal/CreateTopicModal';
 import EditTopicModal from './EditTopicModal/EditTopicModal';
 import CreateAssignmentModal from './CreateAssignmentModal/CreateAssignmentModal';
 import TopicArea from './TopicArea/TopicArea';
+import NoTopicAssignments from './NoTopicAssignments/NoTopicAssignments';
 
 // actions
 import {
@@ -29,8 +28,8 @@ import {
   changePublishStatusOfAssignment
 } from '../../../action/classroom';
 
-import RenameIcon from '../../../images/rename.svg';
-import TrashIcon from '../../../images/trash.svg';
+// import ShareIcon from '../../../images/link.svg';
+import PlusIcon from '../../../images/add.svg';
 
 import './assignments.scss';
 
@@ -47,11 +46,7 @@ const Assignments = ({
   // eslint-disable-next-line no-shadow
   toggleCreateAssignmentModal,
   // eslint-disable-next-line no-shadow
-  toggleEditTopicModal,
-  // eslint-disable-next-line no-shadow
   fetchAssignments,
-  // eslint-disable-next-line no-shadow
-  changePublishStatusOfAssignment,
   // eslint-disable-next-line no-shadow
   fetchTopics,
 }) => {
@@ -64,43 +59,32 @@ const Assignments = ({
     fetchTopics(classroomId);
   }, []);
 
-  const handleChangeAssignmentStatus = ({ assignmentId, isPublished }) => {
-    console.log({
-      assignmentId,
-      isPublished
-    });
-    changePublishStatusOfAssignment({ assignmentId, isPublished })
-      .then(() => {
-        fetchAssignments(classroomId);
-      });
-  };
-
   return (
     <React.Fragment>
       <div className="class-view__assignments">
         <div className="class-view__assignments__action-area">
-          <IconButton icon={<ShareIcon />} style={{ marginRight: '24px' }}> Publish course </IconButton>
-          <IconButton icon={<ShareIcon />} style={{ marginRight: 'auto' }}> Preview student site </IconButton>
-          <Dropdown
-            className="btn"
-            placeholder="New Resource"
+          {/* <IconButton icon={<ShareIcon />} style={{ marginRight: '24px' }}> Publish course </IconButton>
+          <IconButton icon={<ShareIcon />} style={{ marginRight: 'auto' }}> Preview student site </IconButton> */}
+          <IconDropdownButton
+            optionsPosition='right'
+            icon={<PlusIcon />}
             style={{
-              width: '146px'
+              marginLeft: 'auto'
             }}
             options={[
               {
-                name: 'Create Topic',
+                name: 'Topic',
                 value: 'topic',
                 onClick: () => { toggleCreateTopicModal(); }
               }, {
-                name: 'Create Assignment',
+                name: 'Assignment',
                 value: 'assignment',
                 onClick: () => {
                   setResourceType(0);
                   toggleCreateAssignmentModal();
                 }
               }, {
-                name: 'Create Material',
+                name: 'Material',
                 value: 'material',
                 onClick: () => {
                   setResourceType(1);
@@ -110,6 +94,10 @@ const Assignments = ({
             ]}
           />
         </div>
+        <NoTopicAssignments
+          assignments={assignments}
+          classroomId={classroomId}
+        />
         {
           topics && topics.map(topic => (
             <TopicArea
@@ -136,7 +124,6 @@ Assignments.propTypes = {
   createAssignmentModal: PropTypes.bool.isRequired,
   toggleCreateTopicModal: PropTypes.func.isRequired,
   toggleCreateAssignmentModal: PropTypes.func.isRequired,
-  toggleEditTopicModal: PropTypes.func.isRequired,
   assignments: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   classroomId: PropTypes.string.isRequired,
   fetchAssignments: PropTypes.func.isRequired,
@@ -145,7 +132,6 @@ Assignments.propTypes = {
     _id: PropTypes.string.isRequired
   })).isRequired,
   fetchTopics: PropTypes.func.isRequired,
-  changePublishStatusOfAssignment: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

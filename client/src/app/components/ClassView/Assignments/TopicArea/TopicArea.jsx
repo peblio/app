@@ -31,11 +31,10 @@ const topicTarget = {
   drop(props, monitor) {
     const item = monitor.getItem();
     if (item.currentTopicId !== props.id) {
-      console.log(props);
       props.changeTopicOfAssignment({
         assignmentId: item.assignmentId,
         newTopicId: props.id
-      }).then((data) => {
+      }).then(() => {
         props.fetchAssignments(props.classroomId);
       })
         .catch(err => console.log(err));
@@ -67,10 +66,6 @@ const TopicArea = ({
   connectDropTarget,
 }) => {
   const handleChangeAssignmentStatus = ({ assignmentId, isPublished }) => {
-    console.log({
-      assignmentId,
-      isPublished
-    });
     changePublishStatusOfAssignment({ assignmentId, isPublished })
       .then(() => {
         fetchAssignments(classroomId);

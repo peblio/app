@@ -6,11 +6,6 @@ import { DropTarget } from 'react-dnd';
 
 import AssignmentCard from '../AssignmentCard/AssignmentCard';
 
-import RenameIcon from '../../../../images/rename.svg';
-import TrashIcon from '../../../../images/trash.svg';
-
-import IconButton from '../../../IconButton/IconButton';
-
 // actions
 import {
   fetchAssignments,
@@ -19,7 +14,7 @@ import {
   changeTopicOfAssignment
 } from '../../../../action/classroom';
 
-import './noTopicAssignment.scss';
+import './noTopicAssignments.scss';
 
 const ItemTypes = {
   ASSIGNMENT_CARD: 'ASSIGNMENT_CARD'
@@ -30,10 +25,8 @@ const topicTarget = {
   drop(props, monitor) {
     const item = monitor.getItem();
     if (item.currentTopicId !== props.id) {
-      console.log(props);
       props.changeTopicOfAssignment({
         assignmentId: item.assignmentId,
-        newTopicId: props.id
       }).then((data) => {
         props.fetchAssignments(props.classroomId);
       })
@@ -49,12 +42,11 @@ function collectDropTarget(_connect, monitor) {
   };
 }
 
-const TopicArea = ({
+const NoTopicAssignments = ({
   name,
   id,
   assignments,
   classroomId,
-  setEditingTopic,
   // eslint-disable-next-line no-shadow
   fetchAssignments,
   // eslint-disable-next-line no-shadow
@@ -66,10 +58,6 @@ const TopicArea = ({
   connectDropTarget,
 }) => {
   const handleChangeAssignmentStatus = ({ assignmentId, isPublished }) => {
-    console.log({
-      assignmentId,
-      isPublished
-    });
     changePublishStatusOfAssignment({ assignmentId, isPublished })
       .then(() => {
         fetchAssignments(classroomId);
@@ -78,21 +66,6 @@ const TopicArea = ({
 
   return connectDropTarget(
     <div className="class-view__assignments__topic">
-      <div className="class-view__assignments__topic__header-area">
-        <h3 className="class-view__assignments__topic__header-area__header">{name}</h3>
-        <IconButton
-          icon={<RenameIcon />}
-          style={{ marginLeft: 'auto' }}
-          onClick={() => {
-            setEditingTopic({
-              title: name,
-              id
-            });
-            toggleEditTopicModal();
-          }}
-        />
-        <IconButton icon={<TrashIcon />} />
-      </div>
       <div className="class-view__assignments__topic__assignments-table">
         <div className="class-view__assignments__topic__assignments-table__header">
           <div className="">NAME</div>
@@ -102,10 +75,9 @@ const TopicArea = ({
           <div className="">PUBLISHED</div>
         </div>
       </div>
-      {/* AssignmentCard here */}
       {
         assignments.map(assignment => (
-          assignment.topicId === id && (
+          assignment.topicId === null && (
             <AssignmentCard
               topicId={assignment.topicId}
               key={assignment.id}
@@ -125,7 +97,7 @@ const TopicArea = ({
   );
 };
 
-TopicArea.propTypes = {
+NoTopicAssignments.propTypes = {
   classroomId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
@@ -148,5 +120,5 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   changeTopicOfAssignment
 }, dispatch);
 
-const DroppableTargetArea = DropTarget([ItemTypes.ASSIGNMENT_CARD], topicTarget, collectDropTarget)(TopicArea);
+const DroppableTargetArea = DropTarget([ItemTypes.ASSIGNMENT_CARD], topicTarget, collectDropTarget)(NoTopicAssignments);
 export default connect(mapStateToProps, mapDispatchToProps)(DroppableTargetArea);

@@ -8,6 +8,7 @@
   font-family: $roboto;
   font-size: 14px;
   color: $black;
+  align-items: center;
 
   &__title{
     a{
@@ -19,25 +20,12 @@
   }
 
   &__options{
-    &__options-btn{
-      border: 0;
-      margin:0;
-      background: none;
-      cursor: pointer;
-      margin-left: auto;
-      height: 20px;
-      width: 25px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-sizing: border-box;
-  
-      span{
-        width: 4px;
-        height: 4px;
-        border-radius: 50%;
-        box-sizing: border-box;
-        background: $black;
+    .icon-button-dropdown{
+      &__icon{
+        svg{
+          height: unset;
+          width: unset;
+        }
       }
     }
   }
