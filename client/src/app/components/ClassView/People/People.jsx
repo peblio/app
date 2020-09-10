@@ -12,7 +12,7 @@ import StudentAssignmentCard from './StudentAssignmentCard/StudentAssignmentCard
 import TeacherCard from './TeacherCard/TeacherCard';
 
 // actions
-import { fetchAssignmentsByStudentsForTeacher } from '../../../action/classroom';
+import { fetchAssignmentsByStudentsForTeacher, clearAssignmentPeople } from '../../../action/classroom';
 
 import './people.scss';
 
@@ -24,6 +24,10 @@ const People = (props) => {
   useEffect(() => {
     setTeachers(props.members.filter(member => member.role === 'teacher'));
     setStudents(props.members.filter(member => member.role === 'student'));
+
+    return () => {
+      props.clearAssignmentPeople();
+    };
   }, []);
 
   // const sortByNameAZ = () => {
@@ -140,7 +144,8 @@ People.propTypes = {
   assignmentsPeople: PropTypes.shape({
     allClassroomAssignmentsAttemptedByStudent: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     allClassroomAssignmentsInClassroom: PropTypes.arrayOf(PropTypes.shape({})).isRequired
-  }).isRequired
+  }).isRequired,
+  clearAssignmentPeople: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -151,6 +156,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchAssignmentsByStudentsForTeacher,
+  clearAssignmentPeople,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(People);

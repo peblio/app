@@ -1,0 +1,50 @@
+@import 'variables.scss';
+
+.assignment-card-student{
+  width: 816px;
+  height: 177;
+  box-shadow: 0 3.6px 3.6px 0 rgba(0, 0, 0, 0.15);
+  background-color: #fefefe;
+  margin-bottom: 33px;
+  display: flex;
+  padding: 0;
+
+  &__image-area{
+    background: url('http://placekitten.com/300/200');
+    background-size: cover;
+    width: 278px;
+    height: 100%;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    &::after{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 21, 30, 0.15);
+    }
+  }
+
+  &__details{
+    flex: 1;
+    padding: 13px;
+    padding-left: 16px;
+
+    &__title-area{
+      display: flex;
+      align-items: center;
+
+      &__title{
+        margin-right: auto;
+        color: $black;
+        font-family: $roboto;
+        font-weight: 500;
+      }
+    }
+  }
+}

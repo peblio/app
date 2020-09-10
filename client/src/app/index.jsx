@@ -78,6 +78,10 @@ const LazyLoadedClassView = lazy(() => (
   import('./components/ClassView/ClassView.jsx')
 ));
 
+const LazyLoadedClassViewStudent = lazy(() => (
+  import('./components/ClassViewStudent/ClassViewStudent.jsx')
+));
+
 const LazyLoadedAssignmentPage = lazy(() => (
   import('./components/AssignmentPage/AssignmentPage.jsx')
 ));
@@ -105,6 +109,7 @@ class Main extends React.Component {
               <Route path="/classroom" component={withTracker(LazyLoadedClassRoom)} exact />
               <Route path="/classroom/assignment/:assignmentId" component={withTracker(LazyLoadedAssignmentPage)} />
               <Route path="/classroom/teacher/:classId" component={withTracker(LazyLoadedClassView)} />
+              <Route path="/classroom/student/:classId" component={withTracker(LazyLoadedClassViewStudent)} />
               <Route path="/documents/:userName/folder/:folderShortId" component={withTracker(LazyLoadedDocuments)} />
               <Route path="/documents" component={withTracker(LazyLoadedDocuments)} />
               <Route path="/trash" component={withTracker(LazyLoadedTrash)} />

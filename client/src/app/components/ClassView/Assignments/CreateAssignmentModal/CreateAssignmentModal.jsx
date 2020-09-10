@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import Modal from '../../../Modal/Modal';
 import InputField from '../../../InputField/InputField';
 import Dropdown from '../../../Dropdown/Dropdown';
+import DropdownMultiselect from '../../../DropdownMultiselect/DropdownMultiselect';
 import TextareaField from '../../../TextareaField/TextareaField';
 import IconButton from '../../../IconButton/IconButton';
 import Button from '../../../Button/Button';
@@ -25,8 +26,13 @@ import {
   toggleCreateAssignmentModal,
   createAssignment,
   fetchClassrooms,
-  fetchTopics
+  setSubmittinData,
+  fetchAssignments,
 } from '../../../../action/classroom';
+
+import {
+  createPage
+} from '../../../../action/page';
 
 import './createAssignmentModal.scss';
 
@@ -43,10 +49,10 @@ const CreateAssignmentModal = ({
   topics,
   userId,
   // eslint-disable-next-line no-shadow
-  fetchTopics
+  setSubmittinData
 }) => {
   // form states
-  const [classState, setClassState] = useState('');
+  const [classState, setClassState] = useState([classroomId]);
   const [topic, setTopic] = useState('');
   const [date, setDate] = useState();
   const [assignmentTitle, setAssignmentTitle] = useState('');
@@ -63,30 +69,43 @@ const CreateAssignmentModal = ({
   const [linkType, setLinkType] = useState(-1);
 
   const handleSubmit = (publish) => {
-    let assignmentData = {
-      user: userId,
-      classroomId: classState,
-      title: assignmentTitle,
-      dueDate: date,
-      description: instruction,
-      isPublished: publish,
-      type: resourceType ? 'material' : 'assignment',
-      topicId: topic || null
-    };
-    if (addLink) {
-      if (linkTriggeredBy === 'pebl') {
-        assignmentData = {
-          ...assignmentData,
-          peblUrls: addLink
+    setSubmittinData(true);
+    Promise.all(
+      classState.map((classId) => {
+        let assignmentData = {
+          user: userId,
+          classroomId: classId,
+          title: assignmentTitle,
+          dueDate: date,
+          description: instruction,
+          isPublished: publish,
+          type: resourceType ? 'material' : 'assignment',
+          topicId: classId === classroomId ? topic || null : null
         };
-      } else {
-        assignmentData = {
-          ...assignmentData,
-          url: addLink
-        };
-      }
-    }
-    createAssignment(assignmentData);
+        if (addLink) {
+          if (linkTriggeredBy === 'pebl') {
+            assignmentData = {
+              ...assignmentData,
+              peblUrls: addLink
+            };
+          } else {
+            assignmentData = {
+              ...assignmentData,
+              url: addLink
+            };
+          }
+        }
+        return createAssignment(assignmentData);
+      })
+    ).then((data) => {
+      console.log(data);
+      setSubmittinData(false);
+      toggleCreateAssignmentModal();
+      fetchAssignments(classroomId);
+    })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const linkInputClickOutside = (e) => {
@@ -113,12 +132,6 @@ const CreateAssignmentModal = ({
     };
   }, []);
 
-  useEffect(() => {
-    if (classState) {
-      fetchTopics(classState);
-    }
-  }, [classState]);
-
   return (
     <Modal
       header={(
@@ -141,11 +154,11 @@ const CreateAssignmentModal = ({
       </div>
       <form action="">
         <div className="create-assignment-modal__row">
-          <Dropdown
+          <DropdownMultiselect
             placeholder="*Select Class"
             style={{ width: '149px', marginTop: '26px', marginRight: '40px' }}
-            state={classState}
-            setState={setClassState}
+            selected={classState}
+            setSelected={setClassState}
             options={
               classrooms ? classrooms.map(classroom => ({
                 name: classroom.name,
@@ -336,7 +349,7 @@ const CreateAssignmentModal = ({
 CreateAssignmentModal.propTypes = {
   toggleCreateAssignmentModal: PropTypes.func.isRequired,
   createAssignment: PropTypes.func.isRequired,
-  fetchTopics: PropTypes.func.isRequired,
+  setSubmittinData: PropTypes.func.isRequired,
   topics: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired
@@ -359,7 +372,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   toggleCreateAssignmentModal,
   createAssignment,
   fetchClassrooms,
-  fetchTopics,
+  setSubmittinData,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateAssignmentModal);

@@ -7,6 +7,9 @@ import { NavLink } from 'react-router-dom';
 
 import ToggleButton from '../../../ToggleButton/ToggleButton';
 import LessonListCard from '../../../LessonListCard/LessonListCard';
+import IconButtonDropdown from '../../../IconButtonDropdown/IconButtonDropdown';
+
+import OptionsIcon from '../../../../images/options.svg';
 
 import './assignmentCard.scss';
 
@@ -75,11 +78,22 @@ const AssignmentCard = (props) => {
             />
           </div>
           <div className="assignment-card__options">
-            <button className="assignment-card__options__options-btn">
-              <span></span>
-              <span></span>
-              <span></span>
-            </button>
+            <IconButtonDropdown
+              icon={<OptionsIcon />}
+              optionsPosition="right"
+              options={[
+                {
+                  name: 'Edit',
+                  onClick: () => { console.log('Edit'); }
+                }, {
+                  name: 'Rename',
+                  onClick: () => { console.log('Rename'); }
+                }, {
+                  name: 'Delete',
+                  onClick: () => { console.log('Delete'); }
+                }
+              ]}
+            />
           </div>
         </div>
       </LessonListCard>
