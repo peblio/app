@@ -1,3 +1,4 @@
+import shortid from 'shortid';
 import * as ActionTypes from '../constants/reduxConstants';
 import axios from '../utils/axios';
 import history from '../utils/history';
@@ -184,6 +185,13 @@ export const createClassroomTopic = topicData => (dispatch) => {
       dispatch({
         type: ActionTypes.TOGGLE_CREATE_TOPIC_MODAL,
       });
+      return axios.get(`/learning/classroomTopic/${data.classroomId}`);
+    })
+    .then(({ data }) => {
+      dispatch({
+        type: ActionTypes.SET_TOPICS,
+        topics: data
+      });
     })
     .catch((err) => {
       // [TODO]: Add dispatch to show toast notification
@@ -193,6 +201,25 @@ export const createClassroomTopic = topicData => (dispatch) => {
       });
       console.log(err);
     });
+};
+
+export const createPeblForAssignment = title => (dispatch) => {
+  const id = shortid.generate();
+  const data = {
+    title,
+    id
+  };
+  const reqPromise = () => new Promise((resolve, reject) => {
+    axios.post('/pages/save', data)
+      .then(() => {
+        resolve(id);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
+  });
+  return reqPromise();
 };
 // Classroom end
 
@@ -247,10 +274,6 @@ export const fetchTopics = classroomId => (dispatch) => {
     });
 };
 
-export const deleteTopic = topicId => (dispatch) => {
-  console.log('delete', topicId);
-};
-
 export const changeTopicOfAssignment = data => (dispatch) => {
   const reqPromise = () => new Promise((resolve, reject) => {
     axios.patch('/learning/classroomAssignment/reassignTopic', data)
@@ -263,6 +286,41 @@ export const changeTopicOfAssignment = data => (dispatch) => {
       });
   });
   return reqPromise();
+};
+
+export const deleteTopic = ({ topicId, assignments }) => (dispatch) => {
+  Promise.all(
+    assignments.map(
+      // delinking all the assignments from the topic
+      assignment => axios.patch(
+        '/learning/classroomAssignment/reassignTopic',
+        {
+          assignmentId: assignment.id
+        }
+      )
+    )
+  )
+    // deleting after all the assignments are successfully delinked
+    .then(() => axios.delete(`/learning/classroomTopic/${topicId}`))
+    // refrest topics
+    .then(() => axios.get(`/learning/classroomTopic/${assignments[0].classroomId}`))
+    .then(({ data }) => {
+      dispatch({
+        type: ActionTypes.SET_TOPICS,
+        topics: data
+      });
+      // refresh assignments
+      return axios.get(`/learning/classroomAllAssignments/${assignments[0].classroomId}`);
+    })
+    .then(({ data }) => {
+      dispatch({
+        type: ActionTypes.SET_ASSIGNMENTS,
+        assignments: data
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 // Topic end
 

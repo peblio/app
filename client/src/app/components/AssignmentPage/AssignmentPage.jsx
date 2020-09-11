@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import DatePickerField from '../DatePickerField/DatePickerField';
 import DashboardView from '../DashboardBase/DashboardBase';
 import Loader from '../GenericLoader/LoadingMessage';
+import InputField from '../InputField/InputField';
 import RightCrumbIcon from '../../images/right.svg';
 
 import { fetchCurrentClassroomDetails, fetchCurrentAssignmentDetails } from '../../action/classroom';
@@ -13,7 +14,7 @@ import { fetchCurrentClassroomDetails, fetchCurrentAssignmentDetails } from '../
 import './assignmentPage.scss';
 
 const AssignmentPage = (props) => {
-  const [dueDate, setDueDate] = useState(new Date());
+  const [dueDate, setDueDate] = useState(Date.now());
 
   useEffect(() => {
     props.fetchCurrentAssignmentDetails(props.match.params.assignmentId);
@@ -45,6 +46,28 @@ const AssignmentPage = (props) => {
                 calendarPosition="right"
                 state={dueDate}
               />
+            </div>
+            <div className="assignment-page__container">
+              <div className="assignment-page__container__students">
+                {
+                  [...Array(50).keys()].map(() => (
+                    <div className="assignment-page__container__students__student">
+                      <div className="assignment-page__container__students__student__name">
+                        John Doe
+                      </div>
+                      <div className="assignment-page__container__students__student__marks">
+                        <InputField containerWidth="53px" style={{ marginRight: '8px' }} />
+                        <span>
+                          /100
+                        </span>
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
+              <div className="assignment-page__container__pebl">
+
+              </div>
             </div>
           </main>
 

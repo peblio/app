@@ -76,8 +76,8 @@ const NoTopicAssignments = ({
         </div>
       </div>
       {
-        assignments.map(assignment => (
-          assignment.topicId === null && (
+        assignments.length !== 0
+          ? (assignments.map(assignment => (
             <AssignmentCard
               topicId={assignment.topicId}
               key={assignment.id}
@@ -90,8 +90,12 @@ const NoTopicAssignments = ({
               isPublished={assignment.isPublished}
               handleChangeAssignmentStatus={handleChangeAssignmentStatus}
             />
+          )))
+          : (
+            <p className="class-view__assignments__topic__assignments-table__no-assignments">
+              The assignments that are not associated with topics will be shown here
+            </p>
           )
-        ))
       }
     </div>
   );

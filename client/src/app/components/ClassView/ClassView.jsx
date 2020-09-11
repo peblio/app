@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import history from '../../utils/history';
 
 import DashboardView from '../DashboardBase/DashboardBase';
 import TabSwitcher from '../TabSwitcher/TabSwitcher';
@@ -16,8 +17,16 @@ import People from './People/People';
 // actions
 import { fetchCurrentClassroomDetails, clearCurrentClassroom } from '../../action/classroom';
 
-// eslint-disable-next-line no-shadow
-const ClassView = ({ match, fetchCurrentClassroomDetails, clearCurrentClassroom, currentClassroom, dataLoading }) => {
+const ClassView = ({
+  match,
+  // eslint-disable-next-line no-shadow
+  fetchCurrentClassroomDetails,
+  // eslint-disable-next-line no-shadow
+  clearCurrentClassroom,
+  currentClassroom,
+  dataLoading,
+  userId
+}) => {
   useEffect(() => {
     fetchCurrentClassroomDetails(match.params.classId);
 
@@ -26,6 +35,17 @@ const ClassView = ({ match, fetchCurrentClassroomDetails, clearCurrentClassroom,
     };
   }, []);
   const hiddenTextboxRef = useRef();
+
+  useEffect(() => {
+    if (currentClassroom.members) {
+      if (
+        currentClassroom.members.filter(member => member.user === userId)[0].role !==
+        'teacher'
+      ) {
+        history.push(`/classroom/student/${match.params.classId}`);
+      }
+    }
+  }, [currentClassroom]);
 
   const onCodeCopyClick = () => {
     hiddenTextboxRef.current.focus();
@@ -117,14 +137,17 @@ ClassView.propTypes = {
   clearCurrentClassroom: PropTypes.func.isRequired,
   currentClassroom: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    members: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }).isRequired,
-  dataLoading: PropTypes.bool.isRequired
+  dataLoading: PropTypes.bool.isRequired,
+  userId: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
   currentClassroom: state.classroom.currentClassroom,
-  dataLoading: state.classroom.dataLoading
+  dataLoading: state.classroom.dataLoading,
+  userId: state.user.id
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

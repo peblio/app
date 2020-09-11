@@ -16,7 +16,8 @@ import {
   fetchAssignments,
   toggleEditTopicModal,
   changePublishStatusOfAssignment,
-  changeTopicOfAssignment
+  changeTopicOfAssignment,
+  deleteTopic,
 } from '../../../../action/classroom';
 
 import './topicArea.scss';
@@ -62,8 +63,10 @@ const TopicArea = ({
   // eslint-disable-next-line no-shadow
   changePublishStatusOfAssignment,
   // eslint-disable-next-line no-shadow
-  changeTopicOfAssignment,
+  changeTopicOfAssignment, // used in dnd function [DO NOT REMOVE]
   connectDropTarget,
+  // eslint-disable-next-line no-shadow
+  deleteTopic,
 }) => {
   const handleChangeAssignmentStatus = ({ assignmentId, isPublished }) => {
     changePublishStatusOfAssignment({ assignmentId, isPublished })
@@ -87,7 +90,12 @@ const TopicArea = ({
             toggleEditTopicModal();
           }}
         />
-        <IconButton icon={<TrashIcon />} />
+        <IconButton
+          icon={<TrashIcon />}
+          onClick={() => {
+            deleteTopic({ topicId: id, assignments });
+          }}
+        />
       </div>
       <div className="class-view__assignments__topic__assignments-table">
         <div className="class-view__assignments__topic__assignments-table__header">
@@ -101,20 +109,18 @@ const TopicArea = ({
       {/* AssignmentCard here */}
       {
         assignments.map(assignment => (
-          assignment.topicId === id && (
-            <AssignmentCard
-              topicId={assignment.topicId}
-              key={assignment.id}
-              id={assignment.id}
-              title={assignment.title}
-              turnedIn="..."
-              dueDate={assignment.dueDate}
-              permission="view"
-              type={assignment.type}
-              isPublished={assignment.isPublished}
-              handleChangeAssignmentStatus={handleChangeAssignmentStatus}
-            />
-          )
+          <AssignmentCard
+            topicId={assignment.topicId}
+            key={assignment.id}
+            id={assignment.id}
+            title={assignment.title}
+            turnedIn="..."
+            dueDate={assignment.dueDate}
+            permission="view"
+            type={assignment.type}
+            isPublished={assignment.isPublished}
+            handleChangeAssignmentStatus={handleChangeAssignmentStatus}
+          />
         ))
       }
     </div>
@@ -130,7 +136,8 @@ TopicArea.propTypes = {
   toggleEditTopicModal: PropTypes.func.isRequired,
   changePublishStatusOfAssignment: PropTypes.func.isRequired,
   fetchAssignments: PropTypes.func.isRequired,
-  changeTopicOfAssignment: PropTypes.func.isRequired
+  changeTopicOfAssignment: PropTypes.func.isRequired,
+  deleteTopic: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -141,7 +148,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   toggleEditTopicModal,
   changePublishStatusOfAssignment,
   fetchAssignments,
-  changeTopicOfAssignment
+  changeTopicOfAssignment,
+  deleteTopic
 }, dispatch);
 
 const DroppableTargetArea = DropTarget([ItemTypes.ASSIGNMENT_CARD], topicTarget, collectDropTarget)(TopicArea);
