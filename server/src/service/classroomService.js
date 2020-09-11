@@ -276,6 +276,35 @@ export async function editClassroomTopicName(req, res) {
   }
 }
 
+export async function deleteClassroomTopic(req, res) {
+  try {
+    const classroomTopic = await ClassroomTopic.findById(req.params.id);
+    if (!classroomTopic) {
+      return res.status(404).send();
+    }
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: classroomTopic.classroomId
+    });
+    if(!classroomMember) {
+      return res.status(404).send();
+    }
+    if(classroomMember.role !== "teacher") {
+      return res.status(401).send();
+    }
+    const classroomAssignmentsWithTopic = await ClassroomAssignment.find({
+      topicId: req.params.id
+    });
+    if(classroomAssignmentsWithTopic.length > 0) {
+      return res.status(400).send();
+    }
+    await ClassroomTopic.deleteOne({ _id: req.params.id });
+    return res.status(200).send();
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
 export async function saveClassroomAssignment(req, res) {
   try {
     const classroom = await ClassroomDetail.findOne({id: req.body.classroomId});
