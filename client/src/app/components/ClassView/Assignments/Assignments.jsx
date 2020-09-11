@@ -95,7 +95,7 @@ const Assignments = ({
           />
         </div>
         <NoTopicAssignments
-          assignments={assignments}
+          assignments={assignments.filter(assignment => assignment.topicId === null)}
           classroomId={classroomId}
         />
         {
@@ -103,7 +103,7 @@ const Assignments = ({
             <TopicArea
               key={topic._id}
               id={topic._id}
-              assignments={assignments}
+              assignments={assignments.filter(assignment => assignment.topicId === topic._id)}
               setEditingTopic={setEditingTopic}
               classroomId={classroomId}
               name={topic.name}

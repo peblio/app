@@ -123,7 +123,7 @@ const People = (props) => {
                   )
                 )
               ) : (
-                <p className="class-view__people__section__student-details__assignments__no-header">
+                <p className="class-view__people__section__student-details__assignments__no-student">
                   Select a student to see their assignments here
                 </p>
               )

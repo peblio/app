@@ -28,11 +28,9 @@ import {
   fetchClassrooms,
   setSubmittinData,
   fetchAssignments,
+  createPeblForAssignment
 } from '../../../../action/classroom';
 
-import {
-  createPage
-} from '../../../../action/page';
 
 import './createAssignmentModal.scss';
 
@@ -43,13 +41,17 @@ const CreateAssignmentModal = ({
   createAssignment,
   // eslint-disable-next-line no-shadow
   fetchClassrooms,
+  // eslint-disable-next-line no-shadow
+  fetchAssignments,
   resourceType,
   classroomId,
   classrooms,
   topics,
   userId,
   // eslint-disable-next-line no-shadow
-  setSubmittinData
+  setSubmittinData,
+  // eslint-disable-next-line no-shadow
+  createPeblForAssignment,
 }) => {
   // form states
   const [classState, setClassState] = useState([classroomId]);
@@ -82,7 +84,7 @@ const CreateAssignmentModal = ({
           type: resourceType ? 'material' : 'assignment',
           topicId: classId === classroomId ? topic || null : null
         };
-        if (addLink) {
+        if (linkAdded) {
           if (linkTriggeredBy === 'pebl') {
             assignmentData = {
               ...assignmentData,
@@ -97,14 +99,16 @@ const CreateAssignmentModal = ({
         }
         return createAssignment(assignmentData);
       })
-    ).then((data) => {
-      console.log(data);
-      setSubmittinData(false);
-      toggleCreateAssignmentModal();
-      fetchAssignments(classroomId);
-    })
+    )
+      .then((data) => {
+        console.log(data);
+        setSubmittinData(false);
+        toggleCreateAssignmentModal();
+        fetchAssignments(classroomId);
+      })
       .catch((err) => {
         console.log(err);
+        setSubmittinData(false);
       });
   };
 
@@ -244,7 +248,12 @@ const CreateAssignmentModal = ({
             icon={<CreateNewIcon />}
             style={{ marginRight: '16px' }}
             onClick={() => {
-              console.log('Trigger create popup');
+              createPeblForAssignment(assignmentTitle)
+                .then((id) => {
+                  console.log(id);
+                  setLinkAdded(true);
+                  setLinkType(2);
+                });
             }}
           >
             Create new Pebl
@@ -358,7 +367,9 @@ CreateAssignmentModal.propTypes = {
   classroomId: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
   classrooms: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  fetchClassrooms: PropTypes.func.isRequired
+  fetchClassrooms: PropTypes.func.isRequired,
+  fetchAssignments: PropTypes.func.isRequired,
+  createPeblForAssignment: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -373,6 +384,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   createAssignment,
   fetchClassrooms,
   setSubmittinData,
+  createPeblForAssignment,
+  fetchAssignments
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateAssignmentModal);

@@ -34,5 +34,12 @@
       grid-template-columns: 25% 15% 15% 25% 15% 5% ;
       margin-bottom: 8px;
     }
+    &__no-assignments{
+      font-family: $roboto;
+      text-align: center;
+      color: $g3;
+      font-style: italic;
+      padding: 20px;
+    }
   }
 }

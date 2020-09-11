@@ -17,7 +17,8 @@ import './createTopicModal.scss';
 const CreateTopicModal = ({ toggleCreateTopicModal, createClassroomTopic, submittingData, classId }) => {
   const [topicTitle, setTopicTitle] = useState('');
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     const data = {
       classroomId: classId,
       name: topicTitle
@@ -30,31 +31,32 @@ const CreateTopicModal = ({ toggleCreateTopicModal, createClassroomTopic, submit
       header='Create Topic'
       modalClass='create-topic-modal'
     >
-      <h2 className="create-topic-modal__body__header">
-        Enter topic title
-      </h2>
-      <InputField
-        state={topicTitle}
-        onChange={(e) => { setTopicTitle(e.target.value); }}
-        placeholder='e.g. Unit 15'
-        containerWidth="100%"
-      />
-      <div className="create-topic-modal__buttons-container">
-        <Button
-          className='secondary'
-          style={{ marginRight: '16px' }}
-          onClick={() => { toggleCreateTopicModal(); }}
-        >
-          Cancel
-        </Button>
-        <Button
-          className='primary'
-          disabled={!topicTitle.trim() || submittingData}
-          onClick={onSubmit}
-        >
-          Create topic
-        </Button>
-      </div>
+      <form onSubmit={onSubmit}>
+        <h2 className="create-topic-modal__body__header">
+          Enter topic title
+        </h2>
+        <InputField
+          state={topicTitle}
+          onChange={(e) => { setTopicTitle(e.target.value); }}
+          placeholder='e.g. Unit 15'
+          containerWidth="100%"
+        />
+        <div className="create-topic-modal__buttons-container">
+          <Button
+            className='secondary'
+            style={{ marginRight: '16px' }}
+            onClick={() => { toggleCreateTopicModal(); }}
+          >
+            Cancel
+          </Button>
+          <Button
+            className='primary'
+            disabled={!topicTitle.trim() || submittingData}
+          >
+            Create topic
+          </Button>
+        </div>
+      </form>
     </Modal>
   );
 };
