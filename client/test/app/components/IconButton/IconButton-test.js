@@ -2,9 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
-import IconButton from '../../../../../src/app/components/IconButton/IconButton';
+import IconButton from '../../../../src/app/components/IconButton/IconButton';
 
-import FileSVG from '../../../../../src/app/images/file.svg';
+import FileSVG from '../../../../src/app/images/file.svg';
 
 describe('IconButton component', () => {
   it('Should render without errors', () => {

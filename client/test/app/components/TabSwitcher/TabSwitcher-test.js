@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 
-import TabSwitcher from '../../../../../src/app/components/TabSwitcher/TabSwitcher';
+import TabSwitcher from '../../../../src/app/components/TabSwitcher/TabSwitcher';
 
 describe('ToggleButton component', () => {
   let wrapper;

@@ -111,6 +111,7 @@ const TopicArea = ({
         assignments.map(assignment => (
           <AssignmentCard
             topicId={assignment.topicId}
+            classroomId={classroomId}
             key={assignment.id}
             id={assignment.id}
             title={assignment.title}

@@ -79,6 +79,7 @@ const NoTopicAssignments = ({
         assignments.length !== 0
           ? (assignments.map(assignment => (
             <AssignmentCard
+              classroomId={classroomId}
               topicId={assignment.topicId}
               key={assignment.id}
               id={assignment.id}

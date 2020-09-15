@@ -52,7 +52,7 @@ const AssignmentCard = (props) => {
       >
         <div className="assignment-card">
           <div className="assignment-card__title">
-            <NavLink to={`/classroom/assignment/${props.id}`}>
+            <NavLink to={`/classroom/${props.classroomId}/assignment/${props.id}`}>
               {props.title}
             </NavLink>
           </div>
@@ -109,7 +109,8 @@ AssignmentCard.propTypes = {
   title: PropTypes.string.isRequired,
   turnedIn: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  handleChangeAssignmentStatus: PropTypes.func.isRequired
+  handleChangeAssignmentStatus: PropTypes.func.isRequired,
+  classroomId: PropTypes.string.isRequired,
 };
 
 

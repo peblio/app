@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
-import ProgressBar from '../../../../../src/app/components/ProgressBar/ProgressBar';
+import ProgressBar from '../../../../src/app/components/ProgressBar/ProgressBar';
 
 describe('ProgressBar component', () => {
   it('Should render without any errors', () => {

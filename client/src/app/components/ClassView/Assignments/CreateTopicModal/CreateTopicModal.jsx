@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -25,6 +25,10 @@ const CreateTopicModal = ({ toggleCreateTopicModal, createClassroomTopic, submit
     };
     createClassroomTopic(data);
   };
+
+  useLayoutEffect(() => {
+    document.querySelector('.input-field__text-box').focus();
+  }, []);
 
   return (
     <Modal

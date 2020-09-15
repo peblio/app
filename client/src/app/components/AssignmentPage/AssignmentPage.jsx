@@ -7,25 +7,27 @@ import DatePickerField from '../DatePickerField/DatePickerField';
 import DashboardView from '../DashboardBase/DashboardBase';
 import Loader from '../GenericLoader/LoadingMessage';
 import InputField from '../InputField/InputField';
-import RightCrumbIcon from '../../images/right.svg';
+import Dropdown from '../Dropdown/Dropdown';
+import Button from '../Button/Button';
 
 import { fetchCurrentClassroomDetails, fetchCurrentAssignmentDetails } from '../../action/classroom';
 
+import RightCrumbIcon from '../../images/right.svg';
 import './assignmentPage.scss';
 
 const AssignmentPage = (props) => {
-  const [dueDate, setDueDate] = useState(Date.now());
+  const [dueDate, setDueDate] = useState();
 
   useEffect(() => {
+    props.fetchCurrentClassroomDetails(props.match.params.classroomId);
     props.fetchCurrentAssignmentDetails(props.match.params.assignmentId);
   }, []);
 
   useEffect(() => {
-    if (props.currentAssignment) {
-      props.fetchCurrentClassroomDetails(props.currentAssignment.classroomId);
+    if (props.currentAssignment.dueDate) {
       setDueDate(props.currentAssignment.dueDate);
     }
-  }, [props.currentAssignment.classroomId]);
+  }, [props.currentAssignment]);
 
   return (
     <DashboardView>
@@ -45,11 +47,63 @@ const AssignmentPage = (props) => {
                 containerWidth="171px"
                 calendarPosition="right"
                 state={dueDate}
+                setState={setDueDate}
               />
+            </div>
+            <div className="assignment-page__action-area">
+              <div className="assignment-page__action-area__dropdowns">
+                <Dropdown
+                  placeholder="A-Z"
+                  style={{
+                    width: '111px',
+                    marginRight: '100px'
+                  }}
+                  options={[
+                    {
+                      name: 'A-Z',
+                      value: 'A-Z',
+                      onClick: () => { console.log('A-Z'); }
+                    },
+                    {
+                      name: 'Z-A',
+                      value: 'Z-A',
+                      onClick: () => { console.log('Z-A'); }
+                    }
+                  ]}
+                />
+                <Dropdown
+                  placeholder="100 pt"
+                  style={{
+                    width: '111px'
+                  }}
+                  options={[
+                    {
+                      name: 'A-Z',
+                      value: 'A-Z',
+                      onClick: () => { console.log('A-Z'); }
+                    },
+                    {
+                      name: 'Z-A',
+                      value: 'Z-A',
+                      onClick: () => { console.log('Z-A'); }
+                    }
+                  ]}
+                />
+              </div>
+              <Button className="primary">Publish grades</Button>
+              <div className="assignment-page__action-area__turned-in">
+                <span>18</span>
+                {' '}
+                turned in /
+                {' '}
+                <span>25</span>
+                {' '}
+                asigned
+              </div>
             </div>
             <div className="assignment-page__container">
               <div className="assignment-page__container__students">
-                {
+                {/* {
                   [...Array(50).keys()].map(() => (
                     <div className="assignment-page__container__students__student">
                       <div className="assignment-page__container__students__student__name">
@@ -63,10 +117,37 @@ const AssignmentPage = (props) => {
                       </div>
                     </div>
                   ))
+                } */}
+                {
+                  props.currentClassroom.members &&
+                  props.currentClassroom.members.map(member => (
+                    member.role !== 'teacher' && (
+                      <div className="assignment-page__container__students__student">
+                        <div className="assignment-page__container__students__student__name">
+                          {member.userDetail.name}
+                        </div>
+                        <div className="assignment-page__container__students__student__marks">
+                          <InputField containerWidth="53px" style={{ marginRight: '8px' }} />
+                          <span>
+                            /100
+                          </span>
+                        </div>
+                      </div>
+                    )
+                  ))
                 }
               </div>
               <div className="assignment-page__container__pebl">
-
+                <div className="assignment-page__container__pebl__assignment">
+                  <iframe
+                    src={`/fullscreen/${'uPXlLzc1K'}`}
+                    title="title"
+                  />
+                </div>
+                <div className="assignment-page__container__pebl__comment">
+                  <InputField placeholder="type comment..." />
+                  <Button className="secondary">Send</Button>
+                </div>
               </div>
             </div>
           </main>
@@ -79,11 +160,15 @@ const AssignmentPage = (props) => {
 
 AssignmentPage.propTypes = {
   currentClassroom: PropTypes.shape({
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    members: PropTypes.arrayOf(PropTypes.shape({
+
+    }))
   }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
-      assignmentId: PropTypes.string
+      assignmentId: PropTypes.string,
+      classroomId: PropTypes.string
     })
   }).isRequired,
   fetchCurrentClassroomDetails: PropTypes.func.isRequired,

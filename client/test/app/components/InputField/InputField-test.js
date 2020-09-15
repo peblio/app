@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 
-import InputField from '../../../../../src/app/components/InputField/InputField';
+import InputField from '../../../../src/app/components/InputField/InputField';
 
 const InputFieldContainer = (props) => {
   const [value, setValue] = useState('');

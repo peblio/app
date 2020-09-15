@@ -86,6 +86,10 @@ const LazyLoadedAssignmentPage = lazy(() => (
   import('./components/AssignmentPage/AssignmentPage.jsx')
 ));
 
+const LazyLoadedFullScreen = lazy(() => (
+  import('./components/FullScreen/FullScreen')
+));
+
 class Main extends React.Component {
   render() {
     return (
@@ -107,13 +111,17 @@ class Main extends React.Component {
               />
               <Route path="/profile/:userName" component={withTracker(LazyLoadedPaymentProfile)} />
               <Route path="/classroom" component={withTracker(LazyLoadedClassRoom)} exact />
-              <Route path="/classroom/assignment/:assignmentId" component={withTracker(LazyLoadedAssignmentPage)} />
+              <Route
+                path="/classroom/:classroomId/assignment/:assignmentId"
+                component={withTracker(LazyLoadedAssignmentPage)}
+              />
               <Route path="/classroom/teacher/:classId" component={withTracker(LazyLoadedClassView)} />
               <Route path="/classroom/student/:classId" component={withTracker(LazyLoadedClassViewStudent)} />
               <Route path="/documents/:userName/folder/:folderShortId" component={withTracker(LazyLoadedDocuments)} />
               <Route path="/documents" component={withTracker(LazyLoadedDocuments)} />
               <Route path="/trash" component={withTracker(LazyLoadedTrash)} />
               <Route path="/account" component={withTracker(LazyLoadedAccount)} />
+              <Route path="/fullscreen/:id" component={withTracker(LazyLoadedFullScreen)} />
               <Route path="*" component={withTracker(LazyLoadedPage404)} />
             </Switch>
           </Suspense>

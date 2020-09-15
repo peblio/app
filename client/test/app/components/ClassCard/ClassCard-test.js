@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
-import ClassCard from '../../../../../src/app/components/ClassCard/ClassCard';
+import ClassCard from '../../../../src/app/components/ClassCard/ClassCard';
 
 describe('ClassCard component', () => {
   it('Should render without errors and render all props accordingly', () => {
@@ -34,6 +34,6 @@ describe('ClassCard component', () => {
     expect(classSubject.text()).to.equal('Subject');
 
     const cardFooter = wrapper.find('.class-card__main__card-footer');
-    expect(cardFooter.text()).to.equal('6th GRADE20 STUDENTS');
+    expect(cardFooter.text()).to.equal('6th SECTION20 STUDENTS');
   });
 });

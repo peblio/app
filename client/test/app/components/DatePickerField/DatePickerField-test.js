@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 
-import DatePickerField from '../../../../../src/app/components/DatePickerField/DatePickerField';
+import DatePickerField from '../../../../src/app/components/DatePickerField/DatePickerField';
 
 // const DatePickerFieldContainer = (props) => {
 //   const [value, setValue] = useState('');
@@ -39,7 +39,7 @@ import DatePickerField from '../../../../../src/app/components/DatePickerField/D
 
 
 const DatePickerFieldContainer = (props) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState();
   return (
     <DatePickerField
       state={value}

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
-import LessonListCard from '../../../../../src/app/components/LessonListCard/LessonListCard';
+import LessonListCard from '../../../../src/app/components/LessonListCard/LessonListCard';
 
 describe('LessonListCard component', () => {
   it('Should render without errors', () => {
