@@ -24,7 +24,6 @@
     
     #{$root}__header-area{
       display: flex;
-      align-items: center;
       color: $black;
 
       &__bread-crumbs{
@@ -33,15 +32,20 @@
         margin-right: auto;
         display: flex;
         align-items: center;
+        a{
+          color: $black;
+          text-decoration: none;
+        }
       }
 
       &__class-code{
         display: flex;
         font-weight: $heavy-font-weight;
+        align-items: center;
         input{
           border: none;
           background: none;
-          width: 75px;
+          width: 80px;
           margin: 0 4px;
           cursor: pointer;
           font-family: $roboto;

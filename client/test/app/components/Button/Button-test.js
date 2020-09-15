@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
-import Button from '../../../../../src/app/components/Button/Button';
+import Button from '../../../../src/app/components/Button/Button';
 
 describe('Button component', () => {
   it('Should render without errors', () => {

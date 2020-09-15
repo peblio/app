@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { NavLink } from 'react-router-dom';
 import history from '../../utils/history';
 
 import DashboardView from '../DashboardBase/DashboardBase';
@@ -68,7 +69,7 @@ const ClassView = ({
             <main className="class-view__main">
               <div className="class-view__header-area">
                 <div className="class-view__header-area__bread-crumbs">
-                  <span>My Classes</span>
+                  <NavLink to="/classroom">My Classes</NavLink>
                   <RightCrumbIcon />
                   <span>{currentClassroom && currentClassroom.name}</span>
                 </div>

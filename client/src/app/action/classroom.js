@@ -170,6 +170,28 @@ export const clearCurrentClassroom = () => (dispatch) => {
   });
 };
 
+export const createPeblForAssignment = title => (dispatch) => {
+  const id = shortid.generate();
+  const data = {
+    title,
+    id
+  };
+  const reqPromise = () => new Promise((resolve, reject) => {
+    axios.post('/pages/save', data)
+      .then(() => {
+        resolve(id);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
+  });
+  return reqPromise();
+};
+// Classroom end
+
+// Topic start
+
 export const createClassroomTopic = topicData => (dispatch) => {
   dispatch({
     type: ActionTypes.SET_SUBMITTING_DATA,
@@ -203,27 +225,6 @@ export const createClassroomTopic = topicData => (dispatch) => {
     });
 };
 
-export const createPeblForAssignment = title => (dispatch) => {
-  const id = shortid.generate();
-  const data = {
-    title,
-    id
-  };
-  const reqPromise = () => new Promise((resolve, reject) => {
-    axios.post('/pages/save', data)
-      .then(() => {
-        resolve(id);
-      })
-      .catch((err) => {
-        console.log(err);
-        reject(err);
-      });
-  });
-  return reqPromise();
-};
-// Classroom end
-
-// Topic start
 export const editClassroomTopic = ({ topicData, classroomId }) => (dispatch) => {
   dispatch({
     type: ActionTypes.SET_SUBMITTING_DATA,
@@ -401,5 +402,29 @@ export const changePublishStatusOfAssignment = assignment => (dispatch) => {
       });
   });
   return reqPromise();
+};
+
+export const studentAttemptAssignment = assignmentId => (dispatch) => {
+  axios.get(`/learning/classroomAssignment/${assignmentId}`)
+    .then(({ data }) => {
+
+    });
+  /**
+    axios.get(`/pages/${id}`)
+      .then((res) => {
+        const pebl = res.data[0];
+        const id = shortid.generate();
+        const data = {
+          id,
+          title: `${pebl.title}-Copy`,
+          heading: pebl.heading,
+          description: pebl.description,
+          editors: pebl.editors,
+          editorIndex: pebl.editorIndex,
+          layout: pebl.layout,
+          tags: pebl.tags,
+          snapshotPath: pebl.snapshotPath
+        };
+   */
 };
 // Assignments end

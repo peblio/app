@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 
-import TextareaField from '../../../../../src/app/components/TextareaField/TextareaField';
+import TextareaField from '../../../../src/app/components/TextareaField/TextareaField';
 
 const TextareaFieldContainer = (props) => {
   const [value, setValue] = useState('');
@@ -60,7 +60,6 @@ describe('TextareaField component', () => {
     );
     const textarea = wrapper.find('.textarea-field__text-box');
     textarea.simulate('change', { target: { value: 'Testing' } });
-    console.log(wrapper.find('TextareaField').debug());
     const { state } = wrapper.find('TextareaField').props();
     expect(state).to.equal('Testing');
   });

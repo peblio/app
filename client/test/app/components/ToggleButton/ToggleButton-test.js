@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 
-import ToggleButton from '../../../../../src/app/components/ToggleButton/ToggleButton';
+import ToggleButton from '../../../../src/app/components/ToggleButton/ToggleButton';
 
 const ToggleButtonWrapper = () => {
   const [state, setState] = useState(false);

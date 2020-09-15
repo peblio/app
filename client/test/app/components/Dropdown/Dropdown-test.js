@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 
-import Dropdown from '../../../../../src/app/components/Dropdown/Dropdown';
+import Dropdown from '../../../../src/app/components/Dropdown/Dropdown';
 
 const DropdownContainer = () => {
   const [value, setValue] = useState('');
@@ -67,15 +67,7 @@ describe('Dropdown component', () => {
     expect(wrapper.find('.dropdown__options')).to.have.lengthOf(0);
   });
 
-  it('Should render options after being clicked and should close again on clicking', () => {
-    const trigger = wrapper.find('.dropdown__trigger');
-    trigger.simulate('click');
-    expect(wrapper.find('.dropdown__options')).to.have.lengthOf(1);
-    trigger.simulate('click');
-    expect(wrapper.find('.dropdown__options')).to.have.lengthOf(0);
-  });
-
-  it('Should change the value on click and render its name as selected and close the options', async () => {
+  it('Should change the value on click and render its name as selected and close the options', (done) => {
     // click to show options
     const trigger = wrapper.find('.dropdown__trigger');
     trigger.simulate('click');
@@ -89,12 +81,14 @@ describe('Dropdown component', () => {
     firstOption.simulate('click');
     console.log(firstOption.debug());
     // console.log(wrapper.debug());
-    setImmediate(async () => {
+    setImmediate(() => {
       try {
         expect(trigger.find('span').text()).to.equal(getProps().options[options.length - 1].name);
         expect(getProps().state).to.equal(getProps().options[options.length - 1].value);
       } catch (err) {
         console.log(err);
+      } finally {
+        done();
       }
     });
   });

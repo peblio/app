@@ -455,3 +455,13 @@ export function resetImageCrop(id) {
     });
   };
 }
+
+export function loadEditors(editors, editorIndex) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_DB_EDITORS,
+      editors,
+      editorIndex
+    });
+  };
+}
