@@ -8,12 +8,12 @@ classroomRoutes.route('/classroomDetail').patch(classroomController.joinClassroo
 classroomRoutes.route('/classroomDetail/addMember/:id').patch(classroomController.addMemberToClassroom);
 classroomRoutes.route('/classroomDetail/:id').get(classroomController.getClassroomDetail);
 
-classroomRoutes.route('/classroomAssignmentAttempt/:id').get(classroomController.getClassroomStudentAttemptForAssignment);
-classroomRoutes.route('/classroomAssignmentAllAttempts/:id').get(classroomController.getClassroomAllAttemptsForAssignment);
 classroomRoutes.route('/classroomAssignmentAttempt').post(classroomController.saveClassroomAssignmentStudentAttempt);
 classroomRoutes.route('/classroomAssignmentAttempt/addComment').patch(classroomController.addCommentOnClassroomAssignmentAttempt);
 classroomRoutes.route('/classroomAssignmentAttempt/gradeAssignment').patch(classroomController.gradeClassroomAssignmentAttempt);
 classroomRoutes.route('/classroomAssignmentAttempt/:id').patch(classroomController.turnInClassroomAssignmentAttempt);
+classroomRoutes.route('/classroomAssignmentAttempt/:id').get(classroomController.getClassroomStudentAttemptForAssignment);
+classroomRoutes.route('/classroomAssignmentAllAttempts/:id').get(classroomController.getClassroomAllAttemptsForAssignment);
 
 classroomRoutes.route('/classroomTopic/:id').get(classroomController.getClassroomTopics);
 classroomRoutes.route('/classroomTopic').post(classroomController.saveClassroomTopic);
@@ -29,5 +29,4 @@ classroomRoutes.route('/classroomAllAssignments/:id').get(classroomController.ge
 classroomRoutes.route('/classroomAllAssignmentsForStudent/:id').get(classroomController.getAllAssignmentsInClassroomForStudent);
 classroomRoutes.route('/classroomAllAssignmentsByStudentForTeacher/:id').get(classroomController.getAllAssignmentsInClassroomByStudentForTeacher);
 
-classroomRoutes.route('/classroomAllAttemptsForAssignment/:id').get(classroomController.getAllStudentAttemptsForAssignment);
 module.exports = classroomRoutes;
