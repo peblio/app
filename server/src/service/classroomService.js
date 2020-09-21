@@ -41,7 +41,7 @@ export async function getClassroomStudentAttemptForAssignment(req, res) {
   try {
     const myAttemptForAssignment = await ClassroomStudentAssignmentAttempt
     .findOne({assignmentId: req.params.id, user: req.user._id.toString() })
-    .populate('comments.fromUser', 'name');
+    .populate('comments.fromMember', 'firstName lastName');
 
     const classroomAssignment = await ClassroomAssignment.findOne({id: myAttemptForAssignment.assignmentId});
     if(!myAttemptForAssignment) {
@@ -182,7 +182,7 @@ export async function addCommentOnClassroomAssignmentAttempt(req, res) {
       return res.status(401).send();
     }
     classroomAssignmentAttempt.comments.push({ 
-      fromUser: req.user._id.toString(),
+      fromMember: classroomMember._id.toString(),
       text: req.body.text,
     })
     await classroomAssignmentAttempt.save();
