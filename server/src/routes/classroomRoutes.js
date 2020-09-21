@@ -11,9 +11,9 @@ classroomRoutes.route('/classroomDetail/:id').get(classroomController.getClassro
 classroomRoutes.route('/classroomAssignmentAttempt/:id').get(classroomController.getClassroomStudentAttemptForAssignment);
 classroomRoutes.route('/classroomAssignmentAllAttempts/:id').get(classroomController.getClassroomAllAttemptsForAssignment);
 classroomRoutes.route('/classroomAssignmentAttempt').post(classroomController.saveClassroomAssignmentStudentAttempt);
-classroomRoutes.route('/classroomAssignmentAttempt/:id').patch(classroomController.turnInClassroomAssignmentAttempt);
 classroomRoutes.route('/classroomAssignmentAttempt/addComment').patch(classroomController.addCommentOnClassroomAssignmentAttempt);
 classroomRoutes.route('/classroomAssignmentAttempt/gradeAssignment').patch(classroomController.gradeClassroomAssignmentAttempt);
+classroomRoutes.route('/classroomAssignmentAttempt/:id').patch(classroomController.turnInClassroomAssignmentAttempt);
 
 classroomRoutes.route('/classroomTopic/:id').get(classroomController.getClassroomTopics);
 classroomRoutes.route('/classroomTopic').post(classroomController.saveClassroomTopic);

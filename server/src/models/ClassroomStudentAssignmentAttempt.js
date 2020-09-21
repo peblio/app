@@ -12,7 +12,7 @@ const classroomStudentAssignmentAttemptSchema = new Schema({
     turnedInTime: { type: Date },
     marksScored: { type: Number },
     comments: [{
-      fromUser: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+      fromMember: { type: Schema.Types.ObjectId, ref: 'ClassroomMember', required: true },
       text: { type: String, required: true },
       time: { type: Date, default: Date.now, required: true },
       }]
