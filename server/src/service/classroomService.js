@@ -624,7 +624,7 @@ async function populateClassRoomStudentMemberListCount(myClassroom){
 }
 
 async function populateMyMembershipInClassroomDetail(myClassroom, classroomMemberShipList){
-  myClassroom.mymembership = classroomMemberShipList.filter(classroomMemberShip => classroomMemberShip.classroomId === myClassroom.id).pop();
+  myClassroom.myMemberShipDetail = classroomMemberShipList.filter(classroomMemberShip => classroomMemberShip.classroomId === myClassroom.id).pop();
   return myClassroom
 }
 
