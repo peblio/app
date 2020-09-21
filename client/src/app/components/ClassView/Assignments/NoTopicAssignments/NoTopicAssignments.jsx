@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { DropTarget } from 'react-dnd';
 
 import AssignmentCard from '../AssignmentCard/AssignmentCard';
+import InfoBubble from '../../../InfoBubble/InfoBubble';
 
 // actions
 import {
@@ -43,18 +44,14 @@ function collectDropTarget(_connect, monitor) {
 }
 
 const NoTopicAssignments = ({
-  name,
-  id,
   assignments,
   classroomId,
   // eslint-disable-next-line no-shadow
   fetchAssignments,
   // eslint-disable-next-line no-shadow
-  toggleEditTopicModal,
-  // eslint-disable-next-line no-shadow
   changePublishStatusOfAssignment,
   // eslint-disable-next-line no-shadow
-  changeTopicOfAssignment,
+  changeTopicOfAssignment, // used in dnd
   connectDropTarget,
 }) => {
   const handleChangeAssignmentStatus = ({ assignmentId, isPublished }) => {
@@ -69,9 +66,26 @@ const NoTopicAssignments = ({
       <div className="class-view__assignments__topic__assignments-table">
         <div className="class-view__assignments__topic__assignments-table__header">
           <div className="">NAME</div>
-          <div className="">TURNED IN</div>
           <div className="">DUE</div>
-          <div className="">PERMISSION</div>
+          <div className="class-view__assignments__topic__assignments-table__header__type">
+            TYPE
+            <InfoBubble>
+              <div className="">
+                <div>
+                  <span>Assignments</span>
+                  {' '}
+                  will create a copy for each student. Any chages made to the original after the students opens
+                  the assignment will not be viewed.
+                </div>
+                <br />
+                <div>
+                  <span>Resources</span>
+                  {' '}
+                  will share the original link with your students. Copies will not be made and updates will be viewed.
+                </div>
+              </div>
+            </InfoBubble>
+          </div>
           <div className="">PUBLISHED</div>
         </div>
       </div>
@@ -84,7 +98,6 @@ const NoTopicAssignments = ({
               key={assignment.id}
               id={assignment.id}
               title={assignment.title}
-              turnedIn="..."
               dueDate={assignment.dueDate}
               permission="view"
               type={assignment.type}
@@ -104,10 +117,7 @@ const NoTopicAssignments = ({
 
 NoTopicAssignments.propTypes = {
   classroomId: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
   assignments: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  setEditingTopic: PropTypes.func.isRequired,
   toggleEditTopicModal: PropTypes.func.isRequired,
   changePublishStatusOfAssignment: PropTypes.func.isRequired,
   fetchAssignments: PropTypes.func.isRequired,

@@ -7,7 +7,7 @@ import { createClassroom, toggleCreateClassroomModal } from '../../../../action/
 
 import Modal from '../../../Modal/Modal';
 import InputField from '../../../InputField/InputField';
-import Dropdown from '../../../Dropdown/Dropdown';
+// import Dropdown from '../../../Dropdown/Dropdown';
 import TextareaField from '../../../TextareaField/TextareaField';
 import Button from '../../../Button/Button';
 
@@ -100,7 +100,7 @@ export const CreateClassroomModal = ({
             state={room}
             onChange={(e) => { setRoom(e.target.value); }}
             label="Room"
-            placeholder="enter subject"
+            placeholder="enter room"
             containerWidth="199px"
             style={{ marginRight: '30px' }}
           />

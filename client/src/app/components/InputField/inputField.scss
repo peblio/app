@@ -21,8 +21,10 @@
     box-sizing: border-box;
     transition: border 300ms ease;
 
-    &:hover, &:focus{
-      border: solid 1px $b1;
+    &:enabled {
+      &:hover, &:focus{
+        border: solid 1px $b1;
+      }
     }
 
     &:focus{

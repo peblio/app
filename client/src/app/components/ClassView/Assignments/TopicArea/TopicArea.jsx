@@ -10,6 +10,8 @@ import RenameIcon from '../../../../images/rename.svg';
 import TrashIcon from '../../../../images/trash.svg';
 
 import IconButton from '../../../IconButton/IconButton';
+import InfoBubble from '../../../InfoBubble/InfoBubble';
+
 
 // actions
 import {
@@ -100,9 +102,26 @@ const TopicArea = ({
       <div className="class-view__assignments__topic__assignments-table">
         <div className="class-view__assignments__topic__assignments-table__header">
           <div className="">NAME</div>
-          <div className="">TURNED IN</div>
           <div className="">DUE</div>
-          <div className="">PERMISSION</div>
+          <div className="class-view__assignments__topic__assignments-table__header__type">
+            TYPE
+            <InfoBubble>
+              <div className="">
+                <div>
+                  <span>Assignments</span>
+                  {' '}
+                  will create a copy for each student. Any chages made to the original after the students opens the
+                  assignment will not be viewed.
+                </div>
+                <br />
+                <div>
+                  <span>Resources</span>
+                  {' '}
+                  will share the original link with your students. Copies will not be made and updates will be viewed.
+                </div>
+              </div>
+            </InfoBubble>
+          </div>
           <div className="">PUBLISHED</div>
         </div>
       </div>
@@ -115,7 +134,6 @@ const TopicArea = ({
             key={assignment.id}
             id={assignment.id}
             title={assignment.title}
-            turnedIn="..."
             dueDate={assignment.dueDate}
             permission="view"
             type={assignment.type}

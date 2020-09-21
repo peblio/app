@@ -77,7 +77,7 @@ const ClassView = ({
                   Class code :
                   {' '}
                   <input
-                    value={currentClassroom && currentClassroom.id}
+                    value={match.params.classId}
                     onChange={() => {}}
                     ref={hiddenTextboxRef}
                     onFocus={onCodeCopyClick}
@@ -137,9 +137,8 @@ ClassView.propTypes = {
   fetchCurrentClassroomDetails: PropTypes.func.isRequired,
   clearCurrentClassroom: PropTypes.func.isRequired,
   currentClassroom: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    members: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    name: PropTypes.string,
+    members: PropTypes.arrayOf(PropTypes.shape({})),
   }).isRequired,
   dataLoading: PropTypes.bool.isRequired,
   userId: PropTypes.string.isRequired

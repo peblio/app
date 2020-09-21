@@ -1,16 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import history from '../../../utils/history';
 
 import './MyClasses.scss';
 
 import CreateClassModal from './CreateClassModal/CreateClassModal';
 import JoinClassModal from './JoinClassModal/JoinClassModal';
+import ClassTypeSection from './ClassTypeSection/ClassTypeSection';
 
 import Dropdown from '../../Dropdown/Dropdown';
-import ClassCard from '../../ClassCard/ClassCard';
 import GenericLoader from '../../GenericLoader/LoadingMessage';
 
 import { toggleJoinClassroomModal, toggleCreateClassroomModal, fetchClassrooms } from '../../../action/classroom';
@@ -25,11 +24,15 @@ const MyClasses = ({
   toggleJoinClassroomModal,
   // eslint-disable-next-line no-shadow
   fetchClassrooms,
-  dataLoading,
   userName
 }) => {
+  const [dataLoading, setDataLoading] = useState(true);
   useEffect(() => {
-    fetchClassrooms();
+    setDataLoading(true);
+    fetchClassrooms()
+      .then(() => {
+        setDataLoading(false);
+      });
   },
   []);
 
@@ -40,54 +43,49 @@ const MyClasses = ({
 
   return (
     <React.Fragment>
-      <main className="classroom">
-        <div className="classroom__header-area">
-          <header className="classroom__header-area__header">
-            My Classes
-          </header>
-          <Dropdown
-            className="btn"
-            placeholder="New class"
-            style={{
-              width: '146px'
-            }}
-            options={[
-              {
-                name: 'Create class',
-                value: 'create',
-                onClick: () => { toggleCreateClassroomModal(); }
-              }, {
-                name: 'Join class',
-                value: 'join',
-                onClick: () => { toggleJoinClassroomModal(); }
-              }
-            ]}
-          />
-        </div>
-        {dataLoading ? <GenericLoader /> : (
-          <div className="classroom__class-card-container">
-            {
-              classrooms.map(classroom => (
-                <ClassCard
-                  onClick={() => {
-                    if (classroom.mymembership.role === 'teacher') {
-                      history.push(`/classroom/teacher/${classroom.id}`);
-                    } else {
-                      history.push(`/classroom/student/${classroom.id}`);
-                    }
-                  }}
-                  key={classroom.id}
-                  classCode={classroom.id}
-                  classTitle={classroom.name}
-                  subject={classroom.subject}
-                  grade={classroom.section}
-                  studentCount={classroom.studentMemberCount}
-                />
-              ))
-            }
-          </div>
-        )}
-      </main>
+      {
+        dataLoading ? <GenericLoader /> : (
+          <main className="classroom">
+            <div className="classroom__header-area">
+              <header className="classroom__header-area__header">
+                My Classes
+              </header>
+              <Dropdown
+                className="btn"
+                placeholder="New class"
+                style={{
+                  width: '146px'
+                }}
+                options={[
+                  {
+                    name: 'Create class',
+                    value: 'create',
+                    onClick: () => { toggleCreateClassroomModal(); }
+                  }, {
+                    name: 'Join class',
+                    value: 'join',
+                    onClick: () => { toggleJoinClassroomModal(); }
+                  }
+                ]}
+              />
+            </div>
+            <ClassTypeSection
+              header="Created classes"
+              classrooms={classrooms.filter(classroom => classroom.mymembership.role === 'teacher')}
+              style={{
+                marginTop: '69px'
+              }}
+            />
+            <ClassTypeSection
+              header="Joined classes"
+              classrooms={classrooms.filter(classroom => classroom.mymembership.role === 'student')}
+              style={{
+                marginTop: 0
+              }}
+            />
+          </main>
+        )
+      }
       {createClassroomModal && <CreateClassModal />}
       {joinClassroomModal && <JoinClassModal />}
     </React.Fragment>
@@ -101,7 +99,6 @@ MyClasses.propTypes = {
   toggleCreateClassroomModal: PropTypes.func.isRequired,
   toggleJoinClassroomModal: PropTypes.func.isRequired,
   fetchClassrooms: PropTypes.func.isRequired,
-  dataLoading: PropTypes.bool.isRequired,
   userName: PropTypes.string.isRequired
 };
 

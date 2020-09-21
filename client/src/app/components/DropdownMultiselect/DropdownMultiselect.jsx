@@ -95,32 +95,31 @@ const DropdownMultiselect = ({
           </span>
         )
       }
-      {triggered && (
-        <div className="multiselect-dropdown__options">
-          {options.map(option => (
-            <div
-              className="multiselect-dropdown__option-container"
-              key={option.name}
+      <div className={`multiselect-dropdown__options ${triggered ? 'multiselect-dropdown__options--active' : ''}`}>
+        {options.map(option => (
+          <div
+            className="multiselect-dropdown__option-container"
+            key={option.name}
+          >
+            <span className={`multiselect-dropdown__option-container__checkbox ${
+              selected.includes(option.value)?'multiselect-dropdown__option-container__checkbox--selected':''}`
+            }>
+              <CheckboxUnselected />
+              <CheckboxSelected />
+            </span>
+            <button
+              type="button"
+              className='multiselect-dropdown__option'
+              onClick={() => handleSelect(option)}
             >
-              <span className="multiselect-dropdown__option-container__checkbox">
-                {
-                  selected.includes(option.value) ? <CheckboxSelected /> : <CheckboxUnselected />
-                }
-              </span>
-              <button
-                type="button"
-                className='multiselect-dropdown__option'
-                onClick={() => handleSelect(option)}
-              >
-                {option.name}
-              </button>
-              <span className="multiselect-dropdown__tooltip multiselect-dropdown__tooltip--option">
-                {option.name}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
+              {option.name}
+            </button>
+            <span className="multiselect-dropdown__tooltip multiselect-dropdown__tooltip--option">
+              {option.name}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

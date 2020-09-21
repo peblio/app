@@ -33,10 +33,10 @@ const TabSwitcher = ({ tabs, className }) => {
 };
 
 TabSwitcher.propTypes = {
-  tabs: PropTypes.arrayOf([PropTypes.shape({
+  tabs: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
     component: PropTypes.element.isRequired
-  }).isRequired]).isRequired,
+  }).isRequired).isRequired,
   className: PropTypes.string
 };
 

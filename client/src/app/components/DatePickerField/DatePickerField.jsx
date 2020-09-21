@@ -73,7 +73,7 @@ const DatePickerField = ({ state, setState, label, containerWidth, calendarPosit
                 setState(d);
                 setPickerTriggered(() => false);
               }}
-              value={new Date(state)}
+              value={state ? new Date(state) : null}
             />
           </div>
         )

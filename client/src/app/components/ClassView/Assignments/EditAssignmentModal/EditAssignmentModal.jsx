@@ -23,24 +23,28 @@ import LinkPreviewCard from './LinkPreviewCard/LinkPreviewCard';
 
 // actions
 import {
-  toggleCreateAssignmentModal,
   createAssignment,
   fetchClassrooms,
   setSubmittinData,
   fetchAssignments,
-  createPeblForAssignment
+  createPeblForAssignment,
+  toggleEditAssignmentModal,
+  fetchCurrentAssignmentDetails,
+  clearCurrentAssignmentDetails,
 } from '../../../../action/classroom';
 
 
-import './createAssignmentModal.scss';
+import './editAssignmentModal.scss';
 
-const CreateAssignmentModal = ({
+const EditAssignmentModal = ({
   // eslint-disable-next-line no-shadow
-  toggleCreateAssignmentModal,
+  toggleEditAssignmentModal,
   // eslint-disable-next-line no-shadow
   createAssignment,
   // eslint-disable-next-line no-shadow
   fetchClassrooms,
+  // eslint-disable-next-line no-shadow
+  fetchCurrentAssignmentDetails,
   // eslint-disable-next-line no-shadow
   fetchAssignments,
   resourceType,
@@ -52,6 +56,10 @@ const CreateAssignmentModal = ({
   setSubmittinData,
   // eslint-disable-next-line no-shadow
   createPeblForAssignment,
+  // eslint-disable-next-line no-shadow
+  clearCurrentAssignmentDetails,
+  editingAssignmentId,
+  currentAssignment,
 }) => {
   // form states
   const [classState, setClassState] = useState([classroomId]);
@@ -88,7 +96,7 @@ const CreateAssignmentModal = ({
           if (linkTriggeredBy === 'pebl') {
             assignmentData = {
               ...assignmentData,
-              peblUrl: addLink
+              peblUrls: addLink
             };
           } else {
             assignmentData = {
@@ -103,7 +111,7 @@ const CreateAssignmentModal = ({
       .then((data) => {
         console.log(data);
         setSubmittinData(false);
-        toggleCreateAssignmentModal();
+        toggleEditAssignmentModal();
         fetchAssignments(classroomId);
       })
       .catch((err) => {
@@ -130,11 +138,19 @@ const CreateAssignmentModal = ({
 
   useEffect(() => {
     fetchClassrooms();
+    fetchCurrentAssignmentDetails(editingAssignmentId);
     // cleanup event listener if active and component is closed
     return () => {
+      clearCurrentAssignmentDetails();
       document.removeEventListener('click', linkInputClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    setAssignmentTitle(() => currentAssignment.title);
+    setInscruction(() => currentAssignment.description);
+    setDate(() => currentAssignment.dueDate);
+  }, [currentAssignment]);
 
   return (
     <Modal
@@ -277,7 +293,9 @@ const CreateAssignmentModal = ({
           </IconButton>
           <Button
             style={{ marginRight: '16px' }}
-            onClick={() => { toggleCreateAssignmentModal(); }}
+            onClick={() => {
+              toggleEditAssignmentModal();
+            }}
             className="secondary"
           >
             Cancel
@@ -355,8 +373,8 @@ const CreateAssignmentModal = ({
   );
 };
 
-CreateAssignmentModal.propTypes = {
-  toggleCreateAssignmentModal: PropTypes.func.isRequired,
+EditAssignmentModal.propTypes = {
+  toggleEditAssignmentModal: PropTypes.func.isRequired,
   createAssignment: PropTypes.func.isRequired,
   setSubmittinData: PropTypes.func.isRequired,
   topics: PropTypes.arrayOf(PropTypes.shape({
@@ -370,22 +388,30 @@ CreateAssignmentModal.propTypes = {
   fetchClassrooms: PropTypes.func.isRequired,
   fetchAssignments: PropTypes.func.isRequired,
   createPeblForAssignment: PropTypes.func.isRequired,
+  fetchCurrentAssignmentDetails: PropTypes.func.isRequired,
+  editingAssignmentId: PropTypes.string.isRequired,
+  currentAssignment: PropTypes.shape({}).isRequired,
+  clearCurrentAssignmentDetails: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   classroomId: state.classroom.currentClassroom.id,
   classrooms: state.classroom.classrooms,
   userId: state.user.id,
-  topics: state.classroom.topics
+  topics: state.classroom.topics,
+  editingAssignmentId: state.classroom.editingAssignmentId,
+  currentAssignment: state.classroom.currentAssignment,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toggleCreateAssignmentModal,
+  toggleEditAssignmentModal,
   createAssignment,
   fetchClassrooms,
   setSubmittinData,
   createPeblForAssignment,
-  fetchAssignments
+  fetchAssignments,
+  fetchCurrentAssignmentDetails,
+  clearCurrentAssignmentDetails,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateAssignmentModal);
+export default connect(mapStateToProps, mapDispatchToProps)(EditAssignmentModal);

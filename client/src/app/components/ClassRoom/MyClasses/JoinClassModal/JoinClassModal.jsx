@@ -12,8 +12,10 @@ import Button from '../../../Button/Button';
 import './joinClassModal.scss';
 
 // eslint-disable-next-line no-shadow
-const JoinClassroomModal = ({ toggleJoinClassroomModal, submittingData, joinClassroom }) => {
+const JoinClassroomModal = ({ toggleJoinClassroomModal, submittingData, joinClassroom, ...props }) => {
   const [classCode, setClassCode] = useState('');
+  const [firstName, setFirstName] = useState(props.firstName);
+  const [lastName, setLastName] = useState(props.lastName);
 
   return (
     <Modal
@@ -28,7 +30,26 @@ const JoinClassroomModal = ({ toggleJoinClassroomModal, submittingData, joinClas
         onChange={(e) => { setClassCode(e.target.value); }}
         placeholder='e.g. X7dhj3'
         containerWidth="100%"
+        style={{
+          height: '50px'
+        }}
       />
+      <div className="join-class-modal__name-row">
+        <InputField
+          state={firstName}
+          onChange={(e) => { setFirstName(e.target.value); }}
+          label="First name"
+          placeholder="enter input text"
+        />
+      </div>
+      <div className="join-class-modal__name-row">
+        <InputField
+          state={lastName}
+          onChange={(e) => { setLastName(e.target.value); }}
+          label="Last name"
+          placeholder="enter input text"
+        />
+      </div>
       <div className="join-class-modal__buttons-container">
         <Button
           className='secondary'
@@ -39,7 +60,7 @@ const JoinClassroomModal = ({ toggleJoinClassroomModal, submittingData, joinClas
         </Button>
         <Button
           className='primary'
-          disabled={!classCode.trim() || submittingData}
+          disabled={!classCode.trim() || !firstName.trim() || !lastName.trim() || submittingData}
           onClick={() => { joinClassroom(classCode); }}
         >
           Join Class
@@ -53,6 +74,13 @@ JoinClassroomModal.propTypes = {
   toggleJoinClassroomModal: PropTypes.func.isRequired,
   submittingData: PropTypes.bool.isRequired,
   joinClassroom: PropTypes.func.isRequired,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string
+};
+
+JoinClassroomModal.defaultProps = {
+  firstName: '',
+  lastName: '',
 };
 
 const mapStateToProps = state => ({
@@ -61,7 +89,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   toggleJoinClassroomModal,
-  joinClassroom
+  joinClassroom,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(JoinClassroomModal);

@@ -1,23 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './sideBar.scss';
 
-const SideBar = ({ ...props }) => (
-  <div className='student-sidebar'>
-    <ul className="student-sidebar__nav-links">
-      <li className="student-sidebar__nav-link">
-        <button className="active">
-          All
-        </button>
-      </li>
-      <li className="student-sidebar__nav-link">
-        <button>Assignments</button>
-      </li>
-      <li className="student-sidebar__nav-link">
-        <button>Resources</button>
-      </li>
-    </ul>
+const SideBar = ({ children, ...props }) => (
+  <div className='student-sidebar' {...props}>
+    <div className="student-sidebar__container">
+      {children}
+    </div>
   </div>
 );
+
+SideBar.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+};
 
 export default SideBar;
