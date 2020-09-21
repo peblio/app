@@ -7,10 +7,11 @@ const classroomStudentAssignmentAttemptSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     classroomId: { type: String, default: '', required: true },
     assignmentId: { type: String, default: '', required: true },
-    myPeblUrl: { type: String, default: '', required: true },
+    myPeblUrl: { type: String },
     turnedIn: { type: Boolean, default: 'false', required: true },
     turnedInTime: { type: Date },
     marksScored: { type: Number },
+    memberId: { type: Schema.Types.ObjectId, ref: 'ClassroomMember', required: true },
     comments: [{
       fromMember: { type: Schema.Types.ObjectId, ref: 'ClassroomMember', required: true },
       text: { type: String, required: true },

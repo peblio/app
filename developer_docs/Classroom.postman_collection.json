@@ -629,7 +629,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Addition\",\n\t\"classroomId\": \"HyBcfx-VP\"\n}",
+							"raw": "{\n\t\"name\": \"Addition\",\n\t\"classroomId\": \"Bk3Y5kUHv\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -950,7 +950,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": \"5df08cab5b98d5850b6250e7\",\n    \"classroomId\": \"HyBcfx-VP\",\n    \"title\": \"Homework on Addition\",\n    \"dueDate\": \"2020-06-17T14:20:43.897Z\",\n    \"description\": \"Add answers of addition to the pebl\",\n    \"isPublished\": true,\n    \"peblUrl\": \"http://localhost:8080/pebl/N2662b1j\",\n    \"type\": \"assignment\", \n    \"url\": null,\n    \"topicId\": \"5f538720e4ca94668d6d0ff5\"\n}",
+							"raw": "{\n    \"classroomId\": \"Bk3Y5kUHv\",\n    \"title\": \"Homework on Addition\",\n    \"dueDate\": \"2020-06-17T14:20:43.897Z\",\n    \"description\": \"Add answers of addition to the pebl\",\n    \"isPublished\": true,\n    \"peblUrl\": \"http://localhost:8080/pebl/N2662b1j\",\n    \"type\": \"assignment\", \n    \"url\": null,\n    \"topicId\": \"5f68a546f3f306306a52560c\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1348,7 +1348,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": \"5df08cab5b98d5850b6250e7\",\n    \"classroomId\": \"HyBcfx-VP\",\n    \"title\": \"Homework on Addition material\",\n    \"dueDate\": \"2020-06-17T14:20:43.897Z\",\n    \"description\": \"Add answers of addition to the pebl\",\n    \"isPublished\": true,\n    \"type\": \"material\", \n    \"url\": \"http://localhost:8080/pebl/N2662b1j\",\n    \"topicId\": \"5f538720e4ca94668d6d0ff5\"\n}",
+							"raw": "{\n    \"classroomId\": \"Bk3Y5kUHv\",\n    \"title\": \"Homework on Addition material\",\n    \"dueDate\": \"2020-06-17T14:20:43.897Z\",\n    \"description\": \"Add answers of addition to the pebl\",\n    \"isPublished\": true,\n    \"type\": \"material\", \n    \"url\": \"http://localhost:8080/pebl/N2662b1j\",\n    \"topicId\": \"5f68a546f3f306306a52560c\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1438,7 +1438,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/learning/classroomAssignment/rJg5oZW4D",
+							"raw": "http://localhost:8080/api/learning/classroomAssignment/SyTv8Q8rD",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1448,7 +1448,7 @@
 								"api",
 								"learning",
 								"classroomAssignment",
-								"rJg5oZW4D"
+								"SyTv8Q8rD"
 							]
 						}
 					},
@@ -1604,7 +1604,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/learning/classroomAllAssignmentsForStudent/HyBcfx-VP",
+							"raw": "http://localhost:8081/api/learning/classroomAllAssignmentsForStudent/Bk3Y5kUHv",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1614,7 +1614,7 @@
 								"api",
 								"learning",
 								"classroomAllAssignmentsForStudent",
-								"HyBcfx-VP"
+								"Bk3Y5kUHv"
 							]
 						}
 					},
@@ -1848,7 +1848,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"myPeblUrl\": \"http://localhost:8080/pebl/bdCtkRIyi\",\n\t\"classroomId\": \"HyBcfx-VP\",\n\t\"assignmentId\": \"rJg5oZW4D\"\n}",
+							"raw": "{\n\t\"myPeblUrl\": \"http://localhost:8080/pebl/bdCtkRIyi\",\n\t\"classroomId\": \"Bk3Y5kUHv\",\n\t\"assignmentId\": \"rJvWUX8SP\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1927,7 +1927,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"text\": \"I am a techer\",\n\t\"assignmentAttemptId\": \"5f53bf42e1414b8426777d6b\"\n}",
+							"raw": "{\n\t\"text\": \"I am a techer\",\n\t\"assignmentAttemptId\": \"5f68c0b4aa6814363ef58bdc\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2095,7 +2095,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/learning/classroomAssignmentAttempt/rJg5oZW4D",
+							"raw": "http://localhost:8080/api/learning/classroomAssignmentAttempt/rJvWUX8SP",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2105,7 +2105,7 @@
 								"api",
 								"learning",
 								"classroomAssignmentAttempt",
-								"rJg5oZW4D"
+								"rJvWUX8SP"
 							]
 						}
 					},
@@ -2178,7 +2178,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/learning/classroomAssignmentAttempt/rJg5oZW4D",
+							"raw": "http://localhost:8080/api/learning/classroomAssignmentAttempt/rJvWUX8SP",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2188,7 +2188,7 @@
 								"api",
 								"learning",
 								"classroomAssignmentAttempt",
-								"rJg5oZW4D"
+								"rJvWUX8SP"
 							]
 						}
 					},
@@ -2261,7 +2261,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/learning/classroomAssignmentAllAttempts/rJg5oZW4D",
+							"raw": "http://localhost:8080/api/learning/classroomAssignmentAllAttempts/rJvWUX8SP",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2271,7 +2271,7 @@
 								"api",
 								"learning",
 								"classroomAssignmentAllAttempts",
-								"rJg5oZW4D"
+								"rJvWUX8SP"
 							]
 						}
 					},

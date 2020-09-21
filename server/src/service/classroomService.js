@@ -59,16 +59,31 @@ export async function getClassroomStudentAttemptForAssignment(req, res) {
 
 export async function getClassroomAllAttemptsForAssignment(req, res) {
   try {
-    const classroomAssignment = await ClassroomAssignment.findOne({id: req.params.id}).populate('classroomDetail');
-    if(!classroomAssignment) {
+    const classroomAssignment = (await ClassroomAssignment.findOne({id: req.params.id}).populate('topicId').populate('classroomDetail')).toJSON();
+    if (!classroomAssignment) {
       return res.status(404).send();
     }
-    const classroomMemberShip = await ClassroomMember.findOne({classroomId: classroomAssignment.classroomId, user: req.user._id.toString()});
-    if(classroomMemberShip.role !== 'teacher') {
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: classroomAssignment.classroomId
+    });
+    if(!classroomMember) {
+      return res.status(404).send();
+    }
+    if(classroomMember.role !== "teacher") {
       return res.status(401).send();
     }
-    const allAttemptsForAssignment = await ClassroomStudentAssignmentAttempt.find({assignmentId: req.params.id});
-    return res.status(200).json(allAttemptsForAssignment);
+    const allStudentsAttemptForAssignment = await ClassroomStudentAssignmentAttempt
+    .find({assignmentId: classroomAssignment.id})
+    .populate('memberId')
+    .populate('comments.fromMember');
+    
+    return res.status(200).json({
+      allStudentsAttemptForAssignment, 
+      classroomAssignment: classroomAssignment.topicId 
+      ? {...classroomAssignment, topicId: classroomAssignment.topicId._id, topicDetail: classroomAssignment.topicId}
+      : classroomAssignment
+    });
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }
@@ -110,6 +125,7 @@ export async function saveClassroomAssignmentStudentAttempt(req, res) {
       classroomId: req.body.classroomId,
       assignmentId: req.body.assignmentId,
       myPeblUrl: req.body.myPeblUrl,
+      memberId: classroomMember._id.toString()
     }).save();
     return res.status(200).json(classroomAssignmentStudentAttempt);
   } catch (err) {
@@ -579,36 +595,6 @@ export async function getAllAssignmentsInClassroomByStudentForTeacher(req, res) 
       return classroomAssignment;
     })
     return res.status(200).json({allClassroomAssignmentsAttemptedByStudent, allClassroomAssignmentsInClassroom: classroomAssignmentsJson});
-  } catch (err) {
-    return res.status(500).send({ error: err.message });
-  }
-}
-
-export async function getAllStudentAttemptsForAssignment(req, res) {
-  try {
-    const classroomAssignment = (await ClassroomAssignment.findOne({id: req.params.id}).populate('topicId')).toJSON();
-    if (!classroomAssignment) {
-      return res.status(404).send();
-    }
-    const classroomMember = await ClassroomMember.findOne({
-      user: req.user._id.toString(),
-      classroomId: classroomAssignment.classroomId
-    });
-    if(!classroomMember) {
-      return res.status(404).send();
-    }
-    if(classroomMember.role !== "teacher") {
-      return res.status(401).send();
-    }
-    const allStudentsAttemptForAssignment = await ClassroomStudentAssignmentAttempt
-    .find({assignmentId: classroomAssignment.id, turnedIn: true})
-    .populate({path: 'user', select: 'name'});
-    return res.status(200).json({
-      allStudentsAttemptForAssignment, 
-      classroomAssignment: classroomAssignment.topicId 
-      ? {...classroomAssignment, topicId: classroomAssignment.topicId._id, topicDetail: classroomAssignment.topicId}
-      : classroomAssignment
-    });
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }
