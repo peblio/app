@@ -236,7 +236,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/learning/classroomDetail/HyBcfx-VP",
+							"raw": "http://localhost:8080/api/learning/classroomDetail/Bk3Y5kUHv",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -246,7 +246,7 @@
 								"api",
 								"learning",
 								"classroomDetail",
-								"HyBcfx-VP"
+								"Bk3Y5kUHv"
 							]
 						}
 					},
@@ -308,7 +308,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\n\t\"firstName\": \"Komal\",\n\t\"lastName\": \"Student\",\n\t\"classroomId\": \"Bk3Y5kUHv\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -316,7 +316,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/learning/classroomDetail/HyBcfx-VP",
+							"raw": "http://localhost:8081/api/learning/classroomDetail",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -325,8 +325,7 @@
 							"path": [
 								"api",
 								"learning",
-								"classroomDetail",
-								"HyBcfx-VP"
+								"classroomDetail"
 							]
 						}
 					},
@@ -388,7 +387,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"komalstudent\",\n\t\"role\": \"student\"\n}",
+							"raw": "{\n\t\"identifier\": \"komalstudent\",\n\t\"firstName\": \"Komal\",\n\t\"lastName\": \"Student\",\n\t\"role\": \"student\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -396,7 +395,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/learning/classroomDetail/addMember/HyBcfx-VP",
+							"raw": "http://localhost:8081/api/learning/classroomDetail/addMember/Bk3Y5kUHv",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -407,7 +406,7 @@
 								"learning",
 								"classroomDetail",
 								"addMember",
-								"HyBcfx-VP"
+								"Bk3Y5kUHv"
 							]
 						}
 					},

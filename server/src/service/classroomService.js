@@ -667,7 +667,7 @@ export async function getClassroomDetail(req, res) {
 
 export async function joinClassroom(req, res) {
   try {
-    const classroom = await ClassroomDetail.findOne({id: req.params.id});
+    const classroom = await ClassroomDetail.findOne({id: req.body.classroomId});
     if (!classroom) {
       return res.status(404).send();
     }
@@ -676,12 +676,14 @@ export async function joinClassroom(req, res) {
     }
     const classroomMember = await ClassroomMember.findOne({
       user: req.user._id.toString(),
-      classroomId: req.params.id
+      classroomId: req.body.classroomId,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
     });
     if(classroomMember) {
       return res.status(200).send();
     }
-    await buildClassroomMember(req.user._id.toString(), req.params.id, 'student' ).save();
+    await buildClassroomMember(req, req.body.classroomId, 'student' ).save();
     return res.status(200).send();
   } catch (err) {
     return res.status(500).send({ error: err.message });
@@ -694,9 +696,6 @@ export async function addMemberToClassroom(req, res) {
     if (!classroom) {
       return res.status(404).send();
     }
-    if(classroomMember) {
-      return res.status(200).send();
-    }
     const classroomMember = await ClassroomMember.findOne({
       user: req.user._id.toString(),
       classroomId: req.params.id
@@ -707,12 +706,26 @@ export async function addMemberToClassroom(req, res) {
     if(classroomMember.role !== "teacher") {
       return res.status(401).send();
     }
-    const user = await User.findOne({name: req.body.name});
-    const isAlreadyAMember = await ClassroomMember.findOne({user: user._id.toString(), classroomId: req.params.id});
+    const usersWithIdentifier = await User.find({ $or: [{ name: req.body.identifier }, { email: req.body.identifier }]});
+    if(usersWithIdentifier.length > 1 ) {
+      return res.status(400).send();
+    }
+    if(usersWithIdentifier.length == 0 ) {
+      return res.status(404).send();
+    }
+    const classroomMemberToBeAdded = new ClassroomMember({
+      user: usersWithIdentifier[0]._id,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      classroomId: req.params.id,
+      role: req.body.role,
+      isActive: true
+    });
+    const isAlreadyAMember = await ClassroomMember.findOne({user: classroomMemberToBeAdded.user, classroomId: req.params.id});
     if(isAlreadyAMember) {
       return res.status(200).send();
     }
-    await buildClassroomMember(user._id.toString(), req.params.id, req.body.role ).save();
+    await classroomMemberToBeAdded.save();
     return res.status(200).send();
   } catch (err) {
     return res.status(500).send({ error: err.message });

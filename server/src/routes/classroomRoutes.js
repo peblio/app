@@ -4,7 +4,7 @@ import * as classroomController from '../controllers/classroomController';
 
 classroomRoutes.route('/classroomDetail').post(classroomController.createClassroomDetail);
 classroomRoutes.route('/classroomDetail').get(classroomController.getAllMyClassroomDetails);
-classroomRoutes.route('/classroomDetail/:id').patch(classroomController.joinClassroom);
+classroomRoutes.route('/classroomDetail').patch(classroomController.joinClassroom);
 classroomRoutes.route('/classroomDetail/addMember/:id').patch(classroomController.addMemberToClassroom);
 classroomRoutes.route('/classroomDetail/:id').get(classroomController.getClassroomDetail);
 
