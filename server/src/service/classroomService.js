@@ -657,7 +657,7 @@ export async function getClassroomDetail(req, res) {
     });
     const members = await ClassroomMember.find({
       classroomId: req.params.id
-    }).populate('userDetail', 'name');
+    });
     myClassroomDetails.members = members;
     return res.status(200).json(myClassroomDetails);
   } catch (err) {
