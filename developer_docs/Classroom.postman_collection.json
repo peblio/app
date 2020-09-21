@@ -64,7 +64,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Maths Homework\",\n\t\"room\": \"B Block, 104\",\n\t\"description\": \"This classroom is for us to share our Maths homework given after every class\",\n\t\"subject\": \"Maths\",\n\t\"section\": \"I\"\n}",
+							"raw": "{\n\t\"name\": \"Maths Homework\",\n\t\"room\": \"B Block, 104\",\n\t\"description\": \"This classroom is for us to share our Maths homework given after every class\",\n\t\"subject\": \"Maths\",\n\t\"section\": \"I\",\n\t\"firstName\": \"Komal\",\n\t\"lastName\": \"Teacher\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

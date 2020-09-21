@@ -33,9 +33,11 @@ export function buildClassroomAssignment(request) {
   return classroomAssignment;
 }
 
-export function buildClassroomMember(userId, classroomId, role) {
+export function buildClassroomMember(request, classroomId, role) {
   const classroomMember = new ClassroomMember({
-    user: userId,
+    user: request.user._id.toString(),
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
     classroomId: classroomId,
     role: role,
     isActive: true
