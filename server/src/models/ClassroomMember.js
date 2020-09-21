@@ -6,6 +6,8 @@ const Schema = mongoose.Schema;
 const classroomMemberSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   classroomId: { type: String, default: '', required: true },
+  firstName: { type: String, default: ''},
+  lastName: { type: String, default: ''},
   role: { type: String, enum: ['student', 'teacher'], default: 'student', required: true },
   isActive: { type: Boolean, default: true, required: true },
 }, {
