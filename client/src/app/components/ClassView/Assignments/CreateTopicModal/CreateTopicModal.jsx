@@ -44,6 +44,9 @@ const CreateTopicModal = ({ toggleCreateTopicModal, createClassroomTopic, submit
           onChange={(e) => { setTopicTitle(e.target.value); }}
           placeholder='e.g. Unit 15'
           containerWidth="100%"
+          style={{
+            height: '50px'
+          }}
         />
         <div className="create-topic-modal__buttons-container">
           <Button

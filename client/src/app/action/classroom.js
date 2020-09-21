@@ -34,12 +34,29 @@ export const toggleEditTopicModal = () => (dispatch) => {
   });
 };
 
+export const toggleEditAssignmentConfirmationModal = ({ assignmentId, value }) => (dispatch) => {
+  dispatch({
+    type: ActionTypes.TOGGLE_EDIT_ASSIGNMENT_CONFIRMATION_MODAL,
+    data: {
+      assignmentId: assignmentId || null,
+      value
+    }
+  });
+};
+
+export const toggleEditAssignmentModal = () => (dispatch) => {
+  dispatch({
+    type: ActionTypes.TOGGLE_EDIT_ASSIGNMENT_MODAL
+  });
+};
+
 export const setSubmittinData = value => (dispatch) => {
   dispatch({
     type: ActionTypes.SET_SUBMITTING_DATA,
     value
   });
 };
+
 // Modals end
 
 
@@ -51,18 +68,23 @@ export const toggleDataLoading = () => (dispatch) => {
 
 // Classroom start
 export const fetchClassrooms = () => (dispatch) => {
-  axios.get('/learning/classroomDetail')
-    .then(({ data }) => {
-      dispatch({
-        type: ActionTypes.FETCH_CLASSROOMS,
-        classrooms: data
+  const reqPromise = () => new Promise((resolve, reject) => {
+    axios.get('/learning/classroomDetail')
+      .then(({ data }) => {
+        dispatch({
+          type: ActionTypes.FETCH_CLASSROOMS,
+          classrooms: data
+        });
+        resolve(data);
+      })
+      .catch((e) => {
+        if (e.response.status === 404) {
+          history.push('/404');
+        }
+        reject(e);
       });
-    })
-    .catch((e) => {
-      if (e.response.status === 404) {
-        history.push('/404');
-      }
-    });
+  });
+  return reqPromise();
 };
 
 export const createClassroom = classroom => (dispatch) => {
@@ -142,14 +164,8 @@ export const joinClassroom = classCode => (dispatch) => {
 };
 
 export const fetchCurrentClassroomDetails = id => (dispatch) => {
-  dispatch({
-    type: ActionTypes.TOGGLE_DATA_LOADING,
-  });
   axios.get(`/learning/classroomDetail/${id}`)
     .then(({ data }) => {
-      dispatch({
-        type: ActionTypes.TOGGLE_DATA_LOADING,
-      });
       dispatch({
         type: ActionTypes.SET_CURRENT_CLASSROOM,
         data
@@ -158,9 +174,6 @@ export const fetchCurrentClassroomDetails = id => (dispatch) => {
     .catch((err) => {
       // [TODO]: Add dispatch to show toast notification
       console.log(err);
-      dispatch({
-        type: ActionTypes.TOGGLE_DATA_LOADING,
-      });
     });
 };
 
@@ -263,16 +276,21 @@ export const editClassroomTopic = ({ topicData, classroomId }) => (dispatch) => 
 };
 
 export const fetchTopics = classroomId => (dispatch) => {
-  axios.get(`/learning/classroomTopic/${classroomId}`)
-    .then(({ data }) => {
-      dispatch({
-        type: ActionTypes.SET_TOPICS,
-        topics: data
+  const reqPromise = () => new Promise((resolve, reject) => {
+    axios.get(`/learning/classroomTopic/${classroomId}`)
+      .then(({ data }) => {
+        dispatch({
+          type: ActionTypes.SET_TOPICS,
+          topics: data
+        });
+        resolve(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
       });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  });
+  return reqPromise();
 };
 
 export const changeTopicOfAssignment = data => (dispatch) => {
@@ -341,30 +359,54 @@ export const createAssignment = assignmentData => (dispatch) => {
 };
 
 export const fetchAssignments = classroomId => (dispatch) => {
-  axios.get(`/learning/classroomAllAssignments/${classroomId}`)
-    .then(({ data }) => {
-      dispatch({
-        type: ActionTypes.SET_ASSIGNMENTS,
-        assignments: data
+  const reqPromise = () => new Promise((resolve, reject) => {
+    axios.get(`/learning/classroomAllAssignments/${classroomId}`)
+      .then(({ data }) => {
+        dispatch({
+          type: ActionTypes.SET_ASSIGNMENTS,
+          assignments: data
+        });
+        resolve(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
       });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  });
+  return reqPromise();
 };
 
 export const fetchCurrentAssignmentDetails = assignmentId => (dispatch) => {
-  dispatch({
-    type: ActionTypes.TOGGLE_DATA_LOADING,
+  const reqPromise = () => new Promise((resolve, reject) => {
+    axios.get(`/learning/classroomAssignment/${assignmentId}`)
+      .then(({ data }) => {
+        dispatch({
+          type: ActionTypes.SET_CURRENT_ASSIGNMENT,
+          currentAssignment: data
+        });
+        resolve(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
   });
-  axios.get(`/learning/classroomAssignment/${assignmentId}`)
+  return reqPromise();
+};
+
+export const clearCurrentAssignmentDetails = () => (dispatch) => {
+  dispatch({
+    type: ActionTypes.SET_CURRENT_ASSIGNMENT,
+    currentAssignment: {}
+  });
+};
+
+export const fetchStudentAssignments = classroomId => (dispatch) => {
+  axios.get(`/learning/classroomAllAssignmentsForStudent/${classroomId}`)
     .then(({ data }) => {
       dispatch({
-        type: ActionTypes.SET_CURRENT_ASSIGNMENT,
-        currentAssignment: data
-      });
-      dispatch({
-        type: ActionTypes.TOGGLE_DATA_LOADING,
+        type: ActionTypes.SET_STUDENT_ASSIGNMENTS,
+        data
       });
     })
     .catch((err) => {
@@ -404,27 +446,73 @@ export const changePublishStatusOfAssignment = assignment => (dispatch) => {
   return reqPromise();
 };
 
-export const studentAttemptAssignment = assignmentId => (dispatch) => {
-  axios.get(`/learning/classroomAssignment/${assignmentId}`)
-    .then(({ data }) => {
+export const studentAttemptAssignment = data => (dispatch) => {
+  if (data.peblUrl) {
+    const reqPromise = () => new Promise((resolve, reject) => {
+      const temp = data.peblUrl.split('/');
+      const mainPeblId = temp[temp.length - 1];
+      const id = shortid.generate();
 
+      axios.get(`/pages/${mainPeblId}`)
+        .then((res) => {
+          const pebl = res.data[0];
+          const copiedPebl = {
+            id,
+            title: `${pebl.title}-Copy`,
+            heading: pebl.heading,
+            description: pebl.description,
+            editors: pebl.editors,
+            editorIndex: pebl.editorIndex,
+            layout: pebl.layout,
+            tags: pebl.tags,
+            snapshotPath: pebl.snapshotPath
+          };
+          return axios.post('/pages/save', copiedPebl);
+        })
+        .then(() => axios.post('/learning/classroomAssignmentAttempt', {
+          myPeblUrl: `http://local.peblio.co:8080/pebl/${id}`,
+          classroomId: data.classroomId,
+          assignmentId: data.assignmentId
+        })).then(() => {
+          resolve();
+        })
+        .catch((err) => {
+          reject(err);
+        });
     });
-  /**
-    axios.get(`/pages/${id}`)
-      .then((res) => {
-        const pebl = res.data[0];
-        const id = shortid.generate();
-        const data = {
-          id,
-          title: `${pebl.title}-Copy`,
-          heading: pebl.heading,
-          description: pebl.description,
-          editors: pebl.editors,
-          editorIndex: pebl.editorIndex,
-          layout: pebl.layout,
-          tags: pebl.tags,
-          snapshotPath: pebl.snapshotPath
-        };
-   */
+    return reqPromise();
+  }
+};
+
+export const gradeAssignment = ({ assignmentAttemptId, marksObtained }) => (dispatch) => {
+  axios.patch('/learning/classroomAssignmentAttempt/gradeAssignment', ({
+    marksObtained,
+    assignmentAttemptId
+  })).then(({ data }) => {
+    console.log(data);
+  }).catch(err => console.log(err));
+};
+
+export const fetchAssignmentAttempts = classroomId => (dispatch) => {
+  axios.get(`/learning/classroomAssignmentAllAttempts/${classroomId}`)
+    .then(({ data }) => {
+      dispatch({
+        type: ActionTypes.SET_ASSIGNMENT_ATTEMPTS,
+        data
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const commentOnAssignment = commentData => (dispatch) => {
+  axios.get('/learning/classroomAssignmentAttempt/addComment', commentData)
+    .then(({ data }) => {
+      console.log(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 // Assignments end

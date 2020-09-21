@@ -38,27 +38,30 @@ const IconButtonDropdown = ({
       >
         {icon}
       </button>
-      {triggered && (
-        <div className={`icon-button-dropdown__options ${optionsPosition}`} style={{ width: optionsContainerWidth }}>
-          {options.map(option => (
-            <div
-              className="icon-button-dropdown__option-container"
-              key={option.name}
+      <div
+        className={`icon-button-dropdown__options ${triggered ? 'icon-button-dropdown__options--active' : ''}
+        ${optionsPosition}`}
+        style={{ width: optionsContainerWidth }}
+      >
+        {options.map(option => (
+          <div
+            className="icon-button-dropdown__option-container"
+            key={option.name}
+          >
+            <button
+              type="button"
+              className='icon-button-dropdown__option'
+              onClick={() => handleSelect(option)}
             >
-              <button
-                type="button"
-                className='icon-button-dropdown__option'
-                onClick={() => handleSelect(option)}
-              >
-                {option.name}
-              </button>
-              <span className="icon-button-dropdown__tooltip icon-button-dropdown__tooltip--option">
-                {option.name}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
+              {option.icon}
+              {option.name}
+            </button>
+            <span className="icon-button-dropdown__tooltip icon-button-dropdown__tooltip--option">
+              {option.name}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

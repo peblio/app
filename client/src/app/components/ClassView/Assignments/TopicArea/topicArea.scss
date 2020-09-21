@@ -31,8 +31,24 @@
       margin-bottom: 2px;
       display: grid;
       font-weight: 700;
-      grid-template-columns: 25% 15% 15% 25% 15% 5% ;
+      grid-template-columns: 40% 15% 25% 15% 5% ;
       margin-bottom: 8px;
+      align-content: center;
+      align-items: center;
+      
+      &__type{
+        display: flex;
+        align-items: center;
+
+        .info-bubble{
+          margin-left: 4px;
+          div{
+            span{
+              font-weight: 500;
+            }
+          }
+        }
+      }
     }
   }
 }

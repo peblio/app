@@ -1,50 +1,140 @@
 @import 'variables.scss';
 
 .assignment-card-student{
-  width: 816px;
-  height: 177;
+  width: 818px;
   box-shadow: 0 3.6px 3.6px 0 rgba(0, 0, 0, 0.15);
   background-color: #fefefe;
   margin-bottom: 33px;
   display: flex;
+  flex-direction: column;
   padding: 0;
 
-  &__image-area{
-    background: url('http://placekitten.com/300/200');
-    background-size: cover;
-    width: 278px;
-    height: 100%;
-    position: relative;
-    margin: 0;
-    padding: 0;
+  &__header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    padding-left: 28px;
+    padding-right: 16px;
+    font-weight: 500;
     box-sizing: border-box;
+    font-size: $p-size;
+    $header: &;
 
-    &::after{
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 21, 30, 0.15);
+    &--assignment{
+      background: #fad743;
+      &--turned-in{
+        background: #009887;
+        color: #fff
+      }
+    }
+
+    &--material{
+      background: rgba(0, 0, 0, 0.15);
+    }
+
+    span{
+      margin-left: auto;
     }
   }
 
-  &__details{
-    flex: 1;
-    padding: 13px;
-    padding-left: 16px;
-
-    &__title-area{
-      display: flex;
-      align-items: center;
-
-      &__title{
-        margin-right: auto;
-        color: $black;
-        font-family: $roboto;
-        font-weight: 500;
+  &__body{
+    display: flex;
+    height: 100px;
+    box-sizing: border-box;
+    &__image-area{
+      box-sizing: border-box;
+      background: url('http://placekitten.com/300/200');
+      background-size: cover;
+      width: 157px;
+      height: 100%;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+  
+      &::after{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 21, 30, 0.15);
       }
+    }
+  
+    &__details{
+      display: flex;
+      flex: 1;
+      padding: 8px 13px;
+      padding-left: 16px;
+      box-sizing: border-box;
+      
+      &__text-area{
+        box-sizing: border-box;
+        width: 527px;
+        margin-right: auto;
+  
+
+        &__title{
+          margin-right: auto;
+          color: $black;
+          font-family: $roboto;
+          font-weight: 500;
+          font-size: $p-size;
+        }
+
+        &__description{
+          margin-top: 14px;
+          font-size: 14px;
+          height: 45px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+
+  &__comments{
+    margin: 20px;
+    box-sizing: border-box;
+    &__line{
+      width: 100%;
+      height: 1px;
+      background: $g6;
+      margin-bottom: 20px;
+    }
+    &__comment{
+      font-size: $p-size;
+      font-weight: 700;
+      color: $g3;
+      margin-bottom: 21px;
+    }
+    &__comment-box{
+      display: flex;
+
+      .input-field{
+        flex:1;
+        margin-right: 16px;
+      }
+    }
+  }
+  
+  &__grade{
+    border-top: 1px solid $g6;
+    padding: 12px 25px;
+    box-sizing: border-box;
+    background: #f7f7f7;
+    &__label{
+      font-size: 18px;
+      font-weight: bold;
+      color: $g3;
+    }
+    &__score{
+      margin-left: 4px;
+      font-size: 18px;
+      font-weight: 500;
     }
   }
 }

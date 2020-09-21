@@ -60,13 +60,21 @@ const ClassCard = ({
         <div className='class-card__main__title'>{classTitle}</div>
         <div className='class-card__main__subject'>{subject}</div>
         <div className='class-card__main__card-footer'>
-          {grade}
-          {' '}
-          SECTION
-          <span className='circle'></span>
+          {
+            grade && (
+              <React.Fragment>
+                {grade}
+                {' '}
+                SECTION
+                <span className='circle'></span>
+              </React.Fragment>
+            )
+          }
           {studentCount}
           {' '}
-          STUDENTS
+          {
+            studentCount === 1 ? 'STUDENT' : 'STUDENTS'
+          }
         </div>
       </div>
     </div>

@@ -2,50 +2,65 @@
 
 .student-sidebar{
   $root: &;
-  min-width: 202px;
-  padding: 16px 0;
+  width: 202px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  background: $black;
+  box-sizing: border-box;
+  height: calc(100vh - #{$topnav-height});
+  position: sticky;
+  top: 0;
+  
+  &__container{
+    border-top: 1px solid white;
+    padding: 26px 16px 25px 34px;
+    overflow: auto;
+  }
 
-  &__nav-links{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    padding-bottom: 30px;
-    box-sizing: border-box;
-
-
-    #{$root}__nav-link{
-      height: 36px;
+  &__topic{
+    &:not(:first-child){
+      margin-top: 18px;
+    }
+    &__name{
+      background: none;
+      border: none;
+      font-family: $roboto;
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      text-align: left;
       box-sizing: border-box;
-      display: flex;
+      
+      &:focus{
+        outline: none;
+      }
+    }
+
+    &__resources{
+      margin: 12px;
+      box-sizing: border-box;
+      border-left: 1px solid #ffffff70;
+      padding-left: 8px;
       button{
-        box-sizing: border-box;
-        border: none;
         background: none;
-        width: 100%;
-        padding: 10px 23px;
-        font-family: $roboto;
+        border: none;
+        display: block;
         font-size: 14px;
-        font-weight: 500;
-        border-left: 6px solid transparent;
-        color: #667378;
+        color: #fff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-decoration: none;
+        font-weight: normal;
+        padding: 4px 0;
+        width: 100%;
         text-align: left;
 
         &:focus{
           outline: none;
         }
-
-        &.active{
-          border-left: 6px solid #00bb9d; 
-          background-color: rgba(225, 227, 228, 0.5);
-          a{
-            color: #3e4e54;
-          }
-        }
       }
-
     }
   }
 }

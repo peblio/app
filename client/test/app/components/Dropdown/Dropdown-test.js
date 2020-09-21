@@ -53,18 +53,20 @@ describe('Dropdown component', () => {
     const trigger = wrapper.find('.dropdown__trigger');
     expect(trigger).to.have.lengthOf(1);
     expect(trigger.find('span').text()).to.equal(getProps().placeholder);
+    expect(wrapper.find('.dropdown__options')).to.have.lengthOf(1);
+    expect(wrapper.find('.dropdown__options--active')).to.have.lengthOf(0);
   });
 
-  it('Should not render options before being clicked', () => {
-    expect(wrapper.find('.dropdown__options')).to.have.lengthOf(0);
+  it('Should not render expand options before being clicked', () => {
+    expect(wrapper.find('.dropdown__options--active')).to.have.lengthOf(0);
   });
 
   it('Should render options after being clicked and should close again on clicking', () => {
     const trigger = wrapper.find('.dropdown__trigger');
     trigger.simulate('click');
-    expect(wrapper.find('.dropdown__options')).to.have.lengthOf(1);
+    expect(wrapper.find('.dropdown__options--active')).to.have.lengthOf(1);
     trigger.simulate('click');
-    expect(wrapper.find('.dropdown__options')).to.have.lengthOf(0);
+    expect(wrapper.find('.dropdown__options--active')).to.have.lengthOf(0);
   });
 
   it('Should change the value on click and render its name as selected and close the options', (done) => {

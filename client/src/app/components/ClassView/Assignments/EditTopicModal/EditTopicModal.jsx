@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -36,6 +36,10 @@ const EditTopicModal = ({
     editClassroomTopic({ topicData, classroomId });
   };
 
+  useLayoutEffect(() => {
+    document.querySelector('.input-field__text-box').focus();
+  }, []);
+
   return (
     <Modal
       header='Edit Topic'
@@ -49,6 +53,9 @@ const EditTopicModal = ({
         onChange={(e) => { setTopicTitle(e.target.value); }}
         placeholder='e.g. Unit 15'
         containerWidth="100%"
+        style={{
+          height: '50px'
+        }}
       />
       <div className="create-topic-modal__buttons-container">
         <Button

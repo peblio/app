@@ -109,27 +109,25 @@ const Dropdown = ({
         )
       }
 
-      {triggered && (
-        <div className='dropdown__options'>
-          {options.map(option => (
-            <div
-              className="dropdown__option-container"
-              key={option.value}
+      <div className={`dropdown__options ${triggered ? 'dropdown__options--active' : ''}`}>
+        {options.map(option => (
+          <div
+            className="dropdown__option-container"
+            key={option.value}
+          >
+            <button
+              type="button"
+              className='dropdown__option'
+              onClick={() => handleSelect(option)}
             >
-              <button
-                type="button"
-                className='dropdown__option'
-                onClick={() => handleSelect(option)}
-              >
-                {option.name}
-              </button>
-              <span className="dropdown__tooltip dropdown__tooltip--option">
-                {option.name}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
+              {option.name}
+            </button>
+            <span className="dropdown__tooltip dropdown__tooltip--option">
+              {option.name}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

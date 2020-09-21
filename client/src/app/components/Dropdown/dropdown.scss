@@ -146,6 +146,13 @@
     border: solid 1px $g5;
     background-color: #fff;  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
     box-sizing: border-box;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 300ms ease;
+
+    &--active{
+      transform: scaleY(1);
+    }
     
     #{$root}__option-container{
       display: flex;
@@ -153,6 +160,7 @@
       position: relative;
       width: 100%;
       transition: background 300ms ease;
+      box-sizing: border-box;
       &:not(:last-child){
         border-bottom: 1px solid $g5;
       }

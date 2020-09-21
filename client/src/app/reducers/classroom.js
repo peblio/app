@@ -13,7 +13,12 @@ const initialState = {
   assignments: [],
   currentAssignment: {},
   topics: [],
-  assignmetsPeople: []
+  assignmetsPeople: [],
+  editingAssignmentId: null,
+  editAssignmentConfirmationModal: false,
+  editAssignmentModal: false,
+  studentAssignments: {},
+  assignmentAttempts: []
 };
 
 const classrooms = (state = initialState, action) => {
@@ -108,6 +113,40 @@ const classrooms = (state = initialState, action) => {
       return {
         ...state,
         assignmentsPeople: action.assignments
+      };
+
+    case ActionTypes.TOGGLE_EDIT_ASSIGNMENT_CONFIRMATION_MODAL:
+      return {
+        ...state,
+        editingAssignmentId: action.data.assignmentId,
+        editAssignmentConfirmationModal: action.data.value
+      };
+
+    case ActionTypes.TOGGLE_EDIT_ASSIGNMENT_MODAL:
+      // if editAssignmentModal is being closed, clear the editing assignmentID
+      if (state.editAssignmentModal) {
+        return {
+          ...state,
+          editAssignmentModal: false,
+          editingAssignmentId: null,
+        };
+      }
+      // else just set the modal state to true
+      return {
+        ...state,
+        editAssignmentModal: !state.editAssignmentModal
+      };
+
+    case ActionTypes.SET_STUDENT_ASSIGNMENTS:
+      return {
+        ...state,
+        studentAssignments: action.data
+      };
+
+    case ActionTypes.SET_ASSIGNMENT_ATTEMPTS:
+      return {
+        ...state,
+        assignmentAttempts: action.data
       };
 
     default:
