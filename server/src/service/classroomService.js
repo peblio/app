@@ -543,12 +543,30 @@ export async function getAllAssignmentsInClassroomForStudent(req, res) {
     if(classroomMember.role !== "student") {
       return res.status(401).send();
     }
-    const assignmentsAttemptedByStudent = await ClassroomStudentAssignmentAttempt.find({classroomId: req.params.id, user: req.user._id.toString()});
+    const assignmentsAttemptedByStudentWithMarks = await ClassroomStudentAssignmentAttempt
+                                                          .find({ 
+                                                            classroomId: req.params.id, 
+                                                            user: req.user._id.toString()
+                                                          })
+                                                          .populate('assignmentDetail');
+    const assignmentsAttemptedByStudent = assignmentsAttemptedByStudentWithMarks
+                                          .map(assignmentAttemptedByStudent => assignmentAttemptedByStudent.toJSON())
+                                          .map(assignmentAttemptedByStudent => maskMarks(assignmentAttemptedByStudent));
+
     const classroomAllAssignmentsAndMaterials = await ClassroomAssignment.find({classroomId: req.params.id, isPublished: true});
     return res.status(200).json({assignmentsAttemptedByStudent, classroomAllAssignmentsAndMaterials});
   } catch (err) {
+    console.error(err);
     return res.status(500).send({ error: err.message });
   }
+}
+
+function maskMarks(assignmentAttemptedByStudent) {
+  if(!assignmentAttemptedByStudent.assignmentDetail.areGradesPublished) {
+    delete assignmentAttemptedByStudent.marksScored;
+  }
+  delete assignmentAttemptedByStudent.assignmentDetail;
+  return assignmentAttemptedByStudent;
 }
 
 export async function getAllAssignmentsInClassroomByStudentForTeacher(req, res) {
