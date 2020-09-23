@@ -125,12 +125,12 @@ export const createClassroom = classroom => (dispatch) => {
     });
 };
 
-export const joinClassroom = classCode => (dispatch) => {
+export const joinClassroom = joinData => (dispatch) => {
   dispatch({
     type: ActionTypes.SET_SUBMITTING_DATA,
     value: true
   });
-  axios.patch(`/learning/classroomDetail/${classCode}`)
+  axios.patch('/learning/classroomDetail/', joinData)
     .then(() => {
       console.log('Joined');
       dispatch({
@@ -164,17 +164,22 @@ export const joinClassroom = classCode => (dispatch) => {
 };
 
 export const fetchCurrentClassroomDetails = id => (dispatch) => {
-  axios.get(`/learning/classroomDetail/${id}`)
-    .then(({ data }) => {
-      dispatch({
-        type: ActionTypes.SET_CURRENT_CLASSROOM,
-        data
+  const req = () => new Promise((resolve, reject) => {
+    axios.get(`/learning/classroomDetail/${id}`)
+      .then(({ data }) => {
+        dispatch({
+          type: ActionTypes.SET_CURRENT_CLASSROOM,
+          data
+        });
+        resolve(true);
+      })
+      .catch((err) => {
+        // [TODO]: Add dispatch to show toast notification
+        console.log(err);
+        reject(err);
       });
-    })
-    .catch((err) => {
-      // [TODO]: Add dispatch to show toast notification
-      console.log(err);
-    });
+  });
+  return req();
 };
 
 export const clearCurrentClassroom = () => (dispatch) => {
@@ -484,6 +489,9 @@ export const studentAttemptAssignment = data => (dispatch) => {
   }
 };
 
+export const turnInAssignment =
+assignmentId => dispatch => axios.patch(`/learning/classroomAssignmentAttempt/${assignmentId}`);
+
 export const gradeAssignment = ({ assignmentAttemptId, marksObtained }) => (dispatch) => {
   axios.patch('/learning/classroomAssignmentAttempt/gradeAssignment', ({
     marksObtained,
@@ -507,12 +515,17 @@ export const fetchAssignmentAttempts = classroomId => (dispatch) => {
 };
 
 export const commentOnAssignment = commentData => (dispatch) => {
-  axios.get('/learning/classroomAssignmentAttempt/addComment', commentData)
-    .then(({ data }) => {
-      console.log(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  const req = () => new Promise((resolve, reject) => {
+    axios.patch('/learning/classroomAssignmentAttempt/addComment', commentData)
+      .then(({ data }) => {
+        console.log(data);
+        resolve(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
+  });
+  return req();
 };
 // Assignments end

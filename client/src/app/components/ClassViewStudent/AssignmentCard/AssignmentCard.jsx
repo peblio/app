@@ -3,16 +3,22 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import InputField from '../../InputField/InputField';
 
 import Button from '../../Button/Button';
+import InputField from '../../InputField/InputField';
 
-import { studentAttemptAssignment } from '../../../action/classroom';
+import {
+  studentAttemptAssignment,
+  fetchStudentAssignments,
+  turnInAssignment,
+  commentOnAssignment,
+} from '../../../action/classroom';
 
 import './assignmentCard.scss';
 
 const AssignmentCard = (props) => {
   const [comment, setComment] = useState('');
+  const [commenting, setCommenting] = useState(false);
 
   return (
     <div className="assignment-card-student" id={props.id}>
@@ -38,7 +44,26 @@ const AssignmentCard = (props) => {
         <div className="assignment-card-student__body__details">
           <div className="assignment-card-student__body__details__text-area">
             <div className="assignment-card-student__body__details__text-area__title">
-              {props.title}
+              {
+                // eslint-disable-next-line no-nested-ternary
+                props.attemptPeblUrl ? (
+                  <a
+                    rel="noopener noreferrer"
+                    href={props.attemptPeblUrl}
+                    target="_blank"
+                  >
+                    {props.title}
+                  </a>
+                ) : props.url ? (
+                  <a
+                    rel="noopener noreferrer"
+                    href={props.url}
+                    target="_blank"
+                  >
+                    {props.title}
+                  </a>
+                ) : `${props.title}`
+              }
             </div>
             <div className="assignment-card-student__body__details__text-area__description">
               {props.description}
@@ -51,7 +76,8 @@ const AssignmentCard = (props) => {
               className={props.turnedIn ? 'secondary' : 'primary'}
               style={{
                 height: '30px',
-                padding: '6px 13px',
+                display: 'flex',
+                alignItems: 'center',
                 fontSize: '14px',
                 marginLeft: '28px'
               }}
@@ -60,12 +86,16 @@ const AssignmentCard = (props) => {
                   if (props.turnedIn) {
                     console.log('unsubmit');
                   } else if (props.hasStarted) {
-                    console.log('Turn In');
+                    props.turnInAssignment(props.id).then(() => {
+                      props.fetchStudentAssignments(props.classroomId);
+                    });
                   } else {
                     props.studentAttemptAssignment({
                       peblUrl: props.peblUrl,
                       classroomId: props.classroomId,
                       assignmentId: props.id
+                    }).then(() => {
+                      props.fetchStudentAssignments(props.classroomId);
                     });
                   }
                 }
@@ -85,7 +115,45 @@ const AssignmentCard = (props) => {
           <div className="assignment-card-student__comments">
             <div className="assignment-card-student__comments__line"></div>
             <div className="assignment-card-student__comments__comment">COMMENTS</div>
-            <div className="assignment-card-student__comments__comment-box">
+            {
+              // eslint-disable-next-line no-shadow
+              props.comments.map((comment) => {
+                const curMember = props.members.filter(member => member.id === comment.fromMember);
+                let name;
+                if (curMember.length === 1) {
+                  name = `${curMember[0].firstName} ${curMember[0].lastName}`;
+                }
+
+                return (
+                  <div className="assignment-card-student__comments__container">
+                    <div className="assignment-card-student__comments__container__name">
+                      {name}
+                      :
+                    </div>
+                    <div className="assignment-card-student__comments__container__comment">
+                      {comment.text}
+                    </div>
+                  </div>
+                );
+              })
+            }
+            <form
+              className="assignment-card-student__comments__comment-box"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setCommenting(true);
+                props.commentOnAssignment({
+                  text: comment,
+                  assignmentAttemptId: props.attemptId
+                }).then(() => {
+                  setCommenting(false);
+                  props.fetchStudentAssignments(props.classroomId);
+                  setComment('');
+                }).catch((err) => {
+                  setCommenting(true);
+                });
+              }}
+            >
               <InputField
                 placeholder="type comment"
                 containerWidth="100%"
@@ -100,24 +168,28 @@ const AssignmentCard = (props) => {
                 className="secondary"
                 style={{
                   height: '35px',
-                  padding: '10px 19px',
-                  fontSize: '14px'
+                  fontSize: '14px',
+                  display: 'flex',
+                  alignItems: 'center'
                 }}
+                disabled={!comment.trim() || commenting}
               >
                 Send
               </Button>
-            </div>
+            </form>
           </div>
         )
       }
       {
-        props.type === 'assignment' && (
+        props.areGradesPublished && (
           <div className="assignment-card-student__grade">
             <span className="assignment-card-student__grade__label">
               GRADE :
             </span>
             <span className="assignment-card-student__grade__score">
-              70/100
+              {props.marksScored}
+              {' '}
+              / 100
             </span>
           </div>
         )
@@ -134,15 +206,29 @@ AssignmentCard.propTypes = {
   turnedIn: PropTypes.bool,
   hasStarted: PropTypes.bool,
   studentAttemptAssignment: PropTypes.func.isRequired,
+  fetchStudentAssignments: PropTypes.func.isRequired,
+  turnInAssignment: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   classroomId: PropTypes.string.isRequired,
-  peblUrl: PropTypes.string.isRequired
+  peblUrl: PropTypes.string.isRequired,
+  attemptPeblUrl: PropTypes.string,
+  areGradesPublished: PropTypes.bool.isRequired,
+  commentOnAssignment: PropTypes.func.isRequired,
+  marksScored: PropTypes.number,
+  url: PropTypes.string,
+  attemptId: PropTypes.string,
+  comments: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  members: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 AssignmentCard.defaultProps = {
   turnedIn: false,
   hasStarted: false,
   dueDate: '',
+  attemptPeblUrl: '',
+  marksScored: null,
+  url: '',
+  attemptId: ''
 };
 
 const mapStateToProps = state => ({
@@ -151,6 +237,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   studentAttemptAssignment,
+  fetchStudentAssignments,
+  turnInAssignment,
+  commentOnAssignment
 }, dispatch);
 
 

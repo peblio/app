@@ -18,7 +18,7 @@ const ClassTypeSection = ({ header, classrooms, ...props }) => (
           classrooms.map(classroom => (
             <ClassCard
               onClick={() => {
-                if (classroom.mymembership.role === 'teacher') {
+                if (classroom.myMemberShipDetail.role === 'teacher') {
                   history.push(`/classroom/teacher/${classroom.id}`);
                 } else {
                   history.push(`/classroom/student/${classroom.id}`);

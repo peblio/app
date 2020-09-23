@@ -51,7 +51,7 @@
       transform: scale(1);
     }
     &.left{
-      left: 14px;
+      left: -14px;
       transform-origin: top left;
       &::before{
         top: -6.5px;

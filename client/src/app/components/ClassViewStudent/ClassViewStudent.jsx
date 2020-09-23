@@ -6,6 +6,8 @@ import { NavLink } from 'react-router-dom';
 
 import TopNav from '../TopNav/TopNav';
 import RightCrumbIcon from '../../images/right.svg';
+import KidsIllustration from '../../images/kids-illu.svg';
+
 
 import SideBar from './SideBar/SideBar';
 import AssignmentCard from './AssignmentCard/AssignmentCard';
@@ -16,14 +18,16 @@ import {
   fetchClassrooms,
   fetchTopics,
   fetchStudentAssignments,
+  fetchCurrentClassroomDetails,
 } from '../../action/classroom';
 
 import './classViewStudent.scss';
 
 const ClassViewStudent = (props) => {
-  const [currentTopic, setCurrnetTopic] = useState({});
+  // const [currentTopic, setCurrnetTopic] = useState({});
   const [classroomName, setClassroomName] = useState('Loading...');
   const [dropdownTriggered, setDropdownTriggered] = useState(false);
+  const [members, setMembers] = useState([]);
 
   const closeOptionsHandler = () => {
     setDropdownTriggered(false);
@@ -31,26 +35,35 @@ const ClassViewStudent = (props) => {
   };
 
   useEffect(() => {
-    props.fetchClassrooms().then((data) => {
-      setClassroomName(
-        data.filter(
-          classroom => classroom.id === props.match.params.classId
-        )[0].name
-      );
-    });
+    props.fetchClassrooms();
     props.fetchStudentAssignments(props.match.params.classId);
     props.fetchTopics(props.match.params.classId);
+    props.fetchCurrentClassroomDetails(props.match.params.classId);
 
     return () => {
       document.removeEventListener('click', closeOptionsHandler);
     };
   }, [props.match.params.classId]);
 
+  // useEffect(() => {
+  //   if (props.topics.length !== 0) {
+  //     setCurrnetTopic(props.topics[0]);
+  //   }
+  // }, [props.topics, props.match.params.classId]);
+
   useEffect(() => {
-    if (props.topics.length !== 0) {
-      setCurrnetTopic(props.topics[0]);
+    if (props.currentClassroom.name) {
+      setClassroomName(
+        props.currentClassroom.name
+      );
+      setMembers(prevData => [...prevData,
+        ...props.currentClassroom.members.filter(
+          member => member.role === 'teacher' ||
+          member.user === props.userId
+        )
+      ]);
     }
-  }, [props.topics, props.match.params.classId]);
+  }, [props.currentClassroom, props.match.params.classId]);
 
   return (
     <div className='class-view-studet'>
@@ -99,9 +112,12 @@ const ClassViewStudent = (props) => {
                       <button
                         className='class-view-student__header-area__bread-crumbs__dropdown__option'
                         onClick={() => {
-                          history.push(
-                            `/classroom/${classroom.mymembership.role}/${classroom.id}`
-                          );
+                          if (props.match.params.classId !== classroom.id) {
+                            history.push(
+                              `/classroom/${classroom.myMemberShipDetail.role}/${classroom.id}`
+                            );
+                            window.location.reload();
+                          }
                         }}
                       >
                         {classroom.name}
@@ -117,6 +133,7 @@ const ClassViewStudent = (props) => {
               </div>
             </div>
           </div>
+          <KidsIllustration style={{ marginLeft: 'auto' }} />
         </div>
         <div className='class-view-student__body__container'>
           <SideBar>
@@ -144,7 +161,7 @@ const ClassViewStudent = (props) => {
                   <button
                     className='student-sidebar__topic__name'
                     onClick={() => {
-                      setCurrnetTopic(topic);
+                      // setCurrnetTopic(topic);
                       document.getElementById(topic._id).scrollIntoView();
                     }}
                   >
@@ -211,13 +228,20 @@ const ClassViewStudent = (props) => {
                         key={assignment.id}
                         id={assignment.id}
                         title={assignment.title}
+                        areGradesPublished={assignment.areGradesPublished}
                         description={assignment.description}
                         dueDate={assignment.dueDate}
                         type={assignment.type}
-                        hasStarted={attempt.length !== 0}
-                        turnedIn={attempt.length !== 0 && attempt[0].turnedIn}
                         classroomId={props.match.params.classId}
                         peblUrl={assignment.peblUrl}
+                        url={assignment.url}
+                        hasStarted={attempt.length !== 0}
+                        turnedIn={attempt.length !== 0 && attempt[0].turnedIn}
+                        attemptPeblUrl={attempt.length !== 0 && attempt[0].myPeblUrl}
+                        marksScored={attempt.length !== 0 && attempt[0].marksScored}
+                        comments={attempt.length !== 0 && attempt[0].comments}
+                        attemptId={attempt.length !== 0 && attempt[0].id}
+                        members={members}
                       />
                     )
                   );
@@ -248,10 +272,17 @@ const ClassViewStudent = (props) => {
                               description={assignment.description}
                               dueDate={assignment.dueDate}
                               type={assignment.type}
-                              hasStarted={attempt.length !== 0}
-                              turnedIn={attempt.length !== 0 && attempt[0].turnedIn}
                               classroomId={props.match.params.classId}
                               peblUrl={assignment.peblUrl}
+                              url={assignment.url}
+                              areGradesPublished={assignment.areGradesPublished}
+                              hasStarted={attempt.length !== 0}
+                              turnedIn={attempt.length !== 0 && attempt[0].turnedIn}
+                              attemptPeblUrl={attempt.length !== 0 && attempt[0].myPeblUrl}
+                              marksScored={attempt.length !== 0 && attempt[0].marksScored}
+                              comments={attempt.length !== 0 && attempt[0].comments}
+                              attemptId={attempt.length !== 0 && attempt[0].id}
+                              members={members}
                             />
                           )
                         );
@@ -270,6 +301,7 @@ ClassViewStudent.propTypes = {
   fetchClassrooms: PropTypes.func.isRequired,
   fetchTopics: PropTypes.func.isRequired,
   fetchStudentAssignments: PropTypes.func.isRequired,
+  fetchCurrentClassroomDetails: PropTypes.func.isRequired,
   topics: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   studentAssignments: PropTypes.shape({
     assignmentsAttemptedByStudent: PropTypes.arrayOf(PropTypes.shape({})),
@@ -281,12 +313,21 @@ ClassViewStudent.propTypes = {
     }),
   }).isRequired,
   classrooms: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  currentClassroom: PropTypes.shape({
+    name: PropTypes.string,
+    members: PropTypes.arrayOf(PropTypes.shape({
+
+    }))
+  }).isRequired,
+  userId: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
   topics: state.classroom.topics,
   studentAssignments: state.classroom.studentAssignments,
   classrooms: state.classroom.classrooms,
+  currentClassroom: state.classroom.currentClassroom,
+  userId: state.user.id
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
@@ -294,6 +335,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
     fetchClassrooms,
     fetchTopics,
     fetchStudentAssignments,
+    fetchCurrentClassroomDetails,
   },
   dispatch
 );
