@@ -2032,7 +2032,7 @@
 					"response": []
 				},
 				{
-					"name": "TurnInMyClassroomAssignmentAttempt",
+					"name": "ChangeTurnInStatusOfMyClassroomAssignmentAttempt",
 					"request": {
 						"method": "PATCH",
 						"header": [
@@ -2087,7 +2087,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\n\t\"turnedIn\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2095,12 +2095,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/learning/classroomAssignmentAttempt/rJvWUX8SP",
+							"raw": "http://localhost:8081/api/learning/classroomAssignmentAttempt/rJvWUX8SP",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8081",
 							"path": [
 								"api",
 								"learning",

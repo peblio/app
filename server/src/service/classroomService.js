@@ -133,7 +133,7 @@ export async function saveClassroomAssignmentStudentAttempt(req, res) {
   }
 }
 
-export async function turnInClassroomAssignmentAttempt(req, res) {
+export async function changeTurnInStatusOfClassroomAssignmentAttempt(req, res) {
   try {
     const classroomAssignment = await ClassroomAssignment.findOne({id: req.params.id});
     if (!classroomAssignment) {
@@ -162,13 +162,21 @@ export async function turnInClassroomAssignmentAttempt(req, res) {
     if(myClassroomAssignmentAttempt.turnedIn) {
       return res.status(400).send();
     }
-    await ClassroomStudentAssignmentAttempt.update(
-      { assignmentId: req.params.id, user: req.user._id.toString() },
-      {
-        turnedIn: true,
-        turnedInTime: Date.now(),
-      }
-    );
+    if(req.body.turnedIn) {
+      await ClassroomStudentAssignmentAttempt.update(
+        { assignmentId: req.params.assignmentId, user: req.user._id.toString() },
+        {
+          turnedIn: req.body.turnedIn,
+          turnedInTime: Date.now(),
+        });
+    } else {
+        await ClassroomStudentAssignmentAttempt.update(
+        { assignmentId: req.params.assignmentId, user: req.user._id.toString() },
+        {
+          turnedIn: req.body.turnedIn,
+          turnedInTime: null
+        });
+    }
     return res.status(200).send();
   } catch (err) {
     return res.status(500).send({ error: err.message });
