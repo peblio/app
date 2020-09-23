@@ -72,11 +72,11 @@ export function saveClassroomAssignmentStudentAttempt(req, res) {
   }
 }
 
-export function turnInClassroomAssignmentAttempt(req, res) {
+export function changeTurnInStatusOfClassroomAssignmentAttempt(req, res) {
   if (!req.user) {
     return res.status(403).send({ error: 'Please log in first' });
   } else {
-    return classroomService.turnInClassroomAssignmentAttempt(req, res);
+    return classroomService.changeTurnInStatusOfClassroomAssignmentAttempt(req, res);
   }
 }
 
