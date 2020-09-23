@@ -71,14 +71,14 @@ const MyClasses = ({
             </div>
             <ClassTypeSection
               header="Created classes"
-              classrooms={classrooms.filter(classroom => classroom.mymembership.role === 'teacher')}
+              classrooms={classrooms.filter(classroom => classroom.myMemberShipDetail.role === 'teacher')}
               style={{
                 marginTop: '69px'
               }}
             />
             <ClassTypeSection
               header="Joined classes"
-              classrooms={classrooms.filter(classroom => classroom.mymembership.role === 'student')}
+              classrooms={classrooms.filter(classroom => classroom.myMemberShipDetail.role === 'student')}
               style={{
                 marginTop: 0
               }}
@@ -87,13 +87,27 @@ const MyClasses = ({
         )
       }
       {createClassroomModal && <CreateClassModal />}
-      {joinClassroomModal && <JoinClassModal />}
+      {joinClassroomModal && (
+        <JoinClassModal
+          firstName={
+            classrooms.length !== 0 &&
+         classrooms[0].myMemberShipDetail.firstName}
+          lastName={
+            classrooms.length !== 0 &&
+         classrooms[0].myMemberShipDetail.lastName}
+        />
+      )}
     </React.Fragment>
   );
 };
 
 MyClasses.propTypes = {
-  classrooms: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  classrooms: PropTypes.arrayOf(PropTypes.shape({
+    myMemberShipDetail: PropTypes.shape({
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+    })
+  })).isRequired,
   createClassroomModal: PropTypes.bool.isRequired,
   joinClassroomModal: PropTypes.bool.isRequired,
   toggleCreateClassroomModal: PropTypes.func.isRequired,

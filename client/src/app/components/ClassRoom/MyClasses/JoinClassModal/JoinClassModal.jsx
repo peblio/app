@@ -61,7 +61,13 @@ const JoinClassroomModal = ({ toggleJoinClassroomModal, submittingData, joinClas
         <Button
           className='primary'
           disabled={!classCode.trim() || !firstName.trim() || !lastName.trim() || submittingData}
-          onClick={() => { joinClassroom(classCode); }}
+          onClick={() => {
+            joinClassroom({
+              firstName,
+              lastName,
+              classroomId: classCode
+            });
+          }}
         >
           Join Class
         </Button>

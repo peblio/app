@@ -55,7 +55,7 @@ const People = (props) => {
         </div>
         {
           teachers.map(teacher => (
-            <TeacherCard key={teacher.userDetail._id} name={teacher.userDetail.name} />
+            <TeacherCard key={teacher.id} name={`${teacher.firstName} ${teacher.lastName}`} />
           ))
         }
       </div>
@@ -76,11 +76,13 @@ const People = (props) => {
             {
               students.map(student => (
                 <button
-                  key={student.userDetail._id}
+                  key={student.id}
                   className="class-view__people__section__student-details__students__student"
                   onClick={() => handleStudentSelect(student.userDetail.name)}
                 >
-                  {student.userDetail.name}
+                  {student.firstName}
+                  {' '}
+                  {student.lastName}
                 </button>
               ))
             }

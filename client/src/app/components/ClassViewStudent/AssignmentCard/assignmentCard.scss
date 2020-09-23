@@ -83,6 +83,10 @@
           font-family: $roboto;
           font-weight: 500;
           font-size: $p-size;
+          a{
+            color: $black;
+            text-decoration: none;
+          }
         }
 
         &__description{
@@ -112,11 +116,28 @@
       margin-bottom: 21px;
     }
     &__comment-box{
+      margin-top: 16px;
       display: flex;
 
       .input-field{
         flex:1;
         margin-right: 16px;
+      }
+    }
+
+    &__container{
+      display: flex;
+      margin-bottom: 8px;
+
+      &__name{
+        font-weight: 500;
+        color: $black;
+        white-space: nowrap;
+      }
+
+      &__comment{
+        color: $g2;
+        margin-left: 4px;
       }
     }
   }

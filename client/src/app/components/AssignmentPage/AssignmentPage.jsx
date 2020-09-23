@@ -135,7 +135,9 @@ const AssignmentPage = (props) => {
                             );
                           }}
                         >
-                          {member.userDetail.name}
+                          {member.firstName}
+                          {' '}
+                          {member.lastName}
                         </button>
                         <div className="assignment-page__container__students__student__marks">
                           <InputField containerWidth="68px" style={{ marginRight: '8px' }} />
