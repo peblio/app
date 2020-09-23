@@ -1687,7 +1687,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/learning/classroomAllAssignmentsByStudentForTeacher/HyBcfx-VP?studentName=komalstudent",
+							"raw": "http://localhost:8081/api/learning/classroomAllAssignmentsByStudentForTeacher/Bk3Y5kUHv?memberId=5f68988a64eefc2e5d03f59f",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1697,12 +1697,12 @@
 								"api",
 								"learning",
 								"classroomAllAssignmentsByStudentForTeacher",
-								"HyBcfx-VP"
+								"Bk3Y5kUHv"
 							],
 							"query": [
 								{
-									"key": "studentName",
-									"value": "komalstudent"
+									"key": "memberId",
+									"value": "5f68988a64eefc2e5d03f59f"
 								}
 							]
 						}

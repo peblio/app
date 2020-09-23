@@ -585,23 +585,19 @@ export async function getAllAssignmentsInClassroomByStudentForTeacher(req, res) 
     if(classroomMember.role !== "teacher") {
       return res.status(401).send();
     }
-    const studentName = url.parse(req.url, true).query.studentName;
-    const studentDetail = await User.findOne({name: studentName});
-    if(!studentDetail){
-      return res.status(404).send();
-    }
-    const studentMembershipDetails = await ClassroomMember.findOne({
-      user: studentDetail._id.toString(),
-      classroomId: req.params.id
-    });
+    const memberId = url.parse(req.url, true).query.memberId;
+    const studentMembershipDetails = await ClassroomMember.findById(new ObjectId(memberId));
     if(!studentMembershipDetails){
       return res.status(404).send();
     }
     if(studentMembershipDetails.role !== "student") {
       return res.status(401).send();
     }
+    if(studentMembershipDetails.classroomId !== req.params.id) {
+      return res.status(401).send();
+    }
     const allClassroomAssignmentsAttemptedByStudent = await ClassroomStudentAssignmentAttempt
-    .find({classroomId: req.params.id, user: studentDetail._id.toString()})
+    .find({classroomId: req.params.id, user: studentMembershipDetails.user.toString()})
     .populate('assignmentDetail');
     const classroomAssignments = await ClassroomAssignment.find({classroomId: req.params.id}).populate('topicId');
     const classroomAssignmentsJson = classroomAssignments
