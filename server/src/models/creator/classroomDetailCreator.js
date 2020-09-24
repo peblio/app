@@ -29,7 +29,11 @@ export function buildClassroomAssignment(request) {
     url: request.body.url,
     isPublished: request.body.isPublished,
     type: request.body.type,
+    outOfMarks: request.body.outOfMarks,
   });
+  if(request.body.type === "assignment" && !request.body.outOfMarks) {
+    classroomAssignment.outOfMarks = 100;
+  }
   return classroomAssignment;
 }
 

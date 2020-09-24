@@ -950,7 +950,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"classroomId\": \"Bk3Y5kUHv\",\n    \"title\": \"Homework on Addition\",\n    \"dueDate\": \"2020-06-17T14:20:43.897Z\",\n    \"description\": \"Add answers of addition to the pebl\",\n    \"isPublished\": true,\n    \"peblUrl\": \"http://localhost:8080/pebl/N2662b1j\",\n    \"type\": \"assignment\", \n    \"url\": null,\n    \"topicId\": \"5f68a546f3f306306a52560c\"\n}",
+							"raw": "{\n    \"classroomId\": \"Bk3Y5kUHv\",\n    \"title\": \"Homework on Multiplication-Material\",\n    \"dueDate\": \"2020-06-17T14:20:43.897Z\",\n    \"description\": \"Add answers of addition to the pebl\",\n    \"isPublished\": true,\n    \"peblUrl\": \"http://localhost:8080/pebl/N2662b1j\",\n    \"type\": \"assignment\", \n    \"url\": null,\n    \"topicId\": \"5f68a546f3f306306a52560c\",\n    \"outOfMarks\": \"100\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

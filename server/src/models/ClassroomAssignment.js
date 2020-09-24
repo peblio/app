@@ -14,6 +14,7 @@ const classroomAssignmentSchema = new Schema({
   areGradesPublished: { type: Boolean, required: true, default: false },
   peblUrl: { type: String},
   url: { type: String},
+  outOfMarks: { type: Number},
   type: { type: String, enum: ['assignment', 'material'], default: 'assignment', required: true },
   topicId: { type: Schema.Types.ObjectId, ref: 'ClassroomTopic' },
 }, {
