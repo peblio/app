@@ -159,21 +159,13 @@ export async function changeTurnInStatusOfClassroomAssignmentAttempt(req, res) {
     if (!myClassroomAssignmentAttempt) {
       return res.status(404).send();
     }
+    myClassroomAssignmentAttempt.turnedIn = req.body.turnedIn;
     if(req.body.turnedIn) {
-      await ClassroomStudentAssignmentAttempt.update(
-        { assignmentId: req.params.assignmentId, user: req.user._id.toString() },
-        {
-          turnedIn: req.body.turnedIn,
-          turnedInTime: Date.now(),
-        });
+      myClassroomAssignmentAttempt.turnedInTime = Date.now();
     } else {
-        await ClassroomStudentAssignmentAttempt.update(
-        { assignmentId: req.params.assignmentId, user: req.user._id.toString() },
-        {
-          turnedIn: req.body.turnedIn,
-          turnedInTime: null
-        });
+      myClassroomAssignmentAttempt.turnedInTime = null;
     }
+    await myClassroomAssignmentAttempt.save();
     return res.status(200).send();
   } catch (err) {
     return res.status(500).send({ error: err.message });
