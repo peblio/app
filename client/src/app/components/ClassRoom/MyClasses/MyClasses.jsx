@@ -90,11 +90,11 @@ const MyClasses = ({
       {joinClassroomModal && (
         <JoinClassModal
           firstName={
-            classrooms.length !== 0 &&
-         classrooms[0].myMemberShipDetail.firstName}
+            classrooms.length !== 0
+              ? classrooms[0].myMemberShipDetail.firstName : ''}
           lastName={
-            classrooms.length !== 0 &&
-         classrooms[0].myMemberShipDetail.lastName}
+            classrooms.length !== 0
+              ? classrooms[0].myMemberShipDetail.lastName : ''}
         />
       )}
     </React.Fragment>

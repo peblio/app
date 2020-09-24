@@ -6,8 +6,11 @@ import { bindActionCreators } from 'redux';
 // images
 import PlusIcon from '../../../images/add.svg';
 
-// page specific components
+// component imports
 import IconButton from '../../IconButton/IconButton';
+import GenericLoader from '../../GenericLoader/LoadingMessage';
+
+// page specific components
 import StudentAssignmentCard from './StudentAssignmentCard/StudentAssignmentCard';
 import TeacherCard from './TeacherCard/TeacherCard';
 
@@ -20,6 +23,7 @@ const People = (props) => {
   const [teachers, setTeachers] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState();
   const [students, setStudents] = useState([]);
+  const [fetchingAssignments, setFetchingAssignments] = useState();
 
   useEffect(() => {
     setTeachers(props.members.filter(member => member.role === 'teacher'));
@@ -36,10 +40,13 @@ const People = (props) => {
   //   });
   // };
 
-  const handleStudentSelect = (studentName) => {
-    console.log(studentName);
-    setSelectedStudent(studentName);
-    props.fetchAssignmentsByStudentsForTeacher({ studentName, classroomId: props.currentClassroom.id });
+  const handleStudentSelect = (student) => {
+    setSelectedStudent(student);
+    setFetchingAssignments(() => true);
+    props.fetchAssignmentsByStudentsForTeacher({ memberId: student.id, classroomId: props.currentClassroom.id })
+      .then(() => {
+        setFetchingAssignments(() => false);
+      });
   };
 
   return (
@@ -77,8 +84,10 @@ const People = (props) => {
               students.map(student => (
                 <button
                   key={student.id}
-                  className="class-view__people__section__student-details__students__student"
-                  onClick={() => handleStudentSelect(student.userDetail.name)}
+                  className={`class-view__people__section__student-details__students__student ${
+                    selectedStudent && student.id === selectedStudent.id ? 'selected' : ''
+                  }`}
+                  onClick={() => handleStudentSelect(student)}
                 >
                   {student.firstName}
                   {' '}
@@ -99,30 +108,49 @@ const People = (props) => {
                 Due
               </div>
               <div>
-                Comments
-              </div>
-              <div>
                 Grade
               </div>
             </div>
             {
+              // eslint-disable-next-line no-nested-ternary
               selectedStudent ? (
-                props.assignmentsPeople && props.assignmentsPeople.allClassroomAssignmentsInClassroom.map(
-                  assignment => (
-                    assignment.isPublished && assignment.type === 'assignment' && (
-                      <StudentAssignmentCard
-                        title={assignment.title}
-                        status={
-                          props.assignmentsPeople.allClassroomAssignmentsAttemptedByStudent.includes(assignment)
-                            ? 'Turned in' : 'Missing'
+                fetchingAssignments ? (
+                  <div style={{
+                    height: '300px'
+                  }}
+                  >
+                    <GenericLoader />
+                  </div>
+                ) : (
+                  props.assignmentsPeople && props.assignmentsPeople.allClassroomAssignmentsInClassroom &&
+                      props.assignmentsPeople.allClassroomAssignmentsInClassroom.map(
+                        (assignment) => {
+                          const attempt = props.assignmentsPeople.allClassroomAssignmentsAttemptedByStudent.filter(
+                            // eslint-disable-next-line no-shadow
+                            attempt => attempt.assignmentId === assignment.id
+                          );
+                          // console.log(attempt);
+                          return (
+                            assignment.isPublished && assignment.type === 'assignment' && (
+                              <StudentAssignmentCard
+                                title={assignment.title}
+                                description={assignment.description}
+                                status={
+                                  // eslint-disable-next-line no-nested-ternary
+                                  attempt.length !== 0
+                                    ? attempt[0].turnedIn ? 'Turned In' : 'Started' : 'Missing'
+                                }
+                                dueDate={assignment.dueDate}
+                                gradeTotal={100}
+                                url={assignment.url}
+                                peblUrl={assignment.peblUrl}
+                                gradeObtained={attempt.length !== 0 && attempt[0].marksScored}
+                                attemptPeblUrl={attempt.length !== 0 && attempt[0].myPeblUrl}
+                              />
+                            )
+                          );
                         }
-                        dueDate={assignment.dueDate}
-                        comments="sent"
-                        gradeTotal={100}
-                        gradeObtained={assignment.areGradesPublished ? 0 : null}
-                      />
-                    )
-                  )
+                      )
                 )
               ) : (
                 <p className="class-view__people__section__student-details__assignments__no-student">
