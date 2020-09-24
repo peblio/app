@@ -159,9 +159,6 @@ export async function changeTurnInStatusOfClassroomAssignmentAttempt(req, res) {
     if (!myClassroomAssignmentAttempt) {
       return res.status(404).send();
     }
-    if(myClassroomAssignmentAttempt.turnedIn) {
-      return res.status(400).send();
-    }
     if(req.body.turnedIn) {
       await ClassroomStudentAssignmentAttempt.update(
         { assignmentId: req.params.assignmentId, user: req.user._id.toString() },
