@@ -10,7 +10,7 @@ import InputField from '../../InputField/InputField';
 import {
   studentAttemptAssignment,
   fetchStudentAssignments,
-  turnInAssignment,
+  toggleTurnInAssignment,
   commentOnAssignment,
 } from '../../../action/classroom';
 
@@ -84,11 +84,15 @@ const AssignmentCard = (props) => {
               onClick={
                 () => {
                   if (props.turnedIn) {
-                    console.log('unsubmit');
+                    props.toggleTurnInAssignment({ assignmentId: props.id, status: false })
+                      .then(() => {
+                        props.fetchStudentAssignments(props.classroomId);
+                      });
                   } else if (props.hasStarted) {
-                    props.turnInAssignment(props.id).then(() => {
-                      props.fetchStudentAssignments(props.classroomId);
-                    });
+                    props.toggleTurnInAssignment({ assignmentId: props.id, status: true })
+                      .then(() => {
+                        props.fetchStudentAssignments(props.classroomId);
+                      });
                   } else {
                     props.studentAttemptAssignment({
                       peblUrl: props.peblUrl,
@@ -114,29 +118,38 @@ const AssignmentCard = (props) => {
         (props.hasStarted || props.type !== 'assignment') && (
           <div className="assignment-card-student__comments">
             <div className="assignment-card-student__comments__line"></div>
-            <div className="assignment-card-student__comments__comment">COMMENTS</div>
-            {
-              // eslint-disable-next-line no-shadow
-              props.comments.map((comment) => {
-                const curMember = props.members.filter(member => member.id === comment.fromMember);
-                let name;
-                if (curMember.length === 1) {
-                  name = `${curMember[0].firstName} ${curMember[0].lastName}`;
-                }
+            <div className={`assignment-card-student__comments__comment ${
+              props.comments && props.comments.length !== 0
+                ? ''
+                : 'assignment-card-student__comments__comment--no-comments'
+            }`}
+            >
+              COMMENTS
+            </div>
+            <div className="assignment-card-student__comments__view">
+              {
+                // eslint-disable-next-line no-shadow
+                props.comments && props.comments.map((comment) => {
+                  const curMember = props.members.filter(member => member.id === comment.fromMember);
+                  let name;
+                  if (curMember.length === 1) {
+                    name = `${curMember[0].firstName} ${curMember[0].lastName}`;
+                  }
 
-                return (
-                  <div className="assignment-card-student__comments__container">
-                    <div className="assignment-card-student__comments__container__name">
-                      {name}
-                      :
+                  return (
+                    <div className="assignment-card-student__comments__container">
+                      <div className="assignment-card-student__comments__container__name">
+                        {name}
+                        :
+                      </div>
+                      <div className="assignment-card-student__comments__container__comment">
+                        {comment.text}
+                      </div>
                     </div>
-                    <div className="assignment-card-student__comments__container__comment">
-                      {comment.text}
-                    </div>
-                  </div>
-                );
-              })
-            }
+                  );
+                })
+              }
+            </div>
             <form
               className="assignment-card-student__comments__comment-box"
               onSubmit={(e) => {
@@ -181,7 +194,7 @@ const AssignmentCard = (props) => {
         )
       }
       {
-        props.areGradesPublished && (
+        props.areGradesPublished && props.marksScored && (
           <div className="assignment-card-student__grade">
             <span className="assignment-card-student__grade__label">
               GRADE :
@@ -207,7 +220,7 @@ AssignmentCard.propTypes = {
   hasStarted: PropTypes.bool,
   studentAttemptAssignment: PropTypes.func.isRequired,
   fetchStudentAssignments: PropTypes.func.isRequired,
-  turnInAssignment: PropTypes.func.isRequired,
+  toggleTurnInAssignment: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   classroomId: PropTypes.string.isRequired,
   peblUrl: PropTypes.string.isRequired,
@@ -238,7 +251,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   studentAttemptAssignment,
   fetchStudentAssignments,
-  turnInAssignment,
+  toggleTurnInAssignment,
   commentOnAssignment
 }, dispatch);
 

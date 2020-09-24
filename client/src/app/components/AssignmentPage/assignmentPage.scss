@@ -87,48 +87,6 @@
           background-color: var(--thumbBG) ;
         }
       }
-
-      &__student{
-        $stud: &;
-        display: flex;
-        align-items: center;
-        font-family: $roboto;
-        box-sizing: border-box;
-        height: 58px;
-        transition: background 300ms ease;
-        &:hover{
-          background: $g6;
-        }
-        &--selected{
-          background: $g6;
-        }
-
-        &__name{
-          font-family: $roboto;
-          background: none;
-          border: none;
-          box-sizing: border-box;
-          height: 100%;
-          width: calc(100% - 119px);
-          padding: 8px;
-          box-sizing: border-box;
-          border-right: 1px $g5 solid;
-          display: flex;
-          align-items: center;
-          font-size: $p-size;
-          &:focus{
-            outline: none;
-          }
-        }
-        &__marks{
-          padding: 8px;
-          display: flex;
-          align-items: center;
-          font-weight: 500;
-          width: 119px;
-        }
-        border-bottom: 1px $g5 solid;
-      }
     }
 
     &__pebl{

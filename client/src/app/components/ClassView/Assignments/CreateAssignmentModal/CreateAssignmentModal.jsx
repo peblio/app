@@ -101,7 +101,6 @@ const CreateAssignmentModal = ({
       })
     )
       .then((data) => {
-        console.log(data);
         setSubmittinData(false);
         toggleCreateAssignmentModal();
         fetchAssignments(classroomId);

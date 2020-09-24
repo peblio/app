@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -25,12 +25,16 @@ const ClassView = ({
   // eslint-disable-next-line no-shadow
   clearCurrentClassroom,
   currentClassroom,
-  dataLoading,
   userId
 }) => {
-  useEffect(() => {
-    fetchCurrentClassroomDetails(match.params.classId);
+  const [dataLoading, setDataLoading] = useState();
 
+  useEffect(() => {
+    setDataLoading(true);
+    fetchCurrentClassroomDetails(match.params.classId)
+      .then(() => {
+        setDataLoading(false);
+      });
     return () => {
       clearCurrentClassroom();
     };

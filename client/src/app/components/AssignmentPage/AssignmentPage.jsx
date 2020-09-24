@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NavLink } from 'react-router-dom';
 
+import Student from './Student/Student';
+
 import DatePickerField from '../DatePickerField/DatePickerField';
 import DashboardView from '../DashboardBase/DashboardBase';
 import Loader from '../GenericLoader/LoadingMessage';
@@ -16,6 +18,10 @@ import {
   fetchCurrentAssignmentDetails,
   clearCurrentAssignmentDetails,
   fetchAssignmentAttempts,
+  clearAssignmentAttempt,
+  clearCurrentClassroom,
+  commentOnAssignment,
+  publishGrades,
 } from '../../action/classroom';
 
 import RightCrumbIcon from '../../images/right.svg';
@@ -25,8 +31,24 @@ const AssignmentPage = (props) => {
   const [dueDate, setDueDate] = useState();
   const [dataLoading, setDataLoading] = useState(false);
   const [totalMarks, setTotalMarks] = useState('100');
-  const [selectedAssignment, setSelectedAssignment] = useState();
+  const [selectedAssignment, setSelectedAssignment] = useState(null);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [comment, setComment] = useState('');
+  const [totalAssigned, setTotalAssigned] = useState();
+  const [totalTurnedIn, setTotalTurnedIn] = useState();
 
+  // marks passed to student component, to prevent unnecessary state updates
+  const [passedMarks, setPassedMarks] = useState(totalMarks);
+
+  useEffect(() => {
+    const updateTimer = setTimeout(() => {
+      setPassedMarks(totalMarks);
+    }, 800);
+
+    return () => {
+      clearTimeout(updateTimer);
+    };
+  }, [totalMarks]);
 
   useEffect(() => {
     setDataLoading(true);
@@ -39,6 +61,8 @@ const AssignmentPage = (props) => {
 
     return () => {
       props.clearCurrentAssignmentDetails();
+      props.clearAssignmentAttempt();
+      props.clearCurrentClassroom();
     };
   }, []);
 
@@ -49,8 +73,32 @@ const AssignmentPage = (props) => {
   }, [props.currentAssignment]);
 
   useEffect(() => {
-    document.getElementById('assignment-pebl');
-  }, [selectedAssignment]);
+    let val = 0;
+    if (props.currentClassroom.members) {
+      val = props.currentClassroom.members
+        .reduce((acc, member) => {
+          if (member.role === 'student') {
+            return acc + 1;
+          }
+          return acc;
+        }, 0);
+    }
+    setTotalAssigned(val);
+  }, [props.currentClassroom]);
+
+  useEffect(() => {
+    let val = 0;
+    if (props.assignmentAttempts.allStudentsAttemptForAssignment) {
+      val = props.assignmentAttempts.allStudentsAttemptForAssignment
+        .reduce((acc, attempt) => {
+          if (attempt.turnedIn) {
+            return acc + 1;
+          }
+          return acc;
+        }, 0);
+    }
+    setTotalTurnedIn(val);
+  }, [props.assignmentAttempts.allStudentsAttemptForAssignment]);
 
   return (
     <DashboardView>
@@ -103,13 +151,27 @@ const AssignmentPage = (props) => {
                   placeholder="total grade"
                 />
               </div>
-              <Button className="primary">Publish grades</Button>
+              <Button
+                className="primary"
+                disabled={
+                  props.assignmentAttempts.classroomAssignment &&
+                  props.assignmentAttempts.classroomAssignment.areGradesPublished
+                }
+                onClick={() => {
+                  props.publishGrades(props.currentAssignment.id)
+                    .then(() => {
+                      props.fetchAssignmentAttempts(props.match.params.assignmentId);
+                    });
+                }}
+              >
+                Publish grades
+              </Button>
               <div className="assignment-page__action-area__turned-in">
-                <span>18</span>
+                <span>{totalTurnedIn}</span>
                 {' '}
                 turned in /
                 {' '}
-                <span>25</span>
+                <span>{totalAssigned}</span>
                 {' '}
                 asigned
               </div>
@@ -118,36 +180,35 @@ const AssignmentPage = (props) => {
               <div className="assignment-page__container__students">
                 {
                   props.currentClassroom.members &&
-                  props.currentClassroom.members.map(member => (
-                    member.role !== 'teacher' && (
-                      <div className={`assignment-page__container__students__student ${
-                        selectedAssignment &&
-                        selectedAssignment.user === member.user
-                          ? 'assignment-page__container__students__student--selected'
-                          : ''
-                      }`}
-                      >
-                        <button
-                          className="assignment-page__container__students__student__name"
-                          onClick={() => {
-                            setSelectedAssignment(
-                              props.assignmentAttempts.filter(assignment => assignment.user === member.user)[0]
-                            );
+                  props.currentClassroom.members.map((member) => {
+                    let attempt = [];
+                    if (props.assignmentAttempts.allStudentsAttemptForAssignment) {
+                      attempt = props.assignmentAttempts
+                        // eslint-disable-next-line react/prop-types
+                        .allStudentsAttemptForAssignment.filter(assignment => assignment.user === member.user);
+                    }
+                    return (
+                      member.role !== 'teacher' && (
+                        <Student
+                          member={member}
+                          selectedStudent={selectedStudent}
+                          selectedAssignment={selectedAssignment}
+                          onNameClick={() => {
+                            if (attempt.length !== 0) {
+                              setSelectedAssignment(
+                                attempt[0]
+                              );
+                            } else {
+                              setSelectedAssignment(null);
+                            }
+                            setSelectedStudent(member);
                           }}
-                        >
-                          {member.firstName}
-                          {' '}
-                          {member.lastName}
-                        </button>
-                        <div className="assignment-page__container__students__student__marks">
-                          <InputField containerWidth="68px" style={{ marginRight: '8px' }} />
-                          <span>
-                            /100
-                          </span>
-                        </div>
-                      </div>
-                    )
-                  ))
+                          totalMarks={passedMarks}
+                          marksScored={attempt.length !== 0 ? attempt[0].marksScored : ''}
+                        />
+                      )
+                    );
+                  })
                 }
               </div>
               <div className="assignment-page__container__pebl">
@@ -162,26 +223,39 @@ const AssignmentPage = (props) => {
                     )
                   }
                 </div>
-                <div className="assignment-page__container__pebl__comment">
+                <form
+                  className="assignment-page__container__pebl__comment"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    props.commentOnAssignment({
+                      text: comment,
+                      assignmentAttemptId: selectedAssignment.id
+                    }).then(() => {
+                      setComment('');
+                    });
+                  }}
+                >
                   <InputField
                     placeholder="type comment..."
                     disabled={
                       !(selectedAssignment && selectedAssignment.myPeblUrl)
                     }
+                    state={comment}
+                    onChange={(e) => { setComment(e.target.value); }}
                   />
                   <Button
                     className="secondary"
                     disabled={
-                      !(selectedAssignment && selectedAssignment.myPeblUrl)
+                      !comment ||
+                      !selectedAssignment
                     }
                   >
                     Send
                   </Button>
-                </div>
+                </form>
               </div>
             </div>
           </main>
-
         )
       }
     </DashboardView>
@@ -203,13 +277,24 @@ AssignmentPage.propTypes = {
   fetchCurrentClassroomDetails: PropTypes.func.isRequired,
   fetchCurrentAssignmentDetails: PropTypes.func.isRequired,
   currentAssignment: PropTypes.shape({
+    id: PropTypes.string,
     title: PropTypes.string,
     classroomId: PropTypes.string,
     dueDate: PropTypes.instanceOf(Date)
   }).isRequired,
   clearCurrentAssignmentDetails: PropTypes.func.isRequired,
+  clearAssignmentAttempt: PropTypes.func.isRequired,
+  commentOnAssignment: PropTypes.func.isRequired,
+  clearCurrentClassroom: PropTypes.func.isRequired,
   fetchAssignmentAttempts: PropTypes.func.isRequired,
-  assignmentAttempts: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+  publishGrades: PropTypes.func.isRequired,
+  assignmentAttempts: PropTypes.shape({
+    allStudentsAttemptForAssignment: PropTypes.arrayOf(PropTypes.shape({
+    })),
+    classroomAssignment: PropTypes.shape({
+      areGradesPublished: PropTypes.bool
+    })
+  }).isRequired
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -217,6 +302,10 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchCurrentAssignmentDetails,
   clearCurrentAssignmentDetails,
   fetchAssignmentAttempts,
+  clearAssignmentAttempt,
+  clearCurrentClassroom,
+  commentOnAssignment,
+  publishGrades,
 }, dispatch);
 
 const mapStateProps = state => ({

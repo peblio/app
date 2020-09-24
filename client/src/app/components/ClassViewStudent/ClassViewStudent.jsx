@@ -19,12 +19,15 @@ import {
   fetchTopics,
   fetchStudentAssignments,
   fetchCurrentClassroomDetails,
+  clearStudentAssignments,
+  clearTopics,
+  clearCurrentAssignmentDetails,
+  clearCurrentClassroom,
 } from '../../action/classroom';
 
 import './classViewStudent.scss';
 
 const ClassViewStudent = (props) => {
-  // const [currentTopic, setCurrnetTopic] = useState({});
   const [classroomName, setClassroomName] = useState('Loading...');
   const [dropdownTriggered, setDropdownTriggered] = useState(false);
   const [members, setMembers] = useState([]);
@@ -42,17 +45,15 @@ const ClassViewStudent = (props) => {
 
     return () => {
       document.removeEventListener('click', closeOptionsHandler);
+      props.clearStudentAssignments();
+      props.clearTopics();
+      props.clearCurrentAssignmentDetails();
+      props.clearCurrentClassroom();
     };
   }, [props.match.params.classId]);
 
-  // useEffect(() => {
-  //   if (props.topics.length !== 0) {
-  //     setCurrnetTopic(props.topics[0]);
-  //   }
-  // }, [props.topics, props.match.params.classId]);
-
   useEffect(() => {
-    if (props.currentClassroom.name) {
+    if (props.currentClassroom && props.currentClassroom.name) {
       setClassroomName(
         props.currentClassroom.name
       );
@@ -133,7 +134,7 @@ const ClassViewStudent = (props) => {
               </div>
             </div>
           </div>
-          <KidsIllustration style={{ marginLeft: 'auto' }} />
+          <KidsIllustration style={{ marginLeft: 'auto', marginTop: 'auto' }} />
         </div>
         <div className='class-view-student__body__container'>
           <SideBar>
@@ -187,34 +188,6 @@ const ClassViewStudent = (props) => {
               ))}
           </SideBar>
           <div className='class-view-student__body__container__assignments-area'>
-            {/* <div className='class-view-student__body__container__assignments-area__topic-name'>
-              {currentTopic.name}
-            </div>
-            {props.studentAssignments.classroomAllAssignmentsAndMaterials &&
-              props.studentAssignments.classroomAllAssignmentsAndMaterials.map(
-                (assignment) => {
-                  const attempt = props.studentAssignments.assignmentsAttemptedByStudent.filter(
-                    // eslint-disable-next-line no-shadow
-                    attempt => attempt.assignmentId === assignment.id
-                  );
-                  return (
-                    assignment.topicId === currentTopic._id && (
-                      <AssignmentCard
-                        key={assignment.id}
-                        id={assignment.id}
-                        title={assignment.title}
-                        description={assignment.description}
-                        dueDate={assignment.dueDate}
-                        type={assignment.type}
-                        hasStarted={attempt.length !== 0}
-                        turnedIn={attempt.length !== 0 && attempt[0].turnedIn}
-                        classroomId={props.match.params.classId}
-                        peblUrl={assignment.peblUrl}
-                      />
-                    )
-                  );
-                }
-              )} */}
             {props.studentAssignments.classroomAllAssignmentsAndMaterials &&
               props.studentAssignments.classroomAllAssignmentsAndMaterials.map(
                 (assignment) => {
@@ -316,10 +289,13 @@ ClassViewStudent.propTypes = {
   currentClassroom: PropTypes.shape({
     name: PropTypes.string,
     members: PropTypes.arrayOf(PropTypes.shape({
-
     }))
   }).isRequired,
   userId: PropTypes.string.isRequired,
+  clearStudentAssignments: PropTypes.func.isRequired,
+  clearTopics: PropTypes.func.isRequired,
+  clearCurrentAssignmentDetails: PropTypes.func.isRequired,
+  clearCurrentClassroom: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -327,7 +303,7 @@ const mapStateToProps = state => ({
   studentAssignments: state.classroom.studentAssignments,
   classrooms: state.classroom.classrooms,
   currentClassroom: state.classroom.currentClassroom,
-  userId: state.user.id
+  userId: state.user.id,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
@@ -336,6 +312,10 @@ const mapDispatchToProps = dispatch => bindActionCreators(
     fetchTopics,
     fetchStudentAssignments,
     fetchCurrentClassroomDetails,
+    clearStudentAssignments,
+    clearTopics,
+    clearCurrentAssignmentDetails,
+    clearCurrentClassroom,
   },
   dispatch
 );
