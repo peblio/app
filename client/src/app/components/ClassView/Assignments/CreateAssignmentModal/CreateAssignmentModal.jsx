@@ -62,6 +62,7 @@ const CreateAssignmentModal = ({
   const [date, setDate] = useState();
   const [assignmentTitle, setAssignmentTitle] = useState('');
   const [instruction, setInscruction] = useState('');
+  const [outOfMarks, setOutOfMarks] = useState('');
 
   // add link states
   const [addLink, setAddLink] = useState('');
@@ -80,6 +81,7 @@ const CreateAssignmentModal = ({
       classState.map((classId) => {
         let assignmentData = {
           user: userId,
+          outOfMarks,
           classroomId: classId,
           title: assignmentTitle,
           dueDate: date,
@@ -199,6 +201,20 @@ const CreateAssignmentModal = ({
                 ]
             }
           />
+          {
+            !resourceType && (
+              <InputField
+                state={outOfMarks}
+                onChange={(e) => { setOutOfMarks(e.target.value); }}
+                label="Marks assigned"
+                containerWidth="171px"
+                type="number"
+                style={{
+                  marginTop: '-1px',
+                  marginRight: '40px'
+                }}
+              />
+            )}
           {
             !resourceType && (
               <DatePickerField

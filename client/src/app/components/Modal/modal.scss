@@ -18,7 +18,7 @@
     width: 100%;
     overflow-y: auto;
     background-color: rgba(0, 21, 30, 0.7);
-    animation: fade-in 250ms ease-in 0s 1;
+    animation: fade-in 300ms ease-in 0s 1;
   }
   
   &__box{
@@ -29,7 +29,7 @@
     top: 112px;
     left: 50%;
     transform: translateX(-50%);
-    animation: float-down 250ms ease-out 0s 1;
+    animation: float-down 300ms ease-out 0s 1;
     width: 500px;
     background: white;
     #{$root}__header{
@@ -49,7 +49,7 @@
 @keyframes float-down{
   from{
     opacity: 0;
-    top: 0px;
+    top: -50px;
   }
   to{
     opacity: 1;
