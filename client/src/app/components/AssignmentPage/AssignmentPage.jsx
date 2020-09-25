@@ -43,12 +43,14 @@ const AssignmentPage = (props) => {
   useEffect(() => {
     if (selectedAssignment && selectedAssignment.myPeblUrl) {
       const iframe = document.getElementById('assignment-pebl');
-      console.log(iframe.contentDocument);
       setTimeout(() => {
         const body = iframe.contentDocument.querySelector('body');
         body.style.transform = 'scale(0.75)';
+        body.style.transformOrigin = 'top';
         body.style.display = 'flex';
         body.style.justifyContent = 'center';
+        const app = iframe.contentDocument.querySelector('#app');
+        app.style.marginBottom = '-300px';
       }, 300);
     }
   }, [selectedAssignment]);
@@ -82,6 +84,10 @@ const AssignmentPage = (props) => {
   useEffect(() => {
     if (props.currentAssignment.dueDate) {
       setDueDate(props.currentAssignment.dueDate);
+    }
+    if (props.currentAssignment.outOfMarks) {
+      setTotalMarks(props.currentAssignment.outOfMarks);
+      setPassedMarks(props.currentAssignment.outOfMarks);
     }
   }, [props.currentAssignment]);
 
@@ -293,7 +299,8 @@ AssignmentPage.propTypes = {
     id: PropTypes.string,
     title: PropTypes.string,
     classroomId: PropTypes.string,
-    dueDate: PropTypes.instanceOf(Date)
+    dueDate: PropTypes.string,
+    outOfMarks: PropTypes.number
   }).isRequired,
   clearCurrentAssignmentDetails: PropTypes.func.isRequired,
   clearAssignmentAttempt: PropTypes.func.isRequired,

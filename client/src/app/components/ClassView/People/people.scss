@@ -26,9 +26,14 @@
     &__student-details{
       display: flex;
       padding: 16px;
+      height: calc(100% - 270px);
+      padding-bottom: 40px;
+
       &__students{
         width: 300px;
         margin-right: 24px;
+        height: 100%;
+        overflow: auto;
 
         &__loader{
           height: 250px;
@@ -69,8 +74,13 @@
       &__assignments{
         flex: 1;
         min-width: 600px;
+        overflow: auto;
 
         &__header{
+          position: sticky;
+          top: 0;
+          z-index: 5;
+          background: #f7f7f7;
           display: grid;
           padding: 12px 10px;
           padding-left: 24px;
