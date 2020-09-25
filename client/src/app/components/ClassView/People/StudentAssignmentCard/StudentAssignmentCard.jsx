@@ -53,7 +53,7 @@ const StudentAssignmentCard = (props) => {
           </div>
           <div
             className={`student-assignment-card__details__status ${
-              props.status === 'Turned In'
+              props.status === 'Turned in'
                 ? 'student-assignment-card__details__status--success'
                 : ''
             } ${
@@ -61,7 +61,7 @@ const StudentAssignmentCard = (props) => {
                 ? 'student-assignment-card__details__status--started'
                 : ''
             } ${
-              props.status === 'Missing'
+              props.status === 'Missing' || props.status === 'Turned in late'
                 ? 'student-assignment-card__details__status--danger'
                 : ''
             }
@@ -120,6 +120,7 @@ StudentAssignmentCard.propTypes = {
   attemptPeblUrl: PropTypes.string,
   peblUrl: PropTypes.string,
   url: PropTypes.string,
+  turnedInTime: PropTypes.string,
 };
 
 StudentAssignmentCard.defaultProps = {
@@ -127,6 +128,7 @@ StudentAssignmentCard.defaultProps = {
   attemptPeblUrl: '',
   peblUrl: '',
   url: '',
+  turnedInTime: '',
 };
 
 export default StudentAssignmentCard;

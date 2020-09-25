@@ -138,7 +138,11 @@ const People = (props) => {
                                 status={
                                   // eslint-disable-next-line no-nested-ternary
                                   attempt.length !== 0
-                                    ? attempt[0].turnedIn ? 'Turned In' : 'Started' : 'Missing'
+                                    // eslint-disable-next-line no-nested-ternary
+                                    ? attempt[0].turnedIn
+                                      ? new Date(attempt[0].turnedInTime) > new Date(assignment.dueDate)
+                                        ? 'Turned in late' : 'Turned in'
+                                      : 'Started' : 'Missing'
                                 }
                                 dueDate={assignment.dueDate}
                                 gradeTotal={100}

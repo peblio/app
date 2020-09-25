@@ -2,6 +2,7 @@ import shortid from 'shortid';
 import * as ActionTypes from '../constants/reduxConstants';
 import axios from '../utils/axios';
 import history from '../utils/history';
+import { SNAPSHOT_DEFAULT_IMG, DEFAULT_PAGE_TITLE } from '../constants/pageConstants';
 
 // Modals start
 export const toggleCreateClassroomModal = () => (dispatch) => {
@@ -191,7 +192,8 @@ export const clearCurrentClassroom = () => (dispatch) => {
 export const createPeblForAssignment = title => (dispatch) => {
   const id = shortid.generate();
   const data = {
-    title,
+    title: title || DEFAULT_PAGE_TITLE,
+    snapshotPath: SNAPSHOT_DEFAULT_IMG,
     id
   };
   const reqPromise = () => new Promise((resolve, reject) => {
@@ -484,14 +486,15 @@ export const studentAttemptAssignment = data => (dispatch) => {
           const pebl = res.data[0];
           const copiedPebl = {
             id,
-            title: `${pebl.title}-Copy`,
             heading: pebl.heading,
             description: pebl.description,
             editors: pebl.editors,
             editorIndex: pebl.editorIndex,
             layout: pebl.layout,
             tags: pebl.tags,
-            snapshotPath: pebl.snapshotPath
+            snapshotPath: SNAPSHOT_DEFAULT_IMG,
+            title: `${pebl.title}-copy`,
+            parentId: pebl.id,
           };
           return axios.post('/pages/save', copiedPebl);
         })
@@ -508,10 +511,22 @@ export const studentAttemptAssignment = data => (dispatch) => {
     });
     return reqPromise();
   }
+  const reqPromise = () => new Promise((resolve, reject) => {
+    axios.post('/learning/classroomAssignmentAttempt', {
+      classroomId: data.classroomId,
+      assignmentId: data.assignmentId
+    }).then(() => {
+      resolve();
+    })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+  return reqPromise();
 };
 
 export const toggleTurnInAssignment =
-({ assignmentId, status }) => dispatch => axios.patch(`/learning/classroomAssignmentAttempt/${assignmentId}`, {
+({ assignmentId, status }) => () => axios.patch(`/learning/classroomAssignmentAttempt/${assignmentId}`, {
   turnedIn: status
 });
 

@@ -144,7 +144,6 @@ ClassView.propTypes = {
     name: PropTypes.string,
     members: PropTypes.arrayOf(PropTypes.shape({})),
   }).isRequired,
-  dataLoading: PropTypes.bool.isRequired,
   userId: PropTypes.string.isRequired
 };
 
