@@ -120,7 +120,6 @@ StudentAssignmentCard.propTypes = {
   attemptPeblUrl: PropTypes.string,
   peblUrl: PropTypes.string,
   url: PropTypes.string,
-  turnedInTime: PropTypes.string,
 };
 
 StudentAssignmentCard.defaultProps = {
@@ -128,7 +127,6 @@ StudentAssignmentCard.defaultProps = {
   attemptPeblUrl: '',
   peblUrl: '',
   url: '',
-  turnedInTime: '',
 };
 
 export default StudentAssignmentCard;

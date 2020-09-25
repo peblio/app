@@ -41,6 +41,19 @@ const AssignmentPage = (props) => {
   const [passedMarks, setPassedMarks] = useState(totalMarks);
 
   useEffect(() => {
+    if (selectedAssignment && selectedAssignment.myPeblUrl) {
+      const iframe = document.getElementById('assignment-pebl');
+      console.log(iframe.contentDocument);
+      setTimeout(() => {
+        const body = iframe.contentDocument.querySelector('body');
+        body.style.transform = 'scale(0.75)';
+        body.style.display = 'flex';
+        body.style.justifyContent = 'center';
+      }, 300);
+    }
+  }, [selectedAssignment]);
+
+  useEffect(() => {
     const updateTimer = setTimeout(() => {
       setPassedMarks(totalMarks);
     }, 800);
