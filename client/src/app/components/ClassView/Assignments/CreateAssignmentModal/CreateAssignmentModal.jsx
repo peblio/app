@@ -12,6 +12,9 @@ import TextareaField from '../../../TextareaField/TextareaField';
 import IconButton from '../../../IconButton/IconButton';
 import Button from '../../../Button/Button';
 import DatePickerField from '../../../DatePickerField/DatePickerField';
+import axios from '../../../../utils/axios';
+import { SNAPSHOT_DEFAULT_IMG, DEFAULT_PAGE_TITLE } from '../../../../constants/pageConstants';
+
 
 // icons
 import CreateNewIcon from '../../../../images/create_new.svg';
@@ -64,6 +67,7 @@ const CreateAssignmentModal = ({
   const [addLink, setAddLink] = useState('');
   const [addLinkTriggered, setAddLinkTriggered] = useState(false);
   const [linkTriggeredBy, setLinkTriggeredBy] = useState('');
+  const [page, setPage] = useState({});
 
   // resources state
   const [linkAdded, setLinkAdded] = useState(false);
@@ -228,6 +232,7 @@ const CreateAssignmentModal = ({
         </div>
         <div className="create-assignment-modal__action-area">
           <IconButton
+            disabled={linkAdded}
             icon={<PeblIcon />}
             style={{ marginRight: '16px' }}
             onClick={() => {
@@ -244,6 +249,7 @@ const CreateAssignmentModal = ({
             Select Pebl
           </IconButton>
           <IconButton
+            disabled={linkAdded}
             icon={<CreateNewIcon />}
             style={{ marginRight: '16px' }}
             onClick={() => {
@@ -252,12 +258,17 @@ const CreateAssignmentModal = ({
                   console.log(id);
                   setLinkAdded(true);
                   setLinkType(2);
+                  setPage({
+                    title: assignmentTitle || DEFAULT_PAGE_TITLE,
+                    snapshotPath: SNAPSHOT_DEFAULT_IMG
+                  });
                 });
             }}
           >
             Create new Pebl
           </IconButton>
           <IconButton
+            disabled={linkAdded}
             icon={<LinkIcon />}
             style={{ marginRight: 'auto' }}
             id="trigger-link"
@@ -302,10 +313,10 @@ const CreateAssignmentModal = ({
         </div>
         { linkAdded && (
           <div className="create-assignment-modal__resource">
-            {linkType === 2 && (
+            {linkAdded && (
               <LinkPreviewCard
-                title="Deck: learning p5.js 101"
-                previewURL="http://placekitten.com/200/200"
+                title={page ? page.title : ''}
+                previewURL={page ? page.snapshotPath : ''}
                 removeAction={() => {
                   setLinkAdded(false);
                   setLinkType(-1);
@@ -324,11 +335,17 @@ const CreateAssignmentModal = ({
             }}
             onSubmit={(e) => {
               e.preventDefault();
-              setTimeout(() => {
-                setLinkAdded(() => true);
-                setLinkType(() => 2);
-                setAddLinkTriggered(false);
-              }, 1000);
+              if (linkTriggeredBy === 'pebl') {
+                const temp = addLink.split('/');
+                const id = temp[temp.length - 1];
+                console.log(id);
+                axios.get(`/pages/${id}`)
+                  .then(({ data }) => {
+                    setPage(data[0]);
+                    setLinkAdded(() => true);
+                    setAddLinkTriggered(false);
+                  });
+              }
             }}
           >
             <InputField
