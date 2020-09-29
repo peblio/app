@@ -18,7 +18,8 @@ const initialState = {
   editAssignmentConfirmationModal: false,
   editAssignmentModal: false,
   studentAssignments: {},
-  assignmentAttempts: []
+  assignmentAttempts: [],
+  addMemberModal: false,
 };
 
 const classrooms = (state = initialState, action) => {
@@ -148,6 +149,12 @@ const classrooms = (state = initialState, action) => {
         ...state,
         assignmentAttempts: action.data
       };
+
+    case ActionTypes.TOGGLE_ADD_MEMBER_MODAL:
+      return{
+        ...state,
+        addMemberModal: !state.addMemberModal
+      }
 
     default:
       return state;

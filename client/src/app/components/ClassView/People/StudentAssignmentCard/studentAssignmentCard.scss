@@ -85,6 +85,12 @@
     
     &__image{
       margin-right: 25px;
+
+      img{
+        width: 76px;
+        height: 68px;
+        border-radius: 0.5rem;
+      }
     }
 
     &__text{
