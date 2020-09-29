@@ -1,15 +1,29 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
 import PropTypes from 'prop-types';
 import LessonListCard from '../../../LessonListCard/LessonListCard';
 import LinkAlt from '../../../../images/link-alt.svg';
+import axios from '../../../../utils/axios';
 
 import './studentAssignmentCard.scss';
 
 const StudentAssignmentCard = (props) => {
   const [expanded, setExpanded] = useState(false);
+  const [page, setPage] = useState({});
+
+  useEffect(() => {
+    if (props.peblUrl) {
+      const pebl = props.peblUrl.split('/');
+      const id = pebl[pebl.length - 1];
+      axios.get(`/pages/${id}`)
+        .then(({ data }) => {
+          setPage(data[0]);
+        });
+    }
+  }, []);
+
   return (
     <div className={`student-assignment-card ${
       expanded ? 'student-assignment-card--expanded' : ''
@@ -93,7 +107,9 @@ const StudentAssignmentCard = (props) => {
         {
           (props.peblUrl || props.url) && (
             <div className="student-assignment-card__link-details__image">
-              <LinkAlt />
+              {page.snapshotPath ? (
+                <img src={page.snapshotPath} alt={page.title} />)
+                : (<LinkAlt />)}
             </div>
           )
         }

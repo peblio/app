@@ -1,0 +1,27 @@
+.add-member-modal{
+  width: 557px;
+  $root: &;
+
+  &__header{
+    text-align: center;
+  }
+
+  &__body{
+    padding: 64px 121px !important;
+    text-align: center;
+
+    &__header{
+      margin: 0;
+      margin-bottom: 32px;
+    }
+
+    #{$root}__name-row{
+      margin-top: 26px;
+      text-align: left;
+    }
+
+    #{$root}__buttons-container{
+      margin-top: 40px;
+    }
+  }
+}

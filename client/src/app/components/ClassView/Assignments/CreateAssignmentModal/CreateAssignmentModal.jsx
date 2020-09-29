@@ -12,9 +12,9 @@ import TextareaField from '../../../TextareaField/TextareaField';
 import IconButton from '../../../IconButton/IconButton';
 import Button from '../../../Button/Button';
 import DatePickerField from '../../../DatePickerField/DatePickerField';
+
 import axios from '../../../../utils/axios';
 import { SNAPSHOT_DEFAULT_IMG, DEFAULT_PAGE_TITLE } from '../../../../constants/pageConstants';
-
 
 // icons
 import CreateNewIcon from '../../../../images/create_new.svg';
@@ -72,8 +72,8 @@ const CreateAssignmentModal = ({
 
   // resources state
   const [linkAdded, setLinkAdded] = useState(false);
-  // 0 for select pebl, 1 for create new pebl and 2 for link
-  const [linkType, setLinkType] = useState(-1);
+  // // 0 for select pebl, 1 for create new pebl and 2 for link
+  // const [linkType, setLinkType] = useState(-1);
 
   const handleSubmit = (publish) => {
     setSubmittinData(true);
@@ -222,6 +222,7 @@ const CreateAssignmentModal = ({
                 setState={setDate}
                 label="Due Date"
                 containerWidth="171px"
+                calendarPosition="right"
               />
             )}
         </div>
@@ -269,11 +270,12 @@ const CreateAssignmentModal = ({
             icon={<CreateNewIcon />}
             style={{ marginRight: '16px' }}
             onClick={() => {
+              setLinkTriggeredBy('pebl');
               createPeblForAssignment(assignmentTitle)
                 .then((id) => {
                   console.log(id);
                   setLinkAdded(true);
-                  setLinkType(2);
+                  setAddLink(`http://local.peblio.co:8080/pebl/${id}`);
                   setPage({
                     title: assignmentTitle || DEFAULT_PAGE_TITLE,
                     snapshotPath: SNAPSHOT_DEFAULT_IMG
@@ -335,7 +337,7 @@ const CreateAssignmentModal = ({
                 previewURL={page ? page.snapshotPath : ''}
                 removeAction={() => {
                   setLinkAdded(false);
-                  setLinkType(-1);
+                  // setLinkType(-1);
                 }}
               />
             )}

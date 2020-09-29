@@ -58,8 +58,12 @@ export const setSubmittinData = value => (dispatch) => {
   });
 };
 
+export const toggleAddMemberModal = () => (dispatch) => {
+  dispatch({
+    type: ActionTypes.TOGGLE_ADD_MEMBER_MODAL,
+  });
+};
 // Modals end
-
 
 export const toggleDataLoading = () => (dispatch) => {
   dispatch({
@@ -208,10 +212,12 @@ export const createPeblForAssignment = title => (dispatch) => {
   });
   return reqPromise();
 };
+
+export const addMemberToClassroom =
+  (data, { classroomId }) => () => axios.patch(`/learning/classroomDetail/addMember/${classroomId}`, data);
 // Classroom end
 
 // Topic start
-
 export const createClassroomTopic = topicData => (dispatch) => {
   dispatch({
     type: ActionTypes.SET_SUBMITTING_DATA,
@@ -594,4 +600,5 @@ export const publishGrades = assignmentId => (dispatch) => {
   });
   return req();
 };
+
 // Assignments end

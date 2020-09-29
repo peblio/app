@@ -13,6 +13,9 @@ import IconButton from '../../../IconButton/IconButton';
 import Button from '../../../Button/Button';
 import DatePickerField from '../../../DatePickerField/DatePickerField';
 
+import axios from '../../../../utils/axios';
+// import { SNAPSHOT_DEFAULT_IMG, DEFAULT_PAGE_TITLE } from '../../../../constants/pageConstants';
+
 // icons
 import CreateNewIcon from '../../../../images/create_new.svg';
 import PeblIcon from '../../../../images/pebl.svg';
@@ -67,16 +70,16 @@ const EditAssignmentModal = ({
   const [date, setDate] = useState();
   const [assignmentTitle, setAssignmentTitle] = useState('');
   const [instruction, setInscruction] = useState('');
+  const [outOfMarks, setOutOfMarks] = useState('');
 
   // add link states
   const [addLink, setAddLink] = useState('');
   const [addLinkTriggered, setAddLinkTriggered] = useState(false);
   const [linkTriggeredBy, setLinkTriggeredBy] = useState('');
+  const [page, setPage] = useState({});
 
   // resources state
   const [linkAdded, setLinkAdded] = useState(false);
-  // 0 for select pebl, 1 for create new pebl and 2 for link
-  const [linkType, setLinkType] = useState(-1);
 
   const handleSubmit = (publish) => {
     setSubmittinData(true);
@@ -150,6 +153,20 @@ const EditAssignmentModal = ({
     setAssignmentTitle(() => currentAssignment.title);
     setInscruction(() => currentAssignment.description);
     setDate(() => currentAssignment.dueDate);
+    setOutOfMarks(() => currentAssignment.outOfMarks);
+
+    if (currentAssignment.peblUrl) {
+      setAddLink(() => currentAssignment.peblUrl);
+      const temp = currentAssignment.peblUrl.split('/');
+      const id = temp[temp.length - 1];
+      console.log(id);
+      axios.get(`/pages/${id}`)
+        .then(({ data }) => {
+          setPage(data[0]);
+          setLinkAdded(() => true);
+          setAddLinkTriggered(false);
+        });
+    }
   }, [currentAssignment]);
 
   return (
@@ -175,6 +192,7 @@ const EditAssignmentModal = ({
       <form action="">
         <div className="create-assignment-modal__row">
           <DropdownMultiselect
+            disabled
             placeholder="*Select Class"
             style={{ width: '149px', marginTop: '26px', marginRight: '40px' }}
             selected={classState}
@@ -214,6 +232,20 @@ const EditAssignmentModal = ({
           />
           {
             !resourceType && (
+              <InputField
+                state={outOfMarks}
+                onChange={(e) => { setOutOfMarks(e.target.value); }}
+                label="Marks assigned"
+                containerWidth="171px"
+                type="number"
+                style={{
+                  marginTop: '-1px',
+                  marginRight: '40px'
+                }}
+              />
+            )}
+          {
+            !resourceType && (
               <DatePickerField
                 state={date}
                 setState={setDate}
@@ -245,6 +277,7 @@ const EditAssignmentModal = ({
         </div>
         <div className="create-assignment-modal__action-area">
           <IconButton
+            disabled={linkAdded}
             icon={<PeblIcon />}
             style={{ marginRight: '16px' }}
             onClick={() => {
@@ -261,20 +294,22 @@ const EditAssignmentModal = ({
             Select Pebl
           </IconButton>
           <IconButton
+            disabled={linkAdded}
             icon={<CreateNewIcon />}
             style={{ marginRight: '16px' }}
             onClick={() => {
+              setLinkTriggeredBy('link');
               createPeblForAssignment(assignmentTitle)
                 .then((id) => {
                   console.log(id);
                   setLinkAdded(true);
-                  setLinkType(2);
                 });
             }}
           >
             Create new Pebl
           </IconButton>
           <IconButton
+            disabled={linkAdded}
             icon={<LinkIcon />}
             style={{ marginRight: 'auto' }}
             id="trigger-link"
@@ -321,13 +356,13 @@ const EditAssignmentModal = ({
         </div>
         { linkAdded && (
           <div className="create-assignment-modal__resource">
-            {linkType === 2 && (
+            {linkAdded && (
               <LinkPreviewCard
-                title="Deck: learning p5.js 101"
-                previewURL="http://placekitten.com/200/200"
+                title={page ? page.title : ''}
+                previewURL={page ? page.snapshotPath : ''}
                 removeAction={() => {
                   setLinkAdded(false);
-                  setLinkType(-1);
+                  // setLinkType(-1);
                 }}
               />
             )}
@@ -345,7 +380,6 @@ const EditAssignmentModal = ({
               e.preventDefault();
               setTimeout(() => {
                 setLinkAdded(() => true);
-                setLinkType(() => 2);
                 setAddLinkTriggered(false);
               }, 1000);
             }}
@@ -390,7 +424,13 @@ EditAssignmentModal.propTypes = {
   createPeblForAssignment: PropTypes.func.isRequired,
   fetchCurrentAssignmentDetails: PropTypes.func.isRequired,
   editingAssignmentId: PropTypes.string.isRequired,
-  currentAssignment: PropTypes.shape({}).isRequired,
+  currentAssignment: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    peblUrl: PropTypes.string,
+    dueDate: PropTypes.string,
+    outOfMarks: PropTypes.string
+  }).isRequired,
   clearCurrentAssignmentDetails: PropTypes.func.isRequired,
 };
 
