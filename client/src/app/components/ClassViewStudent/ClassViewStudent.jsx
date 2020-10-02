@@ -205,6 +205,7 @@ const ClassViewStudent = (props) => {
                         description={assignment.description}
                         dueDate={assignment.dueDate}
                         type={assignment.type}
+                        outOfMarks={assignment.outOfMarks}
                         classroomId={props.match.params.classId}
                         peblUrl={assignment.peblUrl}
                         url={assignment.url}
@@ -249,6 +250,7 @@ const ClassViewStudent = (props) => {
                               peblUrl={assignment.peblUrl}
                               url={assignment.url}
                               areGradesPublished={assignment.areGradesPublished}
+                              outOfMarks={assignment.outOfMarks}
                               hasStarted={attempt.length !== 0}
                               turnedIn={attempt.length !== 0 && attempt[0].turnedIn}
                               attemptPeblUrl={attempt.length !== 0 && attempt[0].myPeblUrl}

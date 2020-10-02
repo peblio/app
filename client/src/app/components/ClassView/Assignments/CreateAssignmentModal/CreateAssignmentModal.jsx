@@ -62,7 +62,7 @@ const CreateAssignmentModal = ({
   const [date, setDate] = useState();
   const [assignmentTitle, setAssignmentTitle] = useState('');
   const [instruction, setInscruction] = useState('');
-  const [outOfMarks, setOutOfMarks] = useState('');
+  const [outOfMarks, setOutOfMarks] = useState('100');
 
   // add link states
   const [addLink, setAddLink] = useState('');
@@ -72,8 +72,6 @@ const CreateAssignmentModal = ({
 
   // resources state
   const [linkAdded, setLinkAdded] = useState(false);
-  // // 0 for select pebl, 1 for create new pebl and 2 for link
-  // const [linkType, setLinkType] = useState(-1);
 
   const handleSubmit = (publish) => {
     setSubmittinData(true);
@@ -87,7 +85,7 @@ const CreateAssignmentModal = ({
           dueDate: date,
           description: instruction,
           isPublished: publish,
-          type: resourceType ? 'material' : 'assignment',
+          type: resourceType === 'material' ? 'material' : 'assignment',
           topicId: classId === classroomId ? topic || null : null
         };
         if (linkAdded) {
@@ -202,11 +200,11 @@ const CreateAssignmentModal = ({
             }
           />
           {
-            !resourceType && (
+            resourceType === 'assignment' && (
               <InputField
                 state={outOfMarks}
                 onChange={(e) => { setOutOfMarks(e.target.value); }}
-                label="Marks assigned"
+                label="Point value"
                 containerWidth="171px"
                 type="number"
                 style={{
@@ -216,7 +214,7 @@ const CreateAssignmentModal = ({
               />
             )}
           {
-            !resourceType && (
+            resourceType === 'assignment' && (
               <DatePickerField
                 state={date}
                 setState={setDate}
@@ -337,8 +335,8 @@ const CreateAssignmentModal = ({
                 previewURL={page ? page.snapshotPath : ''}
                 removeAction={() => {
                   setLinkAdded(false);
-                  // setLinkType(-1);
                 }}
+                type={resourceType}
               />
             )}
           </div>
@@ -353,16 +351,26 @@ const CreateAssignmentModal = ({
             }}
             onSubmit={(e) => {
               e.preventDefault();
-              if (linkTriggeredBy === 'pebl') {
-                const temp = addLink.split('/');
-                const id = temp[temp.length - 1];
-                console.log(id);
-                axios.get(`/pages/${id}`)
-                  .then(({ data }) => {
-                    setPage(data[0]);
-                    setLinkAdded(() => true);
-                    setAddLinkTriggered(false);
+              const expression = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi;
+              const regex = new RegExp(expression);
+              if (addLink.match(regex)) {
+                if (linkTriggeredBy === 'pebl') {
+                  const temp = addLink.split('/');
+                  const id = temp[temp.length - 1];
+                  console.log(id);
+                  axios.get(`/pages/${id}`)
+                    .then(({ data }) => {
+                      setPage(data[0]);
+                      setLinkAdded(() => true);
+                      setAddLinkTriggered(false);
+                    });
+                } else {
+                  setLinkAdded(() => true);
+                  setAddLinkTriggered(false);
+                  setPage({
+                    title: addLink
                   });
+                }
               }
             }}
           >
@@ -397,7 +405,7 @@ CreateAssignmentModal.propTypes = {
     name: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired
   })).isRequired,
-  resourceType: PropTypes.number.isRequired,
+  resourceType: PropTypes.string.isRequired,
   classroomId: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
   classrooms: PropTypes.arrayOf(PropTypes.shape({})).isRequired,

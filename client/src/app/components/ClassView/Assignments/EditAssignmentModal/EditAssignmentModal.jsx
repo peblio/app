@@ -81,48 +81,6 @@ const EditAssignmentModal = ({
   // resources state
   const [linkAdded, setLinkAdded] = useState(false);
 
-  const handleSubmit = (publish) => {
-    setSubmittinData(true);
-    Promise.all(
-      classState.map((classId) => {
-        let assignmentData = {
-          user: userId,
-          classroomId: classId,
-          title: assignmentTitle,
-          dueDate: date,
-          description: instruction,
-          isPublished: publish,
-          type: resourceType ? 'material' : 'assignment',
-          topicId: classId === classroomId ? topic || null : null
-        };
-        if (linkAdded) {
-          if (linkTriggeredBy === 'pebl') {
-            assignmentData = {
-              ...assignmentData,
-              peblUrls: addLink
-            };
-          } else {
-            assignmentData = {
-              ...assignmentData,
-              url: addLink
-            };
-          }
-        }
-        return createAssignment(assignmentData);
-      })
-    )
-      .then((data) => {
-        console.log(data);
-        setSubmittinData(false);
-        toggleEditAssignmentModal();
-        fetchAssignments(classroomId);
-      })
-      .catch((err) => {
-        console.log(err);
-        setSubmittinData(false);
-      });
-  };
-
   const linkInputClickOutside = (e) => {
     if (e.target.id === 'trigger-link' ||
     e.target.className === 'icon-button' ||
@@ -133,7 +91,6 @@ const EditAssignmentModal = ({
         document.removeEventListener('click', linkInputClickOutside);
       }, 0);
     } else if (e.target.id !== 'add-link' && e.target.id !== 'add-link-button') {
-      // console.log(e.target.parentElement);
       setAddLinkTriggered(() => false);
       document.removeEventListener('click', linkInputClickOutside);
     }
@@ -154,8 +111,10 @@ const EditAssignmentModal = ({
     setInscruction(() => currentAssignment.description);
     setDate(() => currentAssignment.dueDate);
     setOutOfMarks(() => currentAssignment.outOfMarks);
+    setTopic(() => currentAssignment.topicId);
 
     if (currentAssignment.peblUrl) {
+      setLinkTriggeredBy('pebl');
       setAddLink(() => currentAssignment.peblUrl);
       const temp = currentAssignment.peblUrl.split('/');
       const id = temp[temp.length - 1];
@@ -168,6 +127,46 @@ const EditAssignmentModal = ({
         });
     }
   }, [currentAssignment]);
+
+  const handleSubmit = (publish) => {
+    setSubmittinData(true);
+    let assignmentData = {
+      user: userId,
+      classroomId,
+      title: assignmentTitle,
+      dueDate: date,
+      description: instruction,
+      isPublished: publish,
+      type: resourceType ? 'material' : 'assignment',
+      topicId: topic
+    };
+    if (linkAdded) {
+      if (linkTriggeredBy === 'pebl') {
+        assignmentData = {
+          ...assignmentData,
+          peblUrls: addLink
+        };
+      } else {
+        assignmentData = {
+          ...assignmentData,
+          url: addLink
+        };
+      }
+    }
+    console.log(assignmentData);
+    // createAssignment(assignmentData)
+    //   .then((data) => {
+    //     console.log(data);
+    //     setSubmittinData(false);
+    //     toggleEditAssignmentModal();
+    //     fetchAssignments(classroomId);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     setSubmittinData(false);
+    //   });
+  };
+
 
   return (
     <Modal
@@ -235,7 +234,7 @@ const EditAssignmentModal = ({
               <InputField
                 state={outOfMarks}
                 onChange={(e) => { setOutOfMarks(e.target.value); }}
-                label="Marks assigned"
+                label="Point value"
                 containerWidth="171px"
                 type="number"
                 style={{
@@ -429,7 +428,8 @@ EditAssignmentModal.propTypes = {
     description: PropTypes.string,
     peblUrl: PropTypes.string,
     dueDate: PropTypes.string,
-    outOfMarks: PropTypes.string
+    outOfMarks: PropTypes.string,
+    topicId: PropTypes.string
   }).isRequired,
   clearCurrentAssignmentDetails: PropTypes.func.isRequired,
 };
