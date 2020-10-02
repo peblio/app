@@ -61,9 +61,26 @@ const AssignmentCard = (props) => {
       >
         <div className="assignment-card">
           <div className="assignment-card__title">
-            <NavLink to={`/classroom/${props.classroomId}/assignment/${props.id}`}>
-              {props.title}
-            </NavLink>
+            {
+              // eslint-disable-next-line no-nested-ternary
+              props.type === 'assignment' ? (
+                <NavLink to={`/classroom/${props.classroomId}/assignment/${props.id}`}>
+                  {props.title}
+                </NavLink>
+              )
+                : (props.url || props.peblUrl
+                  ? (
+                    <a
+                      href={props.url || props.peblUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {props.title}
+                    </a>
+                  )
+                  : `${props.title}`)
+
+            }
           </div>
           <div className="">
             {props.dueDate ? moment(props.dueDate).format('MM/DD/YY') : '...'}
@@ -119,10 +136,14 @@ AssignmentCard.propTypes = {
   handleChangeAssignmentStatus: PropTypes.func.isRequired,
   classroomId: PropTypes.string.isRequired,
   toggleEditAssignmentConfirmationModal: PropTypes.func.isRequired,
+  peblUrl: PropTypes.string,
+  url: PropTypes.string
 };
 
 AssignmentCard.defaultProps = {
   topicId: null,
+  peblUrl: '',
+  url: ''
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({

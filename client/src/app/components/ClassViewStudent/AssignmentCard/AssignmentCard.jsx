@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
@@ -14,11 +14,32 @@ import {
   commentOnAssignment,
 } from '../../../action/classroom';
 
+import axios from '../../../utils/axios';
+
+import LinkAlt from '../../../images/link-alt.svg';
+
 import './assignmentCard.scss';
 
 const AssignmentCard = (props) => {
   const [comment, setComment] = useState('');
   const [commenting, setCommenting] = useState(false);
+  const [page, setPage] = useState();
+
+  useEffect(() => {
+    if (props.attemptPeblUrl) {
+      const temp = props.attemptPeblUrl.split('/');
+      axios.get(`/pages/${temp[temp.length - 1]}`)
+        .then(({ data }) => {
+          setPage(data[0]);
+        });
+    } else if (props.peblUrl) {
+      const temp = props.peblUrl.split('/');
+      axios.get(`/pages/${temp[temp.length - 1]}`)
+        .then(({ data }) => {
+          setPage(data[0]);
+        });
+    }
+  }, [props.attemptPeblUrl, props.peblUrl]);
 
   return (
     <div className="assignment-card-student" id={props.id}>
@@ -39,8 +60,18 @@ const AssignmentCard = (props) => {
         </span>
       </div>
       <div className="assignment-card-student__body">
-        <div className="assignment-card-student__body__image-area">
-        </div>
+        {
+          (props.peblUrl || props.url || props.attemptPeblUrl) && (
+            <div
+              className="assignment-card-student__body__image-area"
+              style={{
+                backgroundImage: page ? `url(${page.snapshotPath})` : '#e4e4e4',
+              }}
+            >
+              {!page && <LinkAlt />}
+            </div>
+          )
+        }
         <div className="assignment-card-student__body__details">
           <div className="assignment-card-student__body__details__text-area">
             <div className="assignment-card-student__body__details__text-area__title">
@@ -79,7 +110,7 @@ const AssignmentCard = (props) => {
                 display: 'flex',
                 alignItems: 'center',
                 fontSize: '14px',
-                marginLeft: '28px'
+                marginLeft: '16px'
               }}
               onClick={
                 () => {
@@ -115,7 +146,7 @@ const AssignmentCard = (props) => {
         </div>
       </div>
       {
-        (props.hasStarted || props.type !== 'assignment') && (
+        props.hasStarted && (
           <div className="assignment-card-student__comments">
             <div className="assignment-card-student__comments__line"></div>
             <div className={`assignment-card-student__comments__comment ${
@@ -202,7 +233,9 @@ const AssignmentCard = (props) => {
             <span className="assignment-card-student__grade__score">
               {props.marksScored}
               {' '}
-              / 100
+              /
+              {' '}
+              {props.outOfMarks}
             </span>
           </div>
         )
@@ -228,6 +261,7 @@ AssignmentCard.propTypes = {
   areGradesPublished: PropTypes.bool.isRequired,
   commentOnAssignment: PropTypes.func.isRequired,
   marksScored: PropTypes.number,
+  outOfMarks: PropTypes.number.isRequired,
   url: PropTypes.string,
   attemptId: PropTypes.string,
   comments: PropTypes.arrayOf(PropTypes.shape({})).isRequired,

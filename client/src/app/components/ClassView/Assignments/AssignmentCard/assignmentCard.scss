@@ -11,6 +11,9 @@
   align-items: center;
 
   &__title{
+    font-weight: bold;
+    color: $h1-color;
+    font-size: 14px;
     a{
       font-weight: bold;
       color: $h1-color;

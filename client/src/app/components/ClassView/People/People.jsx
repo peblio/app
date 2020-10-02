@@ -31,21 +31,6 @@ const People = (props) => {
   const [fetchingAssignments, setFetchingAssignments] = useState();
   const [addTriggeredBy, setAddTriggeredBy] = useState();
 
-  useEffect(() => {
-    setTeachers(props.members.filter(member => member.role === 'teacher'));
-    setStudents(props.members.filter(member => member.role === 'student'));
-
-    return () => {
-      props.clearAssignmentPeople();
-    };
-  }, [props.members]);
-
-  // const sortByNameAZ = () => {
-  //   setStudents(() => {
-  //     [...students].sort((x, y) => (x.name.toUpperCase() < y.name.toUpperCase() ? 1 : -1));
-  //   });
-  // };
-
   const handleStudentSelect = (student) => {
     setSelectedStudent(student);
     setFetchingAssignments(() => true);
@@ -54,6 +39,26 @@ const People = (props) => {
         setFetchingAssignments(() => false);
       });
   };
+
+  useEffect(() => {
+    setTeachers(props.members.filter(member => member.role === 'teacher'));
+    const studentsTemp = props.members.filter(member => member.role === 'student');
+    studentsTemp.sort((a, b) => {
+      if (a.firstName !== b.firstName) {
+        return a.firstName.toUpperCase() < b.firstName.toUpperCase() ? -1 : 1;
+      }
+      return a.lastName.toUpperCase() < b.lastName.toUpperCase() ? -1 : 1;
+    });
+    setStudents(studentsTemp);
+
+    setImmediate(() => {
+      handleStudentSelect(studentsTemp[0]);
+    });
+
+    return () => {
+      props.clearAssignmentPeople();
+    };
+  }, [props.members]);
 
   return (
     <React.Fragment>

@@ -56,7 +56,7 @@ const Assignments = ({
   fetchTopics,
 }) => {
   // 0 for assignment | 1 for material
-  const [resourceType, setResourceType] = useState(0);
+  const [resourceType, setResourceType] = useState('assignment');
   const [editingTopic, setEditingTopic] = useState(null);
   const [dataLoading, setDataLoading] = useState(false);
 
@@ -91,14 +91,14 @@ const Assignments = ({
                       name: 'Assignment',
                       value: 'assignment',
                       onClick: () => {
-                        setResourceType(0);
+                        setResourceType('assignment');
                         toggleCreateAssignmentModal();
                       }
                     }, {
                       name: 'Material',
                       value: 'material',
                       onClick: () => {
-                        setResourceType(1);
+                        setResourceType('material');
                         toggleCreateAssignmentModal();
                       }
                     }

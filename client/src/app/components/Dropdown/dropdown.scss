@@ -11,8 +11,10 @@
   transition: border 300ms ease;
   border: solid 1px $g5;
   
-  &:focus-within, &:hover{
-    border: solid 1px #008575;
+  &:enabled{
+    &:focus-within, &:hover{
+      border: solid 1px #008575;
+    }
   }
   
   &__trigger{

@@ -29,9 +29,6 @@ const Dropdown = ({
     if (setShowTooltip) {
       setShowTooltip(false);
     }
-    if (className !== 'btn') {
-      setTimeout(() => setSelected(option.name), 0);
-    }
     setTimeout(() => setTriggered(false), 0);
   };
 
@@ -56,6 +53,18 @@ const Dropdown = ({
   useEffect(() => () => {
     document.removeEventListener('click', closeOptionsHandler);
   }, []);
+
+  useEffect(() => {
+    if (className !== 'btn') {
+      // eslint-disable-next-line no-shadow
+      const option = options.filter(option => option.value === state);
+      if (option.length !== 0) {
+        setTimeout(() => setSelected(option[0].name), 0);
+      } else {
+        setSelected(placeholder);
+      }
+    }
+  }, [state]);
 
   return (
     <div

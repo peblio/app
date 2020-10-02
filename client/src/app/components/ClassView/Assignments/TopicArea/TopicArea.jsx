@@ -138,6 +138,8 @@ const TopicArea = ({
             permission="view"
             type={assignment.type}
             isPublished={assignment.isPublished}
+            peblUrl={assignment.peblUrl}
+            url={assignment.url}
             handleChangeAssignmentStatus={handleChangeAssignmentStatus}
           />
         ))

@@ -71,7 +71,7 @@ const DropdownMultiselect = ({
           }}
       >
         <span ref={textRef}>
-          {selected.length !== 0 ? `${selected.length} selected` : placeholder}
+          {placeholder}
         </span>
         <svg
           width='24'
@@ -102,8 +102,9 @@ const DropdownMultiselect = ({
             key={option.name}
           >
             <span className={`multiselect-dropdown__option-container__checkbox ${
-              selected.includes(option.value)?'multiselect-dropdown__option-container__checkbox--selected':''}`
-            }>
+              selected.includes(option.value) ? 'multiselect-dropdown__option-container__checkbox--selected' : ''}`
+            }
+            >
               <CheckboxUnselected />
               <CheckboxSelected />
             </span>
