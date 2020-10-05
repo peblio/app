@@ -128,6 +128,14 @@ export function saveClassroomAssignment(req, res) {
   }
 }
 
+export function editClassroomAssignment(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  } else {
+    return classroomService.editClassroomAssignment(req, res);
+  }
+}
+
 export function publishClassroomAssignment(req, res) {
   if (!req.user) {
     return res.status(403).send({ error: 'Please log in first' });

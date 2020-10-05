@@ -37,6 +37,18 @@ export function buildClassroomAssignment(request) {
   return classroomAssignment;
 }
 
+export function buildModifiedClassroomAssignment(request, classroomAssignment) {
+  classroomAssignment.title = request.body.title;
+  classroomAssignment.topicId = request.body.topicId;
+  classroomAssignment.dueDate = request.body.dueDate; //send ISO date using new Date().toISOString()
+  classroomAssignment.description = request.body.description;
+  classroomAssignment.peblUrl = request.body.peblUrl;
+  classroomAssignment.url = request.body.url;
+  classroomAssignment.isPublished = request.body.isPublished;
+  classroomAssignment.outOfMarks = request.body.outOfMarks;
+  return classroomAssignment;
+}
+
 export function buildClassroomMember(request, classroomId, role) {
   const classroomMember = new ClassroomMember({
     user: request.user._id.toString(),
