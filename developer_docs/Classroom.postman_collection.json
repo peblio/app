@@ -974,6 +974,86 @@
 					"response": []
 				},
 				{
+					"name": "EditClassroomAssignment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"classroomId\": \"Bk3Y5kUHv\",\n    \"title\": \"Homework on Multiplication-Material1\",\n    \"dueDate\": \"2020-12-17T14:20:43.897Z\",\n    \"description\": \"Add answers of addition to the pebl1\",\n    \"isPublished\": false,\n    \"peblUrl\": \"http://localhost:8080/pebl/N2662b1j\",\n    \"outOfMarks\": \"100\",\n    \"topicId\": \"5f68a546f3f306306a52560c\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomAssignment/rJvWUX8SP",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomAssignment",
+								"rJvWUX8SP"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "ChangePublishStatusOfClassroomAssignment",
 					"request": {
 						"method": "PATCH",
