@@ -22,6 +22,7 @@ classroomRoutes.route('/classroomTopic/:id').delete(classroomController.deleteCl
 
 classroomRoutes.route('/classroomAssignment').post(classroomController.saveClassroomAssignment);
 classroomRoutes.route('/classroomAssignment').patch(classroomController.publishClassroomAssignment);
+classroomRoutes.route('/classroomAssignment/:id').put(classroomController.editClassroomAssignment);
 classroomRoutes.route('/classroomAssignment/publishGrades').patch(classroomController.publishGradesForClassroomAssignment);
 classroomRoutes.route('/classroomAssignment/reassignTopic').patch(classroomController.reassignTopicToAssignment);
 classroomRoutes.route('/classroomAssignment/:id').get(classroomController.getClassroomAssignment);

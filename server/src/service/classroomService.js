@@ -1,4 +1,4 @@
-import { buildClassroomDetailFromRequest, buildClassroomMember, buildClassroomAssignment } from '../models/creator/classroomDetailCreator';
+import { buildClassroomDetailFromRequest, buildClassroomMember, buildClassroomAssignment, buildModifiedClassroomAssignment } from '../models/creator/classroomDetailCreator';
 import ClassroomDetail from '../models/ClassroomDetail';
 import ClassroomMember from '../models/ClassroomMember';
 import ClassroomStudentAssignmentAttempt from '../models/ClassroomStudentAssignmentAttempt';
@@ -14,6 +14,30 @@ export async function createClassroomDetail(req, res) {
     const savedClassroomDetail = await classroomDetail.save();
     const myMemberShipDetail = await buildClassroomMember(req, savedClassroomDetail._doc.id, 'teacher' ).save();
     return res.status(200).send({ ...savedClassroomDetail._doc, myMemberShipDetail});
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+}
+
+export async function editClassroomAssignment(req, res) {
+  try {
+    const existingClassroomAssignment = await ClassroomAssignment.findOne({id: req.params.id});
+    if(!existingClassroomAssignment) {
+      return res.status(404).send();
+    }
+    const classroomMember = await ClassroomMember.findOne({
+      user: req.user._id.toString(),
+      classroomId: req.body.classroomId
+    });
+    if(!classroomMember) {
+      return res.status(404).send();
+    }
+    if(classroomMember.role !== "teacher") {
+      return res.status(401).send();
+    }
+    const modifiedClassroomAssignment = buildModifiedClassroomAssignment(req, existingClassroomAssignment);
+    await modifiedClassroomAssignment.save();
+    return res.status(200).json(modifiedClassroomAssignment.toJSON())
   } catch (err) {
     return res.status(500).send({ error: err.message });
   }
