@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -22,23 +22,42 @@ import {
   clearCurrentClassroom,
   commentOnAssignment,
   publishGrades,
+  editAssignment,
 } from '../../action/classroom';
 
 import RightCrumbIcon from '../../images/right.svg';
 import './assignmentPage.scss';
 
 const AssignmentPage = (props) => {
-  const [dueDate, setDueDate] = useState();
+  const [dueDate, setDueDate] = useState('');
   const [dataLoading, setDataLoading] = useState(false);
   const [totalMarks, setTotalMarks] = useState('100');
   const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [comment, setComment] = useState('');
-  const [totalAssigned, setTotalAssigned] = useState();
-  const [totalTurnedIn, setTotalTurnedIn] = useState();
+  const [totalAssigned, setTotalAssigned] = useState('');
+  const [totalTurnedIn, setTotalTurnedIn] = useState('');
+  const [students, setStudents] = useState([]);
+  const [order, setOrder] = useState('A-Z');
 
   // marks passed to student component, to prevent unnecessary state updates
   const [passedMarks, setPassedMarks] = useState(totalMarks);
+
+  const scrollRef = useRef();
+  const initialRender = useRef(true);
+
+  useEffect(() => {
+    if (props.currentClassroom && props.currentClassroom.members) {
+      const stud = props.currentClassroom.members.filter(member => member.role === 'student');
+      stud.sort((a, b) => {
+        if (a.firstName !== b.firstName) {
+          return a.firstName.toUpperCase() < b.firstName.toUpperCase() ? -1 : 1;
+        }
+        return a.lastName.toUpperCase() < b.lastName.toUpperCase() ? -1 : 1;
+      });
+      setStudents(stud);
+    }
+  }, [props.currentClassroom.members]);
 
   useEffect(() => {
     if (selectedAssignment && selectedAssignment.myPeblUrl) {
@@ -52,18 +71,72 @@ const AssignmentPage = (props) => {
         const app = iframe.contentDocument.querySelector('#app');
         app.style.marginBottom = '-300px';
       }, 300);
+      if (scrollRef) {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      }
     }
   }, [selectedAssignment]);
 
+  const constructAssignmentObjectForEdit = () => {
+    let assignment = ({
+      classroomId: props.currentAssignment.classroomId,
+      title: props.currentAssignment.title,
+      dueDate: props.currentAssignment.dueDate,
+      description: props.currentAssignment.description,
+      isPublished: props.currentAssignment.isPublished,
+      topicId: props.currentAssignment.topicId
+    });
+    if (props.currentAssignment.peblUrl) {
+      assignment = {
+        ...assignment,
+        peblUrl: props.currentAssignment.peblUrl
+      };
+    } else if (props.currentAssignment.url) {
+      assignment = {
+        ...assignment,
+        url: props.currentAssignment.url
+      };
+    }
+    return assignment;
+  };
+
   useEffect(() => {
+    let isInitialRender;
+    if (initialRender.current) {
+      isInitialRender = true;
+    }
+
     const updateTimer = setTimeout(() => {
       setPassedMarks(totalMarks);
+      if (!isInitialRender && props.currentAssignment) {
+        const update = {
+          ...constructAssignmentObjectForEdit(),
+          outOfMarks: totalMarks
+        };
+        props.editAssignment({ assignmentId: props.currentAssignment.id, ...update })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     }, 800);
 
     return () => {
       clearTimeout(updateTimer);
     };
   }, [totalMarks]);
+
+  useEffect(() => {
+    if (props.currentAssignment && !initialRender.current && props.currentAssignment.dueDate !== dueDate) {
+      const update = {
+        ...constructAssignmentObjectForEdit(),
+        dueDate
+      };
+      props.editAssignment({ assignmentId: props.currentAssignment.id, ...update })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [dueDate]);
 
   useEffect(() => {
     setDataLoading(true);
@@ -119,6 +192,50 @@ const AssignmentPage = (props) => {
     setTotalTurnedIn(val);
   }, [props.assignmentAttempts.allStudentsAttemptForAssignment]);
 
+  useEffect(() => {
+    if (selectedStudent) {
+      let attempt = [];
+      if (props.assignmentAttempts.allStudentsAttemptForAssignment) {
+        attempt = props.assignmentAttempts
+        // eslint-disable-next-line react/prop-types
+          .allStudentsAttemptForAssignment.filter(assignment => assignment.user === selectedStudent.user);
+      }
+      setSelectedAssignment(attempt[0]);
+    }
+  }, [props.assignmentAttempts]);
+
+  useEffect(() => {
+    if (!initialRender.current && students) {
+      const stud = students.slice();
+      if (order === 'A-Z') {
+        stud.sort((a, b) => {
+          if (a.firstName !== b.firstName) {
+            return a.firstName.toUpperCase() < b.firstName.toUpperCase() ? -1 : 1;
+          }
+          return a.lastName.toUpperCase() < b.lastName.toUpperCase() ? -1 : 1;
+        });
+        setStudents(stud);
+      } else {
+        stud.sort((a, b) => {
+          if (a.firstName !== b.firstName) {
+            return a.firstName.toUpperCase() < b.firstName.toUpperCase() ? 1 : -1;
+          }
+          return a.lastName.toUpperCase() < b.lastName.toUpperCase() ? 1 : -1;
+        });
+        setStudents(stud);
+      }
+    }
+  }, [order]);
+
+  // to check if it's initial render
+  useEffect(() => {
+    initialRender.current = false;
+
+    return () => {
+      initialRender.current = true;
+    };
+  }, []);
+
   return (
     <DashboardView>
       {dataLoading ? <Loader />
@@ -146,6 +263,8 @@ const AssignmentPage = (props) => {
               <div className="assignment-page__action-area__dropdowns">
                 <Dropdown
                   placeholder="A-Z"
+                  state={order}
+                  setState={setOrder}
                   style={{
                     width: '111px',
                     marginRight: '100px'
@@ -154,12 +273,10 @@ const AssignmentPage = (props) => {
                     {
                       name: 'A-Z',
                       value: 'A-Z',
-                      onClick: () => { console.log('A-Z'); }
                     },
                     {
                       name: 'Z-A',
                       value: 'Z-A',
-                      onClick: () => { console.log('Z-A'); }
                     }
                   ]}
                 />
@@ -198,8 +315,8 @@ const AssignmentPage = (props) => {
             <div className="assignment-page__container">
               <div className="assignment-page__container__students">
                 {
-                  props.currentClassroom.members &&
-                  props.currentClassroom.members.map((member) => {
+                  students.length !== 0 &&
+                  students.map((member) => {
                     let attempt = [];
                     if (props.assignmentAttempts.allStudentsAttemptForAssignment) {
                       attempt = props.assignmentAttempts
@@ -207,25 +324,23 @@ const AssignmentPage = (props) => {
                         .allStudentsAttemptForAssignment.filter(assignment => assignment.user === member.user);
                     }
                     return (
-                      member.role !== 'teacher' && (
-                        <Student
-                          member={member}
-                          selectedStudent={selectedStudent}
-                          selectedAssignment={selectedAssignment}
-                          onNameClick={() => {
-                            if (attempt.length !== 0) {
-                              setSelectedAssignment(
-                                attempt[0]
-                              );
-                            } else {
-                              setSelectedAssignment(null);
-                            }
-                            setSelectedStudent(member);
-                          }}
-                          totalMarks={passedMarks}
-                          marksScored={attempt.length !== 0 ? attempt[0].marksScored : ''}
-                        />
-                      )
+                      <Student
+                        member={member}
+                        selectedStudent={selectedStudent}
+                        selectedAssignment={selectedAssignment}
+                        onNameClick={() => {
+                          if (attempt.length !== 0) {
+                            setSelectedAssignment(
+                              attempt[0]
+                            );
+                          } else {
+                            setSelectedAssignment(null);
+                          }
+                          setSelectedStudent(member);
+                        }}
+                        totalMarks={passedMarks}
+                        marksScored={attempt.length !== 0 ? attempt[0].marksScored : ''}
+                      />
                     );
                   })
                 }
@@ -242,36 +357,80 @@ const AssignmentPage = (props) => {
                     )
                   }
                 </div>
-                <form
-                  className="assignment-page__container__pebl__comment"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    props.commentOnAssignment({
-                      text: comment,
-                      assignmentAttemptId: selectedAssignment.id
-                    }).then(() => {
-                      setComment('');
-                    });
-                  }}
-                >
-                  <InputField
-                    placeholder="type comment..."
-                    disabled={
-                      !(selectedAssignment && selectedAssignment.myPeblUrl)
-                    }
-                    state={comment}
-                    onChange={(e) => { setComment(e.target.value); }}
-                  />
-                  <Button
-                    className="secondary"
-                    disabled={
-                      !comment ||
-                      !selectedAssignment
-                    }
+                <div className="assignment-page__container__pebl__comments-container">
+                  {
+                    selectedAssignment && selectedAssignment.comments.length !== 0 && (
+
+                      <div className="assignment-page__container__pebl__comments-container__comments">
+                        <div className="scroll" ref={scrollRef}>
+                          {
+                            selectedAssignment.comments && selectedAssignment.comments.map(
+                              // eslint-disable-next-line no-shadow
+                              comment => (
+                                <div
+                                  key={comment._id}
+                                  className="assignment-page__container__pebl__comments-container__comments__comment"
+                                >
+                                  <div
+                                    className={
+                                      `assignment-page__container__pebl__comments-container__comments__comment-from
+                                    ${
+                                comment.fromMember.role
+                                }`}
+                                  >
+                                    {comment.fromMember.firstName}
+                                    {' '}
+                                    {comment.fromMember.lastName}
+                                    :
+                                  </div>
+                                  <div
+                                    className="
+                                    assignment-page__container__pebl__comments-container__comments__comment-text"
+                                  >
+                                    {
+                                      comment.text
+                                    }
+                                  </div>
+                                </div>
+                              )
+                            )
+                          }
+                        </div>
+                      </div>
+                    )
+                  }
+                  <form
+                    className="assignment-page__container__pebl__comments-container__comment-text-box"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      props.commentOnAssignment({
+                        text: comment,
+                        assignmentAttemptId: selectedAssignment.id
+                      }).then(() => {
+                        setComment('');
+                        props.fetchAssignmentAttempts(props.match.params.assignmentId);
+                      });
+                    }}
                   >
-                    Send
-                  </Button>
-                </form>
+                    <InputField
+                      placeholder="type comment..."
+                      disabled={
+                        !(selectedAssignment)
+                      }
+                      state={comment}
+                      onChange={(e) => { setComment(e.target.value); }}
+                    />
+                    <Button
+                      className="secondary"
+                      disabled={
+                        !comment ||
+                      !selectedAssignment
+                      }
+                    >
+                      Send
+                    </Button>
+                  </form>
+                </div>
               </div>
             </div>
           </main>
@@ -300,6 +459,11 @@ AssignmentPage.propTypes = {
     title: PropTypes.string,
     classroomId: PropTypes.string,
     dueDate: PropTypes.string,
+    description: PropTypes.string,
+    peblUrl: PropTypes.string,
+    topicId: PropTypes.string,
+    url: PropTypes.string,
+    isPublished: PropTypes.bool,
     outOfMarks: PropTypes.number
   }).isRequired,
   clearCurrentAssignmentDetails: PropTypes.func.isRequired,
@@ -307,6 +471,7 @@ AssignmentPage.propTypes = {
   commentOnAssignment: PropTypes.func.isRequired,
   clearCurrentClassroom: PropTypes.func.isRequired,
   fetchAssignmentAttempts: PropTypes.func.isRequired,
+  editAssignment: PropTypes.func.isRequired,
   publishGrades: PropTypes.func.isRequired,
   assignmentAttempts: PropTypes.shape({
     allStudentsAttemptForAssignment: PropTypes.arrayOf(PropTypes.shape({
@@ -326,6 +491,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   clearCurrentClassroom,
   commentOnAssignment,
   publishGrades,
+  editAssignment
 }, dispatch);
 
 const mapStateProps = state => ({

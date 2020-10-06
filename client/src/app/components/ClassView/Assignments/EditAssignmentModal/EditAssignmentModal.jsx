@@ -14,7 +14,7 @@ import Button from '../../../Button/Button';
 import DatePickerField from '../../../DatePickerField/DatePickerField';
 
 import axios from '../../../../utils/axios';
-// import { SNAPSHOT_DEFAULT_IMG, DEFAULT_PAGE_TITLE } from '../../../../constants/pageConstants';
+import { SNAPSHOT_DEFAULT_IMG, DEFAULT_PAGE_TITLE } from '../../../../constants/pageConstants';
 
 // icons
 import CreateNewIcon from '../../../../images/create_new.svg';
@@ -26,7 +26,6 @@ import LinkPreviewCard from './LinkPreviewCard/LinkPreviewCard';
 
 // actions
 import {
-  createAssignment,
   fetchClassrooms,
   setSubmittinData,
   fetchAssignments,
@@ -34,6 +33,7 @@ import {
   toggleEditAssignmentModal,
   fetchCurrentAssignmentDetails,
   clearCurrentAssignmentDetails,
+  editAssignment,
 } from '../../../../action/classroom';
 
 
@@ -43,14 +43,11 @@ const EditAssignmentModal = ({
   // eslint-disable-next-line no-shadow
   toggleEditAssignmentModal,
   // eslint-disable-next-line no-shadow
-  createAssignment,
-  // eslint-disable-next-line no-shadow
   fetchClassrooms,
   // eslint-disable-next-line no-shadow
   fetchCurrentAssignmentDetails,
   // eslint-disable-next-line no-shadow
   fetchAssignments,
-  resourceType,
   classroomId,
   classrooms,
   topics,
@@ -62,6 +59,8 @@ const EditAssignmentModal = ({
   // eslint-disable-next-line no-shadow
   clearCurrentAssignmentDetails,
   editingAssignmentId,
+  // eslint-disable-next-line no-shadow
+  editAssignment,
   currentAssignment,
 }) => {
   // form states
@@ -71,6 +70,7 @@ const EditAssignmentModal = ({
   const [assignmentTitle, setAssignmentTitle] = useState('');
   const [instruction, setInscruction] = useState('');
   const [outOfMarks, setOutOfMarks] = useState('');
+  const [type, setType] = useState('assignment');
 
   // add link states
   const [addLink, setAddLink] = useState('');
@@ -106,12 +106,14 @@ const EditAssignmentModal = ({
     };
   }, []);
 
+  // handles init
   useEffect(() => {
     setAssignmentTitle(() => currentAssignment.title);
     setInscruction(() => currentAssignment.description);
     setDate(() => currentAssignment.dueDate);
     setOutOfMarks(() => currentAssignment.outOfMarks);
     setTopic(() => currentAssignment.topicId);
+    setType(() => currentAssignment.type);
 
     if (currentAssignment.peblUrl) {
       setLinkTriggeredBy('pebl');
@@ -123,28 +125,33 @@ const EditAssignmentModal = ({
         .then(({ data }) => {
           setPage(data[0]);
           setLinkAdded(() => true);
-          setAddLinkTriggered(false);
         });
+    } else if (currentAssignment.url) {
+      setLinkTriggeredBy('url');
+      setAddLink(() => currentAssignment.url);
+      setPage({
+        title: currentAssignment.url
+      });
+      setLinkAdded(() => true);
     }
   }, [currentAssignment]);
 
   const handleSubmit = (publish) => {
     setSubmittinData(true);
     let assignmentData = {
-      user: userId,
       classroomId,
       title: assignmentTitle,
       dueDate: date,
       description: instruction,
       isPublished: publish,
-      type: resourceType ? 'material' : 'assignment',
+      outOfMarks,
       topicId: topic
     };
     if (linkAdded) {
       if (linkTriggeredBy === 'pebl') {
         assignmentData = {
           ...assignmentData,
-          peblUrls: addLink
+          peblUrl: addLink
         };
       } else {
         assignmentData = {
@@ -154,28 +161,29 @@ const EditAssignmentModal = ({
       }
     }
     console.log(assignmentData);
-    // createAssignment(assignmentData)
-    //   .then((data) => {
-    //     console.log(data);
-    //     setSubmittinData(false);
-    //     toggleEditAssignmentModal();
-    //     fetchAssignments(classroomId);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     setSubmittinData(false);
-    //   });
+    console.log(currentAssignment);
+    editAssignment({ assignmentId: currentAssignment.id, ...assignmentData },)
+      .then((data) => {
+        console.log(data);
+        setSubmittinData(false);
+        toggleEditAssignmentModal();
+        fetchAssignments(classroomId);
+      })
+      .catch((err) => {
+        console.log(err);
+        setSubmittinData(false);
+      });
   };
 
 
   return (
     <Modal
       header={(
-        resourceType ? 'Create resource'
+        type === 'material' ? 'Edit resource'
           : (
             <React.Fragment>
               <div className="create-assignment-modal__header__title">
-                Create Assignment
+                Edit Assignment
               </div>
               <span className="create-assignment-modal__header__sub-title">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus, excepturi?
@@ -230,7 +238,7 @@ const EditAssignmentModal = ({
             }
           />
           {
-            !resourceType && (
+            type === 'assignment' && (
               <InputField
                 state={outOfMarks}
                 onChange={(e) => { setOutOfMarks(e.target.value); }}
@@ -244,12 +252,13 @@ const EditAssignmentModal = ({
               />
             )}
           {
-            !resourceType && (
+            type === 'assignment' && (
               <DatePickerField
                 state={date}
                 setState={setDate}
                 label="Due Date"
                 containerWidth="171px"
+                calendarPosition="right"
               />
             )}
         </div>
@@ -297,11 +306,16 @@ const EditAssignmentModal = ({
             icon={<CreateNewIcon />}
             style={{ marginRight: '16px' }}
             onClick={() => {
-              setLinkTriggeredBy('link');
+              setLinkTriggeredBy('pebl');
               createPeblForAssignment(assignmentTitle)
                 .then((id) => {
                   console.log(id);
                   setLinkAdded(true);
+                  setAddLink(`http://local.peblio.co:8080/pebl/${id}`);
+                  setPage({
+                    title: assignmentTitle || DEFAULT_PAGE_TITLE,
+                    snapshotPath: SNAPSHOT_DEFAULT_IMG
+                  });
                 });
             }}
           >
@@ -377,10 +391,27 @@ const EditAssignmentModal = ({
             }}
             onSubmit={(e) => {
               e.preventDefault();
-              setTimeout(() => {
-                setLinkAdded(() => true);
-                setAddLinkTriggered(false);
-              }, 1000);
+              const expression = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi;
+              const regex = new RegExp(expression);
+              if (addLink.match(regex)) {
+                if (linkTriggeredBy === 'pebl') {
+                  const temp = addLink.split('/');
+                  const id = temp[temp.length - 1];
+                  console.log(id);
+                  axios.get(`/pages/${id}`)
+                    .then(({ data }) => {
+                      setPage(data[0]);
+                      setLinkAdded(() => true);
+                      setAddLinkTriggered(false);
+                    });
+                } else {
+                  setLinkAdded(() => true);
+                  setAddLinkTriggered(false);
+                  setPage({
+                    title: addLink
+                  });
+                }
+              }
             }}
           >
             <InputField
@@ -408,13 +439,11 @@ const EditAssignmentModal = ({
 
 EditAssignmentModal.propTypes = {
   toggleEditAssignmentModal: PropTypes.func.isRequired,
-  createAssignment: PropTypes.func.isRequired,
   setSubmittinData: PropTypes.func.isRequired,
   topics: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired
   })).isRequired,
-  resourceType: PropTypes.number.isRequired,
   classroomId: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
   classrooms: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
@@ -424,14 +453,17 @@ EditAssignmentModal.propTypes = {
   fetchCurrentAssignmentDetails: PropTypes.func.isRequired,
   editingAssignmentId: PropTypes.string.isRequired,
   currentAssignment: PropTypes.shape({
+    id: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
     peblUrl: PropTypes.string,
+    url: PropTypes.string,
     dueDate: PropTypes.string,
     outOfMarks: PropTypes.string,
     topicId: PropTypes.string
   }).isRequired,
   clearCurrentAssignmentDetails: PropTypes.func.isRequired,
+  editAssignment: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -445,13 +477,13 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   toggleEditAssignmentModal,
-  createAssignment,
   fetchClassrooms,
   setSubmittinData,
   createPeblForAssignment,
   fetchAssignments,
   fetchCurrentAssignmentDetails,
   clearCurrentAssignmentDetails,
+  editAssignment
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditAssignmentModal);

@@ -28,3 +28,17 @@ export const subject = () => {
     />
   );
 };
+
+export const error = () => {
+  const [value, setValue] = useState('');
+  return (
+    <InputField
+      state={value}
+      onChange={(e) => { setValue(e.target.value); }}
+      label="Subject"
+      placeholder="enter subject"
+      containerWidth="199px"
+      error="Please enter a valid subject"
+    />
+  );
+};
