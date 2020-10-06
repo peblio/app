@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   font-family: $roboto;
+  position: relative;
 
   &__label{
     font-size: $p-size;
@@ -34,5 +35,13 @@
     &::placeholder{
       font-style: italic;
     }
+  }
+
+  &__error{
+    position: absolute;
+    top: calc(100% + 7px);
+    left: 8px;
+    color: $danger-red;
+    font-size: 14px;
   }
 }

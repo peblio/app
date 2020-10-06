@@ -552,16 +552,21 @@ export const gradeAssignment = ({ assignmentAttemptId, marksScored }) => (dispat
 };
 
 export const fetchAssignmentAttempts = classroomId => (dispatch) => {
-  axios.get(`/learning/classroomAssignmentAllAttempts/${classroomId}`)
-    .then(({ data }) => {
-      dispatch({
-        type: ActionTypes.SET_ASSIGNMENT_ATTEMPTS,
-        data
+  const newReq = () => new Promise((resolve, reject) => {
+    axios.get(`/learning/classroomAssignmentAllAttempts/${classroomId}`)
+      .then(({ data }) => {
+        dispatch({
+          type: ActionTypes.SET_ASSIGNMENT_ATTEMPTS,
+          data
+        });
+        resolve();
+      })
+      .catch((err) => {
+        console.log(err);
+        reject();
       });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  });
+  return newReq();
 };
 
 export const clearAssignmentAttempt = () => (dispatch) => {
@@ -575,7 +580,6 @@ export const commentOnAssignment = commentData => (dispatch) => {
   const req = () => new Promise((resolve, reject) => {
     axios.patch('/learning/classroomAssignmentAttempt/addComment', commentData)
       .then(({ data }) => {
-        console.log(data);
         resolve(true);
       })
       .catch((err) => {
@@ -600,5 +604,10 @@ export const publishGrades = assignmentId => (dispatch) => {
   });
   return req();
 };
+
+export const editAssignment = ({
+  assignmentId,
+  ...data
+}) => () => axios.put(`/learning/classroomAssignment/${assignmentId}`, data);
 
 // Assignments end

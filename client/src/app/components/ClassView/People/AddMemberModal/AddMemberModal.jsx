@@ -21,6 +21,7 @@ const AddMemberModal = (props) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState();
 
   return (
     <Modal
@@ -38,6 +39,7 @@ const AddMemberModal = (props) => {
         style={{
           height: '50px'
         }}
+        error={error}
       />
       <div className="add-member-modal__name-row">
         <InputField
@@ -85,6 +87,9 @@ const AddMemberModal = (props) => {
             }).catch((err) => {
               console.log(err);
               setSubmitting(false);
+              if (err.response.status === 400) {
+                setError('Please use username, this email is linked to multiple accounts');
+              }
             });
           }}
         >

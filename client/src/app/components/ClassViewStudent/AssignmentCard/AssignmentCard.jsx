@@ -26,6 +26,21 @@ const AssignmentCard = (props) => {
   const [page, setPage] = useState();
 
   useEffect(() => {
+    if (props.url) {
+      fetch(props.url, {
+        mode: 'cors',
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        }
+      })
+        .then(res => res.text())
+        .then((data) => {
+          console.log(data);
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(data, 'text/html');
+          console.log(doc);
+        });
+    }
     if (props.attemptPeblUrl) {
       const temp = props.attemptPeblUrl.split('/');
       axios.get(`/pages/${temp[temp.length - 1]}`)
@@ -168,7 +183,7 @@ const AssignmentCard = (props) => {
                   }
 
                   return (
-                    <div className="assignment-card-student__comments__container">
+                    <div className="assignment-card-student__comments__container" key={comment._id}>
                       <div className="assignment-card-student__comments__container__name">
                         {name}
                         :
@@ -256,15 +271,15 @@ AssignmentCard.propTypes = {
   toggleTurnInAssignment: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   classroomId: PropTypes.string.isRequired,
-  peblUrl: PropTypes.string.isRequired,
-  attemptPeblUrl: PropTypes.string,
+  peblUrl: PropTypes.string,
+  attemptPeblUrl: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   areGradesPublished: PropTypes.bool.isRequired,
   commentOnAssignment: PropTypes.func.isRequired,
-  marksScored: PropTypes.number,
+  marksScored: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   outOfMarks: PropTypes.number.isRequired,
   url: PropTypes.string,
-  attemptId: PropTypes.string,
-  comments: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  attemptId: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  comments: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape({})), PropTypes.bool]).isRequired,
   members: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
@@ -275,7 +290,8 @@ AssignmentCard.defaultProps = {
   attemptPeblUrl: '',
   marksScored: null,
   url: '',
-  attemptId: ''
+  attemptId: '',
+  peblUrl: ''
 };
 
 const mapStateToProps = state => ({

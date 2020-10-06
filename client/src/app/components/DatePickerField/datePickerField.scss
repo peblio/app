@@ -11,6 +11,7 @@
   &__calendar-container{
     position: absolute;
     top: 100%;
+    z-index: 500;
     &.left{
       left: 0;
     }

@@ -23,5 +23,11 @@
     #{$root}__buttons-container{
       margin-top: 40px;
     }
+
+    
+    .input-field__error{
+      font-size: 11px;
+      top: calc(100% + 4px);
+    }
   }
 }

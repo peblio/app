@@ -8,6 +8,7 @@ const InputField = ({
   placeholder,
   containerWidth,
   onChange,
+  error,
   ...props
 }) => (
   <div className='input-field' style={{ width: containerWidth }}>
@@ -27,6 +28,11 @@ const InputField = ({
       placeholder={placeholder}
       {...props}
     />
+    { error && (
+      <span className="input-field__error">
+        {error}
+      </span>
+    )}
   </div>
 );
 
@@ -36,10 +42,12 @@ InputField.propTypes = {
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
   containerWidth: PropTypes.string.isRequired,
+  error: PropTypes.string,
 };
 
 InputField.defaultProps = {
-  label: ''
+  label: '',
+  error: '',
 };
 
 export default InputField;

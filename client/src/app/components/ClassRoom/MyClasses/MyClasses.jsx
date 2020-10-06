@@ -86,7 +86,16 @@ const MyClasses = ({
           </main>
         )
       }
-      {createClassroomModal && <CreateClassModal />}
+      {createClassroomModal && (
+        <CreateClassModal
+          firstName={
+            classrooms.length !== 0
+              ? classrooms[0].myMemberShipDetail.firstName : ''}
+          lastName={
+            classrooms.length !== 0
+              ? classrooms[0].myMemberShipDetail.lastName : ''}
+        />
+      )}
       {joinClassroomModal && (
         <JoinClassModal
           firstName={
