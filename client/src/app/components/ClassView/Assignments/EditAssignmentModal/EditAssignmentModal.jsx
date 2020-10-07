@@ -311,7 +311,7 @@ const EditAssignmentModal = ({
                 .then((id) => {
                   console.log(id);
                   setLinkAdded(true);
-                  setAddLink(`http://local.peblio.co:8080/pebl/${id}`);
+                  setAddLink(`${window.location.origin}/pebl/${id}`);
                   setPage({
                     title: assignmentTitle || DEFAULT_PAGE_TITLE,
                     snapshotPath: SNAPSHOT_DEFAULT_IMG

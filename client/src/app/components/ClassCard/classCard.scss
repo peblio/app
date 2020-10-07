@@ -68,6 +68,11 @@
       display: flex;
       align-items: center;
       box-sizing: border-box;
+      transition: transform ease 100ms;
+
+      &.clicked{
+        transform: scale(0.95);
+      }
   
       input{
         cursor: pointer;
@@ -87,7 +92,7 @@
         }
         
         &::selection{
-          color: $success-green;
+          color: none;
         }
       }
   
