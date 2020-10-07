@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import './classCard.scss';
@@ -13,25 +13,31 @@ const ClassCard = ({
   ...props
 }) => {
   const hiddenTextboxRef = useRef();
+  const [copyClicked, setCopyClicked] = useState(false);
+
   const onCodeCopyClick = () => {
     hiddenTextboxRef.current.focus();
     hiddenTextboxRef.current.select();
+    setCopyClicked(true);
     setImmediate(() => {
       document.execCommand('copy');
     });
     setTimeout(() => {
       hiddenTextboxRef.current.blur();
-    }, 300);
+      setCopyClicked(false);
+    }, 200);
   };
+
 
   return (
     <div className='class-card' {...props}>
       <button className="class-card__click-area" onClick={onClick}></button>
       <div className="class-card__main">
-        <div className="class-card__main__code">
+        <div className={`class-card__main__code ${copyClicked ? 'clicked' : ''}`}>
           <input
             value={classCode}
             onChange={() => {}}
+            spellCheck="false"
             ref={hiddenTextboxRef}
             onFocus={onCodeCopyClick}
           />
@@ -41,6 +47,7 @@ const ClassCard = ({
             viewBox='0 0 40 48'
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
+            onClick={onCodeCopyClick}
           >
             <path
               d='
