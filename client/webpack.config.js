@@ -5,8 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { getIfUtils, removeEmpty } = require('webpack-config-utils');
 
-// const ENVIRONMENT = process.env.ENVIRONMENT || 'local';
-const ENVIRONMENT = process.env.ENVIRONMENT || 'staging';
+const ENVIRONMENT = process.env.ENVIRONMENT || 'local';
 
 const { ifNotTest } = getIfUtils(ENVIRONMENT);
 
