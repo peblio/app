@@ -43,7 +43,7 @@ export function createPage(title, folder) {
 export function fetchAllPages(profileName, sortType, container) {
   const sortTypeUrl = (container === 'profile' || !sortType) ? 'title' : sortType;
   // do not send in profile name if container is dashboard
-  profileName = (container === 'dashboard') ? null : profileName;
+  profileName = (container === 'dashboard' || container === 'documents') ? null : profileName;
   return (dispatch, getState) => {
     let url = '/sketches';
     if (profileName) {
@@ -196,7 +196,6 @@ export function viewPage(pageId) {
 }
 
 export function jumpToFolderByShortId(folderShortId) {
-
   return dispatch => dispatch({
     type: ActionTypes.JUMP_TO_FOLDER,
     folderShortId
