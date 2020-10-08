@@ -692,17 +692,12 @@ export async function joinClassroom(req, res) {
     if (!classroom) {
       return res.status(404).send();
     }
-    if(classroomMember) {
-      return res.status(200).send();
-    }
     const classroomMember = await ClassroomMember.findOne({
       user: req.user._id.toString(),
       classroomId: req.body.classroomId,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
     });
     if(classroomMember) {
-      return res.status(200).send();
+      return res.status(500).send();
     }
     await buildClassroomMember(req, req.body.classroomId, 'student' ).save();
     return res.status(200).send();
