@@ -22,7 +22,7 @@ import PeblIcon from '../../../../images/pebl.svg';
 import LinkIcon from '../../../../images/link.svg';
 
 // import LessonListCard from '../../LessonListCard/LessonListCard';
-import LinkPreviewCard from './LinkPreviewCard/LinkPreviewCard';
+import LinkPreviewCard from '../CreateAssignmentModal/LinkPreviewCard/LinkPreviewCard';
 
 // actions
 import {
@@ -34,6 +34,7 @@ import {
   fetchCurrentAssignmentDetails,
   clearCurrentAssignmentDetails,
   editAssignment,
+  toggleCreateTopicModal,
 } from '../../../../action/classroom';
 
 
@@ -42,6 +43,8 @@ import './editAssignmentModal.scss';
 const EditAssignmentModal = ({
   // eslint-disable-next-line no-shadow
   toggleEditAssignmentModal,
+  // eslint-disable-next-line no-shadow
+  toggleCreateTopicModal,
   // eslint-disable-next-line no-shadow
   fetchClassrooms,
   // eslint-disable-next-line no-shadow
@@ -224,11 +227,25 @@ const EditAssignmentModal = ({
             setState={setTopic}
             disabled={!classState}
             options={
-              // eslint-disable-next-line no-shadow
-              topics ? topics.map(topic => ({
-                name: topic.name,
-                value: topic._id
-              }))
+              // eslint-disable-next-line no-nested-ternary
+              topics ? topics.length !== 0 ? (
+                // eslint-disable-next-line no-shadow
+                [...topics.map(topic => ({
+                  name: topic.name,
+                  value: topic._id
+                }))]
+              ) : [
+                {
+                  name: 'Create topic',
+                  value: 'Select topic',
+                  onClick: () => {
+                    toggleCreateTopicModal();
+                    setTimeout(() => {
+                      setTopic('');
+                    }, 50);
+                  }
+                }
+              ]
                 : [
                   {
                     name: 'Loading...',
@@ -377,6 +394,7 @@ const EditAssignmentModal = ({
                   setLinkAdded(false);
                   // setLinkType(-1);
                 }}
+                url={addLink}
               />
             )}
           </div>
@@ -460,10 +478,12 @@ EditAssignmentModal.propTypes = {
     url: PropTypes.string,
     dueDate: PropTypes.string,
     outOfMarks: PropTypes.string,
-    topicId: PropTypes.string
+    topicId: PropTypes.string,
+    type: PropTypes.string,
   }).isRequired,
   clearCurrentAssignmentDetails: PropTypes.func.isRequired,
   editAssignment: PropTypes.func.isRequired,
+  toggleCreateTopicModal: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -483,7 +503,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchAssignments,
   fetchCurrentAssignmentDetails,
   clearCurrentAssignmentDetails,
-  editAssignment
+  editAssignment,
+  toggleCreateTopicModal,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditAssignmentModal);

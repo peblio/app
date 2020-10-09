@@ -52,39 +52,25 @@
           font-size: 14px;
           font-weight: $heavy-font-weight;
           color: $g3;
+          transition: transform ease 50ms;
           &:focus{
             outline: none;
           }
           &::selection{
-            color: $success-green;
+            color: none;
           }
+
+        }
+        
+        &.clicked{
+          transform: scale(0.95);
+        }
+        svg{
+          cursor: pointer;
         }
       }
     }
     
-    #{$root}__code{
-      width: 175px;
-      background: none;
-      border: none;
-      border-radius: 3px;
-      margin-left: auto;
-      font-family: $roboto;
-      font-size: 14px;
-      font-weight: $heavy-font-weight;
-      color: $g3;
-      margin-right: -5px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      box-sizing: border-box;
-  
-      &:focus, &:hover{
-        outline: none;
-      }
-      svg{
-        margin-left: 4px;
-      }
-    }
 
     #{$root}__tab-switcher{
       width: 100%;
@@ -93,7 +79,6 @@
         display: flex;
         justify-content: center;
       }
-
     }
   }
 }

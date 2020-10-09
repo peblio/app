@@ -12,7 +12,10 @@ import LessonListCard from '../../../LessonListCard/LessonListCard';
 import IconButtonDropdown from '../../../IconButtonDropdown/IconButtonDropdown';
 
 import {
-  toggleEditAssignmentConfirmationModal
+  toggleEditAssignmentConfirmationModal,
+  toggleEditAssignmentModal,
+  toggleUnpublishAssignmentConfirmationModal,
+  setAssignmentDrag,
 } from '../../../../action/classroom.js';
 
 import RenameIcon from '../../../../images/rename.svg';
@@ -31,7 +34,13 @@ const assignmentSource = {
     return true;
   },
   beginDrag(props) {
+    setTimeout(() => {
+      props.setAssignmentDrag(props.topicId);
+    }, 0);
     return { assignmentId: props.id, currentTopicId: props.topicId };
+  },
+  endDrag(props) {
+    props.setAssignmentDrag(false);
   }
 };
 
@@ -96,7 +105,11 @@ const AssignmentCard = (props) => {
             <ToggleButton
               state={props.isPublished}
               onClick={() => {
-                props.handleChangeAssignmentStatus({ assignmentId: props.id, isPublished: !props.isPublished });
+                if (props.isPublished) {
+                  props.toggleUnpublishAssignmentConfirmationModal(props.id);
+                } else {
+                  props.handleChangeAssignmentStatus({ assignmentId: props.id, isPublished: true });
+                }
               }}
             />
           </div>
@@ -109,7 +122,11 @@ const AssignmentCard = (props) => {
                 {
                   name: 'Edit',
                   onClick: () => {
-                    props.toggleEditAssignmentConfirmationModal({ assignmentId: props.id, value: true });
+                    if (props.type !== 'material' && props.isPublished) {
+                      props.toggleEditAssignmentConfirmationModal({ assignmentId: props.id, value: true });
+                    } else {
+                      props.toggleEditAssignmentModal(props.id);
+                    }
                   },
                   icon: <RenameIcon />
                 }, {
@@ -136,6 +153,8 @@ AssignmentCard.propTypes = {
   handleChangeAssignmentStatus: PropTypes.func.isRequired,
   classroomId: PropTypes.string.isRequired,
   toggleEditAssignmentConfirmationModal: PropTypes.func.isRequired,
+  toggleEditAssignmentModal: PropTypes.func.isRequired,
+  setAssignmentDrag: PropTypes.func.isRequired,
   peblUrl: PropTypes.string,
   url: PropTypes.string
 };
@@ -147,7 +166,10 @@ AssignmentCard.defaultProps = {
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toggleEditAssignmentConfirmationModal
+  toggleEditAssignmentConfirmationModal,
+  toggleEditAssignmentModal,
+  toggleUnpublishAssignmentConfirmationModal,
+  setAssignmentDrag,
 }, dispatch);
 
 

@@ -188,6 +188,18 @@ const ClassViewStudent = (props) => {
               ))}
           </SideBar>
           <div className='class-view-student__body__container__assignments-area'>
+            {
+              props.studentAssignments.classroomAllAssignmentsAndMaterials &&
+              props.studentAssignments.classroomAllAssignmentsAndMaterials.length === 0 && (
+                <div
+                  className="class-view-student__body__container__assignments-area__no-assignments"
+                >
+                  No assignments posted yet
+                  <br />
+                  Stay tuned!
+                </div>
+              )
+            }
             {props.studentAssignments.classroomAllAssignmentsAndMaterials &&
               props.studentAssignments.classroomAllAssignmentsAndMaterials.map(
                 (assignment) => {

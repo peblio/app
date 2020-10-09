@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -46,6 +46,7 @@ function collectDropTarget(_connect, monitor) {
 const NoTopicAssignments = ({
   assignments,
   classroomId,
+  assignmentDrag,
   // eslint-disable-next-line no-shadow
   fetchAssignments,
   // eslint-disable-next-line no-shadow
@@ -61,73 +62,98 @@ const NoTopicAssignments = ({
       });
   };
 
-  return connectDropTarget(
-    <div className="class-view__assignments__topic">
-      <div className="class-view__assignments__topic__assignments-table">
-        <div className="class-view__assignments__topic__assignments-table__header">
-          <div className="">NAME</div>
-          <div className="">DUE</div>
-          <div className="class-view__assignments__topic__assignments-table__header__type">
-            TYPE
-            <InfoBubble>
-              <div className="">
-                <div>
-                  <span>Assignments</span>
-                  {' '}
-                  will create a copy for each student. Any chages made to the original after the students opens
-                  the assignment will not be viewed.
-                </div>
-                <br />
-                <div>
-                  <span>Resources</span>
-                  {' '}
-                  will share the original link with your students. Copies will not be made and updates will be viewed.
-                </div>
+  const [expand, setExpanded] = useState(false);
+
+  useEffect(() => {
+    if (assignmentDrag) {
+      setImmediate(() => {
+        setExpanded(() => true);
+      });
+    } else {
+      setImmediate(() => {
+        setExpanded(() => false);
+      });
+    }
+  }, [assignmentDrag]);
+
+  return (
+    (assignments.length !== 0 || assignmentDrag !== false) && (
+      <div className="class-view__assignments__topic">
+        <div className="class-view__assignments__topic__assignments-table">
+          {assignments.length !== 0 && (
+            <div className="class-view__assignments__topic__assignments-table__header">
+              <div className="">NAME</div>
+              <div className="">DUE</div>
+              <div className="class-view__assignments__topic__assignments-table__header__type">
+                TYPE
+                <InfoBubble>
+                  <div className="">
+                    <div>
+                      <span>Assignments</span>
+                      {' '}
+                      will create a copy for each student. Any chages made to the original after the students opens
+                      the assignment will not be viewed.
+                    </div>
+                    <br />
+                    <div>
+                      <span>Resources</span>
+                      {' '}
+                      will share the original link with your students.
+                      Copies will not be made and updates will be viewed.
+                    </div>
+                  </div>
+                </InfoBubble>
               </div>
-            </InfoBubble>
-          </div>
-          <div className="">PUBLISHED</div>
+              <div className="">PUBLISHED</div>
+            </div>
+          )}
         </div>
-      </div>
-      {
-        assignments.length !== 0
-          ? (assignments.map(assignment => (
-            <AssignmentCard
-              classroomId={classroomId}
-              topicId={assignment.topicId}
-              key={assignment.id}
-              id={assignment.id}
-              title={assignment.title}
-              dueDate={assignment.dueDate}
-              permission="view"
-              type={assignment.type}
-              isPublished={assignment.isPublished}
-              peblUrl={assignment.peblUrl}
-              url={assignment.url}
-              handleChangeAssignmentStatus={handleChangeAssignmentStatus}
-            />
-          )))
-          : (
-            <p className="class-view__assignments__topic__assignments-table__no-assignments">
-              The assignments that are not associated with topics will be shown here
-            </p>
+        {
+          connectDropTarget(
+            <div
+              className={`class-view__assignments__topic__drop-area ${
+                expand && assignmentDrag !== null
+                  ? 'class-view__assignments__topic__drop-area--active' : ''
+              }`}
+            >
+            </div>
           )
-      }
-    </div>
+        }
+        {
+          assignments.length !== 0 &&
+            (assignments.map(assignment => (
+              <AssignmentCard
+                classroomId={classroomId}
+                topicId={assignment.topicId}
+                key={assignment.id}
+                id={assignment.id}
+                title={assignment.title}
+                dueDate={assignment.dueDate}
+                permission="view"
+                type={assignment.type}
+                isPublished={assignment.isPublished}
+                peblUrl={assignment.peblUrl}
+                url={assignment.url}
+                handleChangeAssignmentStatus={handleChangeAssignmentStatus}
+              />
+            )))
+        }
+      </div>
+    )
   );
 };
 
 NoTopicAssignments.propTypes = {
   classroomId: PropTypes.string.isRequired,
   assignments: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  toggleEditTopicModal: PropTypes.func.isRequired,
   changePublishStatusOfAssignment: PropTypes.func.isRequired,
   fetchAssignments: PropTypes.func.isRequired,
-  changeTopicOfAssignment: PropTypes.func.isRequired
+  changeTopicOfAssignment: PropTypes.func.isRequired,
+  assignmentDrag: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired
 };
 
 const mapStateToProps = state => ({
-
+  assignmentDrag: state.classroom.assignmentDrag
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

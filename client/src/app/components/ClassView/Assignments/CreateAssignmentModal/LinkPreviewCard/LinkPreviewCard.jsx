@@ -4,7 +4,7 @@ import CloseIcon from '../../../../../images/close.svg';
 import NoPreview from '../../../../../images/link-alt.svg';
 import './linkPreviewCard.scss';
 
-const LinkPreviewCard = ({ title, removeAction, previewURL, ...props }) => (
+const LinkPreviewCard = ({ title, removeAction, previewURL, url, ...props }) => (
   <div className="link-preview-card">
     <div className="link-preview-card__preview" style={{ backgroundImage: `url(${previewURL})` }}>
       {
@@ -14,9 +14,9 @@ const LinkPreviewCard = ({ title, removeAction, previewURL, ...props }) => (
       }
     </div>
     <div className="link-preview-card__description">
-      <div className="link-preview-card__description__title">
-        {title}
-      </div>
+      <a className="link-preview-card__description__title" href={url} target="_blank" rel="noreferrer">
+        {title.length > 85 ? `${title.substr(0, 80)}...` : title}
+      </a>
       <div className="link-preview-card__description__footer">
         {
           props.type === 'assignment' ? (
@@ -45,7 +45,8 @@ LinkPreviewCard.propTypes = {
   title: PropTypes.string.isRequired,
   removeAction: PropTypes.func.isRequired,
   previewURL: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 };
 
 export default LinkPreviewCard;

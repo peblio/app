@@ -15,11 +15,13 @@ const initialState = {
   topics: [],
   assignmetsPeople: [],
   editingAssignmentId: null,
+  unpublishingAssignmentId: false,
   editAssignmentConfirmationModal: false,
   editAssignmentModal: false,
   studentAssignments: {},
   assignmentAttempts: [],
   addMemberModal: false,
+  assignmentDrag: false,
 };
 
 const classrooms = (state = initialState, action) => {
@@ -29,6 +31,7 @@ const classrooms = (state = initialState, action) => {
         ...state,
         classrooms: action.classrooms
       };
+
     case ActionTypes.ADD_CLASSROOM:
       return {
         ...state,
@@ -36,6 +39,12 @@ const classrooms = (state = initialState, action) => {
           ...state.classrooms,
           action.classroom
         ]
+      };
+
+    case ActionTypes.SET_ASSIGNMENT_DRAG:
+      return {
+        ...state,
+        assignmentDrag: action.assignmentDrag
       };
 
     case ActionTypes.SET_SUBMITTING_DATA:
@@ -93,6 +102,7 @@ const classrooms = (state = initialState, action) => {
       };
 
     case ActionTypes.SET_ASSIGNMENTS:
+      action.assignments.sort((a, b) => (new Date(a.updatedAt) - new Date(b.updatedAt) < 0 ? 1 : -1));
       return {
         ...state,
         assignments: action.assignments
@@ -108,6 +118,12 @@ const classrooms = (state = initialState, action) => {
       return {
         ...state,
         topics: action.topics
+      };
+
+    case ActionTypes.TOGGLE_UNPUBLISH_ASSIGNMENT_CONFIRMATION_MODAL:
+      return {
+        ...state,
+        unpublishingAssignmentId: action.assignmentId
       };
 
     case ActionTypes.SET_ASSIGNMENTS_PEOPLE:
@@ -135,7 +151,8 @@ const classrooms = (state = initialState, action) => {
       // else just set the modal state to true
       return {
         ...state,
-        editAssignmentModal: !state.editAssignmentModal
+        editAssignmentModal: !state.editAssignmentModal,
+        editingAssignmentId: action.assignmentId || state.editingAssignmentId
       };
 
     case ActionTypes.SET_STUDENT_ASSIGNMENTS:
@@ -151,10 +168,38 @@ const classrooms = (state = initialState, action) => {
       };
 
     case ActionTypes.TOGGLE_ADD_MEMBER_MODAL:
-      return{
+      return {
         ...state,
         addMemberModal: !state.addMemberModal
+      };
+
+    case ActionTypes.CHANGE_ASSIGNMENT_TOPIC:
+      // added condition to avoid declaring variables in case block
+      if (action.data) {
+        const { assignmentId, newTopicId } = action.data;
+        const otherAssignments = [];
+        let updatedAssignment = { assignmentId, topicId: newTopicId || null };
+        state.assignments.forEach((assignment) => {
+          if (assignment.id === assignmentId) {
+            updatedAssignment = {
+              ...assignment,
+              ...updatedAssignment
+            };
+          } else {
+            otherAssignments.push(assignment);
+          }
+        });
+        const assignments = [
+          updatedAssignment,
+          ...otherAssignments
+        ];
+        return {
+          ...state,
+          assignments
+        };
       }
+
+      return state;
 
     default:
       return state;

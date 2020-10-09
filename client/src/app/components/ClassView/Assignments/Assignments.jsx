@@ -8,7 +8,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 // generic components
-import IconDropdownButton from '../../IconButtonDropdown/IconButtonDropdown';
+import Dropdown from '../../Dropdown/Dropdown';
 import GenericLoader from '../../GenericLoader/LoadingMessage';
 // import IconButton from '../../IconButton/IconButton';
 
@@ -19,6 +19,10 @@ import CreateAssignmentModal from './CreateAssignmentModal/CreateAssignmentModal
 import TopicArea from './TopicArea/TopicArea';
 import NoTopicAssignments from './NoTopicAssignments/NoTopicAssignments';
 import EditAssignmentConfirmationModal from './EditAssignmetnConfirmationModal/EditAssignmentConfirmationModal';
+import
+UnpublishAssignmentConfirmationModal
+  from
+  './UnpublishAssignmentConfirmationModal/UnpublishAssignmentConfirmationModal';
 import EditAssignmentModal from './EditAssignmentModal/EditAssignmentModal';
 
 // actions
@@ -31,7 +35,6 @@ import {
   changePublishStatusOfAssignment,
 } from '../../../action/classroom';
 
-// import ShareIcon from '../../../images/link.svg';
 import PlusIcon from '../../../images/add.svg';
 
 import './assignments.scss';
@@ -45,6 +48,7 @@ const Assignments = ({
   assignments,
   editAssignmentConfirmationModal,
   editAssignmentModal,
+  unpublishingAssignmentId,
   topics,
   // eslint-disable-next-line no-shadow
   toggleCreateTopicModal,
@@ -76,11 +80,19 @@ const Assignments = ({
           : (
             <div className="class-view__assignments">
               <div className="class-view__assignments__action-area">
-                <IconDropdownButton
-                  optionsPosition='right'
-                  icon={<PlusIcon />}
+                <Dropdown
+                  // optionsPosition='left'
+                  // icon={<PlusIcon />}
+                  className="btn"
+                  placeholder={(
+                    <div className="with-icon">
+                      <PlusIcon className="plus" />
+                      {' '}
+                      Create
+                    </div>
+                  )}
                   style={{
-                    marginLeft: 'auto'
+                    width: '150px'
                   }}
                   options={[
                     {
@@ -125,10 +137,11 @@ const Assignments = ({
           )
       }
       { editAssignmentConfirmationModal && <EditAssignmentConfirmationModal /> }
-      { createTopicModal && <CreateTopicModal /> }
       { createAssignmentModal && <CreateAssignmentModal resourceType={resourceType} /> }
       { editTopicModal && <EditTopicModal editingTopic={editingTopic} classroomId={classroomId} /> }
       { editAssignmentModal && <EditAssignmentModal /> }
+      { createTopicModal && <CreateTopicModal /> }
+      { unpublishingAssignmentId && <UnpublishAssignmentConfirmationModal classroomId={classroomId} /> }
     </React.Fragment>
   );
 };
@@ -149,6 +162,7 @@ Assignments.propTypes = {
   fetchTopics: PropTypes.func.isRequired,
   editAssignmentConfirmationModal: PropTypes.bool.isRequired,
   editAssignmentModal: PropTypes.bool.isRequired,
+  unpublishingAssignmentId: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired
 };
 
 const mapStateToProps = state => ({
@@ -159,6 +173,7 @@ const mapStateToProps = state => ({
   editAssignmentModal: state.classroom.editAssignmentModal,
   assignments: state.classroom.assignments,
   topics: state.classroom.topics,
+  unpublishingAssignmentId: state.classroom.unpublishingAssignmentId,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
