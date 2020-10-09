@@ -2,8 +2,8 @@
 
 .class-view__assignments__topic{
   margin-top: 38px;
-  padding: 0 10px;
-
+  $root: &;
+  
   &__header-area{
     display: flex;
     align-items: center;
@@ -17,7 +17,23 @@
       padding: 0;
     }
   }
-
+  
+  &__drop-area{
+    $drop: &;
+    height: 0px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 8px 0;
+    border-radius: 3px;
+    background: $g6;
+    &--active{
+      transition: height 300ms ease;
+      height: 50px;
+    }
+  }
+  
   &__assignments-table{
     box-sizing: border-box;
     margin-top: 24px;

@@ -16,16 +16,15 @@ const ClassCard = ({
   const [copyClicked, setCopyClicked] = useState(false);
 
   const onCodeCopyClick = () => {
-    hiddenTextboxRef.current.focus();
     hiddenTextboxRef.current.select();
-    setCopyClicked(true);
+    setCopyClicked(() => true);
     setImmediate(() => {
       document.execCommand('copy');
     });
     setTimeout(() => {
       hiddenTextboxRef.current.blur();
-      setCopyClicked(false);
-    }, 200);
+      setCopyClicked(_ => false);
+    }, 0);
   };
 
 

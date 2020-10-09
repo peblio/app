@@ -1,13 +1,13 @@
-.create-topic-modal{
+.unpublish-assignment-confirmation-modal{
   width: 557px;
   $root: &;
-  z-index: 700;
+
   &__header{
     text-align: center;
   }
 
   &__body{
-    padding: 64px 121px !important;
+    padding: 64px 40px !important;
     text-align: center;
 
     &__header{
@@ -17,7 +17,6 @@
 
     #{$root}__buttons-container{
       margin-top: 40px;
-      
     }
   }
 }

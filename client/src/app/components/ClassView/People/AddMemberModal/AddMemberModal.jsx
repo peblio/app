@@ -28,74 +28,87 @@ const AddMemberModal = (props) => {
       header={`Add ${props.triggeredBy.charAt(0).toUpperCase()}${props.triggeredBy.slice(1)}`}
       modalClass='add-member-modal'
     >
-      <h2 className="add-member-modal__body__header">
-        Username or Email
-      </h2>
-      <InputField
-        state={identifier}
-        onChange={(e) => { setIdentifier(e.target.value); }}
-        placeholder='e.g. jon.doe@gmail.com'
-        containerWidth="100%"
-        style={{
-          height: '50px'
-        }}
-        error={error}
-      />
-      <div className="add-member-modal__name-row">
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        setSubmitting(true);
+        props.addMemberToClassroom({
+          firstName,
+          lastName,
+          identifier,
+          role: props.triggeredBy
+        }, {
+          classroomId: props.classroomId
+        }).then(() => {
+          setSubmitting(false);
+          props.fetchCurrentClassroomDetails(props.classroomId);
+          props.toggleAddMemberModal();
+        }).catch((err) => {
+          console.log(err);
+          setSubmitting(false);
+          if (err.response.status === 400) {
+            setError('Please use username, this email is linked to multiple accounts');
+          } else if (err.response.status === 404) {
+            setError('User was not found');
+          }
+        });
+      }}
+      >
+        <h2 className="add-member-modal__body__header">
+          Username or Email
+        </h2>
         <InputField
-          state={firstName}
-          onChange={(e) => { setFirstName(e.target.value); }}
-          label="First name"
-          placeholder="enter input text"
+          state={identifier}
+          onChange={(e) => { setIdentifier(e.target.value); }}
+          placeholder='e.g. jon.doe@gmail.com'
+          containerWidth="100%"
+          style={{
+            height: '50px'
+          }}
+          error={error}
         />
-      </div>
-      <div className="add-member-modal__name-row">
-        <InputField
-          state={lastName}
-          onChange={(e) => { setLastName(e.target.value); }}
-          label="Last name"
-          placeholder="enter input text"
-        />
-      </div>
-      <div className="add-member-modal__buttons-container">
-        <Button
-          className='secondary'
-          onClick={() => { props.toggleAddMemberModal(); }}
-          style={{ marginRight: '16px' }}
-        >
-          Cancel
-        </Button>
-        <Button
-          className='primary'
-          disabled={!identifier.trim() ||
-            !firstName.trim() ||
-            !lastName.trim() ||
-            submitting}
-          onClick={() => {
-            setSubmitting(true);
-            props.addMemberToClassroom({
-              firstName,
-              lastName,
-              identifier,
-              role: props.triggeredBy
-            }, {
-              classroomId: props.classroomId
-            }).then(() => {
-              setSubmitting(false);
-              props.fetchCurrentClassroomDetails(props.classroomId);
-              props.toggleAddMemberModal();
-            }).catch((err) => {
-              console.log(err);
-              setSubmitting(false);
-              if (err.response.status === 400) {
-                setError('Please use username, this email is linked to multiple accounts');
-              }
-            });
+        <div
+          className="add-member-modal__name-row"
+          style={{
+            marginTop: '40px'
           }}
         >
-          Add Member
-        </Button>
-      </div>
+          <InputField
+            state={firstName}
+            onChange={(e) => { setFirstName(e.target.value); }}
+            containerWidth="100%"
+            label="First name"
+            placeholder="enter input text"
+          />
+        </div>
+        <div className="add-member-modal__name-row">
+          <InputField
+            state={lastName}
+            onChange={(e) => { setLastName(e.target.value); }}
+            containerWidth="100%"
+            label="Last name"
+            placeholder="enter input text"
+          />
+        </div>
+        <div className="add-member-modal__buttons-container">
+          <Button
+            className='secondary'
+            onClick={() => { props.toggleAddMemberModal(); }}
+            style={{ marginRight: '16px' }}
+          >
+            Cancel
+          </Button>
+          <Button
+            className='primary'
+            disabled={!identifier.trim() ||
+              !firstName.trim() ||
+              !lastName.trim() ||
+              submitting}
+            type="submit"
+          >
+            Add Member
+          </Button>
+        </div>
+      </form>
     </Modal>
   );
 };

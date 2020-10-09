@@ -57,6 +57,7 @@ const TopicArea = ({
   id,
   assignments,
   classroomId,
+  assignmentDrag,
   setEditingTopic,
   // eslint-disable-next-line no-shadow
   fetchAssignments,
@@ -77,8 +78,8 @@ const TopicArea = ({
       });
   };
 
-  return connectDropTarget(
-    <div className="class-view__assignments__topic">
+  return (
+    <div>
       <div className="class-view__assignments__topic__header-area">
         <h3 className="class-view__assignments__topic__header-area__header">{name}</h3>
         <IconButton
@@ -95,7 +96,7 @@ const TopicArea = ({
         <IconButton
           icon={<TrashIcon />}
           onClick={() => {
-            deleteTopic({ topicId: id, assignments });
+            deleteTopic({ topicId: id, assignments, classroomId });
           }}
         />
       </div>
@@ -125,7 +126,16 @@ const TopicArea = ({
           <div className="">PUBLISHED</div>
         </div>
       </div>
-      {/* AssignmentCard here */}
+      {
+        connectDropTarget(
+          <div
+            className={`class-view__assignments__topic__drop-area ${assignmentDrag !== false && assignmentDrag !== id
+              ? 'class-view__assignments__topic__drop-area--active' : ''
+            }`}
+          >
+          </div>
+        )
+      }
       {
         assignments.map(assignment => (
           <AssignmentCard
@@ -162,7 +172,7 @@ TopicArea.propTypes = {
 };
 
 const mapStateToProps = state => ({
-
+  assignmentDrag: state.classroom.assignmentDrag
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

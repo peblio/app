@@ -8,8 +8,8 @@ import UserAccount from '../Shared/UserAccount/UserAccount';
 import './topNav.scss';
 
 const TopNav = ({ className, children, ...props }) => (
-  <div className={`top-nav ${className || ''}`}>
-    <a href="https://peblio.co" className={`top-nav__brand ${`${className}__brand` || ''}`}>
+  <div className={`top-nav ${className || ''}`} {...props}>
+    <a href="https://www.peblio.co/" className={`top-nav__brand ${`${className}__brand` || ''}`}>
       <PeblioLogo />
     </a>
     <ul className={`top-nav__nav-links ${`${className}__nav-links` || ''}`}>

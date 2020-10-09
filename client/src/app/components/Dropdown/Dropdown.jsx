@@ -121,7 +121,7 @@ const Dropdown = ({
       <div className={`dropdown__options ${triggered ? 'dropdown__options--active' : ''}`}>
         {options.map(option => (
           <div
-            className="dropdown__option-container"
+            className={`dropdown__option-container ${option.className}`}
             key={option.value}
           >
             <button
@@ -147,7 +147,8 @@ Dropdown.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.bool]).isRequired,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    className: PropTypes.string
   })).isRequired,
   placeholder: PropTypes.string.isRequired,
   disabled: PropTypes.bool,

@@ -33,6 +33,11 @@
     font-family: $roboto;
     font-weight: $heavy-font-weight;
 
+    a{
+      color: $black;
+      text-decoration: none;
+    }
+
     &__footer{
       margin-top: auto;
       font-size: 13.4px;

@@ -31,7 +31,8 @@ import {
   fetchClassrooms,
   setSubmittinData,
   fetchAssignments,
-  createPeblForAssignment
+  createPeblForAssignment,
+  toggleCreateTopicModal
 } from '../../../../action/classroom';
 
 
@@ -40,6 +41,8 @@ import './createAssignmentModal.scss';
 const CreateAssignmentModal = ({
   // eslint-disable-next-line no-shadow
   toggleCreateAssignmentModal,
+  // eslint-disable-next-line no-shadow
+  toggleCreateTopicModal,
   // eslint-disable-next-line no-shadow
   createAssignment,
   // eslint-disable-next-line no-shadow
@@ -186,11 +189,25 @@ const CreateAssignmentModal = ({
             setState={setTopic}
             disabled={!classState}
             options={
-              // eslint-disable-next-line no-shadow
-              topics ? topics.map(topic => ({
-                name: topic.name,
-                value: topic._id
-              }))
+              // eslint-disable-next-line no-nested-ternary
+              topics ? topics.length !== 0 ? (
+                // eslint-disable-next-line no-shadow
+                [...topics.map(topic => ({
+                  name: topic.name,
+                  value: topic._id
+                }))]
+              ) : [
+                {
+                  name: 'Create topic',
+                  value: 'Select topic',
+                  onClick: () => {
+                    toggleCreateTopicModal();
+                    setTimeout(() => {
+                      setTopic('');
+                    }, 50);
+                  }
+                }
+              ]
                 : [
                   {
                     name: 'Loading...',
@@ -412,6 +429,7 @@ CreateAssignmentModal.propTypes = {
   fetchClassrooms: PropTypes.func.isRequired,
   fetchAssignments: PropTypes.func.isRequired,
   createPeblForAssignment: PropTypes.func.isRequired,
+  toggleCreateTopicModal: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -427,6 +445,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchClassrooms,
   setSubmittinData,
   createPeblForAssignment,
+  toggleCreateTopicModal,
   fetchAssignments
 }, dispatch);
 

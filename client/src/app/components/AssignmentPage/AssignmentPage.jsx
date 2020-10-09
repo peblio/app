@@ -35,7 +35,6 @@ const AssignmentPage = (props) => {
   const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [comment, setComment] = useState('');
-  const [totalAssigned, setTotalAssigned] = useState('');
   const [totalTurnedIn, setTotalTurnedIn] = useState('');
   const [students, setStudents] = useState([]);
   const [order, setOrder] = useState('A-Z');
@@ -166,20 +165,6 @@ const AssignmentPage = (props) => {
 
   useEffect(() => {
     let val = 0;
-    if (props.currentClassroom.members) {
-      val = props.currentClassroom.members
-        .reduce((acc, member) => {
-          if (member.role === 'student') {
-            return acc + 1;
-          }
-          return acc;
-        }, 0);
-    }
-    setTotalAssigned(val);
-  }, [props.currentClassroom]);
-
-  useEffect(() => {
-    let val = 0;
     if (props.assignmentAttempts.allStudentsAttemptForAssignment) {
       val = props.assignmentAttempts.allStudentsAttemptForAssignment
         .reduce((acc, attempt) => {
@@ -259,63 +244,67 @@ const AssignmentPage = (props) => {
                 setState={setDueDate}
               />
             </div>
-            <div className="assignment-page__action-area">
-              <div className="assignment-page__action-area__dropdowns">
-                <Dropdown
-                  placeholder="A-Z"
-                  state={order}
-                  setState={setOrder}
-                  style={{
-                    width: '111px',
-                    marginRight: '100px'
-                  }}
-                  options={[
-                    {
-                      name: 'A-Z',
-                      value: 'A-Z',
-                    },
-                    {
-                      name: 'Z-A',
-                      value: 'Z-A',
-                    }
-                  ]}
-                />
-                <InputField
-                  containerWidth='119px'
-                  state={totalMarks}
-                  onChange={(e) => { setTotalMarks(e.target.value); }}
-                  placeholder="total grade"
-                />
-              </div>
-              <Button
-                className="primary"
-                disabled={
-                  props.assignmentAttempts.classroomAssignment &&
-                  props.assignmentAttempts.classroomAssignment.areGradesPublished
-                }
-                onClick={() => {
-                  props.publishGrades(props.currentAssignment.id)
-                    .then(() => {
-                      props.fetchAssignmentAttempts(props.match.params.assignmentId);
-                    });
-                }}
-              >
-                Publish grades
-              </Button>
-              <div className="assignment-page__action-area__turned-in">
-                <span>{totalTurnedIn}</span>
-                {' '}
-                turned in /
-                {' '}
-                <span>{totalAssigned}</span>
-                {' '}
-                asigned
-              </div>
-            </div>
-            <div className="assignment-page__container">
-              <div className="assignment-page__container__students">
-                {
-                  students.length !== 0 &&
+            {
+              students.length !== 0 ? (
+                <React.Fragment>
+                  <div className="assignment-page__action-area">
+                    <div className="assignment-page__action-area__dropdowns">
+                      <Dropdown
+                        placeholder="A-Z"
+                        state={order}
+                        setState={setOrder}
+                        style={{
+                          width: '111px',
+                          marginRight: '100px'
+                        }}
+                        options={[
+                          {
+                            name: 'A-Z',
+                            value: 'A-Z',
+                          },
+                          {
+                            name: 'Z-A',
+                            value: 'Z-A',
+                          }
+                        ]}
+                      />
+                      <InputField
+                        containerWidth='119px'
+                        state={totalMarks}
+                        onChange={(e) => { setTotalMarks(e.target.value); }}
+                        placeholder="total grade"
+                        type="number"
+                      />
+                    </div>
+                    <Button
+                      className="primary"
+                      disabled={
+                        props.assignmentAttempts.classroomAssignment &&
+                        props.assignmentAttempts.classroomAssignment.areGradesPublished
+                      }
+                      onClick={() => {
+                        props.publishGrades(props.currentAssignment.id)
+                          .then(() => {
+                            props.fetchAssignmentAttempts(props.match.params.assignmentId);
+                          });
+                      }}
+                    >
+                      Publish grades
+                    </Button>
+                    <div className="assignment-page__action-area__turned-in">
+                      <span>{totalTurnedIn}</span>
+                      {' '}
+                      turned in /
+                      {' '}
+                      <span>{students.length}</span>
+                      {' '}
+                      assigned
+                    </div>
+                  </div>
+                  <div className="assignment-page__container">
+                    <div className="assignment-page__container__students">
+                      {
+                        students.length !== 0 &&
                   students.map((member) => {
                     let attempt = [];
                     if (props.assignmentAttempts.allStudentsAttemptForAssignment) {
@@ -343,96 +332,109 @@ const AssignmentPage = (props) => {
                       />
                     );
                   })
-                }
-              </div>
-              <div className="assignment-page__container__pebl">
-                <div className="assignment-page__container__pebl__assignment">
-                  {
-                    selectedAssignment && selectedAssignment.myPeblUrl && (
-                      <iframe
-                        id="assignment-pebl"
-                        src={`/fullscreen/${selectedAssignment.myPeblUrl.split('/')[4]}`}
-                        title={selectedAssignment.myPeblUrl.split('/')[4]}
-                      />
-                    )
-                  }
-                </div>
-                <div className="assignment-page__container__pebl__comments-container">
-                  {
-                    selectedAssignment && selectedAssignment.comments.length !== 0 && (
+                      }
+                    </div>
+                    <div className="assignment-page__container__pebl">
+                      <div className="assignment-page__container__pebl__assignment">
+                        {
+                          selectedAssignment && selectedAssignment.myPeblUrl && (
+                            <iframe
+                              id="assignment-pebl"
+                              src={`/fullscreen/${selectedAssignment.myPeblUrl.split('/')[4]}`}
+                              title={selectedAssignment.myPeblUrl.split('/')[4]}
+                            />
+                          )
+                        }
+                      </div>
+                      {
+                        selectedAssignment && (
+                          <div className="assignment-page__container__pebl__comments-container">
+                            {
+                              selectedAssignment && selectedAssignment.comments.length !== 0 && (
 
-                      <div className="assignment-page__container__pebl__comments-container__comments">
-                        <div className="scroll" ref={scrollRef}>
-                          {
-                            selectedAssignment.comments && selectedAssignment.comments.map(
-                              // eslint-disable-next-line no-shadow
-                              comment => (
-                                <div
-                                  key={comment._id}
-                                  className="assignment-page__container__pebl__comments-container__comments__comment"
-                                >
-                                  <div
-                                    className={
-                                      `assignment-page__container__pebl__comments-container__comments__comment-from
-                                    ${
-                                comment.fromMember.role
-                                }`}
-                                  >
-                                    {comment.fromMember.firstName}
-                                    {' '}
-                                    {comment.fromMember.lastName}
-                                    :
-                                  </div>
-                                  <div
-                                    className="
-                                    assignment-page__container__pebl__comments-container__comments__comment-text"
-                                  >
+                                <div className="assignment-page__container__pebl__comments-container__comments">
+                                  <div className="scroll" ref={scrollRef}>
                                     {
-                                      comment.text
+                                      selectedAssignment.comments && selectedAssignment.comments.map(
+                                        // eslint-disable-next-line no-shadow
+                                        comment => (
+                                          <div
+                                            key={comment._id}
+                                            // eslint-disable-next-line max-len
+                                            className="assignment-page__container__pebl__comments-container__comments__comment"
+                                          >
+                                            <div
+                                              className={
+                                                // eslint-disable-next-line max-len
+                                                `assignment-page__container__pebl__comments-container__comments__comment-from
+                                    ${
+                                          comment.fromMember.role
+                                          }`}
+                                            >
+                                              {comment.fromMember.firstName}
+                                              {' '}
+                                              {comment.fromMember.lastName}
+                                              :
+                                            </div>
+                                            <div
+                                              className="
+                                    assignment-page__container__pebl__comments-container__comments__comment-text"
+                                            >
+                                              {
+                                                comment.text
+                                              }
+                                            </div>
+                                          </div>
+                                        )
+                                      )
                                     }
                                   </div>
                                 </div>
                               )
-                            )
-                          }
-                        </div>
-                      </div>
-                    )
-                  }
-                  <form
-                    className="assignment-page__container__pebl__comments-container__comment-text-box"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      props.commentOnAssignment({
-                        text: comment,
-                        assignmentAttemptId: selectedAssignment.id
-                      }).then(() => {
-                        setComment('');
-                        props.fetchAssignmentAttempts(props.match.params.assignmentId);
-                      });
-                    }}
-                  >
-                    <InputField
-                      placeholder="type comment..."
-                      disabled={
-                        !(selectedAssignment)
-                      }
-                      state={comment}
-                      onChange={(e) => { setComment(e.target.value); }}
-                    />
-                    <Button
-                      className="secondary"
-                      disabled={
-                        !comment ||
+                            }
+                            <form
+                              className="assignment-page__container__pebl__comments-container__comment-text-box"
+                              onSubmit={(e) => {
+                                e.preventDefault();
+                                props.commentOnAssignment({
+                                  text: comment,
+                                  assignmentAttemptId: selectedAssignment.id
+                                }).then(() => {
+                                  setComment('');
+                                  props.fetchAssignmentAttempts(props.match.params.assignmentId);
+                                });
+                              }}
+                            >
+                              <InputField
+                                placeholder="type comment..."
+                                disabled={
+                                  !(selectedAssignment)
+                                }
+                                state={comment}
+                                onChange={(e) => { setComment(e.target.value); }}
+                              />
+                              <Button
+                                className="secondary"
+                                disabled={
+                                  !comment ||
                       !selectedAssignment
+                                }
+                              >
+                                Send
+                              </Button>
+                            </form>
+                          </div>
+                        )
                       }
-                    >
-                      Send
-                    </Button>
-                  </form>
+                    </div>
+                  </div>
+                </React.Fragment>
+              ) : (
+                <div className="assignment-page__no-students">
+                  There are no students currently enrolled in the class
                 </div>
-              </div>
-            </div>
+              )
+            }
           </main>
         )
       }

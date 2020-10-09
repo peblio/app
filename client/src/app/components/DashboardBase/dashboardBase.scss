@@ -19,7 +19,8 @@
     overflow-x: auto;
     overflow-y: hidden;
     &__container{
-      min-width: 910;
+      min-width: 910px;
+      min-height: calc(100vh - #{$topbar-height});
       overflow-y: scroll;
     }
   }

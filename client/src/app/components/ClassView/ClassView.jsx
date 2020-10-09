@@ -28,6 +28,7 @@ const ClassView = ({
   userId
 }) => {
   const [dataLoading, setDataLoading] = useState();
+  const [codeClicked, setCodeClicked] = useState(false);
 
   useEffect(() => {
     setDataLoading(true);
@@ -55,12 +56,14 @@ const ClassView = ({
   const onCodeCopyClick = () => {
     hiddenTextboxRef.current.focus();
     hiddenTextboxRef.current.select();
+    setCodeClicked(true);
     setImmediate(() => {
       document.execCommand('copy');
     });
     setTimeout(() => {
       hiddenTextboxRef.current.blur();
-    }, 300);
+      setCodeClicked(false);
+    }, 200);
   };
 
   return (
@@ -77,7 +80,7 @@ const ClassView = ({
                   <RightCrumbIcon />
                   <span>{currentClassroom && currentClassroom.name}</span>
                 </div>
-                <div className="class-view__header-area__class-code">
+                <div className={`class-view__header-area__class-code ${codeClicked ? 'clicked' : ''}`}>
                   Class code :
                   {' '}
                   <input
@@ -85,6 +88,7 @@ const ClassView = ({
                     onChange={() => {}}
                     ref={hiddenTextboxRef}
                     onFocus={onCodeCopyClick}
+                    spellCheck="false"
                   />
                   <svg
                     width='15'
@@ -92,6 +96,7 @@ const ClassView = ({
                     viewBox='0 0 40 48'
                     fill='none'
                     xmlns='http://www.w3.org/2000/svg'
+                    onClick={onCodeCopyClick}
                   >
                     <path
                       d='
