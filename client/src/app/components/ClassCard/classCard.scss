@@ -40,71 +40,82 @@
 
   &__main{
     display: flex;
-    pointer-events: none;
     flex-direction: column;
     height: 100%;
     box-sizing: border-box;
     position: relative;
     z-index: 2;
-    &__code-input-hidden{
-      height: 0;
-      width: 0;
-      overflow: hidden;
-      padding: 0;
-      margin: 0;
-      border: none;
-      box-sizing: border-box;
-      background: none;
-    }
   
-  
-    &__code{
-      background: none;
-      pointer-events: all;
-      border: none;
-      border-radius: 3px;
-      margin-left: auto;
-      cursor: pointer;
+    &__class-code{
       display: flex;
+      font-weight: $heavy-font-weight;
       align-items: center;
-      box-sizing: border-box;
-      transition: transform ease 100ms;
+      margin-right: -6px;
 
-      &.clicked{
-        transform: scale(0.95);
-      }
-  
-      input{
-        cursor: pointer;
-        background: none;
-        border:none;
-        text-align: right;
-        width: 50%;
+      &__container{
         margin-left: auto;
-        font-family: $roboto;
-        font-size: 14px;
-        font-weight: $heavy-font-weight;
-        color: $g3;
-  
-        &:focus{
-          transform: scale(-15px, -15px);
-          outline: none;
+        position: relative;
+        input{
+          position: absolute;
+          top: 0;
+          left: 0;
+          border: none;
+          background: none;
+          width: 10px;
+          margin: 0 4px;
+          cursor: pointer;
+          transition: transform ease 50ms;
+          &:focus{
+            outline: none;
+          }
+          &::selection{
+            color: none;
+          }
         }
-        
-        &::selection{
-          color: none;
+
+        &__span{
+          background: #fff;
+          font-family: $roboto;
+          font-size: 14px;
+          font-weight: $heavy-font-weight;
+          color: $g3;
+          position: relative;
+          z-index: 2;
+          padding-left: 4px;
+          padding-right: -2px;
         }
-      }
-  
-      svg{
-        margin-left: 4px;
+
+        &__copied{
+          position: absolute;
+          top: calc(100% + 0px);
+          left: 60%;
+          transform: translateX(-20%);
+          padding: 4px 8px;
+          background: rgba($color: #000000, $alpha: 0.8);
+          border-radius: 3px;
+          color: white;
+          font-size: 14px;
+          font-weight: normal;
+          opacity: 0;
+          transition: opacity 100ms ease;
+
+          &.active{
+            opacity: 1;
+          }
+        }
       }
     }
   
     &__title{
-      margin-top: 28px;
+      margin: 0;
+      margin-top: 18px;
       font-size: $h2-size;
       font-family: $roboto;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 0;
+      cursor: pointer;
     }
   
     &__subject{
