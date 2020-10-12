@@ -116,6 +116,10 @@
       text-align: left;
       padding: 0;
       cursor: pointer;
+
+      &:focus{
+        outline: none;
+      }
     }
   
     &__subject{
