@@ -19,10 +19,33 @@
     overflow-y: auto;
     background-color: rgba(0, 21, 30, 0.7);
     animation: fade-in 300ms ease-in 0s 1;
+    
+    --thumbBG: #{$g6};
+    --scrollbarBG: rgba($color: #000000, $alpha: 0);
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    &::-webkit-scrollbar-track {
+      background: rgba($color: #000000, $alpha: 0);
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba($color: #000000, $alpha: 0) ;
+      transition: background-color 300ms ease;
+      border-radius: 6px;
+    }
+
+    &:hover{
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--thumbBG) ;
+      }
+    }
   }
   
   &__box{
-    margin-bottom: 30px;
     box-sizing: border-box;
     position: absolute;
     border-radius: 3px;
@@ -40,10 +63,18 @@
       font-weight: $heavy-font-weight;
     }
 
+    &__margin{
+      position: absolute;
+      height: 40px;
+      width: 100%;
+      top: 100%;
+    }
+    
     #{$root}__body{
       padding: 40px;
     }
   }
+
 }
 
 @keyframes float-down{

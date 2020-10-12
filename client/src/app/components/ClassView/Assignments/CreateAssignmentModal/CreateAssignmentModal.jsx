@@ -245,7 +245,7 @@ const CreateAssignmentModal = ({
           <InputField
             state={assignmentTitle}
             onChange={(e) => { setAssignmentTitle(e.target.value); }}
-            label="*Assignment title"
+            label={resourceType === 'assignment' ? '*Assignment title' : '*Resource title'}
             placeholder="enter class name"
             containerWidth="100%"
           />
@@ -289,11 +289,13 @@ const CreateAssignmentModal = ({
               createPeblForAssignment(assignmentTitle)
                 .then((id) => {
                   console.log(id);
-                  setLinkAdded(true);
                   setAddLink(`${window.location.origin}/pebl/${id}`);
                   setPage({
                     title: assignmentTitle || DEFAULT_PAGE_TITLE,
-                    snapshotPath: SNAPSHOT_DEFAULT_IMG
+                    snapshotPath: SNAPSHOT_DEFAULT_IMG,
+                  });
+                  setImmediate(() => {
+                    setLinkAdded(true);
                   });
                 });
             }}
@@ -354,6 +356,7 @@ const CreateAssignmentModal = ({
                   setLinkAdded(false);
                 }}
                 type={resourceType}
+                url={addLink}
               />
             )}
           </div>

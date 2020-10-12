@@ -139,41 +139,17 @@ export const createClassroom = classroom => (dispatch) => {
 };
 
 export const joinClassroom = joinData => (dispatch) => {
-  dispatch({
-    type: ActionTypes.SET_SUBMITTING_DATA,
-    value: true
+  const reqPromise = () => new Promise((resolve, reject) => {
+    axios.patch('/learning/classroomDetail/', joinData)
+      .then(() => {
+        resolve(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
   });
-  axios.patch('/learning/classroomDetail/', joinData)
-    .then(() => {
-      console.log('Joined');
-      dispatch({
-        type: ActionTypes.TOGGLE_JOIN_CLASSROOM_MODAL,
-      });
-      dispatch({
-        type: ActionTypes.SET_SUBMITTING_DATA,
-        value: false
-      });
-      axios.get('/learning/classroomDetail')
-        .then(({ data }) => {
-          dispatch({
-            type: ActionTypes.FETCH_CLASSROOMS,
-            classrooms: data
-          });
-        })
-        .catch((e) => {
-          if (e.response.status === 404) {
-            history.push('/404');
-          }
-        });
-    })
-    .catch((err) => {
-      // [TODO]: Add dispatch to show toast notification
-      console.log(err);
-      dispatch({
-        type: ActionTypes.SET_SUBMITTING_DATA,
-        value: false
-      });
-    });
+  return reqPromise();
 };
 
 export const fetchCurrentClassroomDetails = id => (dispatch) => {
@@ -527,7 +503,7 @@ export const studentAttemptAssignment = data => (dispatch) => {
           return axios.post('/pages/save', copiedPebl);
         })
         .then(() => axios.post('/learning/classroomAssignmentAttempt', {
-          myPeblUrl: `http://local.peblio.co:8080/pebl/${id}`,
+          myPeblUrl: `${window.location.origin}/pebl/${id}`,
           classroomId: data.classroomId,
           assignmentId: data.assignmentId
         })).then(() => {

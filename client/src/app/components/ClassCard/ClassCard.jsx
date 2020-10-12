@@ -69,9 +69,9 @@ const ClassCard = ({
           {
             grade && (
               <React.Fragment>
-                {grade}
-                {' '}
                 SECTION
+                {' '}
+                {grade}
                 <span className='circle'></span>
               </React.Fragment>
             )

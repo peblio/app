@@ -79,7 +79,7 @@ const TopicArea = ({
   };
 
   return (
-    <div>
+    <div className="class-view__assignments__topic">
       <div className="class-view__assignments__topic__header-area">
         <h3 className="class-view__assignments__topic__header-area__header">{name}</h3>
         <IconButton
@@ -169,6 +169,8 @@ TopicArea.propTypes = {
   fetchAssignments: PropTypes.func.isRequired,
   changeTopicOfAssignment: PropTypes.func.isRequired,
   deleteTopic: PropTypes.func.isRequired,
+  connectDropTarget: PropTypes.func.isRequired,
+  assignmentDrag: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
