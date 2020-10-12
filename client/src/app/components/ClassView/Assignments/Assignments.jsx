@@ -119,9 +119,11 @@ const Assignments = ({
                 (assignments.length === 0 && topics.length === 0) && (
                   <div className="class-view__assignments__empty">
                     <div className="class-view__assignments__empty__container">
+                      Create
+                      {' '}
                       <span>Topics</span>
                       {' '}
-                      is a way to organize your assignments and resources
+                      to organize your assignments and resources
                       <br />
                       <br />
                       <span>Assignments</span>

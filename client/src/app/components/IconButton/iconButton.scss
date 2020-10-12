@@ -17,14 +17,14 @@
     height: 40px;
     width: 40px;
     border-radius: 50%;
-    transition: background 300ms ease;
+    transition: background 300ms ease !important;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 0;
     
     &:hover{
-      background: $g7;
+      background: $g7 !important;
     }
   }
   
