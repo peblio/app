@@ -1,8 +1,12 @@
 @import 'variables.scss';
 
-.create-assignment-modal{
+.edit-assignment-modal{
   $root: &;
   width: 893px;
+
+  &__loading{
+    height: 400px;
+  }
 
   &__header{
     display: flex;

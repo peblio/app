@@ -81,8 +81,6 @@ const Assignments = ({
             <div className="class-view__assignments">
               <div className="class-view__assignments__action-area">
                 <Dropdown
-                  // optionsPosition='left'
-                  // icon={<PlusIcon />}
                   className="btn"
                   placeholder={(
                     <div className="with-icon">
@@ -107,8 +105,8 @@ const Assignments = ({
                         toggleCreateAssignmentModal();
                       }
                     }, {
-                      name: 'Material',
-                      value: 'material',
+                      name: 'Resource',
+                      value: 'resource',
                       onClick: () => {
                         setResourceType('material');
                         toggleCreateAssignmentModal();
@@ -117,6 +115,29 @@ const Assignments = ({
                   ]}
                 />
               </div>
+              {
+                (assignments.length === 0 && topics.length === 0) && (
+                  <div className="class-view__assignments__empty">
+                    <div className="class-view__assignments__empty__container">
+                      <span>Topics</span>
+                      {' '}
+                      is a way to organize your assignments and resources
+                      <br />
+                      <br />
+                      <span>Assignments</span>
+                      {' '}
+                      will create a copy for each student. Any chages made to the original after the students opens the
+                      assignment will not be viewed.
+                      <br />
+                      <br />
+                      <span>Resources</span>
+                      {' '}
+                      will share the original link with your students. Copies will not be made and updates
+                      will be viewed.
+                    </div>
+                  </div>
+                )
+              }
               <NoTopicAssignments
                 assignments={assignments.filter(assignment => assignment.topicId === null)}
                 classroomId={classroomId}

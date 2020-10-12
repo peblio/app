@@ -20,6 +20,7 @@ const Modal = ({
         <div className={`modal__body ${modalClass ? `${modalClass}__body` : ''}`}>
           {children}
         </div>
+        <div className="modal__box__margin"></div>
       </div>
     </div>
   </div>

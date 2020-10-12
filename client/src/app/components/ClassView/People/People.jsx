@@ -167,8 +167,10 @@ const People = (props) => {
                                     attempt.length !== 0
                                       // eslint-disable-next-line no-nested-ternary
                                       ? attempt[0].turnedIn
-                                        ? new Date(attempt[0].turnedInTime) > new Date(assignment.dueDate)
-                                          ? 'Turned in late' : 'Turned in'
+                                        // eslint-disable-next-line no-nested-ternary
+                                        ? !assignment.dueDate ? 'Turned in'
+                                          : new Date(attempt[0].turnedInTime) > new Date(assignment.dueDate)
+                                            ? 'Turned in late' : 'Turned in'
                                         : 'Started' : 'Missing'
                                   }
                                   dueDate={assignment.dueDate}

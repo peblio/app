@@ -12,6 +12,7 @@ import TextareaField from '../../../TextareaField/TextareaField';
 import IconButton from '../../../IconButton/IconButton';
 import Button from '../../../Button/Button';
 import DatePickerField from '../../../DatePickerField/DatePickerField';
+import GenericLoader from '../../../GenericLoader/LoadingMessage';
 
 import axios from '../../../../utils/axios';
 import { SNAPSHOT_DEFAULT_IMG, DEFAULT_PAGE_TITLE } from '../../../../constants/pageConstants';
@@ -74,6 +75,7 @@ const EditAssignmentModal = ({
   const [instruction, setInscruction] = useState('');
   const [outOfMarks, setOutOfMarks] = useState('');
   const [type, setType] = useState('assignment');
+  const [loading, setLoading] = useState(false);
 
   // add link states
   const [addLink, setAddLink] = useState('');
@@ -100,8 +102,11 @@ const EditAssignmentModal = ({
   };
 
   useEffect(() => {
+    setLoading(true);
     fetchClassrooms();
-    fetchCurrentAssignmentDetails(editingAssignmentId);
+    fetchCurrentAssignmentDetails(editingAssignmentId).then(() => {
+      setLoading(false);
+    });
     // cleanup event listener if active and component is closed
     return () => {
       clearCurrentAssignmentDetails();
@@ -185,272 +190,283 @@ const EditAssignmentModal = ({
         type === 'material' ? 'Edit resource'
           : (
             <React.Fragment>
-              <div className="create-assignment-modal__header__title">
+              <div className="edit-assignment-modal__header__title">
                 Edit Assignment
               </div>
-              <span className="create-assignment-modal__header__sub-title">
+              <span className="edit-assignment-modal__header__sub-title">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus, excepturi?
               </span>
             </React.Fragment>
           )
       )}
-      modalClass="create-assignment-modal"
+      modalClass="edit-assignment-modal"
     >
-      <div className="create-assignment-modal__required">
-        *required
-      </div>
-      <form action="">
-        <div className="create-assignment-modal__row">
-          <DropdownMultiselect
-            disabled
-            placeholder="*Select Class"
-            style={{ width: '149px', marginTop: '26px', marginRight: '40px' }}
-            selected={classState}
-            setSelected={setClassState}
-            options={
-              classrooms ? classrooms.map(classroom => ({
-                name: classroom.name,
-                value: classroom.id
-              }))
-                : [
-                  {
-                    name: 'Loading...',
-                    value: null
-                  }
-                ]
-            }
-          />
-          <Dropdown
-            placeholder="Select topic"
-            style={{ width: '149px', marginTop: '26px', marginRight: '40px' }}
-            state={topic}
-            setState={setTopic}
-            disabled={!classState}
-            options={
-              // eslint-disable-next-line no-nested-ternary
-              topics ? topics.length !== 0 ? (
-                // eslint-disable-next-line no-shadow
-                [...topics.map(topic => ({
-                  name: topic.name,
-                  value: topic._id
-                }))]
-              ) : [
-                {
-                  name: 'Create topic',
-                  value: 'Select topic',
-                  onClick: () => {
-                    toggleCreateTopicModal();
-                    setTimeout(() => {
-                      setTopic('');
-                    }, 50);
-                  }
-                }
-              ]
-                : [
-                  {
-                    name: 'Loading...',
-                    value: null
-                  }
-                ]
-            }
-          />
-          {
-            type === 'assignment' && (
-              <InputField
-                state={outOfMarks}
-                onChange={(e) => { setOutOfMarks(e.target.value); }}
-                label="Point value"
-                containerWidth="171px"
-                type="number"
-                style={{
-                  marginTop: '-1px',
-                  marginRight: '40px'
-                }}
-              />
-            )}
-          {
-            type === 'assignment' && (
-              <DatePickerField
-                state={date}
-                setState={setDate}
-                label="Due Date"
-                containerWidth="171px"
-                calendarPosition="right"
-              />
-            )}
+      {loading ? (
+        <div className="edit-assignment-modal__loading">
+          <GenericLoader />
         </div>
-        <div className="create-assignment-modal__row">
-          <InputField
-            state={assignmentTitle}
-            onChange={(e) => { setAssignmentTitle(e.target.value); }}
-            label="*Assignment title"
-            placeholder="enter class name"
-            containerWidth="100%"
-          />
-        </div>
-        <div className="create-assignment-modal__row">
-          <TextareaField
-            state={instruction}
-            onChange={(e) => { setInscruction(e.target.value); }}
-            label="Instruction (optional)"
-            placeholder="type instructions"
-            style={{
-              containerWidth: '100%',
-              textareaHeight: '96px'
-            }}
-          />
-        </div>
-        <div className="create-assignment-modal__action-area">
-          <IconButton
-            disabled={linkAdded}
-            icon={<PeblIcon />}
-            style={{ marginRight: '16px' }}
-            onClick={() => {
-              setLinkTriggeredBy('pebl');
-              setAddLinkTriggered(state => !state);
-              setTimeout(() => {
-                if (document.querySelector('#add-link')) {
-                  document.querySelector('#add-link').focus();
-                }
-              }, 0);
-              document.addEventListener('click', linkInputClickOutside);
-            }}
-          >
-            Select Pebl
-          </IconButton>
-          <IconButton
-            disabled={linkAdded}
-            icon={<CreateNewIcon />}
-            style={{ marginRight: '16px' }}
-            onClick={() => {
-              setLinkTriggeredBy('pebl');
-              createPeblForAssignment(assignmentTitle)
-                .then((id) => {
-                  console.log(id);
-                  setLinkAdded(true);
-                  setAddLink(`${window.location.origin}/pebl/${id}`);
-                  setPage({
-                    title: assignmentTitle || DEFAULT_PAGE_TITLE,
-                    snapshotPath: SNAPSHOT_DEFAULT_IMG
-                  });
-                });
-            }}
-          >
-            Create new Pebl
-          </IconButton>
-          <IconButton
-            disabled={linkAdded}
-            icon={<LinkIcon />}
-            style={{ marginRight: 'auto' }}
-            id="trigger-link"
-            onClick={() => {
-              setLinkTriggeredBy('link');
-              setAddLinkTriggered(state => !state);
-              setTimeout(() => {
-                if (document.querySelector('#add-link')) {
-                  document.querySelector('#add-link').focus();
-                }
-              }, 0);
-              document.addEventListener('click', linkInputClickOutside);
-            }}
-          >
-            Add link
-          </IconButton>
-          <Button
-            style={{ marginRight: '16px' }}
-            onClick={() => {
-              toggleEditAssignmentModal();
-            }}
-            className="secondary"
-          >
-            Cancel
-          </Button>
-          <Dropdown
-            placeholder="Publish"
-            className="btn"
-            style={{ width: '126px' }}
-            disabled={!classState || !assignmentTitle}
-            options={[
-              {
-                name: 'Publish',
-                value: 'publish',
-                onClick: () => { handleSubmit(true); }
-              },
-              {
-                name: 'Save Draft',
-                value: 'save',
-                onClick: () => { handleSubmit(false); }
-              },
-            ]}
-          />
-        </div>
-        { linkAdded && (
-          <div className="create-assignment-modal__resource">
-            {linkAdded && (
-              <LinkPreviewCard
-                title={page ? page.title : ''}
-                previewURL={page ? page.snapshotPath : ''}
-                removeAction={() => {
-                  setLinkAdded(false);
-                  // setLinkType(-1);
-                }}
-                url={addLink}
-              />
-            )}
+      ) : (
+        <React.Fragment>
+
+          <div className="edit-assignment-modal__required">
+            *required
           </div>
-        )}
-      </form>
-      {
-        addLinkTriggered && (
-          <form
-            className="create-assignment-modal__link-box"
-            style={{
-              left: linkTriggeredBy === 'pebl' ? '40px' : '320px'
-            }}
-            onSubmit={(e) => {
-              e.preventDefault();
-              const expression = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi;
-              const regex = new RegExp(expression);
-              if (addLink.match(regex)) {
-                if (linkTriggeredBy === 'pebl') {
-                  const temp = addLink.split('/');
-                  const id = temp[temp.length - 1];
-                  console.log(id);
-                  axios.get(`/pages/${id}`)
-                    .then(({ data }) => {
-                      setPage(data[0]);
+          <form action="">
+            <div className="edit-assignment-modal__row">
+              <DropdownMultiselect
+                disabled
+                placeholder="*Select Class"
+                style={{ width: '149px', marginTop: '26px', marginRight: '40px' }}
+                selected={classState}
+                setSelected={setClassState}
+                options={
+                  classrooms ? classrooms.map(classroom => ({
+                    name: classroom.name,
+                    value: classroom.id
+                  }))
+                    : [
+                      {
+                        name: 'Loading...',
+                        value: null
+                      }
+                    ]
+                }
+              />
+              <Dropdown
+                placeholder="Select topic"
+                style={{ width: '149px', marginTop: '26px', marginRight: '40px' }}
+                state={topic}
+                setState={setTopic}
+                disabled={!classState}
+                options={
+                // eslint-disable-next-line no-nested-ternary
+                  topics ? topics.length !== 0 ? (
+                  // eslint-disable-next-line no-shadow
+                    [...topics.map(topic => ({
+                      name: topic.name,
+                      value: topic._id
+                    }))]
+                  ) : [
+                    {
+                      name: 'Create topic',
+                      value: 'Select topic',
+                      onClick: () => {
+                        toggleCreateTopicModal();
+                        setTimeout(() => {
+                          setTopic('');
+                        }, 50);
+                      }
+                    }
+                  ]
+                    : [
+                      {
+                        name: 'Loading...',
+                        value: null
+                      }
+                    ]
+                }
+              />
+              {
+                type === 'assignment' && (
+                  <InputField
+                    state={outOfMarks}
+                    onChange={(e) => { setOutOfMarks(e.target.value); }}
+                    label="Point value"
+                    containerWidth="171px"
+                    type="number"
+                    style={{
+                      marginTop: '-1px',
+                      marginRight: '40px'
+                    }}
+                  />
+                )}
+              {
+                type === 'assignment' && (
+                  <DatePickerField
+                    state={date}
+                    setState={setDate}
+                    label="Due Date"
+                    containerWidth="171px"
+                    calendarPosition="right"
+                  />
+                )}
+            </div>
+            <div className="edit-assignment-modal__row">
+              <InputField
+                state={assignmentTitle}
+                onChange={(e) => { setAssignmentTitle(e.target.value); }}
+                label={type === 'assignment' ? '*Assignment title' : '*Resource title'}
+                placeholder="enter class name"
+                containerWidth="100%"
+              />
+            </div>
+            <div className="edit-assignment-modal__row">
+              <TextareaField
+                state={instruction}
+                onChange={(e) => { setInscruction(e.target.value); }}
+                label="Instruction (optional)"
+                placeholder="type instructions"
+                style={{
+                  containerWidth: '100%',
+                  textareaHeight: '96px'
+                }}
+              />
+            </div>
+            <div className="edit-assignment-modal__action-area">
+              <IconButton
+                disabled={linkAdded}
+                icon={<PeblIcon />}
+                style={{ marginRight: '16px' }}
+                onClick={() => {
+                  setLinkTriggeredBy('pebl');
+                  setAddLinkTriggered(state => !state);
+                  setTimeout(() => {
+                    if (document.querySelector('#add-link')) {
+                      document.querySelector('#add-link').focus();
+                    }
+                  }, 0);
+                  document.addEventListener('click', linkInputClickOutside);
+                }}
+              >
+                Select Pebl
+              </IconButton>
+              <IconButton
+                disabled={linkAdded}
+                icon={<CreateNewIcon />}
+                style={{ marginRight: '16px' }}
+                onClick={() => {
+                  setLinkTriggeredBy('pebl');
+                  createPeblForAssignment(assignmentTitle)
+                    .then((id) => {
+                      console.log(id);
+                      setAddLink(`${window.location.origin}/pebl/${id}`);
+                      setPage({
+                        title: assignmentTitle || DEFAULT_PAGE_TITLE,
+                        snapshotPath: SNAPSHOT_DEFAULT_IMG
+                      });
+                      setImmediate(() => {
+                        setLinkAdded(true);
+                      });
+                    });
+                }}
+              >
+                Create new Pebl
+              </IconButton>
+              <IconButton
+                disabled={linkAdded}
+                icon={<LinkIcon />}
+                style={{ marginRight: 'auto' }}
+                id="trigger-link"
+                onClick={() => {
+                  setLinkTriggeredBy('link');
+                  setAddLinkTriggered(state => !state);
+                  setTimeout(() => {
+                    if (document.querySelector('#add-link')) {
+                      document.querySelector('#add-link').focus();
+                    }
+                  }, 0);
+                  document.addEventListener('click', linkInputClickOutside);
+                }}
+              >
+                Add link
+              </IconButton>
+              <Button
+                style={{ marginRight: '16px' }}
+                onClick={() => {
+                  toggleEditAssignmentModal();
+                }}
+                className="secondary"
+              >
+                Cancel
+              </Button>
+              <Dropdown
+                placeholder="Publish"
+                className="btn"
+                style={{ width: '126px' }}
+                disabled={!classState || !assignmentTitle}
+                options={[
+                  {
+                    name: 'Publish',
+                    value: 'publish',
+                    onClick: () => { handleSubmit(true); }
+                  },
+                  {
+                    name: 'Save Draft',
+                    value: 'save',
+                    onClick: () => { handleSubmit(false); }
+                  },
+                ]}
+              />
+            </div>
+            { linkAdded && (
+              <div className="edit-assignment-modal__resource">
+                {linkAdded && (
+                  <LinkPreviewCard
+                    title={page ? page.title : ''}
+                    previewURL={page ? page.snapshotPath : ''}
+                    removeAction={() => {
+                      setLinkAdded(false);
+                    // setLinkType(-1);
+                    }}
+                    url={addLink}
+                  />
+                )}
+              </div>
+            )}
+          </form>
+          {
+            addLinkTriggered && (
+              <form
+                className="edit-assignment-modal__link-box"
+                style={{
+                  left: linkTriggeredBy === 'pebl' ? '40px' : '320px'
+                }}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const expression = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi;
+                  const regex = new RegExp(expression);
+                  if (addLink.match(regex)) {
+                    if (linkTriggeredBy === 'pebl') {
+                      const temp = addLink.split('/');
+                      const id = temp[temp.length - 1];
+                      console.log(id);
+                      axios.get(`/pages/${id}`)
+                        .then(({ data }) => {
+                          setPage(data[0]);
+                          setLinkAdded(() => true);
+                          setAddLinkTriggered(false);
+                        });
+                    } else {
                       setLinkAdded(() => true);
                       setAddLinkTriggered(false);
-                    });
-                } else {
-                  setLinkAdded(() => true);
-                  setAddLinkTriggered(false);
-                  setPage({
-                    title: addLink
-                  });
-                }
-              }
-            }}
-          >
-            <InputField
-              label="Link"
-              containerWidth="305px"
-              state={addLink}
-              onChange={(e) => { setAddLink(e.target.value); }}
-              placeholder="enter link"
-              id="add-link"
-            />
-            <Button
-              className="primary"
-              style={{ marginLeft: '10px' }}
-              id="add-link-button"
-              type="submit"
-            >
-              Add
-            </Button>
-          </form>
-        )
-      }
+                      setPage({
+                        title: addLink
+                      });
+                    }
+                  }
+                }}
+              >
+                <InputField
+                  label="Link"
+                  containerWidth="305px"
+                  state={addLink}
+                  onChange={(e) => { setAddLink(e.target.value); }}
+                  placeholder="enter link"
+                  id="add-link"
+                />
+                <Button
+                  className="primary"
+                  style={{ marginLeft: '10px' }}
+                  id="add-link-button"
+                  type="submit"
+                >
+                  Add
+                </Button>
+              </form>
+            )
+          }
+        </React.Fragment>
+      )}
     </Modal>
   );
 };

@@ -149,6 +149,7 @@ NoTopicAssignments.propTypes = {
   changePublishStatusOfAssignment: PropTypes.func.isRequired,
   fetchAssignments: PropTypes.func.isRequired,
   changeTopicOfAssignment: PropTypes.func.isRequired,
+  connectDropTarget: PropTypes.func.isRequired,
   assignmentDrag: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired
 };
 

@@ -24,23 +24,61 @@
     //   }
 
     .dropdown{
-        &__trigger{
-          border-radius: 20px;
-          .with-icon{
-            display: flex;
-            align-items: center;
-            svg{
-              position: static;
-              height: 18px;
-              width: 18px;
-              margin-right: 8px;
-              path{
-                fill: white;
-              }
+      &__trigger{
+        border-radius: 20px;
+        padding-right: 16px;
+        width: 110px;
+        span{
+          width: 100%;
+        }
+        .with-icon{
+          display: flex;
+          align-items: center;
+          svg{
+            display: unset;
+            position: static;
+            height: 18px;
+            width: 18px;
+            margin-right: 8px;
+            path{
+              fill: white;
             }
           }
         }
+        svg{
+          display: none;
+        }
 
+      }
+      
+      &__divider{
+        display: none;
+      }
+
+      &__options{
+        width: 120%;
+      }
+    }
+  }
+
+  &__empty{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 40px;
+
+    &__container{
+      width: 650px;
+      padding: 40px;
+      border: 1px solid $g5;
+      border-radius: 8px;
+      color: $g3;
+
+      span{
+        font-weight: 600;
+      }
     }
   }
 }
