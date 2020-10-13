@@ -17,7 +17,8 @@ const ClassCard = ({
   const hiddenTextboxRef = useRef();
   const [copyClicked, setCopyClicked] = useState(false);
 
-  const onCodeCopyClick = () => {
+  const onCodeCopyClick = (e) => {
+    e.stopPropagation();
     hiddenTextboxRef.current.select();
     setCopyClicked(() => true);
     setImmediate(() => {
@@ -34,7 +35,7 @@ const ClassCard = ({
 
   return (
     <div className='class-card' {...props}>
-      {/* <button className="class-card__click-area" onClick={onClick}></button> */}
+      <button className="class-card__click-area" onClick={onClick}></button>
       <div className="class-card__main">
         <div className="class-card__main__class-code ">
           <div className="class-card__main__class-code__container">

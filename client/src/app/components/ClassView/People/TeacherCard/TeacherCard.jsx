@@ -11,11 +11,6 @@ const TeacherCard = ({ name }) => (
     <div className="teacher-card__name">
       {name}
     </div>
-    <button className="teacher-card__options">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
   </div>
 );
 

@@ -18,7 +18,7 @@ import EditTopicModal from './EditTopicModal/EditTopicModal';
 import CreateAssignmentModal from './CreateAssignmentModal/CreateAssignmentModal';
 import TopicArea from './TopicArea/TopicArea';
 import NoTopicAssignments from './NoTopicAssignments/NoTopicAssignments';
-import EditAssignmentConfirmationModal from './EditAssignmetnConfirmationModal/EditAssignmentConfirmationModal';
+import EditAssignmentConfirmationModal from './EditAssignmentConfirmationModal/EditAssignmentConfirmationModal';
 import
 UnpublishAssignmentConfirmationModal
   from
@@ -119,11 +119,9 @@ const Assignments = ({
                 (assignments.length === 0 && topics.length === 0) && (
                   <div className="class-view__assignments__empty">
                     <div className="class-view__assignments__empty__container">
-                      Create
-                      {' '}
                       <span>Topics</span>
                       {' '}
-                      to organize your assignments and resources
+                      allow you to organize Assignments and Resources
                       <br />
                       <br />
                       <span>Assignments</span>

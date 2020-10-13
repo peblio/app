@@ -214,9 +214,9 @@ const EditAssignmentModal = ({
           <form action="">
             <div className="edit-assignment-modal__row">
               <DropdownMultiselect
-                disabled
-                placeholder="*Select Class"
-                style={{ width: '149px', marginTop: '26px', marginRight: '40px' }}
+                label="*Select class"
+                placeholder="Select"
+                style={{ width: '149px', marginRight: '40px' }}
                 selected={classState}
                 setSelected={setClassState}
                 options={
@@ -233,20 +233,42 @@ const EditAssignmentModal = ({
                 }
               />
               <Dropdown
+                label="Select topic"
                 placeholder="Select topic"
-                style={{ width: '149px', marginTop: '26px', marginRight: '40px' }}
+                style={{ width: '149px', marginRight: '40px' }}
                 state={topic}
                 setState={setTopic}
                 disabled={!classState}
                 options={
-                // eslint-disable-next-line no-nested-ternary
+                  // eslint-disable-next-line no-nested-ternary
                   topics ? topics.length !== 0 ? (
-                  // eslint-disable-next-line no-shadow
-                    [...topics.map(topic => ({
-                      name: topic.name,
-                      value: topic._id
-                    }))]
+                    [
+                      {
+                        name: 'No topic',
+                        value: '',
+                        className: 'action'
+                      },
+                      {
+                        name: 'Create topic',
+                        value: 'Create',
+                        className: 'action',
+                        onClick: () => {
+                          toggleCreateTopicModal();
+                          setTimeout(() => {
+                            setTopic('');
+                          }, 300);
+                        }
+                      },
+                      // eslint-disable-next-line no-shadow
+                      ...topics.map(topic => ({
+                        name: topic.name,
+                        value: topic._id
+                      }))]
                   ) : [
+                    {
+                      name: 'No topic',
+                      value: ''
+                    },
                     {
                       name: 'Create topic',
                       value: 'Select topic',
@@ -254,9 +276,9 @@ const EditAssignmentModal = ({
                         toggleCreateTopicModal();
                         setTimeout(() => {
                           setTopic('');
-                        }, 50);
+                        }, 300);
                       }
-                    }
+                    },
                   ]
                     : [
                       {
@@ -423,6 +445,7 @@ const EditAssignmentModal = ({
                 }}
                 onSubmit={(e) => {
                   e.preventDefault();
+                  // eslint-disable-next-line max-len
                   const expression = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi;
                   const regex = new RegExp(expression);
                   if (addLink.match(regex)) {

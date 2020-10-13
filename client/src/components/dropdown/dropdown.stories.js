@@ -37,6 +37,41 @@ export const dropdown = () => {
   );
 };
 
+export const dropdownWithLabel = () => {
+  const [value, setValue] = useState('');
+  return (
+    <Dropdown
+      label="label"
+      placeholder="Gradessssss"
+      style={{ width: '100px' }}
+      state={value}
+      setState={setValue}
+      options={[
+        {
+          name: '10th',
+          value: 10
+        },
+        {
+          name: '9th',
+          value: 9
+        },
+        {
+          name: '8th',
+          value: 8
+        },
+        {
+          name: '7th',
+          value: 7
+        },
+        {
+          name: '6th Standard',
+          value: 6
+        }
+      ]}
+    />
+  );
+};
+
 export const disabledDropdown = () => {
   const [value, setValue] = useState('');
   return (
