@@ -165,8 +165,9 @@ const CreateAssignmentModal = ({
       <form action="">
         <div className="create-assignment-modal__row">
           <DropdownMultiselect
-            placeholder="*Select Class"
-            style={{ width: '149px', marginTop: '26px', marginRight: '40px' }}
+            label="*Select class"
+            placeholder="Select"
+            style={{ width: '149px', marginRight: '40px' }}
             selected={classState}
             setSelected={setClassState}
             options={
@@ -183,20 +184,42 @@ const CreateAssignmentModal = ({
             }
           />
           <Dropdown
+            label="Select topic"
             placeholder="Select topic"
-            style={{ width: '149px', marginTop: '26px', marginRight: '40px' }}
+            style={{ width: '149px', marginRight: '40px' }}
             state={topic}
             setState={setTopic}
             disabled={!classState}
             options={
               // eslint-disable-next-line no-nested-ternary
               topics ? topics.length !== 0 ? (
-                // eslint-disable-next-line no-shadow
-                [...topics.map(topic => ({
-                  name: topic.name,
-                  value: topic._id
-                }))]
+                [
+                  {
+                    name: 'No topic',
+                    value: '',
+                    className: 'action'
+                  },
+                  {
+                    name: 'Create topic',
+                    value: 'Create',
+                    className: 'action',
+                    onClick: () => {
+                      toggleCreateTopicModal();
+                      setTimeout(() => {
+                        setTopic('');
+                      }, 300);
+                    }
+                  },
+                  // eslint-disable-next-line no-shadow
+                  ...topics.map(topic => ({
+                    name: topic.name,
+                    value: topic._id
+                  }))]
               ) : [
+                {
+                  name: 'No topic',
+                  value: ''
+                },
                 {
                   name: 'Create topic',
                   value: 'Select topic',
@@ -204,9 +227,9 @@ const CreateAssignmentModal = ({
                     toggleCreateTopicModal();
                     setTimeout(() => {
                       setTopic('');
-                    }, 50);
+                    }, 300);
                   }
-                }
+                },
               ]
                 : [
                   {

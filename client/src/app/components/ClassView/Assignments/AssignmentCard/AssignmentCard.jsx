@@ -19,7 +19,7 @@ import {
 } from '../../../../action/classroom.js';
 
 import RenameIcon from '../../../../images/rename.svg';
-import TrashIcon from '../../../../images/trash.svg';
+// import TrashIcon from '../../../../images/trash.svg';
 
 import OptionsIcon from '../../../../images/options.svg';
 
@@ -129,11 +129,12 @@ const AssignmentCard = (props) => {
                     }
                   },
                   icon: <RenameIcon />
-                }, {
-                  name: 'Delete',
-                  onClick: () => { console.log('Delete'); },
-                  icon: <TrashIcon />
-                }
+                },
+                // {
+                //   name: 'Delete',
+                //   onClick: () => { console.log('Delete'); },
+                //   icon: <TrashIcon />
+                // }
               ]}
             />
           </div>

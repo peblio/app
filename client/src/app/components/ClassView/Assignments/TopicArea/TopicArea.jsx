@@ -137,6 +137,13 @@ const TopicArea = ({
         )
       }
       {
+        assignments.length === 0 && !assignmentDrag && (
+          <div className="class-view__assignments__topic__no-assignments">
+            No assignments have been added to this topic yet
+          </div>
+        )
+      }
+      {
         assignments.map(assignment => (
           <AssignmentCard
             topicId={assignment.topicId}

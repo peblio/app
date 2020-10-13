@@ -3,6 +3,13 @@
 .class-view__assignments__topic{
   margin-top: 38px;
   $root: &;
+
+  &__no-assignments{
+    font-weight: 500;
+    color: $g4;
+    font-style: italic;
+    text-align: center;
+  }
   
   &__header-area{
     display: flex;

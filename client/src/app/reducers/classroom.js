@@ -156,6 +156,9 @@ const classrooms = (state = initialState, action) => {
       };
 
     case ActionTypes.SET_STUDENT_ASSIGNMENTS:
+      action.data
+        .classroomAllAssignmentsAndMaterials
+        .sort((a, b) => (new Date(a.updatedAt) - new Date(b.updatedAt) < 0 ? 1 : -1));
       return {
         ...state,
         studentAssignments: action.data

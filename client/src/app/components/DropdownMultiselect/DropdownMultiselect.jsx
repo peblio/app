@@ -12,6 +12,7 @@ const DropdownMultiselect = ({
   disabled,
   selected,
   setSelected,
+  label,
   ...props
 }) => {
   const [triggered, setTriggered] = useState(false);
@@ -54,6 +55,12 @@ const DropdownMultiselect = ({
 
   return (
     <div className="multiselect-dropdown" {...props}>
+      {
+        label && (
+          <div className="dropdown__label">
+            {label}
+          </div>
+        )}
       <button
         className="multiselect-dropdown__trigger"
         onMouseEnter={handleOnMouseEnter}
@@ -71,7 +78,7 @@ const DropdownMultiselect = ({
           }}
       >
         <span ref={textRef}>
-          {placeholder}
+          {(selected.length !== 0 && `${selected.length} selected`) || placeholder}
         </span>
         <svg
           width='24'
@@ -127,11 +134,13 @@ const DropdownMultiselect = ({
 
 
 DropdownMultiselect.defaultProps = {
-  disabled: false
+  disabled: false,
+  label: '',
 };
 
 DropdownMultiselect.propTypes = {
   placeholder: PropTypes.string.isRequired,
+  label: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired
   })).isRequired,

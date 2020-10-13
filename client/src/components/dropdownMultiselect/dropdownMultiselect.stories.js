@@ -36,3 +36,38 @@ export const dropdown = () => {
     />
   );
 };
+
+export const dropdownWithLabel = () => {
+  const [selected, setSelected] = useState([]);
+  return (
+    <DropdownMultiselect
+      label='Label'
+      placeholder="Gradessssss"
+      style={{ width: '146px' }}
+      selected={selected}
+      setSelected={setSelected}
+      options={[
+        {
+          name: '10th',
+          value: 10
+        },
+        {
+          name: '9th',
+          value: 9
+        },
+        {
+          name: '8th',
+          value: 8
+        },
+        {
+          name: '7th',
+          value: 7
+        },
+        {
+          name: '6th Standard',
+          value: 6
+        }
+      ]}
+    />
+  );
+};
