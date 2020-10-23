@@ -6,23 +6,6 @@
   padding-bottom: 40px;
   &__action-area{
     display: flex;
-
-    // .icon-button-dropdown{
-    //   &__icon{
-    //     background: #008575;
-    //     transition: background 300ms ease;
-    //     svg{
-    //       path{
-    //         fill: white;
-    //       }
-    //     }
-        
-    //     &:hover, &:focus{
-    //       background: #00564c;
-    //       border: none;
-    //     }
-    //   }
-
     .dropdown{
       &__trigger{
         border-radius: 20px;
