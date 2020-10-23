@@ -87,10 +87,15 @@
     height: 275px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     font-size: 18px;
     font-weight: 400;
     box-sizing: border-box;
+
+    &__access{
+      &:not(:last-child){
+        margin-bottom: 24px;
+      }
+    }
   }
 
   &__button-area{

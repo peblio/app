@@ -139,116 +139,127 @@ const People = (props) => {
               Add Student
             </IconButton>
           </div>
-          <div className="class-view__people__section__student-details">
-            <div className="class-view__people__section__student-details__students">
-              <div className="class-view__people__section__student-details__students__header">
-                All students
-                <Dropdown
-                  placeholder="A-Z"
-                  state={order}
-                  setState={setOrder}
-                  style={{
-                    width: '111px',
-                    marginLeft: 'auto'
-                  }}
-                  options={[
-                    {
-                      name: 'A-Z',
-                      value: 'A-Z',
-                    },
-                    {
-                      name: 'Z-A',
-                      value: 'Z-A',
-                    }
-                  ]}
-                />
-              </div>
-              {
-                students.map(student => (
-                  <button
-                    key={student.id}
-                    className={`class-view__people__section__student-details__students__student ${
-                      selectedStudent && student.id === selectedStudent.id ? 'selected' : ''
-                    }`}
-                    onClick={() => handleStudentSelect(student)}
-                  >
-                    {student.firstName}
-                    {' '}
-                    {student.lastName}
-                  </button>
-                ))
-              }
-            </div>
-            <div className="class-view__people__section__student-details__assignments">
-              <div className="class-view__people__section__student-details__assignments__header">
-                <div>
-                  Name
+          {
+            students.length ? (
+              <div className="class-view__people__section__student-details">
+                <div className="class-view__people__section__student-details__students">
+                  <div className="class-view__people__section__student-details__students__header">
+                    All students
+                    <Dropdown
+                      placeholder="A-Z"
+                      state={order}
+                      setState={setOrder}
+                      style={{
+                        width: '111px',
+                        marginLeft: 'auto'
+                      }}
+                      options={[
+                        {
+                          name: 'A-Z',
+                          value: 'A-Z',
+                        },
+                        {
+                          name: 'Z-A',
+                          value: 'Z-A',
+                        }
+                      ]}
+                    />
+                  </div>
+                  {
+                    students.map(student => (
+                      <button
+                        key={student.id}
+                        className={`class-view__people__section__student-details__students__student ${
+                          selectedStudent && student.id === selectedStudent.id ? 'selected' : ''
+                        }`}
+                        onClick={() => handleStudentSelect(student)}
+                      >
+                        {student.firstName}
+                        {' '}
+                        {student.lastName}
+                      </button>
+                    ))
+                  }
                 </div>
-                <div>
-                  Status
-                </div>
-                <div>
-                  Due
-                </div>
-                <div>
-                  Grade
-                </div>
-              </div>
-              {
-                // eslint-disable-next-line no-nested-ternary
-                selectedStudent ? (
-                  fetchingAssignments ? (
-                    <div style={{
-                      height: '100%'
-                    }}
-                    >
-                      <GenericLoader />
+                <div className="class-view__people__section__student-details__assignments">
+                  <div className="class-view__people__section__student-details__assignments__header">
+                    <div>
+                      Name
                     </div>
-                  ) : (
-                    props.assignmentsPeople && props.assignmentsPeople.allClassroomAssignmentsInClassroom &&
-                        props.assignmentsPeople.allClassroomAssignmentsInClassroom.map(
-                          (assignment) => {
-                            const attempt = props.assignmentsPeople.allClassroomAssignmentsAttemptedByStudent.filter(
-                              // eslint-disable-next-line no-shadow
-                              attempt => attempt.assignmentId === assignment.id
-                            );
-                            // console.log(attempt);
-                            return (
-                              assignment.isPublished && assignment.type === 'assignment' && (
-                                <StudentAssignmentCard
-                                  title={assignment.title}
-                                  description={assignment.description}
-                                  status={
-                                    // eslint-disable-next-line no-nested-ternary
-                                    attempt.length !== 0
-                                      // eslint-disable-next-line no-nested-ternary
-                                      ? attempt[0].turnedIn
+                    <div>
+                      Status
+                    </div>
+                    <div>
+                      Due
+                    </div>
+                    <div>
+                      Grade
+                    </div>
+                  </div>
+                  {
+                    // eslint-disable-next-line no-nested-ternary
+                    selectedStudent ? (
+                      fetchingAssignments ? (
+                        <div style={{
+                          height: '100%'
+                        }}
+                        >
+                          <GenericLoader />
+                        </div>
+                      ) : (
+                        props.assignmentsPeople && props.assignmentsPeople.allClassroomAssignmentsInClassroom &&
+                            props.assignmentsPeople.allClassroomAssignmentsInClassroom.map(
+                              (assignment) => {
+                                const attempt = props
+                                  .assignmentsPeople
+                                  .allClassroomAssignmentsAttemptedByStudent
+                                  .filter(
+                                  // eslint-disable-next-line no-shadow
+                                    attempt => attempt.assignmentId === assignment.id
+                                  );
+                                // console.log(attempt);
+                                return (
+                                  assignment.isPublished && assignment.type === 'assignment' && (
+                                    <StudentAssignmentCard
+                                      title={assignment.title}
+                                      description={assignment.description}
+                                      status={
                                         // eslint-disable-next-line no-nested-ternary
-                                        ? !assignment.dueDate ? 'Turned in'
-                                          : new Date(attempt[0].turnedInTime) > new Date(assignment.dueDate)
-                                            ? 'Turned in late' : 'Turned in'
-                                        : 'Started' : 'Missing'
-                                  }
-                                  dueDate={assignment.dueDate}
-                                  gradeTotal={assignment.outOfMarks || '...'}
-                                  url={assignment.url}
-                                  peblUrl={assignment.peblUrl}
-                                  gradeObtained={attempt.length !== 0 && attempt[0].marksScored}
-                                  attemptPeblUrl={attempt.length !== 0 && attempt[0].myPeblUrl}
-                                />
-                              )
-                            );
-                          }
-                        )
-                  )
-                ) : (
-                  <p className="class-view__people__section__student-details__assignments__no-student">
-                    Select a student to see their assignments here
-                  </p>
-                )
-              }
-            </div>
-          </div>
+                                        attempt.length !== 0
+                                          // eslint-disable-next-line no-nested-ternary
+                                          ? attempt[0].turnedIn
+                                            // eslint-disable-next-line no-nested-ternary
+                                            ? !assignment.dueDate ? 'Turned in'
+                                              : new Date(attempt[0].turnedInTime) > new Date(assignment.dueDate)
+                                                ? 'Turned in late' : 'Turned in'
+                                            : 'Started' : 'Missing'
+                                      }
+                                      dueDate={assignment.dueDate}
+                                      gradeTotal={assignment.outOfMarks || '...'}
+                                      url={assignment.url}
+                                      peblUrl={assignment.peblUrl}
+                                      gradeObtained={attempt.length !== 0 && attempt[0].marksScored}
+                                      attemptPeblUrl={attempt.length !== 0 && attempt[0].myPeblUrl}
+                                    />
+                                  )
+                                );
+                              }
+                            )
+                      )
+                    ) : (
+                      <p className="class-view__people__section__student-details__assignments__no-student">
+                        Select a student to see their assignments here
+                      </p>
+                    )
+                  }
+                </div>
+              </div>
+            ) : (
+              <div className="class-view__people__section__no-student">
+                There are no students in this class
+              </div>
+            )
+          }
         </div>
       </div>
       { props.addMemberModal && (

@@ -82,7 +82,7 @@ const ClassCard = ({
             )}
           />
         </div>
-        <button className='class-card__main__title' onClick={onClick}>{classTitle}</button>
+        <div className='class-card__main__title'>{classTitle}</div>
         <div className='class-card__main__subject'>{subject}</div>
         <div className='class-card__main__card-footer'>
           {

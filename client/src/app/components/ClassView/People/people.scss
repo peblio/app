@@ -149,5 +149,15 @@
         }
       }
     }
+
+    &__no-student{
+      height: 100px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $g3;
+      font-weight: 400;
+    }
   }
 }
