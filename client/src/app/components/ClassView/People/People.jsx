@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -9,6 +9,7 @@ import PlusIcon from '../../../images/add.svg';
 // component imports
 import IconButton from '../../IconButton/IconButton';
 import GenericLoader from '../../GenericLoader/LoadingMessage';
+import Dropdown from '../../Dropdown/Dropdown';
 
 // page specific components
 import StudentAssignmentCard from './StudentAssignmentCard/StudentAssignmentCard';
@@ -30,6 +31,8 @@ const People = (props) => {
   const [students, setStudents] = useState([]);
   const [fetchingAssignments, setFetchingAssignments] = useState();
   const [addTriggeredBy, setAddTriggeredBy] = useState();
+  const [order, setOrder] = useState('A-Z');
+  const initialRender = useRef(true);
 
   const handleStudentSelect = (student) => {
     setSelectedStudent(student);
@@ -59,6 +62,40 @@ const People = (props) => {
       props.clearAssignmentPeople();
     };
   }, [props.members]);
+
+
+  useEffect(() => {
+    if (!initialRender.current && students) {
+      const stud = students.slice();
+      if (order === 'A-Z') {
+        stud.sort((a, b) => {
+          if (a.firstName !== b.firstName) {
+            return a.firstName.toUpperCase() < b.firstName.toUpperCase() ? -1 : 1;
+          }
+          return a.lastName.toUpperCase() < b.lastName.toUpperCase() ? -1 : 1;
+        });
+        setStudents(stud);
+      } else {
+        stud.sort((a, b) => {
+          if (a.firstName !== b.firstName) {
+            return a.firstName.toUpperCase() < b.firstName.toUpperCase() ? 1 : -1;
+          }
+          return a.lastName.toUpperCase() < b.lastName.toUpperCase() ? 1 : -1;
+        });
+        setStudents(stud);
+      }
+    }
+  }, [order]);
+
+  // to check if it's initial render
+  useEffect(() => {
+    initialRender.current = false;
+
+    return () => {
+      initialRender.current = true;
+    };
+  }, []);
+
 
   return (
     <React.Fragment>
@@ -106,6 +143,25 @@ const People = (props) => {
             <div className="class-view__people__section__student-details__students">
               <div className="class-view__people__section__student-details__students__header">
                 All students
+                <Dropdown
+                  placeholder="A-Z"
+                  state={order}
+                  setState={setOrder}
+                  style={{
+                    width: '111px',
+                    marginLeft: 'auto'
+                  }}
+                  options={[
+                    {
+                      name: 'A-Z',
+                      value: 'A-Z',
+                    },
+                    {
+                      name: 'Z-A',
+                      value: 'Z-A',
+                    }
+                  ]}
+                />
               </div>
               {
                 students.map(student => (

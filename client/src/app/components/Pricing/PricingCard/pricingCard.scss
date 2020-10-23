@@ -7,6 +7,13 @@
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   overflow: visible;
+
+  &__active-text{
+    position: absolute;
+    top: -36px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
   
   &__backdrop{
     position: absolute;
@@ -26,11 +33,14 @@
     height: 100%;
     background: #fff;
     border-radius: 4px;
+    box-sizing: border-box;
   }
 
-  &:hover {
+  &--active{
     .pricing-card__backdrop{
       opacity: 1;
+      top: -58px;
+      height: calc(100% + 58px + 24px);  
     }
   }
 
@@ -44,12 +54,14 @@
     padding-top: 28px;
     box-sizing: border-box;
     border-radius: 4px 4px 0 0;
+    box-sizing: border-box;
 
     &__name{
       margin: 0;
       font-weight: 500;
       font-size: 22px;
       line-height: normal;
+      box-sizing: border-box;
     }
     
     &__price{
@@ -57,6 +69,7 @@
       font-size: 40px;
       margin-top: 12px;
       line-height: normal;
+      box-sizing: border-box;
     }
 
     &__details{
@@ -65,23 +78,25 @@
       margin-top: 12px;
       line-height: normal;
       font-size: 14px;
+      box-sizing: border-box;
     }
   }
 
   &__body{
     padding: 35px;
-    height: 185px;
+    height: 275px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     font-size: 18px;
     font-weight: 400;
+    box-sizing: border-box;
   }
 
   &__button-area{
-    margin-top: 24px;
     display: flex;
     justify-content: center;
+    box-sizing: border-box;
 
     button{
       padding: 12px 42px;
@@ -95,6 +110,7 @@
       font-size: 14px;
       cursor: pointer;
       position: relative;
+      box-sizing: border-box;
 
       &::before{
         content: '';

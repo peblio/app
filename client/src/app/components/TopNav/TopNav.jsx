@@ -14,7 +14,7 @@ const TopNav = ({ className, children, ...props }) => (
     </a>
     <ul className={`top-nav__nav-links ${`${className}__nav-links` || ''}`}>
       {children}
-      <UserAccount container="dashboard" />
+      <UserAccount />
     </ul>
   </div>
 );

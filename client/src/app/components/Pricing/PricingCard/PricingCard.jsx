@@ -4,7 +4,14 @@ import PropTypes from 'prop-types';
 import './pricingCard.scss';
 
 const PricingCard = props => (
-  <div className="pricing-card">
+  <div className={`pricing-card ${props.active ? 'pricing-card--active' : ''}`}>
+    {
+      props.active && (
+        <div className="pricing-card__active-text">
+          YOUR CURRENT PLAN
+        </div>
+      )
+    }
     <div className="pricing-card__backdrop" style={{ background: props.backdropColor }} />
     <div className="pricing-card__contents">
       <div
@@ -25,8 +32,8 @@ const PricingCard = props => (
       </div>
       <div className="pricing-card__body">
         {
-          props.featureList.map((feature, index) => (
-            <div className="pricing-card__body__access" key={index}>
+          props.featureList.map(feature => (
+            <div className="pricing-card__body__access" key={feature}>
               {feature}
             </div>
           ))
@@ -36,7 +43,7 @@ const PricingCard = props => (
         <button
           onClick={props.onClick}
           style={{
-            display: props.removeButton ? 'none' : 'block',
+            display: props.active ? 'none' : 'block',
             background: props.cardColor
           }}
         >
@@ -56,11 +63,11 @@ PricingCard.propTypes = {
   onClick: PropTypes.func.isRequired,
   featureList: PropTypes.arrayOf(PropTypes.string).isRequired,
   backdropColor: PropTypes.string.isRequired,
-  removeButton: PropTypes.bool,
+  active: PropTypes.bool,
 };
 
 PricingCard.defaultProps = {
-  removeButton: false
+  active: false,
 };
 
 export default PricingCard;

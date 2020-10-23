@@ -8,6 +8,7 @@ import './MyClasses.scss';
 import CreateClassModal from './CreateClassModal/CreateClassModal';
 import JoinClassModal from './JoinClassModal/JoinClassModal';
 import ClassTypeSection from './ClassTypeSection/ClassTypeSection';
+import UpgradeView from './UpgradeView/UpgradeView';
 
 import Dropdown from '../../Dropdown/Dropdown';
 import GenericLoader from '../../GenericLoader/LoadingMessage';
@@ -27,6 +28,7 @@ const MyClasses = ({
   userName
 }) => {
   const [dataLoading, setDataLoading] = useState(true);
+  const [isPremium, setIsPremium] = useState(false);
   useEffect(() => {
     setDataLoading(true);
     fetchClassrooms()
@@ -47,12 +49,18 @@ const MyClasses = ({
         dataLoading ? <GenericLoader /> : (
           <main className="classroom">
             <div className="classroom__header-area">
-              <header className="classroom__header-area__header">
+              <header
+                className="classroom__header-area__header"
+                style={{
+                  color: `${isPremium ? '#00151e' : '#979797'}`
+                }}
+              >
                 My Classes
               </header>
               <Dropdown
                 className="btn"
                 placeholder="New class"
+                disabled={!isPremium}
                 style={{
                   width: '146px'
                 }}
@@ -69,20 +77,28 @@ const MyClasses = ({
                 ]}
               />
             </div>
-            <ClassTypeSection
-              header="Created classes"
-              classrooms={classrooms.filter(classroom => classroom.myMemberShipDetail.role === 'teacher')}
-              style={{
-                marginTop: '69px'
-              }}
-            />
-            <ClassTypeSection
-              header="Joined classes"
-              classrooms={classrooms.filter(classroom => classroom.myMemberShipDetail.role === 'student')}
-              style={{
-                marginTop: 0
-              }}
-            />
+            {
+              isPremium ? (
+                <React.Fragment>
+                  <ClassTypeSection
+                    header="Created classes"
+                    classrooms={classrooms.filter(classroom => classroom.myMemberShipDetail.role === 'teacher')}
+                    style={{
+                      marginTop: '69px'
+                    }}
+                  />
+                  <ClassTypeSection
+                    header="Joined classes"
+                    classrooms={classrooms.filter(classroom => classroom.myMemberShipDetail.role === 'student')}
+                    style={{
+                      marginTop: 0
+                    }}
+                  />
+                </React.Fragment>
+              ) : (
+                <UpgradeView upgrade={() => setIsPremium(true)} />
+              )
+            }
           </main>
         )
       }

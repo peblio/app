@@ -90,6 +90,10 @@ const LazyLoadedFullScreen = lazy(() => (
   import('./components/FullScreen/FullScreen')
 ));
 
+const LazyLoadedPricing = lazy(() => (
+  import('./components/Pricing/Pricing')
+));
+
 class Main extends React.Component {
   render() {
     return (
@@ -122,6 +126,8 @@ class Main extends React.Component {
               <Route path="/trash" component={withTracker(LazyLoadedTrash)} />
               <Route path="/account" component={withTracker(LazyLoadedAccount)} />
               <Route path="/fullscreen/:id" component={withTracker(LazyLoadedFullScreen)} />
+              <Route path="/pricing/:modal" component={withTracker(LazyLoadedPricing)} />
+              <Route path="/pricing" component={withTracker(LazyLoadedPricing)} />
               <Route path="*" component={withTracker(LazyLoadedPage404)} />
             </Switch>
           </Suspense>

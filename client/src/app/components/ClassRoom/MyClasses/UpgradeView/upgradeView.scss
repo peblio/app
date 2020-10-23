@@ -1,0 +1,32 @@
+@import 'variables.scss';
+
+.upgrade-view{
+  height: calc(100% -  120px);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__container{
+    width: 500px;
+    text-align: center;
+    color: $black;
+  }
+
+  &__header{
+    font-family: Roboto;
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  iframe{
+    margin-bottom: 69px;
+  }
+
+  &__sub-header{
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 48px;
+  }
+}

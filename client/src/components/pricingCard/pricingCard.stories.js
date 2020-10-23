@@ -1,5 +1,5 @@
 import React from 'react';
-import PricingCard from '../../app/components/PricingCard/PricingCard';
+import PricingCard from '../../app/components/Pricing/PricingCard/PricingCard';
 
 export default { title: 'Pricing Card' };
 
