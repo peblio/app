@@ -19,28 +19,6 @@ class Share extends React.Component {
     this.renderClassroomWidget();
   }
 
-  getOptions = () => {
-    if (this.props.type === 'student') {
-      return [{
-        value: 'link',
-        displayKey: 'View only',
-        selected: true,
-      }, {
-        value: 'autoRemixLink',
-        displayKey: 'Share as assignment',
-      }];
-    }
-    return [{
-      value: 'autoRemixLink',
-      displayKey: 'Share as assignment',
-      selected: true,
-    },
-    {
-      value: 'link',
-      displayKey: 'View only',
-    }];
-  }
-
   linkTypeChanged = (e) => {
     const linkType = e.target.value;
     this.setState({ linkType });
@@ -61,8 +39,16 @@ class Share extends React.Component {
         url: this.props.shareURL });
   }
 
-
   render() {
+    const options = [{
+      value: 'autoRemixLink',
+      displayKey: 'Share as assignment',
+      selected: true,
+    },
+    {
+      value: 'link',
+      displayKey: 'View only',
+    }];
     return (
       <section className="share__container">
         <div className="share__option">
@@ -71,7 +57,7 @@ class Share extends React.Component {
           </h2>
           <div className="share__option__container">
             <Dropdown
-              options={this.getOptions()}
+              options={options}
               onChange={this.linkTypeChanged}
               formLabel="Share Options"
               formControlClassName="share-modal__select"
@@ -122,12 +108,10 @@ class Share extends React.Component {
 Share.propTypes = {
   pageTitle: PropTypes.string.isRequired,
   shareURL: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
-  shareURL: state.mainToolbar.shareURL,
-  type: state.user.type
+  shareURL: state.mainToolbar.shareURL
 });
 
 export default connect(mapStateToProps, null)(Share);
