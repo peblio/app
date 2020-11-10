@@ -12,11 +12,33 @@ class Share extends React.Component {
   constructor(props) {
     super(props);
     this.copyShareLink = this.copyShareLink.bind(this);
-    this.state = { linkType: 'autoRemixLink' };
+    this.state = { linkType: this.props.type === 'student' ? 'link' : 'autoRemixLink' };
   }
 
   componentDidMount() {
     this.renderClassroomWidget();
+  }
+
+  getOptions = () => {
+    if (this.props.type === 'student') {
+      return [{
+        value: 'link',
+        displayKey: 'View only',
+        selected: true,
+      }, {
+        value: 'autoRemixLink',
+        displayKey: 'Share as assignment',
+      }];
+    }
+    return [{
+      value: 'autoRemixLink',
+      displayKey: 'Share as assignment',
+      selected: true,
+    },
+    {
+      value: 'link',
+      displayKey: 'View only',
+    }];
   }
 
   linkTypeChanged = (e) => {
@@ -39,16 +61,8 @@ class Share extends React.Component {
         url: this.props.shareURL });
   }
 
+
   render() {
-    const options = [{
-      value: 'autoRemixLink',
-      displayKey: 'Share as assignment',
-      selected: true,
-    },
-    {
-      value: 'link',
-      displayKey: 'View only',
-    }];
     return (
       <section className="share__container">
         <div className="share__option">
@@ -57,7 +71,7 @@ class Share extends React.Component {
           </h2>
           <div className="share__option__container">
             <Dropdown
-              options={options}
+              options={this.getOptions()}
               onChange={this.linkTypeChanged}
               formLabel="Share Options"
               formControlClassName="share-modal__select"
@@ -108,10 +122,12 @@ class Share extends React.Component {
 Share.propTypes = {
   pageTitle: PropTypes.string.isRequired,
   shareURL: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
-  shareURL: state.mainToolbar.shareURL
+  shareURL: state.mainToolbar.shareURL,
+  type: state.user.type
 });
 
 export default connect(mapStateToProps, null)(Share);
