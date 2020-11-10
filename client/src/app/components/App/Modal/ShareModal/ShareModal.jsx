@@ -12,7 +12,7 @@ class Share extends React.Component {
   constructor(props) {
     super(props);
     this.copyShareLink = this.copyShareLink.bind(this);
-    this.state = { linkType: 'autoRemixLink' };
+    this.state = { linkType: this.props.type === 'student' ? 'link' : 'autoRemixLink' };
   }
 
   componentDidMount() {
