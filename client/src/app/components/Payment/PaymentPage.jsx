@@ -8,25 +8,36 @@ import { fetchProfile } from '../../action/profile';
 import { fetchCurrentUser } from '../../action/user';
 
 class PaymentPage extends React.Component {
-  componentWillMount() {
+  constructor() {
+    super();
+    this.state = { stripe: null };
+  }
+
+  componentDidMount() {
     this.props.fetchCurrentUser()
       .then(() => {
         this.props.fetchProfile(this.props.userName);
       });
+    if (window.Stripe) {
+      this.setState({ stripe: window.Stripe(process.env.STRIPE_PUBLISHABLE_KEY) });
+    } else {
+      document.querySelector('#stripe-js').addEventListener('load', () => {
+        // Create Stripe instance once Stripe.js loads
+        this.setState({ stripe: window.Stripe(process.env.STRIPE_PUBLISHABLE_KEY) });
+      });
+    }
   }
 
   render() {
-    console.log('rendered', process.env.STRIPE_PUBLISHABLE_KEY);
     return (
       <div className="payment-page__container">
-        <StripeProvider apiKey={process.env.STRIPE_PUBLISHABLE_KEY}>
-          <div className="example">
-            <h1>React Stripe Elements Example</h1>
+        { this.state.stripe && (
+          <StripeProvider stripe={this.state.stripe}>
             <Elements>
               <CheckoutForm />
             </Elements>
-          </div>
-        </StripeProvider>
+          </StripeProvider>
+        )}
       </div>
     );
   }
