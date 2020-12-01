@@ -59,6 +59,7 @@ const CreateTopicModal = ({ toggleCreateTopicModal, createClassroomTopic, submit
           <Button
             className='primary'
             disabled={!topicTitle.trim() || submittingData}
+            type="submit"
           >
             Create topic
           </Button>
