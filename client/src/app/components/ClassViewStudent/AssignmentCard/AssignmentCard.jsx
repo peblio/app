@@ -231,6 +231,7 @@ const AssignmentCard = (props) => {
                   display: 'flex',
                   alignItems: 'center'
                 }}
+                type="submit"
                 disabled={!comment.trim() || commenting}
               >
                 Send
