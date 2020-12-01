@@ -23,6 +23,7 @@ const logRoutes = require('./routes/logRoutes.js');
 const authRoutes = require('./controllers/authController.js');
 const folderRoutes = require('./controllers/folderController');
 const apiRoutes = require('./routes/apiRoutes.js');
+const classroomRoutes = require('./routes/classroomRoutes.js');
 
 require('./config/passport');
 
@@ -65,6 +66,7 @@ router.use('/folders', folderRoutes);
 router.use('/examples', examplesRoutes);
 router.use('/tags', tagRoutes);
 router.use('/live', webSocketRoutes);
+router.use('/learning', classroomRoutes);
 router.use('/', apiRoutes);
 app.use('/api', router);
 

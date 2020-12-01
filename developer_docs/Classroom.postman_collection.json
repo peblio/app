@@ -1,0 +1,2365 @@
+{
+	"info": {
+		"_postman_id": "bff69ddc-17b2-4163-8f51-be743b0ecee6",
+		"name": "Classroom",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ClassroomDetailAndMembers",
+			"item": [
+				{
+					"name": "CreateClassroom",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Maths Homework\",\n\t\"room\": \"B Block, 104\",\n\t\"description\": \"This classroom is for us to share our Maths homework given after every class\",\n\t\"subject\": \"Maths\",\n\t\"section\": \"I\",\n\t\"firstName\": \"Komal\",\n\t\"lastName\": \"Teacher\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomDetail",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomDetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllMyClassroomDetails",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomDetail",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomDetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetClassroomDetail",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomDetail/Bk3Y5kUHv",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomDetail",
+								"Bk3Y5kUHv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JoinClassroom",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"Komal\",\n\t\"lastName\": \"Student\",\n\t\"classroomId\": \"Bk3Y5kUHv\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/learning/classroomDetail",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"learning",
+								"classroomDetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddMemberToClassroom",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"komalstudent\",\n\t\"firstName\": \"Komal\",\n\t\"lastName\": \"Student\",\n\t\"role\": \"student\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/learning/classroomDetail/addMember/Bk3Y5kUHv",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"learning",
+								"classroomDetail",
+								"addMember",
+								"Bk3Y5kUHv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetClassroomGrades",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomGrade",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomGrade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateClassroomGrade",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"I\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomGrade",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomGrade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveClassroomTopic",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Addition\",\n\t\"classroomId\": \"Bk3Y5kUHv\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomTopic",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomTopic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditClassroomTopicName",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Calculus - Addition\",\n\t\"id\": \"5f538720e4ca94668d6d0ff5\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomTopic",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomTopic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteClassroomTopic",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/learning/classroomTopic/5f55f16f56377dde809c0922",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"learning",
+								"classroomTopic",
+								"5f55f16f56377dde809c0922"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetClassroomTopics",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomTopic/HyBcfx-VP",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomTopic",
+								"HyBcfx-VP"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateClassroomAssignment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"classroomId\": \"Bk3Y5kUHv\",\n    \"title\": \"Homework on Multiplication-Material\",\n    \"dueDate\": \"2020-06-17T14:20:43.897Z\",\n    \"description\": \"Add answers of addition to the pebl\",\n    \"isPublished\": true,\n    \"peblUrl\": \"http://localhost:8080/pebl/N2662b1j\",\n    \"type\": \"assignment\", \n    \"url\": null,\n    \"topicId\": \"5f68a546f3f306306a52560c\",\n    \"outOfMarks\": \"100\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomAssignment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomAssignment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditClassroomAssignment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"classroomId\": \"Bk3Y5kUHv\",\n    \"title\": \"Homework on Multiplication-Material1\",\n    \"dueDate\": \"2020-12-17T14:20:43.897Z\",\n    \"description\": \"Add answers of addition to the pebl1\",\n    \"isPublished\": false,\n    \"peblUrl\": \"http://localhost:8080/pebl/N2662b1j\",\n    \"outOfMarks\": \"100\",\n    \"topicId\": \"5f68a546f3f306306a52560c\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomAssignment/rJvWUX8SP",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomAssignment",
+								"rJvWUX8SP"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ChangePublishStatusOfClassroomAssignment",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"assignmentId\": \"rJg5oZW4D\",\n    \"isPublished\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomAssignment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomAssignment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ClassroomChangeTopicOfAssignment",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"assignmentId\": \"rJg5oZW4D\",\n    \"newTopicId\": \"5f538720e4ca94668d6d0ff5\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/learning/classroomAssignment/reassignTopic",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"learning",
+								"classroomAssignment",
+								"reassignTopic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ClassroomRemoveTopicOfAssignment",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"assignmentId\": \"rJg5oZW4D\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/learning/classroomAssignment/reassignTopic",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"learning",
+								"classroomAssignment",
+								"reassignTopic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PublishGradesofClassroomAssignment",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"assignmentId\": \"rJg5oZW4D\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomAssignment/publishGrades",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomAssignment",
+								"publishGrades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateClassroomMaterial",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"classroomId\": \"Bk3Y5kUHv\",\n    \"title\": \"Homework on Addition material\",\n    \"dueDate\": \"2020-06-17T14:20:43.897Z\",\n    \"description\": \"Add answers of addition to the pebl\",\n    \"isPublished\": true,\n    \"type\": \"material\", \n    \"url\": \"http://localhost:8080/pebl/N2662b1j\",\n    \"topicId\": \"5f68a546f3f306306a52560c\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomAssignment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomAssignment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetClassroomAssignment",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomAssignment/SyTv8Q8rD",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomAssignment",
+								"SyTv8Q8rD"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetClassroomAllAssignments",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/learning/classroomAllAssignments/HyBcfx-VP",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"learning",
+								"classroomAllAssignments",
+								"HyBcfx-VP"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetClassroomAllAssignmentsForStudent",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/learning/classroomAllAssignmentsForStudent/Bk3Y5kUHv",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"learning",
+								"classroomAllAssignmentsForStudent",
+								"Bk3Y5kUHv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetClassroomAllAssignmentSubmissionsByStudentForTeacher",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/learning/classroomAllAssignmentsByStudentForTeacher/Bk3Y5kUHv?memberId=5f68988a64eefc2e5d03f59f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"learning",
+								"classroomAllAssignmentsByStudentForTeacher",
+								"Bk3Y5kUHv"
+							],
+							"query": [
+								{
+									"key": "memberId",
+									"value": "5f68988a64eefc2e5d03f59f"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllStudentsAttemptForAssignment",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/learning/classroomAllAttemptsForAssignment/HyBcfx-VP",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"learning",
+								"classroomAllAttemptsForAssignment",
+								"HyBcfx-VP"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ClassroomAttemptAssignment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"myPeblUrl\": \"http://localhost:8080/pebl/bdCtkRIyi\",\n\t\"classroomId\": \"Bk3Y5kUHv\",\n\t\"assignmentId\": \"rJvWUX8SP\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomAssignmentAttempt",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomAssignmentAttempt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ClassroomAttemptAssignmentAddComment",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"I am a techer\",\n\t\"assignmentAttemptId\": \"5f68c0b4aa6814363ef58bdc\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/learning/classroomAssignmentAttempt/addComment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"learning",
+								"classroomAssignmentAttempt",
+								"addComment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ClassroomAttemptAssignmentAddScoredMarks",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"marksScored\": 56,\n\t\"assignmentAttemptId\": \"5f53bf42e1414b8426777d6b\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/learning/classroomAssignmentAttempt/gradeAssignment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"learning",
+								"classroomAssignmentAttempt",
+								"gradeAssignment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ChangeTurnInStatusOfMyClassroomAssignmentAttempt",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"turnedIn\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/learning/classroomAssignmentAttempt/rJvWUX8SP",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"learning",
+								"classroomAssignmentAttempt",
+								"rJvWUX8SP"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ClassroomGetMyAttemptForAssignment",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomAssignmentAttempt/rJvWUX8SP",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomAssignmentAttempt",
+								"rJvWUX8SP"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ClassroomGetAllAttemptsForAssignment",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Cookie",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/learning/classroomAssignmentAllAttempts/rJvWUX8SP",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"learning",
+								"classroomAssignmentAllAttempts",
+								"rJvWUX8SP"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
