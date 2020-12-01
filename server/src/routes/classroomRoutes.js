@@ -2,6 +2,8 @@ const express = require('express');
 const classroomRoutes = express.Router();
 import * as classroomController from '../controllers/classroomController';
 
+classroomRoutes.route('/classroomDetail/access').get(classroomController.hasClassroomCreateAccess);
+
 classroomRoutes.route('/classroomDetail').post(classroomController.createClassroomDetail);
 classroomRoutes.route('/classroomDetail').get(classroomController.getAllMyClassroomDetails);
 classroomRoutes.route('/classroomDetail').patch(classroomController.joinClassroom);

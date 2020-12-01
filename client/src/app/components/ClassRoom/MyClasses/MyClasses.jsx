@@ -13,7 +13,7 @@ import UpgradeView from './UpgradeView/UpgradeView';
 import Dropdown from '../../Dropdown/Dropdown';
 import GenericLoader from '../../GenericLoader/LoadingMessage';
 
-import { toggleJoinClassroomModal, toggleCreateClassroomModal, fetchClassrooms } from '../../../action/classroom';
+import { toggleJoinClassroomModal, toggleCreateClassroomModal, fetchClassrooms, fetchClassroomCreateAccess } from '../../../action/classroom';
 
 const MyClasses = ({
   classrooms,
@@ -25,13 +25,16 @@ const MyClasses = ({
   toggleJoinClassroomModal,
   // eslint-disable-next-line no-shadow
   fetchClassrooms,
-  userName
+  userName,
+  // eslint-disable-next-line no-shadow
+  fetchClassroomCreateAccess,
+  hasClassroomCreateAccess,
 }) => {
   const [dataLoading, setDataLoading] = useState(true);
-  const [isPremium, setIsPremium] = useState(false);
   useEffect(() => {
     setDataLoading(true);
     fetchClassrooms()
+      .then(() => fetchClassroomCreateAccess())
       .then(() => {
         setDataLoading(false);
       });
@@ -52,7 +55,7 @@ const MyClasses = ({
               <header
                 className="classroom__header-area__header"
                 style={{
-                  color: `${isPremium ? '#00151e' : '#979797'}`
+                  color: `${hasClassroomCreateAccess ? '#00151e' : '#979797'}`
                 }}
               >
                 My Classes
@@ -60,7 +63,7 @@ const MyClasses = ({
               <Dropdown
                 className="btn"
                 placeholder="New class"
-                disabled={!isPremium}
+                disabled={!hasClassroomCreateAccess}
                 style={{
                   width: '146px'
                 }}
@@ -78,7 +81,7 @@ const MyClasses = ({
               />
             </div>
             {
-              isPremium ? (
+              hasClassroomCreateAccess ? (
                 <React.Fragment>
                   <ClassTypeSection
                     header="Created classes"
@@ -96,7 +99,7 @@ const MyClasses = ({
                   />
                 </React.Fragment>
               ) : (
-                <UpgradeView upgrade={() => setIsPremium(true)} />
+                <UpgradeView />
               )
             }
           </main>
@@ -138,7 +141,9 @@ MyClasses.propTypes = {
   toggleCreateClassroomModal: PropTypes.func.isRequired,
   toggleJoinClassroomModal: PropTypes.func.isRequired,
   fetchClassrooms: PropTypes.func.isRequired,
-  userName: PropTypes.string.isRequired
+  fetchClassroomCreateAccess: PropTypes.func.isRequired,
+  userName: PropTypes.string.isRequired,
+  hasClassroomCreateAccess: PropTypes.bool.isRequired,
 };
 
 
@@ -146,6 +151,7 @@ function mapStateToProps(state) {
   return {
     dataLoading: state.classroom.dataLoading,
     classrooms: state.classroom.classrooms,
+    hasClassroomCreateAccess: state.classroom.hasClassroomCreateAccess,
     createClassroomModal: state.classroom.createClassroomModal,
     joinClassroomModal: state.classroom.joinClassroomModal,
     userName: state.user.name
@@ -156,7 +162,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     toggleJoinClassroomModal,
     toggleCreateClassroomModal,
-    fetchClassrooms
+    fetchClassrooms,
+    fetchClassroomCreateAccess
   }, dispatch);
 }
 

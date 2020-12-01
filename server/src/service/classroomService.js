@@ -582,6 +582,16 @@ export async function getAllAssignmentsInClassroomForStudent(req, res) {
   }
 }
 
+export async function hasClassroomCreateAccess(req, res) {
+  try {
+    const user = req.user._id.toString();
+    return res.send(200);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ error: err.message });
+  }
+}
+
 function maskMarks(assignmentAttemptedByStudent) {
   if(!assignmentAttemptedByStudent.assignmentDetail.areGradesPublished) {
     delete assignmentAttemptedByStudent.marksScored;

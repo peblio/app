@@ -100,6 +100,33 @@ export const fetchClassrooms = () => (dispatch) => {
   return reqPromise();
 };
 
+export const fetchClassroomCreateAccess = () => (dispatch) => {
+  const reqPromise = () => new Promise((resolve, reject) => {
+    axios.get('/learning/classroomDetail/access')
+      .then(() => {
+        dispatch({
+          type: ActionTypes.FETCH_CLASSROOM_CREATE_ACCESS,
+          hasClassroomCreateAccess: true
+        });
+        resolve(true);
+      })
+      .catch((e) => {
+        if (e.response.status === 404) {
+          history.push('/404');
+          reject(e);
+        }
+        if (e.response.status === 401) {
+          dispatch({
+            type: ActionTypes.FETCH_CLASSROOM_CREATE_ACCESS,
+            hasClassroomCreateAccess: false
+          });
+          resolve(false);
+        }
+      });
+  });
+  return reqPromise();
+};
+
 export const createClassroom = classroom => (dispatch) => {
   dispatch({
     type: ActionTypes.SET_SUBMITTING_DATA,
