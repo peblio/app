@@ -184,6 +184,14 @@ export function getAllAssignmentsInClassroomForStudent(req, res) {
   }
 }
 
+export function hasClassroomCreateAccess(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ error: 'Please log in first' });
+  } else {
+    return classroomService.hasClassroomCreateAccess(req, res);
+  }
+}
+
 export function getAllAssignmentsInClassroomByStudentForTeacher(req, res) {
   if (!req.user) {
     return res.status(403).send({ error: 'Please log in first' });

@@ -2,6 +2,7 @@ import * as ActionTypes from '../constants/reduxConstants';
 
 const initialState = {
   classrooms: [],
+  hasClassroomCreateAccess: false,
   submittingData: false,
   createClassroomModal: false,
   joinClassroomModal: false,
@@ -30,6 +31,12 @@ const classrooms = (state = initialState, action) => {
       return {
         ...state,
         classrooms: action.classrooms
+      };
+
+    case ActionTypes.FETCH_CLASSROOM_CREATE_ACCESS:
+      return {
+        ...state,
+        hasClassroomCreateAccess: action.hasClassroomCreateAccess
       };
 
     case ActionTypes.ADD_CLASSROOM:
