@@ -1,50 +1,37 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import history from '../../../../utils/history';
 
-import Button from '../../../Button/Button';
 
 import './upgradeView.scss';
 
-const UpgradeView = props => (
-  <div className="upgrade-view">
-    <div className="upgrade-view__container">
-      <h1 className="upgrade-view__header">
-        Peblio Classroom
-      </h1>
-      <h2 className="upgrade-view__sub-header">
-        Upgrade to a Peblio teacher account for access to our classroom tools!
-      </h2>
-      <iframe
-        width="100%"
-        height="290"
-        src="https://www.youtube.com/embed/8j0UDiN7my4"
-        frameBorder="0"
-        title="Intro to classrooms"
-        allow="accelerometer;
-      autoplay;
-      clipboard-write;
-      encrypted-media;
-      gyroscope;
-      picture-in-picture"
-        allowFullScreen
-      >
-      </iframe>
+class UpgradeView extends React.Component {
+  redirectToPricingPage = () => {
+    history.push('/pricing');
+  }
 
-      <Button
-        className="primary"
-        onClick={props.upgrade}
-        style={{
-          padding: '8px 48px'
-        }}
-      >
-        Upgrade
-      </Button>
-    </div>
-  </div>
-);
+  render() {
+    return (
+      <React.Fragment>
+        <div className="upgrade-view">
+          <div className="upgrade-view__container">
+            <h1 className="upgrade-view__header">
+              Created Classes
+            </h1>
+            <h2 className="upgrade-view__sub-header">
+              <a className="upgrade-view__sub-header__payment-link" href="/pricing">Upgrade now</a>
+              &nbsp;to create your own classes or&nbsp;
+              <button className="upgrade-view__sub-header__learnmore-link">learn more</button>
+              {' '}
+              about Peblio's classroom tools!
+            </h2>
+          </div>
+        </div>
+      </React.Fragment>
+    );
+  }
+}
 
 UpgradeView.propTypes = {
-  upgrade: PropTypes.func.isRequired
 };
 
 export default UpgradeView;

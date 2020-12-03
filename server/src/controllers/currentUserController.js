@@ -6,13 +6,14 @@ function getCurrentUser(req, res) {
   let name = null;
   let type = null;
   let id = null;
+  let email = null;
   if (req.user) {
-    console.log(req.user.id);
     name = req.user.name;
     type = req.user.type;
     id = req.user.id;
+    email = req.user.email;
   }
-  res.send({ name, type, id });
+  res.send({ name, type, id, email });
 }
 
 async function updateCurrentUserProfile(req, res) {

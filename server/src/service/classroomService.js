@@ -585,7 +585,7 @@ export async function getAllAssignmentsInClassroomForStudent(req, res) {
 export async function hasClassroomCreateAccess(req, res) {
   try {
     const user = req.user._id.toString();
-    return res.send(200);
+    return res.send(401);
   } catch (err) {
     console.error(err);
     return res.status(500).send({ error: err.message });
