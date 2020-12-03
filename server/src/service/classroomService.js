@@ -5,6 +5,7 @@ import ClassroomStudentAssignmentAttempt from '../models/ClassroomStudentAssignm
 import ClassroomTopic from '../models/ClassroomTopic';
 import ClassroomAssignment from '../models/ClassroomAssignment';
 import { ObjectId } from 'mongodb';
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 const url = require('url');
 const User = require('../models/user.js');
 
@@ -624,27 +625,18 @@ export async function hasClassroomCreateAccess(req, res) {
 
 export async function processClassroomPayment(req, res) {
   try {
+    const sig = request.headers['stripe-signature'];
     let event;
-    try {
-      event = JSON.parse(request.body);
-    } catch (err) {
-      response.status(400).send(`Webhook Error: ${err.message}`);
-    }
-    console.log('Webhook event: ', event);
-    switch (event.type) {
-      case 'payment_intent.succeeded':
-        const paymentIntent = event.data.object;
-        break;
-      case 'payment_method.attached':
-        const paymentMethod = event.data.object;
-        break;
-      default:
-        console.log(`Unhandled event type ${event.type}`);
+    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+    // Handle the checkout.session.completed event
+    if (event.type === 'checkout.session.completed') {
+      const session = event.data.object;
+      handleCheckoutSession(session);
     }
     response.json({ received: true });
   } catch (err) {
     console.error(err);
-    return res.status(500).send({ error: err.message });
+    return response.status(400).send(`Webhook Error: ${err.message}`);
   }
 }
 
