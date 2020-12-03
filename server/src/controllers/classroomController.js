@@ -192,6 +192,10 @@ export function hasClassroomCreateAccess(req, res) {
   }
 }
 
+export function processClassroomPayment(req, res) {
+  return classroomService.processClassroomPayment(req, res);
+}
+
 export function getAllAssignmentsInClassroomByStudentForTeacher(req, res) {
   if (!req.user) {
     return res.status(403).send({ error: 'Please log in first' });
