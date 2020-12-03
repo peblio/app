@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import TopNav from '../TopNav/TopNav';
 import FreeCard from './FreeCard/FreeCard';
-import TeacherCard from './TeacherCard/TeacherCard';
+import PaidCard from './PaidCard/PaidCard';
 
 import DesignElements from '../../images/pricing-design-elements.svg';
 
@@ -20,12 +20,8 @@ import {
 import './pricing.scss';
 
 class Pricing extends React.Component {
-  componentDidMount() {
-    console.log(window.Stripe);
-  }
-
   componentDidUpdate() {
-    if (!this.props.user) {
+    if (!this.props.userId) {
       if (this.props.match.params.modal === 'login') {
         this.props.viewLoginModal();
       } else if (this.props.match.params.modal === 'signup') {
@@ -38,19 +34,47 @@ class Pricing extends React.Component {
     }
   }
 
-  redirectToStripeForPayment = () => {
+  redirectToStripeForPaymentMonthly = () => {
+    console.log(1);
     const stripe = window.Stripe('pk_test_9tSHnj3NTrLMsz2qOWYy4fn700dtmhzIa2');
 
     stripe.redirectToCheckout({
-      lineItems: [{ price: 'price_1HuJdCFBQnwbqG0DgqEiKoeb', quantity: 1 }],
+      lineItems: [{ price: 'price_1HuOAqFBQnwbqG0D0R7DqiOD', quantity: 1 }],
       mode: 'subscription',
       // Do not rely on the redirect to the successUrl for fulfilling
       // purchases, customers may not always reach the success_url after
       // a successful payment.
       // Instead use one of the strategies described in
       // https://stripe.com/docs/payments/checkout/fulfill-orders
-      successUrl: 'https://peblio.co',
-      cancelUrl: 'https://peblio.co',
+      successUrl: `${process.env.UI_DOMAIN}/classroom`,
+      cancelUrl: `${process.env.UI_DOMAIN}/pricing`,
+      customerEmail: this.props.userEmail
+    })
+      .then((result) => {
+        if (result.error) {
+          // If `redirectToCheckout` fails due to a browser or network
+          // error, display the localized error message to your customer.
+          const displayError = document.getElementById('error-message');
+          displayError.textContent = result.error.message;
+        }
+      });
+  }
+
+  redirectToStripeForPaymentAnnually = () => {
+    console.log(2);
+    const stripe = window.Stripe('pk_test_9tSHnj3NTrLMsz2qOWYy4fn700dtmhzIa2');
+
+    stripe.redirectToCheckout({
+      lineItems: [{ price: 'price_1HuOAqFBQnwbqG0DgWkIX2mv', quantity: 1 }],
+      mode: 'subscription',
+      // Do not rely on the redirect to the successUrl for fulfilling
+      // purchases, customers may not always reach the success_url after
+      // a successful payment.
+      // Instead use one of the strategies described in
+      // https://stripe.com/docs/payments/checkout/fulfill-orders
+      successUrl: `${process.env.UI_DOMAIN}/classroom`,
+      cancelUrl: `${process.env.UI_DOMAIN}/pricing`,
+      customerEmail: this.props.userEmail
     })
       .then((result) => {
         if (result.error) {
@@ -74,7 +98,10 @@ class Pricing extends React.Component {
             <DesignElements className="pricing__design-element" />
             <div className="pricing__container__cards-section">
               <FreeCard active />
-              <TeacherCard stripePayment={this.redirectToStripeForPayment} />
+              <PaidCard
+                stripePaymentMonthly={this.redirectToStripeForPaymentMonthly}
+                stripePaymentAnnually={this.redirectToStripeForPaymentAnnually}
+              />
             </div>
           </div>
         </div>
@@ -85,7 +112,8 @@ class Pricing extends React.Component {
 
 
 const mapStateToProps = state => ({
-  user: state.user.id,
+  userId: state.user.id,
+  userEmail: state.user.email,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -96,7 +124,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 Pricing.propTypes = {
-  user: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
+  userEmail: PropTypes.string.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   viewSignUpModal: PropTypes.func.isRequired,
   closeLoginModal: PropTypes.func.isRequired,

@@ -99,7 +99,16 @@ const MyClasses = ({
                   />
                 </React.Fragment>
               ) : (
-                <UpgradeView />
+                <React.Fragment>
+                  <UpgradeView />
+                  <ClassTypeSection
+                    header="Joined classes"
+                    classrooms={classrooms.filter(classroom => classroom.myMemberShipDetail.role === 'student')}
+                    style={{
+                      marginTop: '69px'
+                    }}
+                  />
+                </React.Fragment>
               )
             }
           </main>

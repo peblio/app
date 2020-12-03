@@ -139,7 +139,6 @@ export const CreateClassroomModal = ({
           <Button
             className='secondary'
             onClick={() => {
-              console.log('toggle');
               toggleCreateClassroomModal();
             }}
             style={{ marginLeft: 'auto', marginRight: '16px' }}

@@ -15,6 +15,7 @@ const initialState = {
   studentBirthday: null,
   nextScreen: null,
   loading: null,
+  email: null,
 };
 
 const user = (state = initialState, action) => {
@@ -34,7 +35,8 @@ const user = (state = initialState, action) => {
         ...state,
         name: action.data.name,
         type: action.data.type,
-        id: action.data.id
+        id: action.data.id,
+        email: action.data.email,
       };
     }
 
