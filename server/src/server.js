@@ -47,9 +47,12 @@ app.use(session({
     autoReconnect: true
   })
 }));
+
 // add body parser
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({ limit: '50mb', extended: true }));
+app.use(bodyParser.json({ limit: '50mb', extended: true, verify: (req, res, buf) => {
+  req.rawBody = buf
+} }));
 
 // add routes
 app.use(passport.initialize());
