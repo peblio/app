@@ -5,7 +5,7 @@ import PricingCard from '../PricingCard/PricingCard';
 
 import './teacherCard.scss';
 
-const TeacherCard = ({ active }) => {
+const TeacherCard = ({ active, stripePayment }) => {
   const [monthly, setMonthly] = useState(false);
   return (
     <PricingCard
@@ -44,9 +44,7 @@ const TeacherCard = ({ active }) => {
           </div>
         )
       }
-      onClick={() => {
-        console.log('Sign Up');
-      }}
+      onClick={stripePayment}
       featureList={[
         'Everything in Free',
         'Unlimited students',
