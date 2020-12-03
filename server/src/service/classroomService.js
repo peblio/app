@@ -593,7 +593,7 @@ export async function hasClassroomCreateAccess(req, res) {
   }
 }
 
-export async function processClassroomPayment(req, res) {
+export async function processClassroomPayment(request, response) {
   try {
     const sig = request.headers['stripe-signature'];
     let event;
