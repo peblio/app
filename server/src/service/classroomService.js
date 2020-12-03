@@ -599,6 +599,7 @@ export async function processClassroomPayment(request, response) {
     let event;
     console.log('Body: ', request.body);
     console.log('Signing Key: ', process.env.STRIPE_WEBHOOK_SIGNING_KEY);
+    console.log('Sig: ', sig);
     event = stripe.webhooks.constructEvent(request.body, sig, process.env.STRIPE_WEBHOOK_SIGNING_KEY);
     // Handle the checkout.session.completed event
     if (event.type === 'checkout.session.completed') {
