@@ -597,7 +597,7 @@ export async function processClassroomPayment(request, response) {
   try {
     const sig = request.headers['stripe-signature'];
     let event;
-    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(request.body, sig, process.env.STRIPE_WEBHOOK_SIGNING_KEY);
     // Handle the checkout.session.completed event
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
