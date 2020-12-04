@@ -608,7 +608,7 @@ async function handleCheckoutSession(session, hasSucceeded) {
       email: session.customer_email,
       amount: session.amount_total,
       paidDate: Date.now(),
-      active: true,
+      isActive: true,
     });
     await subscriptions.save();
   }
