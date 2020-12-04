@@ -1,7 +1,7 @@
 import { buildClassroomDetailFromRequest, buildClassroomMember, buildClassroomAssignment, buildModifiedClassroomAssignment } from '../models/creator/classroomDetailCreator';
 import ClassroomDetail from '../models/ClassroomDetail';
 import ClassroomMember from '../models/ClassroomMember';
-import StripeCheckoutResponse from '../models/SripeCheckoutResponse';
+import StripeCheckoutResponse from '../models/StripeCheckoutResponse';
 import ClassroomStudentAssignmentAttempt from '../models/ClassroomStudentAssignmentAttempt';
 import ClassroomTopic from '../models/ClassroomTopic';
 import ClassroomAssignment from '../models/ClassroomAssignment';
