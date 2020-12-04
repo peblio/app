@@ -13,7 +13,7 @@ class GoogleLoginButton extends React.Component {
 
   componentDidMount() {
     window.gapi.load('auth2', () => {
-      this.auth2 = window.gapi.auth2.init({ client_id: process.env.GOOGLE_CLIENT_ID });
+      this.auth2 = window.gapi.auth2.init({ client_id: process.env.GOOGLE_CLIENT_ID, scope: 'openid email' });
     });
   }
 
