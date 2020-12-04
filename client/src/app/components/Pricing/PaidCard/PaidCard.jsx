@@ -5,9 +5,8 @@ import PricingCard from '../PricingCard/PricingCard';
 
 import './paidCard.scss';
 
-const PaidCard = ({ active, stripePaymentMonthly, stripePaymentAnnual }) => {
+const PaidCard = ({ active, stripePaymentMonthly, stripePaymentAnnually }) => {
   const [monthly, setMonthly] = useState(false);
-  console.log('monthly:', monthly);
   return (
 
     <PricingCard
@@ -46,7 +45,13 @@ const PaidCard = ({ active, stripePaymentMonthly, stripePaymentAnnual }) => {
           </div>
         )
       }
-      onClick={monthly ? stripePaymentMonthly : stripePaymentAnnual}
+      onClick={() => {
+        if (monthly) {
+          stripePaymentAnnually();
+        } else {
+          stripePaymentMonthly();
+        }
+      }}
       featureList={[
         'Everything in Free',
         'Unlimited students',
@@ -62,7 +67,7 @@ const PaidCard = ({ active, stripePaymentMonthly, stripePaymentAnnual }) => {
 PaidCard.propTypes = {
   active: PropTypes.bool,
   stripePaymentMonthly: PropTypes.func.isRequired,
-  stripePaymentAnnual: PropTypes.func.isRequired,
+  stripePaymentAnnually: PropTypes.func.isRequired,
 };
 
 PaidCard.defaultProps = {

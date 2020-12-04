@@ -32,7 +32,6 @@ const EditAssignmentConfirmationModal = props => (
       <Button
         className='primary'
         onClick={() => {
-          console.log(props.assignmentId);
           props.toggleEditAssignmentConfirmationModal({ assignmentId: props.assignmentId, value: false });
           props.toggleEditAssignmentModal();
         }}

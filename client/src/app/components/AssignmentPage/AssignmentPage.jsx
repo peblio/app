@@ -114,7 +114,7 @@ const AssignmentPage = (props) => {
         };
         props.editAssignment({ assignmentId: props.currentAssignment.id, ...update })
           .catch((err) => {
-            console.log(err);
+            console.err(err);
           });
       }
     }, 800);

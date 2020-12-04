@@ -128,7 +128,6 @@ const EditAssignmentModal = ({
       setAddLink(() => currentAssignment.peblUrl);
       const temp = currentAssignment.peblUrl.split('/');
       const id = temp[temp.length - 1];
-      console.log(id);
       axios.get(`/pages/${id}`)
         .then(({ data }) => {
           setPage(data[0]);
@@ -168,17 +167,14 @@ const EditAssignmentModal = ({
         };
       }
     }
-    console.log(assignmentData);
-    console.log(currentAssignment);
     editAssignment({ assignmentId: currentAssignment.id, ...assignmentData },)
       .then((data) => {
-        console.log(data);
         setSubmittinData(false);
         toggleEditAssignmentModal();
         fetchAssignments(classroomId);
       })
       .catch((err) => {
-        console.log(err);
+        console.err(err);
         setSubmittinData(false);
       });
   };
