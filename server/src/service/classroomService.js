@@ -587,7 +587,11 @@ export async function getAllAssignmentsInClassroomForStudent(req, res) {
 
 export async function hasClassroomCreateAccess(req, res) {
   try {
-    const user = req.user._id.toString();
+    const userEmail = req.user.email;
+    const subscriptions = await Subscriptions.findOne({active: true, email: userEmail});
+    if(subscriptions) {
+      return res.send(200); 
+    }
     return res.send(401);
   } catch (err) {
     console.error(err);
