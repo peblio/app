@@ -593,8 +593,13 @@ export async function hasClassroomCreateAccess(req, res) {
   }
 }
 
-async function handleCheckoutSession(session) {
+async function handleCheckoutSession(session, hasSucceeded) {
   console.log('session: ', session);
+  const stripeCheckoutResponse = new StripeCheckoutResponse({
+    email: session.email,
+    success: hasSucceeded,
+    payload: session,
+  });
 }
 
 export async function processClassroomPayment(request, response) {
@@ -605,9 +610,9 @@ export async function processClassroomPayment(request, response) {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
       console.log('signature: ', sig);
-      await handleCheckoutSession(request.body);
+      await handleCheckoutSession(session, true);
     } else {
-      console.log('Something failed');
+      await handleCheckoutSession(session, false);
     }
     response.json({ received: true });
   } catch (err) {
