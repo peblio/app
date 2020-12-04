@@ -113,7 +113,7 @@ const CreateAssignmentModal = ({
         fetchAssignments(classroomId);
       })
       .catch((err) => {
-        console.log(err);
+        console.err(err);
         setSubmittinData(false);
       });
   };

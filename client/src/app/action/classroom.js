@@ -172,7 +172,7 @@ export const joinClassroom = joinData => (dispatch) => {
         resolve(true);
       })
       .catch((err) => {
-        console.log(err);
+        console.err(err);
         reject(err);
       });
   });
