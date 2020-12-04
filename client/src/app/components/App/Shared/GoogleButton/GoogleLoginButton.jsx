@@ -26,7 +26,10 @@ class GoogleLoginButton extends React.Component {
         });
       })
       .then(this.props.onLoginSuccess)
-      .catch(this.props.onLoginFailure);
+      .catch((err) => {
+        console.log('Google Sign in error', err);
+        this.props.onLoginFailure();
+      });
   }
 
   render() {
