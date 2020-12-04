@@ -588,7 +588,7 @@ export async function getAllAssignmentsInClassroomForStudent(req, res) {
 export async function hasClassroomCreateAccess(req, res) {
   try {
     const userEmail = req.user.email;
-    const subscriptions = await Subscriptions.findOne({active: true, email: userEmail});
+    const subscriptions = await Subscriptions.findOne({isActive: true, email: userEmail});
     if(subscriptions) {
       return res.send(200); 
     }
