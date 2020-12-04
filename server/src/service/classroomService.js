@@ -2,6 +2,7 @@ import { buildClassroomDetailFromRequest, buildClassroomMember, buildClassroomAs
 import ClassroomDetail from '../models/ClassroomDetail';
 import ClassroomMember from '../models/ClassroomMember';
 import StripeCheckoutResponse from '../models/StripeCheckoutResponse';
+import Subscriptions from '../models/Subscriptions';
 import ClassroomStudentAssignmentAttempt from '../models/ClassroomStudentAssignmentAttempt';
 import ClassroomTopic from '../models/ClassroomTopic';
 import ClassroomAssignment from '../models/ClassroomAssignment';
@@ -597,10 +598,19 @@ export async function hasClassroomCreateAccess(req, res) {
 async function handleCheckoutSession(session, hasSucceeded) {
   console.log('session: ', session);
   const stripeCheckoutResponse = new StripeCheckoutResponse({
-    email: session.email,
+    email: session.customer_email,
     success: hasSucceeded,
     payload: session,
   });
+  await stripeCheckoutResponse.save();
+  if( hasSucceeded ){
+    const subscriptions = new Subscriptions({
+      email: session.customer_email,
+      amount: session.amount_total,
+      paid_date: Date.now()
+    });
+    await subscriptions.save();
+  }
 }
 
 export async function processClassroomPayment(request, response) {
