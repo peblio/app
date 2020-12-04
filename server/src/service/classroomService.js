@@ -594,19 +594,20 @@ export async function hasClassroomCreateAccess(req, res) {
 }
 
 async function handleCheckoutSession(session) {
+  console.log('session: ', session);
 }
 
 export async function processClassroomPayment(request, response) {
   try {
     const sig = request.headers['stripe-signature'];
     let event;
-
     event = stripe.webhooks.constructEvent(request.rawBody, sig, process.env.STRIPE_WEBHOOK_SIGNING_KEY);
-    // Handle the checkout.session.completed event
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
       console.log('signature: ', sig);
-      this.handleCheckoutSession(session);
+      await handleCheckoutSession(request.body);
+    } else {
+      console.log('Something failed');
     }
     response.json({ received: true });
   } catch (err) {
