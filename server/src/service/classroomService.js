@@ -593,8 +593,7 @@ export async function hasClassroomCreateAccess(req, res) {
   }
 }
 
-async function handleCheckoutSession() {
-
+async function handleCheckoutSession(session) {
 }
 
 export async function processClassroomPayment(request, response) {
@@ -606,8 +605,8 @@ export async function processClassroomPayment(request, response) {
     // Handle the checkout.session.completed event
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
-      console.log('Session: ', session);
-      handleCheckoutSession(session);
+      console.log('signature: ', sig);
+      this.handleCheckoutSession(session);
     }
     response.json({ received: true });
   } catch (err) {
