@@ -71,19 +71,20 @@ function loginWithGoogle(req, res) {
     idToken: req.body.google_id_token,
     audience: process.env.GOOGLE_CLIENT_ID
   }).then((ticket) => {
-    
     const payload = ticket.getPayload();
     const googleId = payload.sub;
     var profileInfo = jwt_decode(req.body.google_id_token);
 
-    return User.findOne({ googleId }, (err, user) => {
-      if (err) { return req.send({ msg: err }); }
+    User.findOne({ googleId }, (err, user) => {
+      if (err) {
+        return req.send({ msg: err });
+      }
       if (!user) {
         return res.status(400).send({
           msg: 'Please sign up first with Peblio',
         });
       }
-      if(!user.toJSON().email){
+      if (!user.toJSON().email) {
         user.email = profileInfo.email;
         return user.save((saveErr, updatedUser) => {
           if (saveErr) {
@@ -92,18 +93,23 @@ function loginWithGoogle(req, res) {
           }
           return req.login(user, (loginError) => {
             return res.send({
-                  msg: UserConst.LOGIN_SUCCESS,
-                  user: { name: user.name, type: user.type, email: user.email }
-                });
-              });
+              msg: UserConst.LOGIN_SUCCESS,
+              user: { name: user.name, type: user.type, email: user.email }
+            });
           });
+        });
       }
-      return res.send({
-        msg: UserConst.LOGIN_SUCCESS,
-        user: { name: user.name, type: user.type }
+      return req.login(user, (loginError) => {
+        return res.send({
+          msg: UserConst.LOGIN_SUCCESS,
+          user: { name: user.name, type: user.type, email: user.email }
+        });
       });
     });
-  }).catch(err => res.status(401).send({ msg: UserConst.LOGIN_FAILED }));
+  }).catch(err => {
+    console.err('Error while google sign in', err);
+    res.status(401).send({ msg: UserConst.LOGIN_FAILED })
+  });
 }
 
 const authRoutes = express.Router();
