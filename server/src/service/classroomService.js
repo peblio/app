@@ -607,7 +607,8 @@ async function handleCheckoutSession(session, hasSucceeded) {
     const subscriptions = new Subscriptions({
       email: session.customer_email,
       amount: session.amount_total,
-      paid_date: Date.now()
+      paidDate: Date.now(),
+      active: true,
     });
     await subscriptions.save();
   }
