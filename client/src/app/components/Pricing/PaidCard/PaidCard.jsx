@@ -6,16 +6,16 @@ import PricingCard from '../PricingCard/PricingCard';
 import './paidCard.scss';
 
 const PaidCard = ({ active, stripePaymentMonthly, stripePaymentAnnually }) => {
-  const [monthly, setMonthly] = useState(false);
+  const [annually, setAnnually] = useState(true);
   return (
 
     <PricingCard
       cardColor="#980076"
       buttonText="Upgrade"
-      planName={monthly ? 'Teacher Annual' : 'Teacher Monthly'}
-      planPricing={monthly ? '$12/mo' : '$19/mo'}
+      planName={annually ? 'Teacher Annual' : 'Teacher Monthly'}
+      planPricing={annually ? '$12/mo' : '$19/mo'}
       planDetails={
-        monthly ? (
+        annually ? (
           <div>
             <div className="">
               Billed at $144/year
@@ -24,7 +24,7 @@ const PaidCard = ({ active, stripePaymentMonthly, stripePaymentAnnually }) => {
             </div>
             <button
               className="pricing-plan-switch"
-              onClick={() => { setMonthly(val => !val); }}
+              onClick={() => { setAnnually(val => !val); }}
             >
               switch to monthly billing
             </button>
@@ -38,7 +38,7 @@ const PaidCard = ({ active, stripePaymentMonthly, stripePaymentAnnually }) => {
             </div>
             <button
               className="pricing-plan-switch"
-              onClick={() => { setMonthly(val => !val); }}
+              onClick={() => { setAnnually(val => !val); }}
             >
               switch to annual billing
             </button>
@@ -46,7 +46,7 @@ const PaidCard = ({ active, stripePaymentMonthly, stripePaymentAnnually }) => {
         )
       }
       onClick={() => {
-        if (monthly) {
+        if (annually) {
           stripePaymentAnnually();
         } else {
           stripePaymentMonthly();
