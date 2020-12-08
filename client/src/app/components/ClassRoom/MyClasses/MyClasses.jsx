@@ -63,21 +63,29 @@ const MyClasses = ({
               <Dropdown
                 className="btn"
                 placeholder="New class"
-                disabled={!hasClassroomCreateAccess}
                 style={{
                   width: '146px'
                 }}
-                options={[
-                  {
-                    name: 'Create class',
-                    value: 'create',
-                    onClick: () => { toggleCreateClassroomModal(); }
-                  }, {
-                    name: 'Join class',
-                    value: 'join',
-                    onClick: () => { toggleJoinClassroomModal(); }
-                  }
-                ]}
+                options={hasClassroomCreateAccess
+                  ? [
+                    {
+                      name: 'Create class',
+                      value: 'create',
+                      onClick: () => { toggleCreateClassroomModal(); }
+                    }, {
+                      name: 'Join class',
+                      value: 'join',
+                      onClick: () => { toggleJoinClassroomModal(); }
+                    }
+                  ]
+                  : [
+                    {
+                      name: 'Join class',
+                      value: 'join',
+                      onClick: () => { toggleJoinClassroomModal(); }
+                    }
+                  ]
+                }
               />
             </div>
             {
