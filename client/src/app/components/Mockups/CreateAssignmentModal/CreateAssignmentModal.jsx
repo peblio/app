@@ -182,7 +182,7 @@ const CreateAssignmentModal = () => {
             icon={<PeblIcon />}
             style={{ marginRight: '16px' }}
           >
-            Select Pebl
+            Link to existing Pebl
           </IconButton>
           <IconButton
             icon={<CreateNewIcon />}
