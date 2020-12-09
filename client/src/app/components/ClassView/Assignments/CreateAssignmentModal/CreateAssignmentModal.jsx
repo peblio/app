@@ -128,7 +128,6 @@ const CreateAssignmentModal = ({
         document.removeEventListener('click', linkInputClickOutside);
       }, 0);
     } else if (e.target.id !== 'add-link' && e.target.id !== 'add-link-button') {
-      // console.log(e.target.parentElement);
       setAddLinkTriggered(() => false);
       document.removeEventListener('click', linkInputClickOutside);
     }
@@ -136,7 +135,6 @@ const CreateAssignmentModal = ({
 
   useEffect(() => {
     fetchClassrooms();
-    // cleanup event listener if active and component is closed
     return () => {
       document.removeEventListener('click', linkInputClickOutside);
     };
