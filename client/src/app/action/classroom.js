@@ -169,7 +169,19 @@ export const joinClassroom = joinData => (dispatch) => {
   const reqPromise = () => new Promise((resolve, reject) => {
     axios.patch('/learning/classroomDetail/', joinData)
       .then(() => {
-        resolve(true);
+        axios.get('/learning/classroomDetail')
+          .then(({ data }) => {
+            dispatch({
+              type: ActionTypes.FETCH_CLASSROOMS,
+              classrooms: data
+            });
+            resolve(true);
+          })
+          .catch((e) => {
+            if (e.response.status === 404) {
+              history.push('/404');
+            }
+          });
       })
       .catch((err) => {
         console.err(err);
