@@ -19,6 +19,23 @@ export const Student = (props) => {
     setMarks(props.marksScored);
   }, [props.marksScored]);
 
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      props.gradeAssignment({
+        assignmentAttemptId: props.selectedAssignment.id,
+        marksScored: Number.parseInt(marks, 10)
+      }).then(() => {
+        curMarks.current = marks;
+      }).catch(() => {
+        setMarks(curMarks.current);
+      });
+    }, 1000);
+
+    return (() => {
+      clearTimeout(timerId);
+    });
+  }, [marks]);
+
   return (
     <button
       className={`assignment-page__container__students__student ${
@@ -53,19 +70,6 @@ export const Student = (props) => {
           disabled={props.selectedStudent === null || !props.selectedAssignment || (
             props.selectedStudent.user !== props.member.user
           )}
-          onBlur={() => {
-            // eslint-disable-next-line eqeqeq
-            if (curMarks.current != marks) {
-              props.gradeAssignment({
-                assignmentAttemptId: props.selectedAssignment.id,
-                marksScored: Number.parseInt(marks, 10)
-              }).then(() => {
-                curMarks.current = marks;
-              }).catch(() => {
-                setMarks(curMarks.current);
-              });
-            }
-          }}
         />
         <span>
           /
