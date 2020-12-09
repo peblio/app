@@ -13,12 +13,14 @@
   transition: background 300ms ease;
   background: none;
   border-bottom: 1px $g5 solid;
+  border-radius: none;
 
   &:focus{
     outline: none;
   }
   &:hover{
     background: $g6;
+    border: none;
   }
   &--selected{
     background: $g6;
@@ -36,6 +38,7 @@
     display: flex;
     align-items: center;
     font-size: $p-size;
+    color: black;
   }
   &__marks{
     padding: 8px;
@@ -44,5 +47,6 @@
     font-weight: 500;
     width: 119px;
     font-size: $p-size;
+    color: black;
   }
 }
