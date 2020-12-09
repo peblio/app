@@ -25,7 +25,7 @@ class DocumentsComponent extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.userName && prevProps.userName !== this.props.userName || prevProps.documentSort !== this.props.documentSort) {
+    if (this.props.userName && (prevProps.userName !== this.props.userName || prevProps.documentSort !== this.props.documentSort)) {
       this.props.fetchAllPages(this.props.userName, this.props.documentSort, this.props.container)
         .then(() => {
           if (this.props.folderShortId) {

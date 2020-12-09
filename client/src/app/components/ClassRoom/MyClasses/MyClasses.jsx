@@ -13,7 +13,13 @@ import UpgradeView from './UpgradeView/UpgradeView';
 import Dropdown from '../../Dropdown/Dropdown';
 import GenericLoader from '../../GenericLoader/LoadingMessage';
 
-import { toggleJoinClassroomModal, toggleCreateClassroomModal, fetchClassrooms, fetchClassroomCreateAccess } from '../../../action/classroom';
+import {
+  toggleJoinClassroomModal,
+  toggleCreateClassroomModal,
+  fetchClassrooms,
+  fetchClassroomCreateAccess
+} from '../../../action/classroom';
+import AccountUpgradeModal from './AccountUpgradeModal/AccountUpgradeModal';
 
 const MyClasses = ({
   classrooms,
