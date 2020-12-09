@@ -46,6 +46,12 @@ const AssignmentPage = (props) => {
   const initialRender = useRef(true);
 
   useEffect(() => {
+    if (students.length !== 0) {
+      setSelectedStudent(students[0]);
+    }
+  }, [students]);
+
+  useEffect(() => {
     if (props.currentClassroom && props.currentClassroom.members) {
       const stud = props.currentClassroom.members.filter(member => member.role === 'student');
       stud.sort((a, b) => {
