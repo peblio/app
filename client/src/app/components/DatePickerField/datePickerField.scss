@@ -87,11 +87,16 @@
       &--now{
         background: $g6 !important;
       }
-      &--active{
+
+      &--active.react-calendar__month-view__days__day{
         background: $primary-green !important;
+        color: $white !important;
       }
     }
-  }
 
+    &__navigation__label, &__navigation__arrow{
+      color: $black !important;
+    }
+  }
   
 }
