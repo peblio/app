@@ -69,8 +69,8 @@ const AssignmentPage = (props) => {
         body.style.justifyContent = 'center';
         const app = iframe.contentDocument.querySelector('#app');
         app.style.marginBottom = '-300px';
-      }, 300);
-      if (scrollRef) {
+      }, 1500);
+      if (scrollRef.current) {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
       }
     }
@@ -117,7 +117,7 @@ const AssignmentPage = (props) => {
             console.err(err);
           });
       }
-    }, 800);
+    }, 500);
 
     return () => {
       clearTimeout(updateTimer);
