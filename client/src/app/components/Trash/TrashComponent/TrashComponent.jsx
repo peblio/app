@@ -92,16 +92,16 @@ class TrashComponent extends React.Component {
               className="profile-pebl__sub-info"
             >
               <button
-                className="pages__icon"
-                onClick={() => { this.deletePage(page._id); }}
-              >
-                <DeleteIcon alt="delete page" />
-              </button>
-              <button
-                className="pages__icon"
+                className="profile-pebl__icon"
                 onClick={() => { this.restorePage(page._id); }}
               >
                 <RestoreIcon alt="restore page" />
+              </button>
+              <button
+                className="profile-pebl__icon"
+                onClick={() => { this.deletePage(page._id); }}
+              >
+                <DeleteIcon alt="delete page" />
               </button>
             </div>
           </div>
