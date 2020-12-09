@@ -48,5 +48,10 @@
     width: 119px;
     font-size: $p-size;
     color: black;
+    input{
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: textfield;
+    }
   }
 }
