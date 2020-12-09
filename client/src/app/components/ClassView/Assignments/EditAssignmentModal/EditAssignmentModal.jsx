@@ -346,7 +346,7 @@ const EditAssignmentModal = ({
                   document.addEventListener('click', linkInputClickOutside);
                 }}
               >
-                Select Pebl
+                Link to existing Pebl
               </IconButton>
               <IconButton
                 disabled={linkAdded}
