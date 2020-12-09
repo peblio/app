@@ -80,6 +80,9 @@
     border: 1px solid $g5 !important;
     border-radius: 3px !important;
     &__tile{
+      &.react-calendar__month-view__days__day {
+        color: black !important;
+      }
       border-radius: 3px !important;
       &--now{
         background: $g6 !important;
