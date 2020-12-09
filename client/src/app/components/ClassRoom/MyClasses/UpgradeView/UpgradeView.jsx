@@ -1,6 +1,6 @@
 import React from 'react';
 import history from '../../../../utils/history';
-
+import AccountUpgradeModal from '../AccountUpgradeModal/AccountUpgradeModal';
 
 import './upgradeView.scss';
 
@@ -26,6 +26,7 @@ class UpgradeView extends React.Component {
             </h2>
           </div>
         </div>
+        {/* <AccountUpgradeModal closeAccountUpgradeModal={() => { }} /> */}
       </React.Fragment>
     );
   }

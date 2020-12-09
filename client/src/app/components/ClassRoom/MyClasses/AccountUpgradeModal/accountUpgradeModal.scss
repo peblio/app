@@ -1,0 +1,31 @@
+.account-upgrade-modal{
+  width: 883px;
+  $root: &;
+
+  &__header{
+    text-align: center;
+    padding: 28px !important;
+  }
+
+  &__body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    &__header{
+      font-size: 20px;
+      font-weight: 500;
+      font-family: Roboto;
+    }
+
+    iframe{
+      width: 387px;
+      height: 219px;
+      margin: 40px 0;
+    }
+
+    &__button-area{
+      margin-bottom: 24px;
+    }
+  }
+}
