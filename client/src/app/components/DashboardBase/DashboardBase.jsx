@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -10,13 +10,27 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 import SideBar from '../SideBar/SideBar';
 import './dashboardBase.scss';
 
+import history from '../../utils/history';
+
 // actions
 import { loadMemoryConsumed } from '../../action/dashboard';
 import { fetchCurrentUser } from '../../action/user';
 
 // eslint-disable-next-line no-shadow
-const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, fetchCurrentUser, children }) => {
+const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, fetchCurrentUser, children, userId }) => {
+  const firstRender = useRef(true);
+
   useEffect(() => {
+    if (!firstRender.current) {
+      // console.log({ userId });
+      if (!userId) {
+        history.push('/');
+      }
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    firstRender.current = false;
     fetchCurrentUser();
     loadMemoryConsumed();
   }, []);
@@ -50,17 +64,23 @@ const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, fetchCurrentUser, c
   );
 };
 
+DashboardBase.defaultProps = {
+  userId: ''
+};
+
 DashboardBase.propTypes = {
   memoryConsumed: PropTypes.number.isRequired,
   loadMemoryConsumed: PropTypes.func.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired,
+  userId: PropTypes.string
 };
 
 function mapStateToProps(state) {
   return {
     memoryConsumed: state.dashboard.memoryConsumed,
     name: PropTypes.string.isRequired,
+    userId: state.user.id
   };
 }
 
