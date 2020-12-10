@@ -425,6 +425,7 @@ const AssignmentPage = (props) => {
                                   !comment ||
                       !selectedAssignment
                                 }
+                                type="submit"
                               >
                                 Send
                               </Button>
