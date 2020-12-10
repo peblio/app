@@ -53,7 +53,7 @@ const PaidCard = ({ active, stripePaymentMonthly, stripePaymentAnnually }) => {
         }
       }}
       featureList={[
-        'Everything in Free',
+        'Everything in Free Plan',
         'Unlimited students',
         'Unlimited classrooms',
         'Asset hosting with 5GB storage',
