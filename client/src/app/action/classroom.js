@@ -11,6 +11,12 @@ export const toggleCreateClassroomModal = () => (dispatch) => {
   });
 };
 
+export const toggleLearnMoreModal = () => (dispatch) => {
+  dispatch({
+    type: ActionTypes.TOGGLE_LEARN_MORE_MODAL,
+  });
+};
+
 export const toggleJoinClassroomModal = () => (dispatch) => {
   dispatch({
     type: ActionTypes.TOGGLE_JOIN_CLASSROOM_MODAL,
