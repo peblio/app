@@ -190,7 +190,7 @@ const EditAssignmentModal = ({
                 Edit Assignment
               </div>
               <span className="edit-assignment-modal__header__sub-title">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus, excepturi?
+                Any changes made to this assignment will not be viewed by students who already began the assignment
               </span>
             </React.Fragment>
           )
