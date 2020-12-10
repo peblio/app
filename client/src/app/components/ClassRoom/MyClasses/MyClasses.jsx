@@ -17,9 +17,9 @@ import {
   toggleJoinClassroomModal,
   toggleCreateClassroomModal,
   fetchClassrooms,
-  fetchClassroomCreateAccess
+  fetchClassroomCreateAccess,
+  toggleLearnMoreModal,
 } from '../../../action/classroom';
-import AccountUpgradeModal from './AccountUpgradeModal/AccountUpgradeModal';
 
 const MyClasses = ({
   classrooms,
@@ -35,6 +35,9 @@ const MyClasses = ({
   // eslint-disable-next-line no-shadow
   fetchClassroomCreateAccess,
   hasClassroomCreateAccess,
+  // eslint-disable-next-line no-shadow
+  toggleLearnMoreModal,
+  learnMoreModal
 }) => {
   const [dataLoading, setDataLoading] = useState(true);
   useEffect(() => {
@@ -114,7 +117,7 @@ const MyClasses = ({
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <UpgradeView />
+                  <UpgradeView learnMoreModal={learnMoreModal} toggleLearnMoreModal={toggleLearnMoreModal} />
                   <ClassTypeSection
                     header="Joined classes"
                     classrooms={classrooms.filter(classroom => classroom.myMemberShipDetail.role === 'student')}
@@ -167,6 +170,8 @@ MyClasses.propTypes = {
   fetchClassroomCreateAccess: PropTypes.func.isRequired,
   userName: PropTypes.string.isRequired,
   hasClassroomCreateAccess: PropTypes.bool.isRequired,
+  learnMoreModal: PropTypes.bool.isRequired,
+  toggleLearnMoreModal: PropTypes.func.isRequired,
 };
 
 
@@ -177,6 +182,7 @@ function mapStateToProps(state) {
     hasClassroomCreateAccess: state.classroom.hasClassroomCreateAccess,
     createClassroomModal: state.classroom.createClassroomModal,
     joinClassroomModal: state.classroom.joinClassroomModal,
+    learnMoreModal: state.classroom.learnMoreModal,
     userName: state.user.name
   };
 }
@@ -185,6 +191,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     toggleJoinClassroomModal,
     toggleCreateClassroomModal,
+    toggleLearnMoreModal,
     fetchClassrooms,
     fetchClassroomCreateAccess
   }, dispatch);

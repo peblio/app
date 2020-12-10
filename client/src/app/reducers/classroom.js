@@ -23,6 +23,7 @@ const initialState = {
   assignmentAttempts: [],
   addMemberModal: false,
   assignmentDrag: false,
+  learnMoreModal: false,
 };
 
 const classrooms = (state = initialState, action) => {
@@ -64,6 +65,12 @@ const classrooms = (state = initialState, action) => {
       return {
         ...state,
         createClassroomModal: !state.createClassroomModal
+      };
+
+    case ActionTypes.TOGGLE_LEARN_MORE_MODAL:
+      return {
+        ...state,
+        learnMoreModal: !state.learnMoreModal
       };
 
     case ActionTypes.TOGGLE_JOIN_CLASSROOM_MODAL:
