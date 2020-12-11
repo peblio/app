@@ -17,9 +17,17 @@ import {
   closeSignUpModal,
 } from '../../action/mainToolbar.js';
 
+import {
+  fetchClassroomCreateAccess,
+} from '../../action/classroom.js';
+
 import './pricing.scss';
 
 class Pricing extends React.Component {
+  componentDidMount() {
+    this.props.fetchClassroomCreateAccess();
+  }
+
   componentDidUpdate() {
     if (!this.props.userId) {
       if (this.props.match.params.modal === 'login') {
@@ -35,7 +43,6 @@ class Pricing extends React.Component {
   }
 
   redirectToStripeForPaymentMonthly = () => {
-    console.log(1);
     const stripe = window.Stripe('pk_test_9tSHnj3NTrLMsz2qOWYy4fn700dtmhzIa2');
 
     stripe.redirectToCheckout({
@@ -61,25 +68,17 @@ class Pricing extends React.Component {
   }
 
   redirectToStripeForPaymentAnnually = () => {
-    console.log(2);
     const stripe = window.Stripe('pk_test_9tSHnj3NTrLMsz2qOWYy4fn700dtmhzIa2');
 
     stripe.redirectToCheckout({
       lineItems: [{ price: 'price_1HuOAqFBQnwbqG0DgWkIX2mv', quantity: 1 }],
       mode: 'subscription',
-      // Do not rely on the redirect to the successUrl for fulfilling
-      // purchases, customers may not always reach the success_url after
-      // a successful payment.
-      // Instead use one of the strategies described in
-      // https://stripe.com/docs/payments/checkout/fulfill-orders
       successUrl: `${process.env.UI_DOMAIN}/classroom`,
       cancelUrl: `${process.env.UI_DOMAIN}/pricing`,
       customerEmail: this.props.userEmail
     })
       .then((result) => {
         if (result.error) {
-          // If `redirectToCheckout` fails due to a browser or network
-          // error, display the localized error message to your customer.
           const displayError = document.getElementById('error-message');
           displayError.textContent = result.error.message;
         }
@@ -97,8 +96,9 @@ class Pricing extends React.Component {
           <div className="pricing__container">
             <DesignElements className="pricing__design-element" />
             <div className="pricing__container__cards-section">
-              <FreeCard active />
+              <FreeCard active={!this.props.isPaidUser} />
               <PaidCard
+                active={this.props.isPaidUser}
                 stripePaymentMonthly={this.redirectToStripeForPaymentMonthly}
                 stripePaymentAnnually={this.redirectToStripeForPaymentAnnually}
               />
@@ -114,22 +114,26 @@ class Pricing extends React.Component {
 const mapStateToProps = state => ({
   userId: state.user.id,
   userEmail: state.user.email,
+  isPaidUser: state.classroom.hasClassroomCreateAccess,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   viewLoginModal,
   viewSignUpModal,
   closeLoginModal,
-  closeSignUpModal
+  closeSignUpModal,
+  fetchClassroomCreateAccess,
 }, dispatch);
 
 Pricing.propTypes = {
   userId: PropTypes.string.isRequired,
   userEmail: PropTypes.string.isRequired,
+  isPaidUser: PropTypes.bool.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
   viewSignUpModal: PropTypes.func.isRequired,
   closeLoginModal: PropTypes.func.isRequired,
   closeSignUpModal: PropTypes.func.isRequired,
+  fetchClassroomCreateAccess: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       modal: PropTypes.string

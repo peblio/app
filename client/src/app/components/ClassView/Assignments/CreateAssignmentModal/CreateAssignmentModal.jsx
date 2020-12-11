@@ -143,14 +143,14 @@ const CreateAssignmentModal = ({
   return (
     <Modal
       header={(
-        resourceType ? 'Create resource'
+        resourceType ? 'Create Assignment'
           : (
             <React.Fragment>
               <div className="create-assignment-modal__header__title">
                 Create Assignment
               </div>
               <span className="create-assignment-modal__header__sub-title">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus, excepturi?
+                A copy of any attached pebl will be created for each student
               </span>
             </React.Fragment>
           )
