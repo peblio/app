@@ -19,16 +19,16 @@ const FreeCard = ({ active }) => (
       '1 classroom (10 students)'
     ]}
     backdropColor="rgba(0, 21, 30, 0.1)"
-    active={active}
+    active={isPaidUser}
   />
 );
 
 FreeCard.propTypes = {
-  active: PropTypes.bool
+  isPaidUser: PropTypes.bool
 };
 
 FreeCard.defaultProps = {
-  active: false
+  isPaidUser: false
 };
 
 export default FreeCard;
