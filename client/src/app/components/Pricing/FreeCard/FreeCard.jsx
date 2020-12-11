@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import PricingCard from '../PricingCard/PricingCard';
 
-const FreeCard = ({ active }) => (
+const FreeCard = ({ isPaidUser }) => (
   <PricingCard
     cardColor="#00151e"
     buttonText="Sign Up"
