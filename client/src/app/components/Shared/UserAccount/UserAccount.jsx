@@ -76,6 +76,7 @@ class UserAccount extends React.Component {
   )
 
   render() {
+    const showPricingOption = process.env.SHOW_CLASSROOMS_AND_PRICING;
     return (
       <div>
         {this.props.name ? (
@@ -128,6 +129,7 @@ class UserAccount extends React.Component {
                     this.props.container === 'profile' ||
                     this.renderListItem('profile', `/profile/${this.props.name}`)
                   }
+                  {showPricingOption === 'true' && this.renderListItem('pricing', '/pricing') }
                   <li className="user-account__list-item">
                     <button
                       className="user-account__link"
@@ -135,7 +137,7 @@ class UserAccount extends React.Component {
                       onKeyDown={this.logout}
                       data-test="user-account__logout-button"
                     >
-                    Logout
+                      Logout
                     </button>
                   </li>
                 </ul>
@@ -149,7 +151,7 @@ class UserAccount extends React.Component {
               onClick={this.props.viewLoginModal}
               data-test="user-account__login-button"
             >
-            Log In
+              Log In
             </button>
             <div className="user-account__spacer"></div>
             <button
@@ -157,7 +159,7 @@ class UserAccount extends React.Component {
               onClick={this.props.viewSignUpModal}
               data-test="user-account__signup-button"
             >
-            Sign Up
+              Sign Up
             </button>
           </div>
         )}
