@@ -91,19 +91,10 @@ const AssignmentCard = (props) => {
           <div className="assignment-card-student__body__details__text-area">
             <div className="assignment-card-student__body__details__text-area__title">
               {
-                // eslint-disable-next-line no-nested-ternary
-                props.attemptPeblUrl ? (
+                props.attemptPeblUrl || props.url || props.peblUrl ? (
                   <a
                     rel="noopener noreferrer"
-                    href={props.attemptPeblUrl}
-                    target="_blank"
-                  >
-                    {props.title}
-                  </a>
-                ) : props.url ? (
-                  <a
-                    rel="noopener noreferrer"
-                    href={props.url}
+                    href={props.attemptPeblUrl || props.url || props.peblUrl}
                     target="_blank"
                   >
                     {props.title}
