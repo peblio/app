@@ -218,6 +218,9 @@ const classrooms = (state = initialState, action) => {
 
       return state;
 
+    case ActionTypes.LOGOUT_USER:
+      return initialState;
+
     default:
       return state;
   }
