@@ -2,7 +2,7 @@
 
 .student-sidebar{
   $root: &;
-  width: 202px;
+  width: calc(250px + 2.5rem);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
