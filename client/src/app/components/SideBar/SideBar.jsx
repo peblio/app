@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import './sideBar.scss';
 
+const showClassroomOption = process.env.SHOW_CLASSROOMS_AND_PRICING === 'true';
+
 const SideBar = ({ children, ...props }) => (
   <div className='sidebar'>
     <ul className="sidebar__nav-links">
@@ -16,9 +18,12 @@ const SideBar = ({ children, ...props }) => (
           Documents
         </NavLink>
       </li>
-      <li className="sidebar__nav-link">
-        <NavLink to='/classroom' activeClassName='active'>My Classes</NavLink>
-      </li>
+      {showClassroomOption && (
+        <li className="sidebar__nav-link">
+          <NavLink to='/classroom' activeClassName='active'>My Classes</NavLink>
+        </li>
+      )
+      }
       <li className="sidebar__nav-link">
         <NavLink to='/trash' activeClassName='active'>Trash</NavLink>
       </li>
