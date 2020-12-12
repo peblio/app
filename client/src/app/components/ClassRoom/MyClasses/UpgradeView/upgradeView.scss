@@ -38,6 +38,9 @@
     line-height: normal;
     letter-spacing: normal;
     color: #667378;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
   }
 
   &__sub-header__learnmore-link {
