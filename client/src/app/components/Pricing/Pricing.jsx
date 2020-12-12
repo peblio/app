@@ -40,7 +40,7 @@ class Pricing extends React.Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     if (!this.props.userId) {
       if (this.props.match.params.modal === 'login') {
         this.props.viewLoginModal();
@@ -52,6 +52,8 @@ class Pricing extends React.Component {
     } else if (this.props.match.params.modal === 'signup') {
       this.props.closeSignUpModal();
     }
+
+    console.log(prevProps);
   }
 
   handleCloseDowngradeModal = () => {

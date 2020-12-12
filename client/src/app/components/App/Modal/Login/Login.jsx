@@ -92,7 +92,7 @@ class Login extends React.Component {
 
           <div className="login-modal__buttonholder">
 
-            <button className="forgot-modal__button" type="submit" value="Submit" data-test="submit-login">
+            <button className="login-modal__button" type="submit" value="Submit" data-test="submit-login">
               Submit
             </button>
             <button
@@ -102,7 +102,7 @@ class Login extends React.Component {
                 this.props.closeLoginModal();
               }}
             >
-            forgot password?
+              forgot password?
             </button>
           </div>
         </form>
