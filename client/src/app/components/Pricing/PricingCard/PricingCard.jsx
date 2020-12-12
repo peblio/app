@@ -40,15 +40,16 @@ const PricingCard = props => (
         }
       </div>
       <div className="pricing-card__button-area">
-        <button
-          onClick={props.onClick}
-          style={{
-            display: props.active ? 'none' : 'block',
-            background: props.cardColor
-          }}
-        >
-          {props.buttonText}
-        </button>
+        {props.buttonText && (
+          <button
+            onClick={props.onClick}
+            style={{
+              background: props.cardColor
+            }}
+          >
+            {props.buttonText}
+          </button>
+        )}
       </div>
     </div>
   </div>
