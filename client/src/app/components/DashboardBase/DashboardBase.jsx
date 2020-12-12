@@ -17,17 +17,17 @@ import { loadMemoryConsumed } from '../../action/dashboard';
 import { fetchCurrentUser } from '../../action/user';
 
 // eslint-disable-next-line no-shadow
-const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, fetchCurrentUser, children, userId }) => {
+const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, fetchCurrentUser, children, userName }) => {
   const firstRender = useRef(true);
 
   useEffect(() => {
     if (!firstRender.current) {
-      // console.log({ userId });
-      if (!userId) {
+      // console.log({ userName });
+      if (!userName) {
         history.push('/');
       }
     }
-  }, [userId]);
+  }, [userName]);
 
   useEffect(() => {
     firstRender.current = false;
@@ -65,7 +65,7 @@ const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, fetchCurrentUser, c
 };
 
 DashboardBase.defaultProps = {
-  userId: ''
+  userName: ''
 };
 
 DashboardBase.propTypes = {
@@ -73,14 +73,14 @@ DashboardBase.propTypes = {
   loadMemoryConsumed: PropTypes.func.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired,
-  userId: PropTypes.string
+  userName: PropTypes.string
 };
 
 function mapStateToProps(state) {
   return {
     memoryConsumed: state.dashboard.memoryConsumed,
     name: PropTypes.string.isRequired,
-    userId: state.user.id
+    userName: state.user.name
   };
 }
 

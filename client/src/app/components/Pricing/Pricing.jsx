@@ -40,8 +40,8 @@ class Pricing extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (!this.props.userId) {
+  componentDidUpdate() {
+    if (!this.props.userName) {
       if (this.props.match.params.modal === 'login') {
         this.props.viewLoginModal();
       } else if (this.props.match.params.modal === 'signup') {
@@ -52,8 +52,6 @@ class Pricing extends React.Component {
     } else if (this.props.match.params.modal === 'signup') {
       this.props.closeSignUpModal();
     }
-
-    console.log(prevProps);
   }
 
   handleCloseDowngradeModal = () => {
@@ -124,13 +122,13 @@ class Pricing extends React.Component {
             <div className="pricing__container__cards-section">
               <FreeCard
                 active={!this.props.isPaidUser}
-                userId={this.props.userId}
+                userName={this.props.userName}
                 openDowngradeModal={this.handleOpenDowngradeModal}
                 viewSignUpModal={this.props.viewSignUpModal}
               />
               <PaidCard
                 active={this.props.isPaidUser}
-                userId={this.props.userId}
+                userName={this.props.userName}
                 stripePaymentMonthly={this.redirectToStripeForPaymentMonthly}
                 stripePaymentAnnually={this.redirectToStripeForPaymentAnnually}
                 viewSignUpModal={this.props.viewSignUpModal}
@@ -146,8 +144,8 @@ class Pricing extends React.Component {
 
 
 const mapStateToProps = state => ({
-  userId: state.user.id,
   userEmail: state.user.email,
+  userName: state.user.name,
   isPaidUser: state.classroom.hasClassroomCreateAccess,
 });
 
@@ -160,7 +158,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 Pricing.propTypes = {
-  userId: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
   userEmail: PropTypes.string.isRequired,
   isPaidUser: PropTypes.bool.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
