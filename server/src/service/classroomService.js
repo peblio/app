@@ -630,6 +630,7 @@ export async function processClassroomPayment(request, response) {
     } else {
       await handleCheckoutSession(session, false);
     }
+    console.log('Saved payment info');
     response.json({ received: true });
   } catch (err) {
     console.error(err);
