@@ -111,6 +111,12 @@
           &:focus{
             outline: none;
           }
+
+          &:hover{
+            background: none;
+            border: none;
+            color: white;
+          }
         }
         &__options{
           font-family: $roboto;
