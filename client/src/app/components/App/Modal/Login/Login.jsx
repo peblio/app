@@ -46,7 +46,7 @@ class Login extends React.Component {
       password
     })
       .then(this.loginSuccessful)
-      .then(this.props.fetchCurrentUserForAppStartUp())
+      .then(setTimeout(() => this.props.fetchCurrentUserForAppStartUp(), 500))
       .then(() => {
         const log = {
           message: 'User Logged In',
