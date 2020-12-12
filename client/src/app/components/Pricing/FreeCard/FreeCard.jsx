@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 
 import PricingCard from '../PricingCard/PricingCard';
 
-const FreeCard = ({ active, userId, openDowngradeModal, viewSignUpModal }) => (
+const FreeCard = ({ active, userName, openDowngradeModal, viewSignUpModal }) => (
   <PricingCard
     cardColor="#00151e"
     buttonText={
       // eslint-disable-next-line no-nested-ternary
-      userId ? (!active ? 'Downgrade' : '') : 'Sign Up'
+      userName ? (!active ? 'Downgrade' : '') : 'Sign Up'
     }
     planName="Free"
     planPricing="$0"
     planDetails="forever"
     onClick={() => {
-      if (userId && !active) {
+      if (userName && !active) {
         openDowngradeModal();
         return;
       }
@@ -32,13 +32,13 @@ const FreeCard = ({ active, userId, openDowngradeModal, viewSignUpModal }) => (
 
 FreeCard.propTypes = {
   active: PropTypes.bool,
-  userId: PropTypes.string,
+  userName: PropTypes.string,
   openDowngradeModal: PropTypes.func.isRequired
 };
 
 FreeCard.defaultProps = {
   active: false,
-  userId: ''
+  userName: ''
 };
 
 export default FreeCard;

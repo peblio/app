@@ -5,7 +5,7 @@ import PricingCard from '../PricingCard/PricingCard';
 
 import './paidCard.scss';
 
-const PaidCard = ({ active, stripePaymentMonthly, stripePaymentAnnually, userId, viewSignUpModal }) => {
+const PaidCard = ({ active, stripePaymentMonthly, stripePaymentAnnually, userName, viewSignUpModal }) => {
   const [annually, setAnnually] = useState(true);
   return (
 
@@ -13,7 +13,7 @@ const PaidCard = ({ active, stripePaymentMonthly, stripePaymentAnnually, userId,
       cardColor="#980076"
       buttonText={
         // eslint-disable-next-line no-nested-ternary
-        userId ? (!active ? 'Upgrade' : '') : 'Sign Up'
+        userName ? (!active ? 'Upgrade' : '') : 'Sign Up'
       }
       planName={annually ? 'Teacher Annual' : 'Teacher Monthly'}
       planPricing={annually ? '$12/mo' : '$19/mo'}
@@ -49,7 +49,7 @@ const PaidCard = ({ active, stripePaymentMonthly, stripePaymentAnnually, userId,
         )
       }
       onClick={() => {
-        if (userId) {
+        if (userName) {
           if (annually) {
             stripePaymentAnnually();
           } else {
@@ -75,13 +75,13 @@ PaidCard.propTypes = {
   active: PropTypes.bool,
   stripePaymentMonthly: PropTypes.func.isRequired,
   stripePaymentAnnually: PropTypes.func.isRequired,
-  userId: PropTypes.string,
+  userName: PropTypes.string,
   viewSignUpModal: PropTypes.func.isRequired
 };
 
 PaidCard.defaultProps = {
   active: false,
-  userId: ''
+  userName: ''
 };
 
 export default PaidCard;

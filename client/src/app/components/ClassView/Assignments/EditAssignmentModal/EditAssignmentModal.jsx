@@ -55,7 +55,6 @@ const EditAssignmentModal = ({
   classroomId,
   classrooms,
   topics,
-  userId,
   // eslint-disable-next-line no-shadow
   setSubmittinData,
   // eslint-disable-next-line no-shadow
@@ -498,7 +497,6 @@ EditAssignmentModal.propTypes = {
     _id: PropTypes.string.isRequired
   })).isRequired,
   classroomId: PropTypes.string.isRequired,
-  userId: PropTypes.string.isRequired,
   classrooms: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   fetchClassrooms: PropTypes.func.isRequired,
   fetchAssignments: PropTypes.func.isRequired,
@@ -524,7 +522,6 @@ EditAssignmentModal.propTypes = {
 const mapStateToProps = state => ({
   classroomId: state.classroom.currentClassroom.id,
   classrooms: state.classroom.classrooms,
-  userId: state.user.id,
   topics: state.classroom.topics,
   editingAssignmentId: state.classroom.editingAssignmentId,
   currentAssignment: state.classroom.currentAssignment,
