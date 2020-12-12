@@ -35,6 +35,12 @@
       &:focus{
         outline: none;
       }
+
+      &:hover{
+        background: none;
+        border: none;
+        color: #fff;
+      }
     }
 
     &__resources{
@@ -59,6 +65,10 @@
 
         &:focus{
           outline: none;
+        }
+
+        &:hover{
+          background: none;
         }
       }
     }
