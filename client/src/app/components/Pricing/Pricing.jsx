@@ -41,6 +41,7 @@ class Pricing extends React.Component {
   }
 
   componentDidUpdate() {
+    this.props.fetchClassroomCreateAccess();
     if (!this.props.userName) {
       if (this.props.match.params.modal === 'login') {
         this.props.viewLoginModal();
