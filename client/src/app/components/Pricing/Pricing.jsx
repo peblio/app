@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import DowngradeModal from './DowngradeModal/DowngradeModal';
 
 import TopNav from '../TopNav/TopNav';
 import FreeCard from './FreeCard/FreeCard';
 import PaidCard from './PaidCard/PaidCard';
 
 import DesignElements from '../../images/pricing-design-elements.svg';
-
 
 import {
   viewLoginModal,
@@ -24,8 +24,20 @@ import {
 import './pricing.scss';
 
 class Pricing extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      downgradeModal: false
+    };
+  }
+
   componentDidMount() {
     this.props.fetchClassroomCreateAccess();
+    if (this.props.match.params.modal === 'login') {
+      this.props.viewLoginModal();
+    } else if (this.props.match.params.modal === 'signup') {
+      this.props.viewSignUpModal();
+    }
   }
 
   componentDidUpdate() {
@@ -40,6 +52,18 @@ class Pricing extends React.Component {
     } else if (this.props.match.params.modal === 'signup') {
       this.props.closeSignUpModal();
     }
+  }
+
+  handleCloseDowngradeModal = () => {
+    this.setState(() => ({
+      downgradeModal: false
+    }));
+  }
+
+  handleOpenDowngradeModal = () => {
+    this.setState(() => ({
+      downgradeModal: true
+    }));
   }
 
   redirectToStripeForPaymentMonthly = () => {
@@ -96,15 +120,23 @@ class Pricing extends React.Component {
           <div className="pricing__container">
             <DesignElements className="pricing__design-element" />
             <div className="pricing__container__cards-section">
-              <FreeCard active={!this.props.isPaidUser} />
+              <FreeCard
+                active={!this.props.isPaidUser}
+                userId={this.props.userId}
+                openDowngradeModal={this.handleOpenDowngradeModal}
+                viewSignUpModal={this.props.viewSignUpModal}
+              />
               <PaidCard
                 active={this.props.isPaidUser}
+                userId={this.props.userId}
                 stripePaymentMonthly={this.redirectToStripeForPaymentMonthly}
                 stripePaymentAnnually={this.redirectToStripeForPaymentAnnually}
+                viewSignUpModal={this.props.viewSignUpModal}
               />
             </div>
           </div>
         </div>
+        {this.state.downgradeModal && <DowngradeModal closeDowngradeModal={this.handleCloseDowngradeModal} />}
       </div>
     );
   }
