@@ -76,6 +76,7 @@ class UserAccount extends React.Component {
   )
 
   render() {
+    const showPricingOption = process.env.SHOW_CLASSROOMS_AND_PRICING;
     return (
       <div>
         {this.props.name ? (
@@ -128,7 +129,7 @@ class UserAccount extends React.Component {
                     this.props.container === 'profile' ||
                     this.renderListItem('profile', `/profile/${this.props.name}`)
                   }
-                  {this.renderListItem('pricing', '/pricing') }
+                  {showPricingOption === 'true' && this.renderListItem('pricing', '/pricing') }
                   <li className="user-account__list-item">
                     <button
                       className="user-account__link"
