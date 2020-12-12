@@ -143,7 +143,7 @@ const CreateAssignmentModal = ({
   return (
     <Modal
       header={(
-        resourceType ? 'Create Assignment'
+        resourceType !== 'assignment' ? 'Create Resource'
           : (
             <React.Fragment>
               <div className="create-assignment-modal__header__title">
