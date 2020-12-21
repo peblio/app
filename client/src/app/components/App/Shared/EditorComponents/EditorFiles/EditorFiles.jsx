@@ -9,7 +9,7 @@ import FileUpload from '../../FileUpload/FileUpload.jsx';
 
 import { MEDIA_FILE_REGEX } from '../../../../../constants/widgetConstants.js';
 
-const CODE_FILE_REGEX = /.+\.(csv|txt|json|js|css)$/i;
+const CODE_FILE_REGEX = /.+\.(js|css)$/i;
 
 require('./editorFiles.scss');
 
