@@ -108,7 +108,7 @@ export const fetchClassrooms = () => (dispatch) => {
 
 export const fetchClassroomCreateAccess = () => (dispatch) => {
   const reqPromise = () => new Promise((resolve, reject) => {
-    axios.get('/learning/classroomDetail/access')
+    axios.get(`/learning/classroomDetail/access?timestamp=${new Date().getTime()}`)
       .then(() => {
         dispatch({
           type: ActionTypes.FETCH_CLASSROOM_CREATE_ACCESS,
