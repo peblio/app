@@ -6,6 +6,7 @@ const User = require('../models/user.js');
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
 const credentials = new AWS.SharedIniFileCredentials();
+import * as classroomService from '../service/classroomService';
 AWS.config.credentials = credentials;
 const myBucket = process.env.S3_BUCKET;
 
@@ -52,7 +53,7 @@ export function uploadFiles(req, res) {
   });
 }
 
-export function getFileInfo(req, res) {
+export async function getFileInfo(req, res) {
   let user = req.user;
   if(!user){
     res.status(403).send({err: 'Please log in first'});
@@ -69,10 +70,14 @@ export function getFileInfo(req, res) {
     }
     const sizeArray = data.Contents.map( content => content.Size);
     const totalSize = sizeArray.reduce((sum, n) => sum + n, 0);
-    res.status(200).send({
-      data,
-      size: totalSize,
-      unit: 'bytes'
+    return classroomService.getMemoryAllowed(req, res)
+    .then(totalmemory => {
+      return res.status(200).send({
+        data,
+        size: totalSize,
+        totalmemory,
+        unit: 'bytes'
+      });
     });
   });
 }

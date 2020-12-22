@@ -599,6 +599,21 @@ export async function hasClassroomCreateAccess(req, res) {
   }
 }
 
+export async function getMemoryAllowed(req, res) {
+  try {
+    const userEmail = req.user.email;
+    const subscriptions = await Subscriptions.findOne({isActive: true, email: userEmail});
+    if(!subscriptions) {
+      return 500000000; 
+    } else {
+      return 5368709000;
+    }
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ error: err.message });
+  }
+}
+
 async function handleCheckoutSession(session, hasSucceeded) {
   console.log('session: ', session);
   const stripeCheckoutResponse = new StripeCheckoutResponse({

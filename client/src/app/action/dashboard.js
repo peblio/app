@@ -84,9 +84,11 @@ export function loadMemoryConsumed() {
   return dispatch => axios.get('files/size')
     .then((memoryInfo) => {
       const size = memoryInfo.data.size;
+      const totalMemory = memoryInfo.data.totalMemory;
       dispatch({
         type: ActionTypes.LOAD_MEMORY_CONSUMED,
-        memoryConsumed: size
+        memoryConsumed: size,
+        totalMemory
       });
     })
     .catch((err) => {

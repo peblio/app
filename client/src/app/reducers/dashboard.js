@@ -8,6 +8,7 @@ const initialState = {
   parentFolderId: '',
   isAddNewMenuOpen: false,
   memoryConsumed: 0,
+  totalMemory: 500000000
 };
 const dashboard = (state = initialState, action) => {
   switch (action.type) {
@@ -29,7 +30,8 @@ const dashboard = (state = initialState, action) => {
       });
     case ActionTypes.LOAD_MEMORY_CONSUMED:
       return Object.assign({}, state, {
-        memoryConsumed: action.memoryConsumed
+        memoryConsumed: action.memoryConsumed,
+        totalMemory: action.totalMemory
       });
     case ActionTypes.SET_PARENT_FOLDER:
       return Object.assign({}, state, {
