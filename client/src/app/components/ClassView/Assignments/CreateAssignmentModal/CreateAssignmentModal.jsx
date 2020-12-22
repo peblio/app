@@ -285,7 +285,7 @@ const CreateAssignmentModal = ({
         </div>
         <div className="create-assignment-modal__action-area">
           <IconButton
-            disabled={linkAdded}
+            disabled={linkAdded || addLinkTriggered}
             icon={<PeblIcon />}
             style={{ marginRight: '16px' }}
             onClick={() => {
@@ -302,14 +302,13 @@ const CreateAssignmentModal = ({
             Link to existing Pebl
           </IconButton>
           <IconButton
-            disabled={linkAdded}
+            disabled={linkAdded || addLinkTriggered}
             icon={<CreateNewIcon />}
             style={{ marginRight: '16px' }}
             onClick={() => {
               setLinkTriggeredBy('pebl');
               createPeblForAssignment(assignmentTitle)
                 .then((id) => {
-                  console.log(id);
                   setAddLink(`${window.location.origin}/pebl/${id}`);
                   setPage({
                     title: assignmentTitle || DEFAULT_PAGE_TITLE,
@@ -324,7 +323,7 @@ const CreateAssignmentModal = ({
             Create new Pebl
           </IconButton>
           <IconButton
-            disabled={linkAdded}
+            disabled={linkAdded || addLinkTriggered}
             icon={<LinkIcon />}
             style={{ marginRight: 'auto' }}
             id="trigger-link"
@@ -373,6 +372,7 @@ const CreateAssignmentModal = ({
               <LinkPreviewCard
                 title={page ? page.title : ''}
                 previewURL={page ? page.snapshotPath : ''}
+                linkTriggeredBy={linkTriggeredBy}
                 removeAction={() => {
                   setLinkAdded(false);
                 }}
@@ -398,7 +398,6 @@ const CreateAssignmentModal = ({
                 if (linkTriggeredBy === 'pebl') {
                   const temp = addLink.split('/');
                   const id = temp[temp.length - 1];
-                  console.log(id);
                   axios.get(`/pages/${id}`)
                     .then(({ data }) => {
                       setPage(data[0]);

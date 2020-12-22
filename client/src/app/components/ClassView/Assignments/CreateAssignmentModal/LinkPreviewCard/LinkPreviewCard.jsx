@@ -19,7 +19,7 @@ const LinkPreviewCard = ({ title, removeAction, previewURL, url, ...props }) => 
       </a>
       <div className="link-preview-card__description__footer">
         {
-          props.type === 'assignment' ? (
+          props.type === 'assignment' && props.linkTriggeredBy !== 'link' ? (
             <React.Fragment>
               <span>copy</span>
               {' '}
@@ -43,6 +43,7 @@ const LinkPreviewCard = ({ title, removeAction, previewURL, url, ...props }) => 
 
 LinkPreviewCard.propTypes = {
   title: PropTypes.string.isRequired,
+  linkTriggeredBy: PropTypes.string.isRequired,
   removeAction: PropTypes.func.isRequired,
   previewURL: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
