@@ -18,8 +18,7 @@ class UpgradeView extends React.Component {
               <a className="upgrade-view__sub-header__payment-link" href="/pricing">Upgrade now</a>
               &nbsp;to create your own classes or&nbsp;
               <button className="upgrade-view__sub-header__learnmore-link" onClick={this.props.toggleLearnMoreModal}>learn more</button>
-              {' '}
-              about Peblio's classroom tools!
+              &nbsp; about Peblio's classroom tools!
             </h2>
           </div>
         </div>
