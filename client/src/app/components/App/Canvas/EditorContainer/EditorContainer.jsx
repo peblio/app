@@ -128,6 +128,7 @@ class EditorContainer extends React.Component {
                 viewEditorPreview={this.viewEditorPreview}
                 loadMemoryConsumed={this.props.loadMemoryConsumed}
                 memoryConsumed={this.props.memoryConsumed}
+                totalMemory={this.props.totalMemory}
               />
             )}
             {this.editorView() === 'split' && (
@@ -230,13 +231,15 @@ EditorContainer.propTypes = {
   viewEditorPreview: PropTypes.func.isRequired,
   loadMemoryConsumed: PropTypes.func.isRequired,
   memoryConsumed: PropTypes.number.isRequired,
+  totalMemory: PropTypes.number.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     name: state.user.name,
     editorTheme: state.preferences.editorTheme,
-    memoryConsumed: state.dashboard.memoryConsumed
+    memoryConsumed: state.dashboard.memoryConsumed,
+    totalMemory: state.dashboard.totalMemory,
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -69,8 +69,9 @@ class Image extends React.Component {
     const file = files[0];
     if (file.name.match(MEDIA_FILE_REGEX)) {
       const memoryConsumedInMegaBytes = Math.ceil(this.props.memoryConsumed / 1000000);
+      const totalMemoryInMegaBytes = Math.ceil(this.props.totalMemory / 1000000);
       const memoryOfNewFile = Math.ceil(file.size / 1000000);
-      if ((memoryConsumedInMegaBytes + memoryOfNewFile) < 1024) {
+      if ((memoryConsumedInMegaBytes + memoryOfNewFile) < totalMemoryInMegaBytes) {
         this.startFileUpload();
         axios.get(`/upload/${this.props.name}/images`, {
           params: {
@@ -286,13 +287,15 @@ Image.propTypes = {
   setImageURL: PropTypes.func.isRequired,
   loadMemoryConsumed: PropTypes.func.isRequired,
   memoryConsumed: PropTypes.number.isRequired,
+  totalMemory: PropTypes.number.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     name: state.user.name,
     preview: state.page.preview,
-    memoryConsumed: state.dashboard.memoryConsumed
+    memoryConsumed: state.dashboard.memoryConsumed,
+    totalMemory: state.dashboard.totalMemory
   };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({

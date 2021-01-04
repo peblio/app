@@ -52,8 +52,9 @@ class EditorFiles extends React.Component {
     }
     if (file.name.match(MEDIA_FILE_REGEX)) {
       const memoryConsumedInMegaBytes = Math.ceil(this.props.memoryConsumed / 1000000);
+      const totalMemoryInMegaBytes = Math.ceil(this.props.totalMemory / 1000000);
       const memoryOfNewFile = Math.ceil(file.size / 1000000);
-      if ((memoryConsumedInMegaBytes + memoryOfNewFile) < 1024) {
+      if ((memoryConsumedInMegaBytes + memoryOfNewFile) < totalMemoryInMegaBytes) {
         this.startFileUpload();
         axios.get(`/upload/${this.props.name}/images`, {
           params: {
@@ -80,9 +81,9 @@ class EditorFiles extends React.Component {
           .catch((err) => {
             console.log(err);
           });
+      } else {
+        alert('Cannot upload file as max memory consumed');
       }
-    } else {
-      alert('Cannot upload file as max memory consumed');
     }
   }
 
@@ -105,7 +106,7 @@ class EditorFiles extends React.Component {
                 }
                 data-test="editor-toolbar__file-name"
               >
-              Preview
+                Preview
               </button>
             </li>
           )}
@@ -135,7 +136,7 @@ class EditorFiles extends React.Component {
               onClick={this.openFileUpload}
               data-test='editor-toolbar__add-file-button'
             >
-            Add File
+              Add File
             </button>
           )
         }
@@ -189,6 +190,7 @@ EditorFiles.propTypes = {
   viewEditorPreview: PropTypes.func.isRequired,
   loadMemoryConsumed: PropTypes.func.isRequired,
   memoryConsumed: PropTypes.number.isRequired,
+  totalMemory: PropTypes.number.isRequired,
 };
 
 export default EditorFiles;

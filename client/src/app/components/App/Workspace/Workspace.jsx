@@ -118,6 +118,7 @@ class Workspace extends React.Component {
                       setCurrentFile={this.props.setCurrentFile}
                       loadMemoryConsumed={this.props.loadMemoryConsumed}
                       memoryConsumed={this.props.memoryConsumed}
+                      totalMemory={this.props.totalMemory}
                     />
                   )}
 
@@ -240,6 +241,7 @@ Workspace.propTypes = {
   updateFile: PropTypes.func.isRequired,
   workspace: PropTypes.shape({}).isRequired,
   memoryConsumed: PropTypes.number.isRequired,
+  totalMemory: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -256,7 +258,8 @@ const mapStateToProps = state => ({
   isWorkspaceOpen: state.workspace.isWorkspaceOpen,
   memoryConsumed: state.dashboard.memoryConsumed,
   name: state.user.name,
-  workspace: state.workspace.workspace
+  workspace: state.workspace.workspace,
+  totalMemory: state.dashboard.totalMemory,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
