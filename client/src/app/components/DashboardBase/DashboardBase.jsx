@@ -17,7 +17,7 @@ import { loadMemoryConsumed } from '../../action/dashboard';
 import { fetchCurrentUser } from '../../action/user';
 
 // eslint-disable-next-line no-shadow
-const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, fetchCurrentUser, children, userName }) => {
+const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, totalMemory, fetchCurrentUser, children, userName }) => {
   const firstRender = useRef(true);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, fetchCurrentUser, c
     loadMemoryConsumed();
   }, []);
 
-  const memoryConsumedInMegaBytes = mem => Math.ceil(mem / 1000000);
+  const memoryInMegaBytes = mem => Math.ceil(mem / 1000000);
 
   return (
     <React.Fragment>
@@ -48,8 +48,8 @@ const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, fetchCurrentUser, c
               borderTop: '1px solid #CCD0D2'
             }}
             label="STORAGE"
-            completed={memoryConsumedInMegaBytes(memoryConsumed) * 100 / 1024}
-            total={1024}
+            completed={memoryInMegaBytes(memoryConsumed)}
+            total={memoryInMegaBytes(totalMemory)}
             units="MB"
             containerWidth="100%"
           />
@@ -70,6 +70,7 @@ DashboardBase.defaultProps = {
 
 DashboardBase.propTypes = {
   memoryConsumed: PropTypes.number.isRequired,
+  totalMemory: PropTypes.number.isRequired,
   loadMemoryConsumed: PropTypes.func.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired,
@@ -79,6 +80,7 @@ DashboardBase.propTypes = {
 function mapStateToProps(state) {
   return {
     memoryConsumed: state.dashboard.memoryConsumed,
+    totalMemory: state.dashboard.totalMemory,
     name: PropTypes.string.isRequired,
     userName: state.user.name
   };

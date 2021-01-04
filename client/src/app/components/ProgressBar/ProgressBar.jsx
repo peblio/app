@@ -27,7 +27,7 @@ const ProgressBar = ({
       {
         showDetails && (
           <div className="progress-bar__details">
-            { `${completed}${units} out of ${total}${units}`}
+            { `${completed} ${units} out of ${total} ${units}`}
           </div>
         )
       }
