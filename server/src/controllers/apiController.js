@@ -71,11 +71,11 @@ export async function getFileInfo(req, res) {
     const sizeArray = data.Contents.map( content => content.Size);
     const totalSize = sizeArray.reduce((sum, n) => sum + n, 0);
     return classroomService.getMemoryAllowed(req, res)
-    .then(totalmemory => {
+    .then(totalMemory => {
       return res.status(200).send({
         data,
         size: totalSize,
-        totalmemory,
+        totalMemory,
         unit: 'bytes'
       });
     });
