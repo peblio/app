@@ -14,6 +14,10 @@ const ProgressBar = ({
 }) => {
   const completionWidthCalc = (comp, tot) => (completed / total) * 100;
 
+  const memoryInMegaBytes = mem => Math.ceil(mem / 1000000);
+
+  const memoryInGigaBytes = mem => Math.ceil(mem / 100000000);
+
   return (
     <div className='progress-bar' style={{ width: containerWidth, ...style }}>
       {label && <div className='progress-bar__label'>{label}</div>}
@@ -27,7 +31,7 @@ const ProgressBar = ({
       {
         showDetails && (
           <div className="progress-bar__details">
-            { `${completed} ${units} out of ${total} ${units}`}
+            { `${memoryInMegaBytes(completed)} ${units} out of ${memoryInMegaBytes(total)} ${units}`}
           </div>
         )
       }

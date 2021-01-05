@@ -35,8 +35,6 @@ const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, totalMemory, fetchC
     loadMemoryConsumed();
   }, []);
 
-  const memoryInMegaBytes = mem => Math.ceil(mem / 1000000);
-
   return (
     <React.Fragment>
       <TopNav />
@@ -48,9 +46,9 @@ const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, totalMemory, fetchC
               borderTop: '1px solid #CCD0D2'
             }}
             label="STORAGE"
-            completed={memoryInMegaBytes(memoryConsumed)}
-            total={memoryInMegaBytes(totalMemory)}
-            units="MB"
+            completed={memoryConsumed}
+            total={totalMemory}
+            units="bytes"
             containerWidth="100%"
           />
         </SideBar>
