@@ -18,6 +18,13 @@ const ProgressBar = ({
 
   const memoryInGigaBytes = mem => Math.ceil(mem / 100000000);
 
+  const getMemoryStringToDisplay = (mem) => {
+    if (mem < 1073741824) {
+      return `${memoryInMegaBytes(mem)} MB`;
+    }
+    return `${memoryInGigaBytes(mem)} GB`;
+  };
+
   return (
     <div className='progress-bar' style={{ width: containerWidth, ...style }}>
       {label && <div className='progress-bar__label'>{label}</div>}
@@ -31,7 +38,7 @@ const ProgressBar = ({
       {
         showDetails && (
           <div className="progress-bar__details">
-            { `${memoryInMegaBytes(completed)} ${units} out of ${memoryInMegaBytes(total)} ${units}`}
+            { `${getMemoryStringToDisplay(completed)} out of ${getMemoryStringToDisplay(total)}`}
           </div>
         )
       }
