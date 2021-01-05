@@ -14,16 +14,13 @@ const ProgressBar = ({
 }) => {
   const completionWidthCalc = (comp, tot) => (completed / total) * 100;
 
-  const memoryInMegaBytes = mem => Math.ceil(mem / 1000000);
-
-  const memoryInGigaBytes = mem => Math.ceil(mem / 100000000);
-
-  const getMemoryStringToDisplay = (mem) => {
-    if (mem < 1073741824) {
-      return `${memoryInMegaBytes(mem)} MB`;
-    }
-    return `${memoryInGigaBytes(mem)} GB`;
-  };
+  function bytesToSize(bytes) {
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0) return 'n/a';
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+    if (i === 0) return `${bytes} ${sizes[i]})`;
+    return `${(bytes / (1024 ** i)).toFixed(1)} ${sizes[i]}`;
+  }
 
   return (
     <div className='progress-bar' style={{ width: containerWidth, ...style }}>
@@ -38,7 +35,7 @@ const ProgressBar = ({
       {
         showDetails && (
           <div className="progress-bar__details">
-            { `${getMemoryStringToDisplay(completed)} out of ${getMemoryStringToDisplay(total)}`}
+            { `${bytesToSize(completed)} out of ${bytesToSize(total)}`}
           </div>
         )
       }

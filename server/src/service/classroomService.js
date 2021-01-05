@@ -604,7 +604,7 @@ export async function getMemoryAllowed(req, res) {
     const userEmail = req.user.email;
     const subscriptions = await Subscriptions.findOne({isActive: true, email: userEmail});
     if(!subscriptions) {
-      return 500000000; 
+      return 524288000; 
     } else {
       return 5368709000;
     }
