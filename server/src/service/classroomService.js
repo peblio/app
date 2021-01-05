@@ -590,9 +590,9 @@ export async function hasClassroomCreateAccess(req, res) {
     const userEmail = req.user.email;
     const subscriptions = await Subscriptions.findOne({isActive: true, email: userEmail});
     if(subscriptions) {
-      return res.send(200); 
+      return res.sendStatus(200); 
     }
-    return res.send(401);
+    return res.sendStatus(401);
   } catch (err) {
     console.error(err);
     return res.status(500).send({ error: err.message });
