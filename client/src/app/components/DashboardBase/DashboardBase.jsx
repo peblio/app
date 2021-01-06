@@ -10,8 +10,6 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 import SideBar from '../SideBar/SideBar';
 import './dashboardBase.scss';
 
-import history from '../../utils/history';
-
 // actions
 import { loadMemoryConsumed } from '../../action/dashboard';
 import { fetchCurrentUser } from '../../action/user';
@@ -19,23 +17,8 @@ import { fetchCurrentUser } from '../../action/user';
 // eslint-disable-next-line no-shadow
 const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, totalMemory, fetchCurrentUser, children, userName }) => {
   const firstRender = useRef(true);
-
-  useEffect(() => {
-    if (!firstRender.current) {
-      // console.log({ userName });
-      if (!userName) {
-        history.push('/');
-      }
-    }
-  }, [userName]);
-
-  useEffect(() => {
-    firstRender.current = false;
-    fetchCurrentUser();
-    loadMemoryConsumed();
-  }, []);
-
-  return (
+  const loggedOutDashboard = <React.Fragment><TopNav /></React.Fragment>;
+  const loggedInDashboard = (
     <React.Fragment>
       <TopNav />
       <div className="dashboard">
@@ -60,6 +43,18 @@ const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, totalMemory, fetchC
       </div>
     </React.Fragment>
   );
+
+  useEffect(() => {
+    firstRender.current = false;
+    fetchCurrentUser();
+    loadMemoryConsumed();
+  }, []);
+
+
+  if (userName) {
+    return loggedInDashboard;
+  }
+  return loggedOutDashboard;
 };
 
 DashboardBase.defaultProps = {
