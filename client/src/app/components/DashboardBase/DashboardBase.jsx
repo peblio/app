@@ -12,10 +12,14 @@ import './dashboardBase.scss';
 
 // actions
 import { loadMemoryConsumed } from '../../action/dashboard';
+import { viewLoginModal } from '../../action/mainToolbar.js';
 import { fetchCurrentUser } from '../../action/user';
 
-// eslint-disable-next-line no-shadow
-const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, totalMemory, fetchCurrentUser, children, userName }) => {
+
+const DashboardBase = ({
+  // eslint-disable-next-line no-shadow
+  memoryConsumed, loadMemoryConsumed, totalMemory, fetchCurrentUser, children, userName, viewLoginModal
+}) => {
   const firstRender = useRef(true);
   const loggedOutDashboard = <React.Fragment><TopNav /></React.Fragment>;
   const loggedInDashboard = (
@@ -50,6 +54,12 @@ const DashboardBase = ({ memoryConsumed, loadMemoryConsumed, totalMemory, fetchC
     loadMemoryConsumed();
   }, []);
 
+  useEffect(() => {
+    if (!userName) {
+      viewLoginModal();
+    }
+  }, [userName]);
+
 
   if (userName) {
     return loggedInDashboard;
@@ -66,6 +76,7 @@ DashboardBase.propTypes = {
   totalMemory: PropTypes.number.isRequired,
   loadMemoryConsumed: PropTypes.func.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
+  viewLoginModal: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired,
   userName: PropTypes.string
 };
@@ -82,7 +93,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     loadMemoryConsumed,
-    fetchCurrentUser
+    fetchCurrentUser,
+    viewLoginModal
   }, dispatch);
 }
 export default (connect(mapStateToProps, mapDispatchToProps)(DashboardBase));
