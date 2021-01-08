@@ -26,8 +26,10 @@ import {
 } from '../../action/classroom';
 
 import './classViewStudent.scss';
+import DashboardBase from '../DashboardBase/DashboardBase';
 
 const ClassViewStudent = (props) => {
+  const loggedOutDashboard = <DashboardBase />;
   const [classroomName, setClassroomName] = useState('Loading...');
   const [dropdownTriggered, setDropdownTriggered] = useState(false);
   const [members, setMembers] = useState([]);
@@ -66,6 +68,9 @@ const ClassViewStudent = (props) => {
     }
   }, [props.currentClassroom, props.match.params.classId]);
 
+  if (!props.userName) {
+    return loggedOutDashboard;
+  }
   return (
     <div className='class-view-studet'>
       <TopNav />
@@ -310,6 +315,7 @@ ClassViewStudent.propTypes = {
   clearTopics: PropTypes.func.isRequired,
   clearCurrentAssignmentDetails: PropTypes.func.isRequired,
   clearCurrentClassroom: PropTypes.func.isRequired,
+  userName: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -318,6 +324,7 @@ const mapStateToProps = state => ({
   classrooms: state.classroom.classrooms,
   currentClassroom: state.classroom.currentClassroom,
   userId: state.user.id,
+  userName: state.user.name
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(

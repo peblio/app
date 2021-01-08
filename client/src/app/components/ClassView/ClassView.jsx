@@ -26,11 +26,11 @@ const ClassView = ({
   // eslint-disable-next-line no-shadow
   clearCurrentClassroom,
   currentClassroom,
-  userId
+  userId,
+  userName
 }) => {
   const [dataLoading, setDataLoading] = useState();
   const [codeClicked, setCodeClicked] = useState(false);
-
   useEffect(() => {
     setDataLoading(true);
     fetchCurrentClassroomDetails(match.params.classId)
@@ -53,7 +53,6 @@ const ClassView = ({
       }
     }
   }, [currentClassroom]);
-
   const onCodeCopyClick = () => {
     hiddenTextboxRef.current.focus();
     hiddenTextboxRef.current.select();
@@ -68,8 +67,8 @@ const ClassView = ({
       setCodeClicked(false);
     }, 800);
   };
-
-  return (
+  const loggedOutView = <DashboardView />;
+  const loggedInView = (
     <DashboardView>
       {
         dataLoading
@@ -153,6 +152,12 @@ const ClassView = ({
       }
     </DashboardView>
   );
+
+
+  if (userName) {
+    return loggedInView;
+  }
+  return loggedOutView;
 };
 
 ClassView.propTypes = {
@@ -167,13 +172,15 @@ ClassView.propTypes = {
     name: PropTypes.string,
     members: PropTypes.arrayOf(PropTypes.shape({})),
   }).isRequired,
-  userId: PropTypes.string.isRequired
+  userId: PropTypes.string.isRequired,
+  userName: PropTypes.string
 };
 
 const mapStateToProps = state => ({
   currentClassroom: state.classroom.currentClassroom,
   dataLoading: state.classroom.dataLoading,
-  userId: state.user.id
+  userId: state.user.id,
+  userName: state.user.name
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
