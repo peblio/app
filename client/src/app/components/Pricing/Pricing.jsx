@@ -71,7 +71,7 @@ class Pricing extends React.Component {
     const stripe = window.Stripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
     stripe.redirectToCheckout({
-      lineItems: [{ price: 'price_1HuOAqFBQnwbqG0D0R7DqiOD', quantity: 1 }],
+      lineItems: [{ price: process.env.STRIPE_MONTHLY_PRICING_PLAN, quantity: 1 }],
       mode: 'subscription',
       // Do not rely on the redirect to the successUrl for fulfilling
       // purchases, customers may not always reach the success_url after
@@ -96,7 +96,7 @@ class Pricing extends React.Component {
     const stripe = window.Stripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
     stripe.redirectToCheckout({
-      lineItems: [{ price: 'price_1HuOAqFBQnwbqG0DgWkIX2mv', quantity: 1 }],
+      lineItems: [{ price: process.env.STRIPE_ANNUAL_PRICING_PLAN, quantity: 1 }],
       mode: 'subscription',
       successUrl: `${process.env.UI_DOMAIN}/classroom`,
       cancelUrl: `${process.env.UI_DOMAIN}/pricing`,
