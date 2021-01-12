@@ -68,7 +68,7 @@ class Pricing extends React.Component {
   }
 
   redirectToStripeForPaymentMonthly = () => {
-    const stripe = window.Stripe('pk_test_9tSHnj3NTrLMsz2qOWYy4fn700dtmhzIa2');
+    const stripe = window.Stripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
     stripe.redirectToCheckout({
       lineItems: [{ price: 'price_1HuOAqFBQnwbqG0D0R7DqiOD', quantity: 1 }],
@@ -93,7 +93,7 @@ class Pricing extends React.Component {
   }
 
   redirectToStripeForPaymentAnnually = () => {
-    const stripe = window.Stripe('pk_test_9tSHnj3NTrLMsz2qOWYy4fn700dtmhzIa2');
+    const stripe = window.Stripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
     stripe.redirectToCheckout({
       lineItems: [{ price: 'price_1HuOAqFBQnwbqG0DgWkIX2mv', quantity: 1 }],
