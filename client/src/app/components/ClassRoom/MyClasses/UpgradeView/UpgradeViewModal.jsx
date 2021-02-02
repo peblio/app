@@ -17,7 +17,7 @@ const UpgradeViewModal = props => (
       <iframe
         width="100%"
         height="290"
-        src="https://www.youtube.com/embed/8j0UDiN7my4"
+        src="https://www.youtube.com/embed/amt6Q_F9TYg"
         frameBorder="0"
         title="Intro to classrooms"
         allow="accelerometer;
