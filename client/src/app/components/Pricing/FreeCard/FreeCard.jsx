@@ -23,7 +23,7 @@ const FreeCard = ({ active, userName, openDowngradeModal, viewSignUpModal }) => 
     featureList={[
       'Unlimited public Pebls',
       '500MB Storage',
-      '1 classroom (10 students)'
+      'Library of community resources”'
     ]}
     backdropColor="rgba(0, 21, 30, 0.1)"
     active={active}
