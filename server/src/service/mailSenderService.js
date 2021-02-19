@@ -77,7 +77,6 @@ function sendMail(mailOptions) {
         console.log(`Message sent`);
     })
     .catch((error) => {
-        console.error(error)
         console.log(`Message error: ${error}`);
     })
 
