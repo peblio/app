@@ -568,6 +568,7 @@ export const studentAttemptAssignment = data => (dispatch) => {
       resolve();
     })
       .catch((err) => {
+        console.log(err);
         reject(err);
       });
   });

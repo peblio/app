@@ -1,5 +1,4 @@
-const nodemailer = require('nodemailer');
-const sgTransport = require('nodemailer-sendgrid-transport');
+const sgMail = require('@sendgrid/mail');
 
 export function sendSuccessfulResetMail(email) {
     const mailOptions = {
@@ -71,19 +70,14 @@ export function sendResetMail(email, users, tokens) {
 }
 
 function sendMail(mailOptions) {
-    const options = {
-        auth: {
-            api_user: process.env.PEBLIO_SENDGRID_USER,
-            api_key: process.env.PEBLIO_SENDGRID_PASSWORD
-        }
-    };
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+    sgMail
+    .send(mailOptions)
+    .then(() => {
+        console.log(`Message sent`);
+    })
+    .catch((error) => {
+        console.log(`Message error: ${error}`);
+    })
 
-    const client = nodemailer.createTransport(sgTransport(options));
-    client.sendMail(mailOptions, (err, info) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(`Message sent: ${info.response}`);
-        }
-    });
 }

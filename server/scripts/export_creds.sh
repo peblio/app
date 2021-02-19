@@ -32,6 +32,7 @@ PEBLIO_COOKIE_NAME=`get_secret cookie.name`$'\n'\
 AWS_PROFILE=peblio$'\n'\
 STRIPE_KEY=`get_secret stripe.key`$'\n'\
 STRIPE_WEBHOOK_SIGNING_KEY=`get_secret stripe.webhook_signing_secret`$'\n'\
+SENDGRID_API_KEY=`get_secret sendgrid.api_key`$'\n'\
 PEBLIO_SESSION_SECRET=`get_secret session.secret`\
 > .env
 

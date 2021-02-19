@@ -32,6 +32,7 @@ export PEBLIO_COOKIE_DOMAIN=`get_secret cookie.domain`
 export PEBLIO_COOKIE_NAME=`get_secret cookie.name`
 export PEBLIO_SESSION_SECRET=`get_secret session.secret`
 export STRIPE_KEY=`get_secret stripe.key`
+export SENDGRID_API_KEY=`get_secret sendgrid.api_key`
 export STRIPE_WEBHOOK_SIGNING_KEY=`get_secret stripe.webhook_signing_secret`
 
 "$@"
