@@ -67,8 +67,14 @@ const AssignmentCard = (props) => {
                 peblUrl: props.peblUrl,
                 classroomId: props.classroomId,
                 assignmentId: props.id
-              }).then(() => {
+              }).then((myPeblUrl) => {
                 props.fetchStudentAssignments(props.classroomId);
+                if (myPeblUrl) {
+                  const win = window.open(myPeblUrl, '_blank');
+                  if (win != null) {
+                    win.focus();
+                  }
+                }
               });
             }}
             target="_blank"
@@ -181,8 +187,14 @@ const AssignmentCard = (props) => {
                       peblUrl: props.peblUrl,
                       classroomId: props.classroomId,
                       assignmentId: props.id
-                    }).then(() => {
+                    }).then((myPeblUrl) => {
                       props.fetchStudentAssignments(props.classroomId);
+                      if (myPeblUrl) {
+                        const win = window.open(myPeblUrl, '_blank');
+                        if (win != null) {
+                          win.focus();
+                        }
+                      }
                     });
                   }
                 }
