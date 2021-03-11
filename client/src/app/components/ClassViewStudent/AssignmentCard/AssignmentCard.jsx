@@ -25,6 +25,62 @@ const AssignmentCard = (props) => {
   const [commenting, setCommenting] = useState(false);
   const [page, setPage] = useState();
 
+  const shouldRenderAssignmentAttemptUrl = (hasStarted, peblUrl) => {
+    if (hasStarted && peblUrl) { return true; }
+    return false;
+  };
+
+  const renderUrlWithAction = () => {
+    if (shouldRenderAssignmentAttemptUrl(props.hasStarted, props.peblUrl)) {
+      return (
+        <React.Fragment>
+          <a
+            rel="noopener noreferrer"
+            href={props.attemptPeblUrl}
+            target="_blank"
+          >
+            {props.title}
+          </a>
+        </React.Fragment>
+      );
+    }
+    if (!props.peblUrl && props.url) {
+      return (
+        <React.Fragment>
+          <a
+            rel="noopener noreferrer"
+            href={props.url}
+            target="_blank"
+          >
+            {props.title}
+          </a>
+        </React.Fragment>
+      );
+    }
+    if (!props.hasStarted && props.peblUrl) {
+      return (
+        <React.Fragment>
+          <button
+            className="assignment-card-student__body__details__text-area__link"
+            onClick={() => {
+              props.studentAttemptAssignment({
+                peblUrl: props.peblUrl,
+                classroomId: props.classroomId,
+                assignmentId: props.id
+              }).then(() => {
+                props.fetchStudentAssignments(props.classroomId);
+              });
+            }}
+            target="_blank"
+          >
+            {props.title}
+          </button>
+        </React.Fragment>
+      );
+    }
+    return `${props.title}`;
+  };
+
   useEffect(() => {
     if (props.url) {
       fetch(props.url, {
@@ -90,17 +146,7 @@ const AssignmentCard = (props) => {
         <div className="assignment-card-student__body__details">
           <div className="assignment-card-student__body__details__text-area">
             <div className="assignment-card-student__body__details__text-area__title">
-              {
-                props.attemptPeblUrl || props.url || props.peblUrl ? (
-                  <a
-                    rel="noopener noreferrer"
-                    href={props.attemptPeblUrl || props.url || props.peblUrl}
-                    target="_blank"
-                  >
-                    {props.title}
-                  </a>
-                ) : `${props.title}`
-              }
+              {renderUrlWithAction()}
             </div>
             <div className="assignment-card-student__body__details__text-area__description">
               {props.description}
