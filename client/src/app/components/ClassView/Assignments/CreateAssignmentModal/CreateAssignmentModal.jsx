@@ -419,8 +419,10 @@ const CreateAssignmentModal = ({
               containerWidth="305px"
               state={addLink}
               onChange={(e) => {
-                if (e.target.value !== '' && e.target.value.endsWith('?autoremix=true')) {
-                  setAddLink(e.target.value.replace('?autoremix=true', ''));
+                if (e.target.value !== '' && (e.target.value.endsWith('?autoremix=true') || e.target.value.endsWith('?autoRemix=true'))) {
+                  const replacedLinkWithSmallChar = e.target.value.replace('?autoremix=true', '');
+                  const replacedLinkWithCapitalCaseChar = replacedLinkWithSmallChar.replace('?autoRemix=true', '');
+                  setAddLink(replacedLinkWithCapitalCaseChar);
                 } else {
                   setAddLink(e.target.value);
                 }
