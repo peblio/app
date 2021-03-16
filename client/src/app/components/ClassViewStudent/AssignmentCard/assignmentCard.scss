@@ -95,6 +95,23 @@
           }
         }
 
+        &__link{
+          background: none!important;
+          border: none;
+          padding: 0!important;
+          /*optional*/
+          font-family: arial, sans-serif;
+          /*input has OS specific font-family*/
+          color: $black;
+          font-family: $roboto;
+          font-weight: 500;
+          font-size: $p-size;
+          cursor: pointer;
+          &:hover {
+            border: none;
+          }
+        }
+
         &__description{
           margin-top: 14px;
           font-size: 14px;

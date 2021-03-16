@@ -529,7 +529,7 @@ export const studentAttemptAssignment = data => (dispatch) => {
       const temp = data.peblUrl.split('/');
       const mainPeblId = temp[temp.length - 1];
       const id = shortid.generate();
-
+      const myPeblUrl = `${window.location.origin}/pebl/${id}`;
       axios.get(`/pages/${mainPeblId}`)
         .then((res) => {
           const pebl = res.data[0];
@@ -548,11 +548,11 @@ export const studentAttemptAssignment = data => (dispatch) => {
           return axios.post('/pages/save', copiedPebl);
         })
         .then(() => axios.post('/learning/classroomAssignmentAttempt', {
-          myPeblUrl: `${window.location.origin}/pebl/${id}`,
+          myPeblUrl,
           classroomId: data.classroomId,
           assignmentId: data.assignmentId
         })).then(() => {
-          resolve();
+          resolve(myPeblUrl);
         })
         .catch((err) => {
           reject(err);
