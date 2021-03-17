@@ -4,6 +4,7 @@ module.exports = {
     script: './scripts/run_with_credstash.sh',
     args: 'npm run startserver',
     time: true,
+    log_date_format: 'YYYY-MM-DD HH:mm:ss',
     env: {
       SERVER_PORT: 8081,
       NODE_ENV: 'development',
