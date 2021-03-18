@@ -331,7 +331,7 @@ const EditAssignmentModal = ({
             </div>
             <div className="edit-assignment-modal__action-area">
               <IconButton
-                disabled={linkAdded}
+                disabled={linkAdded || addLinkTriggered}
                 icon={<PeblIcon />}
                 style={{ marginRight: '16px' }}
                 onClick={() => {
@@ -348,18 +348,17 @@ const EditAssignmentModal = ({
                 Link to existing Pebl
               </IconButton>
               <IconButton
-                disabled={linkAdded}
+                disabled={linkAdded || addLinkTriggered}
                 icon={<CreateNewIcon />}
                 style={{ marginRight: '16px' }}
                 onClick={() => {
                   setLinkTriggeredBy('pebl');
                   createPeblForAssignment(assignmentTitle)
                     .then((id) => {
-                      console.log(id);
                       setAddLink(`${window.location.origin}/pebl/${id}`);
                       setPage({
                         title: assignmentTitle || DEFAULT_PAGE_TITLE,
-                        snapshotPath: SNAPSHOT_DEFAULT_IMG
+                        snapshotPath: SNAPSHOT_DEFAULT_IMG,
                       });
                       setImmediate(() => {
                         setLinkAdded(true);
@@ -370,7 +369,7 @@ const EditAssignmentModal = ({
                 Create new Pebl
               </IconButton>
               <IconButton
-                disabled={linkAdded}
+                disabled={linkAdded || addLinkTriggered}
                 icon={<LinkIcon />}
                 style={{ marginRight: 'auto' }}
                 id="trigger-link"
@@ -421,10 +420,11 @@ const EditAssignmentModal = ({
                   <LinkPreviewCard
                     title={page ? page.title : ''}
                     previewURL={page ? page.snapshotPath : ''}
+                    linkTriggeredBy={linkTriggeredBy}
                     removeAction={() => {
                       setLinkAdded(false);
-                    // setLinkType(-1);
                     }}
+                    type={type}
                     url={addLink}
                   />
                 )}
@@ -440,14 +440,12 @@ const EditAssignmentModal = ({
                 }}
                 onSubmit={(e) => {
                   e.preventDefault();
-                  // eslint-disable-next-line max-len
                   const expression = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi;
                   const regex = new RegExp(expression);
                   if (addLink.match(regex)) {
                     if (linkTriggeredBy === 'pebl') {
                       const temp = addLink.split('/');
                       const id = temp[temp.length - 1];
-                      console.log(id);
                       axios.get(`/pages/${id}`)
                         .then(({ data }) => {
                           setPage(data[0]);
@@ -468,7 +466,15 @@ const EditAssignmentModal = ({
                   label="Link"
                   containerWidth="305px"
                   state={addLink}
-                  onChange={(e) => { setAddLink(e.target.value); }}
+                  onChange={(e) => {
+                    if (e.target.value !== '' && (e.target.value.endsWith('?autoremix=true') || e.target.value.endsWith('?autoRemix=true'))) {
+                      const replacedLinkWithSmallChar = e.target.value.replace('?autoremix=true', '');
+                      const replacedLinkWithCapitalCaseChar = replacedLinkWithSmallChar.replace('?autoRemix=true', '');
+                      setAddLink(replacedLinkWithCapitalCaseChar);
+                    } else {
+                      setAddLink(e.target.value);
+                    }
+                  }}
                   placeholder="enter link"
                   id="add-link"
                 />
