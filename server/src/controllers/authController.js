@@ -9,7 +9,7 @@ const UserConst = require('../userConstants.js');
 
 function signupWithGoogle(req, res) {
   if (!req.body.google_id_token) {
-    return res.status(400).send({ msg: '' });
+    return res.status(400).send({ msg: 'Google Id token missing' });
   }
   const type = req.body.userType;
   const requiresGuardianConsent = req.body.requiresGuardianConsent;
@@ -49,11 +49,11 @@ function signupWithGoogle(req, res) {
       return userPromise.then((newRegisteredUser) => {
         req.login(newRegisteredUser, (loginError) => {
           if (loginError) {
-            return res.send({ msg: loginError });
+            return res.status(500).send({ msg: loginError });
           }
           return res.send({
             msg: UserConst.LOGIN_SUCCESS,
-            user: { name: newRegisteredUser.name, type: newRegisteredUser.type, email: user.email },
+            user: { name: newRegisteredUser.name, type: newRegisteredUser.type, email: newRegisteredUser.email },
             google_id_token: req.body.google_id_token
           });
         });
