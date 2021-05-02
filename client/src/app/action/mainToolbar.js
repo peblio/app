@@ -143,6 +143,9 @@ export function viewSignUpModal() {
 export function closeSignUpModal() {
   return (dispatch) => {
     dispatch({
+      type: ActionTypes.CLEAR_SIGNUP_VALUES
+    });
+    dispatch({
       type: ActionTypes.CLOSE_SIGN_UP_MODAL
     });
   };
