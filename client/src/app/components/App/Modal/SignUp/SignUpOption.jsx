@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { saveLog } from '../../../../utils/log';
 import { closeSignUpModal } from '../../../../action/mainToolbar.js';
 import GoogleSignupButton from '../../Shared/GoogleButton/GoogleSignupButton.jsx';
 import { setUserName, setUserType } from '../../../../action/user.js';
@@ -21,24 +20,11 @@ class SignUpOption extends React.Component {
     this.props.setNextScreen('PeblioSignUpForm');
   }
 
-  signUpFailed = (error) => {
+  signUpFailed = (message) => {
     this.setState({
       showNotice: true,
-      notice: error.response.data.msg
+      notice: message
     });
-  }
-
-  googleLoginSuccessful = (response) => {
-    this.props.closeSignUpModal();
-    const log = {
-      message: 'User Logged In using Google',
-      path: '/auth/login',
-      action: 'LoginUserWithGoogle',
-      module: 'ui',
-      level: 'INFO',
-      user: response.data.user.name
-    };
-    saveLog(log);
   }
 
   render() {
@@ -48,7 +34,6 @@ class SignUpOption extends React.Component {
           Almost signed up!
         </h2>
         <GoogleSignupButton
-          onLoginSuccess={this.googleLoginSuccessful}
           onLoginFailure={this.signUpFailed}
           userType={this.props.userType}
           requiresGuardianConsent={this.props.requiresGuardianConsent}
@@ -71,7 +56,7 @@ class SignUpOption extends React.Component {
             onClick={this.signUpUsingPeblio}
             data-test="signup-modal__button-peblio"
           >
-            Sign in with Peblio
+            Sign up with Peblio
           </button>
         </div>
         {this.state.showNotice && (

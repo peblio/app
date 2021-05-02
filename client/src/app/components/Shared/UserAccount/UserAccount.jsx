@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Modal from '../../App/Modal/Modal.jsx';
 import Login from '../../App/Modal/Login/Login.jsx';
-import SignUp from '../../App/Modal/SignUp/SignUp.jsx';
+import AccountTypeSignUpPage from '../../App/Modal/SignUp/AccountTypeSignUpPage.jsx';
 
 import {
   toggleAccountDropdown,
@@ -24,7 +24,9 @@ require('./userAccount.scss');
 
 class UserAccount extends React.Component {
   componentDidMount() {
-    this.props.fetchCurrentUser();
+    if (this.props.name) {
+      this.props.fetchCurrentUser();
+    }
   }
 
   logout = () => {
@@ -177,7 +179,7 @@ class UserAccount extends React.Component {
           isOpen={this.props.isSignUpModalOpen}
           closeModal={this.props.closeSignUpModal}
         >
-          <SignUp
+          <AccountTypeSignUpPage
             authLoadedPage={this.authLoadedPage}
           />
         </Modal>

@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet';
 
 import axios from '../../../../utils/axios';
 import './googleLoginButton.scss';
+import { saveLog } from '../../../../utils/log';
+import { saveErrorLogWithoutUser } from '../../../../utils/log';
 
 class GoogleSignupButton extends React.Component {
   constructor(props) {
@@ -28,28 +30,50 @@ class GoogleSignupButton extends React.Component {
         closeSignUpModal();
         setUserName(response.data.user.name);
         setUserType(response.data.user.type);
+        const log = {
+          message: 'User Logged In using Google',
+          path: '/auth/login',
+          action: 'LoginUserWithGoogle',
+          module: 'ui',
+          level: 'INFO',
+          user: response.data.user.name
+        };
+        saveLog(log);
       });
   }
 
   handleClick = () => {
-    this.auth2.signIn()
-      .then((googleUser) => {
-        const idToken = googleUser.getAuthResponse().id_token;
-        return axios.post('/auth/signin/google', {
-          userType: this.props.userType,
-          requiresGuardianConsent: this.props.requiresGuardianConsent,
-          guardianEmail: this.props.guardianEmail,
-          google_id_token: idToken,
-          name: this.props.name
+    if (this.auth2) {
+      this.auth2.signIn()
+        .then((googleUser) => {
+          const idToken = googleUser.getAuthResponse().id_token;
+          if (idToken) {
+            return axios.post('/auth/signin/google', {
+              userType: this.props.userType,
+              requiresGuardianConsent: this.props.requiresGuardianConsent,
+              guardianEmail: this.props.guardianEmail,
+              google_id_token: idToken,
+              name: this.props.name
+            }).catch((err) => {
+              saveErrorLogWithoutUser(err.response.data.msg, err.stack, '/auth/signin/google');
+              throw err;
+            });
+          }
+          throw new Error('No Id Token');
+        })
+        .then(this.signIn)
+        .catch((err) => {
+          saveErrorLogWithoutUser('User Signup via Google Failed', err.stack, '/auth/signin/google');
+          this.props.onLoginFailure('Google Sign up error. Please try again after sometime.');
         });
-      })
-      .then(this.signIn)
-      .catch(this.props.onLoginFailure);
+    } else {
+      this.props.onLoginFailure('Google Sign up error. Please try again after sometime.');
+    }
   }
 
   render() {
     return (
-      <button className="google-login-button" onClick={this.handleClick}>
+      <button className="google-signup-button" onClick={this.handleClick}>
         <Helmet>
           <script src="https://apis.google.com/js/platform.js" async defer></script>
         </Helmet>
@@ -60,7 +84,6 @@ class GoogleSignupButton extends React.Component {
 
 GoogleSignupButton.propTypes = {
   guardianEmail: PropTypes.string,
-  onLoginSuccess: PropTypes.func.isRequired,
   onLoginFailure: PropTypes.func.isRequired,
   requiresGuardianConsent: PropTypes.bool.isRequired,
   userType: PropTypes.string.isRequired,
