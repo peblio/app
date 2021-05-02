@@ -27,7 +27,7 @@ class Login extends React.Component {
     this.props.authLoadedPage();
   }
 
-  setUserDetails(response) {
+  setUserDetails = (response) => {
     this.props.setUserName(response.data.user.name);
     this.props.setUserType(response.data.user.type);
   }
@@ -64,7 +64,9 @@ class Login extends React.Component {
         };
         saveLog(log);
       })
-      .catch(error => this.loginFailed(error.response.data.msg));
+      .catch((error) => {
+        this.loginFailed(error.response.data.msg ? error.response.data.msg : 'Login Failed');
+      });
     event.preventDefault();
   }
 
