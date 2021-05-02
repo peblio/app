@@ -66,7 +66,7 @@ class SignUpUsername extends React.Component {
           </button>
         </div>
         {this.state.showNotice && (
-          <p className="signup-modal__notice">
+          <p className="signup-modal__notice" data-test="signup-modal__notice">
             {this.state.notice}
           </p>
         )}
