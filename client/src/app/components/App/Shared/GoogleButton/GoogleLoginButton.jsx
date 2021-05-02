@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 
 import axios from '../../../../utils/axios';
 import './googleLoginButton.scss';
+import { saveErrorLogWithoutUser } from '../../../../utils/log';
 
 class GoogleLoginButton extends React.Component {
   constructor(props) {
@@ -21,14 +22,17 @@ class GoogleLoginButton extends React.Component {
     this.auth2.signIn()
       .then((googleUser) => {
         const idToken = googleUser.getAuthResponse().id_token;
-        return axios.post('/auth/login/google', {
-          google_id_token: idToken,
-        });
+        if (idToken) {
+          return axios.post('/auth/login/google', {
+            google_id_token: idToken,
+          });
+        }
+        throw new Error('No Id Token');
       })
       .then(this.props.onLoginSuccess)
       .catch((err) => {
-        console.log('Google Sign in error', err);
-        this.props.onLoginFailure();
+        saveErrorLogWithoutUser('User Login via Google Failed', err.stack, '/auth/login/google');
+        this.props.onLoginFailure('Google Sign in error. Please try again after sometime.');
       });
   }
 

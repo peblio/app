@@ -27,11 +27,9 @@ class Login extends React.Component {
     this.props.authLoadedPage();
   }
 
-  loginFailed(error) {
-    this.setState({
-      showNotice: true,
-      notice: error.response.data.msg
-    });
+  setUserDetails(response) {
+    this.props.setUserName(response.data.user.name);
+    this.props.setUserType(response.data.user.type);
   }
 
   loginSuccessful(response) {
@@ -40,13 +38,21 @@ class Login extends React.Component {
     this.props.closeLoginModal();
   }
 
+  loginFailed(errorMessage) {
+    this.setState({
+      showNotice: true,
+      notice: errorMessage
+    });
+  }
+
   submitLoginUser(event, name, password) {
     axios.post('/auth/login', {
       name,
       password
     })
-      .then(this.loginSuccessful)
-      .then(setTimeout(() => this.props.fetchCurrentUserForAppStartUp(), 1500))
+      .then(this.setUserDetails)
+      .then(this.props.fetchCurrentUserForAppStartUp)
+      .then(this.props.closeLoginModal)
       .then(() => {
         const log = {
           message: 'User Logged In',
@@ -58,7 +64,7 @@ class Login extends React.Component {
         };
         saveLog(log);
       })
-      .catch(this.loginFailed);
+      .catch(error => this.loginFailed(error.response.data.msg));
     event.preventDefault();
   }
 

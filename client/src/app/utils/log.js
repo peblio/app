@@ -19,3 +19,16 @@ export function saveErrorLog(error, getState, lastAction) {
     .then(res => console.log('Saved Error'))
     .catch(err => console.log('Error saving log'));
 }
+
+export function saveErrorLogWithoutUser(errorMessage, stack, path) {
+  axios.post('/logs', {
+    message: errorMessage,
+    stacktrace: stack,
+    path,
+    module: 'ui',
+    level: 'ERROR',
+    action: 'DUMMY_ACTION',
+  })
+    .then(res => console.log('Saved Error'))
+    .catch(err => console.log('Error saving log'));
+}
