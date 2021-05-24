@@ -41,8 +41,8 @@ class ForkPrompt extends React.Component {
             className="fork-prompt__button-container"
           >
             <button
-              className="fork-prompt__button"
-              data-test="just-browsing__fork-prompt__button"
+              className="fork-prompt__just-browsing-button"
+              data-test="fork-prompt__just-browsing-button"
               onClick={() => {
                 this.props.closeForkPrompt();
                 this.props.setUserBrowsingPebl();

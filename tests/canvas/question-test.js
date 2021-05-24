@@ -34,7 +34,7 @@ test('can type text in answer', async (t) => {
   const selector = Selector('[data-test=question__answer]');
   const text = ANSWER;
   await checkTextArea(t, selector, 'My');
-  await t.click(Selector('[data-test=just-browsing__fork-prompt__button]'));
+  await t.click(Selector('[data-test=fork-prompt__just-browsing-button]'));
   await checkTextArea(t, selector, text);
   await t.expect(selector.nth(0).textContent).eql(text);
 });
