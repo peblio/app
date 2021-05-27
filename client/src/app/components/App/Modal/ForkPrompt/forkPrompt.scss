@@ -5,7 +5,7 @@
     display: flex;
     justify-content: center;
   }
-  &__button{
+  &__button,&__just-browsing-button{
     @extend %modal__button;
     max-width: 40%;
     color: $green;
@@ -51,6 +51,6 @@
     }
   }
 }
-.fork-prompt__button+.fork-prompt__button {
+.fork-prompt__button,.fork-prompt__just-browsing-button {
   margin-left: $large-margin;
 }
