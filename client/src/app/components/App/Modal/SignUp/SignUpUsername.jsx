@@ -42,7 +42,7 @@ class SignUpUsername extends React.Component {
     return (
       <div className="signup-modal__username">
         <h2 className="signup-modal__subtitle">
-            Create your username
+          Create your username
         </h2>
         <div className="signup-modal__div">
           <input
@@ -62,11 +62,11 @@ class SignUpUsername extends React.Component {
             onClick={this.onNextButtonClick}
             value="Submit"
           >
-                  Next
+            Next
           </button>
         </div>
         {this.state.showNotice && (
-          <p className="signup-modal__notice">
+          <p className="signup-modal__notice" data-test="signup-modal__notice">
             {this.state.notice}
           </p>
         )}

@@ -28,6 +28,16 @@ test('through the login form with a valid email and password', async (t) => {
     .expect(Selector('[data-test=account-button]').exists).ok();
 });
 
+test.only('through the login form with a invalid email and password should show error', async (t) => {
+  await t
+    .click(Selector('[data-test=close-modal]'))
+    .click(Selector('[data-test=user-account__login-button]'))
+    .typeText(Selector('#login-modal-name'), 'bla')
+    .typeText(Selector('#login-modal-password'), studentUser.password)
+    .click(Selector('[data-test=submit-login]'))
+    .expect(Selector('[data-test=signup-modal__notice]').withText('Login failed')).ok();
+});
+
 test('with an XHR request', async (t) => {
   await login(studentUser.email, studentUser.password);
   await t.setNativeDialogHandler(type => type === 'beforeunload');

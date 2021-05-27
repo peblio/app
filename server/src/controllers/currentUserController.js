@@ -12,8 +12,10 @@ function getCurrentUser(req, res) {
     type = req.user.type;
     id = req.user.id;
     email = req.user.email;
+    res.send({ name, type, id, email });
+  } else {
+    res.status(401).send({ msg: 'Please log in first.' });
   }
-  res.send({ name, type, id, email });
 }
 
 async function updateCurrentUserProfile(req, res) {

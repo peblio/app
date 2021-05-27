@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 
 import axios from '../../../../utils/axios';
 import './googleLoginButton.scss';
+import { saveErrorLogWithoutUser } from '../../../../utils/log';
 
 class GoogleLoginButton extends React.Component {
   constructor(props) {
@@ -11,25 +12,37 @@ class GoogleLoginButton extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+
   componentDidMount() {
     window.gapi.load('auth2', () => {
       this.auth2 = window.gapi.auth2.init({ client_id: process.env.GOOGLE_CLIENT_ID, scope: 'openid email' });
     });
   }
 
+  onGoogleApiInitSuccess = () => {
+
+  }
+
   handleClick() {
-    this.auth2.signIn()
-      .then((googleUser) => {
-        const idToken = googleUser.getAuthResponse().id_token;
-        return axios.post('/auth/login/google', {
-          google_id_token: idToken,
+    if (this.auth2) {
+      this.auth2.signIn()
+        .then((googleUser) => {
+          const idToken = googleUser.getAuthResponse().id_token;
+          if (idToken) {
+            return axios.post('/auth/login/google', {
+              google_id_token: idToken,
+            });
+          }
+          throw new Error('No Id Token');
+        })
+        .then(this.props.onLoginSuccess)
+        .catch((err) => {
+          saveErrorLogWithoutUser('User Login via Google Failed', err.stack, '/auth/login/google');
+          this.props.onLoginFailure('Google Login error. Please try again after sometime.');
         });
-      })
-      .then(this.props.onLoginSuccess)
-      .catch((err) => {
-        console.log('Google Sign in error', err);
-        this.props.onLoginFailure();
-      });
+    } else {
+      this.props.onLoginFailure('Google Login error. Please try again after sometime.');
+    }
   }
 
   render() {

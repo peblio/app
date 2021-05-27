@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import StudentBirthDateDetails from './StudentDetails/StudentBirthDateDetails.jsx';
 import SignUpOption from './SignUpOption.jsx';
-import { setUserName, setUserType, setNextScreen } from '../../../../action/user.js';
+import { setUserName, setUserType, setNextScreen, clearSignupSelectedValues } from '../../../../action/user.js';
 import CheckSVG from '../../../../images/green-check.svg';
 import SignUpUsername from './SignUpUsername.jsx';
 import PeblioSignUpForm from './PeblioSignUpForm.jsx';
 
 require('./signup.scss');
 
-class SignUp extends React.Component {
+class AccountTypeSignUpPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,6 +22,7 @@ class SignUp extends React.Component {
 
   componentWillMount() {
     this.props.setNextScreen('');
+    this.props.clearSignupSelectedValues();
   }
 
   componentWillUnmount() {
@@ -196,7 +197,7 @@ class SignUp extends React.Component {
             rel="noopener noreferrer"
             className="signup-modal__link"
           >
-          Privacy Policy
+            Privacy Policy
           </a>
         </label>
         <div className="signup-modal__buttonholder">
@@ -206,7 +207,7 @@ class SignUp extends React.Component {
             value="Submit"
             onClick={this.onNextButtonClick}
           >
-          Next
+            Next
           </button>
         </div>
       </div>
@@ -236,15 +237,16 @@ class SignUp extends React.Component {
   }
 }
 
-SignUp.propTypes = {
+AccountTypeSignUpPage.propTypes = {
   authLoadedPage: PropTypes.func.isRequired,
   setUserType: PropTypes.func.isRequired,
   setNextScreen: PropTypes.func.isRequired,
+  clearSignupSelectedValues: PropTypes.func.isRequired,
   userType: PropTypes.string.isRequired,
   nextScreen: PropTypes.string
 };
 
-SignUp.defaultProps = {
+AccountTypeSignUpPage.defaultProps = {
   nextScreen: null
 };
 
@@ -257,7 +259,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => bindActionCreators({
   setUserName,
   setUserType,
-  setNextScreen
+  setNextScreen,
+  clearSignupSelectedValues,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(AccountTypeSignUpPage);

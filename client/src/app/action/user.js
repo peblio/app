@@ -93,7 +93,7 @@ export function fetchCurrentUserForAppStartUp() {
     dispatch({
       type: ActionTypes.SET_USER_LOADING,
     });
-    axios.get('/current_user')
+    axios.get(`/current_user?timestamp=${new Date().getTime()}`)
       .then(({ data }) => {
         dispatch({
           type: ActionTypes.SET_USER,
@@ -104,7 +104,6 @@ export function fetchCurrentUserForAppStartUp() {
         });
       })
       .catch((err) => {
-        console.log(err);
         dispatch({
           type: ActionTypes.SET_USER_LOADING_COMPLETED,
         });

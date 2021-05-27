@@ -28,11 +28,10 @@ class PeblioSignUpForm extends React.Component {
     });
   }
 
-  signUpFailed = (error) => {
-    console.log('In google signup failed');
+  signUpFailed = (message) => {
     this.setState({
       showNotice: true,
-      notice: error.response.data.msg
+      notice: message,
     });
   }
 
@@ -123,7 +122,7 @@ class PeblioSignUpForm extends React.Component {
           };
           saveLog(log);
         })
-        .catch(this.signUpFailed);
+        .catch(error => this.signUpFailed(error.response.data.msg));
     } else {
       this.passwordMatchFailed();
     }
@@ -194,7 +193,7 @@ class PeblioSignUpForm extends React.Component {
               onClick={this.submitSignUpUser}
               value="Submit"
             >
-                  Sign in with Peblio
+              Sign Up with Peblio
             </button>
           </div>
         </div>

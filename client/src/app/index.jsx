@@ -38,10 +38,6 @@ const LazyLoadedApp = lazy(() => (
   import('./components/App/App.jsx')
 ));
 
-// const LazyLoadedDashboard = lazy(() => (
-//   import('./components/Dashboard/Dashboard.jsx')
-// ));
-
 const LazyLoadedPaymentPage = lazy(() => (
   import('./components/Payment/PaymentPage.jsx')
 ));
