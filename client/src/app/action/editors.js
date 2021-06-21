@@ -134,6 +134,24 @@ export function playCode(id) {
   };
 }
 
+export function enablePythonInteractiveRunMode(id) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.ENABLE_PYTHON_INTERACTIVE_RUN_MODE,
+      id
+    });
+  };
+}
+
+export function disablePythonInteractiveRunMode(id) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.DISABLE_PYTHON_INTERACTIVE_RUN_MODE,
+      id
+    });
+  };
+}
+
 export function stopCode(id) {
   return (dispatch) => {
     dispatch({

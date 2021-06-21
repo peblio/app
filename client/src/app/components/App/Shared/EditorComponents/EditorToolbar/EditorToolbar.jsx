@@ -54,6 +54,21 @@ class EditorToolbar extends React.Component {
     }
   }
 
+  playCode = () => {
+    if (this.props.editorMode === 'python') {
+      this.props.disablePythonInteractiveRunMode();
+    }
+    this.props.playCode();
+    if (this.props.isPlaying) {
+      this.props.startCodeRefresh();
+    }
+  }
+
+  enablePythonInteractiveRunMode = () => {
+    this.props.stopCode();
+    this.props.enablePythonInteractiveRunMode();
+  }
+
   render() {
     return (
       <div className='editor-toolbar__container'>
@@ -80,7 +95,7 @@ class EditorToolbar extends React.Component {
               <span
                 className='beta-tag'
               >
-             beta
+                beta
               </span>
             )}
             {this.props.container === 'workspace' && (
@@ -104,10 +119,7 @@ class EditorToolbar extends React.Component {
             <Tooltip content="Run Code">
               <button
                 className={`editor-toolbar__svg ${this.props.isPlaying ? 'editor-toolbar--isPlaying' : ''}`}
-                onClick={() => {
-                  this.props.playCode();
-                  if (this.props.isPlaying) { this.props.startCodeRefresh(); }
-                }}
+                onClick={this.playCode}
                 data-test='play-sketch-button'
               >
                 <PlaySVG alt='Run Code' />
@@ -120,6 +132,15 @@ class EditorToolbar extends React.Component {
                 data-test='pause-sketch-button'
               >
                 <PauseSVG alt='Pause Code' />
+              </button>
+            </Tooltip>
+            <Tooltip content="Interactive Console">
+              <button
+                className={`editor-toolbar__svg ${!this.props.isPlaying ? 'editor-toolbar--isPaused' : ''}`}
+                onClick={this.enablePythonInteractiveRunMode}
+                data-test='pause-sketch-button'
+              >
+                <PlaySVG alt='Interactive Console' />
               </button>
             </Tooltip>
           </div>
@@ -200,6 +221,8 @@ EditorToolbar.propTypes = {
   setYPosition: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
+  enablePythonInteractiveRunMode: PropTypes.func.isRequired,
+  disablePythonInteractiveRunMode: PropTypes.func.isRequired,
   toggleConsole: PropTypes.func.isRequired,
   toggleWidgetFullscreen: PropTypes.func.isRequired,
 
