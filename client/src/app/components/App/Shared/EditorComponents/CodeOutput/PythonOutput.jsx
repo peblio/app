@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import srcDoc from 'srcdoc-polyfill';
 
-class ProcessingOutput extends React.Component {
+class PythonOutput extends React.Component {
   componentDidMount() {
     this.startSketch();
   }
@@ -88,7 +88,7 @@ class ProcessingOutput extends React.Component {
   }
 }
 
-ProcessingOutput.propTypes = {
+PythonOutput.propTypes = {
   clearConsoleOutput: PropTypes.func.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
@@ -99,4 +99,4 @@ ProcessingOutput.propTypes = {
   updateConsoleOutput: PropTypes.func.isRequired
 };
 
-export default ProcessingOutput;
+export default PythonOutput;
