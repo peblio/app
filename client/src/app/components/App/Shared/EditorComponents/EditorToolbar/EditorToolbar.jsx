@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import InfoSVG from '../../../../../images/info.svg';
 import PauseSVG from '../../../../../images/pause.svg';
 import PlaySVG from '../../../../../images/play.svg';
+import InteractiveConsoleSVG from '../../../../../images/interactive-console.svg';
 import EditorExpand from '../../../../../images/editor-expand.svg';
 import EditorCompress from '../../../../../images/editor-compress.svg';
 import PreferencesSVG from '../../../../../images/preferences.svg';
@@ -140,7 +141,7 @@ class EditorToolbar extends React.Component {
                 onClick={this.enablePythonInteractiveRunMode}
                 data-test='pause-sketch-button'
               >
-                <PlaySVG alt='Interactive Console' />
+                <InteractiveConsoleSVG alt='Interactive Console' />
               </button>
             </Tooltip>
           </div>
