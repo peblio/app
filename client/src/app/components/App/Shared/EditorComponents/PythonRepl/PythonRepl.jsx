@@ -13,7 +13,6 @@ class PythonRepl extends React.Component {
 
   componentDidMount() {
     Sk.configure({ output: this.outf, read: this.builtinRead, retainglobals: true });
-    console.log('Configured');
   }
 
   outf = (text) => {

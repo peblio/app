@@ -1,9 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import srcDoc from 'srcdoc-polyfill';
+import Sk from 'skulpt';
 
 class PythonOutput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      output: ''
+    };
+  }
+
   componentDidMount() {
+    Sk.configure({ output: this.outf, read: this.builtinRead });
     this.startSketch();
   }
 
@@ -19,70 +28,44 @@ class PythonOutput extends React.Component {
     this.stopSketch();
   }
 
-  onIframeLoad = () => {
-    const pythonCode = this.props.files[0].content;
-    this.iframe.contentWindow.executeCode(pythonCode);
+  outf = (text) => {
+    console.log('Output is', text);
+    this.setState({ output: text });
   }
 
+  builtinRead = (x) => {
+    if (Sk.builtinFiles === undefined || Sk.builtinFiles.files[x] === undefined) {
+      throw new Error(`File not found: '${x}'`);
+    }
+    return Sk.builtinFiles.files[x];
+  }
+
+
   startSketch=() => {
-    window.addEventListener('message', this.props.updateConsoleOutput, false);
-    let sketchDoc =
-    `
-    <html>
-      <head>
-        <title>Page Title</title>
-      </head>
-      <body>
-      </body>
-    </html>`;
-    sketchDoc = this.injectLocalFiles(sketchDoc);
-    sketchDoc = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
-    srcDoc.set(this.iframe, sketchDoc);
+    const myPromise = Sk.misceval.asyncToPromise(() => Sk.importMainWithBody('<stdin>', false, this.props.files[0].content, true));
+    myPromise.then((mod) => {
+      console.log('success');
+    },
+    (err) => {
+      console.log('ERROR', err.toString());
+      this.setState({ output: err.toString() });
+    });
   }
 
   stopSketch=() => {
-    window.removeEventListener('message', this.props.updateConsoleOutput);
-    this.props.clearConsoleOutput();
-  }
-
-  injectLocalFiles(sketchDoc) {
-    const scriptsToInject = [
-      '/hijackConsole.js',
-      '/skulpt.min.js',
-      '/skulpt-stdlib.js',
-      '/pythonUtils.js'
-    ];
-    const parser = new DOMParser();
-    const tempSketchDoc = parser.parseFromString(sketchDoc, 'text/html');
-    scriptsToInject.forEach((scriptToInject) => {
-      const script = tempSketchDoc.createElement('script');
-      script.src = scriptToInject;
-      tempSketchDoc.head.appendChild(script);
-    });
-
-    const pythonOutput = tempSketchDoc.createElement('pre');
-    pythonOutput.setAttribute('id', 'python-output');
-    pythonOutput.setAttribute('data-test', 'python-output');
-    tempSketchDoc.body.appendChild(pythonOutput);
-    const pythonGraphicOutput = tempSketchDoc.createElement('div');
-    pythonGraphicOutput.setAttribute('id', 'python-graphic-output');
-    pythonGraphicOutput.setAttribute('data-test', 'python-graphic-output');
-    tempSketchDoc.body.appendChild(pythonGraphicOutput);
-    return tempSketchDoc;
+    this.setState({ output: '' });
   }
 
   render() {
     return (
-      <div>
-        <iframe
-          title="python output"
-          ref={(element) => { this.iframe = element; }}
-          id="code-output"
-          data-test="sketch-output"
-          name="python-output"
-          onLoad={this.onIframeLoad.bind(this)}
-        >
-        </iframe>
+      <div
+        title="python output"
+        ref={(element) => { this.iframe = element; }}
+        id="code-output"
+        data-test="sketch-output"
+        name="python-output"
+      >
+        {this.state.output}
       </div>
     );
   }
