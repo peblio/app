@@ -47,7 +47,7 @@ class CodeOutput extends React.Component {
               isPlaying={this.props.isPlaying}
               isRefreshing={this.props.isRefreshing}
               stopCodeRefresh={this.props.stopCodeRefresh}
-              updateConsoleOutput={this.props.updateConsoleOutput}
+              updateConsoleOutput={this.props.updateConsoleOutputForPython}
             />
           )
         }
@@ -74,7 +74,8 @@ CodeOutput.propTypes = {
   isRefreshing: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
-  updateConsoleOutput: PropTypes.func.isRequired
+  updateConsoleOutput: PropTypes.func.isRequired,
+  updateConsoleOutputForPython: PropTypes.func.isRequired
 };
 
 export default CodeOutput;

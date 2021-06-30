@@ -189,6 +189,16 @@ export function updateConsoleOutput(id, event) {
   };
 }
 
+export function updateConsoleOutputForPython(id, output) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.UPDATE_CONSOLE_OUTPUT_FOR_PYTHON,
+      id,
+      output
+    });
+  };
+}
+
 export function clearConsoleOutput(id) {
   return (dispatch) => {
     dispatch({

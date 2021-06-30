@@ -183,6 +183,13 @@ const editorsReducer = (state = initialState, action) => {
       return { ...state, editors };
     }
 
+    case ActionTypes.UPDATE_CONSOLE_OUTPUT_FOR_PYTHON: {
+      const tempOutput = editors[action.id].consoleOutputText.slice();
+      tempOutput.push(action.output);
+      editors[action.id].consoleOutputText = tempOutput;
+      return { ...state, editors };
+    }
+
     case ActionTypes.CLEAR_CONSOLE_OUTPUT: {
       editors[action.id].consoleOutputText = [];
       return { ...state, editors };

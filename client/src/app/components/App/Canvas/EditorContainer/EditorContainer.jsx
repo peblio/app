@@ -46,6 +46,9 @@ class EditorContainer extends React.Component {
       // Dec-17 : There's a memory leak in the Javascript editor. Watch the console after clicking Play.
       this.props.updateConsoleOutput(this.props.id, e);
     };
+    this.updateConsoleOutputForPython = (e) => {
+      this.props.updateConsoleOutputForPython(this.props.id, e);
+    };
     this.viewEditorPreview = () => this.props.viewEditorPreview(this.props.id);
   }
 
@@ -160,6 +163,7 @@ class EditorContainer extends React.Component {
                 toggleConsole={this.toggleConsole}
                 toggleEditorFilesView={this.toggleEditorFilesView}
                 updateConsoleOutput={this.updateConsoleOutput}
+                updateConsoleOutputForPython={this.updateConsoleOutputForPython}
                 updateFile={this.updateFile}
                 viewEditorPreview={this.viewEditorPreview}
               />
@@ -190,6 +194,7 @@ class EditorContainer extends React.Component {
                 toggleEditorFilesView={this.toggleEditorFilesView}
                 updateFile={this.updateFile}
                 updateConsoleOutput={this.updateConsoleOutput}
+                updateConsoleOutputForPython={this.updateConsoleOutputForPython}
                 viewEditorPreview={this.viewEditorPreview}
               />
             )}
@@ -234,6 +239,7 @@ EditorContainer.propTypes = {
   stopCodeRefresh: PropTypes.func.isRequired,
   toggleWidgetFullscreen: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
+  updateConsoleOutputForPython: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
   viewEditorPreview: PropTypes.func.isRequired,
   loadMemoryConsumed: PropTypes.func.isRequired,

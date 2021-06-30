@@ -6,12 +6,11 @@ class PythonOutput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      output: ''
+      lines: []
     };
   }
 
   componentDidMount() {
-    Sk.configure({ output: this.outf, read: this.builtinRead });
     this.startSketch();
   }
 
@@ -28,9 +27,9 @@ class PythonOutput extends React.Component {
   }
 
   outf = (text) => {
-    console.log('Output is', text);
-    this.setState({ output: text });
-    this.props.updateConsoleOutput(text);
+    const lines = this.state.lines;
+    lines.push(text);
+    this.setState(() => ({ lines }));
   }
 
   builtinRead = (x) => {
@@ -42,19 +41,19 @@ class PythonOutput extends React.Component {
 
 
   startSketch=() => {
+    Sk.configure({ output: this.outf, read: this.builtinRead });
+    this.stopSketch();
+    this.state = {
+      lines: []
+    };
     const myPromise = Sk.misceval.asyncToPromise(() => Sk.importMainWithBody('<stdin>', false, this.props.files[0].content, true));
-    myPromise.then((mod) => {
-      console.log('success');
-    },
-    (err) => {
-      console.log('ERROR', err.toString());
-      this.setState({ output: err.toString() });
-      this.props.updateConsoleOutput(err.toString());
-    });
+    myPromise.then((mod) => {},
+      (err) => {
+        this.props.updateConsoleOutput(err.toString());
+      });
   }
 
   stopSketch=() => {
-    this.setState({ output: '' });
     this.props.clearConsoleOutput();
   }
 
@@ -67,7 +66,7 @@ class PythonOutput extends React.Component {
         data-test="sketch-output"
         name="python-output"
       >
-        {this.state.output}
+        {this.state.lines.map(line => <div>{line}</div>)}
       </div>
     );
   }
@@ -81,6 +80,7 @@ PythonOutput.propTypes = {
   })).isRequired,
   isRefreshing: PropTypes.bool.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired
 };
 
