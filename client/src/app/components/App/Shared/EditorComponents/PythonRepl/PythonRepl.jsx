@@ -11,10 +11,6 @@ class PythonRepl extends React.Component {
     };
   }
 
-  componentDidMount() {
-    Sk.configure({ output: this.outf, read: this.builtinRead, retainglobals: true });
-  }
-
   outf = (text) => {
     const lines = this.state.lines;
     lines.push({ type: 'output', value: text });
@@ -22,6 +18,7 @@ class PythonRepl extends React.Component {
   }
 
   onSubmit = (input) => {
+    Sk.configure({ output: this.outf, read: this.builtinRead, retainglobals: true });
     const lines = this.state.lines;
     lines.push({ type: 'input', value: input });
     this.setState({ lines });
