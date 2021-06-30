@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import srcDoc from 'srcdoc-polyfill';
 import Sk from 'skulpt';
 
 class PythonOutput extends React.Component {
@@ -31,6 +30,7 @@ class PythonOutput extends React.Component {
   outf = (text) => {
     console.log('Output is', text);
     this.setState({ output: text });
+    this.props.updateConsoleOutput(text);
   }
 
   builtinRead = (x) => {
@@ -49,11 +49,13 @@ class PythonOutput extends React.Component {
     (err) => {
       console.log('ERROR', err.toString());
       this.setState({ output: err.toString() });
+      this.props.updateConsoleOutput(err.toString());
     });
   }
 
   stopSketch=() => {
     this.setState({ output: '' });
+    this.props.clearConsoleOutput();
   }
 
   render() {
