@@ -7,30 +7,36 @@ class PythonRepl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lines: []
+      lines: [],
+      inputLines: [],
     };
   }
 
   outf = (text) => {
     const lines = this.state.lines;
     lines.push({ type: 'output', value: text });
-    this.setState({ lines });
+    this.setState(prevState => ({ lines, inputLines: prevState.inputLines }));
   }
 
   onSubmit = (input) => {
     Sk.configure({ output: this.outf, read: this.builtinRead, retainglobals: true });
-    const lines = this.state.lines;
-    lines.push({ type: 'input', value: input });
-    this.setState({ lines });
-
-    const myPromise = Sk.misceval.asyncToPromise(() => Sk.importMainWithBody('repl', false, input, true));
-    myPromise.then((mod) => {
-      console.log('success');
-    },
-    (err) => {
+    const inputLines = this.state.inputLines;
+    inputLines.push({ type: 'input', value: input });
+    this.setState(() => ({ lines: [], inputLines }));
+    inputLines.forEach((inputLine) => {
       const lines = this.state.lines;
-      lines.push({ type: 'error', value: err.toString() });
-      this.setState({ lines });
+      lines.push({ type: 'input', value: input });
+      this.setState(prevState => ({ lines, inputLines: prevState.inputLines }));
+      console.log('pushing input', lines);
+      const myPromise = Sk.misceval.asyncToPromise(() => Sk.importMainWithBody('repl', false, inputLine.value, true));
+      myPromise.then((mod) => {
+        console.log('success');
+      },
+      (err) => {
+        const existingLines = this.state.lines;
+        existingLines.push({ type: 'error', value: err.toString() });
+        this.setState(prevState => ({ lines: existingLines, inputLines: prevState.inputLines }));
+      });
     });
   }
 
