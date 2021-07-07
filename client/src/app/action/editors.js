@@ -179,6 +179,16 @@ export function stopCodeRefresh(id) {
   };
 }
 
+export function updateReplLines(id, line) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.UPDATE_PYTHON_REPL_LINES,
+      id,
+      line
+    });
+  };
+}
+
 export function updateConsoleOutput(id, event) {
   return (dispatch) => {
     dispatch({

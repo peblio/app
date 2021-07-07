@@ -48,12 +48,13 @@ class CodeOutput extends React.Component {
               isRefreshing={this.props.isRefreshing}
               stopCodeRefresh={this.props.stopCodeRefresh}
               updateConsoleOutput={this.props.updateConsoleOutputForPython}
+              updateReplLines={this.props.updateReplLines}
             />
           )
         }
         {
           ['python'].includes(this.props.editorMode) && this.props.pythonRunMode === 'interactive' && (
-            <PythonRepl />
+            <PythonRepl updateReplLines={this.props.updateReplLines} />
           )
         }
       </div>
@@ -75,7 +76,8 @@ CodeOutput.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
-  updateConsoleOutputForPython: PropTypes.func.isRequired
+  updateConsoleOutputForPython: PropTypes.func.isRequired,
+  updateReplLines: PropTypes.func.isRequired
 };
 
 export default CodeOutput;

@@ -1,7 +1,7 @@
 import { ReactReplView } from 'awesome-react-repl';
 import React from 'react';
+import PropTypes from 'prop-types';
 import Sk from 'skulpt';
-
 
 class PythonRepl extends React.Component {
   constructor(props) {
@@ -14,6 +14,7 @@ class PythonRepl extends React.Component {
   outf = (text) => {
     const lines = this.state.lines;
     lines.push({ type: 'output', value: text });
+    this.props.updateReplLines({ type: 'output', value: text });
     this.setState({ lines });
   }
 
@@ -21,6 +22,7 @@ class PythonRepl extends React.Component {
     Sk.configure({ output: this.outf, read: this.builtinRead, retainglobals: true });
     const lines = this.state.lines;
     lines.push({ type: 'input', value: input });
+    this.props.updateReplLines({ type: 'input', value: input });
     this.setState({ lines });
 
     const myPromise = Sk.misceval.asyncToPromise(() => Sk.importMainWithBody('repl', false, input, true));
@@ -30,6 +32,7 @@ class PythonRepl extends React.Component {
     (err) => {
       const lines = this.state.lines;
       lines.push({ type: 'error', value: err.toString() });
+      this.props.updateReplLines({ type: 'error', value: err.toString() });
       this.setState({ lines });
     });
   }
@@ -60,6 +63,11 @@ class PythonRepl extends React.Component {
 }
 
 PythonRepl.propTypes = {
+  updateReplLines: PropTypes.func.isRequired,
+  replLines: PropTypes.arrayOf(PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired
 };
 
 

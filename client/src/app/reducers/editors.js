@@ -121,7 +121,8 @@ const editorsReducer = (state = initialState, action) => {
         pythonRunMode: action.mode === 'python' ? 'non-interactive' : '',
         innerWidth: CODE_DEFAULT_INSIDE_WIDTH,
         editorView: 'split',
-        isWidgetFullScreenMode: false
+        isWidgetFullScreenMode: false,
+        pythonReplLines: []
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -173,6 +174,9 @@ const editorsReducer = (state = initialState, action) => {
       editors[action.id].isRefreshing = false;
       return { ...state, editors };
 
+    case ActionTypes.UPDATE_PYTHON_REPL_LINES:
+      editors[action.id].pythonReplLines.push(action.line);
+      return { ...state, editors };
 
     case ActionTypes.UPDATE_CONSOLE_OUTPUT: {
       const tempOutput = editors[action.id].consoleOutputText.slice();

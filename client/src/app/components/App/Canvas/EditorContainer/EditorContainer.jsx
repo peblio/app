@@ -36,6 +36,7 @@ class EditorContainer extends React.Component {
     this.setInnerWidth = value => this.props.setInnerWidth(this.props.id, value);
     this.startCodeRefresh = () => this.props.startCodeRefresh(this.props.id);
     this.stopCodeRefresh = () => this.props.stopCodeRefresh(this.props.id);
+    this.updateReplLines = value => this.props.updateReplLines(this.props.id, value);
     this.updateFile = (index, file) => this.props.updateFile(this.props.id, index, file);
     this.setCurrentFile = index => this.props.setCurrentFile(this.props.id, index);
     this.closeFileView = index => this.props.closeFileView(this.props.id, index);
@@ -166,6 +167,7 @@ class EditorContainer extends React.Component {
                 updateConsoleOutputForPython={this.updateConsoleOutputForPython}
                 updateFile={this.updateFile}
                 viewEditorPreview={this.viewEditorPreview}
+                updateReplLines={this.updateReplLines}
               />
             )}
             {this.editorView() === 'tabbed' && (
@@ -196,6 +198,7 @@ class EditorContainer extends React.Component {
                 updateConsoleOutput={this.updateConsoleOutput}
                 updateConsoleOutputForPython={this.updateConsoleOutputForPython}
                 viewEditorPreview={this.viewEditorPreview}
+                updateReplLines={this.updateReplLines}
               />
             )}
           </div>
@@ -247,6 +250,11 @@ EditorContainer.propTypes = {
   totalMemory: PropTypes.number.isRequired,
   enablePythonInteractiveRunMode: PropTypes.func.isRequired,
   disablePythonInteractiveRunMode: PropTypes.func.isRequired,
+  updateReplLines: PropTypes.func.isRequired,
+  replLines: PropTypes.arrayOf(PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired
 };
 
 function mapStateToProps(state) {
