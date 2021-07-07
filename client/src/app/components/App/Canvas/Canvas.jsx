@@ -143,6 +143,7 @@ class Canvas extends React.Component {
             isRefreshing={editor.isRefreshing}
             isWidgetFullScreenMode={editor.isWidgetFullScreenMode}
             editorView={editor.editorView}
+            pythonReplLines={editor.pythonReplLines}
           />
         )}
       </VisibilitySensor>

@@ -54,7 +54,7 @@ class CodeOutput extends React.Component {
         }
         {
           ['python'].includes(this.props.editorMode) && this.props.pythonRunMode === 'interactive' && (
-            <PythonRepl updateReplLines={this.props.updateReplLines} />
+            <PythonRepl updateReplLines={this.props.updateReplLines} pythonReplLines={this.props.pythonReplLines} />
           )
         }
       </div>
@@ -77,7 +77,11 @@ CodeOutput.propTypes = {
   stopCodeRefresh: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
   updateConsoleOutputForPython: PropTypes.func.isRequired,
-  updateReplLines: PropTypes.func.isRequired
+  updateReplLines: PropTypes.func.isRequired,
+  pythonReplLines: PropTypes.arrayOf(PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired
 };
 
 export default CodeOutput;

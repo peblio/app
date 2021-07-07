@@ -168,6 +168,7 @@ class EditorContainer extends React.Component {
                 updateFile={this.updateFile}
                 viewEditorPreview={this.viewEditorPreview}
                 updateReplLines={this.updateReplLines}
+                pythonReplLines={this.props.pythonReplLines}
               />
             )}
             {this.editorView() === 'tabbed' && (
@@ -199,6 +200,7 @@ class EditorContainer extends React.Component {
                 updateConsoleOutputForPython={this.updateConsoleOutputForPython}
                 viewEditorPreview={this.viewEditorPreview}
                 updateReplLines={this.updateReplLines}
+                pythonReplLines={this.props.pythonReplLines}
               />
             )}
           </div>
@@ -251,7 +253,7 @@ EditorContainer.propTypes = {
   enablePythonInteractiveRunMode: PropTypes.func.isRequired,
   disablePythonInteractiveRunMode: PropTypes.func.isRequired,
   updateReplLines: PropTypes.func.isRequired,
-  replLines: PropTypes.arrayOf(PropTypes.shape({
+  pythonReplLines: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
   })).isRequired

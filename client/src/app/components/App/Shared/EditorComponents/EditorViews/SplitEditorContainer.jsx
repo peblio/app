@@ -82,6 +82,7 @@ class SplitEditorContainer extends React.Component {
                 consoleOutputText={this.props.consoleOutputText}
                 updateConsoleOutputForPython={this.props.updateConsoleOutputForPython}
                 updateReplLines={this.props.updateReplLines}
+                pythonReplLines={this.props.pythonReplLines}
               />
             )}
             <ConsoleOutput
@@ -128,7 +129,11 @@ SplitEditorContainer.propTypes = {
   updateConsoleOutputForPython: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
   viewEditorPreview: PropTypes.func.isRequired,
-  updateReplLines: PropTypes.func.isRequired
+  updateReplLines: PropTypes.func.isRequired,
+  pythonReplLines: PropTypes.arrayOf(PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired
 };
 
 
