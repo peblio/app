@@ -130,15 +130,18 @@ class EditorToolbar extends React.Component {
                 <PauseSVG alt='Pause Code' />
               </button>
             </Tooltip>
-            <Tooltip content="Interactive Console and Run Output">
-              <button
-                className={`editor-toolbar__svg ${!this.props.isPlaying ? 'editor-toolbar--isPaused' : ''}`}
-                onClick={this.playCode}
-                data-test='pause-sketch-button'
-              >
-                <InteractiveConsoleSVG alt='Interactive Console' />
-              </button>
-            </Tooltip>
+            {this.props.editorMode === 'python' && (
+              <Tooltip content="Interactive Console and Run Output">
+                <button
+                  className={`editor-toolbar__svg ${!this.props.isPlaying ? 'editor-toolbar--isPaused' : ''}`}
+                  onClick={this.playCode}
+                  data-test='pause-sketch-button'
+                >
+                  <InteractiveConsoleSVG alt='Interactive Console' />
+                </button>
+              </Tooltip>
+            )
+            }
           </div>
           <div className='editor-toolbar__button-container-right'>
             {this.props.container === 'workspace' && (
