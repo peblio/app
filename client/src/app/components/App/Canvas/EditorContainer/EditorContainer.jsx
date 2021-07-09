@@ -169,6 +169,7 @@ class EditorContainer extends React.Component {
                 viewEditorPreview={this.viewEditorPreview}
                 updateReplLines={this.updateReplLines}
                 pythonReplLines={this.props.pythonReplLines}
+                stopCode={this.props.stopCode}
               />
             )}
             {this.editorView() === 'tabbed' && (
@@ -201,6 +202,7 @@ class EditorContainer extends React.Component {
                 viewEditorPreview={this.viewEditorPreview}
                 updateReplLines={this.updateReplLines}
                 pythonReplLines={this.props.pythonReplLines}
+                stopCode={this.props.stopCode}
               />
             )}
           </div>

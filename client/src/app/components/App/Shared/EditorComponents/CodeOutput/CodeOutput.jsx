@@ -4,7 +4,6 @@ import srcDoc from 'srcdoc-polyfill'; // eslint-disable-line
 import FrontEndOutput from './FrontEndOutput.jsx';
 import ProcessingOutput from './ProcessingOutput.jsx';
 import PythonRepl from '../PythonRepl/PythonRepl';
-import PythonOutput from './PythonOutput';
 
 const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/; // eslint-disable-line
 
@@ -39,22 +38,19 @@ class CodeOutput extends React.Component {
           )
         }
         {
-          ['python'].includes(this.props.editorMode) && this.props.pythonRunMode !== 'interactive' && (
-            <PythonOutput
+          ['python'].includes(this.props.editorMode) && (
+            <PythonRepl
+              updateReplLines={this.props.updateReplLines}
+              pythonReplLines={this.props.pythonReplLines}
               id={this.props.id}
               clearConsoleOutput={this.props.clearConsoleOutput}
               files={this.props.files}
               isPlaying={this.props.isPlaying}
               isRefreshing={this.props.isRefreshing}
               stopCodeRefresh={this.props.stopCodeRefresh}
+              stopCode={this.props.stopCode}
               updateConsoleOutput={this.props.updateConsoleOutputForPython}
-              updateReplLines={this.props.updateReplLines}
             />
-          )
-        }
-        {
-          ['python'].includes(this.props.editorMode) && this.props.pythonRunMode === 'interactive' && (
-            <PythonRepl updateReplLines={this.props.updateReplLines} pythonReplLines={this.props.pythonReplLines} />
           )
         }
       </div>
@@ -81,7 +77,8 @@ CodeOutput.propTypes = {
   pythonReplLines: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
-  })).isRequired
+  })).isRequired,
+  stopCode: PropTypes.func.isRequired,
 };
 
 export default CodeOutput;

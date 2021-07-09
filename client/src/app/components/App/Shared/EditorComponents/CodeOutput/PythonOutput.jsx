@@ -3,13 +3,6 @@ import PropTypes from 'prop-types';
 import Sk from 'skulpt';
 
 class PythonOutput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      lines: []
-    };
-  }
-
   componentDidMount() {
     this.startSketch();
   }
@@ -27,9 +20,7 @@ class PythonOutput extends React.Component {
   }
 
   outf = (text) => {
-    const lines = this.state.lines;
-    lines.push(text);
-    this.setState(() => ({ lines }));
+    this.props.updateReplLines({ type: 'output', value: text });
   }
 
   builtinRead = (x) => {
@@ -49,7 +40,7 @@ class PythonOutput extends React.Component {
     const myPromise = Sk.misceval.asyncToPromise(() => Sk.importMainWithBody('<stdin>', false, this.props.files[0].content, true));
     myPromise.then((mod) => {},
       (err) => {
-        this.props.updateConsoleOutput(err.toString());
+        this.props.updateReplLines({ type: 'error', value: err.toString() });
       });
   }
 
@@ -80,8 +71,7 @@ PythonOutput.propTypes = {
   })).isRequired,
   isRefreshing: PropTypes.bool.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
-  updateConsoleOutput: PropTypes.func.isRequired
+  updateReplLines: PropTypes.func.isRequired,
 };
 
 export default PythonOutput;

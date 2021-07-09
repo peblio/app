@@ -4,8 +4,34 @@ import PropTypes from 'prop-types';
 import Sk from 'skulpt';
 
 class PythonRepl extends React.Component {
+  componentDidMount() {
+    if (this.props.isPlaying) {
+      this.startSketch();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.isRefreshing === false && this.props.isRefreshing === true) {
+      this.props.stopCodeRefresh();
+      this.startSketch();
+    }
+  }
+
   outf = (text) => {
     this.props.updateReplLines({ type: 'output', value: text });
+  }
+
+  startSketch=() => {
+    Sk.configure({ output: this.outf, read: this.builtinRead });
+    this.state = {
+      lines: []
+    };
+    const myPromise = Sk.misceval.asyncToPromise(() => Sk.importMainWithBody('<stdin>', false, this.props.files[0].content, true));
+    myPromise.then((mod) => {},
+      (err) => {
+        this.props.updateReplLines({ type: 'error', value: err.toString() });
+      });
+    this.props.stopCode();
   }
 
   onSubmit = (input) => {
@@ -50,7 +76,15 @@ PythonRepl.propTypes = {
   pythonReplLines: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
-  })).isRequired
+  })).isRequired,
+  files: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
+  })).isRequired,
+  isPlaying: PropTypes.bool.isRequired,
+  isRefreshing: PropTypes.bool.isRequired,
+  stopCode: PropTypes.func.isRequired,
+  stopCodeRefresh: PropTypes.func.isRequired,
 };
 
 
