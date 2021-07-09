@@ -118,7 +118,6 @@ const editorsReducer = (state = initialState, action) => {
         isPlaying: false,
         isRefreshing: false,
         editorMode: action.mode,
-        pythonRunMode: action.mode === 'python' ? 'non-interactive' : '',
         innerWidth: CODE_DEFAULT_INSIDE_WIDTH,
         editorView: 'split',
         isWidgetFullScreenMode: false,
@@ -151,14 +150,6 @@ const editorsReducer = (state = initialState, action) => {
 
     case ActionTypes.PLAY_CODE:
       editors[action.id].isPlaying = true;
-      return { ...state, editors };
-
-    case ActionTypes.ENABLE_PYTHON_INTERACTIVE_RUN_MODE:
-      editors[action.id].pythonRunMode = 'interactive';
-      return { ...state, editors };
-
-    case ActionTypes.DISABLE_PYTHON_INTERACTIVE_RUN_MODE:
-      editors[action.id].pythonRunMode = 'non-interactive';
       return { ...state, editors };
 
     case ActionTypes.STOP_CODE:

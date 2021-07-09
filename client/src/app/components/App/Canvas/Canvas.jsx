@@ -136,7 +136,6 @@ class Canvas extends React.Component {
             code={editor.code}
             consoleOutputText={editor.consoleOutputText}
             editorMode={editor.editorMode}
-            pythonRunMode={editor.pythonRunMode}
             files={editor.files}
             innerWidth={editor.innerWidth}
             isPlaying={editor.isPlaying && isVisible}

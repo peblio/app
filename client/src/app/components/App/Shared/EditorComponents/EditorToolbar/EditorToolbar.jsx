@@ -56,18 +56,10 @@ class EditorToolbar extends React.Component {
   }
 
   playCode = () => {
-    if (this.props.editorMode === 'python') {
-      this.props.disablePythonInteractiveRunMode();
-    }
     this.props.playCode();
     if (this.props.isPlaying) {
       this.props.startCodeRefresh();
     }
-  }
-
-  enablePythonInteractiveRunMode = () => {
-    this.props.stopCode();
-    this.props.enablePythonInteractiveRunMode();
   }
 
   render() {
@@ -117,15 +109,18 @@ class EditorToolbar extends React.Component {
                 {this.props.editorMode}
               </p>
             )}
-            <Tooltip content="Run Code">
-              <button
-                className={`editor-toolbar__svg ${this.props.isPlaying ? 'editor-toolbar--isPlaying' : ''}`}
-                onClick={this.playCode}
-                data-test='play-sketch-button'
-              >
-                <PlaySVG alt='Run Code' />
-              </button>
-            </Tooltip>
+            { this.props.editorMode !== 'python' && (
+              <Tooltip content="Run Code">
+                <button
+                  className={`editor-toolbar__svg ${this.props.isPlaying ? 'editor-toolbar--isPlaying' : ''}`}
+                  onClick={this.playCode}
+                  data-test='play-sketch-button'
+                >
+                  <PlaySVG alt='Run Code' />
+                </button>
+              </Tooltip>
+            )
+            }
             <Tooltip content="Stop Code">
               <button
                 className={`editor-toolbar__svg ${!this.props.isPlaying ? 'editor-toolbar--isPaused' : ''}`}
@@ -135,10 +130,10 @@ class EditorToolbar extends React.Component {
                 <PauseSVG alt='Pause Code' />
               </button>
             </Tooltip>
-            <Tooltip content="Interactive Console">
+            <Tooltip content="Interactive Console and Run Output">
               <button
                 className={`editor-toolbar__svg ${!this.props.isPlaying ? 'editor-toolbar--isPaused' : ''}`}
-                onClick={this.enablePythonInteractiveRunMode}
+                onClick={this.playCode}
                 data-test='pause-sketch-button'
               >
                 <InteractiveConsoleSVG alt='Interactive Console' />
@@ -222,8 +217,6 @@ EditorToolbar.propTypes = {
   setYPosition: PropTypes.func.isRequired,
   startCodeRefresh: PropTypes.func.isRequired,
   stopCode: PropTypes.func.isRequired,
-  enablePythonInteractiveRunMode: PropTypes.func.isRequired,
-  disablePythonInteractiveRunMode: PropTypes.func.isRequired,
   toggleConsole: PropTypes.func.isRequired,
   toggleWidgetFullscreen: PropTypes.func.isRequired,
 

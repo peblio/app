@@ -63,7 +63,6 @@ CodeOutput.propTypes = {
   clearConsoleOutput: PropTypes.func.isRequired,
   consoleOutputText: PropTypes.string.isRequired,
   editorMode: PropTypes.string.isRequired,
-  pythonRunMode: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired

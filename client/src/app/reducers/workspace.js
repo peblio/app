@@ -32,9 +32,6 @@ const workspaceReducer = (state = initialState, action) => {
       workspace.editorMode = action.value;
       workspace.currentFile = Code.STARTFILE[action.value];
       workspace.files = Code.FILES[action.value];
-      if (workspace.editorMode === 'python') {
-        workspace.pythonRunMode = 'non-interactive';
-      }
       return { ...state, workspace };
 
     case ActionTypes.WP_UPDATE_CONSOLE_OUTPUT: {
