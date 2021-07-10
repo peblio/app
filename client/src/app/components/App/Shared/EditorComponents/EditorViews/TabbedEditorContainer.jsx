@@ -61,6 +61,7 @@ class TabbedContainer extends React.Component {
               />
             )}
             <ConsoleOutput
+              id={this.props.id}
               consoleOutputText={this.props.consoleOutputText}
               isConsoleOpen={this.props.isConsoleOpen}
               toggleConsole={this.props.toggleConsole}

@@ -173,6 +173,7 @@ class Workspace extends React.Component {
                           />
                         )}
                         <ConsoleOutput
+                          id='workspace'
                           consoleOutputText={this.props.consoleOutputText}
                           isConsoleOpen={this.state.isConsoleOpen}
                           toggleConsole={this.toggleConsole}

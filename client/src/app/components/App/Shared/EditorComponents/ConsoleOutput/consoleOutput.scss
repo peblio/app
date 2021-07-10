@@ -12,6 +12,11 @@
 }
 
 .console__output-text{
+  height: 0;
+  overflow-x: scroll;
+}
+
+.console__output-turtle{
   height: $console-output-height;
   overflow-x: scroll;
 }

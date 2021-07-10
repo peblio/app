@@ -23,6 +23,7 @@ class PythonRepl extends React.Component {
 
   startSketch=() => {
     Sk.configure({ output: this.outf, read: this.builtinRead });
+    (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = `console__output-${this.props.id}`;
     this.state = {
       lines: []
     };
@@ -72,6 +73,7 @@ class PythonRepl extends React.Component {
 }
 
 PythonRepl.propTypes = {
+  id: PropTypes.string.isRequired,
   updateReplLines: PropTypes.func.isRequired,
   pythonReplLines: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.string.isRequired,
