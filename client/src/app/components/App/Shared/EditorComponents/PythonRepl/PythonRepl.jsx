@@ -23,7 +23,7 @@ class PythonRepl extends React.Component {
 
   startSketch=() => {
     Sk.configure({ output: this.outf, read: this.builtinRead });
-    (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = `console__output-${this.props.id}`;
+    (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = `python-graphic-output-${this.props.id}`;
     this.state = {
       lines: []
     };

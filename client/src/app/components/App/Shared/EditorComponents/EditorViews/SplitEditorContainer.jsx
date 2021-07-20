@@ -87,6 +87,7 @@ class SplitEditorContainer extends React.Component {
             )}
             <ConsoleOutput
               id={this.props.id}
+              editorMode={this.props.editorMode}
               consoleOutputText={this.props.consoleOutputText}
               isConsoleOpen={this.props.isConsoleOpen}
               toggleConsole={this.props.toggleConsole}
