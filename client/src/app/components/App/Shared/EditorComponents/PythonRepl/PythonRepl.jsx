@@ -3,6 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Sk from 'skulpt';
 
+require('./pythonRepl.scss');
+
 class PythonRepl extends React.Component {
   componentDidMount() {
     if (this.props.isPlaying) {
@@ -57,7 +59,7 @@ class PythonRepl extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="python-repl-wrapper">
         <ReactReplView
           title="My Awesome Repl!"
           tabs={['Python']}
