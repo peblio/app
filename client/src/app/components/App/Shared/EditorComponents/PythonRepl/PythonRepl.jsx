@@ -65,7 +65,11 @@ class PythonRepl extends React.Component {
           onSubmit={this.onSubmit}
           onClear={console.log('Cleared')}
           height={200}
+          width={466}
           lines={this.props.pythonReplLines}
+          className="repl-view"
+          id="repl-view"
+          class="repl-view"
         />
       </div>
     );

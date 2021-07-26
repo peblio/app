@@ -68,30 +68,38 @@ class SplitEditorContainer extends React.Component {
         ? 'editor__output-overlay--show' : ''}`}
             >
             </div>
-            { this.props.isPlaying && (
-              <CodeOutput
+            <SplitPane
+              split="horizontal"
+              defaultSize={this.props.innerWidth}
+              onDragStarted={this.props.startResize}
+              onDragFinished={(size) => { this.props.finishResize(); this.props.setInnerWidth(size); }}
+              ref={this.state.splitPaneRef}
+            >
+              { this.props.isPlaying && (
+                <CodeOutput
+                  id={this.props.id}
+                  clearConsoleOutput={this.props.clearConsoleOutput}
+                  editorMode={this.props.editorMode}
+                  files={this.props.files}
+                  isPlaying={this.props.isPlaying}
+                  isRefreshing={this.props.isRefreshing}
+                  stopCodeRefresh={this.props.stopCodeRefresh}
+                  updateConsoleOutput={this.props.updateConsoleOutput}
+                  consoleOutputText={this.props.consoleOutputText}
+                  updateConsoleOutputForPython={this.props.updateConsoleOutputForPython}
+                  updateReplLines={this.props.updateReplLines}
+                  pythonReplLines={this.props.pythonReplLines}
+                  stopCode={this.props.stopCode}
+                />
+              )}
+              <ConsoleOutput
                 id={this.props.id}
-                clearConsoleOutput={this.props.clearConsoleOutput}
                 editorMode={this.props.editorMode}
-                files={this.props.files}
-                isPlaying={this.props.isPlaying}
-                isRefreshing={this.props.isRefreshing}
-                stopCodeRefresh={this.props.stopCodeRefresh}
-                updateConsoleOutput={this.props.updateConsoleOutput}
                 consoleOutputText={this.props.consoleOutputText}
-                updateConsoleOutputForPython={this.props.updateConsoleOutputForPython}
-                updateReplLines={this.props.updateReplLines}
-                pythonReplLines={this.props.pythonReplLines}
-                stopCode={this.props.stopCode}
+                isConsoleOpen={this.props.isConsoleOpen}
+                toggleConsole={this.props.toggleConsole}
               />
-            )}
-            <ConsoleOutput
-              id={this.props.id}
-              editorMode={this.props.editorMode}
-              consoleOutputText={this.props.consoleOutputText}
-              isConsoleOpen={this.props.isConsoleOpen}
-              toggleConsole={this.props.toggleConsole}
-            />
+            </SplitPane>
           </div>
         </SplitPane>
 
