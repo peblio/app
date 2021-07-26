@@ -166,6 +166,9 @@ const editorsReducer = (state = initialState, action) => {
       return { ...state, editors };
 
     case ActionTypes.UPDATE_PYTHON_REPL_LINES:
+      if (!editors[action.id].pythonReplLines) {
+        editors[action.id].pythonReplLines = [];
+      }
       editors[action.id].pythonReplLines.push(action.line);
       return { ...state, editors };
 
