@@ -10,7 +10,7 @@ const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/; // eslint-disable
 class CodeOutput extends React.Component {
   render() {
     return (
-      <div>
+      <React.Fragment>
         {
           ['p5', 'html', 'webdev'].includes(this.props.editorMode) && (
             <FrontEndOutput
@@ -42,6 +42,7 @@ class CodeOutput extends React.Component {
             <PythonRepl
               updateReplLines={this.props.updateReplLines}
               pythonReplLines={this.props.pythonReplLines}
+              height={this.props.height}
               id={this.props.id}
               clearConsoleOutput={this.props.clearConsoleOutput}
               files={this.props.files}
@@ -53,7 +54,7 @@ class CodeOutput extends React.Component {
             />
           )
         }
-      </div>
+      </React.Fragment>
     );
   }
 }
@@ -78,6 +79,7 @@ CodeOutput.propTypes = {
     value: PropTypes.string.isRequired,
   })).isRequired,
   stopCode: PropTypes.func.isRequired,
+  height: PropTypes.number.isRequired,
 };
 
 export default CodeOutput;

@@ -66,7 +66,7 @@ class PythonRepl extends React.Component {
           selectedTab="Python"
           onSubmit={this.onSubmit}
           onClear={console.log('Cleared')}
-          height={200}
+          height={this.props.height}
           lines={this.props.pythonReplLines || []}
         />
       </div>
@@ -89,6 +89,7 @@ PythonRepl.propTypes = {
   isRefreshing: PropTypes.bool.isRequired,
   stopCode: PropTypes.func.isRequired,
   stopCodeRefresh: PropTypes.func.isRequired,
+  height: PropTypes.number.isRequired,
 };
 
 
