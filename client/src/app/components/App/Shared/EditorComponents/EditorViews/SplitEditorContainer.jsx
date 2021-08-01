@@ -12,7 +12,7 @@ class SplitEditorContainer extends React.Component {
     super();
     this.state = {
       verticalSplitPaneRef: React.createRef(),
-      horizontalPanelTopSectionHeight: 200
+      horizontalPanelTopSectionHeight: 140
     };
   }
 
@@ -71,7 +71,9 @@ class SplitEditorContainer extends React.Component {
             </div>
             <SplitPane
               split="horizontal"
-              onChange={size => this.setState({ horizontalPanelTopSectionHeight: size })}
+              onChange={(size) => {
+                this.setState({ horizontalPanelTopSectionHeight: size });
+              }}
             >
               { this.props.isPlaying && (
                 <CodeOutput
@@ -88,7 +90,7 @@ class SplitEditorContainer extends React.Component {
                   updateReplLines={this.props.updateReplLines}
                   pythonReplLines={this.props.pythonReplLines}
                   stopCode={this.props.stopCode}
-                  height={this.state.horizontalPanelTopSectionHeight}
+                  height={this.state.horizontalPanelTopSectionHeight - 60} // This is the extra header height thst Repl Component has
                 />
               )}
               <ConsoleOutput
