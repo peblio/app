@@ -42,7 +42,7 @@ class CodeOutput extends React.Component {
             <PythonRepl
               updateReplLines={this.props.updateReplLines}
               pythonReplLines={this.props.pythonReplLines}
-              height={this.props.height}
+              height={this.props.height || 200}
               id={this.props.id}
               clearConsoleOutput={this.props.clearConsoleOutput}
               files={this.props.files}

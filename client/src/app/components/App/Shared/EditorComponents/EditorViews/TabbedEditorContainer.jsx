@@ -9,7 +9,7 @@ import EditorOpenFiles from '../EditorOpenFiles/EditorOpenFiles.jsx';
 class TabbedContainer extends React.Component {
   render() {
     return (
-      <div className="editor__container">
+      <div className="editor__container tabbed-editor__container">
         <EditorOpenFiles
           id={this.props.id}
           closeFileView={this.props.closeFileView}

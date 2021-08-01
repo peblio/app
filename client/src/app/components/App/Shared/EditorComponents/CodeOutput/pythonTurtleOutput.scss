@@ -2,8 +2,25 @@
 
 .console__outputDiv {
   height: 100%;
-
   .console__output-text {
     height: 100%;
   }
 }
+
+.tabbed-editor__container {
+  .console__outputDiv {
+    overflow: scroll;
+    height: 30%;
+    width: 98%;
+  }
+
+  .console__output-text {
+    width: 100%;
+    // canvas{
+      //  width: 100%;
+    //   height: 90%;
+    //  }
+  }
+}
+
+
