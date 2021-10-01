@@ -12,13 +12,13 @@ import './dashboardBase.scss';
 
 // actions
 import { loadMemoryConsumed } from '../../action/dashboard';
-import { viewLoginModal } from '../../action/mainToolbar.js';
+import { closeLoginModal, viewLoginModal } from '../../action/mainToolbar.js';
 import { fetchCurrentUser } from '../../action/user';
 
 
 const DashboardBase = ({
   // eslint-disable-next-line no-shadow
-  memoryConsumed, loadMemoryConsumed, totalMemory, fetchCurrentUser, children, userName, viewLoginModal
+  memoryConsumed, loadMemoryConsumed, totalMemory, fetchCurrentUser, children, userName, viewLoginModal, closeLoginModal
 }) => {
   const firstRender = useRef(true);
   const loggedOutDashboard = <React.Fragment><TopNav /></React.Fragment>;
@@ -57,6 +57,8 @@ const DashboardBase = ({
   useEffect(() => {
     if (!userName) {
       viewLoginModal();
+    } else {
+      closeLoginModal();
     }
   }, [userName]);
 
@@ -77,6 +79,7 @@ DashboardBase.propTypes = {
   loadMemoryConsumed: PropTypes.func.isRequired,
   fetchCurrentUser: PropTypes.func.isRequired,
   viewLoginModal: PropTypes.func.isRequired,
+  closeLoginModal: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired,
   userName: PropTypes.string
 };
@@ -94,7 +97,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     loadMemoryConsumed,
     fetchCurrentUser,
-    viewLoginModal
+    viewLoginModal,
+    closeLoginModal
   }, dispatch);
 }
 export default (connect(mapStateToProps, mapDispatchToProps)(DashboardBase));
