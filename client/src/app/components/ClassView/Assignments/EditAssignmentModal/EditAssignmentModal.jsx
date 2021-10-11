@@ -133,7 +133,7 @@ const EditAssignmentModal = ({
           setLinkAdded(() => true);
         });
     } else if (currentAssignment.url) {
-      setLinkTriggeredBy('url');
+      setLinkTriggeredBy('link');
       setAddLink(() => currentAssignment.url);
       setPage({
         title: currentAssignment.url
