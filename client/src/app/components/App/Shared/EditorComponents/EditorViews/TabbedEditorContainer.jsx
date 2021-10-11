@@ -1,12 +1,87 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import SplitPane from 'react-split-pane';
 
 import CodeEditor from '../CodeEditor/CodeEditor.jsx';
 import CodeOutput from '../CodeOutput/CodeOutput.jsx';
 import ConsoleOutput from '../ConsoleOutput/ConsoleOutput.jsx';
 import EditorOpenFiles from '../EditorOpenFiles/EditorOpenFiles.jsx';
 
+require('./tabbedContainer.scss');
+
 class TabbedContainer extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      horizontalSplitPaneRef: React.createRef(),
+      horizontalPanelTopSectionHeight: 120,
+
+    };
+  }
+
+  isPythonEditor = () => ['python'].includes(this.props.editorMode)
+
+  renderConsoleOutput = () => (
+    <ConsoleOutput
+      id={this.props.id}
+      editorMode={this.props.editorMode}
+      consoleOutputText={this.props.consoleOutputText}
+      isConsoleOpen={this.props.isConsoleOpen}
+      toggleConsole={this.props.toggleConsole}
+    />
+  )
+
+  renderCodeOutput = () => (
+    <CodeOutput
+      id={this.props.id}
+      clearConsoleOutput={this.props.clearConsoleOutput}
+      editorMode={this.props.editorMode}
+      files={this.props.files}
+      isPlaying={this.props.isPlaying}
+      isRefreshing={this.props.isRefreshing}
+      stopCodeRefresh={this.props.stopCodeRefresh}
+      updateConsoleOutput={this.props.updateConsoleOutput}
+      consoleOutputText={this.props.consoleOutputText}
+      updateConsoleOutputForPython={this.props.updateConsoleOutputForPython}
+      updateReplLines={this.props.updateReplLines}
+      pythonReplLines={this.props.pythonReplLines}
+      stopCode={this.props.stopCode}
+      height={this.state.horizontalPanelTopSectionHeight - 60} // This is the extra header height thst Repl Component has
+    />
+  )
+
+  renderPythonOutput = () => (
+    <div>
+      <SplitPane
+        split="horizontal"
+        className="editor__tabbed__split-pane"
+        ref={this.state.horizontalSplitPaneRef}
+        onChange={(size) => {
+          this.setState({ horizontalPanelTopSectionHeight: size });
+        }}
+      >
+        {this.renderCodeOutput()}
+        {this.renderConsoleOutput()}
+      </SplitPane>
+    </div>
+  )
+
+renderNonPythonOutput = () => (
+  <React.Fragment>
+    {this.renderConsoleOutput()}
+    {this.renderCodeOutput()}
+  </React.Fragment>
+)
+
+
+  renderOutput = () => (
+    <div className={`editor__output ${this.props.isConsoleOpen ? 'editor__output--short' : ''}`}>
+      <div className={`editor__output-overlay ${this.props.isResizing ? 'editor__output-overlay--show' : ''}`} />
+      {this.props.isPlaying && this.isPythonEditor() && this.renderPythonOutput()}
+      {this.props.isPlaying && !this.isPythonEditor() && this.renderNonPythonOutput()}
+    </div>
+  )
+
   render() {
     return (
       <div className="editor__container tabbed-editor__container">
@@ -21,7 +96,7 @@ class TabbedContainer extends React.Component {
           toggleEditorFilesView={this.props.toggleEditorFilesView}
           viewEditorPreview={this.props.viewEditorPreview}
         />
-        {this.props.currentFile === -1 || (
+        {this.props.currentFile !== -1 && (
           <div className="editor__input editor__input-tabbed">
             <CodeEditor
               id={this.props.id}
@@ -35,41 +110,7 @@ class TabbedContainer extends React.Component {
             />
           </div>
         )}
-        {this.props.currentFile === -1 && (
-          <div className={`editor__output ${this.props.isConsoleOpen ? 'editor__output--short' : ''}`}>
-            <div
-              className={`editor__output-overlay
-                      ${this.props.isResizing
-            ? 'editor__output-overlay--show' : ''}`}
-            >
-            </div>
-            { this.props.isPlaying && (
-              <CodeOutput
-                id={this.props.id}
-                clearConsoleOutput={this.props.clearConsoleOutput}
-                editorMode={this.props.editorMode}
-                files={this.props.files}
-                isPlaying={this.props.isPlaying}
-                isRefreshing={this.props.isRefreshing}
-                stopCodeRefresh={this.props.stopCodeRefresh}
-                updateConsoleOutput={this.props.updateConsoleOutput}
-                consoleOutputText={this.props.consoleOutputText}
-                updateConsoleOutputForPython={this.props.updateConsoleOutputForPython}
-                updateReplLines={this.props.updateReplLines}
-                pythonReplLines={this.props.pythonReplLines}
-                stopCode={this.props.stopCode}
-              />
-            )}
-            <ConsoleOutput
-              id={this.props.id}
-              editorMode={this.props.editorMode}
-              consoleOutputText={this.props.consoleOutputText}
-              isConsoleOpen={this.props.isConsoleOpen}
-              toggleConsole={this.props.toggleConsole}
-            />
-          </div>
-        )}
-
+        {this.props.currentFile === -1 && this.renderOutput()}
       </div>
     );
   }
