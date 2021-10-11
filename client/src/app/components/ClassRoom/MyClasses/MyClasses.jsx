@@ -59,7 +59,7 @@ const MyClasses = ({
     <React.Fragment>
       {
         dataLoading ? <GenericLoader /> : (
-          <main className="classroom">
+          <main className="classroom" data-test="classroom-test">
             <div className="classroom__header-area">
               <header
                 className="classroom__header-area__header"

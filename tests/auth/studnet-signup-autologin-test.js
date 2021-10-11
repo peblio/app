@@ -40,6 +40,31 @@ test('through the signup form with a valid email and password', async (t) => {
     .expect(Selector('[data-test=account-button]').exists).ok();
 });
 
+test('through the signup form from login modal on classroom page with a valid email and password', async (t) => {
+  await t
+    .navigateTo('/classroom')
+    .click(Selector('[data-test=close-modal]'))
+    .click(Selector('[data-test=user-account__signup-button]'))
+    .click(Selector('[data-test=signup-modal__radio-student]'))
+    .click(Selector('[data-test=signup-modal__checkbox]'))
+    .click(Selector('[data-test=signup-modal__button-next]'))
+    .click(monthSelect)
+    .click(monthOption.withText('Jan'))
+    .click(yearSelect)
+    .click(yearOption.withText('1992'))
+    .click(Selector('[data-test=signup-modal__button-next]'))
+    .typeText(Selector('[data-test=signup-modal__input-name]'), studentUser.name, { paste: true })
+    .click(Selector('[data-test=signup-modal__button-next]'))
+    .click(Selector('[data-test=signup-modal__button-peblio]'))
+    .typeText(Selector('[data-test=signup-modal__input-email]'), studentUser.email, { paste: true })
+    .typeText(Selector('[data-test=signup-modal__input-pswd]'), studentUser.password, { paste: true })
+    .typeText(Selector('[data-test=signup-modal__input-pswd-confirm]'), studentUser.password, { paste: true })
+    .click(Selector('[data-test=signup-modal__button-submit]'))
+    .wait(1000)
+    .expect(Selector('[data-test=account-button]').exists).ok()
+    .expect(Selector('[data-test=classroom-test]').exists).ok();
+});
+
 test('through the signup form shall show error when username already taken', async (t) => {
   const hashedPassword = await hashUserPassword(studentUser.password);
   await seedDB({
