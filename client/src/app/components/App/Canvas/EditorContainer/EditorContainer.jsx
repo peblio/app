@@ -34,6 +34,7 @@ class EditorContainer extends React.Component {
     this.setInnerWidth = value => this.props.setInnerWidth(this.props.id, value);
     this.startCodeRefresh = () => this.props.startCodeRefresh(this.props.id);
     this.stopCodeRefresh = () => this.props.stopCodeRefresh(this.props.id);
+    this.updateReplLines = value => this.props.updateReplLines(this.props.id, value);
     this.updateFile = (index, file) => this.props.updateFile(this.props.id, index, file);
     this.setCurrentFile = index => this.props.setCurrentFile(this.props.id, index);
     this.closeFileView = index => this.props.closeFileView(this.props.id, index);
@@ -43,6 +44,9 @@ class EditorContainer extends React.Component {
       // UPDATE: 29-Oct-18 : Not using Javascript editor now, but keep in mind if added
       // Dec-17 : There's a memory leak in the Javascript editor. Watch the console after clicking Play.
       this.props.updateConsoleOutput(this.props.id, e);
+    };
+    this.updateConsoleOutputForPython = (e) => {
+      this.props.updateConsoleOutputForPython(this.props.id, e);
     };
     this.viewEditorPreview = () => this.props.viewEditorPreview(this.props.id);
   }
@@ -155,8 +159,12 @@ class EditorContainer extends React.Component {
                 toggleConsole={this.toggleConsole}
                 toggleEditorFilesView={this.toggleEditorFilesView}
                 updateConsoleOutput={this.updateConsoleOutput}
+                updateConsoleOutputForPython={this.updateConsoleOutputForPython}
                 updateFile={this.updateFile}
                 viewEditorPreview={this.viewEditorPreview}
+                updateReplLines={this.updateReplLines}
+                pythonReplLines={this.props.pythonReplLines}
+                stopCode={this.props.stopCode}
               />
             )}
             {this.editorView() === 'tabbed' && (
@@ -184,7 +192,11 @@ class EditorContainer extends React.Component {
                 toggleEditorFilesView={this.toggleEditorFilesView}
                 updateFile={this.updateFile}
                 updateConsoleOutput={this.updateConsoleOutput}
+                updateConsoleOutputForPython={this.updateConsoleOutputForPython}
                 viewEditorPreview={this.viewEditorPreview}
+                updateReplLines={this.updateReplLines}
+                pythonReplLines={this.props.pythonReplLines}
+                stopCode={this.props.stopCode}
               />
             )}
           </div>
@@ -227,11 +239,17 @@ EditorContainer.propTypes = {
   stopCodeRefresh: PropTypes.func.isRequired,
   toggleWidgetFullscreen: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
+  updateConsoleOutputForPython: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
   viewEditorPreview: PropTypes.func.isRequired,
   loadMemoryConsumed: PropTypes.func.isRequired,
   memoryConsumed: PropTypes.number.isRequired,
   totalMemory: PropTypes.number.isRequired,
+  updateReplLines: PropTypes.func.isRequired,
+  pythonReplLines: PropTypes.arrayOf(PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired
 };
 
 function mapStateToProps(state) {

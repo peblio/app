@@ -11,7 +11,8 @@ class SplitEditorContainer extends React.Component {
   constructor() {
     super();
     this.state = {
-      splitPaneRef: React.createRef()
+      verticalSplitPaneRef: React.createRef(),
+      horizontalPanelTopSectionHeight: 140
     };
   }
 
@@ -19,8 +20,8 @@ class SplitEditorContainer extends React.Component {
     if (this.props.innerWidth !== previousProps.innerWidth) {
       this.props.startResize();
       this.props.setInnerWidth(this.props.innerWidth);
-      this.state.splitPaneRef.current.setState({ draggedSize: this.props.innerWidth });
-      this.state.splitPaneRef.current.setState({ pane1Size: this.props.innerWidth });
+      this.state.verticalSplitPaneRef.current.setState({ draggedSize: this.props.innerWidth });
+      this.state.verticalSplitPaneRef.current.setState({ pane1Size: this.props.innerWidth });
       this.props.finishResize();
     }
   }
@@ -33,7 +34,7 @@ class SplitEditorContainer extends React.Component {
           defaultSize={this.props.innerWidth}
           onDragStarted={this.props.startResize}
           onDragFinished={(size) => { this.props.finishResize(); this.props.setInnerWidth(size); }}
-          ref={this.state.splitPaneRef}
+          ref={this.state.verticalSplitPaneRef}
         >
           <div className="editor__input editor__input-split">
             <EditorOpenFiles
@@ -57,6 +58,7 @@ class SplitEditorContainer extends React.Component {
                 setCurrentFile={this.props.setCurrentFile}
                 toggleEditorFilesView={this.props.toggleEditorFilesView}
                 updateFile={this.props.updateFile}
+                updateReplLines={this.props.updateReplLines}
               />
             )}
           </div>
@@ -67,24 +69,38 @@ class SplitEditorContainer extends React.Component {
         ? 'editor__output-overlay--show' : ''}`}
             >
             </div>
-            { this.props.isPlaying && (
-              <CodeOutput
+            <SplitPane
+              split="horizontal"
+              onChange={(size) => {
+                this.setState({ horizontalPanelTopSectionHeight: size });
+              }}
+            >
+              { this.props.isPlaying && (
+                <CodeOutput
+                  id={this.props.id}
+                  clearConsoleOutput={this.props.clearConsoleOutput}
+                  editorMode={this.props.editorMode}
+                  files={this.props.files}
+                  isPlaying={this.props.isPlaying}
+                  isRefreshing={this.props.isRefreshing}
+                  stopCodeRefresh={this.props.stopCodeRefresh}
+                  updateConsoleOutput={this.props.updateConsoleOutput}
+                  consoleOutputText={this.props.consoleOutputText}
+                  updateConsoleOutputForPython={this.props.updateConsoleOutputForPython}
+                  updateReplLines={this.props.updateReplLines}
+                  pythonReplLines={this.props.pythonReplLines}
+                  stopCode={this.props.stopCode}
+                  height={this.state.horizontalPanelTopSectionHeight - 60} // This is the extra header height thst Repl Component has
+                />
+              )}
+              <ConsoleOutput
                 id={this.props.id}
-                clearConsoleOutput={this.props.clearConsoleOutput}
                 editorMode={this.props.editorMode}
-                files={this.props.files}
-                isPlaying={this.props.isPlaying}
-                isRefreshing={this.props.isRefreshing}
-                stopCodeRefresh={this.props.stopCodeRefresh}
-                updateConsoleOutput={this.props.updateConsoleOutput}
                 consoleOutputText={this.props.consoleOutputText}
+                isConsoleOpen={this.props.isConsoleOpen}
+                toggleConsole={this.props.toggleConsole}
               />
-            )}
-            <ConsoleOutput
-              consoleOutputText={this.props.consoleOutputText}
-              isConsoleOpen={this.props.isConsoleOpen}
-              toggleConsole={this.props.toggleConsole}
-            />
+            </SplitPane>
           </div>
         </SplitPane>
 
@@ -120,8 +136,15 @@ SplitEditorContainer.propTypes = {
   toggleEditorFilesView: PropTypes.func.isRequired,
   toggleConsole: PropTypes.func.isRequired,
   updateConsoleOutput: PropTypes.func.isRequired,
+  updateConsoleOutputForPython: PropTypes.func.isRequired,
   updateFile: PropTypes.func.isRequired,
-  viewEditorPreview: PropTypes.func.isRequired
+  viewEditorPreview: PropTypes.func.isRequired,
+  updateReplLines: PropTypes.func.isRequired,
+  pythonReplLines: PropTypes.arrayOf(PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired,
+  stopCode: PropTypes.func.isRequired,
 };
 
 

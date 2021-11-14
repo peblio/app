@@ -161,12 +161,32 @@ export function stopCodeRefresh(id) {
   };
 }
 
+export function updateReplLines(id, line) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.UPDATE_PYTHON_REPL_LINES,
+      id,
+      line
+    });
+  };
+}
+
 export function updateConsoleOutput(id, event) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.UPDATE_CONSOLE_OUTPUT,
       id,
       event
+    });
+  };
+}
+
+export function updateConsoleOutputForPython(id, output) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.UPDATE_CONSOLE_OUTPUT_FOR_PYTHON,
+      id,
+      output
     });
   };
 }

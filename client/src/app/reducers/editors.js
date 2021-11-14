@@ -120,7 +120,8 @@ const editorsReducer = (state = initialState, action) => {
         editorMode: action.mode,
         innerWidth: CODE_DEFAULT_INSIDE_WIDTH,
         editorView: 'split',
-        isWidgetFullScreenMode: false
+        isWidgetFullScreenMode: false,
+        pythonReplLines: []
       };
       stack.push(id);
       const editorIndex = state.editorIndex + 1;
@@ -164,12 +165,25 @@ const editorsReducer = (state = initialState, action) => {
       editors[action.id].isRefreshing = false;
       return { ...state, editors };
 
+    case ActionTypes.UPDATE_PYTHON_REPL_LINES:
+      if (!editors[action.id].pythonReplLines) {
+        editors[action.id].pythonReplLines = [];
+      }
+      editors[action.id].pythonReplLines.push(action.line);
+      return { ...state, editors };
 
     case ActionTypes.UPDATE_CONSOLE_OUTPUT: {
       const tempOutput = editors[action.id].consoleOutputText.slice();
       if (action.event.data.arguments && (action.event.data.id === action.id)) {
         tempOutput.push(action.event.data.arguments.join());
       }
+      editors[action.id].consoleOutputText = tempOutput;
+      return { ...state, editors };
+    }
+
+    case ActionTypes.UPDATE_CONSOLE_OUTPUT_FOR_PYTHON: {
+      const tempOutput = editors[action.id].consoleOutputText.slice();
+      tempOutput.push(action.output);
       editors[action.id].consoleOutputText = tempOutput;
       return { ...state, editors };
     }

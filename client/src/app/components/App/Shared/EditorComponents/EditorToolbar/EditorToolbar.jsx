@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import InfoSVG from '../../../../../images/info.svg';
 import PauseSVG from '../../../../../images/pause.svg';
 import PlaySVG from '../../../../../images/play.svg';
+import InteractiveConsoleSVG from '../../../../../images/interactive-console.svg';
 import EditorExpand from '../../../../../images/editor-expand.svg';
 import EditorCompress from '../../../../../images/editor-compress.svg';
 import PreferencesSVG from '../../../../../images/preferences.svg';
@@ -54,6 +55,13 @@ class EditorToolbar extends React.Component {
     }
   }
 
+  playCode = () => {
+    this.props.playCode();
+    if (this.props.isPlaying) {
+      this.props.startCodeRefresh();
+    }
+  }
+
   render() {
     return (
       <div className='editor-toolbar__container'>
@@ -80,7 +88,7 @@ class EditorToolbar extends React.Component {
               <span
                 className='beta-tag'
               >
-             beta
+                beta
               </span>
             )}
             {this.props.container === 'workspace' && (
@@ -101,18 +109,18 @@ class EditorToolbar extends React.Component {
                 {this.props.editorMode}
               </p>
             )}
-            <Tooltip content="Run Code">
-              <button
-                className={`editor-toolbar__svg ${this.props.isPlaying ? 'editor-toolbar--isPlaying' : ''}`}
-                onClick={() => {
-                  this.props.playCode();
-                  if (this.props.isPlaying) { this.props.startCodeRefresh(); }
-                }}
-                data-test='play-sketch-button'
-              >
-                <PlaySVG alt='Run Code' />
-              </button>
-            </Tooltip>
+            { this.props.editorMode !== 'python' && (
+              <Tooltip content="Run Code">
+                <button
+                  className={`editor-toolbar__svg ${this.props.isPlaying ? 'editor-toolbar--isPlaying' : ''}`}
+                  onClick={this.playCode}
+                  data-test='play-sketch-button'
+                >
+                  <PlaySVG alt='Run Code' />
+                </button>
+              </Tooltip>
+            )
+            }
             <Tooltip content="Stop Code">
               <button
                 className={`editor-toolbar__svg ${!this.props.isPlaying ? 'editor-toolbar--isPaused' : ''}`}
@@ -122,6 +130,18 @@ class EditorToolbar extends React.Component {
                 <PauseSVG alt='Pause Code' />
               </button>
             </Tooltip>
+            {this.props.editorMode === 'python' && (
+              <Tooltip content="Interactive Console and Run Output">
+                <button
+                  className={`editor-toolbar__svg ${!this.props.isPlaying ? 'editor-toolbar--isPaused' : ''}`}
+                  onClick={this.playCode}
+                  data-test='pause-sketch-button'
+                >
+                  <InteractiveConsoleSVG alt='Interactive Console' />
+                </button>
+              </Tooltip>
+            )
+            }
           </div>
           <div className='editor-toolbar__button-container-right'>
             {this.props.container === 'workspace' && (
