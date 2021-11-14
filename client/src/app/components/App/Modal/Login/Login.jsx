@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 
 import axios from '../../../../utils/axios';
 import { setUserName, setUserType, fetchCurrentUserForAppStartUp } from '../../../../action/user.js';
-import { closeLoginModal, viewForgotModal } from '../../../../action/mainToolbar.js';
+import { closeLoginModal, viewForgotModal, viewSignUpModal } from '../../../../action/mainToolbar.js';
 import GoogleLoginButton from '../../Shared/GoogleButton/GoogleLoginButton.jsx';
 import { saveLog } from '../../../../utils/log';
 
@@ -113,6 +113,15 @@ class Login extends React.Component {
             >
               forgot password?
             </button>
+            <button
+              className="login-modal__signup-link"
+              onClick={() => {
+                this.props.viewSignUpModal();
+                this.props.closeLoginModal();
+              }}
+            >
+              Sign Up
+            </button>
           </div>
         </form>
 
@@ -133,6 +142,7 @@ Login.propTypes = {
   setUserName: PropTypes.func.isRequired,
   setUserType: PropTypes.func.isRequired,
   viewForgotModal: PropTypes.func.isRequired,
+  viewSignUpModal: PropTypes.func.isRequired,
   fetchCurrentUserForAppStartUp: PropTypes.func.isRequired
 };
 
@@ -141,6 +151,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setUserName,
   setUserType,
   viewForgotModal,
+  viewSignUpModal,
   fetchCurrentUserForAppStartUp
 }, dispatch);
 

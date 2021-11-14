@@ -34,7 +34,7 @@
     @extend %modal__buttonholder;
   }
 
-  &__forgot-link {
+  &__forgot-link, &__signup-link {
     @extend %modal__link;
     margin: $large-margin 0;
     &:hover {
