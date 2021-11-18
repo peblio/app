@@ -7,12 +7,18 @@ import CodeOutput from '../CodeOutput/CodeOutput.jsx';
 import ConsoleOutput from '../ConsoleOutput/ConsoleOutput.jsx';
 import EditorOpenFiles from '../EditorOpenFiles/EditorOpenFiles.jsx';
 
+
 class SplitEditorContainer extends React.Component {
   constructor() {
     super();
+
     this.state = {
       verticalSplitPaneRef: React.createRef(),
-      horizontalPanelTopSectionHeight: 140
+      horizontalSplitPaneRef: React.createRef(),
+      horizontalPanelTopSectionHeight: 140,
+      paneOneStyle: {
+        height: '70%'
+      }
     };
   }
 
@@ -71,9 +77,17 @@ class SplitEditorContainer extends React.Component {
             </div>
             <SplitPane
               split="horizontal"
+              className="editor__output__split-editor-vertical"
               onChange={(size) => {
-                this.setState({ horizontalPanelTopSectionHeight: size });
+                this.setState(
+                  {
+                    horizontalPanelTopSectionHeight: size,
+                    paneOneStyle: { height: size }
+                  }
+                );
               }}
+              pane1Style={this.state.paneOneStyle}
+              ref={this.state.horizontalSplitPaneRef}
             >
               { this.props.isPlaying && (
                 <CodeOutput
