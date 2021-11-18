@@ -14,7 +14,6 @@ class SplitEditorContainer extends React.Component {
 
     this.state = {
       verticalSplitPaneRef: React.createRef(),
-      horizontalSplitPaneRef: React.createRef(),
       horizontalPanelTopSectionHeight: 140,
       paneOneStyle: {
         height: '70%'
@@ -87,7 +86,6 @@ class SplitEditorContainer extends React.Component {
                 );
               }}
               pane1Style={this.state.paneOneStyle}
-              ref={this.state.horizontalSplitPaneRef}
             >
               { this.props.isPlaying && (
                 <CodeOutput

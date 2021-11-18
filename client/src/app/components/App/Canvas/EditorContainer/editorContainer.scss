@@ -63,11 +63,6 @@
     &--short {
       height: calc(100% - #{$console-output-height} - #{$console-heading-height});
     }
-    &__split-editor-vertical {
-      .Pane1 {
-        // height: 70%
-      }
-    }
   }
 
   &__total-container{
