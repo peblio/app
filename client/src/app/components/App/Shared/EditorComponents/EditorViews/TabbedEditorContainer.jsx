@@ -19,8 +19,6 @@ class TabbedContainer extends React.Component {
     };
   }
 
-  isPythonEditor = () => ['python'].includes(this.props.editorMode)
-
   renderConsoleOutput = () => (
     <ConsoleOutput
       id={this.props.id}
@@ -50,7 +48,7 @@ class TabbedContainer extends React.Component {
     />
   )
 
-  renderPythonOutput = () => (
+  renderOutput = () => (
     <div>
       <SplitPane
         split="horizontal"
@@ -66,19 +64,10 @@ class TabbedContainer extends React.Component {
     </div>
   )
 
-renderNonPythonOutput = () => (
-  <React.Fragment>
-    {this.renderConsoleOutput()}
-    {this.renderCodeOutput()}
-  </React.Fragment>
-)
-
-
   renderOutput = () => (
     <div className={`editor__output ${this.props.isConsoleOpen ? 'editor__output--short' : ''}`}>
       <div className={`editor__output-overlay ${this.props.isResizing ? 'editor__output-overlay--show' : ''}`} />
-      {this.props.isPlaying && this.isPythonEditor() && this.renderPythonOutput()}
-      {this.props.isPlaying && !this.isPythonEditor() && this.renderNonPythonOutput()}
+      {this.props.isPlaying && this.renderPythonOutput()}
     </div>
   )
 
