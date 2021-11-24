@@ -74,20 +74,20 @@ class SplitEditorContainer extends React.Component {
         ? 'editor__output-overlay--show' : ''}`}
             >
             </div>
-            <SplitPane
-              split="horizontal"
-              className="editor__output__split-editor-vertical"
-              onChange={(size) => {
-                this.setState(
-                  {
-                    horizontalPanelTopSectionHeight: size,
-                    paneOneStyle: { height: size }
-                  }
-                );
-              }}
-              pane1Style={this.state.paneOneStyle}
-            >
-              { this.props.isPlaying && (
+            { this.props.isPlaying && (
+              <SplitPane
+                split="horizontal"
+                className="editor__output__split-editor-vertical"
+                onChange={(size) => {
+                  this.setState(
+                    {
+                      horizontalPanelTopSectionHeight: size,
+                      paneOneStyle: { height: size }
+                    }
+                  );
+                }}
+                pane1Style={this.state.paneOneStyle}
+              >
                 <CodeOutput
                   id={this.props.id}
                   clearConsoleOutput={this.props.clearConsoleOutput}
@@ -102,17 +102,18 @@ class SplitEditorContainer extends React.Component {
                   updateReplLines={this.props.updateReplLines}
                   pythonReplLines={this.props.pythonReplLines}
                   stopCode={this.props.stopCode}
-                  height={this.state.horizontalPanelTopSectionHeight - 60} // This is the extra header height thst Repl Component has
+                  height={this.state.horizontalPanelTopSectionHeight - 60}
                 />
-              )}
-              <ConsoleOutput
-                id={this.props.id}
-                editorMode={this.props.editorMode}
-                consoleOutputText={this.props.consoleOutputText}
-                isConsoleOpen={this.props.isConsoleOpen}
-                toggleConsole={this.props.toggleConsole}
-              />
-            </SplitPane>
+                <ConsoleOutput
+                  id={this.props.id}
+                  editorMode={this.props.editorMode}
+                  consoleOutputText={this.props.consoleOutputText}
+                  isConsoleOpen={this.props.isConsoleOpen}
+                  toggleConsole={this.props.toggleConsole}
+                />
+
+              </SplitPane>
+            )}
           </div>
         </SplitPane>
 
