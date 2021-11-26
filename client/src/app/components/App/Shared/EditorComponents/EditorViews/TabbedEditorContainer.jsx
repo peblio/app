@@ -50,24 +50,19 @@ class TabbedContainer extends React.Component {
 
   renderOutput = () => (
     <div>
-      <SplitPane
-        split="horizontal"
-        className="editor__tabbed__split-pane"
-        ref={this.state.horizontalSplitPaneRef}
-        onChange={(size) => {
-          this.setState({ horizontalPanelTopSectionHeight: size });
-        }}
-      >
-        {this.renderCodeOutput()}
-        {this.renderConsoleOutput()}
-      </SplitPane>
-    </div>
-  )
-
-  renderOutput = () => (
-    <div className={`editor__output ${this.props.isConsoleOpen ? 'editor__output--short' : ''}`}>
-      <div className={`editor__output-overlay ${this.props.isResizing ? 'editor__output-overlay--show' : ''}`} />
-      {this.props.isPlaying && this.renderPythonOutput()}
+      { this.props.isPlaying && (
+        <SplitPane
+          split="horizontal"
+          className="editor__tabbed__split-pane"
+          ref={this.state.horizontalSplitPaneRef}
+          onChange={(size) => {
+            this.setState({ horizontalPanelTopSectionHeight: size });
+          }}
+        >
+          {this.renderCodeOutput()}
+          {this.renderConsoleOutput()}
+        </SplitPane>
+      )}
     </div>
   )
 

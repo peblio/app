@@ -42,12 +42,10 @@ class PythonRepl extends React.Component {
     this.props.updateReplLines({ type: 'input', value: input });
 
     const myPromise = Sk.misceval.asyncToPromise(() => Sk.importMainWithBody('repl', false, input, true));
-    myPromise.then((mod) => {
-      console.log('success');
-    },
-    (err) => {
-      this.props.updateReplLines({ type: 'error', value: err.toString() });
-    });
+    myPromise.then((mod) => {},
+      (err) => {
+        this.props.updateReplLines({ type: 'error', value: err.toString() });
+      });
   }
 
   builtinRead = (x) => {
@@ -65,7 +63,6 @@ class PythonRepl extends React.Component {
           tabs={['Python']}
           selectedTab="Python"
           onSubmit={this.onSubmit}
-          onClear={console.log('Cleared')}
           height={this.props.height}
           lines={this.props.pythonReplLines || []}
         />
