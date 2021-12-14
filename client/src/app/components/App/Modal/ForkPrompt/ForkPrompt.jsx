@@ -27,52 +27,106 @@ class ForkPrompt extends React.Component {
     }
   }
 
-  render() {
-    return (
-      <div className="fork-prompt__content">
-        <div>
-          <h2 className="fork-prompt__title">
-            Would you like to remix the page?
-          </h2>
-          <p className="fork-prompt__subtitle">
-            Remixing this page will save a copy to your account and allow you to save your changes.
-          </p>
-          <div
-            className="fork-prompt__button-container"
+  renderRemixMessage = () => (
+    <div className="fork-prompt__content">
+      <div>
+        <h2 className="fork-prompt__title">
+          Would you like to remix the page?
+        </h2>
+        <p className="fork-prompt__subtitle">
+          Remixing this page will save a copy to your account and allow you to save your changes.
+        </p>
+        <div
+          className="fork-prompt__button-container"
+        >
+          <button
+            className="fork-prompt__just-browsing-button"
+            data-test="fork-prompt__just-browsing-button"
+            onClick={() => {
+              this.props.closeForkPrompt();
+              this.props.setUserBrowsingPebl();
+            }}
           >
-            <button
-              className="fork-prompt__just-browsing-button"
-              data-test="fork-prompt__just-browsing-button"
-              onClick={() => {
-                this.props.closeForkPrompt();
-                this.props.setUserBrowsingPebl();
-              }}
-            >
-              Just Browsing
-            </button>
-            <button
-              className="fork-prompt__button"
-              onClick={() => {
-                this.props.closeForkPrompt();
-                this.props.savePage();
-              }}
-            >
-              Remix
-            </button>
-          </div>
-          <div className="fork-prompt__checkbox-container">
-            <input
-              id="fork-prompt__dont-ask"
-              name="fork-prompt__dont-ask"
-              type="checkbox"
-              className="fork-prompt__checkbox"
-              onChange={(e) => { this.setForkPromptPreference(e); }}
-              checked={this.state.isChecked}
-            />
-            <label htmlFor="fork-prompt__dont-ask">Don‘t ask me again</label>
-          </div>
+            Just Browsing
+          </button>
+          <button
+            className="fork-prompt__button"
+            onClick={() => {
+              this.props.closeForkPrompt();
+              this.props.savePage();
+            }}
+          >
+            Remix
+          </button>
+        </div>
+        <div className="fork-prompt__checkbox-container">
+          <input
+            id="fork-prompt__dont-ask"
+            name="fork-prompt__dont-ask"
+            type="checkbox"
+            className="fork-prompt__checkbox"
+            onChange={(e) => { this.setForkPromptPreference(e); }}
+            checked={this.state.isChecked}
+          />
+          <label htmlFor="fork-prompt__dont-ask">Don‘t ask me again</label>
         </div>
       </div>
+    </div>
+  )
+
+  renderSaveMessage = () => (
+    <div className="fork-prompt__content">
+      <div>
+        <h2 className="fork-prompt__title">
+          Would you like to save the page?
+        </h2>
+        <p className="fork-prompt__subtitle">
+          Saving this page will save the changes you have made to this pebl.
+        </p>
+        <div
+          className="fork-prompt__button-container"
+        >
+          <button
+            className="fork-prompt__just-browsing-button"
+            data-test="fork-prompt__just-browsing-button"
+            onClick={() => {
+              this.props.closeForkPrompt();
+              this.props.setUserBrowsingPebl();
+            }}
+          >
+            Just Browsing
+          </button>
+          <button
+            className="fork-prompt__button"
+            onClick={() => {
+              this.props.closeForkPrompt();
+              this.props.savePage();
+            }}
+          >
+            Save
+          </button>
+        </div>
+        <div className="fork-prompt__checkbox-container">
+          <input
+            id="fork-prompt__dont-ask"
+            name="fork-prompt__dont-ask"
+            type="checkbox"
+            className="fork-prompt__checkbox"
+            onChange={(e) => { this.setForkPromptPreference(e); }}
+            checked={this.state.isChecked}
+          />
+          <label htmlFor="fork-prompt__dont-ask">Don‘t ask me again</label>
+        </div>
+      </div>
+    </div>
+  )
+
+  render() {
+    return (
+      <React.Fragment>
+        {!this.props.saveMode && this.renderRemixMessage()}
+        {this.props.saveMode && this.renderSaveMessage()}
+      </React.Fragment>
     );
   }
 }
@@ -80,7 +134,8 @@ class ForkPrompt extends React.Component {
 ForkPrompt.propTypes = {
   closeForkPrompt: PropTypes.func.isRequired,
   savePage: PropTypes.func.isRequired,
-  setUserBrowsingPebl: PropTypes.func.isRequired
+  setUserBrowsingPebl: PropTypes.func.isRequired,
+  saveMode: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
