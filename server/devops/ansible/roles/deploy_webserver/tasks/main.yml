@@ -12,7 +12,7 @@
 - name: install python requirements
   pip:
     requirements: "{{ ansible_env.HOME }}/{{ webserver_src_dir }}/requirements.txt"
-    executable: pip
+    executable: pip3
   notify:
     - restart pm2
 
