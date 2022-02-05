@@ -318,9 +318,9 @@ class Ec2Inventory(object):
         }
 
         if six.PY3:
-            config = configparser.ConfigParser(DEFAULTS)
+            config = configparser.ConfigParser(DEFAULTS, allow_no_value=True)
         else:
-            config = configparser.SafeConfigParser(DEFAULTS)
+            config = configparser.SafeConfigParser(DEFAULTS, allow_no_value=True)
         ec2_ini_path = os.environ.get('EC2_INI_PATH', defaults['ec2']['ini_path'])
         ec2_ini_path = os.path.expanduser(os.path.expandvars(ec2_ini_path))
 
