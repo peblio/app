@@ -13,8 +13,8 @@ Thank you for wanting to contribute to Peblio. In this document, you will find i
 
 1. Remix this repository.
 2. Clone the forked repository and cd into it.
-3. (Optional) Create a [Python 2 virtualenv](https://docs.python-guide.org/dev/virtualenvs/#lower-level-virtualenv) and activate it.
-4. ```pip install -r requirements.txt```
+3. (Optional) Create a [Python 3.7.11 virtualenv](https://docs.python-guide.org/dev/virtualenvs/#lower-level-virtualenv) and activate it.
+4. ```pip3 install -r requirements.txt```
 5. Make sure that you have [Node.js v8.7.0 or higher installed](https://github.com/creationix/nvm#installation).
 6. ```npm install```
 7. ```cd client && npm install```
@@ -259,21 +259,43 @@ We use `peblio` profile for AWS and this is defined in AWS_PROFILE environment v
 Let's talk about front end first
 
 1. Create an S3 bucket - this needs to be done manually
-1. When creating bucket, you can copy the settings from an existing bucket
-1. Setup static website hosting for the bucket once its created
-1. Create cloudfront - choose web distribution
-1. Make note of the distribution ID
-1. Update distribution ID and S3 bucket name in [deploy.sh](https://github.com/peblio/app/blob/master/client/devops/deploy.sh)
-1. Post this, you can use the deploy scripts, and it should be up on the S3 link
-1. To map this URL to a domain name, go to DNS provider (godaddy) and update the details
+2. When creating bucket, you can copy the settings from an existing bucket
+3. Setup static website hosting for the bucket once its created
+4. Create cloudfront - choose web distribution
+5. Make note of the distribution ID
+6. Update distribution ID and S3 bucket name in [deploy.sh](https://github.com/peblio/app/blob/master/client/devops/deploy.sh)
+7. Post this, you can use the deploy scripts, and it should be up on the S3 link
+8. To map this URL to a domain name, go to DNS provider (godaddy) and update the details
 
 regd Back end
 
 1. Create a new IAM user (this is not necessary, but will make for a clean, new system)
-1. Change the [cross_env_var](https://github.com/peblio/app/blob/master/server/devops/ansible/inventories/cross_env_vars.yml) to include the new github repo and new IAM user
-1. Change the variables inside [group_vars](https://github.com/peblio/app/tree/master/server/devops/ansible/inventories/staging/group_vars) - you will choose machine size here
-1. Now you can run the create_webserver script and the deploy_webserver script!
+2. Change the [cross_env_var](https://github.com/peblio/app/blob/master/server/devops/ansible/inventories/cross_env_vars.yml) to include the new github repo and new IAM user
+3. Change the variables inside [group_vars](https://github.com/peblio/app/tree/master/server/devops/ansible/inventories/staging/group_vars) - you will choose machine size here
+4. Now you can run the create_webserver script and the deploy_webserver script!
 YAAAY!
+5. Post this, run the script to spin up the server
 
+Trouble shooting commands for python3 upgrade:
 
-1. Post this, run the script to spin up the server
+Clear space
+df -h
+sudo apt-get clean
+sudo apt clean
+cd /home/ubuntu/proto-2/server
+npm dedupe
+cd /usr/src
+ls -lt
+-- Delete older header like linux-aws-headers-4.4.0-1047
+sudo apt purge linux-aws-headers-4.4.0-1079
+sudo apt-get install linux-aws-headers-4.4.0-1095
+sudo find / -name "linux-aws-*"
+sudo apt-get autoremove
+sudo apt autoremove
+sudo apt autoclean
+
+Install pip3
+sudo apt remove --purge python3-pip
+curl -O https://bootstrap.pypa.io/pip/3.5/get-pip.py
+sudo -E python3 get-pip.py
+
