@@ -20,7 +20,7 @@ class Pebls extends Component {
     this.state = {
       page: FIRST_PAGE,
       pageLimit: PAGE_SIZE,
-      withStudents: false
+      withStudents: true
     };
   }
 
@@ -123,7 +123,7 @@ Pebls.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    tagName: state.resources.name,
+    tagName: state.resources.tagName,
     studioPebls: state.resources.pebls,
     totalPebls: state.resources.totalPebls
   };
