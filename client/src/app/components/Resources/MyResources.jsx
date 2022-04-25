@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import './MyResources.scss';
 import GenericLoader from '../GenericLoader/LoadingMessage';
+import Featured from './Featured/Featured';
 import Pebls from './Pebls/Pebls';
 
 import { setTagName } from '../../action/resources';
@@ -39,10 +40,9 @@ const MyResources = ({
     <React.Fragment>
       {dataLoading ? <GenericLoader /> : (
         <div className="dashboard__myresources">
-          <span className="dashboard__myresources__header">
-            Popular Resources for
-            {userName}
-          </span>
+          <div>
+            {/* <Featured /> */}
+          </div>
           <p className="dashboard__myresources__header__title">
             Search for Resources
           </p>
