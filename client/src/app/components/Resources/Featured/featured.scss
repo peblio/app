@@ -1,0 +1,89 @@
+@import 'variables';
+
+.dashboard__children {
+  overflow-y: scroll !important;
+}
+
+.featured {
+  &-pebls__pebl {
+    margin: $pebl-margin;
+    border-radius: $small-border-radius;
+    width: auto !important;
+  }
+  &-collections__collection {
+    margin: $pebl-margin;
+    border-radius: $small-border-radius;
+    width: auto !important;
+  }
+  &-profiles__profile {
+    border-radius: $small-border-radius;
+    width: auto !important;
+    padding: $medium-padding;
+  }
+  &__container {
+    display: flex;
+    flex-direction: column;
+    background: $offwhite;
+    width: 100%;
+    padding-bottom: $medium-padding;
+  }
+  &__sub-container {
+    width: 1*$pebl-image-size-width + 2*$pebl-margin;
+    margin: 0 auto;
+  }
+  &__list {
+    padding: 0;
+    padding-right: 3rem;
+    margin: 0;
+  }
+  &__heading {
+    font-size: $subheading-font;
+    color: $black;
+    padding: $medium-padding 0;
+    margin-bottom: 0;
+    margin-top: $large-padding*2;
+  }
+}
+
+.slick-next:before, .slick-prev:before {
+  font-size: 20px;
+  line-height: 1;
+  color: $black;
+}
+.slick-slider {
+  width: 300px;
+  margin: 0 auto;
+}
+.slick-dots {
+  display: none !important;
+}
+.slick-track {
+  padding: $medium-padding;
+}
+
+@media only screen and (min-width: 550px) {
+  .slick-slider, .featured__sub-container {
+    width: 2*$pebl-image-size-width + 4*$pebl-margin;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .slick-slider, .featured__sub-container {
+    width: 3*$pebl-image-size-width + 6*$pebl-margin;
+    //600 + 150
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .slick-slider, .featured__sub-container {
+    width: 4*$pebl-image-size-width + 8*$pebl-margin;
+    //800 + 200
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  .slick-slider, .featured__sub-container {
+    width: 5*$pebl-image-size-width + 10*$pebl-margin;
+    //1000 + 250
+  }
+}
