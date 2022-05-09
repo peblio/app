@@ -24,7 +24,14 @@ class PythonRepl extends React.Component {
   }
 
   startSketch=() => {
-    Sk.configure({ output: this.outf, read: this.builtinRead });
+    console.log('startSketch');
+    Sk.configure({ output: this.outf,
+      read: this.builtinRead,
+      retainglobals: true,
+      inputfun(prompt) {
+        return window.prompt(prompt);
+      },
+      inputfunTakesPrompt: true });
     (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = `python-graphic-output-${this.props.id}`;
     this.state = {
       lines: []
@@ -38,7 +45,14 @@ class PythonRepl extends React.Component {
   }
 
   onSubmit = (input) => {
-    Sk.configure({ output: this.outf, read: this.builtinRead, retainglobals: true });
+    console.log('Heelo');
+    Sk.configure({ output: this.outf,
+      read: this.builtinRead,
+      retainglobals: true,
+      inputfun(prompt) {
+        return window.prompt(prompt);
+      },
+      inputfunTakesPrompt: true });
     this.props.updateReplLines({ type: 'input', value: input });
 
     const myPromise = Sk.misceval.asyncToPromise(() => Sk.importMainWithBody('repl', false, input, true));
