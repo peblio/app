@@ -157,17 +157,21 @@ These settings would produce a destination_format as the following:
 import sys
 import os
 import argparse
+import bisect
 import re
 from time import time
+from copy import deepcopy
+from datetime import date, datetime
 import boto
 from boto import ec2
 from boto import rds
 from boto import elasticache
 from boto import route53
 from boto import sts
-import six
 
+from ansible.module_utils import six
 from ansible.module_utils import ec2 as ec2_utils
+from ansible.module_utils.six.moves import configparser
 
 HAS_BOTO3 = False
 try:
@@ -176,13 +180,9 @@ try:
 except ImportError:
     pass
 
-from six.moves import configparser
 from collections import defaultdict
 
-try:
-    import json
-except ImportError:
-    import simplejson as json
+import json
 
 DEFAULTS = {
     'all_elasticache_clusters': 'False',
@@ -190,16 +190,16 @@ DEFAULTS = {
     'all_elasticache_replication_groups': 'False',
     'all_instances': 'False',
     'all_rds_instances': 'False',
-    'aws_access_key_id': None,
-    'aws_secret_access_key': None,
-    'aws_security_token': None,
-    'boto_profile': None,
+    'aws_access_key_id': '',
+    'aws_secret_access_key': '',
+    'aws_security_token': '',
+    'boto_profile': '',
     'cache_max_age': '300',
     'cache_path': '~/.ansible/tmp',
     'destination_variable': 'public_dns_name',
     'elasticache': 'True',
     'eucalyptus': 'False',
-    'eucalyptus_host': None,
+    'eucalyptus_host': '',
     'expand_csv_tags': 'False',
     'group_by_ami_id': 'True',
     'group_by_availability_zone': 'True',
@@ -221,19 +221,19 @@ DEFAULTS = {
     'group_by_tag_keys': 'True',
     'group_by_tag_none': 'True',
     'group_by_vpc_id': 'True',
-    'hostname_variable': None,
-    'iam_role': None,
+    'hostname_variable': '',
+    'iam_role': '',
     'include_rds_clusters': 'False',
     'nested_groups': 'False',
-    'pattern_exclude': None,
-    'pattern_include': None,
+    'pattern_exclude': '',
+    'pattern_include': '',
     'rds': 'False',
     'regions': 'all',
     'regions_exclude': 'us-gov-west-1, cn-north-1',
     'replace_dash_in_groups': 'True',
     'route53': 'False',
     'route53_excluded_zones': '',
-    'route53_hostnames': None,
+    'route53_hostnames': '',
     'stack_filters': 'False',
     'vpc_destination_variable': 'ip_address'
 }
@@ -243,6 +243,13 @@ class Ec2Inventory(object):
 
     def _empty_inventory(self):
         return {"_meta": {"hostvars": {}}}
+
+    def _json_serial(self, obj):
+        """JSON serializer for objects not serializable by default json code"""
+
+        if isinstance(obj, (datetime, date)):
+            return obj.isoformat()
+        raise TypeError("Type %s not serializable" % type(obj))
 
     def __init__(self):
         ''' Main execution path '''
@@ -318,9 +325,9 @@ class Ec2Inventory(object):
         }
 
         if six.PY3:
-            config = configparser.ConfigParser(DEFAULTS, allow_no_value=True)
+            config = configparser.ConfigParser(DEFAULTS)
         else:
-            config = configparser.SafeConfigParser(DEFAULTS, allow_no_value=True)
+            config = configparser.SafeConfigParser(DEFAULTS)
         ec2_ini_path = os.environ.get('EC2_INI_PATH', defaults['ec2']['ini_path'])
         ec2_ini_path = os.path.expanduser(os.path.expandvars(ec2_ini_path))
 
@@ -572,12 +579,14 @@ class Ec2Inventory(object):
         return connect_args
 
     def connect_to_aws(self, module, region):
-        connect_args = self.credentials
+        connect_args = deepcopy(self.credentials)
 
         # only pass the profile name if it's set (as it is not supported by older boto versions)
         if self.boto_profile:
             connect_args['profile_name'] = self.boto_profile
             self.boto_fix_security_token_in_profile(connect_args)
+        elif os.environ.get('AWS_SESSION_TOKEN'):
+            connect_args['security_token'] = os.environ.get('AWS_SESSION_TOKEN')
 
         if self.iam_role:
             sts_conn = sts.connect_to_region(region, **connect_args)
@@ -728,13 +737,6 @@ class Ec2Inventory(object):
         account_id = boto.connect_iam().get_user().arn.split(':')[4]
         c_dict = {}
         for c in clusters:
-            # remove these datetime objects as there is no serialisation to json
-            # currently in place and we don't need the data yet
-            if 'EarliestRestorableTime' in c:
-                del c['EarliestRestorableTime']
-            if 'LatestRestorableTime' in c:
-                del c['LatestRestorableTime']
-
             if not self.ec2_instance_filters:
                 matches_filter = True
             else:
@@ -1646,14 +1648,15 @@ class Ec2Inventory(object):
         return self.json_format_dict(self.get_host_info_dict_from_instance(instance), True)
 
     def push(self, my_dict, key, element):
-        ''' Push an element onto an array that may not have been defined in
-        the dict '''
+        ''' Insert an element into an array that may not have been defined in
+        the dict. The elements are inserted to preserve asciibetical ordering
+        of the array '''
         group_info = my_dict.setdefault(key, [])
         if isinstance(group_info, dict):
             host_list = group_info.setdefault('hosts', [])
-            host_list.append(element)
+            bisect.insort(host_list, element)
         else:
-            group_info.append(element)
+            bisect.insort(group_info, element)
 
     def push_group(self, my_dict, key, element):
         ''' Push a group as a child of another group. '''
@@ -1701,9 +1704,9 @@ class Ec2Inventory(object):
         string '''
 
         if pretty:
-            return json.dumps(data, sort_keys=True, indent=2)
+            return json.dumps(data, sort_keys=True, indent=2, default=self._json_serial)
         else:
-            return json.dumps(data)
+            return json.dumps(data, default=self._json_serial)
 
 
 if __name__ == '__main__':
