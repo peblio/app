@@ -243,13 +243,25 @@ class App extends React.Component {
         <Welcome />
       </Modal>
 
-      {(this.showForkPromptPreference() && !this.props.isBrowsingPebl && !this.props.canEdit) && (
+      {this.showForkPrompt() && (
         <Modal size="auto" isOpen={this.props.isForkPromptOpen} closeModal={this.props.closeForkPrompt}>
-          <ForkPrompt savePage={this.buildPageDataAndSavePage} />
+          <ForkPrompt savePage={this.buildPageDataAndSavePage} saveMode={false} />
+        </Modal>
+      )}
+
+      {this.showSavePrompt() && (
+        <Modal size="auto" isOpen={this.props.isForkPromptOpen} closeModal={this.props.closeForkPrompt}>
+          <ForkPrompt savePage={this.buildPageDataAndSavePage} saveMode />
         </Modal>
       )}
     </React.Fragment>
   )
+
+  showForkPrompt = () => this.showForkPromptPreference() && !this.props.isBrowsingPebl &&
+  !this.props.canEdit && !this.props.name
+
+  showSavePrompt = () => this.showForkPromptPreference() && !this.props.isBrowsingPebl &&
+  !this.props.canEdit && this.props.name
 
   renderToolBar = () => (
     <nav className="main-nav">
