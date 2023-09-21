@@ -17,12 +17,6 @@ const MyResources = ({
 }) => {
   const [dataLoading, setDataLoading] = useState(true);
   const tagSearchText = useRef(null);
-
-  const tryTag = (e) => {
-    setTagName(e.target.innerText);
-    tagSearchText.value = e.target.innerText;
-  };
-
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       setTagName(e.target.value);
@@ -55,41 +49,6 @@ const MyResources = ({
               onKeyPress={handleKeyPress}
               ref={tagSearchText}
             />
-          </div>
-          <div
-            className="tag-input__sug-tag-container"
-          >
-            <ul className="tag-input__sug-tags">
-
-              <button
-                onClick={tryTag}
-                className="tag-input__sug-tag-button"
-              >
-                p5.js
-              </button>
-
-              <button
-                onClick={tryTag}
-                className="tag-input__sug-tag-button"
-              >
-                python
-              </button>
-
-
-              <button
-                onClick={tryTag}
-                className="tag-input__sug-tag-button"
-              >
-                beginner
-              </button>
-
-              <button
-                onClick={tryTag}
-                className="tag-input__sug-tag-button"
-              >
-                scratch
-              </button>
-            </ul>
           </div>
           <div>
             <Pebls />
