@@ -40,6 +40,9 @@ const MyResources = ({
     <React.Fragment>
       {dataLoading ? <GenericLoader /> : (
         <div className="dashboard__myresources">
+          <div>
+            {/* <Featured /> */}
+          </div>
           <p className="dashboard__myresources__header__title">
             Search for Resources
           </p>
