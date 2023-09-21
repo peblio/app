@@ -11,7 +11,6 @@ import profile from './profile.js';
 import user from './user.js';
 import workspace from './workspace.js';
 import classroom from './classroom';
-import resources from './resources';
 
 const rootReducer = combineReducers({
   dashboard,
@@ -24,8 +23,7 @@ const rootReducer = combineReducers({
   profile,
   user,
   workspace,
-  classroom,
-  resources
+  classroom
 });
 
 export default rootReducer;
