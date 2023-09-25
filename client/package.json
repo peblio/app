@@ -69,7 +69,6 @@
     "redux-thunk": "^2.2.0",
     "regex": "^0.1.1",
     "sass-lint": "^1.12.1",
-    "sasslint-webpack-plugin": "^1.0.4",
     "shortid": "^2.2.8",
     "skulpt": "^1.2.0",
     "srcdoc-polyfill": "^0.2.0",
@@ -78,8 +77,6 @@
   "devDependencies": {
     "@babel/core": "^7.4.0",
     "@babel/register": "^7.4.0",
-    "@storybook/addon-actions": "^5.3.19",
-    "@storybook/react": "^5.3.18",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.6",
     "babel-jest": "^23.0.1",
