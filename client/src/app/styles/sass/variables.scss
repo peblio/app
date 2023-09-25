@@ -1,7 +1,7 @@
 //colors
 $white: #FFFFFF;
 $whitish: #FBFBFB;
-$offwhite: #FBFBFB;
+
 $transparent: #FFFFFF00;
 $light-black: #21333b;
 $lighter-gray: #F0F0F0;
@@ -17,9 +17,7 @@ $red: #D73E2C;
 $heather: #bdc3c7;
 $licorice: #373a47;
 $mistgrey: #b8b7ad;
-$blue: #006A98;
 
-$grey: #B2B8BB;
 $gray: #888888;
 $black: #00151E;
 $black-trans: #00151E11;
@@ -178,34 +176,6 @@ $z-index-layer-4: 400;
 $shadow-v-offset: 2px;
 $shadow-blur: 4px;
 
-$border-yellow: #FFD111;
-$border-pink: #9A0077;
-$border-green: #47B471;
-$border-blue: #00699A;
-
-$button-width: 160px;
-$button-height: 40px;
-$nav-height: 65px;
-$pebl-image-size-width: 200px;
-$pebl-image-size-height: 150px;
-$pebl-collection-size-width: 200px;
-$pebl-collection-size-height: 250px;
-$pebl-margin: 25px;
-
-$small-font: 12px;
-$small-line-height: 18px;
-$medium-font: 18px;
-$medium-line-height: 22px;
-$large-font: 24px;
-$large-line-height: 32px;
-$hero-heading-font-1: 42px;
-$hero-heading-font-2: 32px;
-$about-heading-1: 35px;
-$about-heading-2: 25px;
-$hero-heading-line-height: 51px;
-$hero-left-margin: 6%;
-$subheading-font: 35px;
-
 :export {
   totalWidth: $total-width;
   white: $white;
@@ -214,5 +184,4 @@ $subheading-font: 35px;
   green: $green;
   g4: $g4;
   border: $small-border;
-  pebl-colors: $border-yellow, $border-pink, $border-green, $border-blue;
 }

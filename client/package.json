@@ -73,9 +73,7 @@
     "shortid": "^2.2.8",
     "skulpt": "^1.2.0",
     "srcdoc-polyfill": "^0.2.0",
-    "superagent": "^3.8.2",
-    "react-infinite-scroll-component": "^4.5.0",
-    "react-slick": "^0.23.2"
+    "superagent": "^3.8.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",

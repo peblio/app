@@ -24,12 +24,6 @@ const SideBar = ({ children, ...props }) => (
         </li>
       )
       }
-      {true && (
-        <li className="sidebar__nav-link">
-          <NavLink to='/resources' activeClassName='active'>Resources</NavLink>
-        </li>
-      )
-      }
       <li className="sidebar__nav-link">
         <NavLink to='/trash' activeClassName='active'>Trash</NavLink>
       </li>
