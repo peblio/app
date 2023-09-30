@@ -31,7 +31,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "bcrypt": "^2.0.1",
+    "bcrypt": "5.1.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "connect-mongo": "5.0.0",
