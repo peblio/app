@@ -1,7 +1,7 @@
 ---
 ansible_user: ubuntu
 ansible_python_interpreter: python3
-node_version: v8.7.0
+node_version: v16.20.2
 key_name: Peblios
 security_group_name: peblio-security-group
 ami_id: ami-41e0b93b
