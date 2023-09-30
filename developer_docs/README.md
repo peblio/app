@@ -15,7 +15,7 @@ Thank you for wanting to contribute to Peblio. In this document, you will find i
 2. Clone the forked repository and cd into it.
 3. (Optional) Create a [Python 3.7.11 virtualenv](https://docs.python-guide.org/dev/virtualenvs/#lower-level-virtualenv) and activate it.
 4. ```pip3 install -r requirements.txt```
-5. Make sure that you have [Node.js v8.7.0 or higher installed](https://github.com/creationix/nvm#installation).
+5. Make sure that you have [Node.js v16.20.2 or higher installed](https://github.com/creationix/nvm#installation).
 6. ```npm install```
 7. ```cd client && npm install```
 8. ```cd ../server && npm install```
