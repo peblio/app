@@ -15,6 +15,7 @@ class GoogleSignupButton extends React.Component {
 
   componentDidMount() {
     if( window.gapi !=  null){
+      this.auth2 = window.gapi.auth2.getAuthInstance();
       return
     }
     window.gapi.load('auth2', () => {
@@ -71,7 +72,11 @@ class GoogleSignupButton extends React.Component {
         .then(this.signIn)
         .catch((err) => {
           saveErrorLogWithoutUser('User Signup via Google Failed', err.stack, '/auth/signin/google');
-          this.props.onLoginFailure('Google Sign up error. Please try again after sometime.');
+          if(err.response && err.response.data && err.response.data.msg){
+            this.props.onLoginFailure(`${err.response.data.msg}`);
+          } else {
+            this.props.onLoginFailure('Google Sign up error. Please try again after sometime.');
+          }
         });
     } else {
       this.props.onLoginFailure('Google Sign up error. Please try again after sometime.');
