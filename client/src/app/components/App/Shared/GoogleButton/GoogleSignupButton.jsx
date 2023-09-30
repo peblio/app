@@ -14,8 +14,15 @@ class GoogleSignupButton extends React.Component {
   }
 
   componentDidMount() {
+    if( window.gapi !=  null){
+      return
+    }
     window.gapi.load('auth2', () => {
-      this.auth2 = window.gapi.auth2.init({ client_id: process.env.GOOGLE_CLIENT_ID });
+      try{
+        this.auth2 = window.gapi.auth2.init({ client_id: process.env.GOOGLE_CLIENT_ID });
+      } catch(err) {
+        console.log(err);
+      }
     });
   }
 
