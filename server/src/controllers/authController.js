@@ -27,7 +27,7 @@ function signupWithGoogle(req, res) {
       if (err) { return req.send({ msg: err }); }
       if (user) {
         return res.status(400).send({
-          msg: 'User already signed up using Google with Peblio',
+          msg: 'User already signed up using Google with Peblio. Please use another google account to signup',
         });
       }
       var profileInfo = jwt_decode(req.body.google_id_token);
@@ -80,7 +80,7 @@ function loginWithGoogle(req, res) {
         return req.send({ msg: err });
       }
       if (!user) {
-        return res.status(400).send({
+        return res.status(404).send({
           msg: 'Please sign up first with Peblio',
         });
       }
