@@ -19,7 +19,7 @@
 - name: install node packages via npm
   npm:
     path: "{{ ansible_env.HOME }}/{{ webserver_src_dir }}/server"
-    executable: /usr/local/bin/npm --save --legacy-peer-deps
+    executable: /usr/local/bin/npm
   notify:
     - restart pm2
 
