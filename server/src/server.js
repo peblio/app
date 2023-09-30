@@ -14,7 +14,11 @@ let app = express();
 const expressWs = require('express-ws')(app);
 app = expressWs.app;
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
+const store = new MongoStore({
+  mongoUrl: process.env.MONGO_DB_PEBLIO,
+  autoReconnect: true
+})
 const currentUserRoutes = require('./controllers/currentUserController');
 const webSocketRoutes = require('./routes/webSocketRoutes.js')(expressWs);
 const pageRoutes = require('./routes/pageRoutes.js');
@@ -42,10 +46,7 @@ app.use(session({
     httpOnly: false,
     secure: false,
   },
-  store: new MongoStore({
-    url: process.env.MONGO_DB_PEBLIO,
-    autoReconnect: true
-  })
+  store: store
 }));
 
 // add body parser
