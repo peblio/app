@@ -15,7 +15,6 @@ const expressWs = require('express-ws')(app);
 app = expressWs.app;
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-console.log(process.env.MONGO_DB_PEBLIO)
 const store = new MongoStore({
   mongoUrl: process.env.MONGO_DB_PEBLIO,
   autoReconnect: true
