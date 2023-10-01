@@ -195,7 +195,7 @@ export async function trashPage(req, res) {
   return res.status(403).send({ error: 'You do not have the permissions to delete this page' });
 }
 
-export async function getTrashPages(req, res) {
+export function getTrashPages(req, res) {
   const user = req.user;
   if (!user) {
     return res.status(403).send({ error: 'Please log in first' });
