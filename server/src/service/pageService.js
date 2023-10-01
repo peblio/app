@@ -9,7 +9,7 @@ AWS.config.credentials = credentials;
 const bucket = process.env.S3_BUCKET;
 import { buildPageForUpdateFromRequest } from '../models/creator/pageCreator';
 
-export async function getPage(req, res) {
+export function getPage(req, res) {
   return Page.find({
     id: req.params.pageId
   }, (err, data) => {
