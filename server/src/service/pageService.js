@@ -211,7 +211,7 @@ export async function getTrashPages(req, res) {
   });
 }
 
-export async function updatePage(req, res) {
+export function updatePage(req, res) {
   const user = req.user;
   if (!user) {
     return res.status(403).send({ error: 'Please log in first' });
