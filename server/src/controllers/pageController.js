@@ -40,7 +40,7 @@ export function updatePage(req, res) {
     return pageService.updatePage(req, res);
 }
 
-export async function getTrashPages(req, res) {
+export function getTrashPages(req, res) {
     return pageService.getTrashPages(req, res);
 }
 
