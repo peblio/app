@@ -1,6 +1,6 @@
 import * as pageService from '../service/pageService';
 
-export async function getPage(req, res) {
+export function getPage(req, res) {
     return pageService.getPage(req, res);
 }
 
