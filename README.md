@@ -18,7 +18,7 @@
 
 ### Get Started
 * Here are some [resources to get started](https://www.peblio.co/#posts)
-* To start using Peblio, visit the [demo website](https://demo.peblio.co/).
+* To start using Peblio, please visit the [demo website](https://demo.peblio.co/).
 
 
 ## Examples
