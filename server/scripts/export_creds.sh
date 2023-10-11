@@ -37,3 +37,5 @@ PEBLIO_SESSION_SECRET=`get_secret session.secret`\
 > .env
 
 "$@"
+
+echo "Exported environment variables from credstash..."

@@ -38,7 +38,11 @@ class GoogleLoginButton extends React.Component {
         .then(this.props.onLoginSuccess)
         .catch((err) => {
           saveErrorLogWithoutUser('User Login via Google Failed', err.stack, '/auth/login/google');
-          this.props.onLoginFailure('Google Login error. Please try again after sometime.');
+          if(err.response.status == 404){
+            this.props.onLoginFailure('Please Signup with Google first.');
+          } else {
+            this.props.onLoginFailure('Google Login error. Please try again after sometime.');
+          }
         });
     } else {
       this.props.onLoginFailure('Google Login error. Please try again after sometime.');
