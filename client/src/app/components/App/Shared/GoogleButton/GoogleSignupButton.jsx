@@ -14,7 +14,7 @@ class GoogleSignupButton extends React.Component {
   }
 
   componentDidMount() {
-    if( window.gapi !=  null){
+    if( window.gapi.auth2 !=  null){
       this.auth2 = window.gapi.auth2.getAuthInstance();
       return
     }
