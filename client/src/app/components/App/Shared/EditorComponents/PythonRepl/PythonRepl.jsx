@@ -24,7 +24,6 @@ class PythonRepl extends React.Component {
   }
 
   startSketch=() => {
-    console.log('startSketch');
     Sk.configure({ output: this.outf,
       read: this.builtinRead,
       retainglobals: true,
@@ -45,7 +44,6 @@ class PythonRepl extends React.Component {
   }
 
   onSubmit = (input) => {
-    console.log('Heelo');
     Sk.configure({ output: this.outf,
       read: this.builtinRead,
       retainglobals: true,

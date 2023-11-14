@@ -9,6 +9,32 @@ Thank you for wanting to contribute to Peblio. In this document, you will find i
 * [Deploying](#deploying)
 * [Credstash and Environment Variables](#credtash-and-environment-variables)
 
+## Setup on M1 Mac:
+1. Remix this repository.
+2. Clone the forked repository and cd into it.
+3. Create a Python 3.8.11 environment and activate it.
+4. ```pip install -r requirements.txt  --use-deprecated=backtrack-on-build-failures```
+5. Make sure that you have [Node.js v8.7.0 or higher installed](https://github.com/creationix/nvm#installation).
+6. ```npm install```
+7. ```cd client && npm install```
+8. ```cd ../server && npm install```
+9. Install MongoDB and make sure it is running.
+    * For Mac OSX with [homebrew](https://brew.sh/): `brew install mongodb` then `brew services start mongodb`
+10. Get the AWS IAM credentials for the `peblio-local-development` user from Mathura and place them in your `~/.aws/credentials` file under a profile called `peblio`. You should also create a `peblio` profile in `~/.aws/config` with the line `region=us-east-1`. The easiest way to do this is to run `aws configure --profile peblio`. See the [AWS docs](https://docs.aws.amazon.com/cli/latest/userguide/cli-multiple-profiles.html) for more details.
+11. Get the `Peblios.pem` SSH key from Mathura and place it in your `~/.ssh` directory. Then, if you haven't already, [generate an SSH key for your GitHub account](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/). Finally, add the following lines to your `~/.bashrc` or `~/.bash_profile` startup script:
+    ```
+    ssh-add ~/.ssh/Peblios.pem
+    ssh-add ~/.ssh/id_rsa
+    ```
+    Alternatively, if you're using OS X, instead of modifying your `~/.bashrc`, you can [configure SSH to use the OS X Keychain to automatically make your private keys available to SSH](https://apple.stackexchange.com/a/250572).
+12. (Optional) Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) and [Redux Developer Tools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) Chrome extensions.
+13. In case you see error for not being able to load libffi
+```brew install libffi```
+14. Find where libffi.8.dylib is and run
+```cp libffi.8.dylib libffi.7.dylib```
+
+
+
 ## Setup
 
 1. Remix this repository.

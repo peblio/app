@@ -288,7 +288,7 @@ export function uploadPageSnapshotToS3(req, res) {
         { snapshotPath: `https://s3.amazonaws.com/${bucket}/${fileName}` },
         (pageUpdateErr, data) => {
           if (pageUpdateErr) {
-            return res.status(500).send(err);
+            return res.status(500).send(pageUpdateErr);
           } else {
             return res.status(200).send();
           }
