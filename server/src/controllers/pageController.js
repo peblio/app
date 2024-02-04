@@ -1,6 +1,6 @@
 import * as pageService from '../service/pageService';
 
-export async function getPage(req, res) {
+export function getPage(req, res) {
     return pageService.getPage(req, res);
 }
 
@@ -36,11 +36,11 @@ export async function updatePageWithVersion(req, res) {
     return pageService.updatePageWithVersion(req, res);
 }
 
-export async function updatePage(req, res) {
+export function updatePage(req, res) {
     return pageService.updatePage(req, res);
 }
 
-export async function getTrashPages(req, res) {
+export function getTrashPages(req, res) {
     return pageService.getTrashPages(req, res);
 }
 

@@ -9,7 +9,7 @@ AWS.config.credentials = credentials;
 const bucket = process.env.S3_BUCKET;
 import { buildPageForUpdateFromRequest } from '../models/creator/pageCreator';
 
-export async function getPage(req, res) {
+export function getPage(req, res) {
   return Page.find({
     id: req.params.pageId
   }, (err, data) => {
@@ -195,7 +195,7 @@ export async function trashPage(req, res) {
   return res.status(403).send({ error: 'You do not have the permissions to delete this page' });
 }
 
-export async function getTrashPages(req, res) {
+export function getTrashPages(req, res) {
   const user = req.user;
   if (!user) {
     return res.status(403).send({ error: 'Please log in first' });
@@ -211,7 +211,7 @@ export async function getTrashPages(req, res) {
   });
 }
 
-export async function updatePage(req, res) {
+export function updatePage(req, res) {
   const user = req.user;
   if (!user) {
     return res.status(403).send({ error: 'Please log in first' });
