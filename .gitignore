@@ -1,3 +1,4 @@
+node_modules*/
 node_modules/
 client/build/
 **/.DS_Store
@@ -9,3 +10,4 @@ client/src/.sass-cache/
 server/package-lock.json
 client/package-lock.json
 package-lock.json
+package-lock_old.json
