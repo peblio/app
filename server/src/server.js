@@ -5,9 +5,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = Promise;
 const bodyParser = require('body-parser');
 import express from 'express';
-import userRoutes from './controllers/userController';
-import examplesRoutes from './controllers/examplesController';
-import tagRoutes from './controllers/tagController';
+
 const passport = require('passport');
 const cors = require('cors');
 let app = express();
@@ -15,6 +13,11 @@ const expressWs = require('express-ws')(app);
 app = expressWs.app;
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+
+
+const userRoutes = require('./controllers/userController');
+const examplesRoutes = require('./controllers/examplesController');
+const tagRoutes = require('./controllers/tagController');
 const currentUserRoutes = require('./controllers/currentUserController');
 const webSocketRoutes = require('./routes/webSocketRoutes.js')(expressWs);
 const pageRoutes = require('./routes/pageRoutes.js');

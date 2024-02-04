@@ -3,19 +3,18 @@ const exampleRoutes = express.Router();
 const Page = require('../models/page.js');
 const User = require('../models/user.js');
 
-export function getExamples(req, res) {
-  return User.find({ name: 'peblioexamples' }, (userFindError, user) => {
-    if (userFindError) {
-      return res.status(500).send(userFindError);
+export async function getExamples(req, res) {
+  try {
+    const user = await User.findOne({ name: 'peblioexamples' }).exec();
+    if(user && user._id) {
+      const pages = await Page.find({ user: user._id }).exec();
+      return res.status(200).send(pages);
     }
-    return Page.find({ user: user[0]._id }, (pageFindError, page) => {
-      if (pageFindError) {
-        return res.status(500).send(pageFindError);
-      }
-      return res.status(200).send(page);
-    });
-  });
+    return res.status(500).send('Error while retrieving examples');
+  } catch (err) {
+    return res.status(500).send({ error: 'Error while retrieving examples' });
+  }
 }
 
 exampleRoutes.route('/').get(getExamples);
-export default exampleRoutes;
+module.exports = exampleRoutes;
