@@ -155,6 +155,7 @@ export function duplicatePage(id, folder) {
               page: response.data.page
             });
           });
+          window.open(`/pebl/${id}`, '_blank');
       })
       .catch((err) => {
         console.log(err);
