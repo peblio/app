@@ -98,7 +98,11 @@ class Login extends React.Component {
               ref={(userPassword) => { this.userPassword = userPassword; }}
             />
           </div>
-
+          {this.state.showNotice && (
+          <p className="forgot-modal__error">
+            {ReactHtmlParser(this.state.notice)}
+          </p>
+          )}
           <div className="login-modal__buttonholder">
 
             <button className="login-modal__button" type="submit" value="Submit" data-test="submit-login">
@@ -123,14 +127,7 @@ class Login extends React.Component {
               Sign Up
             </button>
           </div>
-        </form>
-
-
-        {this.state.showNotice && (
-          <p className="forgot-modal__notice">
-            {ReactHtmlParser(this.state.notice)}
-          </p>
-        )}
+        </form>   
       </div>
     );
   }
