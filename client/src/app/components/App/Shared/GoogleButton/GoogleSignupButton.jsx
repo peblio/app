@@ -71,7 +71,7 @@ class GoogleSignupButton extends React.Component {
         })
         .then(this.signIn)
         .catch((err) => {
-          saveErrorLogWithoutUser('User Signup via Google Failed', err.stack, '/auth/signin/google');
+          saveErrorLogWithoutUser('User Sign Up via Google Failed', err.stack, '/auth/signin/google');
           if(err.response && err.response.data && err.response.data.msg){
             this.props.onLoginFailure(`${err.response.data.msg}`);
           } else {
