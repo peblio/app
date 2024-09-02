@@ -86,6 +86,7 @@ function startServer() {
   const listener = app.listen(process.env.SERVER_PORT || 8081, () => {
     console.log(`ENVIRONMENT: ${process.env.ENVIRONMENT}`);
     console.log(`Listening on port ${listener.address().port}`);
+    console.log('Version: ' + process.version);
   });
 }
 

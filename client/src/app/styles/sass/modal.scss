@@ -121,6 +121,14 @@
   justify-content: center;
   display: flex;
 }
+
+%modal__error {
+  font-size: $medium-font-size;
+  color: $red;
+  justify-content: center;
+  display: flex;
+}
+
 %modal__buttonholder {
   text-align: $center-align;
 }

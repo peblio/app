@@ -39,7 +39,7 @@ class GoogleLoginButton extends React.Component {
         .catch((err) => {
           saveErrorLogWithoutUser('User Login via Google Failed', err.stack, '/auth/login/google');
           if(err.response.status == 404){
-            this.props.onLoginFailure('Please Signup with Google first.');
+            this.props.onLoginFailure('Please Sign Up with Google first.');
           } else {
             this.props.onLoginFailure('Google Login error. Please try again after sometime.');
           }
