@@ -117,7 +117,7 @@ class Login extends React.Component {
             >
               forgot password?
             </button>
-            <p className="login-modal__text-secondary">Don't have an account?</p>
+            <h1 className="login-modal__highlight_message">Don't have an account?</h1>
             <button
               className="login-modal__signup-button"
               onClick={() => {
