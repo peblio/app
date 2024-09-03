@@ -106,7 +106,7 @@ class Login extends React.Component {
           <div className="login-modal__buttonholder">
 
             <button className="login-modal__button" type="submit" value="Submit" data-test="submit-login">
-              Submit
+              Log In
             </button>
             <button
               className="login-modal__forgot-link"
