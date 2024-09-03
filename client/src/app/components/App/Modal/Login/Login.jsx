@@ -118,13 +118,13 @@ class Login extends React.Component {
               forgot password?
             </button>
             <button
-              className="login-modal__signup-link"
+              className="login-modal__signup-button"
               onClick={() => {
                 this.props.viewSignUpModal();
                 this.props.closeLoginModal();
               }}
             >
-              Sign Up
+              Dont have an account? Sign Up
             </button>
           </div>
         </form>   
