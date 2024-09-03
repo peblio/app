@@ -42,6 +42,10 @@
     }
   }
 
+  &__signup-button {
+    @extend %modal__button;
+  }
+
   &__notice {
     @extend %modal__notice;
   }
