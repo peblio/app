@@ -124,7 +124,7 @@ class Login extends React.Component {
                 this.props.closeLoginModal();
               }}
             >
-              Dont have an account? Sign Up
+              Don't have an account? <br/>Sign Up
             </button>
           </div>
         </form>   
