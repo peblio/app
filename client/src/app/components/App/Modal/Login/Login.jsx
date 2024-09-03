@@ -117,6 +117,7 @@ class Login extends React.Component {
             >
               forgot password?
             </button>
+            <p className="login-modal__text-secondary">Don't have an account?</p>
             <button
               className="login-modal__signup-button"
               onClick={() => {
@@ -124,7 +125,7 @@ class Login extends React.Component {
                 this.props.closeLoginModal();
               }}
             >
-              Don't have an account? <br/>Sign Up
+              Sign Up
             </button>
           </div>
         </form>   
