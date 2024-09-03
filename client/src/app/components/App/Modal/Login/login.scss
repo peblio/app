@@ -53,4 +53,9 @@
   &__text-secondary {
     @extend %modal__text;
   }
+
+ &__highlight_message {
+    @extend %modal__title;
+    margin-bottom: 0%;
+ }
 }
